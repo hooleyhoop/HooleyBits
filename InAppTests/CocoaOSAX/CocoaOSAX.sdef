@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="Dictionary">
+	<suite name="CocoaOSAX" code="IaPt" description="What?">
+		<command name="monkeeeeeeey" code="EeEeeeEE"/>
+		<command name="mouseClickAt" code="EeEeeeEG">
+			<direct-parameter>
+				<type type="integer" list="yes"/>
+			</direct-parameter>
+		</command>
+		<command name="mouseDoubleClickAt" code="EeEeeeEF">
+			<direct-parameter>
+				<type type="integer" list="yes"/>
+			</direct-parameter>
+		</command>
+		<command name="mouseDownAt" code="EeEeeeEH">
+			<direct-parameter>
+				<type type="integer" list="yes"/>
+			</direct-parameter>
+			<parameter name="upAt" code="x$$$">
+				<type type="integer" list="yes"/>
+			</parameter>
+		</command>
+	</suite>
+</dictionary>

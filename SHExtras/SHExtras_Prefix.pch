@@ -1,0 +1,10 @@
+//
+// Prefix header for all source files of the 'QuartzXML' target in the 'QuartzXML' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+	#import "Utils.h"
+//	#import "Logger.h"
+	#import "NSString+Extras.h"
+#endif

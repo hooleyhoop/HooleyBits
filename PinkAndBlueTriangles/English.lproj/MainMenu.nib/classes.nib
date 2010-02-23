@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {step = id; }; 
+            CLASS = AppControl; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {pb3dView = PB3DView; pbView = PBView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = PB3DView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {start = id; stop = id; }; 
+            CLASS = PBView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

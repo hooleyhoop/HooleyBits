@@ -1,0 +1,276 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		171953DD0DB3FD3B00AAC8B8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */; };
+		171953FB0DB3FDE500AAC8B8 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FA0DB3FDE500AAC8B8 /* Controller.m */; };
+		171953FD0DB3FDFB00AAC8B8 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */; };
+		175387700DB9743C0017AE02 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953D90DB3FCFD00AAC8B8 /* SCEvent.m */; };
+		7343C84B111AD984005A2689 /* ApplescriptUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7343C84A111AD984005A2689 /* ApplescriptUtils.m */; };
+		73AC18CB111A2802004E523B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AC18CA111A2802004E523B /* ApplicationServices.framework */; };
+		73AC18D4111A2814004E523B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AC18D3111A2814004E523B /* Carbon.framework */; };
+		73BAE991111AF0C800FAE3A6 /* ReloadBrowser.scpt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73AC18ED111A2897004E523B /* ReloadBrowser.scpt */; };
+		8DD76F9A0486AA7600D96B5E /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* Events.m */; settings = {ATTRIBUTES = (); }; };
+		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		73BAE99B111AF0D800FAE3A6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				73BAE991111AF0C800FAE3A6 /* ReloadBrowser.scpt in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
+		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		171953D80DB3FCFD00AAC8B8 /* SCEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEvent.h; sourceTree = "<group>"; };
+		171953D90DB3FCFD00AAC8B8 /* SCEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCEvent.m; sourceTree = "<group>"; };
+		171953DA0DB3FCFD00AAC8B8 /* SCEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
+		171953DB0DB3FD2800AAC8B8 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
+		171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		171953F90DB3FDE500AAC8B8 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		171953FA0DB3FDE500AAC8B8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
+		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
+		32A70AAB03705E1F00C91783 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.pch; sourceTree = "<group>"; };
+		7343C849111AD984005A2689 /* ApplescriptUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplescriptUtils.h; path = ../../Blake/SHShared/ApplescriptUtils.h; sourceTree = SOURCE_ROOT; };
+		7343C84A111AD984005A2689 /* ApplescriptUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplescriptUtils.m; path = ../../Blake/SHShared/ApplescriptUtils.m; sourceTree = SOURCE_ROOT; };
+		73AC18CA111A2802004E523B /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		73AC18D3111A2814004E523B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		73AC18ED111A2897004E523B /* ReloadBrowser.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.scpt; path = ReloadBrowser.scpt; sourceTree = "<group>"; };
+		8DD76FA10486AA7600D96B5E /* SCEvents */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SCEvents; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F9B0486AA7600D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
+				171953DD0DB3FD3B00AAC8B8 /* CoreServices.framework in Frameworks */,
+				73AC18CB111A2802004E523B /* ApplicationServices.framework in Frameworks */,
+				73AC18D4111A2814004E523B /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* SCEvents */ = {
+			isa = PBXGroup;
+			children = (
+				32A70AAB03705E1F00C91783 /* SCEvents.pch */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				17BD472C0DE85550008FC970 /* Other */,
+				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+				73AC18CA111A2802004E523B /* ApplicationServices.framework */,
+				73AC18D3111A2814004E523B /* Carbon.framework */,
+			);
+			name = SCEvents;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7796FE84155DC02AAC07 /* Events.m */,
+				171953F90DB3FDE500AAC8B8 /* Controller.h */,
+				171953FA0DB3FDE500AAC8B8 /* Controller.m */,
+				73AC18ED111A2897004E523B /* ReloadBrowser.scpt */,
+				7343C849111AD984005A2689 /* ApplescriptUtils.h */,
+				7343C84A111AD984005A2689 /* ApplescriptUtils.m */,
+				171953D70DB3FCE900AAC8B8 /* SCEvents */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */,
+				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		171953D70DB3FCE900AAC8B8 /* SCEvents */ = {
+			isa = PBXGroup;
+			children = (
+				171953D80DB3FCFD00AAC8B8 /* SCEvent.h */,
+				171953D90DB3FCFD00AAC8B8 /* SCEvent.m */,
+				171953DA0DB3FCFD00AAC8B8 /* SCEvents.h */,
+				171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */,
+				171953DB0DB3FD2800AAC8B8 /* SCEventListenerProtocol.h */,
+			);
+			name = SCEvents;
+			sourceTree = "<group>";
+		};
+		17BD472C0DE85550008FC970 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FA10486AA7600D96B5E /* SCEvents */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F960486AA7600D96B5E /* SCEvents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "SCEvents" */;
+			buildPhases = (
+				8DD76F990486AA7600D96B5E /* Sources */,
+				8DD76F9B0486AA7600D96B5E /* Frameworks */,
+				73BAE99B111AF0D800FAE3A6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCEvents;
+			productInstallPath = "$(HOME)/bin";
+			productName = SCEvents;
+			productReference = 8DD76FA10486AA7600D96B5E /* SCEvents */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "SCEvents" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* SCEvents */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F960486AA7600D96B5E /* SCEvents */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F990486AA7600D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F9A0486AA7600D96B5E /* Events.m in Sources */,
+				171953FB0DB3FDE500AAC8B8 /* Controller.m in Sources */,
+				171953FD0DB3FDFB00AAC8B8 /* SCEvents.m in Sources */,
+				175387700DB9743C0017AE02 /* SCEvent.m in Sources */,
+				7343C84B111AD984005A2689 /* ApplescriptUtils.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB927508733DD40010E9CD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SCEvents.pch;
+				GCC_VERSION = 4.2;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = SCEvents;
+			};
+			name = Development;
+		};
+		1DEB927608733DD40010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SCEvents_Prefix.pch;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = SCEvents;
+			};
+			name = Release;
+		};
+		1DEB927908733DD40010E9CD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Development;
+		};
+		1DEB927A08733DD40010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "SCEvents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB927508733DD40010E9CD /* Development */,
+				1DEB927608733DD40010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "SCEvents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB927908733DD40010E9CD /* Development */,
+				1DEB927A08733DD40010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

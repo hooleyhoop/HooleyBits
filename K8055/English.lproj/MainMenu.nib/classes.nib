@@ -1,0 +1,44 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = HXImageIndicator; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = HXLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {outputChanged = id; pwmChanged = id; resetCounts = id; switchOff = id; }; 
+            CLASS = K8055Window; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                analog1 = id; 
+                analog2 = id; 
+                count1 = id; 
+                count2 = id; 
+                count3 = id; 
+                count4 = id; 
+                count5 = id; 
+                input1 = id; 
+                input2 = id; 
+                input3 = id; 
+                input4 = id; 
+                input5 = id; 
+                output1 = id; 
+                output2 = id; 
+                output3 = id; 
+                output4 = id; 
+                output5 = id; 
+                output6 = id; 
+                output7 = id; 
+                output8 = id; 
+                pwm1 = id; 
+                pwm2 = id; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

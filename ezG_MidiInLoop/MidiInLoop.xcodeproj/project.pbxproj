@@ -1,0 +1,505 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		731879790E4E4EBB00C9B8FF /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731879780E4E4EBB00C9B8FF /* SenTestingKit.framework */; };
+		7318799A0E4E52DE00C9B8FF /* MidiInLoopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731879750E4E4E7100C9B8FF /* MidiInLoopTests.m */; };
+		734EFE990E7E716A00CDCB9A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734EFE980E7E716A00CDCB9A /* Carbon.framework */; };
+		734EFEA50E7E71B400CDCB9A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734EFEA40E7E71B400CDCB9A /* QuartzCore.framework */; };
+		734EFEE30E7E724E00CDCB9A /* GridLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 734EFEE20E7E724E00CDCB9A /* GridLayer.m */; };
+		73A8F6AF0E4F776900720C0D /* MidiInLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A8F6AB0E4F776900720C0D /* MidiInLoop.m */; };
+		73A8F6B00E4F776900720C0D /* AGMsgFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A8F6AD0E4F776900720C0D /* AGMsgFilter.m */; };
+		73A8F6B30E4F778B00720C0D /* AGMsgFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A8F6B10E4F778B00720C0D /* AGMsgFilterTests.m */; };
+		73C7626C0E48EA9800F89196 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7626B0E48EA9800F89196 /* CoreMIDI.framework */; };
+		73CE2BD60E7D2DD2006E7DDE /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CE2BD40E7D2DD2006E7DDE /* AudioUnit.framework */; };
+		73CE2BD70E7D2DD2006E7DDE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CE2BD50E7D2DD2006E7DDE /* AudioToolbox.framework */; };
+		73DA19AB0E7BD6710040A848 /* NeckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DA19AA0E7BD6710040A848 /* NeckView.m */; };
+		73DA19B80E7BD7800040A848 /* NeckViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DA19B70E7BD7800040A848 /* NeckViewControl.m */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		731879530E4E495000C9B8FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = MidiInLoop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* MidiInLoop_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiInLoop_Prefix.pch; sourceTree = "<group>"; };
+		7318794E0E4E48B600C9B8FF /* AGLoopTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AGLoopTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7318794F0E4E48B600C9B8FF /* AGLoopTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AGLoopTests-Info.plist"; sourceTree = "<group>"; };
+		731879740E4E4E7100C9B8FF /* MidiInLoopTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInLoopTests.h; path = Tests/MidiInLoopTests.h; sourceTree = "<group>"; };
+		731879750E4E4E7100C9B8FF /* MidiInLoopTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInLoopTests.m; path = Tests/MidiInLoopTests.m; sourceTree = "<group>"; };
+		731879780E4E4EBB00C9B8FF /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		734E00280E7E812000CDCB9A /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = /Library/Frameworks/FScript.framework; sourceTree = "<absolute>"; };
+		734EFE980E7E716A00CDCB9A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		734EFEA40E7E71B400CDCB9A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		734EFEE10E7E724E00CDCB9A /* GridLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridLayer.h; path = Src/GridLayer.h; sourceTree = "<group>"; };
+		734EFEE20E7E724E00CDCB9A /* GridLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridLayer.m; path = Src/GridLayer.m; sourceTree = "<group>"; };
+		73A8F6AB0E4F776900720C0D /* MidiInLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInLoop.m; path = Src/MidiInLoop.m; sourceTree = "<group>"; };
+		73A8F6AC0E4F776900720C0D /* MidiInLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInLoop.h; path = Src/MidiInLoop.h; sourceTree = "<group>"; };
+		73A8F6AD0E4F776900720C0D /* AGMsgFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AGMsgFilter.m; path = Src/AGMsgFilter.m; sourceTree = "<group>"; };
+		73A8F6AE0E4F776900720C0D /* AGMsgFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGMsgFilter.h; path = Src/AGMsgFilter.h; sourceTree = "<group>"; };
+		73A8F6B10E4F778B00720C0D /* AGMsgFilterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AGMsgFilterTests.m; path = Tests/AGMsgFilterTests.m; sourceTree = "<group>"; };
+		73A8F6B20E4F778B00720C0D /* AGMsgFilterTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AGMsgFilterTests.h; path = Tests/AGMsgFilterTests.h; sourceTree = "<group>"; };
+		73C7626B0E48EA9800F89196 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<absolute>"; };
+		73CE2BD40E7D2DD2006E7DDE /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		73CE2BD50E7D2DD2006E7DDE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		73DA19A90E7BD6710040A848 /* NeckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NeckView.h; path = Src/NeckView.h; sourceTree = "<group>"; };
+		73DA19AA0E7BD6710040A848 /* NeckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NeckView.m; path = Src/NeckView.m; sourceTree = "<group>"; };
+		73DA19B60E7BD7800040A848 /* NeckViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NeckViewControl.h; path = Src/NeckViewControl.h; sourceTree = "<group>"; };
+		73DA19B70E7BD7800040A848 /* NeckViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NeckViewControl.m; path = Src/NeckViewControl.m; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* MidiInLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MidiInLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7318794B0E4E48B600C9B8FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				731879790E4E4EBB00C9B8FF /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				73C7626C0E48EA9800F89196 /* CoreMIDI.framework in Frameworks */,
+				73CE2BD60E7D2DD2006E7DDE /* AudioUnit.framework in Frameworks */,
+				73CE2BD70E7D2DD2006E7DDE /* AudioToolbox.framework in Frameworks */,
+				734EFE990E7E716A00CDCB9A /* Carbon.framework in Frameworks */,
+				734EFEA50E7E71B400CDCB9A /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				73A8F6AC0E4F776900720C0D /* MidiInLoop.h */,
+				73A8F6AB0E4F776900720C0D /* MidiInLoop.m */,
+				73A8F6AE0E4F776900720C0D /* AGMsgFilter.h */,
+				73A8F6AD0E4F776900720C0D /* AGMsgFilter.m */,
+				73DA19A60E7BD6420040A848 /* Views */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				734E00280E7E812000CDCB9A /* FScript.framework */,
+				734EFEA40E7E71B400CDCB9A /* QuartzCore.framework */,
+				734EFE980E7E716A00CDCB9A /* Carbon.framework */,
+				73CE2BD40E7D2DD2006E7DDE /* AudioUnit.framework */,
+				73CE2BD50E7D2DD2006E7DDE /* AudioToolbox.framework */,
+				731879780E4E4EBB00C9B8FF /* SenTestingKit.framework */,
+				73C7626B0E48EA9800F89196 /* CoreMIDI.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* MidiInLoop.app */,
+				7318794E0E4E48B600C9B8FF /* AGLoopTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* MidiInLoop */ = {
+			isa = PBXGroup;
+			children = (
+				731879710E4E4E5000C9B8FF /* Tests */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				7318794F0E4E48B600C9B8FF /* AGLoopTests-Info.plist */,
+			);
+			name = MidiInLoop;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* MidiInLoop_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		731879710E4E4E5000C9B8FF /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				731879740E4E4E7100C9B8FF /* MidiInLoopTests.h */,
+				731879750E4E4E7100C9B8FF /* MidiInLoopTests.m */,
+				73A8F6B20E4F778B00720C0D /* AGMsgFilterTests.h */,
+				73A8F6B10E4F778B00720C0D /* AGMsgFilterTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		73DA19A60E7BD6420040A848 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				73DA19B60E7BD7800040A848 /* NeckViewControl.h */,
+				73DA19B70E7BD7800040A848 /* NeckViewControl.m */,
+				73DA19A90E7BD6710040A848 /* NeckView.h */,
+				73DA19AA0E7BD6710040A848 /* NeckView.m */,
+				734EFEE10E7E724E00CDCB9A /* GridLayer.h */,
+				734EFEE20E7E724E00CDCB9A /* GridLayer.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7318794D0E4E48B600C9B8FF /* AGLoopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 731879520E4E48B700C9B8FF /* Build configuration list for PBXNativeTarget "AGLoopTests" */;
+			buildPhases = (
+				731879490E4E48B600C9B8FF /* Resources */,
+				7318794A0E4E48B600C9B8FF /* Sources */,
+				7318794B0E4E48B600C9B8FF /* Frameworks */,
+				7318794C0E4E48B600C9B8FF /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				731879540E4E495000C9B8FF /* PBXTargetDependency */,
+			);
+			name = AGLoopTests;
+			productName = AGLoopTests;
+			productReference = 7318794E0E4E48B600C9B8FF /* AGLoopTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8D1107260486CEB800E47090 /* MidiInLoop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MidiInLoop" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MidiInLoop;
+			productInstallPath = "$(HOME)/Applications";
+			productName = MidiInLoop;
+			productReference = 8D1107320486CEB800E47090 /* MidiInLoop.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MidiInLoop" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* MidiInLoop */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* MidiInLoop */,
+				7318794D0E4E48B600C9B8FF /* AGLoopTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		731879490E4E48B600C9B8FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7318794C0E4E48B600C9B8FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7318794A0E4E48B600C9B8FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7318799A0E4E52DE00C9B8FF /* MidiInLoopTests.m in Sources */,
+				73A8F6B30E4F778B00720C0D /* AGMsgFilterTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				73A8F6AF0E4F776900720C0D /* MidiInLoop.m in Sources */,
+				73A8F6B00E4F776900720C0D /* AGMsgFilter.m in Sources */,
+				73DA19AB0E7BD6710040A848 /* NeckView.m in Sources */,
+				73DA19B80E7BD7800040A848 /* NeckViewControl.m in Sources */,
+				734EFEE30E7E724E00CDCB9A /* GridLayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		731879540E4E495000C9B8FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* MidiInLoop */;
+			targetProxy = 731879530E4E495000C9B8FF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		731879500E4E48B700C9B8FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MidiInLoop.app/Contents/MacOS/MidiInLoop";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "AGLoopTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/PrivateFrameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AGLoopTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		731879510E4E48B700C9B8FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "AGLoopTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AGLoopTests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MidiInLoop_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MidiInLoop;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MidiInLoop_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MidiInLoop;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		731879520E4E48B700C9B8FF /* Build configuration list for PBXNativeTarget "AGLoopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				731879500E4E48B700C9B8FF /* Debug */,
+				731879510E4E48B700C9B8FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MidiInLoop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MidiInLoop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

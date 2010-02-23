@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {CLASS = CIColor; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIContext; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIFilter; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIFilterShape; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIImage; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIImageAccumulator; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIKernel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIPlugIn; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CISampler; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = CIVector; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {
+            CLASS = QCInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = NSView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = SHAEKeyframeParseUI; LANGUAGE = ObjC; SUPERCLASS = QCInspector; }
+    ); 
+    IBVersion = 1; 
+}

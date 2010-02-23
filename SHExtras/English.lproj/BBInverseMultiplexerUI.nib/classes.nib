@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {addOutputPort = id; removeOutputPort = id; }; 
+            CLASS = BBInverseMultiplexerUI; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = NSView; }; 
+            SUPERCLASS = QCInspector; 
+        }, 
+        {
+            ACTIONS = {addOperation = id; removeOperation = id; }; 
+            CLASS = CIMathUI; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = QCInspector; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = QCInspector; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Goatse</string>
+		<key>name</key>
+		<string>BB Rendering Destination Dimensions</string>
+		<key>description</key>
+		<string>Like the stock patch, except that we report the correct size e.g. inside render in image.</string>
+	</dict>
+	
+
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputWidth</key>
+		<dict>
+			<key>description</key>
+			<string>The width in QC units.</string>
+			<key>name</key>
+			<string>Width</string>
+		</dict>
+		
+		<key>outputHeight</key>
+		<dict>
+			<key>description</key>
+			<string>The height in QC units.</string>
+			<key>name</key>
+			<string>Height</string>
+		</dict>
+		
+		<key>outputWidthPx</key>
+		<dict>
+			<key>description</key>
+			<string>The width in pixels.</string>
+			<key>name</key>
+			<string>Width</string>
+		</dict>
+		
+		<key>outputHeightPx</key>
+		<dict>
+			<key>description</key>
+			<string>The height in pixels.</string>
+			<key>name</key>
+			<string>Height</string>
+		</dict>	
+		
+		<key>outputResolution</key>
+		<dict>
+			<key>description</key>
+			<string>The resolution (ratio of pixels to qc units).</string>
+			<key>name</key>
+			<string>Resolution</string>
+		</dict>	
+		
+		<key>outputAspectRatio</key>
+		<dict>
+			<key>description</key>
+			<string>The ratio of width to height.</string>
+			<key>name</key>
+			<string>Aspect ratio</string>
+		</dict>
+		
+	</dict>
+
+</dict>
+</plist>

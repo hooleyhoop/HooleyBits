@@ -1,0 +1,103 @@
+{\rtf1\mac\ansicpg10000\cocoartf102
+\readonlydoc1{\fonttbl\f0\fnil\fcharset77 LucidaGrande;\f1\fnil\fcharset77 Charcoal;\f2\fnil\fcharset77 LucidaGrande-Bold;
+\f3\fnil\fcharset77 Geneva;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue153;\red0\green0\blue211;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17420\viewh12720\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f0\fs26 \cf2 \ul \ulc2 Sample projects/Read me, July 2004 
+\f1\fs22 \cf0 \ul \ulc0 \
+
+\f0\fs26 \cf2 \ulnone \
+Preliminary note \cf0 \
+
+\fs22 - The projects in "Sample projects" require Smile 2.6.1 or higher and XCode.\
+- For any additional information please visit \cf3 \ul \ulc3 <http://www.satimage-software.com>\cf0 \ulnone \
+\
+
+\fs26 \cf2 Overview \cf0 \
+
+\fs22 The "Sample_projects" folder contains three folders with sample projects for XCode and one "Satimage includes" folder. All of the three projects require the "Satimage includes" folder.\
+- "SampleOsax" demonstrates how to make a computational scripting addition (or 'osax') that you can later control or use from SmileLab - or from any AppleScript script. The code in SampleOsax shows how to use the "array of real" and "matrix" structures (the packed array structures used in SmileLab).\
+- "SampleApp" demonstrates how to make an existing computational code into a scriptable application so that you can control it, and so that it can interact automatically with SmileLab.\
+- "ThreadedApp" demonstrates how to have your computational code run in its own thread, how to halt then resume its execution and how to perform any required testing in between.\
+\
+Where needed each of the sample source files includes comments which explain what you have to do to customize the sample for your purposes.\
+You can obtain more information about scripting definitions:\
+	- in the "man" page for sdef, Type "man sdef" in a terminal window,\
+	- with the scripting definitions DTD at "/System/Library/DTDs/sdef.dtd",\
+	- with the developer samples  in the folder "/Developer/Examples/Scripting Definitions".\
+\
+
+\fs26 \cf2 Contents\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f2\b\fs22 \cf0 Satimage includes
+\f0\b0 \
+You should not have to bring changes to the files in that folder.\
+- AEDescUtils.cpp and AEDescUtils.h: utilities to handle the translation between the C types and AppleScript.\
+- Osax.cpp and Osax.h: a library which implements an osax skeleton (for osax project only).\
+- main.cp: the source file for the debugging application target of the osax project (for osax project only).\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 - SmileOSL.cp and SmileOSL.h: a library which implements a simple model of object specifier resolution (for application project only). \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f2\b \cf0 SampleOsax
+\f0\b0 \
+- SampleOsax.xcode: the project for XCode. SampleOsax.xcode defines two targets: one target builds an osax, the other builds an application. That application is not to be used as a sample application (the other project is for that). That application is only for debugging purposes. Indeed a given code will be debugged more easily in an application than in an osax.\
+- SampleOsax.cp: the core source for the sample osax.\
+- SampleOsax.sdef: the XML source file for the dictionary of the sample osax.\
+- mandelbrot.cpp and mandelbrot.h: computational code for the sample osax.\
+- SampleOsax script: an AppleScript script that tests the sample osax.\
+Once built you must copy the osax into one of the /Library/ScriptingAdditions/ folders (preferably, user or local). Then you can execute "SampleOsax script". "SampleOsax script" displays a fractal set in a graphic window where you can zoom in.\
+- Mandelbrot: the resulting graphic window saved as a bundle. You can directly use it to display and explore the fractal set.\
+\
+
+\f2\b SampleApp
+\f0\b0 \
+- SampleApp.xcode: the project for XCode.\
+- Heat.cp and Heat.h: the computational code for the sample application (computes heat transport).\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 - SampleApp.sdef: the XML source file for the dictionary of the sample application.\
+- main.cp: the part of the code of the sample application which implements scriptability.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 - SampleApp script: an AppleScript script that tests the sample application. "SampleApp script" must run in Smile. "SampleApp script" interacts with SampleApp in order to display the evolution of the temperature field with time.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f2\b \cf0 ThreadedApp
+\f0\b0 \
+- ThreadedApp.xcode: the project for XCode.\
+\pard\tx565\tx1133\tx1700\tx2266\tx2832\tx3401\tx3967\tx4535\tx5102\tx5669\tx6235\tx6802\ql\qnatural
+\cf0 - ThreadedApp.sdef: the XML source file for the dictionary of the sample application.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 - main.cp: the part of the code of the sample application which implements threading and scriptability.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 - compute.cpp and compute.h: the computational part.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+\cf0 - ThreadedApp script: an AppleScript script that demonstrates how to use the feature.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f2\b \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f0\b0\fs26 \cf2 Disclaimer \cf0 \
+
+\fs22 In no event will Satimage be liable for any consequences of the use or of the lack of use of this piece of software. \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f3\fs20 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f0\fs18 \cf0 Satimage SARL\
+1 avenue des Pr\'8es\
+F-94260 Fresnes\
+France\
+\
+Latest updates, license agreement, info about the software: \cf3 \ul <http://www.satimage-software.com/>\cf0 \ulnone \
+Bugs, suggestions: \cf3 \ul <mailto:support@satimage-software.com>\cf0 \ulnone \
+Subscribe to Smile User discussion List: \cf3 \ul <mailto:listserv@satimage-software.com?body=subscribe%20sul>\cf0 \ulnone \
+Satimage's home page: \cf3 \ul <http://www.satimage.fr>\cf0 \ulnone \
+}

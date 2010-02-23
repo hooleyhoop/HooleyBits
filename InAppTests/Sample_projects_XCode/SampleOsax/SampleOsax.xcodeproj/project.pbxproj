@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3B017C0605D3D62700D10D2D /* Osax.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5E005D3B0DE009E1A4A /* Osax.cpp */; };
+		3B017C0705D3D62B00D10D2D /* Osax.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5E105D3B0DE009E1A4A /* Osax.h */; };
+		3B017C9C05D3D65C00D10D2D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
+		3B25013C05E646C0006FA2EE /* DebugOsax-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B25013B05E646C0006FA2EE /* DebugOsax-Info.plist */; };
+		3BB9A5E405D3B0DE009E1A4A /* AEDescUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5DE05D3B0DE009E1A4A /* AEDescUtils.cpp */; };
+		3BB9A5E505D3B0DE009E1A4A /* AEDescUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5DF05D3B0DE009E1A4A /* AEDescUtils.h */; };
+		3BB9A5E605D3B0DE009E1A4A /* Osax.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5E005D3B0DE009E1A4A /* Osax.cpp */; };
+		3BB9A5E705D3B0DE009E1A4A /* Osax.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5E105D3B0DE009E1A4A /* Osax.h */; };
+		3BB9A5EA05D3B0DE009E1A4A /* AEDescUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5DE05D3B0DE009E1A4A /* AEDescUtils.cpp */; };
+		3BB9A5EB05D3B0DE009E1A4A /* AEDescUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5DF05D3B0DE009E1A4A /* AEDescUtils.h */; };
+		3BB9A5F105D3B134009E1A4A /* main.cp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5F005D3B134009E1A4A /* main.cp */; };
+		3BB9A5F705D3B1AC009E1A4A /* mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5F405D3B1AC009E1A4A /* mandelbrot.cpp */; };
+		3BB9A5F805D3B1AC009E1A4A /* mandelbrot.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5F505D3B1AC009E1A4A /* mandelbrot.h */; };
+		3BB9A5F905D3B1AC009E1A4A /* SampleOsax.cp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5F605D3B1AC009E1A4A /* SampleOsax.cp */; };
+		3BB9A5FA05D3B1AC009E1A4A /* mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5F405D3B1AC009E1A4A /* mandelbrot.cpp */; };
+		3BB9A5FB05D3B1AC009E1A4A /* mandelbrot.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB9A5F505D3B1AC009E1A4A /* mandelbrot.h */; };
+		3BB9A5FC05D3B1AC009E1A4A /* SampleOsax.cp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A5F605D3B1AC009E1A4A /* SampleOsax.cp */; };
+		73CAF1AA11074A8200697018 /* SampleOsax.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9A5FE05D3C891009E1A4A /* SampleOsax.sdef */; };
+		73CAF1D111074C1400697018 /* SampleOsax.r in Rez */ = {isa = PBXBuildFile; fileRef = 73CAF18E1107482E00697018 /* SampleOsax.r */; };
+		8D01CCC80486CAD60068D4B7 /* SampleOsax_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 32BAE0B30371A71500C91783 /* SampleOsax_Prefix.pch */; };
+		8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		3BB9A60505D3C94E009E1A4A /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.sdef";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).r",
+			);
+			script = "$(SYSTEM_DEVELOPER_TOOLS)/sdp -f a -o $(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).r $(INPUT_FILE_PATH) ";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		32BAE0B30371A71500C91783 /* SampleOsax_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleOsax_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		3B25013B05E646C0006FA2EE /* DebugOsax-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "DebugOsax-Info.plist"; sourceTree = "<group>"; };
+		3BB9A5DA05D3B0A9009E1A4A /* DebugOsax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DebugOsax.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BB9A5DE05D3B0DE009E1A4A /* AEDescUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = AEDescUtils.cpp; sourceTree = "<group>"; };
+		3BB9A5DF05D3B0DE009E1A4A /* AEDescUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AEDescUtils.h; sourceTree = "<group>"; };
+		3BB9A5E005D3B0DE009E1A4A /* Osax.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Osax.cpp; sourceTree = "<group>"; };
+		3BB9A5E105D3B0DE009E1A4A /* Osax.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Osax.h; sourceTree = "<group>"; };
+		3BB9A5F005D3B134009E1A4A /* main.cp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = main.cp; sourceTree = "<group>"; };
+		3BB9A5F405D3B1AC009E1A4A /* mandelbrot.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = mandelbrot.cpp; sourceTree = SOURCE_ROOT; };
+		3BB9A5F505D3B1AC009E1A4A /* mandelbrot.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = mandelbrot.h; sourceTree = SOURCE_ROOT; };
+		3BB9A5F605D3B1AC009E1A4A /* SampleOsax.cp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SampleOsax.cp; sourceTree = SOURCE_ROOT; };
+		3BB9A5FE05D3C891009E1A4A /* SampleOsax.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = SampleOsax.sdef; sourceTree = SOURCE_ROOT; };
+		73CAF18E1107482E00697018 /* SampleOsax.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = SampleOsax.r; path = Resources/SampleOsax.r; sourceTree = "<group>"; };
+		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D01CCD20486CAD60068D4B7 /* Mandelbrot.osax */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mandelbrot.osax; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BB9A5D805D3B0A9009E1A4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B017C9C05D3D65C00D10D2D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* SampleOsax */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77ADFE841716C02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+			);
+			name = SampleOsax;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD10486CAD60068D4B7 /* Info.plist */,
+				3B25013B05E646C0006FA2EE /* DebugOsax-Info.plist */,
+				3BB9A5FE05D3C891009E1A4A /* SampleOsax.sdef */,
+				73CAF18E1107482E00697018 /* SampleOsax.r */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77ADFE841716C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				3BB9A5DD05D3B0DE009E1A4A /* Satimage includes */,
+				32BAE0B30371A71500C91783 /* SampleOsax_Prefix.pch */,
+				3BB9A5F405D3B1AC009E1A4A /* mandelbrot.cpp */,
+				3BB9A5F505D3B1AC009E1A4A /* mandelbrot.h */,
+				3BB9A5F605D3B1AC009E1A4A /* SampleOsax.cp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD20486CAD60068D4B7 /* Mandelbrot.osax */,
+				3BB9A5DA05D3B0A9009E1A4A /* DebugOsax.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3BB9A5DD05D3B0DE009E1A4A /* Satimage includes */ = {
+			isa = PBXGroup;
+			children = (
+				3BB9A5DE05D3B0DE009E1A4A /* AEDescUtils.cpp */,
+				3BB9A5DF05D3B0DE009E1A4A /* AEDescUtils.h */,
+				3BB9A5E005D3B0DE009E1A4A /* Osax.cpp */,
+				3BB9A5E105D3B0DE009E1A4A /* Osax.h */,
+				3BB9A5F005D3B134009E1A4A /* main.cp */,
+			);
+			name = "Satimage includes";
+			path = "../Satimage includes";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3BB9A5D405D3B0A9009E1A4A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BB9A5EB05D3B0DE009E1A4A /* AEDescUtils.h in Headers */,
+				3BB9A5F805D3B1AC009E1A4A /* mandelbrot.h in Headers */,
+				3B017C0705D3D62B00D10D2D /* Osax.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D01CCC70486CAD60068D4B7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCC80486CAD60068D4B7 /* SampleOsax_Prefix.pch in Headers */,
+				3BB9A5E505D3B0DE009E1A4A /* AEDescUtils.h in Headers */,
+				3BB9A5E705D3B0DE009E1A4A /* Osax.h in Headers */,
+				3BB9A5FB05D3B1AC009E1A4A /* mandelbrot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3BB9A5D905D3B0A9009E1A4A /* DebugOsax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73E7A8C01106290600A66784 /* Build configuration list for PBXNativeTarget "DebugOsax" */;
+			buildPhases = (
+				3BB9A5D405D3B0A9009E1A4A /* Headers */,
+				3BB9A5D505D3B0A9009E1A4A /* Resources */,
+				3BB9A5D605D3B0A9009E1A4A /* Sources */,
+				3BB9A5D705D3B0A9009E1A4A /* Rez */,
+				3BB9A5D805D3B0A9009E1A4A /* Frameworks */,
+			);
+			buildRules = (
+				3BB9A60505D3C94E009E1A4A /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = DebugOsax;
+			productName = DebugOsax;
+			productReference = 3BB9A5DA05D3B0A9009E1A4A /* DebugOsax.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8D01CCC60486CAD60068D4B7 /* SampleOsax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73E7A8BF1106290600A66784 /* Build configuration list for PBXNativeTarget "SampleOsax" */;
+			buildPhases = (
+				8D01CCC70486CAD60068D4B7 /* Headers */,
+				8D01CCC90486CAD60068D4B7 /* Resources */,
+				8D01CCCB0486CAD60068D4B7 /* Sources */,
+				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
+				73CAF1A611074A0500697018 /* Process sdef */,
+				73CAF1B311074B3700697018 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SampleOsax;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = SampleOsax;
+			productReference = 8D01CCD20486CAD60068D4B7 /* Mandelbrot.osax */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 73E7A8BE1106290600A66784 /* Build configuration list for PBXProject "SampleOsax" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* SampleOsax */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D01CCC60486CAD60068D4B7 /* SampleOsax */,
+				3BB9A5D905D3B0A9009E1A4A /* DebugOsax */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3BB9A5D505D3B0A9009E1A4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B25013C05E646C0006FA2EE /* DebugOsax-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D01CCC90486CAD60068D4B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73CAF1AA11074A8200697018 /* SampleOsax.sdef in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		3BB9A5D705D3B0A9009E1A4A /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73CAF1B311074B3700697018 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73CAF1D111074C1400697018 /* SampleOsax.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		73CAF1A611074A0500697018 /* Process sdef */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/SampleOsax.sdef",
+			);
+			name = "Process sdef";
+			outputPaths = (
+				"$(SRCROOT)/Resources/${INPUT_FILE_BASE}.r",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/sdp -f a -o Resources/SampleOsax.r SampleOsax.sdef";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3BB9A5D605D3B0A9009E1A4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BB9A5EA05D3B0DE009E1A4A /* AEDescUtils.cpp in Sources */,
+				3BB9A5F105D3B134009E1A4A /* main.cp in Sources */,
+				3BB9A5F705D3B1AC009E1A4A /* mandelbrot.cpp in Sources */,
+				3BB9A5F905D3B1AC009E1A4A /* SampleOsax.cp in Sources */,
+				3B017C0605D3D62700D10D2D /* Osax.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BB9A5E405D3B0DE009E1A4A /* AEDescUtils.cpp in Sources */,
+				3BB9A5E605D3B0DE009E1A4A /* Osax.cpp in Sources */,
+				3BB9A5FA05D3B1AC009E1A4A /* mandelbrot.cpp in Sources */,
+				3BB9A5FC05D3B1AC009E1A4A /* SampleOsax.cp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		73E7A8B51106290600A66784 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		73E7A8B61106290600A66784 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Deployment;
+		};
+		73E7A8B71106290600A66784 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+		73E7A8B81106290600A66784 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SampleOsax_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = Mandelbrot;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = osax;
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		73E7A8B91106290600A66784 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SampleOsax_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Mandelbrot;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = osax;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		73E7A8BA1106290600A66784 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SampleOsax_Prefix.pch;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Mandelbrot;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = osax;
+			};
+			name = Default;
+		};
+		73E7A8BB1106290600A66784 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				INFOPLIST_FILE = "DebugOsax-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DebugOsax;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost";
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		73E7A8BC1106290600A66784 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				INFOPLIST_FILE = "DebugOsax-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DebugOsax;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost";
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		73E7A8BD1106290600A66784 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				INFOPLIST_FILE = "DebugOsax-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DebugOsax;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost";
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73E7A8BE1106290600A66784 /* Build configuration list for PBXProject "SampleOsax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E7A8B51106290600A66784 /* Development */,
+				73E7A8B61106290600A66784 /* Deployment */,
+				73E7A8B71106290600A66784 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		73E7A8BF1106290600A66784 /* Build configuration list for PBXNativeTarget "SampleOsax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E7A8B81106290600A66784 /* Development */,
+				73E7A8B91106290600A66784 /* Deployment */,
+				73E7A8BA1106290600A66784 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		73E7A8C01106290600A66784 /* Build configuration list for PBXNativeTarget "DebugOsax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E7A8BB1106290600A66784 /* Development */,
+				73E7A8BC1106290600A66784 /* Deployment */,
+				73E7A8BD1106290600A66784 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

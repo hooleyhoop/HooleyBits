@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Source</string>
+		<key>name</key>
+		<string>Unsafe Image Loader Patch</string>
+		<key>description</key>
+		<string>This patch downloads an image, cheerfully ignoring any security restrictions that QuickTime might impose.
+		The URL must use one of the allowed protocols: file, http, https or ftp. Most common image file formats are supported: JPEG, TIFF, PNG, GIF, BMP, TGA, OpenEXR, JPEG 2000, PDF... When the download is finished, the "Done Signal" output is temporarily set to True and the image is made available on the "Image" output.
+
+The downloaded images are kept in a shared cache, unless that option is specifically disabled in the patch's settings. The cache has a maximum allowed size of 10% of the total video memory. If the cache has reached its maximum size, older images are removed.</string>
+	</dict>
+	
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputURL</key>
+		<dict>
+			<key>description</key>
+		<string>The URL to the image file.</string>
+		<key>name</key>
+		<string>Image URL</string>
+		</dict>
+	</dict>
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputImage</key>
+		<dict>
+			<key>description</key>
+			<string>The resulting image.</string>
+			<key>name</key>
+			<string>Image</string>
+		</dict>
+		<key>outputSignal</key>
+		<dict>
+			<key>description</key>
+			<string>The download-finished signal.</string>
+			<key>name</key>
+			<string>Done Signal</string>
+		</dict>
+	</dict>
+	
+</dict>
+</plist>

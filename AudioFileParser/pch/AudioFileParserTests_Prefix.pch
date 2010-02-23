@@ -1,0 +1,12 @@
+//
+// Prefix header for all source files of the 'AudioFileParser' target in the 'AudioFileParser' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+	#import <CoreServices/CoreServices.h>
+	#import <CoreAudio/CoreAudio.h>
+	#import <SenTestingKit/SenTestingKit.h>
+	#import <OCMock/OCMock.h>
+	#import <SHTestUtilities/SHTestUtilities.h>
+#endif

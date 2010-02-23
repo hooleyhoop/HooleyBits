@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="">
+	<suite name="Sample Additions" code="SAMP" description="This is a sample by Satimage to be used within Smile. Check www.satimage-software.com for additionnal informations.">
+		
+			<class name="array of real" code="Lido" hidden="yes" plural="arrays of real">
+			</class>
+			<class name="matrix" code="Matr" hidden="yes" plural="matrices">
+			</class>
+		
+		
+			<command name="mandelbrot" code="SAMPMAND" description="compute a fractal set associated to the iterations of the analytic function  f(z)=z*z+c">
+				<direct-parameter type="integer" optional="yes" description="maximum number of iterations. Default: 2556."/>
+				<parameter name="xdata" code="x$$$" type="array of real" description="real part of c"/>
+				<parameter name="ydata" code="y$$$" type="array of real" description="imaginary part of c"/>
+				<result type="matrix" description="a matrix containing for each value of c the number of iterations necessary to reach abs(f(z))&gt;2"/>
+			</command>
+		
+	</suite>
+</dictionary>

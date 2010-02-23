@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2899E5220DE3E06400AC0155 /* AudioQueueFilePlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* AudioQueueFilePlayerViewController.xib */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D7ACF80DDB3853001CB0EB /* AudioQueueFilePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* AudioQueueFilePlayerViewController.m */; };
+		733E882E0F39A7780039ADF5 /* SpectraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E882D0F39A7780039ADF5 /* SpectraView.m */; };
+		733E88910F39AAFB0039ADF5 /* AudioQueuePlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E88900F39AAFB0039ADF5 /* AudioQueuePlay.m */; };
+		733E88CC0F39AD2E0039ADF5 /* audioboo_recording.aif in Resources */ = {isa = PBXBuildFile; fileRef = 733E88CB0F39AD2E0039ADF5 /* audioboo_recording.aif */; };
+		733E89260F39AF480039ADF5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733E89250F39AF480039ADF5 /* AudioToolbox.framework */; };
+		733E8BB30F39E3150039ADF5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733E8BB20F39E3150039ADF5 /* QuartzCore.framework */; };
+		733E8D800F39FBEC0039ADF5 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 733E8D7F0F39FBEC0039ADF5 /* Entitlements.plist */; };
+		73AC01DF0F403B0300FA9887 /* libSHShared_iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AC01DE0F403B0300FA9887 /* libSHShared_iphone.a */; };
+		73C69E3A0F3B155200E3296B /* recording_backgraound.png in Resources */ = {isa = PBXBuildFile; fileRef = 73C69E390F3B155200E3296B /* recording_backgraound.png */; };
+		73C69EBD0F3B2EFD00E3296B /* colourfill.png in Resources */ = {isa = PBXBuildFile; fileRef = 73C69EBC0F3B2EFD00E3296B /* colourfill.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		733676880F4188C300E40357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
+			remoteInfo = SHShared;
+		};
+		7336768A0F4188C300E40357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F;
+			remoteInfo = SHSharedTests;
+		};
+		7336768C0F4188C300E40357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887;
+			remoteInfo = SHShared_static;
+		};
+		7336768E0F4188C300E40357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
+			remoteInfo = SHShared_iphone;
+		};
+		733676900F4188CF00E40357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73AC016A0F4039D100FA9887;
+			remoteInfo = SHShared_iphone;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueueFilePlayerAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioQueueFilePlayerAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* AudioQueueFilePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioQueueFilePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2899E5210DE3E06400AC0155 /* AudioQueueFilePlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioQueueFilePlayerViewController.xib; sourceTree = "<group>"; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28D7ACF60DDB3853001CB0EB /* AudioQueueFilePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueueFilePlayerViewController.h; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* AudioQueueFilePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioQueueFilePlayerViewController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* AudioQueueFilePlayer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueueFilePlayer_Prefix.pch; sourceTree = "<group>"; };
+		733675A60F4184E200E40357 /* SHooleyObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHooleyObject.h; path = ../../Blake/SHShared/Src/SHooleyObject.h; sourceTree = SOURCE_ROOT; };
+		733676810F4188C300E40357 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		733676C80F4189F400E40357 /* LogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogController.h; path = ../../Blake/SHShared/Src/LogController.h; sourceTree = SOURCE_ROOT; };
+		733676CA0F418A1300E40357 /* SHInstanceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHInstanceCounter.h; path = ../../Blake/SHShared/Src/SHInstanceCounter.h; sourceTree = SOURCE_ROOT; };
+		733E882C0F39A7780039ADF5 /* SpectraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpectraView.h; sourceTree = "<group>"; };
+		733E882D0F39A7780039ADF5 /* SpectraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpectraView.m; sourceTree = "<group>"; };
+		733E888F0F39AAFB0039ADF5 /* AudioQueuePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueuePlay.h; sourceTree = "<group>"; };
+		733E88900F39AAFB0039ADF5 /* AudioQueuePlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioQueuePlay.m; sourceTree = "<group>"; };
+		733E88CB0F39AD2E0039ADF5 /* audioboo_recording.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = audioboo_recording.aif; sourceTree = "<group>"; };
+		733E89250F39AF480039ADF5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		733E8BB20F39E3150039ADF5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		733E8D7F0F39FBEC0039ADF5 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		73AC01DE0F403B0300FA9887 /* libSHShared_iphone.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSHShared_iphone.a; path = ../../Blake/build/libSHShared_iphone.a; sourceTree = SOURCE_ROOT; };
+		73B076ED0F430A32003B1CD2 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Debug.xcconfig"; path = "/Code/Config/Project-Debug.xcconfig"; sourceTree = "<absolute>"; };
+		73B076EE0F430A32003B1CD2 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-QCPlugin.xcconfig"; path = "/Code/Config/Target-QCPlugin.xcconfig"; sourceTree = "<absolute>"; };
+		73B076EF0F430A32003B1CD2 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Plugin.xcconfig"; path = "/Code/Config/Target-Plugin.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F00F430A32003B1CD2 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Framework.xcconfig"; path = "/Code/Config/Target-Framework.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F10F430A32003B1CD2 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Executable.xcconfig"; path = "/Code/Config/Target-Executable.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F20F430A32003B1CD2 /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Base.xcconfig"; path = "/Code/Config/Target-Base.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F30F430A32003B1CD2 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Release.xcconfig"; path = "/Code/Config/Project-Release.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F40F430A32003B1CD2 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Coverage.xcconfig"; path = "/Code/Config/Project-Coverage.xcconfig"; sourceTree = "<absolute>"; };
+		73B076F50F430A32003B1CD2 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Base.xcconfig"; path = "/Code/Config/Project-Base.xcconfig"; sourceTree = "<absolute>"; };
+		73BA81B50F41914D00262035 /* SHSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHSwizzler.h; path = ../../Blake/SHShared/Src/SHSwizzler.h; sourceTree = SOURCE_ROOT; };
+		73C69E390F3B155200E3296B /* recording_backgraound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recording_backgraound.png; sourceTree = "<group>"; };
+		73C69EBC0F3B2EFD00E3296B /* colourfill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colourfill.png; sourceTree = "<group>"; };
+		73F2F4A40F40A2DD00D294F4 /* BBLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BBLogger.h; path = ../../Blake/SHShared/Src/BBLogger.h; sourceTree = SOURCE_ROOT; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				733E89260F39AF480039ADF5 /* AudioToolbox.framework in Frameworks */,
+				733E8BB30F39E3150039ADF5 /* QuartzCore.framework in Frameworks */,
+				73AC01DF0F403B0300FA9887 /* libSHShared_iphone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.h */,
+				1D3623250D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.m */,
+				733E88A80F39AB540039ADF5 /* View */,
+				733E88A90F39AB590039ADF5 /* Audio */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* AudioQueueFilePlayer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				73B076100F42FCEA003B1CD2 /* Configs */,
+				73F2F4A30F40A2D200D294F4 /* Debugging */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				733E8D7F0F39FBEC0039ADF5 /* Entitlements.plist */,
+				733676810F4188C300E40357 /* SHShared.xcodeproj */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* AudioQueueFilePlayer_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				73C69EBC0F3B2EFD00E3296B /* colourfill.png */,
+				73C69E390F3B155200E3296B /* recording_backgraound.png */,
+				733E88CB0F39AD2E0039ADF5 /* audioboo_recording.aif */,
+				2899E5210DE3E06400AC0155 /* AudioQueueFilePlayerViewController.xib */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73AC01DE0F403B0300FA9887 /* libSHShared_iphone.a */,
+				733E8BB20F39E3150039ADF5 /* QuartzCore.framework */,
+				733E89250F39AF480039ADF5 /* AudioToolbox.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		733676820F4188C300E40357 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				733676890F4188C300E40357 /* SHShared.framework */,
+				7336768B0F4188C300E40357 /* SHSharedTests.octest */,
+				7336768D0F4188C300E40357 /* libSHShared_static.a */,
+				7336768F0F4188C300E40357 /* libSHShared_iphone.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		733E88A80F39AB540039ADF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				28D7ACF60DDB3853001CB0EB /* AudioQueueFilePlayerViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* AudioQueueFilePlayerViewController.m */,
+				733E882C0F39A7780039ADF5 /* SpectraView.h */,
+				733E882D0F39A7780039ADF5 /* SpectraView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		733E88A90F39AB590039ADF5 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				733E888F0F39AAFB0039ADF5 /* AudioQueuePlay.h */,
+				733E88900F39AAFB0039ADF5 /* AudioQueuePlay.m */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		73B076100F42FCEA003B1CD2 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				73B076240F42FD2A003B1CD2 /* Project */,
+				73B076250F42FD30003B1CD2 /* Target */,
+			);
+			name = Configs;
+			sourceTree = "<group>";
+		};
+		73B076240F42FD2A003B1CD2 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				73B076ED0F430A32003B1CD2 /* Project-Debug.xcconfig */,
+				73B076F30F430A32003B1CD2 /* Project-Release.xcconfig */,
+				73B076F40F430A32003B1CD2 /* Project-Coverage.xcconfig */,
+				73B076F50F430A32003B1CD2 /* Project-Base.xcconfig */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		73B076250F42FD30003B1CD2 /* Target */ = {
+			isa = PBXGroup;
+			children = (
+				73B076EE0F430A32003B1CD2 /* Target-QCPlugin.xcconfig */,
+				73B076EF0F430A32003B1CD2 /* Target-Plugin.xcconfig */,
+				73B076F00F430A32003B1CD2 /* Target-Framework.xcconfig */,
+				73B076F10F430A32003B1CD2 /* Target-Executable.xcconfig */,
+				73B076F20F430A32003B1CD2 /* Target-Base.xcconfig */,
+			);
+			name = Target;
+			sourceTree = "<group>";
+		};
+		73F2F4A30F40A2D200D294F4 /* Debugging */ = {
+			isa = PBXGroup;
+			children = (
+				73BA81B50F41914D00262035 /* SHSwizzler.h */,
+				733676CA0F418A1300E40357 /* SHInstanceCounter.h */,
+				733676C80F4189F400E40357 /* LogController.h */,
+				73F2F4A40F40A2DD00D294F4 /* BBLogger.h */,
+				733675A60F4184E200E40357 /* SHooleyObject.h */,
+			);
+			name = Debugging;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* AudioQueueFilePlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AudioQueueFilePlayer" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				733676910F4188CF00E40357 /* PBXTargetDependency */,
+			);
+			name = AudioQueueFilePlayer;
+			productName = AudioQueueFilePlayer;
+			productReference = 1D6058910D05DD3D006BFB54 /* AudioQueueFilePlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AudioQueueFilePlayer" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 733676820F4188C300E40357 /* Products */;
+					ProjectRef = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* AudioQueueFilePlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		733676890F4188C300E40357 /* SHShared.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHShared.framework;
+			remoteRef = 733676880F4188C300E40357 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7336768B0F4188C300E40357 /* SHSharedTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedTests.octest;
+			remoteRef = 7336768A0F4188C300E40357 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7336768D0F4188C300E40357 /* libSHShared_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_static.a;
+			remoteRef = 7336768C0F4188C300E40357 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7336768F0F4188C300E40357 /* libSHShared_iphone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_iphone.a;
+			remoteRef = 7336768E0F4188C300E40357 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				2899E5220DE3E06400AC0155 /* AudioQueueFilePlayerViewController.xib in Resources */,
+				733E88CC0F39AD2E0039ADF5 /* audioboo_recording.aif in Resources */,
+				733E8D800F39FBEC0039ADF5 /* Entitlements.plist in Resources */,
+				73C69E3A0F3B155200E3296B /* recording_backgraound.png in Resources */,
+				73C69EBD0F3B2EFD00E3296B /* colourfill.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* AudioQueueFilePlayerAppDelegate.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* AudioQueueFilePlayerViewController.m in Sources */,
+				733E882E0F39A7780039ADF5 /* SpectraView.m in Sources */,
+				733E88910F39AAFB0039ADF5 /* AudioQueuePlay.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		733676910F4188CF00E40357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHShared_iphone;
+			targetProxy = 733676900F4188CF00E40357 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73B076F10F430A32003B1CD2 /* Target-Executable.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREFIX_HEADER = AudioQueueFilePlayer_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = AudioQueueFilePlayer;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AudioQueueFilePlayer_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build\"",
+				);
+				PRODUCT_NAME = AudioQueueFilePlayer;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73B076ED0F430A32003B1CD2 /* Project-Debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ONLY_ACTIVE_ARCH = YES;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CC0D6F0B-E3D7-4875-85C5-0822BAF74CC7";
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: steve hooley";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CC0D6F0B-E3D7-4875-85C5-0822BAF74CC7";
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AudioQueueFilePlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AudioQueueFilePlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

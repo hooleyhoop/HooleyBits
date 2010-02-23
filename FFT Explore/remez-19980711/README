@@ -1,0 +1,65 @@
+/**************************************************************************
+ * Parks-McClellan algorithm for FIR filter design (C version)
+ *-------------------------------------------------
+ *  Copyright (c) 1995,1998  Jake Janovetz (janovetz@uiuc.edu)
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Library General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Library General Public
+ *  License along with this library; if not, write to the Free
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *************************************************************************/
+
+DESCRIPTION:
+============
+The Parks-McClellan program is a filter design program which creates
+optimal filters in the sense that there is equirriple in the pass bands
+and stop bands of the resulting frequency response.
+
+This version was written for use in another program in which I required
+C access to the design routine.  Therefore, Matlab's 'remez' function
+wouldn't do.  I also didn't like all the FORTRAN to C conversions done
+because they're impossible to read.  This version is based on the original
+FORTRAN code and equations presented in Oppenheim & Schafer.
+
+To use the code, simply include all but 'main' in your own code.  There
+is no front end supplied with this code, but that should be simple to
+implement.
+
+If any errors are found, please let me know.  I have compared the output
+to that of Matlab's 'remez' function and get close (within reasonable
+rounding error -- on the order of 1e-13) to the impulse response.  However,
+I have not exhaustively tested it with a lot of vectors.
+
+  Jake
+
+COMPILE INSTRUCTIONS:
+=====================
+To compile the test program that generates a single filter, but asks for
+no input (it truly is a test program), very simply type:
+
+   cc -o test test.c remez.c -lm
+
+On a UNIX machine.  You may use other compilers (namely gcc), but you
+must link the math libraries (-lm).  If you have problems compiling on
+a system, let me know and I'll see what I can do.  The code should be
+very portable, though.
+
+Then, you can run the compiled program (test) and watch it generate some
+fascinating (!) coefficients.
+
+THANKS:
+=======
+Thanks to Dr Peter Kootsookos for his help in finding a couple bugs in
+the original code.
+
+

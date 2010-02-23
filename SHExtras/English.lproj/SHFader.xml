@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Source</string>
+		<key>name</key>
+		<string>SHFader</string>
+		<key>description</key>
+		<string>This patch fades a value 0..1, triggered by input signals for fade-in and fade-out.</string>
+	</dict>
+	
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputStartFadeIn</key>
+		<dict>
+			<key>description</key>
+			<string>Trigger to start fade-in.</string>
+			<key>name</key>
+			<string>Start Fade-In</string>
+		</dict>	
+		
+		<key>inputStartFadeOut</key>
+		<dict>
+			<key>description</key>
+			<string>Trigger to start fade-out.</string>
+			<key>name</key>
+			<string>Start Fade-Out</string>
+		</dict>
+
+		<key>inputReset</key>
+		<dict>
+			<key>description</key>
+			<string>reset</string>
+			<key>name</key>
+			<string>Reset</string>
+		</dict>
+					
+		<key>inputFadeTime</key>
+		<dict>
+			<key>description</key>
+			<string>Duration of the fade.</string>
+			<key>name</key>
+			<string>Fade Time</string>
+		</dict>
+	</dict>
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputValue</key>
+		<dict>
+			<key>description</key>
+			<string>The fade value.</string>
+			<key>name</key>
+			<string>Fade Value</string>
+		</dict>		
+	</dict>
+	
+</dict>
+</plist>

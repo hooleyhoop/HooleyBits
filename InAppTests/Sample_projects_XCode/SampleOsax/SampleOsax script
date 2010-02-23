@@ -1,0 +1,18 @@
+(*
+Copyright (c) 2004  Satimage. All rights reserved.
+This file belongs to the "SampleOsax" sample that is a part of the "SampleProjects" package. Note that the "SampleProjects" folder contains a ReadMe file that describes the whole "SampleProjects" package.
+"SampleOsax" demonstrates how to make a computational scripting addition (or 'osax') that you can later control or use from SmileLab - or from any AppleScript script.
+The following lines are an AppleScript script that tests the sample osax. "SampleOsax script" must run in Smile and requires the SmileLab license. "SampleOsax script" use the SampleOsax to compute a fractal set and displays it in a graphic window where you can zoom in.
+SmileLab documentation can be found at <www.satimage-software.com>.
+
+Once built you must copy the osax into some /Library/ScriptingAdditions/ folder (preferably, user or local). Then you can execute "SampleOsax script": select the whole text then press the 'Enter' key (NOT Carriage Return).
+For debug purpose, see the last commentary part of the following lines.
+*)
+
+set sz to 100
+set x to createarray sz range {-2, 1}
+set y to createarray sz range {-1.5, 1.5}
+
+--call of the SampleOSAX function
+set m to mandelbrot 255 xdata x ydata y
+

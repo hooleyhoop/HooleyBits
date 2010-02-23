@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {setColorEnabled = id; setHTMLEnabled = id; }; 
+            CLASS = BBStringRendererUI; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {colorButton = NSButton; htmlButton = NSButton; view = NSView; }; 
+            SUPERCLASS = QCInspector; 
+        }, 
+        {
+            ACTIONS = {addOperation = id; removeOperation = id; }; 
+            CLASS = CIMathUI; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = QCInspector; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = QCInspector; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

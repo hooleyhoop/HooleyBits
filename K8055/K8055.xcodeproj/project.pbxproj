@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A12E73A408DECE43004D9066 /* Help in Resources */ = {isa = PBXBuildFile; fileRef = A12E73A208DECE43004D9066 /* Help */; };
+		A12E73A608DECE89004D9066 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A12E73A508DECE89004D9066 /* index.html */; };
+		A1501E1808D9FB43005E1AB8 /* K8055.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BD970508D9EF1700C4789A /* K8055.m */; };
+		A1501E1908D9FB53005E1AB8 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1BD963808D9EE4500C4789A /* IOKit.framework */; };
+		A1501E3308D9FBA6005E1AB8 /* USBTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A1501E3208D9FBA6005E1AB8 /* USBTest.m */; };
+		A1B3BA1A08DD118E0094E433 /* K8055Window.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B3BA1908DD118E0094E433 /* K8055Window.m */; };
+		A1B3BAF008DD7E270094E433 /* K8055.icns in Resources */ = {isa = PBXBuildFile; fileRef = A1B3BAEF08DD7E270094E433 /* K8055.icns */; };
+		A1BD963908D9EE4500C4789A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1BD963808D9EE4500C4789A /* IOKit.framework */; };
+		A1BD970608D9EF1700C4789A /* K8055.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BD970508D9EF1700C4789A /* K8055.m */; };
+		A1F8A7C308DE043100357200 /* bar.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A7C008DE043100357200 /* bar.tif */; };
+		A1F8A7C408DE043100357200 /* led-off.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A7C108DE043100357200 /* led-off.tif */; };
+		A1F8A7C508DE043100357200 /* led-on.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A7C208DE043100357200 /* led-on.tif */; };
+		A1F8A7DA08DE04E500357200 /* HXImageIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F8A7D908DE04E500357200 /* HXImageIndicator.m */; };
+		A1F8A83608DE24B800357200 /* HXLevelIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F8A83508DE24B800357200 /* HXLevelIndicator.m */; };
+		A1F8A87108DE324D00357200 /* left.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A86E08DE324D00357200 /* left.tif */; };
+		A1F8A87208DE324D00357200 /* right.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A86F08DE324D00357200 /* right.tif */; };
+		A1F8A87308DE324D00357200 /* trough.tif in Resources */ = {isa = PBXBuildFile; fileRef = A1F8A87008DE324D00357200 /* trough.tif */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* K8055_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = K8055_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* K8055.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8055.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A12E73A208DECE43004D9066 /* Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Help; sourceTree = "<group>"; };
+		A12E73A508DECE89004D9066 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = Help/index.html; sourceTree = "<group>"; };
+		A1501D7A08D9FB09005E1AB8 /* USBTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = USBTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1501E3208D9FBA6005E1AB8 /* USBTest.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = USBTest.m; sourceTree = "<group>"; };
+		A1B3BA1808DD118E0094E433 /* K8055Window.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = K8055Window.h; path = Application/K8055Window.h; sourceTree = "<group>"; };
+		A1B3BA1908DD118E0094E433 /* K8055Window.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = K8055Window.m; path = Application/K8055Window.m; sourceTree = "<group>"; };
+		A1B3BADE08DD7C3E0094E433 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		A1B3BADF08DD7C3E0094E433 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		A1B3BAE008DD7C3E0094E433 /* INSTALL */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		A1B3BAE108DD7C3E0094E433 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		A1B3BAE208DD7C3E0094E433 /* README */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		A1B3BAE308DD7C3E0094E433 /* THANKS */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = THANKS; sourceTree = "<group>"; };
+		A1B3BAEF08DD7E270094E433 /* K8055.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = K8055.icns; sourceTree = "<group>"; };
+		A1B3BB2708DD8DE20094E433 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
+		A1BD963808D9EE4500C4789A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		A1BD970408D9EF1700C4789A /* K8055.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = K8055.h; path = K8055/K8055.h; sourceTree = "<group>"; };
+		A1BD970508D9EF1700C4789A /* K8055.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = K8055.m; path = K8055/K8055.m; sourceTree = "<group>"; };
+		A1F8A7C008DE043100357200 /* bar.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bar.tif; sourceTree = "<group>"; };
+		A1F8A7C108DE043100357200 /* led-off.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "led-off.tif"; sourceTree = "<group>"; };
+		A1F8A7C208DE043100357200 /* led-on.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "led-on.tif"; sourceTree = "<group>"; };
+		A1F8A7D808DE04E500357200 /* HXImageIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HXImageIndicator.h; path = Core/HXImageIndicator.h; sourceTree = "<group>"; };
+		A1F8A7D908DE04E500357200 /* HXImageIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HXImageIndicator.m; path = Core/HXImageIndicator.m; sourceTree = "<group>"; };
+		A1F8A83408DE24B800357200 /* HXLevelIndicator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = HXLevelIndicator.h; path = Core/HXLevelIndicator.h; sourceTree = "<group>"; };
+		A1F8A83508DE24B800357200 /* HXLevelIndicator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = HXLevelIndicator.m; path = Core/HXLevelIndicator.m; sourceTree = "<group>"; };
+		A1F8A86E08DE324D00357200 /* left.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = left.tif; sourceTree = "<group>"; };
+		A1F8A86F08DE324D00357200 /* right.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = right.tif; sourceTree = "<group>"; };
+		A1F8A87008DE324D00357200 /* trough.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = trough.tif; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				A1BD963908D9EE4500C4789A /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1501D7808D9FB09005E1AB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1501E1908D9FB53005E1AB8 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A1B3BA1408DCFFAA0094E433 /* Application */,
+				A1F8A7CC08DE04B100357200 /* Core */,
+				A1BD970708D9EF1B00C4789A /* K8055 */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1BD963808D9EE4500C4789A /* IOKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* K8055.app */,
+				A1501D7A08D9FB09005E1AB8 /* USBTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* K8055 */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				A12E73A208DECE43004D9066 /* Help */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				A1B3BADB08DD7C050094E433 /* Other Files */,
+				A12E73A508DECE89004D9066 /* index.html */,
+			);
+			name = K8055;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A1501E3208D9FBA6005E1AB8 /* USBTest.m */,
+				32CA4F630368D1EE00C91783 /* K8055_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8A86E08DE324D00357200 /* left.tif */,
+				A1F8A86F08DE324D00357200 /* right.tif */,
+				A1F8A87008DE324D00357200 /* trough.tif */,
+				A1F8A7C008DE043100357200 /* bar.tif */,
+				A1F8A7C108DE043100357200 /* led-off.tif */,
+				A1F8A7C208DE043100357200 /* led-on.tif */,
+				A1B3BAEF08DD7E270094E433 /* K8055.icns */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1B3BA1408DCFFAA0094E433 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A1B3BA1808DD118E0094E433 /* K8055Window.h */,
+				A1B3BA1908DD118E0094E433 /* K8055Window.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		A1B3BADB08DD7C050094E433 /* Other Files */ = {
+			isa = PBXGroup;
+			children = (
+				A1B3BADE08DD7C3E0094E433 /* AUTHORS */,
+				A1B3BADF08DD7C3E0094E433 /* COPYING */,
+				A1B3BAE008DD7C3E0094E433 /* INSTALL */,
+				A1B3BAE108DD7C3E0094E433 /* NEWS */,
+				A1B3BAE208DD7C3E0094E433 /* README */,
+				A1B3BAE308DD7C3E0094E433 /* THANKS */,
+				A1B3BB2708DD8DE20094E433 /* TODO */,
+			);
+			name = "Other Files";
+			sourceTree = "<group>";
+		};
+		A1BD970708D9EF1B00C4789A /* K8055 */ = {
+			isa = PBXGroup;
+			children = (
+				A1BD970408D9EF1700C4789A /* K8055.h */,
+				A1BD970508D9EF1700C4789A /* K8055.m */,
+			);
+			name = K8055;
+			sourceTree = "<group>";
+		};
+		A1F8A7CC08DE04B100357200 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A1F8A83408DE24B800357200 /* HXLevelIndicator.h */,
+				A1F8A83508DE24B800357200 /* HXLevelIndicator.m */,
+				A1F8A7D808DE04E500357200 /* HXImageIndicator.h */,
+				A1F8A7D908DE04E500357200 /* HXImageIndicator.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* K8055 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1BD962D08D9EDB500C4789A /* Build configuration list for PBXNativeTarget "K8055" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = K8055;
+			productInstallPath = "$(HOME)/Applications";
+			productName = K8055;
+			productReference = 8D1107320486CEB800E47090 /* K8055.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1501D7908D9FB09005E1AB8 /* USBTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1501E2E08D9FB71005E1AB8 /* Build configuration list for PBXNativeTarget "USBTest" */;
+			buildPhases = (
+				A1501D7708D9FB09005E1AB8 /* Sources */,
+				A1501D7808D9FB09005E1AB8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = USBTest;
+			productName = USBTest;
+			productReference = A1501D7A08D9FB09005E1AB8 /* USBTest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A1BD963108D9EDB500C4789A /* Build configuration list for PBXProject "K8055" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* K8055 */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* K8055 */,
+				A1501D7908D9FB09005E1AB8 /* USBTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				A1B3BAF008DD7E270094E433 /* K8055.icns in Resources */,
+				A1F8A7C308DE043100357200 /* bar.tif in Resources */,
+				A1F8A7C408DE043100357200 /* led-off.tif in Resources */,
+				A1F8A7C508DE043100357200 /* led-on.tif in Resources */,
+				A1F8A87108DE324D00357200 /* left.tif in Resources */,
+				A1F8A87208DE324D00357200 /* right.tif in Resources */,
+				A1F8A87308DE324D00357200 /* trough.tif in Resources */,
+				A12E73A408DECE43004D9066 /* Help in Resources */,
+				A12E73A608DECE89004D9066 /* index.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				A1BD970608D9EF1700C4789A /* K8055.m in Sources */,
+				A1B3BA1A08DD118E0094E433 /* K8055Window.m in Sources */,
+				A1F8A7DA08DE04E500357200 /* HXImageIndicator.m in Sources */,
+				A1F8A83608DE24B800357200 /* HXLevelIndicator.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1501D7708D9FB09005E1AB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1501E1808D9FB43005E1AB8 /* K8055.m in Sources */,
+				A1501E3308D9FBA6005E1AB8 /* USBTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A1501E2F08D9FB71005E1AB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = USBTest;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Debug;
+		};
+		A1501E3008D9FB71005E1AB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = USBTest;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Release;
+		};
+		A1501E3108D9FB71005E1AB8 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = USBTest;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		A1BD962E08D9EDB500C4789A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = K8055_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = K8055;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		A1BD962F08D9EDB500C4789A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = K8055_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = K8055;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		A1BD963008D9EDB500C4789A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = K8055_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = K8055;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		A1BD963208D9EDB500C4789A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A1BD963308D9EDB500C4789A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A1BD963408D9EDB500C4789A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1501E2E08D9FB71005E1AB8 /* Build configuration list for PBXNativeTarget "USBTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1501E2F08D9FB71005E1AB8 /* Debug */,
+				A1501E3008D9FB71005E1AB8 /* Release */,
+				A1501E3108D9FB71005E1AB8 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		A1BD962D08D9EDB500C4789A /* Build configuration list for PBXNativeTarget "K8055" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1BD962E08D9EDB500C4789A /* Debug */,
+				A1BD962F08D9EDB500C4789A /* Release */,
+				A1BD963008D9EDB500C4789A /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		A1BD963108D9EDB500C4789A /* Build configuration list for PBXProject "K8055" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1BD963208D9EDB500C4789A /* Debug */,
+				A1BD963308D9EDB500C4789A /* Release */,
+				A1BD963408D9EDB500C4789A /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Numeric</string>
+		<key>name</key>
+		<string>SHGlobalVar</string>
+		<key>description</key>
+		<string>This patch fades a value 0..1, triggered by input signals for fade-in and fade-out.</string>
+	</dict>
+
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputKeyForVariable</key>
+		<dict>
+			<key>description</key>
+			<string>Variable name.</string>
+			<key>name</key>
+			<string>Variable</string>
+		</dict>
+		
+		<key>inputTakeSampleSignal</key>
+		<dict>
+			<key>description</key>
+			<string>Trigger to take sample.</string>
+			<key>name</key>
+			<string>Trigger</string>
+		</dict>
+		
+		<key>inputSignal</key>
+		<dict>
+			<key>description</key>
+			<string>The input to sample.</string>
+			<key>name</key>
+			<string>Input</string>
+		</dict>
+		
+	</dict>
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputValue</key>
+		<dict>
+			<key>description</key>
+			<string>The sampled value.</string>
+			<key>name</key>
+			<string>Sampled value</string>
+		</dict>		
+	</dict>
+	
+</dict>
+</plist>

@@ -1,0 +1,21 @@
+SCEVENTS VERSION HISTORY
+------------------------
+
+VERSION 0.1.4 (build 50)
+Released on December 5, 2009
+	- [FIX] Fix an issue relating to the removal of an event path's trailing slash.
+	- [FIX] Fix an issue that prevented external drives from being ejected even after stopWatchingPaths; had been called.
+	- [NEW] Added the method streamDescription; which calls the FSEvents function FSEventStreamCopyDescription() to return debug information for the event stream.
+
+VERSION 0.1.3 (build 39)
+Released on September 9, 2009
+    - [NEW] General code tidy up including the use of Objective-C 2.0 properties.
+
+VERSION 0.1.2 (build 26)
+Released on May 24, 2008
+    - [FIX] Events not be ignored properly even though their paths are in the exclude list.
+    - [NEW] The ability to enable or disable the behaviour of ignoring events from sub-directories of paths to ignore events from. 
+
+VERSION 0.1.1 (build 22)
+Released on May 17, 2008
+    - [NEW] The ability to ignore events from specific directories.

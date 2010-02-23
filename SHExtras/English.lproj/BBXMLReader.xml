@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Source</string>
+		<key>name</key>
+		<string>XML Patch</string>
+		<key>description</key>
+		<string>This patch downloads and parses an QCPort XML feed, then returns a list of content.
+
+The http-based URL to the feed is specified through the "URL" string input.  The output structure is the contents of the feed, as a child of the qcport->item node.  Each member of this structure is a structure itself describing a single article (title, contents, date...).
+
+If an error occurred, the output structure will be replaced with an "Error" key.
+</string>
+	</dict>
+	
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputURL</key>
+		<dict>
+			<key>description</key>
+			<string>The URL of the XML feed.</string>
+			<key>name</key>
+			<string>URL</string>
+		</dict>	
+		<key>inputSelector</key>
+		<dict>
+			<key>description</key>
+			<string>Selects nodes in the XML feed using a slash-separated path.</string>
+			<key>name</key>
+			<string>Selector</string>
+		</dict>
+		<key>inputRefreshFeed</key>
+		<dict>
+			<key>description</key>
+			<string>Set True to force a refresh of the URL contents.</string>
+			<key>name</key>
+			<string>Refresh Feed</string>
+		</dict>
+		<key>inputForceArrays</key>
+		<dict>
+			<key>description</key>
+			<string>Set True to always wrap the content in an array.</string>
+			<key>name</key>
+			<string>Force Arrays</string>
+		</dict>
+	</dict>
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputContent</key>
+		<dict>
+			<key>description</key>
+			<string>The list of content in the XML feed.</string>
+			<key>name</key>
+			<string>Article List</string>
+		</dict>		
+		<key>outputReady</key>
+		<dict>
+			<key>description</key>
+			<string>Set to 1 once the feed is fully downloaded.</string>
+			<key>name</key>
+			<string>Ready</string>
+		</dict>	
+	</dict>
+	
+</dict>
+</plist>

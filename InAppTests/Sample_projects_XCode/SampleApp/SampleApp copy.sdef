@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<dictionary title="">
+	<suite name="Heat equation" code="CPHO" description="This is a sample by Satimage to be used within Smile. Check www.satimage-software.com for additionnal informations.">
+		<classes>
+			<class name="array of real" code="Lido" hidden="hidden" plural="arrays of real">
+			</class>
+			<class name="matrix" code="Matr" hidden="hidden" plural="matrices">
+			</class>
+			<class name="application" code="capp" plural="matrices" description="the application program">
+				<properties>
+					<property name="ncols" code="ncol" type="integer" description="number of columns of the application's temperature matrix"/>
+					<property name="nrows" code="nrow" type="integer" description="number of rows of the application's temperature matrix"/>
+					<property name="temperature" code="Temp" type="matrix" description="the temperature data to compute"/>
+					<property name="dt" code="dt  " type="real" description="the delay corresponding to each step of computation"/>
+					<property name="sigma" code="sigm" type="real"/>
+					<property name="properties" code="Prop" type="record"/>
+				</properties>
+			</class>
+		</classes>
+		<commands>
+			<command name="compute" code="CPHOCOMP" description="call the computation code of heat diffusion as many times as specified">
+				<direct-parameter type="integer" description="number of steps"/>
+			</command>
+		</commands>
+	</suite>
+</dictionary>

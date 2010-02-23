@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary xmlns:xi="http://www.w3.org/2003/XInclude">
+<xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+
+<!-- add your own suite definitions here -->
+<suite name="InAppTests" code="iaPt" description="What?">
+
+			<!-- for the purposes of this sample, we'll define an enumeration
+			that we will use as a value type for storing in one of our properties.
+			 -->
+
+
+	<!-- application is defined in the standard suite which we have imported -->
+	<!-- If you would like to include textsuite stuff you still have to copy and paste -->
+	<class name="application" code="capp" description="Our simple application class." inherits="application">
+	<!-- the following names the Objective-C class where Cocoa will look for
+			the property accessor methods for the properties we define for
+			this AppleScript class. -->
+		<cocoa class="NSApplication"/>
+
+			<!-- properties defined on the main application container -->
+
+			<!-- Property Tutorial -->
+
+			<!-- the 'special version' property.
+				The term 'version' already has a four letter code defined for
+				it in the AppleScript Terminology and Apple Event Codes listings.
+				See: http://developer.apple.com/releasenotes/AppleScript/ASTerminology_AppleEventCodes/TermsAndCodes.html
+				Because 'version' already has a code, we use that code here.
+				Also, notice we have defined 'version' as a read-only property.
+			-->
+
+	</class>
+	
+	<!-- our verbs -->
+		<!-- say fuck -->
+	<command name="say fuck" code="IaPtsygk" description="my second command">
+	<cocoa class="NSSayWhateverCommand"/>
+	<direct-parameter description="a text parameter passed to the command" type="text"/>
+	<result description="the direct parameter enclosed in quotes" type="text"/>
+	</command>
+
+		<!-- sayHello -->
+	<command name="sayHello" code="IaPtsyhl" description="my first command">
+	<cocoa class="NSSayScriptCommand"/>
+	</command>
+	
+		<!-- twattle -->
+	<command name="twattle" code="RRrrRfsS">
+	<direct-parameter type="text"/>
+	<parameter name="prose" code="Pros" description="a text parameter." type="text">
+	<cocoa key="ProseText"/>
+	</parameter>
+	<result type="text"/>
+	</command>
+
+	</suite>
+</dictionary>

@@ -1,0 +1,796 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		730B39000E5F288100434DF5 /* NoteBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7860E5CA070003AE8A6 /* NoteBase.m */; };
+		730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
+		7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */; };
+		736457B70E6BEC560022079A /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
+		73675B130FF42D5700B02E63 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F6DC0E5C9F60003AE8A6 /* FScript.framework */; };
+		7397F6D80E5C9F1A003AE8A6 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F6D70E5C9F1A003AE8A6 /* AppControl.m */; };
+		7397F6DD0E5C9F60003AE8A6 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F6DC0E5C9F60003AE8A6 /* FScript.framework */; };
+		7397F76C0E5C9FF1003AE8A6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */; };
+		7397F76D0E5C9FF1003AE8A6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */; };
+		7397F76E0E5C9FF1003AE8A6 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */; };
+		7397F7710E5C9FFD003AE8A6 /* MIDIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */; };
+		7397F7F40E5CA35A003AE8A6 /* Sor_Study.mid in Resources */ = {isa = PBXBuildFile; fileRef = 7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */; };
+		7397F8030E5CA9E6003AE8A6 /* MusicDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */; };
+		7397F8110E5CAC33003AE8A6 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F77A0E5CA03A003AE8A6 /* Song.m */; };
+		7397F84C0E5CB25C003AE8A6 /* Staff.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F77D0E5CA045003AE8A6 /* Staff.m */; };
+		7397F8770E5CB702003AE8A6 /* Clef.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7C90E5CA1F6003AE8A6 /* Clef.m */; };
+		7397F87C0E5CB735003AE8A6 /* KeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */; };
+		7397F8840E5CB783003AE8A6 /* Measure.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F78F0E5CA0A1003AE8A6 /* Measure.m */; };
+		7397F8FB0E5CC0FD003AE8A6 /* TimeSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7800E5CA053003AE8A6 /* TimeSignature.m */; };
+		7397F9890E5CC541003AE8A6 /* ChromaticKeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */; };
+		73B4CCCF0FF512C900949D15 /* SimpleNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB4530FEE5936001B7C96 /* SimpleNote.m */; };
+		73B4CD7B0FF51BD500949D15 /* SimpleSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB45A0FEE5958001B7C96 /* SimpleSong.m */; };
+		73B4CD7C0FF51BD900949D15 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
+		73B4CD7E0FF51BE600949D15 /* MIDIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */; };
+		73B4CD9F0FF51EE600949D15 /* SimpleSongTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB3CA50FED3F3B000C1262 /* SimpleSongTests.m */; };
+		73B4CDA40FF51EFA00949D15 /* MidiLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73675AB50FF42A6600B02E63 /* MidiLoaderTests.m */; };
+		73B4CDA50FF51F0000949D15 /* MIDIUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73675AB30FF42A2600B02E63 /* MIDIUtilTests.m */; };
+		73B4CDA60FF51F0200949D15 /* MidiInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73675AB00FF429DD00B02E63 /* MidiInterfaceTests.m */; };
+		73B4CDA70FF51F0800949D15 /* MidiInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */; };
+		73B4CDAA0FF51F1800949D15 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */; };
+		73B4CDAB0FF51F1900949D15 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */; };
+		73B4CDAC0FF51F1A00949D15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */; };
+		73B4CDAD0FF51F1E00949D15 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */; };
+		73B71F180E5DEB630064F2BA /* TempoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7830E5CA05F003AE8A6 /* TempoData.m */; };
+		73B721B20E5E00570064F2BA /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7890E5CA083003AE8A6 /* Note.m */; };
+		73B721B50E5E00930064F2BA /* Chord.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7A30E5CA123003AE8A6 /* Chord.m */; };
+		73B721B70E5E00B90064F2BA /* Rest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F78C0E5CA095003AE8A6 /* Rest.m */; };
+		73BB3CAB0FED3F6B000C1262 /* SimpleNoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB3CAA0FED3F6B000C1262 /* SimpleNoteTests.m */; };
+		73C7F3220FF3890400DAB6E1 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */; };
+		73CA09200E77D2A0006D131C /* ring-12-0.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73CA091F0E77D2A0006D131C /* ring-12-0.mid */; };
+		73CA0AAC0E77E1BB006D131C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CA0AAA0E77E1BB006D131C /* CoreServices.framework */; };
+		73CA0AAD0E77E1BB006D131C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */; };
+		73CA0AB70E77E1D9006D131C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CA0AB60E77E1D9006D131C /* Carbon.framework */; };
+		73D107E20FEA4B29000CFF15 /* SongPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D107E10FEA4B29000CFF15 /* SongPlayer.m */; };
+		73EFB4540FEE5936001B7C96 /* SimpleNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB4530FEE5936001B7C96 /* SimpleNote.m */; };
+		73EFB45B0FEE5958001B7C96 /* SimpleSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB45A0FEE5958001B7C96 /* SimpleSong.m */; };
+		73FB73820E69FE8600AE64C2 /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		73495DE50FEEDFB4002BED5B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* SenorStaff Hack_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenorStaff Hack_Prefix.pch"; sourceTree = "<group>"; };
+		730DEE050FF1789F001D9E33 /* MidiLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiLoader.h; path = Src/MidiLoader.h; sourceTree = "<group>"; };
+		730DEE060FF1789F001D9E33 /* MidiLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiLoader.m; path = Src/MidiLoader.m; sourceTree = "<group>"; };
+		7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInterface.h; path = Src/MidiInterface.h; sourceTree = "<group>"; };
+		7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInterface.m; path = Src/MidiInterface.m; sourceTree = "<group>"; };
+		73675AB00FF429DD00B02E63 /* MidiInterfaceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInterfaceTests.m; path = Tests/MidiInterfaceTests.m; sourceTree = "<group>"; };
+		73675AB30FF42A2600B02E63 /* MIDIUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIDIUtilTests.m; path = Tests/MIDIUtilTests.m; sourceTree = "<group>"; };
+		73675AB50FF42A6600B02E63 /* MidiLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiLoaderTests.m; path = Tests/MidiLoaderTests.m; sourceTree = "<group>"; };
+		73675AEA0FF42B9700B02E63 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Framework.xcconfig"; path = "/Code/Config/Target-Framework.xcconfig"; sourceTree = "<absolute>"; };
+		73675AEB0FF42B9700B02E63 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Debug.xcconfig"; path = "/Code/Config/Project-Debug.xcconfig"; sourceTree = "<absolute>"; };
+		73675AEC0FF42B9700B02E63 /* Target-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-iPhone.xcconfig"; path = "/Code/Config/Target-iPhone.xcconfig"; sourceTree = "<absolute>"; };
+		73675AED0FF42B9700B02E63 /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Base.xcconfig"; path = "/Code/Config/Target-Base.xcconfig"; sourceTree = "<absolute>"; };
+		73675AEE0FF42B9700B02E63 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Coverage.xcconfig"; path = "/Code/Config/Project-Coverage.xcconfig"; sourceTree = "<absolute>"; };
+		73675AEF0FF42B9700B02E63 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Release.xcconfig"; path = "/Code/Config/Project-Release.xcconfig"; sourceTree = "<absolute>"; };
+		73675AF00FF42B9700B02E63 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-QCPlugin.xcconfig"; path = "/Code/Config/Target-QCPlugin.xcconfig"; sourceTree = "<absolute>"; };
+		73675AF10FF42B9700B02E63 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Executable.xcconfig"; path = "/Code/Config/Target-Executable.xcconfig"; sourceTree = "<absolute>"; };
+		73675AF20FF42B9700B02E63 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Base.xcconfig"; path = "/Code/Config/Project-Base.xcconfig"; sourceTree = "<absolute>"; };
+		73675AF30FF42B9700B02E63 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Plugin.xcconfig"; path = "/Code/Config/Target-Plugin.xcconfig"; sourceTree = "<absolute>"; };
+		7397F6D60E5C9F1A003AE8A6 /* AppControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControl.h; sourceTree = "<group>"; };
+		7397F6D70E5C9F1A003AE8A6 /* AppControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControl.m; sourceTree = "<group>"; };
+		7397F6DC0E5C9F60003AE8A6 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = /Library/Frameworks/FScript.framework; sourceTree = "<absolute>"; };
+		7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<absolute>"; };
+		7397F76F0E5C9FFD003AE8A6 /* MIDIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDIUtil.h; sourceTree = "<group>"; };
+		7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDIUtil.m; sourceTree = "<group>"; };
+		7397F7790E5CA03A003AE8A6 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		7397F77A0E5CA03A003AE8A6 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		7397F77C0E5CA045003AE8A6 /* Staff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Staff.h; sourceTree = "<group>"; };
+		7397F77D0E5CA045003AE8A6 /* Staff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Staff.m; sourceTree = "<group>"; };
+		7397F77F0E5CA053003AE8A6 /* TimeSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSignature.h; sourceTree = "<group>"; };
+		7397F7800E5CA053003AE8A6 /* TimeSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSignature.m; sourceTree = "<group>"; };
+		7397F7820E5CA05F003AE8A6 /* TempoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempoData.h; sourceTree = "<group>"; };
+		7397F7830E5CA05F003AE8A6 /* TempoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempoData.m; sourceTree = "<group>"; };
+		7397F7850E5CA070003AE8A6 /* NoteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteBase.h; sourceTree = "<group>"; };
+		7397F7860E5CA070003AE8A6 /* NoteBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteBase.m; sourceTree = "<group>"; };
+		7397F7880E5CA083003AE8A6 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		7397F7890E5CA083003AE8A6 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		7397F78B0E5CA095003AE8A6 /* Rest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rest.h; sourceTree = "<group>"; };
+		7397F78C0E5CA095003AE8A6 /* Rest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rest.m; sourceTree = "<group>"; };
+		7397F78E0E5CA0A1003AE8A6 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
+		7397F78F0E5CA0A1003AE8A6 /* Measure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Measure.m; sourceTree = "<group>"; };
+		7397F79B0E5CA0F9003AE8A6 /* KeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySignature.h; sourceTree = "<group>"; };
+		7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySignature.m; sourceTree = "<group>"; };
+		7397F79F0E5CA113003AE8A6 /* CompoundTimeSig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompoundTimeSig.h; sourceTree = "<group>"; };
+		7397F7A00E5CA113003AE8A6 /* CompoundTimeSig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompoundTimeSig.m; sourceTree = "<group>"; };
+		7397F7A20E5CA123003AE8A6 /* Chord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chord.h; sourceTree = "<group>"; };
+		7397F7A30E5CA123003AE8A6 /* Chord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chord.m; sourceTree = "<group>"; };
+		7397F7A50E5CA134003AE8A6 /* Repeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repeat.h; sourceTree = "<group>"; };
+		7397F7A60E5CA134003AE8A6 /* Repeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repeat.m; sourceTree = "<group>"; };
+		7397F7C80E5CA1F6003AE8A6 /* Clef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clef.h; sourceTree = "<group>"; };
+		7397F7C90E5CA1F6003AE8A6 /* Clef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clef.m; sourceTree = "<group>"; };
+		7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = Sor_Study.mid; sourceTree = "<group>"; };
+		7397F8010E5CA9E6003AE8A6 /* MusicDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicDocument.h; sourceTree = "<group>"; };
+		7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicDocument.m; sourceTree = "<group>"; };
+		7397F9870E5CC541003AE8A6 /* ChromaticKeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromaticKeySignature.h; sourceTree = "<group>"; };
+		7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromaticKeySignature.m; sourceTree = "<group>"; };
+		73B87E9E0E6985A6003C2410 /* SenorStaffTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SenorStaffTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73B87E9F0E6985A6003C2410 /* SenorStaffTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SenorStaffTests-Info.plist"; sourceTree = "<group>"; };
+		73BB3CA50FED3F3B000C1262 /* SimpleSongTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleSongTests.m; path = Tests/SimpleSongTests.m; sourceTree = "<group>"; };
+		73BB3CAA0FED3F6B000C1262 /* SimpleNoteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleNoteTests.m; path = Tests/SimpleNoteTests.m; sourceTree = "<group>"; };
+		73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		73CA091F0E77D2A0006D131C /* ring-12-0.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = "ring-12-0.mid"; sourceTree = "<group>"; };
+		73CA09AE0E77E0D1006D131C /* libportsmf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libportsmf.a; path = ../../../Source_Code/portmedia/trunk/build/Debug/libportsmf.a; sourceTree = SOURCE_ROOT; };
+		73CA09B40E77E12C006D131C /* allegro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allegro.h; path = ../../../Source_Code/portmedia/trunk/allegro.h; sourceTree = SOURCE_ROOT; };
+		73CA0AAA0E77E1BB006D131C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		73CA0AB60E77E1D9006D131C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		73D107E00FEA4B29000CFF15 /* SongPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongPlayer.h; path = Src/SongPlayer.h; sourceTree = "<group>"; };
+		73D107E10FEA4B29000CFF15 /* SongPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongPlayer.m; path = Src/SongPlayer.m; sourceTree = "<group>"; };
+		73EFB4520FEE5936001B7C96 /* SimpleNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleNote.h; path = Src/SimpleNote.h; sourceTree = "<group>"; };
+		73EFB4530FEE5936001B7C96 /* SimpleNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleNote.m; path = Src/SimpleNote.m; sourceTree = "<group>"; };
+		73EFB4590FEE5958001B7C96 /* SimpleSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleSong.h; path = Src/SimpleSong.h; sourceTree = "<group>"; };
+		73EFB45A0FEE5958001B7C96 /* SimpleSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleSong.m; path = Src/SimpleSong.m; sourceTree = "<group>"; };
+		73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = "bars - 1 2 3 4.mid"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* SenorStaff Hack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SenorStaff Hack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73B87E9B0E6985A6003C2410 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73675B130FF42D5700B02E63 /* FScript.framework in Frameworks */,
+				73B4CDAA0FF51F1800949D15 /* CoreMIDI.framework in Frameworks */,
+				73B4CDAB0FF51F1900949D15 /* CoreAudio.framework in Frameworks */,
+				73B4CDAC0FF51F1A00949D15 /* AudioToolbox.framework in Frameworks */,
+				73B4CDAD0FF51F1E00949D15 /* AudioUnit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				7397F6DD0E5C9F60003AE8A6 /* FScript.framework in Frameworks */,
+				7397F76C0E5C9FF1003AE8A6 /* AudioToolbox.framework in Frameworks */,
+				7397F76D0E5C9FF1003AE8A6 /* CoreAudio.framework in Frameworks */,
+				7397F76E0E5C9FF1003AE8A6 /* CoreMIDI.framework in Frameworks */,
+				73CA0AAC0E77E1BB006D131C /* CoreServices.framework in Frameworks */,
+				73CA0AAD0E77E1BB006D131C /* CoreFoundation.framework in Frameworks */,
+				73CA0AB70E77E1D9006D131C /* Carbon.framework in Frameworks */,
+				73C7F3220FF3890400DAB6E1 /* AudioUnit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7397F6D60E5C9F1A003AE8A6 /* AppControl.h */,
+				7397F6D70E5C9F1A003AE8A6 /* AppControl.m */,
+				7397F76F0E5C9FFD003AE8A6 /* MIDIUtil.h */,
+				7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */,
+				7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */,
+				7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */,
+				73EFB44F0FEE590C001B7C96 /* Simplified */,
+				7397F7D00E5CA211003AE8A6 /* senorstaff */,
+				73D107E00FEA4B29000CFF15 /* SongPlayer.h */,
+				73D107E10FEA4B29000CFF15 /* SongPlayer.m */,
+				73CA09B40E77E12C006D131C /* allegro.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */,
+				73CA0AB60E77E1D9006D131C /* Carbon.framework */,
+				73CA0AAA0E77E1BB006D131C /* CoreServices.framework */,
+				73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */,
+				73CA09AE0E77E0D1006D131C /* libportsmf.a */,
+				7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */,
+				7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */,
+				7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */,
+				7397F6DC0E5C9F60003AE8A6 /* FScript.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* SenorStaff Hack.app */,
+				73B87E9E0E6985A6003C2410 /* SenorStaffTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* SenorStaff Hack */ = {
+			isa = PBXGroup;
+			children = (
+				73675AE80FF42B7F00B02E63 /* configs */,
+				736457B10E6BEC160022079A /* Tests */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				73B87E9F0E6985A6003C2410 /* SenorStaffTests-Info.plist */,
+			);
+			name = "SenorStaff Hack";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* SenorStaff Hack_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				73CA091F0E77D2A0006D131C /* ring-12-0.mid */,
+				73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */,
+				7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		736457B10E6BEC160022079A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				73BB3CAA0FED3F6B000C1262 /* SimpleNoteTests.m */,
+				73BB3CA50FED3F3B000C1262 /* SimpleSongTests.m */,
+				73675AB50FF42A6600B02E63 /* MidiLoaderTests.m */,
+				73675AB30FF42A2600B02E63 /* MIDIUtilTests.m */,
+				73675AB00FF429DD00B02E63 /* MidiInterfaceTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		73675AE80FF42B7F00B02E63 /* configs */ = {
+			isa = PBXGroup;
+			children = (
+				73675AEA0FF42B9700B02E63 /* Target-Framework.xcconfig */,
+				73675AEB0FF42B9700B02E63 /* Project-Debug.xcconfig */,
+				73675AEC0FF42B9700B02E63 /* Target-iPhone.xcconfig */,
+				73675AED0FF42B9700B02E63 /* Target-Base.xcconfig */,
+				73675AEE0FF42B9700B02E63 /* Project-Coverage.xcconfig */,
+				73675AEF0FF42B9700B02E63 /* Project-Release.xcconfig */,
+				73675AF00FF42B9700B02E63 /* Target-QCPlugin.xcconfig */,
+				73675AF10FF42B9700B02E63 /* Target-Executable.xcconfig */,
+				73675AF20FF42B9700B02E63 /* Project-Base.xcconfig */,
+				73675AF30FF42B9700B02E63 /* Target-Plugin.xcconfig */,
+			);
+			name = configs;
+			sourceTree = "<group>";
+		};
+		7397F7D00E5CA211003AE8A6 /* senorstaff */ = {
+			isa = PBXGroup;
+			children = (
+				7397F8010E5CA9E6003AE8A6 /* MusicDocument.h */,
+				7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */,
+				7397F7790E5CA03A003AE8A6 /* Song.h */,
+				7397F77A0E5CA03A003AE8A6 /* Song.m */,
+				7397F77C0E5CA045003AE8A6 /* Staff.h */,
+				7397F77D0E5CA045003AE8A6 /* Staff.m */,
+				7397F77F0E5CA053003AE8A6 /* TimeSignature.h */,
+				7397F7800E5CA053003AE8A6 /* TimeSignature.m */,
+				7397F7820E5CA05F003AE8A6 /* TempoData.h */,
+				7397F7830E5CA05F003AE8A6 /* TempoData.m */,
+				7397F7850E5CA070003AE8A6 /* NoteBase.h */,
+				7397F7860E5CA070003AE8A6 /* NoteBase.m */,
+				7397F7880E5CA083003AE8A6 /* Note.h */,
+				7397F7890E5CA083003AE8A6 /* Note.m */,
+				7397F78B0E5CA095003AE8A6 /* Rest.h */,
+				7397F78C0E5CA095003AE8A6 /* Rest.m */,
+				7397F78E0E5CA0A1003AE8A6 /* Measure.h */,
+				7397F78F0E5CA0A1003AE8A6 /* Measure.m */,
+				7397F79B0E5CA0F9003AE8A6 /* KeySignature.h */,
+				7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */,
+				7397F79F0E5CA113003AE8A6 /* CompoundTimeSig.h */,
+				7397F7A00E5CA113003AE8A6 /* CompoundTimeSig.m */,
+				7397F7A20E5CA123003AE8A6 /* Chord.h */,
+				7397F7A30E5CA123003AE8A6 /* Chord.m */,
+				7397F7A50E5CA134003AE8A6 /* Repeat.h */,
+				7397F7A60E5CA134003AE8A6 /* Repeat.m */,
+				7397F7C80E5CA1F6003AE8A6 /* Clef.h */,
+				7397F7C90E5CA1F6003AE8A6 /* Clef.m */,
+				7397F9870E5CC541003AE8A6 /* ChromaticKeySignature.h */,
+				7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */,
+			);
+			name = senorstaff;
+			sourceTree = "<group>";
+		};
+		73EFB44F0FEE590C001B7C96 /* Simplified */ = {
+			isa = PBXGroup;
+			children = (
+				73EFB4520FEE5936001B7C96 /* SimpleNote.h */,
+				73EFB4530FEE5936001B7C96 /* SimpleNote.m */,
+				73EFB4590FEE5958001B7C96 /* SimpleSong.h */,
+				73EFB45A0FEE5958001B7C96 /* SimpleSong.m */,
+				730DEE050FF1789F001D9E33 /* MidiLoader.h */,
+				730DEE060FF1789F001D9E33 /* MidiLoader.m */,
+			);
+			name = Simplified;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73B87E9D0E6985A6003C2410 /* SenorStaffTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73B87EA20E6985A6003C2410 /* Build configuration list for PBXNativeTarget "SenorStaffTests" */;
+			buildPhases = (
+				73B87E990E6985A6003C2410 /* Resources */,
+				73B87E9A0E6985A6003C2410 /* Sources */,
+				73B87E9B0E6985A6003C2410 /* Frameworks */,
+				73B87E9C0E6985A6003C2410 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SenorStaffTests;
+			productName = SenorStaffTests;
+			productReference = 73B87E9E0E6985A6003C2410 /* SenorStaffTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8D1107260486CEB800E47090 /* SenorStaff Hack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SenorStaff Hack" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				73495DE50FEEDFB4002BED5B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SenorStaff Hack";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "SenorStaff Hack";
+			productReference = 8D1107320486CEB800E47090 /* SenorStaff Hack.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SenorStaff Hack" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* SenorStaff Hack */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* SenorStaff Hack */,
+				73B87E9D0E6985A6003C2410 /* SenorStaffTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73B87E990E6985A6003C2410 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				736457B70E6BEC560022079A /* bars - 1 2 3 4.mid in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				7397F7F40E5CA35A003AE8A6 /* Sor_Study.mid in Resources */,
+				73FB73820E69FE8600AE64C2 /* bars - 1 2 3 4.mid in Resources */,
+				73CA09200E77D2A0006D131C /* ring-12-0.mid in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		73B87E9C0E6985A6003C2410 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\nexport MallocStackLogging=YES\nexport MallocScribble=1\nexport MallocPreScribble=1\nexport NSDebugEnabled=YES\n\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n\n\n# Run gcov on the framework getting tested\n# (If lcov is installed, we'll use that instead, and get pretty html output)\n\nif [ \"${CONFIGURATION}\" = 'Coverage' ]; then     \n\tFRAMEWORK_NAME=ProtoNodeGraph\n\tFRAMEWORK_TARGET=ProtoNodeGraph\n# -- useful for building correct path to object files /${CONFIGURATION}/${FRAMEWORK_TARGET}.build\n     FRAMEWORK_OBJ_DIR=${OBJROOT}/${FRAMEWORK_NAME}.build/Objects-normal/${NATIVE_ARCH}\n\techo \"Black Sabbath -\"\n\techo $FRAMEWORK_OBJ_DIR\n#\tmkdir -p coverage\n#\tcd coverage\n\t\n#\tif hash lcov 2>/dev/null; then\n#\t\tECHO ${FRAMEWORK_TARGET} STEVE\n#\t\t/opt/local/bin/lcov --directory ${FRAMEWORK_OBJ_DIR} --capture --output-file ${FRAMEWORK_TARGET}.info\n#\t\t/opt/local/bin/genhtml ${FRAMEWORK_TARGET}.info\n#\telse\n#\t\techo \"***************\"\n#\t\techo \"lcov is not installed - using gcov instead\"\n#\t\techo \"***************\"\n#\t\tfind ${OBJROOT} -name *.gcda -exec gcov -o ${FRAMEWORK_OBJ_DIR} {} \\;\n#\tfi\n\t\n     cd ..\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73B87E9A0E6985A6003C2410 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73BB3CAB0FED3F6B000C1262 /* SimpleNoteTests.m in Sources */,
+				73B4CCCF0FF512C900949D15 /* SimpleNote.m in Sources */,
+				73B4CD7B0FF51BD500949D15 /* SimpleSong.m in Sources */,
+				73B4CD7C0FF51BD900949D15 /* MidiLoader.m in Sources */,
+				73B4CD7E0FF51BE600949D15 /* MIDIUtil.m in Sources */,
+				73B4CD9F0FF51EE600949D15 /* SimpleSongTests.m in Sources */,
+				73B4CDA40FF51EFA00949D15 /* MidiLoaderTests.m in Sources */,
+				73B4CDA50FF51F0000949D15 /* MIDIUtilTests.m in Sources */,
+				73B4CDA60FF51F0200949D15 /* MidiInterfaceTests.m in Sources */,
+				73B4CDA70FF51F0800949D15 /* MidiInterface.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				7397F6D80E5C9F1A003AE8A6 /* AppControl.m in Sources */,
+				7397F7710E5C9FFD003AE8A6 /* MIDIUtil.m in Sources */,
+				7397F8030E5CA9E6003AE8A6 /* MusicDocument.m in Sources */,
+				7397F8110E5CAC33003AE8A6 /* Song.m in Sources */,
+				7397F84C0E5CB25C003AE8A6 /* Staff.m in Sources */,
+				7397F8770E5CB702003AE8A6 /* Clef.m in Sources */,
+				7397F87C0E5CB735003AE8A6 /* KeySignature.m in Sources */,
+				7397F8840E5CB783003AE8A6 /* Measure.m in Sources */,
+				7397F8FB0E5CC0FD003AE8A6 /* TimeSignature.m in Sources */,
+				7397F9890E5CC541003AE8A6 /* ChromaticKeySignature.m in Sources */,
+				73B71F180E5DEB630064F2BA /* TempoData.m in Sources */,
+				73B721B20E5E00570064F2BA /* Note.m in Sources */,
+				73B721B50E5E00930064F2BA /* Chord.m in Sources */,
+				73B721B70E5E00B90064F2BA /* Rest.m in Sources */,
+				730B39000E5F288100434DF5 /* NoteBase.m in Sources */,
+				73D107E20FEA4B29000CFF15 /* SongPlayer.m in Sources */,
+				73EFB4540FEE5936001B7C96 /* SimpleNote.m in Sources */,
+				73EFB45B0FEE5958001B7C96 /* SimpleSong.m in Sources */,
+				730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */,
+				7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		73675AF40FF42BAE00B02E63 /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AEE0FF42B9700B02E63 /* Project-Coverage.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+			};
+			name = Coverage;
+		};
+		73675AF50FF42BAE00B02E63 /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AF10FF42B9700B02E63 /* Target-Executable.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SenorStaff Hack_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Source Code/portsmf/portsmf/build/Debug\"",
+				);
+				PRODUCT_NAME = "SenorStaff Hack";
+			};
+			name = Coverage;
+		};
+		73675AF60FF42BAE00B02E63 /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AF30FF42B9700B02E63 /* Target-Plugin.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(SYMROOT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_DIR)",
+					"$(inherited)",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				INFOPLIST_FILE = "SenorStaffTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(BUILD_DIR)";
+				OTHER_LDFLAGS = (
+					"-lgcov",
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SenorStaffTests;
+				TEST_RIG = /Developer/Tools/otest;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Coverage;
+		};
+		73B87EA00E6985A6003C2410 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AF30FF42B9700B02E63 /* Target-Plugin.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(NATIVE_ARCH)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(SYMROOT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_DIR)",
+					"$(inherited)",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "SenorStaffTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(BUILD_DIR)";
+				OBJROOT = "$(SYMROOT)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SenorStaffTests;
+				SYMROOT = "$(PROJECT_DIR)/build";
+				TEST_RIG = /Developer/Tools/otest;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		73B87EA10E6985A6003C2410 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "SenorStaffTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SenorStaffTests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SenorStaff Hack_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Source Code/portsmf/portsmf/build/Debug\"",
+				);
+				PRODUCT_NAME = "SenorStaff Hack";
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SenorStaff Hack_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Source Code/portsmf/portsmf/build/Debug\"",
+				);
+				PRODUCT_NAME = "SenorStaff Hack";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AEB0FF42B9700B02E63 /* Project-Debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(SYMROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "$(SYMROOT)";
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SYMROOT = "$(SYMROOT)";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73675AEF0FF42B9700B02E63 /* Project-Release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73B87EA20E6985A6003C2410 /* Build configuration list for PBXNativeTarget "SenorStaffTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73B87EA00E6985A6003C2410 /* Debug */,
+				73675AF60FF42BAE00B02E63 /* Coverage */,
+				73B87EA10E6985A6003C2410 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SenorStaff Hack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				73675AF50FF42BAE00B02E63 /* Coverage */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SenorStaff Hack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				73675AF40FF42BAE00B02E63 /* Coverage */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

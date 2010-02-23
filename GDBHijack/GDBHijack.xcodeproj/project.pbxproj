@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73773A640D4F5453009D8898 /* DevToolsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 737738D60D4F52D9009D8898 /* DevToolsKit.framework */; };
+		73773A7C0D4F5797009D8898 /* GDBHijackControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* GDBHijackControl.m */; };
+		73773A7D0D4F5799009D8898 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		73A0E1DF0D4F752C00A30F66 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73A0E1DE0D4F752C00A30F66 /* Info.plist */; };
+		73B880640D5725CB0034C337 /* FScriptGC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D418000D50D23300AA3289 /* FScriptGC.framework */; };
+		73D418010D50D23300AA3289 /* FScriptGC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D418000D50D23300AA3289 /* FScriptGC.framework */; };
+		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
+		8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */; };
+		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		8D15AC310486D014006FF6A4 /* GDBHijackControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* GDBHijackControl.m */; settings = {ATTRIBUTES = (); }; };
+		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		2A37F4ACFDCFA73011CA2CEA /* GDBHijackControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDBHijackControl.m; sourceTree = "<group>"; };
+		2A37F4AEFDCFA73011CA2CEA /* GDBHijackControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDBHijackControl.h; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A37F4B5FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MyDocument.nib; sourceTree = "<group>"; };
+		2A37F4B7FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32DBCF750370BD2300C91783 /* GDBHijack_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDBHijack_Prefix.pch; sourceTree = "<group>"; };
+		737738C90D4F52D9009D8898 /* XDBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XDBase.framework; path = Library/PrivateFrameworks/XDBase.framework; sourceTree = DEVELOPER_DIR; };
+		737738CA0D4F52D9009D8898 /* DevToolsFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsFoundation.framework; path = Library/PrivateFrameworks/DevToolsFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		737738CB0D4F52D9009D8898 /* XDInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XDInterface.framework; path = Library/PrivateFrameworks/XDInterface.framework; sourceTree = DEVELOPER_DIR; };
+		737738CC0D4F52D9009D8898 /* InstrumentsDTrace.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstrumentsDTrace.framework; path = Library/PrivateFrameworks/InstrumentsDTrace.framework; sourceTree = DEVELOPER_DIR; };
+		737738CD0D4F52D9009D8898 /* XcodeEdit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeEdit.framework; path = Library/PrivateFrameworks/XcodeEdit.framework; sourceTree = DEVELOPER_DIR; };
+		737738CE0D4F52D9009D8898 /* DevToolsSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsSupport.framework; path = Library/PrivateFrameworks/DevToolsSupport.framework; sourceTree = DEVELOPER_DIR; };
+		737738CF0D4F52D9009D8898 /* DevToolsCParsing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsCParsing.framework; path = Library/PrivateFrameworks/DevToolsCParsing.framework; sourceTree = DEVELOPER_DIR; };
+		737738D00D4F52D9009D8898 /* InstrumentsPlugIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstrumentsPlugIn.framework; path = Library/PrivateFrameworks/InstrumentsPlugIn.framework; sourceTree = DEVELOPER_DIR; };
+		737738D10D4F52D9009D8898 /* DevToolsInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsInterface.framework; path = Library/PrivateFrameworks/DevToolsInterface.framework; sourceTree = DEVELOPER_DIR; };
+		737738D20D4F52D9009D8898 /* InstrumentsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstrumentsKit.framework; path = Library/PrivateFrameworks/InstrumentsKit.framework; sourceTree = DEVELOPER_DIR; };
+		737738D30D4F52D9009D8898 /* DocSetAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DocSetAccess.framework; path = Library/PrivateFrameworks/DocSetAccess.framework; sourceTree = DEVELOPER_DIR; };
+		737738D40D4F52D9009D8898 /* DevToolsRemoteClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsRemoteClient.framework; path = Library/PrivateFrameworks/DevToolsRemoteClient.framework; sourceTree = DEVELOPER_DIR; };
+		737738D50D4F52D9009D8898 /* DevToolsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsCore.framework; path = Library/PrivateFrameworks/DevToolsCore.framework; sourceTree = DEVELOPER_DIR; };
+		737738D60D4F52D9009D8898 /* DevToolsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsKit.framework; path = Library/PrivateFrameworks/DevToolsKit.framework; sourceTree = DEVELOPER_DIR; };
+		737738D70D4F52D9009D8898 /* DevToolsBundleInjection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsBundleInjection.framework; path = Library/PrivateFrameworks/DevToolsBundleInjection.framework; sourceTree = DEVELOPER_DIR; };
+		737738D80D4F52D9009D8898 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = Library/PrivateFrameworks/JavaKit.framework; sourceTree = DEVELOPER_DIR; };
+		73773A750D4F5747009D8898 /* GDBHijackPlugin.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GDBHijackPlugin.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		73773A760D4F5747009D8898 /* GDBHijackPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GDBHijackPlugin-Info.plist"; sourceTree = "<group>"; };
+		73A0E1DE0D4F752C00A30F66 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		73D418000D50D23300AA3289 /* FScriptGC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScriptGC.framework; path = /Library/Frameworks/FScriptGC.framework; sourceTree = "<absolute>"; };
+		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* GDBHijack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDBHijack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73773A730D4F5747009D8898 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73773A7D0D4F5799009D8898 /* Cocoa.framework in Frameworks */,
+				73B880640D5725CB0034C337 /* FScriptGC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				73773A640D4F5453009D8898 /* DevToolsKit.framework in Frameworks */,
+				73D418010D50D23300AA3289 /* FScriptGC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73D418000D50D23300AA3289 /* FScriptGC.framework */,
+				737738C90D4F52D9009D8898 /* XDBase.framework */,
+				737738CA0D4F52D9009D8898 /* DevToolsFoundation.framework */,
+				737738CB0D4F52D9009D8898 /* XDInterface.framework */,
+				737738CC0D4F52D9009D8898 /* InstrumentsDTrace.framework */,
+				737738CD0D4F52D9009D8898 /* XcodeEdit.framework */,
+				737738CE0D4F52D9009D8898 /* DevToolsSupport.framework */,
+				737738CF0D4F52D9009D8898 /* DevToolsCParsing.framework */,
+				737738D00D4F52D9009D8898 /* InstrumentsPlugIn.framework */,
+				737738D10D4F52D9009D8898 /* DevToolsInterface.framework */,
+				737738D20D4F52D9009D8898 /* InstrumentsKit.framework */,
+				737738D30D4F52D9009D8898 /* DocSetAccess.framework */,
+				737738D40D4F52D9009D8898 /* DevToolsRemoteClient.framework */,
+				737738D50D4F52D9009D8898 /* DevToolsCore.framework */,
+				737738D60D4F52D9009D8898 /* DevToolsKit.framework */,
+				737738D70D4F52D9009D8898 /* DevToolsBundleInjection.framework */,
+				737738D80D4F52D9009D8898 /* JavaKit.framework */,
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* GDBHijack.app */,
+				73773A750D4F5747009D8898 /* GDBHijackPlugin.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* GDBHijack */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+				73773A760D4F5747009D8898 /* GDBHijackPlugin-Info.plist */,
+				73A0E1DE0D4F752C00A30F66 /* Info.plist */,
+			);
+			name = GDBHijack;
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4AEFDCFA73011CA2CEA /* GDBHijackControl.h */,
+				2A37F4ACFDCFA73011CA2CEA /* GDBHijackControl.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF750370BD2300C91783 /* GDBHijack_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
+				2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */,
+				8D15AC360486D014006FF6A4 /* Info.plist */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73773A740D4F5747009D8898 /* GDBHijackPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73773A7A0D4F5747009D8898 /* Build configuration list for PBXNativeTarget "GDBHijackPlugin" */;
+			buildPhases = (
+				73773A710D4F5747009D8898 /* Resources */,
+				73773A720D4F5747009D8898 /* Sources */,
+				73773A730D4F5747009D8898 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GDBHijackPlugin;
+			productName = GDBHijackPlugin;
+			productReference = 73773A750D4F5747009D8898 /* GDBHijackPlugin.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8D15AC270486D014006FF6A4 /* GDBHijack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "GDBHijack" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GDBHijack;
+			productInstallPath = "$(HOME)/Applications";
+			productName = GDBHijack;
+			productReference = 8D15AC370486D014006FF6A4 /* GDBHijack.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "GDBHijack" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 1;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* GDBHijack */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D15AC270486D014006FF6A4 /* GDBHijack */,
+				73773A740D4F5747009D8898 /* GDBHijackPlugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73773A710D4F5747009D8898 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
+				8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */,
+				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				73A0E1DF0D4F752C00A30F66 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73773A720D4F5747009D8898 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73773A7C0D4F5797009D8898 /* GDBHijackControl.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC310486D014006FF6A4 /* GDBHijackControl.m in Sources */,
+				8D15AC320486D014006FF6A4 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4B5FDCFA73011CA2CEA /* English */,
+			);
+			name = MyDocument.nib;
+			sourceTree = "<group>";
+		};
+		2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4B7FDCFA73011CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4BAFDCFA73011CA2CEA /* English */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		73773A780D4F5747009D8898 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Developer/Library/PrivateFrameworks,
+					/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "GDBHijackPlugin-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/SIMBL/Plugins";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = GDBHijackPlugin;
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		73773A790D4F5747009D8898 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Developer/Library/PrivateFrameworks,
+					/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "GDBHijackPlugin-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/SIMBL/Plugins";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = GDBHijackPlugin;
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/Library/PrivateFrameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = GDBHijack_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = GDBHijack;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/Library/PrivateFrameworks\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = GDBHijack_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = GDBHijack;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Developer/Library/PrivateFrameworks;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73773A7A0D4F5747009D8898 /* Build configuration list for PBXNativeTarget "GDBHijackPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73773A780D4F5747009D8898 /* Debug */,
+				73773A790D4F5747009D8898 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "GDBHijack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "GDBHijack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}

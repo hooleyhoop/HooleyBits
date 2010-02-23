@@ -1,0 +1,36 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = SHArrayController; LANGUAGE = ObjC; SUPERCLASS = NSArrayController; }, 
+        {
+            CLASS = SHAuxWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_viewport" = SHViewport; }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {
+            CLASS = SHAuxWindowDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_theWindow" = SHAuxWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = SHCustomViewController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = SHNodeListViewTable; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {
+            ACTIONS = {updateSelectionInModel = id; }; 
+            CLASS = "SHNodeListView_V"; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_arrayController" = NSArrayController; 
+                "_contents" = NSView; 
+                "_savedWindow" = NSWindow; 
+                "_tableView" = NSTableView; 
+                "_tableViewContainer" = NSScrollView; 
+            }; 
+            SUPERCLASS = SHSwapableView; 
+        }, 
+        {CLASS = SHSwapableView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = SHViewport; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

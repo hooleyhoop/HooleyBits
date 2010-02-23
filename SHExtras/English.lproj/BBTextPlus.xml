@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>category</key>
+		<string>Generator</string>
+		<key>name</key>
+		<string>Super Image from String</string>
+		<key>description</key>
+		<string>This patch renders a string as an image using the specified font attributes and text alignment mode.
+
+The "String" input defines the string to be rendered, and "Image Width" and "Image Height" the dimensions of the image in which to render the string. If those dimensions are null, the image will automatically be sized to fit the entire string.
+The name of the font to use is defined by the "Font Name" input as a case-sensitive PostScript name (it can also be set from the patch's settings) and its size is defined by the "Font Size" input. Font leading and kerning can also be modified through the corresponding patch inputs. All these dimensions are expressed in Quartz Composer coordinates system units by default.
+
+This patch outputs the image containing the rendered string (in white over a black background) and the recommended size at which it should be displayed in the rendering destination for optimal visual quality (those values would typically be passed to a Billboard or Sprite patch). It also returns the number of visible text lines and visible text glyphs (this information is useful in case the entire string does not fit in the image).
+
+Note that Image With String can run in mode where dimensions are specified in pixels instead of units (use the patch's settings to switch to that mode). This mode can be useful if you explicitely want to create an image with given pixels dimensions.</string>
+	</dict>
+	
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputString</key>
+		<dict>
+			<key>description</key>
+			<string>The text string to render.</string>
+			<key>name</key>
+			<string>String</string>
+		</dict>
+		<key>inputFontName</key>
+		<dict>
+			<key>description</key>
+			<string>The name of the font to use to render the string.</string>
+			<key>name</key>
+			<string>Font Name</string>
+		</dict>
+		<key>inputGlyphSize</key>
+		<dict>
+			<key>description</key>
+			<string>The size of the font glyphs.</string>
+			<key>name</key>
+			<string>Font Size</string>
+		</dict>
+		<key>inputLeading</key>
+		<dict>
+			<key>description</key>
+				<string>The leading offset for the font glyphs.</string>
+				<key>name</key>
+				<string>Font Leading Offset</string>
+		</dict>
+		<key>inputKerning</key>
+		<dict>
+			<key>description</key>
+				<string>The kerning shift for the font glyphs.</string>
+				<key>name</key>
+				<string>Font Kerning Shift</string>
+		</dict>
+		<key>inputGlyphCount</key>
+		<dict>
+			<key>description</key>
+				<string>Percentage of characters to display.</string>
+				<key>name</key>
+				<string>Display Percentage</string>
+		</dict>
+		<key>inputWidth</key>
+		<dict>
+			<key>description</key>
+				<string>The width of the image (set to 0 for automatic computation).</string>
+				<key>name</key>
+				<string>Image Width</string>
+		</dict>
+		
+		<key>inputHeight</key>
+		<dict>
+			<key>description</key>
+				<string>The height of the image (set to 0 for automatic computation).</string>
+				<key>name</key>
+				<string>Image Height</string>
+		</dict>
+		
+		<key>inputTextAlignment</key>
+		<dict>
+			<key>description</key>
+				<string>0 : left align, 1 : right align, 2 : center align, 3 : justified.</string>
+				<key>name</key>
+				<string>Text Alignment</string>
+		</dict>
+
+		<key>inputGlowSize</key>
+		<dict>
+			<key>description</key>
+				<string>Glow size.</string>
+				<key>name</key>
+				<string>Glow Size</string>
+		</dict>
+
+		<key>inputGlowColor</key>
+		<dict>
+			<key>description</key>
+				<string>Glow color.</string>
+				<key>name</key>
+				<string>Glow Color</string>
+		</dict>
+				
+	</dict>
+	
+	<key>outputAttributes</key>
+	<dict>
+		<key>outputImage</key>
+		<dict>
+			<key>description</key>
+			<string>The resulting image.</string>
+			<key>name</key>
+			<string>Image</string>
+		</dict>
+		<key>outputWidth</key>
+		<dict>
+			<key>description</key>
+			<string>The width at which the image should be displayed.</string>
+			<key>name</key>
+			<string>Display Width</string>
+		</dict>
+		<key>outputHeight</key>
+		<dict>
+			<key>description</key>
+			<string>The height at which the image should be displayed.</string>
+			<key>name</key>
+			<string>Display Height</string>
+		</dict>
+<!--		<key>outputLineCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of visible lines in the image.</string>
+			<key>name</key>
+			<string>Line Count</string>
+		</dict>
+		<key>outputGlyphCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of visible glyphs in the image.</string>
+			<key>name</key>
+			<string>Glyph Count</string>
+		</dict> -->
+	</dict>
+	
+</dict>
+</plist>

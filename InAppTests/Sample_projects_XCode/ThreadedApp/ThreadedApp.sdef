@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="">
+	<suite name="ThreadApp" code="SAMP" description="This is a sample by Satimage to be used within Smile. Check www.satimage-software.com for additionnal informations.">
+		
+			<class name="array of real" code="Lido" plural="arrays of real" hidden="yes" description="a packed list of small real. Can be coerced to an AppleScript list with 'as list of real'. Conversely, a list of real may be translated using 'as array of real' for fast computation.">
+			</class>
+			<class name="matrix" code="Matr" plural="matrices" hidden="yes" description="An AppleScript representation of a 2D array of real numbers as a record">
+				
+					<property name="ncols" code="ncol" type="integer" description="the number of columns"/>
+					<property name="nrows" code="nrow" type="integer" description="the number of rows"/>
+					<property name="array of real" code="Lido" type="array of real" description="the data, as an array of real or as a standard AppleScript list of real numbers. Ordering: the first numbers are the data for the first row."/>
+				
+			</class>
+			<class name="application" code="capp" description="the application program">
+				
+					<property name="theInt" code="a   " type="integer" description="a monitored integer property"/>
+					<property name="debugvar1" code="dbg1" type="real" description="a debug variable"/>
+					<property name="debugvar2" code="dbg2" type="text" description="a debug variable"/>
+					<property name="debugvar3" code="dbg3" type="array of real" description="a debug variable"/>
+					<property name="debugvar4" code="dbg4" type="matrix" description="a debug variable"/>
+					<property name="properties" code="Prop" type="record"/>
+				
+			</class>
+		
+		
+			<command name="compute" code="SAMPCOMP" description="start the thread">
+				<direct-parameter type="integer" description="the starting number"/>
+			</command>
+			<command name="resume" code="SAMPRESU" description="resume the thread">
+			</command>
+		
+	</suite>
+</dictionary>

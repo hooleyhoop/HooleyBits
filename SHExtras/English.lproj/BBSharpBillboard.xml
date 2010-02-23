@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	
+	<key>nodeAttributes</key>
+	<dict>
+		<key>copyright</key>
+		<string>Best Before Media Ltd. 2006</string>
+		<key>description</key>
+		<string>This patch is a simplified version of the Sprite patch: it renders a quad positioned with only 2 coordinates and which always faces the viewer.
+
+Because of these specificities, Billboard also has several unique features:
+The width of the quad is set from the "Width" input and its height is computed automatically to preserve the aspect ratio of the image it displays.
+This image is multiplied by the color set on the "Color" input and can be combined with a mask using the optional "Mask Image" input (the mask will be resized to match the image's size).
+It has a special "Core Image Direct Rendering" setting that renders images resulting from Core Image filters directly to the destination context, at the highest possible quality.
+Finally, the rendered quad can be forced to be pixel-aligned, to ensure maximal sharpness.
+
+Note that Billboard is not affected by the environment fog or lighting, and contrary to Sprite, it will not render anything if its "Image" input is not defined.</string>
+		<key>name</key>
+		<string>Sharp Billboard</string>
+		<key>category</key>
+		<string>Renderer</string>
+	</dict>
+	
+	<key>inputAttributes</key>
+	<dict>
+		<key>inputImage</key>
+		<dict>
+			<key>description</key>
+			<string>The image on the billboard.</string>
+			<key>name</key>
+			<string>Image</string>
+		</dict>
+		<key>inputMask</key>
+		<dict>
+			<key>description</key>
+			<string>The mask image to apply to the image on the billboard.</string>
+			<key>name</key>
+			<string>Mask Image</string>
+		</dict>
+		<key>inputX</key>
+		<dict>
+			<key>description</key>
+			<string>The horizontal position of the billboard.</string>
+			<key>name</key>
+			<string>X Position</string>
+		</dict>
+		<key>inputY</key>
+		<dict>
+			<key>description</key>
+			<string>The vertical position of the billboard.</string>
+			<key>name</key>
+			<string>Y Position</string>
+		</dict>
+		<key>inputRotation</key>
+		<dict>
+			<key>description</key>
+			<string>Rotation of the billboard.</string>
+			<key>name</key>
+			<string>Rotation</string>
+		</dict>
+		<key>inputScale</key>
+		<dict>
+			<key>description</key>
+			<string>The width of the billboard.</string>
+			<key>name</key>
+			<string>Width</string>
+		</dict>
+		<key>inputColor</key>
+		<dict>
+			<key>description</key>
+			<string>The color of the billboard.</string>
+			<key>name</key>
+			<string>Color</string>
+		</dict>
+	</dict>
+	
+</dict>
+</plist>

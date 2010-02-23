@@ -1,0 +1,26 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                addInputPort = id; 
+                addOutputPort = id; 
+                execute = id; 
+                removeInputPort = id; 
+                removeOutputPort = id; 
+            }; 
+            CLASS = BBPythonPatchUI; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {textview = NSTextView; }; 
+            SUPERCLASS = QCInspector; 
+        }, 
+        {CLASS = BBPythonTextEditor; LANGUAGE = ObjC; SUPERCLASS = NSTextView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = QCInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
