@@ -8,9 +8,6 @@
 #import "AsyncTestProxy.h"
 #import "TestHelp.h"
 #import "AsyncTests.h"
-#import <SHTestUtilities/SHTestUtilities.h>
-#import <SenTestingKit/SenTestingKit.h>
-#import <OCMock/OCMock.h>
 
 @interface TestAsyncTestProxy : SenTestCase {
 	
@@ -29,6 +26,7 @@
 	[_testProxy release];
 }
 
+// Test that when we call fire we get a callback
 - (void)testFire {
 	
 	id mockCallbackOb = MOCK(TestHelp);
@@ -36,6 +34,7 @@
 	[_testProxy setCallbackOb:mockCallbackOb];
 	_testProxy.resultProcessObject = mockResultAction;
 	
+	[[mockCallbackOb expect] _callBackForASync:_testProxy];
 	[_testProxy fire];
 }
 

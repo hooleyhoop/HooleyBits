@@ -155,10 +155,6 @@
 	return aRemoteTestProxy;
 }
 
-#ifndef _BLOCK
-#define _BLOCK(x) [x asBlock]
-#endif
-
 + (GUITestProxy *)assertDocumentCountIs:(NSUInteger)value {
 	//
 //	-- make block to do document count

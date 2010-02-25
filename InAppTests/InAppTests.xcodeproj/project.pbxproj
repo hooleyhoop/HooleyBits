@@ -20,7 +20,6 @@
 		7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7384E13D10FBBB930077D202 /* Carbon.framework */; };
 		7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		7385A6DB10FCDD9A00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
-		73872FF31128146000948FE7 /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		73880A641126BC6E00081774 /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
 		738BE6C41121DF0E0028EB59 /* NSApplication+ScriptingExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */; };
 		7395221B1128724300F747E9 /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
@@ -35,11 +34,11 @@
 		73BB35F410F5343F000A7F01 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
+		73CC0800113681F400B53CA9 /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
 		73E0CB4A112027AD00261F28 /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73E0CB551120285E00261F28 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
-		73E38C4A112DE2720077F4D8 /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
 		73EB2BC7112B03DD004F3A26 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73EB2BC8112B03DF004F3A26 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73EF278B112B2C0D009C849C /* PLBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EF278A112B2C0D009C849C /* PLBlocks.framework */; };
@@ -111,6 +110,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
+		};
+		73CC082C11368A3B00B53CA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9;
+			remoteInfo = TestUtilitiesTests;
 		};
 		73EB2BC2112B03C0004F3A26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -432,6 +438,7 @@
 				7364E7BF10F771B9002B5E45 /* SHSharedUI.framework */,
 				7364E7C110F771B9002B5E45 /* SHSharedUITests.octest */,
 				7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */,
+				73CC082D11368A3B00B53CA9 /* TestUtilitiesTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -632,6 +639,13 @@
 			remoteRef = 7364E7C210F771B9002B5E45 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		73CC082D11368A3B00B53CA9 /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 73CC082C11368A3B00B53CA9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -685,11 +699,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73872FF31128146000948FE7 /* TestHelpTests.m in Sources */,
 				7395221B1128724300F747E9 /* AsyncTestProxy.m in Sources */,
 				7395222D1128738D00F747E9 /* AsyncTests.m in Sources */,
 				739522321128739400F747E9 /* TestHelp.m in Sources */,
-				73E38C4A112DE2720077F4D8 /* TestAsyncTestProxy.m in Sources */,
+				73CC0800113681F400B53CA9 /* TestHelpTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

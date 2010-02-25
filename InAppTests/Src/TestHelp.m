@@ -131,25 +131,32 @@
 	
 }
 
-- (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject {
-
-	//	-waitForCallback
-	// make a block to be executed on callback
-	// Dont keep state here - pass the callback object into testProxy for storage
-//	FSBlock *exprBlock = _BLOCK(@"[:blockArg1 :arg1 | (blockArg1 value) isEqualTo: arg1]");
-//	FSBlock *callbackBlock  = _BLOCK(@"[[:arg1 :arg2 | assertResultOfBlockIsTrue: blk1 arg1: arg2: msg: ");
-
-	/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-	NSInvocation *callbackInvocation;
-	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&callbackInvocation]	 
+/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
+- (NSInvocation *)_assertEqualObjectsBlock {
+	
+	NSAssert(_tests, @"oops, need to set the _tests object");
+	
+	FSBlock *exprBlock = _BLOCK(@"[:blockArg1 :arg1 | (blockArg1 value) isEqualTo: arg1]");
+	//	FSBlock *callbackBlock  = _BLOCK(@"[[:arg1 :arg2 | assertResultOfBlockIsTrue: blk1 arg1: arg2: msg: ");
+	
+	
+	NSInvocation *outInv;
+	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv]	 
 	 assertResultOfBlockIsTrue:@""
 	 arg1:@""
 	 arg2:@""
 	 msg:@"oop"
 	 ];
-	
-	// this needs to retain inv
-	testProxy.resultProcessObject = callbackInvocation;
+	return outInv;
+}
+
+- (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject {
+
+	// make a block to be executed on callback
+	// Dont keep state here - pass the callback object into testProxy for storage
+
+	// Build the inv to call whe the callback is reached. this needs to retain inv
+	testProxy.resultProcessObject =  [self _assertEqualObjectsBlock];
 
 	//	-queue
 	//	-fire

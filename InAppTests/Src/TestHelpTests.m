@@ -6,9 +6,6 @@
 //  Copyright 2010 BestBefore Ltd. All rights reserved.
 //
 #import "AsyncTests.h"
-#import <SHTestUtilities/SHTestUtilities.h>
-#import <SenTestingKit/SenTestingKit.h>
-#import <OCMock/OCMock.h>
 #import "TestHelp.h"
 #import "AsyncTestProxy.h"
 
@@ -40,17 +37,16 @@
 //-- ignore the result
 //-- assert result is true
 //-- assert result is false
+
 //-- assert result is equal to another result
+- (void)testAssertResultIsEaualToAnotherResult {
+	// - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject
 
-- (void)testMuthaFucker {
-
+// Expected behavoir
 //	-queue
 //	-fire
 //	-waitForCallback
 //	-process result
-
-//	[expectThat(app.alertView) should].exist;
-//	[[app view:@"UIThreePartButton"] touch];
 
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
@@ -61,7 +57,7 @@
 	[_th aSyncAssertEqual:mockTP :@"steven"];
 	[mockTP verify];
 
-	/* mock isn't going to call back on it's own */
+	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
 	[[[mockTP expect] andReturn:@"steven"] result];
 	
 	id mockResultAction = MOCK(NSInvocation);
@@ -72,6 +68,18 @@
 	[mockResultAction verify];
 	[mockTP verify];
 }
+
+- (void)testAssertEqualObjectsBlock {
+	//- (NSInvocation *)assertEqualObjectsBlock
+	
+	NSInvocation *equalBlock = [_th _assertEqualObjectsBlock];
+	[equalBlock invoke];
+}
+
+// Better form of expectation?
+//	[expectThat(app.alertView) should].exist;
+//	[[app view:@"UIThreePartButton"] touch];
+
 
 //	[expect that:mockTP equals:@"steven"]
 
