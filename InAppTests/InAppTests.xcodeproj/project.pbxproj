@@ -11,6 +11,7 @@
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		730D4EAF10FC9BED00E0F81C /* GUIFiddler.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D4EAE10FC9BED00E0F81C /* GUIFiddler.m */; };
 		730D4EE210FC9DC300E0F81C /* GUIFiddler in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730D4E8610FC9B5900E0F81C /* GUIFiddler */; };
+		735084DA1137F7EC005A4F05 /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		735AB38010F5F641008378AA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		73662EE61121CB0800E8DC9F /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
 		736D2A1010F5E9B80020CB19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 736D2A0F10F5E9B80020CB19 /* main.m */; };
@@ -34,11 +35,11 @@
 		73BB35F410F5343F000A7F01 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
-		73CC0800113681F400B53CA9 /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
 		73E0CB4A112027AD00261F28 /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73E0CB551120285E00261F28 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
+		73E20F6C1137DCA00092F736 /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
 		73EB2BC7112B03DD004F3A26 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73EB2BC8112B03DF004F3A26 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73EF278B112B2C0D009C849C /* PLBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EF278A112B2C0D009C849C /* PLBlocks.framework */; };
@@ -330,7 +331,7 @@
 				73B361CF1116E6050064AF28 /* AppDelegate.m */,
 				738BE6C21121DF0E0028EB59 /* NSApplication+ScriptingExtras.h */,
 				738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */,
-				730D4EAB10FC9BCE00E0F81C /* GUIFiddler - APP */,
+				730D4EAB10FC9BCE00E0F81C /* GUIFiddler - Standalone APP */,
 				735AB3C710F5F847008378AA /* Document */,
 				735AB3C610F5F83C008378AA /* Setup - Test Runner */,
 				735AB3C510F5F832008378AA /* TestCases */,
@@ -371,12 +372,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		730D4EAB10FC9BCE00E0F81C /* GUIFiddler - APP */ = {
+		730D4EAB10FC9BCE00E0F81C /* GUIFiddler - Standalone APP */ = {
 			isa = PBXGroup;
 			children = (
 				730D4EAE10FC9BED00E0F81C /* GUIFiddler.m */,
 			);
-			name = "GUIFiddler - APP";
+			name = "GUIFiddler - Standalone APP";
 			sourceTree = "<group>";
 		};
 		735AB3C410F5F825008378AA /* GTM - Reference */ = {
@@ -702,7 +703,8 @@
 				7395221B1128724300F747E9 /* AsyncTestProxy.m in Sources */,
 				7395222D1128738D00F747E9 /* AsyncTests.m in Sources */,
 				739522321128739400F747E9 /* TestHelp.m in Sources */,
-				73CC0800113681F400B53CA9 /* TestHelpTests.m in Sources */,
+				73E20F6C1137DCA00092F736 /* TestAsyncTestProxy.m in Sources */,
+				735084DA1137F7EC005A4F05 /* TestHelpTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

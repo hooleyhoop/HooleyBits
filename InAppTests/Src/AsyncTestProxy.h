@@ -5,9 +5,10 @@
 //  Created by Steven Hooley on 13/02/2010.
 //  Copyright 2010 BestBefore. All rights reserved.
 //
+#import <SHShared/SHooleyObject.h>
 
 @class TestHelp;
-@interface AsyncTestProxy : NSObject {
+@interface AsyncTestProxy : SHooleyObject {
 
 	NSInvocation	*_remoteInvocation;
 

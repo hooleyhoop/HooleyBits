@@ -19,12 +19,16 @@
 
 @implementation TestHelpTests
 
+static NSAutoreleasePool *pool;
+
 - (void)setUp {
+	pool = [[NSAutoreleasePool alloc] init];
 	_th = [[TestHelp makeWithTest:self] retain];
 }
 
 - (void)tearDown {
 	[_th release];
+	[pool release];
 }
 
 //-- push test proxies onto a queue, these will be evaluated in order, they can be asynchronous, they will finish completely before next starts
@@ -46,7 +50,7 @@
 //	-queue
 //	-fire
 //	-waitForCallback
-//	-process result
+//	-swap result into result invocation, fire result invocation
 
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
@@ -58,23 +62,43 @@
 	[mockTP verify];
 
 	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
-	[[[mockTP expect] andReturn:@"steven"] result];
+	NSString *fakeResult = @"steven";
+	[[[mockTP expect] andReturn:fakeResult] result];
 	
 	id mockResultAction = MOCK(NSInvocation);
 	[[mockResultAction expect] invoke];
 	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
+	[[mockResultAction expect] setArgument:fakeResult atIndex:2];
+
 	[_th _callBackForASync:mockTP];
 	
 	[mockResultAction verify];
 	[mockTP verify];
 }
 
+// Test that we build an invocation that calls back to our test class (STAsserts need to be on the test class) with the correct arguments
 - (void)testAssertEqualObjectsBlock {
 	//- (NSInvocation *)assertEqualObjectsBlock
 	
-	NSInvocation *equalBlock = [_th _assertEqualObjectsBlock];
+	NSString *expectedResult = @"steven";
+	
+	id mockTests = MOCK(AsyncTests);
+	SwappedInIvar *swapIn = [SwappedInIvar swapFor:_th :"_tests" :mockTests];
+	
+	// We expect the first arg of the invocation to be empty because the result wouldn't be availbale at this stage
+	[[mockTests expect] assertResultOfBlockIsTrue:OCMOCK_ANY arg1:nil arg2:expectedResult msg:nil];
+	
+	NSInvocation *equalBlock = [_th _assertEqualObjectsInvocationWithDefferedResultProxy:nil expectedResult:expectedResult];
 	[equalBlock invoke];
+	
+	[mockTests verify];
+	[swapIn putBackOriginal];
 }
+
+- (void)test_assertEqualObjectsBlock {
+	
+}
+
 
 // Better form of expectation?
 //	[expectThat(app.alertView) should].exist;

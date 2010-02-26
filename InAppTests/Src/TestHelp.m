@@ -131,22 +131,24 @@
 	
 }
 
-/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-- (NSInvocation *)_assertEqualObjectsBlock {
-	
-	NSAssert(_tests, @"oops, need to set the _tests object");
+- (FSBlock *)_assertEqualObjectsBlock {
 	
 	FSBlock *exprBlock = _BLOCK(@"[:blockArg1 :arg1 | (blockArg1 value) isEqualTo: arg1]");
 	//	FSBlock *callbackBlock  = _BLOCK(@"[[:arg1 :arg2 | assertResultOfBlockIsTrue: blk1 arg1: arg2: msg: ");
 	
+	return exprBlock;
+}
+
+/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
+- (NSInvocation *)_assertEqualObjectsInvocationWithDefferedResultProxy:(AsyncTestProxy *)notUsed expectedResult:(id)ob2 {
+	
+	NSAssert(_tests, @"oops, need to set the _tests object");
 	
 	NSInvocation *outInv;
-	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv]	 
-	 assertResultOfBlockIsTrue:@""
-	 arg1:@""
-	 arg2:@""
-	 msg:@"oop"
-	 ];
+	
+	// of course, result isn't available at this stage
+	id result = nil;
+	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assertResultOfBlockIsTrue:[self _assertEqualObjectsBlock] arg1:result arg2:ob2 msg:nil];
 	return outInv;
 }
 
@@ -156,7 +158,7 @@
 	// Dont keep state here - pass the callback object into testProxy for storage
 
 	// Build the inv to call whe the callback is reached. this needs to retain inv
-	testProxy.resultProcessObject =  [self _assertEqualObjectsBlock];
+	testProxy.resultProcessObject =  [self _assertEqualObjectsInvocationWithDefferedResultProxy:testProxy expectedResult:someOtherObject];
 
 	//	-queue
 	//	-fire
@@ -172,8 +174,15 @@
 	//	-process result
 	id result = someKindOfMagicObject.result;
 	id resultProcessObject = someKindOfMagicObject.resultProcessObject;
-	[resultProcessObject invoke];
-
+	if( resultProcessObject )
+	{
+		if(result){
+			// swap in result
+			[resultProcessObject setArgument:result atIndex:2];
+		}
+		[resultProcessObject invoke];
+	}
+	
 	[self _popWaitingAsyncTest:someKindOfMagicObject];
 }
 

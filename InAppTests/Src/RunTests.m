@@ -16,7 +16,7 @@ static int _psn;
 static RunTests *_shared;
 
 #pragma mark -
-@interface FF : NSObject {
+@interface FF : SHooleyObject {
 id _target;
 SEL _selector;
 NSArray *_args;	
@@ -70,6 +70,14 @@ NSArray *_args;
 //+ (void)addException:(NSException *)anException {
 //	[[RunTests shared]->_testRun addException:anException];
 //}
++ (void)startLockTimer {
+	// TODO: implement this!
+}
+
++ (void)cancelLockTimer {
+	// TODO: implement this!
+}
+
 static BOOL _locked;
 + (BOOL)isLocked {
 	return _locked;
@@ -77,10 +85,12 @@ static BOOL _locked;
 + (void)lock {
 	NSAssert(NO==_locked, @"lock errror - cant lock");
 	_locked =YES;
+	[self startLockTimer];
 }
 + (void)unlock:(id)callee callback:(SEL)method {
 
 	NSAssert(YES==_locked, @"lock errror - cant unlock");
+	[self cancelLockTimer];
 	[callee performSelector:method];
 	_locked =NO;
 }

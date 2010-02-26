@@ -16,14 +16,18 @@
 
 @end
 
+static NSAutoreleasePool *pool;
+
 @implementation TestAsyncTestProxy
 
 - (void)setUp {
+	pool = [[NSAutoreleasePool alloc] init];
 	_testProxy = [[AsyncTestProxy alloc] init];
 }
 
 - (void)tearDown {
 	[_testProxy release];
+	[pool release];
 }
 
 // Test that when we call fire we get a callback

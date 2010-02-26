@@ -7,7 +7,9 @@
 //
 @class SenTestSuiteRun;
 
-@interface RunTests : NSObject {
+#import <SHShared/SHooleyObject.h>
+
+@interface RunTests : SHooleyObject {
 
 	NSTimer							*_timer;
 	
