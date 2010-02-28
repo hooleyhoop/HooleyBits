@@ -133,10 +133,7 @@
 
 - (FSBlock *)_assertEqualObjectsBlock {
 	
-	FSBlock *exprBlock = _BLOCK(@"[:blockArg1 :arg1 | (blockArg1 value) isEqualTo: arg1]");
-	//	FSBlock *callbackBlock  = _BLOCK(@"[[:arg1 :arg2 | assertResultOfBlockIsTrue: blk1 arg1: arg2: msg: ");
-	
-	return exprBlock;
+	return _BLOCK(@"[:arg1 :arg2 | arg2 isEqualTo: arg1]");	
 }
 
 /* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */

@@ -32,18 +32,35 @@ static NSAutoreleasePool *pool;
 }
 
 //-- push test proxies onto a queue, these will be evaluated in order, they can be asynchronous, they will finish completely before next starts
-//
-//-- test order
-//-- test asynchronous
-//
 //-- so you build a block, push it onto the stack, execute it later it returns a result
-//
+
+//-- test order
+- (void) {
+	
+}
+
+//-- test asynchronous
+- (void) {
+	
+}
+
 //-- ignore the result
+- (void) {
+	
+}
+
 //-- assert result is true
+- (void) {
+	
+}
+
 //-- assert result is false
+- (void) {
+	
+}
 
 //-- assert result is equal to another result
-- (void)testAssertResultIsEaualToAnotherResult {
+- (void)testAssertResultIsEqualToAnotherResult {
 	// - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject
 
 // Expected behavoir
@@ -96,7 +113,14 @@ static NSAutoreleasePool *pool;
 }
 
 - (void)test_assertEqualObjectsBlock {
+	// - (FSBlock *)_assertEqualObjectsBlock
+
+	FSBlock *blk = [_th _assertEqualObjectsBlock];
+	id result1 = [blk value:@"Steven" value:@"Steven"];	
+	STAssertTrue( [result1 isTrue], nil );
 	
+	id result2 = [blk value:@"Steven" value:@"Barry"];
+	STAssertFalse( [result2 isTrue], nil );
 }
 
 
