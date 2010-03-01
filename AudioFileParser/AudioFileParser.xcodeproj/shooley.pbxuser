@@ -1,0 +1,1213 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 7309615610E26D8C008B4C08 /* testRunner */;
+		activeTarget = 73095FF010E266E6008B4C08 /* AudioFileParserTests */;
+		addToTargets = (
+			73095FF010E266E6008B4C08 /* AudioFileParserTests */,
+		);
+		breakpoints = (
+			73C0071410EB845800194454 /* SHCASpectralProcessorTests.mm:144 */,
+			7384A67910EBB633000AD152 /* SHCASpectralProcessorTests.mm:177 */,
+			738243AC10F00AD200C69483 /* FFTHelperTests.m:42 */,
+			738FC39210F0C86B005CFFC7 /* FFTHelper.m:69 */,
+			73923A0310F3926E0098E5B1 /* ProcessingStuff.mm:193 */,
+			73923A6810F39F780098E5B1 /* AudioFileParser.m:439 */,
+			73923A7010F39FBD0098E5B1 /* FFTHelper.m:117 */,
+			73D515D3110B1CD7005537A5 /* ProcessingStuff.mm:61 */,
+			73D51608110B1E06005537A5 /* ProcessingStuff.mm:64 */,
+			73D5160F110B1EFA005537A5 /* BacwardsProcessTests.mm:43 */,
+			73D51618110B1F26005537A5 /* BacwardsProcessTests.mm:63 */,
+			7389E4CA11132FB9004D4B5D /* ProcessingStuff.mm:269 */,
+			7385BFAE11222C0700C0688C /* BacwardsProcessTests.mm:34 */,
+			7385BFD7112233CA00C0688C /* SHCASpectralProcessor.cpp:280 */,
+			73D937BB1122C8AB007D44EF /* FFTTetsts.m:115 */,
+			73D938171122CCAD007D44EF /* FFTTetsts.m:123 */,
+			73C2CF061122E03C000CDFF9 /* FFTTetsts.m:153 */,
+			73C2CF0B1122E142000CDFF9 /* FFTTetsts.m:150 */,
+			731EF1891123002B000A9078 /* FFTTetsts.m:170 */,
+			731EF1CD1123100B000A9078 /* FFTTetsts.m:71 */,
+			731EF1CF1123100E000A9078 /* FFTTetsts.m:83 */,
+		);
+		codeSenseManager = 73CB05D710DBE23300AE25C8 /* Code sense */;
+		executables = (
+			73CB05CD10DBE21F00AE25C8 /* AudioFileParser */,
+			7309615610E26D8C008B4C08 /* testRunner */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					830,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = 1;
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					960,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					694,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 287935940;
+			PBXWorkspaceStateSaveDate = 287935940;
+		};
+		perUserProjectItems = {
+			731EF27511232C8C000A9078 /* PBXTextBookmark */ = 731EF27511232C8C000A9078 /* PBXTextBookmark */;
+			7385BFA911222AF800C0688C /* PBXTextBookmark */ = 7385BFA911222AF800C0688C /* PBXTextBookmark */;
+			73D937BC1122C8AE007D44EF /* PBXTextBookmark */ = 73D937BC1122C8AE007D44EF /* PBXTextBookmark */;
+			73D937BD1122C8AE007D44EF /* PBXTextBookmark */ = 73D937BD1122C8AE007D44EF /* PBXTextBookmark */;
+			73D937BE1122C8AE007D44EF /* PBXTextBookmark */ = 73D937BE1122C8AE007D44EF /* PBXTextBookmark */;
+			73D937C41122C8AE007D44EF /* PBXTextBookmark */ = 73D937C41122C8AE007D44EF /* PBXTextBookmark */;
+			73D937C51122C8AE007D44EF /* PBXTextBookmark */ = 73D937C51122C8AE007D44EF /* PBXTextBookmark */;
+			73D937C61122C8AE007D44EF /* PBXTextBookmark */ = 73D937C61122C8AE007D44EF /* PBXTextBookmark */;
+			73D937C71122C8AE007D44EF /* PBXTextBookmark */ = 73D937C71122C8AE007D44EF /* PBXTextBookmark */;
+			73D937CB1122C8AE007D44EF /* PBXTextBookmark */ = 73D937CB1122C8AE007D44EF /* PBXTextBookmark */;
+			73D937CE1122C8AE007D44EF /* PBXTextBookmark */ = 73D937CE1122C8AE007D44EF /* PBXTextBookmark */;
+			73D937EE1122C953007D44EF /* PBXTextBookmark */ = 73D937EE1122C953007D44EF /* PBXTextBookmark */;
+			73D937FA1122CA6A007D44EF /* PBXTextBookmark */ = 73D937FA1122CA6A007D44EF /* PBXTextBookmark */;
+			73D937FB1122CA6A007D44EF /* PBXTextBookmark */ = 73D937FB1122CA6A007D44EF /* PBXTextBookmark */;
+			73D937FC1122CA6A007D44EF /* PBXTextBookmark */ = 73D937FC1122CA6A007D44EF /* PBXTextBookmark */;
+			73D937FD1122CA6A007D44EF /* PBXTextBookmark */ = 73D937FD1122CA6A007D44EF /* PBXTextBookmark */;
+			73D937FE1122CA6A007D44EF /* PBXTextBookmark */ = 73D937FE1122CA6A007D44EF /* PBXTextBookmark */;
+			73D938021122CA6A007D44EF /* PBXTextBookmark */ = 73D938021122CA6A007D44EF /* PBXTextBookmark */;
+			73D938031122CA6A007D44EF /* PBXTextBookmark */ = 73D938031122CA6A007D44EF /* PBXTextBookmark */;
+			73D938061122CA6A007D44EF /* PBXTextBookmark */ = 73D938061122CA6A007D44EF /* PBXTextBookmark */;
+			73D938331122D422007D44EF /* PBXTextBookmark */ = 73D938331122D422007D44EF /* PBXTextBookmark */;
+			73D938341122D422007D44EF /* PBXTextBookmark */ = 73D938341122D422007D44EF /* PBXTextBookmark */;
+			73D938351122D422007D44EF /* PBXTextBookmark */ = 73D938351122D422007D44EF /* PBXTextBookmark */;
+			73D938361122D422007D44EF /* PBXTextBookmark */ = 73D938361122D422007D44EF /* PBXTextBookmark */;
+			73D938371122D422007D44EF /* PBXTextBookmark */ = 73D938371122D422007D44EF /* PBXTextBookmark */;
+			73D9383A1122D422007D44EF /* PBXTextBookmark */ = 73D9383A1122D422007D44EF /* PBXTextBookmark */;
+			73D9383C1122D422007D44EF /* PBXTextBookmark */ = 73D9383C1122D422007D44EF /* PBXTextBookmark */;
+			73D9383E1122D422007D44EF /* PBXTextBookmark */ = 73D9383E1122D422007D44EF /* PBXTextBookmark */;
+			73EB2A2011298FFF004F3A26 /* PBXTextBookmark */ = 73EB2A2011298FFF004F3A26 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 73CB05D610DBE23300AE25C8 /* Source Control */;
+		userBuildSettings = {
+			SYMROOT = /Users/shooley/Desktop/Programming/Cocoa/Blake/build;
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {839, 387}}";
+			sepNavSelRange = "{139, 0}";
+			sepNavVisRange = "{0, 236}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* AudioFileParser_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 277}}";
+			sepNavSelRange = "{126, 28}";
+			sepNavVisRange = "{0, 200}";
+		};
+	};
+	73095FD910E262C9008B4C08 /* BufferStore.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {839, 468}}";
+			sepNavSelRange = "{528, 12}";
+			sepNavVisRange = "{44, 791}";
+		};
+	};
+	73095FDA10E262C9008B4C08 /* BufferStore.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 2884}}";
+			sepNavSelRange = "{504, 133}";
+			sepNavVisRange = "{5143, 845}";
+			sepNavWindowFrame = "{{90, 90}, {1161, 788}}";
+		};
+	};
+	73095FF010E266E6008B4C08 /* AudioFileParserTests */ = {
+		activeExec = 0;
+	};
+	7309601310E26779008B4C08 /* BufferStoreTests.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {884, 3850}}";
+			sepNavSelRange = "{4487, 0}";
+			sepNavVisRange = "{3907, 1351}";
+			sepNavWindowFrame = "{{15, 105}, {1279, 768}}";
+		};
+	};
+	7309615610E26D8C008B4C08 /* testRunner */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+			YES,
+			YES,
+		);
+		argumentStrings = (
+			"-SenTest All",
+			"$(PROJECT_DIR)/../../Blake/build/$(CONFIGURATION)/AudioFileParserTests.octest",
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				commandLineArgs = (
+				);
+				displayName = "Executable Runner";
+				environment = {
+				};
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = DYLD_LIBRARY_PATH;
+				value = "$(PROJECT_DIR)/../build/$(CONFIGURATION)";
+			},
+			{
+				active = YES;
+				name = DYLD_FRAMEWORK_PATH;
+				value = "$(PROJECT_DIR)/../build/$(CONFIGURATION)";
+			},
+			{
+				active = YES;
+				name = MallocPreScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = MallocScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = NSHangOnUncaughtException;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = OBJC_DISABLE_GC;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSDebugEnabled;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSZombieEnabled;
+				value = YES;
+			},
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = 7309615710E26D8C008B4C08 /* otest */;
+		libgmallocEnabled = 0;
+		name = testRunner;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			"*dataPtr2-float--[BufferStoreTests testAdvanceDataPtrBy]" = 3;
+			"*imagp-float--[FFTTetsts test1DFFT]" = 1;
+			"*realp-float--[FFTTetsts test1DFFT]" = 1;
+		};
+	};
+	7309615710E26D8C008B4C08 /* otest */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = "compiled.mach-o.executable";
+		name = otest;
+		path = /Developer/Tools/otest;
+		sourceTree = "<absolute>";
+	};
+	731EF1891123002B000A9078 /* FFTTetsts.m:170 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test1DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 170;
+		location = AudioFileParserTests;
+		modificationTime = 287512652.135931;
+		state = 1;
+	};
+	731EF1CD1123100B000A9078 /* FFTTetsts.m:71 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test2DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 71;
+		location = AudioFileParserTests;
+		modificationTime = 287512660.280767;
+		state = 1;
+	};
+	731EF1CF1123100E000A9078 /* FFTTetsts.m:83 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test2DFFT";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 83;
+		location = AudioFileParserTests;
+		modificationTime = 287512643.2874089;
+		state = 1;
+	};
+	731EF27511232C8C000A9078 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		name = "FFTTetsts.m: 31";
+		rLen = 0;
+		rLoc = 474;
+		rType = 0;
+		vrLen = 962;
+		vrLoc = 3;
+	};
+	736395E210E0DC1100F74307 /* AUBase.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1062, 27443}}";
+			sepNavSelRange = "{66253, 0}";
+			sepNavVisRange = "{65742, 1055}";
+		};
+	};
+	736395E310E0DC1100F74307 /* AUBase.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 11596}}";
+			sepNavSelRange = "{2657, 0}";
+			sepNavVisRange = "{2270, 518}";
+		};
+	};
+	736395EC10E0DC1100F74307 /* AUScopeElement.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1055, 6734}}";
+			sepNavSelRange = "{2986, 0}";
+			sepNavVisRange = "{2683, 682}";
+		};
+	};
+	736395F610E0DC4C00F74307 /* SHCASpectralProcessor.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 1904}}";
+			sepNavSelRange = "{4427, 8}";
+			sepNavVisRange = "{3451, 1194}";
+		};
+	};
+	736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1115, 5236}}";
+			sepNavSelRange = "{12376, 45}";
+			sepNavVisRange = "{10692, 1979}";
+		};
+	};
+	7363960010E0DCCF00F74307 /* AUBuffer.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 2756}}";
+			sepNavSelRange = "{3925, 102}";
+			sepNavVisRange = "{3561, 577}";
+		};
+	};
+	7363960110E0DCCF00F74307 /* AUBuffer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 3159}}";
+			sepNavSelRange = "{3364, 15}";
+			sepNavVisRange = "{3040, 873}";
+		};
+	};
+	7363960E10E0DD5200F74307 /* CAStreamBasicDescription.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1406, 6874}}";
+			sepNavSelRange = "{9243, 0}";
+			sepNavVisRange = "{8554, 2083}";
+		};
+	};
+	7363960F10E0DD5200F74307 /* CAStreamBasicDescription.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1406, 3584}}";
+			sepNavSelRange = "{5327, 17}";
+			sepNavVisRange = "{4453, 2123}";
+		};
+	};
+	7363961810E0DD7200F74307 /* CAMath.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {884, 819}}";
+			sepNavSelRange = "{2617, 0}";
+			sepNavVisRange = "{1695, 1292}";
+		};
+	};
+	7363962110E0DD9600F74307 /* CAAutoDisposer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1226, 6201}}";
+			sepNavSelRange = "{5483, 0}";
+			sepNavVisRange = "{5173, 350}";
+		};
+	};
+	7363963210E0DE9400F74307 /* CABitOperations.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1115, 2506}}";
+			sepNavSelRange = "{4566, 1}";
+			sepNavVisRange = "{3613, 1321}";
+		};
+	};
+	736398D610E10E5700F74307 /* CABufferList.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1363, 4144}}";
+			sepNavSelRange = "{10190, 0}";
+			sepNavVisRange = "{4111, 733}";
+		};
+	};
+	736398D710E10E5700F74307 /* CABufferList.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 2951}}";
+			sepNavSelRange = "{3065, 13}";
+			sepNavVisRange = "{2412, 807}";
+		};
+	};
+	7366459D10E134850049510B /* beat_detect.pde.txt */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 3724}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 822}";
+		};
+	};
+	738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {884, 3276}}";
+			sepNavSelRange = "{1662, 62}";
+			sepNavVisRange = "{1314, 667}";
+		};
+	};
+	7381128A10E3D73200D73143 /* CAXException.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 3835}}";
+			sepNavSelRange = "{125, 5}";
+			sepNavVisRange = "{0, 2270}";
+		};
+	};
+	7381128F10E3D76D00D73143 /* AUBaseHelper.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {912, 1470}}";
+			sepNavSelRange = "{2472, 28}";
+			sepNavVisRange = "{2054, 943}";
+		};
+	};
+	738243AC10F00AD200C69483 /* FFTHelperTests.m:42 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 738F25D810EF71E700A35230 /* FFTHelperTests.m */;
+		functionName = "-testBlahBlah";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 42;
+		modificationTime = 287512633.780798;
+		state = 0;
+	};
+	7384A67910EBB633000AD152 /* SHCASpectralProcessorTests.mm:177 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */;
+		functionName = "callBackFunction_getMagnitudes(SpectralBufferList* inSpectra, void* inUserData)";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 177;
+		modificationTime = 287512633.718134;
+		state = 0;
+	};
+	7385BFA911222AF800C0688C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7363961810E0DD7200F74307 /* CAMath.h */;
+		name = "CAMath.h: 50";
+		rLen = 0;
+		rLoc = 2617;
+		rType = 0;
+		vrLen = 1292;
+		vrLoc = 1695;
+	};
+	7385BFAE11222C0700C0688C /* BacwardsProcessTests.mm:34 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */;
+		functionName = "-init";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 34;
+		location = AudioFileParserTests;
+		modificationTime = 287512642.270371;
+		state = 1;
+	};
+	7385BFD7112233CA00C0688C /* SHCASpectralProcessor.cpp:280 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */;
+		functionName = "SHCASpectralProcessor::DoFwdFFT()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 280;
+		location = AudioFileParserTests;
+		modificationTime = 287512642.440117;
+		state = 1;
+	};
+	7389E4CA11132FB9004D4B5D /* ProcessingStuff.mm:269 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		functionName = "callBackFunction_storeMagnitudes( SpectralBufferList *inSpectra, void *inUserData )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 269;
+		location = AudioFileParserTests;
+		modificationTime = 287512642.2158111;
+		state = 1;
+	};
+	738F25CC10EF719D00A35230 /* ProcessingStuffTests.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {884, 462}}";
+			sepNavSelRange = "{334, 0}";
+			sepNavVisRange = "{0, 485}";
+		};
+	};
+	738F25D110EF71CD00A35230 /* FFTHelper.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 597}}";
+			sepNavSelRange = "{361, 0}";
+			sepNavVisRange = "{0, 369}";
+		};
+	};
+	738F25D210EF71CD00A35230 /* FFTHelper.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 1904}}";
+			sepNavSelRange = "{1123, 0}";
+			sepNavVisRange = "{577, 1195}";
+		};
+	};
+	738F25D810EF71E700A35230 /* FFTHelperTests.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 728}}";
+			sepNavSelRange = "{666, 0}";
+			sepNavVisRange = "{148, 821}";
+		};
+	};
+	738FC39210F0C86B005CFFC7 /* FFTHelper.m:69 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 738F25D210EF71CD00A35230 /* FFTHelper.m */;
+		functionName = "-saveImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 69;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.258759;
+		state = 1;
+	};
+	73923A0310F3926E0098E5B1 /* ProcessingStuff.mm:193 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		functionName = "-closeWriteFile";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 193;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.334218;
+		state = 1;
+	};
+	73923A6810F39F780098E5B1 /* AudioFileParser.m:439 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */;
+		functionName = "-processFiles:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 439;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.524048;
+		state = 1;
+	};
+	73923A7010F39FBD0098E5B1 /* FFTHelper.m:117 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 738F25D210EF71CD00A35230 /* FFTHelper.m */;
+		functionName = "-saveImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 117;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.5952269;
+		state = 1;
+	};
+	73C0071410EB845800194454 /* SHCASpectralProcessorTests.mm:144 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */;
+		functionName = "-testFrequencies";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 144;
+		modificationTime = 287512633.603736;
+		state = 0;
+	};
+	73C2CF061122E03C000CDFF9 /* FFTTetsts.m:153 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test1DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 153;
+		location = AudioFileParserTests;
+		modificationTime = 287512650.35475;
+		state = 1;
+	};
+	73C2CF0B1122E142000CDFF9 /* FFTTetsts.m:150 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test1DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 150;
+		location = AudioFileParserTests;
+		modificationTime = 287512649.4936761;
+		state = 1;
+	};
+	73CB05CD10DBE21F00AE25C8 /* AudioFileParser */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = NSHangOnUncaughtException;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = MallocPreScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = MallocScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = NSZombieEnabled;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSDebugEnabled;
+				value = YES;
+			},
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = AudioFileParser;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			"thisFrame-Fixed--[AudioFileParser processFiles:]" = 1;
+		};
+	};
+	73CB05D310DBE23300AE25C8 /* AudioFileParser.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 597}}";
+			sepNavSelRange = "{351, 0}";
+			sepNavVisRange = "{0, 564}";
+		};
+	};
+	73CB05D410DBE23300AE25C8 /* AudioFileParser.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 6846}}";
+			sepNavSelRange = "{16704, 22}";
+			sepNavVisRange = "{16148, 910}";
+			sepNavWindowFrame = "{{225, 110}, {1279, 768}}";
+		};
+	};
+	73CB05D610DBE23300AE25C8 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	73CB05D710DBE23300AE25C8 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	73D4A39410DF8BFE0091B586 /* ProcessingStuff.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {839, 387}}";
+			sepNavSelRange = "{294, 20}";
+			sepNavVisRange = "{0, 512}";
+			sepNavWindowFrame = "{{501, -148}, {1279, 768}}";
+		};
+	};
+	73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1115, 3990}}";
+			sepNavSelRange = "{914, 21}";
+			sepNavVisRange = "{0, 1596}";
+			sepNavWindowFrame = "{{29, 57}, {1279, 768}}";
+		};
+	};
+	73D515BE110B1A3D005537A5 /* BacwardsProcessTests.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {839, 387}}";
+			sepNavSelRange = "{245, 14}";
+			sepNavVisRange = "{0, 267}";
+			sepNavWindowFrame = "{{38, 84}, {1279, 768}}";
+		};
+	};
+	73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 1848}}";
+			sepNavSelRange = "{996, 2}";
+			sepNavVisRange = "{302, 1230}";
+		};
+	};
+	73D515D3110B1CD7005537A5 /* ProcessingStuff.mm:61 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		functionName = "-processSomeAudio::";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 61;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.713016;
+		state = 1;
+	};
+	73D51608110B1E06005537A5 /* ProcessingStuff.mm:64 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		functionName = "-processSomeAudio::";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 64;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.8457431;
+		state = 1;
+	};
+	73D5160F110B1EFA005537A5 /* BacwardsProcessTests.mm:43 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */;
+		functionName = "muthaFuckingCallback( SpectralBufferList *inSpectra, void *inUserData )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 43;
+		location = AudioFileParserTests;
+		modificationTime = 287512641.9515031;
+		state = 1;
+	};
+	73D51618110B1F26005537A5 /* BacwardsProcessTests.mm:63 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */;
+		functionName = "-doBackwardsFFT";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 63;
+		location = AudioFileParserTests;
+		modificationTime = 287512642.049798;
+		state = 1;
+	};
+	73D937A71122BE67007D44EF /* FFTTetsts.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 3052}}";
+			sepNavSelRange = "{307, 0}";
+			sepNavVisRange = "{19, 946}";
+		};
+	};
+	73D937BB1122C8AB007D44EF /* FFTTetsts.m:115 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test1DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 115;
+		location = AudioFileParserTests;
+		modificationTime = 287512645.477425;
+		state = 1;
+	};
+	73D937BC1122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */;
+		name = "SHCASpectralProcessorTests.mm: 75";
+		rLen = 62;
+		rLoc = 1662;
+		rType = 0;
+		vrLen = 667;
+		vrLoc = 1314;
+	};
+	73D937BD1122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */;
+		name = "BufferStoreTests.m: 132";
+		rLen = 0;
+		rLoc = 4487;
+		rType = 0;
+		vrLen = 1351;
+		vrLoc = 3907;
+	};
+	73D937BE1122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25CC10EF719D00A35230 /* ProcessingStuffTests.mm */;
+		name = "ProcessingStuffTests.mm: 19";
+		rLen = 0;
+		rLoc = 334;
+		rType = 0;
+		vrLen = 485;
+		vrLoc = 0;
+	};
+	73D937C41122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		name = "ProcessingStuff.mm: 65";
+		rLen = 0;
+		rLoc = 1596;
+		rType = 0;
+		vrLen = 860;
+		vrLoc = 885;
+	};
+	73D937C51122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */;
+		name = "SHCASpectralProcessorTests.mm: 75";
+		rLen = 62;
+		rLoc = 1662;
+		rType = 0;
+		vrLen = 667;
+		vrLoc = 1314;
+	};
+	73D937C61122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */;
+		name = "BufferStoreTests.m: 132";
+		rLen = 0;
+		rLoc = 4487;
+		rType = 0;
+		vrLen = 1351;
+		vrLoc = 3907;
+	};
+	73D937C71122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25CC10EF719D00A35230 /* ProcessingStuffTests.mm */;
+		name = "ProcessingStuffTests.mm: 19";
+		rLen = 0;
+		rLoc = 334;
+		rType = 0;
+		vrLen = 485;
+		vrLoc = 0;
+	};
+	73D937CB1122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7366459D10E134850049510B /* beat_detect.pde.txt */;
+		name = "beat_detect.pde.txt: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 612;
+		vrLoc = 0;
+	};
+	73D937CE1122C8AE007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */;
+		name = "AudioFileParser.m: 436";
+		rLen = 0;
+		rLoc = 16777;
+		rType = 0;
+		vrLen = 791;
+		vrLoc = 16267;
+	};
+	73D937EE1122C953007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */;
+		name = "BacwardsProcessTests.mm: 38";
+		rLen = 2;
+		rLoc = 996;
+		rType = 0;
+		vrLen = 1165;
+		vrLoc = 337;
+	};
+	73D937FA1122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73095FDA10E262C9008B4C08 /* BufferStore.m */;
+		name = "BufferStore.m: 28";
+		rLen = 133;
+		rLoc = 504;
+		rType = 0;
+		vrLen = 845;
+		vrLoc = 5143;
+	};
+	73D937FB1122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73F51F0C10E5364F00A012D2 /* HooleyStuff.m */;
+		name = "HooleyStuff.m: 63";
+		rLen = 0;
+		rLoc = 1629;
+		rType = 0;
+		vrLen = 1229;
+		vrLoc = 514;
+	};
+	73D937FC1122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */;
+		name = "BacwardsProcessTests.mm: 38";
+		rLen = 2;
+		rLoc = 996;
+		rType = 0;
+		vrLen = 1230;
+		vrLoc = 302;
+	};
+	73D937FD1122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */;
+		name = "ProcessingStuff.mm: 65";
+		rLen = 0;
+		rLoc = 1596;
+		rType = 0;
+		vrLen = 1722;
+		vrLoc = 2421;
+	};
+	73D937FE1122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */;
+		name = "FFTHelper.m: 59";
+		rLen = 0;
+		rLoc = 1123;
+		rType = 0;
+		vrLen = 1195;
+		vrLoc = 577;
+	};
+	73D938021122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73095FDA10E262C9008B4C08 /* BufferStore.m */;
+		name = "BufferStore.m: 28";
+		rLen = 133;
+		rLoc = 504;
+		rType = 0;
+		vrLen = 845;
+		vrLoc = 5143;
+	};
+	73D938031122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73F51F0C10E5364F00A012D2 /* HooleyStuff.m */;
+		name = "HooleyStuff.m: 63";
+		rLen = 0;
+		rLoc = 1629;
+		rType = 0;
+		vrLen = 1229;
+		vrLoc = 514;
+	};
+	73D938061122CA6A007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */;
+		name = "FFTHelper.m: 59";
+		rLen = 0;
+		rLoc = 1123;
+		rType = 0;
+		vrLen = 1195;
+		vrLoc = 577;
+	};
+	73D938171122CCAD007D44EF /* FFTTetsts.m:123 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		functionName = "-test1DFFT";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 123;
+		location = AudioFileParserTests;
+		modificationTime = 287512648.658398;
+		state = 1;
+	};
+	73D938331122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */;
+		name = "AudioFileParser.m: 432";
+		rLen = 22;
+		rLoc = 16704;
+		rType = 0;
+		vrLen = 903;
+		vrLoc = 16148;
+	};
+	73D938341122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25D810EF71E700A35230 /* FFTHelperTests.m */;
+		name = "FFTHelperTests.m: 39";
+		rLen = 0;
+		rLoc = 666;
+		rType = 0;
+		vrLen = 821;
+		vrLoc = 148;
+	};
+	73D938351122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 736395F610E0DC4C00F74307 /* SHCASpectralProcessor.h */;
+		name = "SHCASpectralProcessor.h: 115";
+		rLen = 8;
+		rLoc = 4427;
+		rType = 0;
+		vrLen = 1194;
+		vrLoc = 3451;
+	};
+	73D938361122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */;
+		name = "SHCASpectralProcessor.cpp: 270";
+		rLen = 8;
+		rLoc = 10287;
+		rType = 0;
+		vrLen = 1630;
+		vrLoc = 9472;
+	};
+	73D938371122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7366459D10E134850049510B /* beat_detect.pde.txt */;
+		name = "beat_detect.pde.txt: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 822;
+		vrLoc = 0;
+	};
+	73D9383A1122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */;
+		name = "SHCASpectralProcessor.cpp: 321";
+		rLen = 39;
+		rLoc = 12088;
+		rType = 0;
+		vrLen = 1261;
+		vrLoc = 11102;
+	};
+	73D9383C1122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 738F25D810EF71E700A35230 /* FFTHelperTests.m */;
+		name = "FFTHelperTests.m: 39";
+		rLen = 0;
+		rLoc = 666;
+		rType = 0;
+		vrLen = 821;
+		vrLoc = 148;
+	};
+	73D9383E1122D422007D44EF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 736395F610E0DC4C00F74307 /* SHCASpectralProcessor.h */;
+		name = "SHCASpectralProcessor.h: 115";
+		rLen = 8;
+		rLoc = 4427;
+		rType = 0;
+		vrLen = 1194;
+		vrLoc = 3451;
+	};
+	73EB2A2011298FFF004F3A26 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D937A71122BE67007D44EF /* FFTTetsts.m */;
+		name = "FFTTetsts.m: 23";
+		rLen = 0;
+		rLoc = 307;
+		rType = 0;
+		vrLen = 946;
+		vrLoc = 19;
+	};
+	73F51E9C10E4E91400A012D2 /* HooleyStuff.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1037, 597}}";
+			sepNavSelRange = "{149, 37}";
+			sepNavVisRange = "{0, 729}";
+		};
+	};
+	73F51F0C10E5364F00A012D2 /* HooleyStuff.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1138, 1078}}";
+			sepNavSelRange = "{1629, 0}";
+			sepNavVisRange = "{514, 1229}";
+		};
+	};
+	8D1107260486CEB800E47090 /* AudioFileParser */ = {
+		activeExec = 0;
+		executables = (
+			73CB05CD10DBE21F00AE25C8 /* AudioFileParser */,
+		);
+	};
+}
