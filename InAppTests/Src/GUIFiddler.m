@@ -1,4 +1,6 @@
 #import <Foundation/Foundation.h>
+#import <Foundation/NSObjCRuntime.h>
+#import <objc/message.h>
 #import <SHTestUtilities/ApplescriptGUI.h>
 
 #define RUNLOOPMODE kCFRunLoopDefaultMode
@@ -6,7 +8,8 @@
 
 @interface GUIFiddler : NSObject {
 	
-}
+}#import <objc/message.h>
+
 @end
 
 static NSDictionary				*_data;

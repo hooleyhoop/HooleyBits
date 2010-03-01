@@ -11,7 +11,6 @@
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		730D4EAF10FC9BED00E0F81C /* GUIFiddler.m in Sources */ = {isa = PBXBuildFile; fileRef = 730D4EAE10FC9BED00E0F81C /* GUIFiddler.m */; };
 		730D4EE210FC9DC300E0F81C /* GUIFiddler in CopyFiles */ = {isa = PBXBuildFile; fileRef = 730D4E8610FC9B5900E0F81C /* GUIFiddler */; };
-		735084DA1137F7EC005A4F05 /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		735AB38010F5F641008378AA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		73662EE61121CB0800E8DC9F /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
 		736D2A1010F5E9B80020CB19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 736D2A0F10F5E9B80020CB19 /* main.m */; };
@@ -23,26 +22,28 @@
 		7385A6DB10FCDD9A00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73880A641126BC6E00081774 /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
 		738BE6C41121DF0E0028EB59 /* NSApplication+ScriptingExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */; };
-		7395221B1128724300F747E9 /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
-		739522221128734D00F747E9 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
-		739522231128734F00F747E9 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
-		739522241128735200F747E9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
-		7395222D1128738D00F747E9 /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
-		739522321128739400F747E9 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
 		73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73B361D01116E6050064AF28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B361CF1116E6050064AF28 /* AppDelegate.m */; };
 		73B4B65311256676001FFB0D /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
 		73BB35F410F5343F000A7F01 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
+		73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
+		73BC1A0C1139C56D0088135A /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
+		73BC1A0D1139C56E0088135A /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
+		73BC1A101139C5840088135A /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
+		73BC1A131139C58E0088135A /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
+		73BC1A141139C5910088135A /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
+		73C68FE911388E3A00FA2613 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
+		73C68FF211388E6D00FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
+		73C6900911388EB300FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
+		73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
+		73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
+		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
 		73E0CB4A112027AD00261F28 /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73E0CB551120285E00261F28 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
-		73E20F6C1137DCA00092F736 /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
-		73EB2BC7112B03DD004F3A26 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
-		73EB2BC8112B03DF004F3A26 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
-		73EF278B112B2C0D009C849C /* PLBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EF278A112B2C0D009C849C /* PLBlocks.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -238,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */,
+				73C6900911388EB300FA2613 /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,12 +247,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				739522221128734D00F747E9 /* OCMock.framework in Frameworks */,
-				739522231128734F00F747E9 /* FScript.framework in Frameworks */,
-				739522241128735200F747E9 /* SenTestingKit.framework in Frameworks */,
-				73EB2BC7112B03DD004F3A26 /* SHTestUtilities.framework in Frameworks */,
-				73EB2BC8112B03DF004F3A26 /* SHShared.framework in Frameworks */,
-				73EF278B112B2C0D009C849C /* PLBlocks.framework in Frameworks */,
+				73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */,
+				73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */,
+				73C839511139BE8000E0295E /* SHShared.framework in Frameworks */,
+				73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +265,8 @@
 				7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */,
 				7385A6DB10FCDD9A00ED053F /* SHTestUtilities.framework in Frameworks */,
 				73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */,
+				73C68FE911388E3A00FA2613 /* SHShared.framework in Frameworks */,
+				73C68FF211388E6D00FA2613 /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,7 +685,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "\"${SRCROOT}/../../Blake/runTests.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -700,11 +702,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7395221B1128724300F747E9 /* AsyncTestProxy.m in Sources */,
-				7395222D1128738D00F747E9 /* AsyncTests.m in Sources */,
-				739522321128739400F747E9 /* TestHelp.m in Sources */,
-				73E20F6C1137DCA00092F736 /* TestAsyncTestProxy.m in Sources */,
-				735084DA1137F7EC005A4F05 /* TestHelpTests.m in Sources */,
+				73BC1A0C1139C56D0088135A /* TestHelpTests.m in Sources */,
+				73BC1A0D1139C56E0088135A /* TestAsyncTestProxy.m in Sources */,
+				73BC1A101139C5840088135A /* AsyncTestProxy.m in Sources */,
+				73BC1A131139C58E0088135A /* AsyncTests.m in Sources */,
+				73BC1A141139C5910088135A /* TestHelp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +795,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AB71126C01F00081774 /* Target-CocoaDaemon.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
 				PRODUCT_NAME = GUIFiddler;
 			};
 			name = Debug;
@@ -801,6 +807,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AB71126C01F00081774 /* Target-CocoaDaemon.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
 				PRODUCT_NAME = GUIFiddler;
 			};
 			name = Release;
@@ -811,9 +821,10 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../Blake/build/Debug\"";
 				PRODUCT_NAME = TestTests;
 			};
 			name = Debug;
@@ -822,11 +833,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AB21126BF9000081774 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
 				);
-				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				PRODUCT_NAME = TestTests;
 			};
 			name = Release;
@@ -835,6 +847,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AAD1126BF9000081774 /* Target-Executable.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
 				PRODUCT_NAME = InAppTests;
 			};
 			name = Debug;
@@ -843,6 +859,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AAD1126BF9000081774 /* Target-Executable.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
 				PRODUCT_NAME = InAppTests;
 			};
 			name = Release;
