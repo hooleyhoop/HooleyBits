@@ -35,28 +35,51 @@ static NSAutoreleasePool *pool;
 //-- so you build a block, push it onto the stack, execute it later it returns a result
 
 //-- test order
-- (void) {
+- (void)testOrder {
 	
 }
 
 //-- test asynchronous
-- (void) {
+- (void)testAsync {
 	
 }
 
 //-- ignore the result
-- (void) {
+- (void)testNoResult {
 	
 }
 
 //-- assert result is true
-- (void) {
+- (void)testResultTrue {
 	
 }
 
 //-- assert result is false
-- (void) {
+- (void)testResultFalse {
+	// - (void)aSyncAssertFalse:(AsyncTestProxy *)someKindOfMagicObject
+
+	id mockTP = MOCK(AsyncTestProxy);
+	[[mockTP expect] setCallbackOb:_th];
+	[[mockTP expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP expect] fire];
 	
+	/* call the method */
+	[_th aSyncAssertFalse:mockTP ];
+	[mockTP verify];
+	
+	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
+	FSBoolean *fakeResult = [FSBoolean fsFalse];
+	[[[mockTP expect] andReturn:fakeResult] result];
+	
+	id mockResultAction = MOCK(NSInvocation);
+	[[mockResultAction expect] invoke];
+	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
+	[[mockResultAction expect] setArgument:[OCMArg anyPointer] atIndex:2];
+	
+	[_th _callBackForASync:mockTP];
+	
+	[mockResultAction verify];
+	[mockTP verify];
 }
 
 //-- assert result is equal to another result
@@ -85,15 +108,14 @@ static NSAutoreleasePool *pool;
 	id mockResultAction = MOCK(NSInvocation);
 	[[mockResultAction expect] invoke];
 	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
-	[[mockResultAction expect] setArgument:fakeResult atIndex:2];
-
+	[[mockResultAction expect] setArgument:[OCMArg anyPointer] atIndex:2]; 
 	[_th _callBackForASync:mockTP];
 	
 	[mockResultAction verify];
 	[mockTP verify];
 }
 
-// Test that we build an invocation that calls back to our test class (STAsserts need to be on the test class) with the correct arguments
+//  Test that we build an invocation that calls back to our test class (STAsserts need to be on the test class) with the correct arguments
 - (void)testAssertEqualObjectsBlock {
 	//- (NSInvocation *)assertEqualObjectsBlock
 	
@@ -103,9 +125,9 @@ static NSAutoreleasePool *pool;
 	SwappedInIvar *swapIn = [SwappedInIvar swapFor:_th :"_tests" :mockTests];
 	
 	// We expect the first arg of the invocation to be empty because the result wouldn't be availbale at this stage
-	[[mockTests expect] assertResultOfBlockIsTrue:OCMOCK_ANY arg1:nil arg2:expectedResult msg:nil];
-	
-	NSInvocation *equalBlock = [_th _assertEqualObjectsInvocationWithDefferedResultProxy:nil expectedResult:expectedResult];
+	[[mockTests expect] assert_arg1:nil arg2:expectedResult ofBlock:OCMOCK_ANY failMsg:nil];
+
+	NSInvocation *equalBlock = [_th _assertEqualObjectsInvocationWithDeferedResultProxy:nil expectedResult:expectedResult];
 	[equalBlock invoke];
 	
 	[mockTests verify];
@@ -122,7 +144,6 @@ static NSAutoreleasePool *pool;
 	id result2 = [blk value:@"Steven" value:@"Barry"];
 	STAssertFalse( [result2 isTrue], nil );
 }
-
 
 // Better form of expectation?
 //	[expectThat(app.alertView) should].exist;

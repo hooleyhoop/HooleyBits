@@ -113,16 +113,6 @@
 	[self _pushWaitingAsyncTest:someKindOfMagicObject];
 }
 
-- (void)aSyncAssertFalse:(AsyncTestProxy *)someKindOfMagicObject :(NSString *)msg {
-
-	NSParameterAssert(someKindOfMagicObject);
-	NSParameterAssert(msg);
-	
-	[someKindOfMagicObject setFailMSg:msg];
-	[someKindOfMagicObject setFailCondition:false];
-	[self _pushWaitingAsyncTest:someKindOfMagicObject];
-}
-
 #pragma mark New Stuff
 - (void)_startCallbackTimer {
 	
@@ -135,9 +125,20 @@
 	
 	return _BLOCK(@"[:arg1 :arg2 | arg2 isEqualTo: arg1]");	
 }
+- (FSBlock *)_assertFailBlock {
+	
+	return _BLOCK(@"[:arg1 | arg1 isEqual: (FSBoolean fsFalse)]");	
+}
+
+- (void)insertResultArg:(id *)result intoInvocation:(NSInvocation *)inv {
+
+	NSParameterAssert(*result);
+	NSParameterAssert(inv);
+	[inv setArgument:result atIndex:2];
+}
 
 /* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-- (NSInvocation *)_assertEqualObjectsInvocationWithDefferedResultProxy:(AsyncTestProxy *)notUsed expectedResult:(id)ob2 {
+- (NSInvocation *)_assertEqualObjectsInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed expectedResult:(id)ob2 {
 	
 	NSAssert(_tests, @"oops, need to set the _tests object");
 	
@@ -145,21 +146,54 @@
 	
 	// of course, result isn't available at this stage
 	id result = nil;
-	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assertResultOfBlockIsTrue:[self _assertEqualObjectsBlock] arg1:result arg2:ob2 msg:nil];
+	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assert_arg1:result arg2:ob2 ofBlock:[self _assertEqualObjectsBlock] failMsg:nil];
 	return outInv;
 }
 
-- (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject {
+/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
+- (NSInvocation *)_assertFailInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed {
+	
+	NSAssert( _tests, @"oops, need to set the _tests object" );
+	
+	NSInvocation *outInv;
+	
+	// of course, result isn't available at this stage
+	id result = nil;
+	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assert_arg1:result ofBlock:[self _assertFailBlock] failMsg:nil];
+	return outInv;
+}
 
+- (void)aSyncAssertFalse:(AsyncTestProxy *)testProxyFuture {
+	
+	NSParameterAssert(testProxyFuture);
+	
 	// make a block to be executed on callback
-	// Dont keep state here - pass the callback object into testProxy for storage
-
+	// Dont keep state here - pass the callback object into testProxyFuture for storage
+	
 	// Build the inv to call whe the callback is reached. this needs to retain inv
-	testProxy.resultProcessObject =  [self _assertEqualObjectsInvocationWithDefferedResultProxy:testProxy expectedResult:someOtherObject];
+	testProxyFuture.resultProcessObject = [self _assertFailInvocationWithDeferedResultProxy:testProxyFuture];
 
 	//	-queue
 	//	-fire
-	[self _pushWaitingAsyncTest:testProxy];
+	[self _pushWaitingAsyncTest: testProxyFuture];
+	
+	[self _startCallbackTimer];
+}
+
+- (void)aSyncAssertEqual:(AsyncTestProxy *)testProxyFuture :(id)someOtherObject {
+
+	NSParameterAssert(testProxyFuture);
+	NSParameterAssert(someOtherObject);
+
+	// make a block to be executed on callback
+	// Dont keep state here - pass the callback object into testProxyFuture for storage
+
+	// Build the inv to call whe the callback is reached. this needs to retain inv
+	testProxyFuture.resultProcessObject = [self _assertEqualObjectsInvocationWithDeferedResultProxy:testProxyFuture expectedResult:someOtherObject];
+
+	//	-queue
+	//	-fire
+	[self _pushWaitingAsyncTest:testProxyFuture];
 
 	[self _startCallbackTimer];
 }
@@ -174,12 +208,11 @@
 	if( resultProcessObject )
 	{
 		if(result){
-			// swap in result
-			[resultProcessObject setArgument:result atIndex:2];
+			[self insertResultArg:&result intoInvocation:resultProcessObject];
 		}
 		[resultProcessObject invoke];
 	}
-	
+
 	[self _popWaitingAsyncTest:someKindOfMagicObject];
 }
 

@@ -28,12 +28,12 @@
 		73BB35F410F5343F000A7F01 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
 		73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73BC1A0C1139C56D0088135A /* TestHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B4B65211256676001FFB0D /* TestHelpTests.m */; };
-		73BC1A0D1139C56E0088135A /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
 		73BC1A101139C5840088135A /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
 		73BC1A131139C58E0088135A /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
 		73BC1A141139C5910088135A /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
+		73C20632113E76A2006EF7C4 /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
 		73C68FE911388E3A00FA2613 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73C68FF211388E6D00FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
 		73C6900911388EB300FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
@@ -703,10 +703,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				73BC1A0C1139C56D0088135A /* TestHelpTests.m in Sources */,
-				73BC1A0D1139C56E0088135A /* TestAsyncTestProxy.m in Sources */,
 				73BC1A101139C5840088135A /* AsyncTestProxy.m in Sources */,
 				73BC1A131139C58E0088135A /* AsyncTests.m in Sources */,
 				73BC1A141139C5910088135A /* TestHelp.m in Sources */,
+				73C20632113E76A2006EF7C4 /* TestAsyncTestProxy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,14 @@
 
 @implementation AsyncTests
 
-- (void)assertResultOfBlockIsTrue:(FSBlock *)fscript arg1:(id)value1 arg2:(id)value2 msg:(NSString *)errorMsg {
+- (void)assert_arg1:(id)value1 ofBlock:(FSBlock *)fscript failMsg:(NSString *)errorMsg {
+	
+	FSBoolean *result = [fscript value:value1];
+	BOOL success = [result isEqual:[FSBoolean fsTrue]];
+	STAssertTrue( success, errorMsg ); // could use a block for this error msg
+}
+
+- (void)assert_arg1:(id)value1 arg2:(id)value2 ofBlock:(FSBlock *)fscript failMsg:(NSString *)errorMsg {
 	
 	FSBoolean *result = [fscript value:value1 value:value2];
 	BOOL success = [result isEqual:[FSBoolean fsTrue]];
