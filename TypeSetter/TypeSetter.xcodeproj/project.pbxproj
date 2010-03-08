@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */; };
+		7331A9BE1145746300EFCB8F /* Picture 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7331A9BD1145746300EFCB8F /* Picture 4.png */; };
 		7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */; };
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
@@ -26,6 +28,9 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* TypeSetter_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeSetter_Prefix.pch; sourceTree = "<group>"; };
+		7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphRenderer.h; path = Src/GlyphRenderer.h; sourceTree = "<group>"; };
+		7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRenderer.m; path = Src/GlyphRenderer.m; sourceTree = "<group>"; };
+		7331A9BD1145746300EFCB8F /* Picture 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Picture 4.png"; path = "images/Picture 4.png"; sourceTree = "<group>"; };
 		7344137C0F67CACD00D6CF73 /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = Src/DebugView.h; sourceTree = "<group>"; };
 		7344137D0F67CACD00D6CF73 /* DebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugView.m; path = Src/DebugView.m; sourceTree = "<group>"; };
 		73AECE8210469B2A0003D9CB /* DebugSymbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DebugSymbols.framework; path = System/Library/PrivateFrameworks/DebugSymbols.framework; sourceTree = SDKROOT; };
@@ -56,6 +61,8 @@
 			children = (
 				7344137C0F67CACD00D6CF73 /* DebugView.h */,
 				7344137D0F67CACD00D6CF73 /* DebugView.m */,
+				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
+				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -114,6 +121,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7331A9BD1145746300EFCB8F /* Picture 4.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -175,6 +183,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				7331A9BE1145746300EFCB8F /* Picture 4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +196,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */,
+				7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
