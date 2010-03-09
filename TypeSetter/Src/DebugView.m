@@ -8,6 +8,8 @@
 
 #import "DebugView.h"
 #import "GlyphRenderer.h"
+#import "PlaceHolderImage.h"
+#import "ImageWindow.h"
 
 @implementation DebugView
 
@@ -17,6 +19,12 @@
 		[self setNeedsDisplay:YES];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+	
+	PlaceHolderImage *tempImage = [PlaceHolderImage placeHolderWithSize:CGSizeMake(400,400)];
+	ImageWindow *tempImageWindow = [ImageWindow showImage:tempImage];
 }
 
 // highest-level = framesetter. The framesetter object uses other Core Text objects, such as typesetter, line, and glyph run objects, to accomplish its work: creating frame objects, which are lines of glyphs laid out within a shape.
@@ -55,7 +63,7 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	
 	// Initialize a rectangular path.
 	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = CGRectMake( 10.0, 10.0, 200.0, 200.0);
+	CGRect bounds = CGRectMake( 10.0f, 10.0f, 200.0f, 200.0f );
 	CGPathAddRect(path, NULL, bounds);
 	
 	// Initialize an attributed string.
@@ -65,7 +73,7 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	
 	// Create a color and add it as an attribute to the string.
 	CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-	CGFloat components[] = { 1.0, 0.0, 0.0, 0.8 };
+	CGFloat components[] = { 1.0f, 0.0f, 0.0f, 0.8f };
 	CGColorRef red = CGColorCreate(rgbColorSpace, components);
 	CGColorSpaceRelease(rgbColorSpace);
 	CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 50), kCTForegroundColorAttributeName, red);

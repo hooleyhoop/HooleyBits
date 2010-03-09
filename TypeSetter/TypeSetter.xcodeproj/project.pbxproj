@@ -13,6 +13,9 @@
 		7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */; };
 		735F809A114672FE000AC142 /* GlyphRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */; };
 		735F80CE1146736F000AC142 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F80C811467360000AC142 /* SHTestUtilities.framework */; };
+		735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */; };
+		735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */; };
+		735F814F1146808F000AC142 /* ImageWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F814E1146808F000AC142 /* ImageWindow.m */; };
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
@@ -26,63 +29,63 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D /* SHShared.framework */;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
 			remoteInfo = SHShared;
 		};
 		735F80BD11467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 732360B80C5E75BD0039CC7F /* SHSharedTests.octest */;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F;
 			remoteInfo = SHSharedTests;
 		};
 		735F80BF11467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73AC00F70F4037DF00FA9887 /* libSHShared_static.a */;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887;
 			remoteInfo = SHShared_static;
 		};
 		735F80C111467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73AC016B0F4039D100FA9887 /* libSHShared_iphone.a */;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
 		};
 		735F80C311467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2;
 			remoteInfo = SHSharedUI;
 		};
 		735F80C511467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2;
 			remoteInfo = SHSharedUITests;
 		};
 		735F80C711467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
 		735F80C911467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9;
 			remoteInfo = TestUtilitiesTests;
 		};
 		735F80CF11467383000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
 /* End PBXContainerItemProxy section */
@@ -115,6 +118,12 @@
 		735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-TestBundle.xcconfig"; path = "../../Blake/Config/Target-TestBundle.xcconfig"; sourceTree = SOURCE_ROOT; };
 		735F8099114672FE000AC142 /* GlyphRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRendererTests.m; path = Tests/GlyphRendererTests.m; sourceTree = "<group>"; };
 		735F80AF11467360000AC142 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		735F81431146806B000AC142 /* CrudeImageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrudeImageWrapper.h; path = Src/CrudeImageWrapper.h; sourceTree = "<group>"; };
+		735F81441146806B000AC142 /* CrudeImageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CrudeImageWrapper.m; path = Src/CrudeImageWrapper.m; sourceTree = "<group>"; };
+		735F81481146807C000AC142 /* PlaceHolderImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceHolderImage.h; path = Src/PlaceHolderImage.h; sourceTree = "<group>"; };
+		735F81491146807C000AC142 /* PlaceHolderImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceHolderImage.m; path = Src/PlaceHolderImage.m; sourceTree = "<group>"; };
+		735F814D1146808F000AC142 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageWindow.h; path = Src/ImageWindow.h; sourceTree = "<group>"; };
+		735F814E1146808F000AC142 /* ImageWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageWindow.m; path = Src/ImageWindow.m; sourceTree = "<group>"; };
 		73AECE8210469B2A0003D9CB /* DebugSymbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DebugSymbols.framework; path = System/Library/PrivateFrameworks/DebugSymbols.framework; sourceTree = SDKROOT; };
 		73AECE8510469B7B0003D9CB /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -152,6 +161,7 @@
 				7344137D0F67CACD00D6CF73 /* DebugView.m */,
 				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
 				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
+				735F814011468055000AC142 /* Crude Image */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -269,6 +279,19 @@
 				735F80CA11467360000AC142 /* TestUtilitiesTests.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		735F814011468055000AC142 /* Crude Image */ = {
+			isa = PBXGroup;
+			children = (
+				735F81481146807C000AC142 /* PlaceHolderImage.h */,
+				735F81491146807C000AC142 /* PlaceHolderImage.m */,
+				735F81431146806B000AC142 /* CrudeImageWrapper.h */,
+				735F81441146806B000AC142 /* CrudeImageWrapper.m */,
+				735F814D1146808F000AC142 /* ImageWindow.h */,
+				735F814E1146808F000AC142 /* ImageWindow.m */,
+			);
+			name = "Crude Image";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,6 +469,9 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */,
 				7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */,
+				735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */,
+				735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */,
+				735F814F1146808F000AC142 /* ImageWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
