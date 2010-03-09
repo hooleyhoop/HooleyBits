@@ -11,6 +11,8 @@
 		7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */; };
 		7331A9BE1145746300EFCB8F /* Picture 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7331A9BD1145746300EFCB8F /* Picture 4.png */; };
 		7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */; };
+		735F809A114672FE000AC142 /* GlyphRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */; };
+		735F80CE1146736F000AC142 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F80C811467360000AC142 /* SHTestUtilities.framework */; };
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
@@ -18,6 +20,72 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		735F80BB11467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D /* SHShared.framework */;
+			remoteInfo = SHShared;
+		};
+		735F80BD11467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F /* SHSharedTests.octest */;
+			remoteInfo = SHSharedTests;
+		};
+		735F80BF11467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887 /* libSHShared_static.a */;
+			remoteInfo = SHShared_static;
+		};
+		735F80C111467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887 /* libSHShared_iphone.a */;
+			remoteInfo = SHShared_iphone;
+		};
+		735F80C311467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteInfo = SHSharedUI;
+		};
+		735F80C511467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteInfo = SHSharedUITests;
+		};
+		735F80C711467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteInfo = SHTestUtilities;
+		};
+		735F80C911467360000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteInfo = TestUtilitiesTests;
+		};
+		735F80CF11467383000AC142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteInfo = SHTestUtilities;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -27,21 +95,42 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* TypeSetter_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeSetter_Prefix.pch; sourceTree = "<group>"; };
 		7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphRenderer.h; path = Src/GlyphRenderer.h; sourceTree = "<group>"; };
 		7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRenderer.m; path = Src/GlyphRenderer.m; sourceTree = "<group>"; };
 		7331A9BD1145746300EFCB8F /* Picture 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Picture 4.png"; path = "images/Picture 4.png"; sourceTree = "<group>"; };
 		7344137C0F67CACD00D6CF73 /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = Src/DebugView.h; sourceTree = "<group>"; };
 		7344137D0F67CACD00D6CF73 /* DebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugView.m; path = Src/DebugView.m; sourceTree = "<group>"; };
+		735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeSetterTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		735F802011466F10000AC142 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Base.xcconfig"; path = "../../Blake/Config/Project-Base.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802111466F10000AC142 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Coverage.xcconfig"; path = "../../Blake/Config/Project-Coverage.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802211466F10000AC142 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Debug.xcconfig"; path = "../../Blake/Config/Project-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802311466F10000AC142 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Release.xcconfig"; path = "../../Blake/Config/Project-Release.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802411466F10000AC142 /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Base.xcconfig"; path = "../../Blake/Config/Target-Base.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802511466F10000AC142 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Executable.xcconfig"; path = "../../Blake/Config/Target-Executable.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802611466F10000AC142 /* Target-CocoaDaemon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-CocoaDaemon.xcconfig"; path = "../../Blake/Config/Target-CocoaDaemon.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802711466F10000AC142 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Framework.xcconfig"; path = "../../Blake/Config/Target-Framework.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802811466F10000AC142 /* Target-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-iPhone.xcconfig"; path = "../../Blake/Config/Target-iPhone.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802911466F10000AC142 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Plugin.xcconfig"; path = "../../Blake/Config/Target-Plugin.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802A11466F10000AC142 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-QCPlugin.xcconfig"; path = "../../Blake/Config/Target-QCPlugin.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-TestBundle.xcconfig"; path = "../../Blake/Config/Target-TestBundle.xcconfig"; sourceTree = SOURCE_ROOT; };
+		735F8099114672FE000AC142 /* GlyphRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRendererTests.m; path = Tests/GlyphRendererTests.m; sourceTree = "<group>"; };
+		735F80AF11467360000AC142 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
 		73AECE8210469B2A0003D9CB /* DebugSymbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DebugSymbols.framework; path = System/Library/PrivateFrameworks/DebugSymbols.framework; sourceTree = SDKROOT; };
 		73AECE8510469B7B0003D9CB /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		73AECF2210469BF50003D9CB /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TypeSetter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeSetter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		735F7FFB11466EF1000AC142 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				735F80CE1146736F000AC142 /* SHTestUtilities.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* TypeSetter.app */,
+				735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,11 +186,14 @@
 		29B97314FDCFA39411CA2CEA /* TypeSetter */ = {
 			isa = PBXGroup;
 			children = (
+				735F807A114672C0000AC142 /* Tests */,
+				735F801F11466F10000AC142 /* Configs */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				735F80AF11467360000AC142 /* SHShared.xcodeproj */,
 				73AECE8210469B2A0003D9CB /* DebugSymbols.framework */,
 				73AECE8510469B7B0003D9CB /* Quartz.framework */,
 				73AECE8710469B7B0003D9CB /* QuartzCore.framework */,
@@ -112,7 +205,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* TypeSetter_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -122,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				7331A9BD1145746300EFCB8F /* Picture 4.png */,
-				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
@@ -138,9 +229,70 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		735F801F11466F10000AC142 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				735F802011466F10000AC142 /* Project-Base.xcconfig */,
+				735F802111466F10000AC142 /* Project-Coverage.xcconfig */,
+				735F802211466F10000AC142 /* Project-Debug.xcconfig */,
+				735F802311466F10000AC142 /* Project-Release.xcconfig */,
+				735F802411466F10000AC142 /* Target-Base.xcconfig */,
+				735F802511466F10000AC142 /* Target-Executable.xcconfig */,
+				735F802611466F10000AC142 /* Target-CocoaDaemon.xcconfig */,
+				735F802711466F10000AC142 /* Target-Framework.xcconfig */,
+				735F802811466F10000AC142 /* Target-iPhone.xcconfig */,
+				735F802911466F10000AC142 /* Target-Plugin.xcconfig */,
+				735F802A11466F10000AC142 /* Target-QCPlugin.xcconfig */,
+				735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */,
+			);
+			name = Configs;
+			sourceTree = "<group>";
+		};
+		735F807A114672C0000AC142 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				735F8099114672FE000AC142 /* GlyphRendererTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		735F80B011467360000AC142 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				735F80BC11467360000AC142 /* SHShared.framework */,
+				735F80BE11467360000AC142 /* SHSharedTests.octest */,
+				735F80C011467360000AC142 /* libSHShared_static.a */,
+				735F80C211467360000AC142 /* libSHShared_iphone.a */,
+				735F80C411467360000AC142 /* SHSharedUI.framework */,
+				735F80C611467360000AC142 /* SHSharedUITests.octest */,
+				735F80C811467360000AC142 /* SHTestUtilities.framework */,
+				735F80CA11467360000AC142 /* TestUtilitiesTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		735F7FFD11466EF1000AC142 /* TypeSetterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 735F800211466EF4000AC142 /* Build configuration list for PBXNativeTarget "TypeSetterTests" */;
+			buildPhases = (
+				735F7FF911466EF1000AC142 /* Resources */,
+				735F7FFA11466EF1000AC142 /* Sources */,
+				735F7FFB11466EF1000AC142 /* Frameworks */,
+				735F7FFC11466EF1000AC142 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				735F80D011467383000AC142 /* PBXTargetDependency */,
+			);
+			name = TypeSetterTests;
+			productName = TypeSetterTests;
+			productReference = 735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		8D1107260486CEB800E47090 /* TypeSetter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "TypeSetter" */;
@@ -169,14 +321,87 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* TypeSetter */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 735F80B011467360000AC142 /* Products */;
+					ProjectRef = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* TypeSetter */,
+				735F7FFD11466EF1000AC142 /* TypeSetterTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		735F80BC11467360000AC142 /* SHShared.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHShared.framework;
+			remoteRef = 735F80BB11467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80BE11467360000AC142 /* SHSharedTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedTests.octest;
+			remoteRef = 735F80BD11467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80C011467360000AC142 /* libSHShared_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_static.a;
+			remoteRef = 735F80BF11467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80C211467360000AC142 /* libSHShared_iphone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_iphone.a;
+			remoteRef = 735F80C111467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80C411467360000AC142 /* SHSharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHSharedUI.framework;
+			remoteRef = 735F80C311467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80C611467360000AC142 /* SHSharedUITests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedUITests.octest;
+			remoteRef = 735F80C511467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80C811467360000AC142 /* SHTestUtilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHTestUtilities.framework;
+			remoteRef = 735F80C711467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735F80CA11467360000AC142 /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 735F80C911467360000AC142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
+		735F7FF911466EF1000AC142 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,7 +414,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		735F7FFC11466EF1000AC142 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../../Blake/runTests.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		735F7FFA11466EF1000AC142 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				735F809A114672FE000AC142 /* GlyphRendererTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -201,6 +450,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		735F80D011467383000AC142 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHTestUtilities;
+			targetProxy = 735F80CF11467383000AC142 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -222,74 +479,71 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C01FCF4B08A954540054247B /* Debug */ = {
+		735F800011466EF4000AC142 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+					/Developer/Library/Frameworks,
+					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
 				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = TypeSetter_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../Blake/build/Debug\"";
+				PRODUCT_NAME = TypeSetterTests;
+			};
+			name = Debug;
+		};
+		735F800111466EF4000AC142 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = TypeSetterTests;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802511466F10000AC142 /* Target-Executable.xcconfig */;
+			buildSettings = {
 				PRODUCT_NAME = TypeSetter;
 			};
 			name = Debug;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802511466F10000AC142 /* Target-Executable.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
-				);
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = TypeSetter_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = TypeSetter;
 			};
 			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802211466F10000AC142 /* Project-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802311466F10000AC142 /* Project-Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		735F800211466EF4000AC142 /* Build configuration list for PBXNativeTarget "TypeSetterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				735F800011466EF4000AC142 /* Debug */,
+				735F800111466EF4000AC142 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "TypeSetter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

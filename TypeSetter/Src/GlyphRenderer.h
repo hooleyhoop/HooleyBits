@@ -13,4 +13,6 @@
 
 }
 
+- (CGImageRef)glyphImage;
+
 @end
