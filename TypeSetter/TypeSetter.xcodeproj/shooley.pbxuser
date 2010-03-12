@@ -2,18 +2,29 @@
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Debug;
-		activeExecutable = 735F802E11466F2D000AC142 /* RunTests (Otest) */;
+		activeExecutable = 73CD0ACC0F52AA50001F0C0D /* TypeSetter */;
 		activeTarget = 8D1107260486CEB800E47090 /* TypeSetter */;
 		addToTargets = (
 			8D1107260486CEB800E47090 /* TypeSetter */,
 		);
 		breakpoints = (
 			730352C30F5D45C80037A240 /* +[NSObject initialize] */,
-			7331A9C41145760000EFCB8F /* DebugView.m:95 */,
-			735F7FB4114668A1000AC142 /* GlyphRenderer.m:106 */,
-			735F7FBF114668F7000AC142 /* GlyphRenderer.m:44 */,
+			735F7FBF114668F7000AC142 /* GlyphRenderer.m:50 */,
 			735F80F0114674BA000AC142 /* GlyphRendererTests.m:23 */,
 			735F80F2114674BB000AC142 /* GlyphRendererTests.m:26 */,
+			73BBB5251147ABBE0043B790 /* GlyphRenderer.m:267 */,
+			73EC676011496257005F93C2 /* GlyphRenderer.m:226 */,
+			73889D42114A4D5C008B0494 /* GlyphRenderer.m:213 */,
+			73889D47114A4DA3008B0494 /* GlyphRenderer.m:206 */,
+			73889D55114A503D008B0494 /* GlyphRenderer.m:194 */,
+			73889D89114A55BB008B0494 /* GlyphRenderer.m:122 */,
+			73889D9A114A5775008B0494 /* GlyphRenderer.m:131 */,
+			73889DA3114A5805008B0494 /* GlyphRenderer.m:192 */,
+			73889DB6114A5BB6008B0494 /* GlyphRenderer.m:141 */,
+			73889DBD114A5C14008B0494 /* GlyphRenderer.m:167 */,
+			73889DCE114A5DC4008B0494 /* GlyphRenderer.m:183 */,
+			73889DD9114A65B8008B0494 /* GlyphRenderer.m:153 */,
+			73D678A6114A9996002EBD84 /* GlyphRenderer.m:159 */,
 		);
 		codeSenseManager = 73CD0ADB0F52AA55001F0C0D /* Code sense */;
 		executables = (
@@ -65,7 +76,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					22,
 					300,
-					673,
+					434,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXExecutablesDataSource_ActiveFlagID,
@@ -78,7 +89,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					785,
+					546,
 					20,
 					48,
 					43,
@@ -117,66 +128,21 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 289832728;
-			PBXWorkspaceStateSaveDate = 289832728;
+			PBXPerProjectTemplateStateSaveDate = 290101410;
+			PBXWorkspaceStateSaveDate = 290101410;
 		};
 		perUserProjectItems = {
-			735F7E1711465BA5000AC142 /* PBXTextBookmark */ = 735F7E1711465BA5000AC142 /* PBXTextBookmark */;
-			735F7E1811465BA5000AC142 /* PBXTextBookmark */ = 735F7E1811465BA5000AC142 /* PBXTextBookmark */;
-			735F7F8111466892000AC142 /* PBXTextBookmark */ = 735F7F8111466892000AC142 /* PBXTextBookmark */;
-			735F7F8311466892000AC142 /* PBXTextBookmark */ = 735F7F8311466892000AC142 /* PBXTextBookmark */;
-			735F7F8511466892000AC142 /* PBXTextBookmark */ = 735F7F8511466892000AC142 /* PBXTextBookmark */;
-			735F7F8711466892000AC142 /* PBXTextBookmark */ = 735F7F8711466892000AC142 /* PBXTextBookmark */;
-			735F7F8911466892000AC142 /* PBXTextBookmark */ = 735F7F8911466892000AC142 /* PBXTextBookmark */;
-			735F7F8B11466892000AC142 /* PBXTextBookmark */ = 735F7F8B11466892000AC142 /* PBXTextBookmark */;
-			735F7F8D11466892000AC142 /* PBXTextBookmark */ = 735F7F8D11466892000AC142 /* PBXTextBookmark */;
-			735F7F8F11466892000AC142 /* PBXTextBookmark */ = 735F7F8F11466892000AC142 /* PBXTextBookmark */;
-			735F7F9111466892000AC142 /* PBXTextBookmark */ = 735F7F9111466892000AC142 /* PBXTextBookmark */;
-			735F7F9311466892000AC142 /* PBXTextBookmark */ = 735F7F9311466892000AC142 /* PBXTextBookmark */;
-			735F7F9511466892000AC142 /* PBXTextBookmark */ = 735F7F9511466892000AC142 /* PBXTextBookmark */;
-			735F7F9911466892000AC142 /* PBXTextBookmark */ = 735F7F9911466892000AC142 /* PBXTextBookmark */;
-			735F7F9B11466892000AC142 /* PBXTextBookmark */ = 735F7F9B11466892000AC142 /* PBXTextBookmark */;
-			735F7F9D11466892000AC142 /* PBXTextBookmark */ = 735F7F9D11466892000AC142 /* PBXTextBookmark */;
-			735F7FC2114668FB000AC142 /* PBXTextBookmark */ = 735F7FC2114668FB000AC142 /* PBXTextBookmark */;
-			735F80F5114674C2000AC142 /* PBXTextBookmark */ = 735F80F5114674C2000AC142 /* PBXTextBookmark */;
-			735F80F6114674C2000AC142 /* PBXTextBookmark */ = 735F80F6114674C2000AC142 /* PBXTextBookmark */;
-			735F80F8114674C2000AC142 /* PBXTextBookmark */ = 735F80F8114674C2000AC142 /* PBXTextBookmark */;
-			735F80FD114674C2000AC142 /* PBXTextBookmark */ = 735F80FD114674C2000AC142 /* PBXTextBookmark */;
-			735F80FE114674C2000AC142 /* PBXTextBookmark */ = 735F80FE114674C2000AC142 /* PBXTextBookmark */;
-			735F8100114674C2000AC142 /* PBXTextBookmark */ = 735F8100114674C2000AC142 /* PBXTextBookmark */;
-			735F813211467F6D000AC142 /* PBXTextBookmark */ = 735F813211467F6D000AC142 /* PBXTextBookmark */;
-			735F813411467F6D000AC142 /* PBXTextBookmark */ = 735F813411467F6D000AC142 /* PBXTextBookmark */;
-			735F8158114684AB000AC142 /* PBXTextBookmark */ = 735F8158114684AB000AC142 /* PBXTextBookmark */;
-			735F8159114684AB000AC142 /* PBXTextBookmark */ = 735F8159114684AB000AC142 /* PBXTextBookmark */;
-			735F815A114684AB000AC142 /* PBXTextBookmark */ = 735F815A114684AB000AC142 /* PBXTextBookmark */;
-			735F815B114684AB000AC142 /* PBXTextBookmark */ = 735F815B114684AB000AC142 /* PBXTextBookmark */;
-			735F815C114684AB000AC142 /* PBXTextBookmark */ = 735F815C114684AB000AC142 /* PBXTextBookmark */;
-			735F815D114684AB000AC142 /* PBXTextBookmark */ = 735F815D114684AB000AC142 /* PBXTextBookmark */;
-			735F815E114684AB000AC142 /* PBXTextBookmark */ = 735F815E114684AB000AC142 /* PBXTextBookmark */;
-			735F815F114684AB000AC142 /* PBXBookmark */ = 735F815F114684AB000AC142 /* PBXBookmark */;
-			735F8160114684AB000AC142 /* PBXTextBookmark */ = 735F8160114684AB000AC142 /* PBXTextBookmark */;
-			735F8161114684AB000AC142 /* PBXTextBookmark */ = 735F8161114684AB000AC142 /* PBXTextBookmark */;
-			735F8162114684AB000AC142 /* PBXTextBookmark */ = 735F8162114684AB000AC142 /* PBXTextBookmark */;
-			735F8163114684AB000AC142 /* PBXTextBookmark */ = 735F8163114684AB000AC142 /* PBXTextBookmark */;
-			735F8164114684AB000AC142 /* PBXTextBookmark */ = 735F8164114684AB000AC142 /* PBXTextBookmark */;
-			735F8165114684AB000AC142 /* PBXTextBookmark */ = 735F8165114684AB000AC142 /* PBXTextBookmark */;
-			735F8166114684AB000AC142 /* PBXTextBookmark */ = 735F8166114684AB000AC142 /* PBXTextBookmark */;
-			735F8167114684AB000AC142 /* PBXTextBookmark */ = 735F8167114684AB000AC142 /* PBXTextBookmark */;
-			735F8168114684AB000AC142 /* PBXTextBookmark */ = 735F8168114684AB000AC142 /* PBXTextBookmark */;
-			735F8169114684AB000AC142 /* PBXTextBookmark */ = 735F8169114684AB000AC142 /* PBXTextBookmark */;
-			735F816A114684AB000AC142 /* PBXTextBookmark */ = 735F816A114684AB000AC142 /* PBXTextBookmark */;
-			735F816B114684AB000AC142 /* PBXTextBookmark */ = 735F816B114684AB000AC142 /* PBXTextBookmark */;
-			735F816C114684AB000AC142 /* PBXTextBookmark */ = 735F816C114684AB000AC142 /* PBXTextBookmark */;
-			735F816D114684AB000AC142 /* PBXTextBookmark */ = 735F816D114684AB000AC142 /* PBXTextBookmark */;
-			735F816E114684AB000AC142 /* PBXTextBookmark */ = 735F816E114684AB000AC142 /* PBXTextBookmark */;
-			735F816F114684AB000AC142 /* PBXTextBookmark */ = 735F816F114684AB000AC142 /* PBXTextBookmark */;
-			735F8170114684AB000AC142 /* PBXTextBookmark */ = 735F8170114684AB000AC142 /* PBXTextBookmark */;
-			735F8171114684AB000AC142 /* PBXTextBookmark */ = 735F8171114684AB000AC142 /* PBXTextBookmark */;
-			735F8172114684AB000AC142 /* PBXTextBookmark */ = 735F8172114684AB000AC142 /* PBXTextBookmark */;
-			735F8173114684AB000AC142 /* PBXTextBookmark */ = 735F8173114684AB000AC142 /* PBXTextBookmark */;
-			735F8174114684AB000AC142 /* PBXTextBookmark */ = 735F8174114684AB000AC142 /* PBXTextBookmark */;
-			735F8175114684AB000AC142 /* PBXTextBookmark */ = 735F8175114684AB000AC142 /* PBXTextBookmark */;
-			735F8176114684AB000AC142 /* PBXTextBookmark */ = 735F8176114684AB000AC142 /* PBXTextBookmark */;
+			73889D1B114A4792008B0494 /* PBXTextBookmark */ = 73889D1B114A4792008B0494 /* PBXTextBookmark */;
+			73889D1C114A4792008B0494 /* PBXTextBookmark */ = 73889D1C114A4792008B0494 /* PBXTextBookmark */;
+			73889D1E114A4792008B0494 /* PBXTextBookmark */ = 73889D1E114A4792008B0494 /* PBXTextBookmark */;
+			73D678AD114A9A43002EBD84 /* PBXTextBookmark */ = 73D678AD114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678AE114A9A43002EBD84 /* PBXTextBookmark */ = 73D678AE114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678B0114A9A43002EBD84 /* PBXTextBookmark */ = 73D678B0114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678B2114A9A43002EBD84 /* PBXTextBookmark */ = 73D678B2114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678B3114A9A43002EBD84 /* PBXTextBookmark */ = 73D678B3114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678B4114A9A43002EBD84 /* PBXTextBookmark */ = 73D678B4114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678B6114A9A43002EBD84 /* PBXTextBookmark */ = 73D678B6114A9A43002EBD84 /* PBXTextBookmark */;
+			73D678C6114A9ACD002EBD84 /* PBXTextBookmark */ = 73D678C6114A9ACD002EBD84 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 73CD0ADA0F52AA55001F0C0D /* Source Control */;
 		userBuildSettings = {
@@ -200,39 +166,23 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = CoreFoundation;
-		modificationTime = 289830083.618531;
+		modificationTime = 290101828.858125;
 		state = 2;
 		symbolName = "+[NSObject initialize]";
 	};
 	7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1144, 373}}";
-			sepNavSelRange = "{181, 13}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 686}}";
+			sepNavSelRange = "{211, 0}";
 			sepNavVisRange = "{0, 244}";
 		};
 	};
 	7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 3556}}";
-			sepNavSelRange = "{3626, 0}";
-			sepNavVisRange = "{3160, 1024}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 6046}}";
+			sepNavSelRange = "{5197, 0}";
+			sepNavVisRange = "{3943, 1594}";
 		};
-	};
-	7331A9C41145760000EFCB8F /* DebugView.m:95 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		functionName = "-drawRect:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 95;
-		modificationTime = 289830086.655025;
-		state = 0;
 	};
 	7344137C0F67CACD00D6CF73 /* DebugView.h */ = {
 		uiCtxt = {
@@ -243,287 +193,13 @@
 	};
 	7344137D0F67CACD00D6CF73 /* DebugView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 1680}}";
-			sepNavSelRange = "{3016, 0}";
-			sepNavVisRange = "{2342, 1270}";
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 1722}}";
+			sepNavSelRange = "{3221, 393}";
+			sepNavVisRange = "{1687, 1927}";
 			sepNavWindowFrame = "{{125, 4}, {1480, 1024}}";
 		};
 	};
-	735F7E1711465BA5000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 93";
-		rLen = 0;
-		rLoc = 4147;
-		rType = 0;
-		vrLen = 1712;
-		vrLoc = 3;
-	};
-	735F7E1811465BA5000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */;
-		name = "GlyphRenderer.h: 9";
-		rLen = 0;
-		rLoc = 167;
-		rType = 0;
-		vrLen = 217;
-		vrLoc = 0;
-	};
-	735F7F8111466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8211466892000AC142 /* KGRender.m */;
-		name = "KGRender.m: 45";
-		rLen = 13;
-		rLoc = 2241;
-		rType = 0;
-		vrLen = 1874;
-		vrLoc = 1436;
-	};
-	735F7F8211466892000AC142 /* KGRender.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = KGRender.m;
-		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/testing/SWRender/KGRender.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F8311466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8411466892000AC142 /* Widget_BooInfoPage.m */;
-		name = "Widget_BooInfoPage.m: 173";
-		rLen = 13;
-		rLoc = 6123;
-		rType = 0;
-		vrLen = 1946;
-		vrLoc = 4995;
-	};
-	735F7F8411466892000AC142 /* Widget_BooInfoPage.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = Widget_BooInfoPage.m;
-		path = /Users/shooley/Desktop/Programming/Cocoa/BooInfoPage/Classes/Widget_BooInfoPage.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F8511466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8611466892000AC142 /* CGColorSpace.m */;
-		name = "CGColorSpace.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1737;
-		vrLoc = 0;
-	};
-	735F7F8611466892000AC142 /* CGColorSpace.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = CGColorSpace.m;
-		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/CoreGraphics/CGColorSpace.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F8711466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8811466892000AC142 /* NSColor_whiteCalibrated.m */;
-		name = "NSColor_whiteCalibrated.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1889;
-		vrLoc = 0;
-	};
-	735F7F8811466892000AC142 /* NSColor_whiteCalibrated.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = NSColor_whiteCalibrated.m;
-		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/AppKit/NSColor.subproj/NSColor_whiteCalibrated.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F8911466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8A11466892000AC142 /* ImageBufferCG.cpp */;
-		name = "ImageBufferCG.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1835;
-		vrLoc = 0;
-	};
-	735F7F8A11466892000AC142 /* ImageBufferCG.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = ImageBufferCG.cpp;
-		path = /Users/shooley/Desktop/Programming/Cocoa/webkit/WebCore/platform/graphics/cg/ImageBufferCG.cpp;
-		sourceTree = "<absolute>";
-	};
-	735F7F8B11466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8C11466892000AC142 /* FFTHelper.m */;
-		name = "FFTHelper.m: 72";
-		rLen = 1;
-		rLoc = 1400;
-		rType = 0;
-		vrLen = 1472;
-		vrLoc = 1297;
-	};
-	735F7F8C11466892000AC142 /* FFTHelper.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = FFTHelper.m;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/AudioFileParser/Classes/FFTHelper.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F8D11466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F8E11466892000AC142 /* movReader.cpp */;
-		name = "movReader.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1096;
-		vrLoc = 0;
-	};
-	735F7F8E11466892000AC142 /* movReader.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = movReader.cpp;
-		path = /Applications/Nuke5.2v1/Documentation/NDK/examples/movReader.cpp;
-		sourceTree = "<absolute>";
-	};
-	735F7F8F11466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9011466892000AC142 /* ImageWriterPlugIn.m */;
-		name = "ImageWriterPlugIn.m: 89";
-		rLen = 13;
-		rLoc = 3061;
-		rType = 0;
-		vrLen = 1980;
-		vrLoc = 2256;
-	};
-	735F7F9011466892000AC142 /* ImageWriterPlugIn.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = ImageWriterPlugIn.m;
-		path = "/Developer/Examples/Quartz Composer/Plugins/ImageWriter/ImageWriterPlugIn.m";
-		sourceTree = "<absolute>";
-	};
-	735F7F9111466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9211466892000AC142 /* KGBitmapContext.m */;
-		name = "KGBitmapContext.m: 119";
-		rLen = 11;
-		rLoc = 3833;
-		rType = 0;
-		vrLen = 949;
-		vrLoc = 3013;
-	};
-	735F7F9211466892000AC142 /* KGBitmapContext.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = KGBitmapContext.m;
-		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/CoreGraphics/KGBitmapContext.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F9311466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9411466892000AC142 /* Layer.m */;
-		name = "Layer.m: 779";
-		rLen = 13;
-		rLoc = 28477;
-		rType = 0;
-		vrLen = 1779;
-		vrLoc = 27661;
-	};
-	735F7F9411466892000AC142 /* Layer.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = Layer.m;
-		path = "/Users/shooley/Desktop/Programming/Source_Code/topdraw-read-only/Renderer/Layer.m";
-		sourceTree = "<absolute>";
-	};
-	735F7F9511466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9611466892000AC142 /* MandelbrotView.m */;
-		name = "MandelbrotView.m: 483";
-		rLen = 13;
-		rLoc = 17263;
-		rType = 0;
-		vrLen = 1474;
-		vrLoc = 16581;
-	};
-	735F7F9611466892000AC142 /* MandelbrotView.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = MandelbrotView.m;
-		path = "/Volumes/Macintosh HD/Users/shooley/Desktop/Coding Headstarts/Simpler_Threading_With_NSOperation_Headstart/Simpler Threading with NSOperation Sample Code/2. NSOperationHeadstart.end/MandelbrotView.m";
-		sourceTree = "<absolute>";
-	};
-	735F7F9911466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9A11466892000AC142 /* NSBitmapImageRep.m */;
-		name = "NSBitmapImageRep.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1086;
-		vrLoc = 5923;
-	};
-	735F7F9A11466892000AC142 /* NSBitmapImageRep.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = NSBitmapImageRep.m;
-		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/AppKit/NSBitmapImageRep.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F9B11466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9C11466892000AC142 /* VoyeurRenderView.m */;
-		name = "VoyeurRenderView.m: 216";
-		rLen = 4;
-		rLoc = 7964;
-		rType = 0;
-		vrLen = 1299;
-		vrLoc = 7205;
-	};
-	735F7F9C11466892000AC142 /* VoyeurRenderView.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = VoyeurRenderView.m;
-		path = /Developer/Examples/Quartz/PDF/Voyeur/VoyeurRenderView.m;
-		sourceTree = "<absolute>";
-	};
-	735F7F9D11466892000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F7F9E11466892000AC142 /* MyView.m */;
-		name = "MyView.m: 101";
-		rLen = 9;
-		rLoc = 2829;
-		rType = 0;
-		vrLen = 1578;
-		vrLoc = 2271;
-	};
-	735F7F9E11466892000AC142 /* MyView.m */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.objc;
-		name = MyView.m;
-		path = /Users/shooley/Downloads/code/CoreAnimationLayers/AnimationTypes/MyView.m;
-		sourceTree = "<absolute>";
-	};
-	735F7FB4114668A1000AC142 /* GlyphRenderer.m:106 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		functionName = "-glyphImage";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 106;
-		modificationTime = 289830086.770532;
-		state = 0;
-	};
-	735F7FBF114668F7000AC142 /* GlyphRenderer.m:44 */ = {
+	735F7FBF114668F7000AC142 /* GlyphRenderer.m:50 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -535,19 +211,10 @@
 		functionName = "+glyphsForCharacters:ofFont:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 44;
-		modificationTime = 289830086.880742;
-		state = 0;
-	};
-	735F7FC2114668FB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		name = "GlyphRenderer.m: 116";
-		rLen = 12;
-		rLoc = 3352;
-		rType = 0;
-		vrLen = 1011;
-		vrLoc = 2485;
+		lineNumber = 50;
+		location = TypeSetter;
+		modificationTime = 290101828.777866;
+		state = 1;
 	};
 	735F7FFD11466EF1000AC142 /* TypeSetterTests */ = {
 		activeExec = 0;
@@ -654,9 +321,9 @@
 	};
 	735F8099114672FE000AC142 /* GlyphRendererTests.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 462}}";
-			sepNavSelRange = "{322, 0}";
-			sepNavVisRange = "{43, 349}";
+			sepNavIntBoundsRect = "{{0, 0}, {1351, 462}}";
+			sepNavSelRange = "{302, 0}";
+			sepNavVisRange = "{0, 398}";
 		};
 	};
 	735F80F0114674BA000AC142 /* GlyphRendererTests.m:23 */ = {
@@ -669,11 +336,10 @@
 		delayBeforeContinue = 0;
 		fileReference = 735F8099114672FE000AC142 /* GlyphRendererTests.m */;
 		functionName = "-setUp";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 23;
-		location = TypeSetterTests;
-		modificationTime = 289830104.839353;
+		modificationTime = 290101964.506043;
 		state = 1;
 	};
 	735F80F2114674BB000AC142 /* GlyphRendererTests.m:26 */ = {
@@ -686,120 +352,11 @@
 		delayBeforeContinue = 0;
 		fileReference = 735F8099114672FE000AC142 /* GlyphRendererTests.m */;
 		functionName = "-tearDown";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 26;
-		location = TypeSetterTests;
-		modificationTime = 289830177.4650201;
+		modificationTime = 290101964.505563;
 		state = 1;
-	};
-	735F80F5114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */;
-		name = "GlyphRenderer.h: 12";
-		rLen = 13;
-		rLoc = 181;
-		rType = 0;
-		vrLen = 244;
-		vrLoc = 0;
-	};
-	735F80F6114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F80F7114674C2000AC142 /* TestTests_Prefix.pch */;
-		name = "TestTests_Prefix.pch: 6";
-		rLen = 169;
-		rLoc = 116;
-		rType = 0;
-		vrLen = 293;
-		vrLoc = 0;
-	};
-	735F80F7114674C2000AC142 /* TestTests_Prefix.pch */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = TestTests_Prefix.pch;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/InAppTests/pch/TestTests_Prefix.pch;
-		sourceTree = "<absolute>";
-	};
-	735F80F8114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F80F9114674C2000AC142 /* TypeSetterTests_Prefix.pch */;
-		name = "TypeSetterTests_Prefix.pch: 10";
-		rLen = 0;
-		rLoc = 277;
-		rType = 0;
-		vrLen = 285;
-		vrLoc = 0;
-	};
-	735F80F9114674C2000AC142 /* TypeSetterTests_Prefix.pch */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = TypeSetterTests_Prefix.pch;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/TypeSetter/pch/TypeSetterTests_Prefix.pch;
-		sourceTree = "<absolute>";
-	};
-	735F80FD114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */;
-		name = "GlyphRendererTests.m: 18";
-		rLen = 0;
-		rLoc = 248;
-		rType = 0;
-		vrLen = 291;
-		vrLoc = 0;
-	};
-	735F80FE114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F80FF114674C2000AC142 /* TestTests_Prefix.pch */;
-		name = "TestTests_Prefix.pch: 6";
-		rLen = 169;
-		rLoc = 116;
-		rType = 0;
-		vrLen = 293;
-		vrLoc = 0;
-	};
-	735F80FF114674C2000AC142 /* TestTests_Prefix.pch */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = TestTests_Prefix.pch;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/InAppTests/pch/TestTests_Prefix.pch;
-		sourceTree = "<absolute>";
-	};
-	735F8100114674C2000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F8101114674C2000AC142 /* TypeSetterTests_Prefix.pch */;
-		name = "TypeSetterTests_Prefix.pch: 10";
-		rLen = 0;
-		rLoc = 277;
-		rType = 0;
-		vrLen = 285;
-		vrLoc = 0;
-	};
-	735F8101114674C2000AC142 /* TypeSetterTests_Prefix.pch */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = TypeSetterTests_Prefix.pch;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/TypeSetter/pch/TypeSetterTests_Prefix.pch;
-		sourceTree = "<absolute>";
-	};
-	735F813211467F6D000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */;
-		name = "GlyphRendererTests.m: 24";
-		rLen = 0;
-		rLoc = 322;
-		rType = 0;
-		vrLen = 349;
-		vrLoc = 43;
-	};
-	735F813411467F6D000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */;
-		name = "GlyphRendererTests.m: 24";
-		rLen = 0;
-		rLoc = 322;
-		rType = 0;
-		vrLen = 349;
-		vrLoc = 43;
 	};
 	735F81431146806B000AC142 /* CrudeImageWrapper.h */ = {
 		uiCtxt = {
@@ -843,309 +400,222 @@
 			sepNavVisRange = "{0, 304}";
 		};
 	};
-	735F8158114684AB000AC142 /* PBXTextBookmark */ = {
+	73889D1B114A4792008B0494 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		fRef = 735F81431146806B000AC142 /* CrudeImageWrapper.h */;
-		name = "CrudeImageWrapper.h: 12";
-		rLen = 17;
-		rLoc = 185;
-		rType = 0;
-		vrLen = 225;
-		vrLoc = 0;
-	};
-	735F8159114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */;
-		name = "CrudeImageWrapper.m: 9";
-		rLen = 30;
-		rLoc = 148;
-		rType = 0;
-		vrLen = 220;
-		vrLoc = 0;
-	};
-	735F815A114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F814D1146808F000AC142 /* ImageWindow.h */;
-		name = "ImageWindow.h: 16";
-		rLen = 55;
-		rLoc = 233;
-		rType = 0;
-		vrLen = 295;
-		vrLoc = 0;
-	};
-	735F815B114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81481146807C000AC142 /* PlaceHolderImage.h */;
-		name = "PlaceHolderImage.h: 13";
+		fRef = 7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */;
+		name = "GlyphRenderer.h: 15";
 		rLen = 0;
-		rLoc = 229;
+		rLoc = 211;
 		rType = 0;
-		vrLen = 300;
+		vrLen = 244;
 		vrLoc = 0;
 	};
-	735F815C114684AB000AC142 /* PBXTextBookmark */ = {
+	73889D1C114A4792008B0494 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 76";
-		rLen = 0;
-		rLoc = 3016;
+		name = "DebugView.m: 80";
+		rLen = 393;
+		rLoc = 3221;
 		rType = 0;
-		vrLen = 1270;
-		vrLoc = 2342;
+		vrLen = 1927;
+		vrLoc = 1687;
 	};
-	735F815D114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		name = "GlyphRenderer.m: 128";
-		rLen = 0;
-		rLoc = 3626;
-		rType = 0;
-		vrLen = 1024;
-		vrLoc = 3160;
-	};
-	735F815E114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */;
-		name = "PlaceHolderImage.m: 10";
-		rLen = 0;
-		rLoc = 176;
-		rType = 0;
-		vrLen = 295;
-		vrLoc = 0;
-	};
-	735F815F114684AB000AC142 /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 735F814E1146808F000AC142 /* ImageWindow.m */;
-	};
-	735F8160114684AB000AC142 /* PBXTextBookmark */ = {
+	73889D1E114A4792008B0494 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 25";
-		rLen = 0;
-		rLoc = 599;
+		name = "DebugView.m: 80";
+		rLen = 393;
+		rLoc = 3221;
 		rType = 0;
-		vrLen = 1418;
-		vrLoc = 216;
+		vrLen = 1927;
+		vrLoc = 1687;
 	};
-	735F8161114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		name = "GlyphRenderer.m: 128";
-		rLen = 0;
-		rLoc = 3626;
-		rType = 0;
-		vrLen = 1025;
-		vrLoc = 3160;
+	73889D42114A4D5C008B0494 /* GlyphRenderer.m:213 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 213;
+		location = TypeSetter;
+		modificationTime = 290101828.782824;
+		state = 1;
 	};
-	735F8162114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81431146806B000AC142 /* CrudeImageWrapper.h */;
-		name = "CrudeImageWrapper.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 225;
-		vrLoc = 0;
+	73889D47114A4DA3008B0494 /* GlyphRenderer.m:206 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 206;
+		location = TypeSetter;
+		modificationTime = 290101828.783751;
+		state = 1;
 	};
-	735F8163114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81481146807C000AC142 /* PlaceHolderImage.h */;
-		name = "PlaceHolderImage.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 223;
-		vrLoc = 0;
+	73889D55114A503D008B0494 /* GlyphRenderer.m:194 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 194;
+		location = TypeSetter;
+		modificationTime = 290101828.784552;
+		state = 1;
 	};
-	735F8164114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		name = "GlyphRenderer.m: 128";
-		rLen = 0;
-		rLoc = 3626;
-		rType = 0;
-		vrLen = 1024;
-		vrLoc = 3160;
+	73889D89114A55BB008B0494 /* GlyphRenderer.m:122 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 122;
+		location = TypeSetter;
+		modificationTime = 290101852.773273;
+		state = 1;
 	};
-	735F8165114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 25";
-		rLen = 11;
-		rLoc = 534;
-		rType = 0;
-		vrLen = 1418;
-		vrLoc = 216;
+	73889D9A114A5775008B0494 /* GlyphRenderer.m:131 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 131;
+		location = TypeSetter;
+		modificationTime = 290101856.260622;
+		state = 1;
 	};
-	735F8166114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */;
-		name = "CrudeImageWrapper.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 220;
-		vrLoc = 0;
+	73889DA3114A5805008B0494 /* GlyphRenderer.m:192 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 192;
+		location = TypeSetter;
+		modificationTime = 290101828.78671;
+		state = 1;
 	};
-	735F8167114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F814D1146808F000AC142 /* ImageWindow.h */;
-		name = "ImageWindow.h: 12";
-		rLen = 0;
-		rLoc = 226;
-		rType = 0;
-		vrLen = 213;
-		vrLoc = 0;
+	73889DB6114A5BB6008B0494 /* GlyphRenderer.m:141 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 141;
+		location = TypeSetter;
+		modificationTime = 290101856.996807;
+		state = 1;
 	};
-	735F8168114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81431146806B000AC142 /* CrudeImageWrapper.h */;
-		name = "CrudeImageWrapper.h: 12";
-		rLen = 17;
-		rLoc = 185;
-		rType = 0;
-		vrLen = 225;
-		vrLoc = 0;
+	73889DBD114A5C14008B0494 /* GlyphRenderer.m:167 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 167;
+		location = TypeSetter;
+		modificationTime = 290101828.814389;
+		state = 1;
 	};
-	735F8169114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81481146807C000AC142 /* PlaceHolderImage.h */;
-		name = "PlaceHolderImage.h: 12";
-		rLen = 0;
-		rLoc = 226;
-		rType = 0;
-		vrLen = 232;
-		vrLoc = 0;
+	73889DCE114A5DC4008B0494 /* GlyphRenderer.m:183 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 183;
+		location = TypeSetter;
+		modificationTime = 290101828.81524;
+		state = 1;
 	};
-	735F816A114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 13";
-		rLen = 0;
-		rLoc = 241;
-		rType = 0;
-		vrLen = 442;
-		vrLoc = 0;
+	73889DD9114A65B8008B0494 /* GlyphRenderer.m:153 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 153;
+		location = TypeSetter;
+		modificationTime = 290101871.713778;
+		state = 1;
 	};
-	735F816B114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */;
-		name = "PlaceHolderImage.m: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 217;
-		vrLoc = 0;
-	};
-	735F816C114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */;
-		name = "CrudeImageWrapper.m: 9";
-		rLen = 30;
-		rLoc = 148;
-		rType = 0;
-		vrLen = 220;
-		vrLoc = 0;
-	};
-	735F816D114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */;
-		name = "PlaceHolderImage.m: 10";
-		rLen = 0;
-		rLoc = 176;
-		rType = 0;
-		vrLen = 217;
-		vrLoc = 0;
-	};
-	735F816E114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81481146807C000AC142 /* PlaceHolderImage.h */;
-		name = "PlaceHolderImage.h: 10";
-		rLen = 0;
-		rLoc = 177;
-		rType = 0;
-		vrLen = 238;
-		vrLoc = 0;
-	};
-	735F816F114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 26";
-		rLen = 157;
-		rLoc = 442;
-		rType = 0;
-		vrLen = 1256;
-		vrLoc = 305;
-	};
-	735F8170114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F814D1146808F000AC142 /* ImageWindow.h */;
-		name = "ImageWindow.h: 16";
-		rLen = 55;
-		rLoc = 233;
-		rType = 0;
-		vrLen = 295;
-		vrLoc = 0;
-	};
-	735F8171114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 26";
-		rLen = 91;
-		rLoc = 442;
-		rType = 0;
-		vrLen = 1320;
-		vrLoc = 305;
-	};
-	735F8172114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81481146807C000AC142 /* PlaceHolderImage.h */;
-		name = "PlaceHolderImage.h: 13";
-		rLen = 0;
-		rLoc = 229;
-		rType = 0;
-		vrLen = 300;
-		vrLoc = 0;
-	};
-	735F8173114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */;
-		name = "DebugView.m: 76";
-		rLen = 0;
-		rLoc = 3016;
-		rType = 0;
-		vrLen = 1270;
-		vrLoc = 2342;
-	};
-	735F8174114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
-		name = "GlyphRenderer.m: 128";
-		rLen = 0;
-		rLoc = 3626;
-		rType = 0;
-		vrLen = 1024;
-		vrLoc = 3160;
-	};
-	735F8175114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */;
-		name = "PlaceHolderImage.m: 10";
-		rLen = 0;
-		rLoc = 176;
-		rType = 0;
-		vrLen = 295;
-		vrLoc = 0;
-	};
-	735F8176114684AB000AC142 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 735F814E1146808F000AC142 /* ImageWindow.m */;
-		name = "ImageWindow.m: 14";
-		rLen = 17;
-		rLoc = 254;
-		rType = 0;
-		vrLen = 304;
-		vrLoc = 0;
+	73BBB5251147ABBE0043B790 /* GlyphRenderer.m:267 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 267;
+		location = TypeSetter;
+		modificationTime = 290101828.780893;
+		state = 1;
 	};
 	73CD0ACC0F52AA50001F0C0D /* TypeSetter */ = {
 		isa = PBXExecutable;
@@ -1154,7 +624,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 0;
+		breakpointsEnabled = 1;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -1178,6 +648,10 @@
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
+			"lead-UTF16Char--[GlyphRenderer glyphImage]" = 1;
+			"tableTag-CTFontTableTag-(null)" = 5;
+			"tableTag-CTFontTableTag--[GlyphRenderer glyphImage]" = 5;
+			"trail-UTF16Char--[GlyphRenderer glyphImage]" = 1;
 		};
 	};
 	73CD0ADA0F52AA55001F0C0D /* Source Control */ = {
@@ -1190,6 +664,161 @@
 	73CD0ADB0F52AA55001F0C0D /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	73D6787B114A87AF002EBD84 /* NSFont.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = NSFont.m;
+		path = /Users/shooley/Desktop/Programming/Source_Code/cocotron/AppKit/NSFont.m;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1154, 7392}}";
+			sepNavSelRange = "{6351, 1}";
+			sepNavVisRange = "{5759, 1249}";
+		};
+	};
+	73D678A6114A9996002EBD84 /* GlyphRenderer.m:159 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 159;
+		location = TypeSetter;
+		modificationTime = 290101876.261036;
+		state = 1;
+	};
+	73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1491, 1680}}";
+			sepNavSelRange = "{2020, 92}";
+			sepNavVisRange = "{0, 2780}";
+		};
+	};
+	73D678AD114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D6787B114A87AF002EBD84 /* NSFont.m */;
+		name = "NSFont.m: 216";
+		rLen = 1;
+		rLoc = 6351;
+		rType = 0;
+		vrLen = 1249;
+		vrLoc = 5759;
+	};
+	73D678AE114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D678AF114A9A43002EBD84 /* UFIFont.m */;
+		name = "UFIFont.m: 58";
+		rLen = 25;
+		rLoc = 2610;
+		rType = 0;
+		vrLen = 1715;
+		vrLoc = 1065;
+	};
+	73D678AF114A9A43002EBD84 /* UFIFont.m */ = {
+		isa = PBXFileReference;
+		name = UFIFont.m;
+		path = "/Volumes/Unicode Font Info/source/classes/UFIFont.m";
+		sourceTree = "<absolute>";
+	};
+	73D678B0114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D678B1114A9A43002EBD84 /* UFIStringAdditions.m */;
+		name = "UFIStringAdditions.m: 57";
+		rLen = 7;
+		rLoc = 2465;
+		rType = 0;
+		vrLen = 1746;
+		vrLoc = 1488;
+	};
+	73D678B1114A9A43002EBD84 /* UFIStringAdditions.m */ = {
+		isa = PBXFileReference;
+		name = UFIStringAdditions.m;
+		path = "/Volumes/Macintosh HD/Users/shooley/Desktop/from old laptop/steve backup/SHGlyphStacker/Unicode font stuff/source/classes/UFIStringAdditions.m";
+		sourceTree = "<absolute>";
+	};
+	73D678B2114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: 'iString' undeclared (first use in this function)";
+		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		rLen = 1;
+		rLoc = 163;
+		rType = 1;
+	};
+	73D678B3114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		name = "GlyphRenderer.m: 161";
+		rLen = 25;
+		rLoc = 4960;
+		rType = 0;
+		vrLen = 1446;
+		vrLoc = 4087;
+	};
+	73D678B4114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D678B5114A9A43002EBD84 /* UFIFont.m */;
+		name = "UFIFont.m: 58";
+		rLen = 25;
+		rLoc = 2610;
+		rType = 0;
+		vrLen = 1715;
+		vrLoc = 1065;
+	};
+	73D678B5114A9A43002EBD84 /* UFIFont.m */ = {
+		isa = PBXFileReference;
+		name = UFIFont.m;
+		path = "/Volumes/Unicode Font Info/source/classes/UFIFont.m";
+		sourceTree = "<absolute>";
+	};
+	73D678B6114A9A43002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73D678B7114A9A43002EBD84 /* UFIStringAdditions.m */;
+		name = "UFIStringAdditions.m: 57";
+		rLen = 7;
+		rLoc = 2465;
+		rType = 0;
+		vrLen = 1746;
+		vrLoc = 1488;
+	};
+	73D678B7114A9A43002EBD84 /* UFIStringAdditions.m */ = {
+		isa = PBXFileReference;
+		name = UFIStringAdditions.m;
+		path = "/Volumes/Macintosh HD/Users/shooley/Desktop/from old laptop/steve backup/SHGlyphStacker/Unicode font stuff/source/classes/UFIStringAdditions.m";
+		sourceTree = "<absolute>";
+	};
+	73D678C6114A9ACD002EBD84 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		name = "GlyphRenderer.m: 164";
+		rLen = 0;
+		rLoc = 5197;
+		rType = 0;
+		vrLen = 1594;
+		vrLoc = 3943;
+	};
+	73EC676011496257005F93C2 /* GlyphRenderer.m:226 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */;
+		functionName = "-glyphImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 226;
+		location = TypeSetter;
+		modificationTime = 290101828.782098;
+		state = 1;
 	};
 	8D1107260486CEB800E47090 /* TypeSetter */ = {
 		activeExec = 0;

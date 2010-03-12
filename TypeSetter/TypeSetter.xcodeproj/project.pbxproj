@@ -19,6 +19,7 @@
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
+		73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -128,6 +129,8 @@
 		73AECE8510469B7B0003D9CB /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		73AECF2210469BF50003D9CB /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UFIStringAdditions.m; sourceTree = "<group>"; };
+		73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFIStringAdditions.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TypeSetter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeSetter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -161,6 +164,8 @@
 				7344137D0F67CACD00D6CF73 /* DebugView.m */,
 				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
 				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
+				73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */,
+				73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */,
 				735F814011468055000AC142 /* Crude Image */,
 			);
 			name = Classes;
@@ -472,6 +477,7 @@
 				735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */,
 				735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */,
 				735F814F1146808F000AC142 /* ImageWindow.m in Sources */,
+				73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
