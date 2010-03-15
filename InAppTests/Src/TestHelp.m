@@ -60,7 +60,7 @@
 	// -- if queue was empty do this one immediately
 	if(1==[_objectsAwaitingCallbacks count]) {
 		NSAssert( [_objectsAwaitingCallbacks objectAtIndex:0]==someKindOfMagicObject, @"are you having a laugh?");
-		[someKindOfMagicObject fire];
+		[someKindOfMagicObject nextRunloopCycle_fire];
 	}
 }
 
@@ -76,7 +76,7 @@
 	// -- do the next queued action
 	if([_objectsAwaitingCallbacks count]){
 		AsyncTestProxy *next = [_objectsAwaitingCallbacks objectAtIndex:0];
-		[next performSelector:@selector(fire) withObject:nil afterDelay:0];
+		[next nextRunloopCycle_fire];
 	}
 }
 

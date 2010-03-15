@@ -20,6 +20,7 @@
 // (it is nothing to do with us, we are just saving state fr the test)
 @property (retain, readwrite) NSInvocation *resultProcessObject;
 
+- (void)nextRunloopCycle_fire;
 - (void)fire;
 
 - (void)setCallbackOb:(TestHelp *)val;

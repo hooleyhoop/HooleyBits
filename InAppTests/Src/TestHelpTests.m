@@ -51,7 +51,7 @@ static NSAutoreleasePool *pool;
 	[[mockTP3 expect] setCallbackOb:_th];
 	
 	// fire will only be called on the first item until we do the callback
-	[[mockTP1 expect] fire];
+	[[mockTP1 expect] nextRunloopCycle_fire];
 	
 	[_th aSyncAssertResultNil:(id)mockTP1];
 	[_th aSyncAssertResultNil:(id)mockTP2];
@@ -67,21 +67,21 @@ static NSAutoreleasePool *pool;
 	[[[mockTP1 expect] andReturn:nil] result];
 	[[[mockTP1 expect] andReturn:mockResultAction] resultProcessObject];
 	[[mockResultAction expect] invoke];
-	[[mockTP2 expect] fire];
+	[[mockTP2 expect] nextRunloopCycle_fire];
 	[_th _callBackForASync:(id)mockTP1];	
-	
+		
 	[mockResultAction verify];
 	[mockTP1 verify];
 	[mockTP2 verify];
 	[mockTP3 verify];
 
 	/* callback 2 */
-	[[mockTP3 expect] fire];
+	[[mockTP3 expect] nextRunloopCycle_fire];
 	[[mockResultAction expect] invoke];
 	[[[mockTP2 expect] andReturn:nil] result];
 	[[[mockTP2 expect] andReturn:mockResultAction] resultProcessObject];
-	[_th _callBackForASync:mockTP2];	
-	
+	[_th _callBackForASync:(id)mockTP2];
+
 	[mockResultAction verify];
 	[mockTP1 verify];
 	[mockTP2 verify];
@@ -91,8 +91,8 @@ static NSAutoreleasePool *pool;
 	[[mockResultAction expect] invoke];
 	[[[mockTP3 expect] andReturn:nil] result];
 	[[[mockTP3 expect] andReturn:mockResultAction] resultProcessObject];
-	[_th _callBackForASync:mockTP3];	
-	
+	[_th _callBackForASync:(id)mockTP3];	
+
 	[mockResultAction verify];
 	[mockTP1 verify];
 	[mockTP2 verify];
@@ -106,7 +106,7 @@ static NSAutoreleasePool *pool;
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
 	[[mockTP expect] setResultProcessObject:[OCMArg any]];
-	[[mockTP expect] fire];
+	[[mockTP expect] nextRunloopCycle_fire];
 	
 	/* call the method */
 	OCMockObject *mockResult = MOCK(NSObject);
@@ -136,7 +136,7 @@ static NSAutoreleasePool *pool;
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
 	[[mockTP expect] setResultProcessObject:[OCMArg any]];
-	[[mockTP expect] fire];
+	[[mockTP expect] nextRunloopCycle_fire];
 	
 	/* call the method */
 	[_th aSyncAssertResultNil:mockTP];
@@ -162,7 +162,7 @@ static NSAutoreleasePool *pool;
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
 	[[mockTP expect] setResultProcessObject:[OCMArg any]];
-	[[mockTP expect] fire];
+	[[mockTP expect] nextRunloopCycle_fire];
 	
 	/* call the method */
 	[_th aSyncAssertTrue:mockTP ];
@@ -190,7 +190,7 @@ static NSAutoreleasePool *pool;
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
 	[[mockTP expect] setResultProcessObject:[OCMArg any]];
-	[[mockTP expect] fire];
+	[[mockTP expect] nextRunloopCycle_fire];
 	
 	/* call the method */
 	[_th aSyncAssertFalse:mockTP ];
@@ -224,7 +224,7 @@ static NSAutoreleasePool *pool;
 	id mockTP = MOCK(AsyncTestProxy);
 	[[mockTP expect] setCallbackOb:_th];
 	[[mockTP expect] setResultProcessObject:[OCMArg any]];
-	[[mockTP expect] fire];
+	[[mockTP expect] nextRunloopCycle_fire];
 
 	/* call the method */
 	[_th aSyncAssertEqual:mockTP :@"steven"];

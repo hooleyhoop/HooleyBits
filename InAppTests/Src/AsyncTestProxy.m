@@ -36,6 +36,10 @@
 //	_resultMessage = nil;
 }
 
+- (void)nextRunloopCycle_fire {
+	[self performSelector:@selector(fire) withObject:nil afterDelay:0];
+}
+
 - (void)fire {
 	
 	//-- addObserver
