@@ -138,6 +138,13 @@
 			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
+		73156B73114E3C870014341C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9;
+			remoteInfo = TestUtilitiesTests;
+		};
 		738FC26110F0B1A0005CFFC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
@@ -424,6 +431,7 @@
 				7309611510E26B2F008B4C08 /* SHSharedUI.framework */,
 				7309611710E26B2F008B4C08 /* SHSharedUITests.octest */,
 				7309611910E26B2F008B4C08 /* SHTestUtilities.framework */,
+				73156B74114E3C870014341C /* TestUtilitiesTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -638,6 +646,13 @@
 			fileType = wrapper.framework;
 			path = SHTestUtilities.framework;
 			remoteRef = 7309611810E26B2F008B4C08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73156B74114E3C870014341C /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 73156B73114E3C870014341C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

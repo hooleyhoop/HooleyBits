@@ -10,6 +10,7 @@
 #import "GUITestProxy.h"
 #import "AsyncTests.h"
 #import <SHShared/SHShared.h>
+#import "NSInvocation_testFutures.h"
 
 #pragma mark -
 @implementation TestHelp
@@ -45,7 +46,7 @@
 	NSLog(@"%@, %@ - %@",[anException name],[anException reason], [anException userInfo]);
 }
 
-#pragma mark Tests are done in order
+#pragma mark OLD - Tests are done in order
 - (void)_pushWaitingAsyncTest:(AsyncTestProxy *)someKindOfMagicObject {
 	
 	NSParameterAssert(someKindOfMagicObject);
@@ -79,7 +80,7 @@
 	}
 }
 
-#pragma mark callbacks for async tests on complete
+#pragma mark OLD - callbacks for async tests on complete
 - (void)_callBackForASyncAssertTrue:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject {
 	
 	STAssertTrue(value, msg);
@@ -95,7 +96,7 @@
 	[self _popWaitingAsyncTest:someKindOfMagicObject];
 }
 
-#pragma mark USE THESE to do async tests
+#pragma mark OLD - USE THESE to do async tests
 - (void)aSync:(AsyncTestProxy *)someKindOfMagicObject {
 	
 	NSParameterAssert(someKindOfMagicObject);
@@ -103,7 +104,7 @@
 	[self _pushWaitingAsyncTest:someKindOfMagicObject];
 }
 
-- (void)aSyncAssertTrue:(AsyncTestProxy *)someKindOfMagicObject :(NSString *)msg {
+- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg {
 	
 	NSParameterAssert(someKindOfMagicObject);
 	NSParameterAssert(msg);
@@ -115,52 +116,70 @@
 
 #pragma mark New Stuff
 - (void)_startCallbackTimer {
-	
+	//TODO: check in that downloaded stuff..
 }
 - (void)_stopCallbackTimer {
-	
-}
-
-- (FSBlock *)_assertEqualObjectsBlock {
-	
-	return _BLOCK(@"[:arg1 :arg2 | arg2 isEqualTo: arg1]");	
-}
-- (FSBlock *)_assertFailBlock {
-	
-	return _BLOCK(@"[:arg1 | arg1 isEqual: (FSBoolean fsFalse)]");	
+	//TODO: check in that downloaded stuff..
 }
 
 - (void)insertResultArg:(id *)result intoInvocation:(NSInvocation *)inv {
-
+	
 	NSParameterAssert(*result);
 	NSParameterAssert(inv);
 	[inv setArgument:result atIndex:2];
 }
 
-/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-- (NSInvocation *)_assertEqualObjectsInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed expectedResult:(id)ob2 {
+- (void)_callBackForASync:(AsyncTestProxy *)someKindOfMagicObject {
 	
-	NSAssert(_tests, @"oops, need to set the _tests object");
+	[self _stopCallbackTimer];
 	
-	NSInvocation *outInv;
+	//	-process result
+	id result = someKindOfMagicObject.result;
+	id resultProcessObject = someKindOfMagicObject.resultProcessObject;
+	if( resultProcessObject )
+	{
+		if(result){
+			[self insertResultArg:&result intoInvocation:resultProcessObject];
+		}
+		[resultProcessObject invoke];
+	}
 	
-	// of course, result isn't available at this stage
-	id result = nil;
-	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assert_arg1:result arg2:ob2 ofBlock:[self _assertEqualObjectsBlock] failMsg:nil];
-	return outInv;
+	[self _popWaitingAsyncTest:someKindOfMagicObject];
 }
 
-/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-- (NSInvocation *)_assertFailInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed {
+#pragma mark New Assertions
+
+- (void)aSyncAssertResultNotNil:(AsyncTestProxy *)testProxyFuture {
 	
-	NSAssert( _tests, @"oops, need to set the _tests object" );
+	NSParameterAssert(testProxyFuture);
+	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertResultNotNilInvocation:_tests];
+	[self _pushWaitingAsyncTest: testProxyFuture];
+	[self _startCallbackTimer];
+}
+
+- (void)aSyncAssertResultNil:(AsyncTestProxy *)testProxyFuture {
 	
-	NSInvocation *outInv;
+	NSParameterAssert(testProxyFuture);
+	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertResultNilInvocation:_tests];
+	[self _pushWaitingAsyncTest: testProxyFuture];
+	[self _startCallbackTimer];
+}
+
+- (void)aSyncAssertTrue:(AsyncTestProxy *)testProxyFuture {
 	
-	// of course, result isn't available at this stage
-	id result = nil;
-	[[NSInvocation makeRetainedInvocationWithTarget:_tests invocationOut:&outInv] assert_arg1:result ofBlock:[self _assertFailBlock] failMsg:nil];
-	return outInv;
+	NSParameterAssert(testProxyFuture);
+	
+	// make a block to be executed on callback
+	// Dont keep state here - pass the callback object into testProxyFuture for storage
+	
+	// Build the inv to call whe the callback is reached. this needs to retain inv
+	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertTrueInvocation:_tests];
+	
+	//	-queue
+	//	-fire
+	[self _pushWaitingAsyncTest: testProxyFuture];
+	
+	[self _startCallbackTimer];
 }
 
 - (void)aSyncAssertFalse:(AsyncTestProxy *)testProxyFuture {
@@ -171,7 +190,7 @@
 	// Dont keep state here - pass the callback object into testProxyFuture for storage
 	
 	// Build the inv to call whe the callback is reached. this needs to retain inv
-	testProxyFuture.resultProcessObject = [self _assertFailInvocationWithDeferedResultProxy:testProxyFuture];
+	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertFailInvocation:_tests];
 
 	//	-queue
 	//	-fire
@@ -189,7 +208,7 @@
 	// Dont keep state here - pass the callback object into testProxyFuture for storage
 
 	// Build the inv to call whe the callback is reached. this needs to retain inv
-	testProxyFuture.resultProcessObject = [self _assertEqualObjectsInvocationWithDeferedResultProxy:testProxyFuture expectedResult:someOtherObject];
+	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertEqualObjectsInvocation:_tests expectedResult:someOtherObject];
 
 	//	-queue
 	//	-fire
@@ -197,25 +216,6 @@
 
 	[self _startCallbackTimer];
 }
-
-- (void)_callBackForASync:(AsyncTestProxy *)someKindOfMagicObject {
-
-	[self _stopCallbackTimer];
-
-	//	-process result
-	id result = someKindOfMagicObject.result;
-	id resultProcessObject = someKindOfMagicObject.resultProcessObject;
-	if( resultProcessObject )
-	{
-		if(result){
-			[self insertResultArg:&result intoInvocation:resultProcessObject];
-		}
-		[resultProcessObject invoke];
-	}
-
-	[self _popWaitingAsyncTest:someKindOfMagicObject];
-}
-
 
 @end
 

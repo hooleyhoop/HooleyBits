@@ -25,14 +25,15 @@
 - (void)_callBackForASyncAssertFalse:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject;
 
 - (void)aSync:(AsyncTestProxy *)someKindOfMagicObject;
-- (void)aSyncAssertTrue:(AsyncTestProxy *)someKindOfMagicObject :(NSString *)msg;
+- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg;
 
 #pragma mark New Stuff
-- (FSBlock *)_assertEqualObjectsBlock;
-- (NSInvocation *)_assertEqualObjectsInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed expectedResult:(id)ob2;
-- (NSInvocation *)_assertFailInvocationWithDeferedResultProxy:(AsyncTestProxy *)notUsed;
 
+#pragma mark New Assertions
+- (void)aSyncAssertTrue:(AsyncTestProxy *)testProxy;
 - (void)aSyncAssertFalse:(AsyncTestProxy *)testProxy;
 - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject;
+- (void)aSyncAssertResultNil:(AsyncTestProxy *)testProxy;
+- (void)aSyncAssertResultNotNil:(AsyncTestProxy *)testProxy;
 
 @end

@@ -34,28 +34,157 @@ static NSAutoreleasePool *pool;
 //-- push test proxies onto a queue, these will be evaluated in order, they can be asynchronous, they will finish completely before next starts
 //-- so you build a block, push it onto the stack, execute it later it returns a result
 
+//-- test asynchronous
 //-- test order
-- (void)testOrder {
+- (void)testtAsyncOrder {
+
+	OCMockObject *mockTP1 = MOCK(AsyncTestProxy);
+	OCMockObject *mockTP2 = MOCK(AsyncTestProxy);
+	OCMockObject *mockTP3 = MOCK(AsyncTestProxy);
 	
+	[[mockTP1 expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP2 expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP3 expect] setResultProcessObject:[OCMArg any]];
+
+	[[mockTP1 expect] setCallbackOb:_th];
+	[[mockTP2 expect] setCallbackOb:_th];
+	[[mockTP3 expect] setCallbackOb:_th];
+	
+	// fire will only be called on the first item until we do the callback
+	[[mockTP1 expect] fire];
+	
+	[_th aSyncAssertResultNil:(id)mockTP1];
+	[_th aSyncAssertResultNil:(id)mockTP2];
+	[_th aSyncAssertResultNil:(id)mockTP3];
+
+	[mockTP1 verify];
+	[mockTP2 verify];
+	[mockTP3 verify];
+
+	/* callback 1 */
+	id mockResultAction = MOCK(NSInvocation);
+
+	[[[mockTP1 expect] andReturn:nil] result];
+	[[[mockTP1 expect] andReturn:mockResultAction] resultProcessObject];
+	[[mockResultAction expect] invoke];
+	[[mockTP2 expect] fire];
+	[_th _callBackForASync:(id)mockTP1];	
+	
+	[mockResultAction verify];
+	[mockTP1 verify];
+	[mockTP2 verify];
+	[mockTP3 verify];
+
+	/* callback 2 */
+	[[mockTP3 expect] fire];
+	[[mockResultAction expect] invoke];
+	[[[mockTP2 expect] andReturn:nil] result];
+	[[[mockTP2 expect] andReturn:mockResultAction] resultProcessObject];
+	[_th _callBackForASync:mockTP2];	
+	
+	[mockResultAction verify];
+	[mockTP1 verify];
+	[mockTP2 verify];
+	[mockTP3 verify];
+
+	/* callback 3 */
+	[[mockResultAction expect] invoke];
+	[[[mockTP3 expect] andReturn:nil] result];
+	[[[mockTP3 expect] andReturn:mockResultAction] resultProcessObject];
+	[_th _callBackForASync:mockTP3];	
+	
+	[mockResultAction verify];
+	[mockTP1 verify];
+	[mockTP2 verify];
+	[mockTP3 verify];
 }
 
-//-- test asynchronous
-- (void)testAsync {
+#pragma mark New Async Assertions
+- (void)test_aSyncAssertResultNotNil {
+// - (void)aSyncAssertResultNotNil:(AsyncTestProxy *)someKindOfMagicObject
+
+	id mockTP = MOCK(AsyncTestProxy);
+	[[mockTP expect] setCallbackOb:_th];
+	[[mockTP expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP expect] fire];
 	
+	/* call the method */
+	OCMockObject *mockResult = MOCK(NSObject);
+	[_th aSyncAssertResultNotNil:mockTP];
+	[mockTP verify];
+	
+	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
+	[[[mockTP expect] andReturn:mockResult] result];
+	
+	id mockResultAction = MOCK(NSInvocation);
+	[[mockResultAction expect] invoke];
+	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
+	
+	// dificult to test that we swap in the result because we swap in a new pointer to it
+	[[mockResultAction expect] setArgument:[OCMArg anyPointer] atIndex:2];
+	
+	[_th _callBackForASync:mockTP];
+	
+	[mockResultAction verify];
+	[mockTP verify];
 }
 
 //-- ignore the result
-- (void)testNoResult {
+- (void)test_aSyncAssertResultNil {
+	// - (void)aSyncAssertResultNil:(AsyncTestProxy *)someKindOfMagicObject
+
+	id mockTP = MOCK(AsyncTestProxy);
+	[[mockTP expect] setCallbackOb:_th];
+	[[mockTP expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP expect] fire];
 	
+	/* call the method */
+	[_th aSyncAssertResultNil:mockTP];
+	[mockTP verify];
+	
+	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
+	[[[mockTP expect] andReturn:nil] result];
+	
+	id mockResultAction = MOCK(NSInvocation);
+	[[mockResultAction expect] invoke];
+	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
+	
+	[_th _callBackForASync:mockTP];
+	
+	[mockResultAction verify];
+	[mockTP verify];
 }
 
 //-- assert result is true
-- (void)testResultTrue {
+- (void)test_aSyncAssertTrue {
+	// - (void)aSyncAssertTrue:(AsyncTestProxy *)someKindOfMagicObject
 	
+	id mockTP = MOCK(AsyncTestProxy);
+	[[mockTP expect] setCallbackOb:_th];
+	[[mockTP expect] setResultProcessObject:[OCMArg any]];
+	[[mockTP expect] fire];
+	
+	/* call the method */
+	[_th aSyncAssertTrue:mockTP ];
+	[mockTP verify];
+	
+	/* although we -fired, the mock isn't going to call back on it's own - simulate the callback */
+	FSBoolean *fakeResult = [FSBoolean fsTrue];
+	[[[mockTP expect] andReturn:fakeResult] result];
+	
+	id mockResultAction = MOCK(NSInvocation);
+	[[mockResultAction expect] invoke];
+	[[[mockTP expect] andReturn:mockResultAction] resultProcessObject];
+	[[mockResultAction expect] setArgument:[OCMArg anyPointer] atIndex:2];
+	
+	[_th _callBackForASync:mockTP];
+	
+	[mockResultAction verify];
+	[mockTP verify];
 }
 
 //-- assert result is false
-- (void)testResultFalse {
+- (void)test_aSyncAssertFalse {
 	// - (void)aSyncAssertFalse:(AsyncTestProxy *)someKindOfMagicObject
 
 	id mockTP = MOCK(AsyncTestProxy);
@@ -83,7 +212,7 @@ static NSAutoreleasePool *pool;
 }
 
 //-- assert result is equal to another result
-- (void)testAssertResultIsEqualToAnotherResult {
+- (void)test_aSyncAssertEqual {
 	// - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject
 
 // Expected behavoir
@@ -113,36 +242,6 @@ static NSAutoreleasePool *pool;
 	
 	[mockResultAction verify];
 	[mockTP verify];
-}
-
-//  Test that we build an invocation that calls back to our test class (STAsserts need to be on the test class) with the correct arguments
-- (void)testAssertEqualObjectsBlock {
-	//- (NSInvocation *)assertEqualObjectsBlock
-	
-	NSString *expectedResult = @"steven";
-	
-	id mockTests = MOCK(AsyncTests);
-	SwappedInIvar *swapIn = [SwappedInIvar swapFor:_th :"_tests" :mockTests];
-	
-	// We expect the first arg of the invocation to be empty because the result wouldn't be availbale at this stage
-	[[mockTests expect] assert_arg1:nil arg2:expectedResult ofBlock:OCMOCK_ANY failMsg:nil];
-
-	NSInvocation *equalBlock = [_th _assertEqualObjectsInvocationWithDeferedResultProxy:nil expectedResult:expectedResult];
-	[equalBlock invoke];
-	
-	[mockTests verify];
-	[swapIn putBackOriginal];
-}
-
-- (void)test_assertEqualObjectsBlock {
-	// - (FSBlock *)_assertEqualObjectsBlock
-
-	FSBlock *blk = [_th _assertEqualObjectsBlock];
-	id result1 = [blk value:@"Steven" value:@"Steven"];	
-	STAssertTrue( [result1 isTrue], nil );
-	
-	id result2 = [blk value:@"Steven" value:@"Barry"];
-	STAssertFalse( [result2 isTrue], nil );
 }
 
 // Better form of expectation?
