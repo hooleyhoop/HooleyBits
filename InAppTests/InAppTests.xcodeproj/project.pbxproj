@@ -47,6 +47,9 @@
 		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
+		73DAE2F2114EC44C00221BC8 /* TestAsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E38C49112DE2720077F4D8 /* TestAsyncTestProxy.m */; };
+		73DAE2FD114EC50100221BC8 /* GuiTestProxyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DAE2FC114EC50100221BC8 /* GuiTestProxyTests.m */; };
+		73DAE2FE114EC50100221BC8 /* GuiTestProxyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DAE2FC114EC50100221BC8 /* GuiTestProxyTests.m */; };
 		73E0CB4A112027AD00261F28 /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73E0CB551120285E00261F28 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -234,6 +237,7 @@
 		73D975831108845B0060A7C2 /* NSScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSScriptCommand.m; path = Src/NSScriptCommand.m; sourceTree = "<group>"; };
 		73D975C9110886450060A7C2 /* NSSayWhateverCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSSayWhateverCommand.h; path = Src/NSSayWhateverCommand.h; sourceTree = "<group>"; };
 		73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSSayWhateverCommand.m; path = Src/NSSayWhateverCommand.m; sourceTree = "<group>"; };
+		73DAE2FC114EC50100221BC8 /* GuiTestProxyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuiTestProxyTests.m; path = Src/GuiTestProxyTests.m; sourceTree = "<group>"; };
 		73E0CB48112027AD00261F28 /* GuiTestProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuiTestProxy.h; path = Src/GuiTestProxy.h; sourceTree = "<group>"; };
 		73E0CB49112027AD00261F28 /* GuiTestProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuiTestProxy.m; path = Src/GuiTestProxy.m; sourceTree = "<group>"; };
 		73E0CB531120285E00261F28 /* TestHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestHelp.h; path = Src/TestHelp.h; sourceTree = "<group>"; };
@@ -485,6 +489,7 @@
 				73B4B65211256676001FFB0D /* TestHelpTests.m */,
 				73156D2A114E967A0014341C /* TestFSBlockConviences.m */,
 				73156D7F114E997B0014341C /* TestNSInvocation_testFutures.m */,
+				73DAE2FC114EC50100221BC8 /* GuiTestProxyTests.m */,
 			);
 			name = "Unit Tests";
 			sourceTree = "<group>";
@@ -735,6 +740,8 @@
 				73156D7A114E995C0014341C /* NSInvocation_testFutures.m in Sources */,
 				73156D80114E997B0014341C /* TestNSInvocation_testFutures.m in Sources */,
 				73156DD4114EA5B20014341C /* TestHelpTests.m in Sources */,
+				73DAE2F2114EC44C00221BC8 /* TestAsyncTestProxy.m in Sources */,
+				73DAE2FD114EC50100221BC8 /* GuiTestProxyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +764,7 @@
 				73880A641126BC6E00081774 /* AsyncTestProxy.m in Sources */,
 				73156D31114E96CD0014341C /* FSBlockConviences.m in Sources */,
 				73156D7B114E995C0014341C /* NSInvocation_testFutures.m in Sources */,
+				73DAE2FE114EC50100221BC8 /* GuiTestProxyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
