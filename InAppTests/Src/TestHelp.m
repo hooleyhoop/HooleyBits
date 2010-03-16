@@ -12,10 +12,23 @@
 #import <SHShared/SHShared.h>
 #import "NSInvocation_testFutures.h"
 
+@interface TestHelp() 
+- (void)_doNextAction;
+- (void)_startCallbackTimer;
+- (void)_stopCallbackTimer;
+@end
+
 #pragma mark -
 @implementation TestHelp
 
 @synthesize tests=_tests;
+@synthesize callbackTimer=_callbackTimer;
+
++ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg {
+
+	NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:targetArg selector:@selector(_callbackTimeout) userInfo:nil repeats:NO];
+	return newTimer;
+}
 
 + (id)makeWithTest:(AsyncTests *)value {
 	
@@ -47,6 +60,13 @@
 }
 
 #pragma mark OLD - Tests are done in order
+- (void)_doNextAction {
+	
+	AsyncTestProxy *next = [_objectsAwaitingCallbacks objectAtIndex:0];
+	[self _startCallbackTimer];	
+	[next nextRunloopCycle_fire];
+}
+
 - (void)_pushWaitingAsyncTest:(AsyncTestProxy *)someKindOfMagicObject {
 	
 	NSParameterAssert(someKindOfMagicObject);
@@ -58,9 +78,8 @@
 	[_objectsAwaitingCallbacks addObject:someKindOfMagicObject];
 	
 	// -- if queue was empty do this one immediately
-	if(1==[_objectsAwaitingCallbacks count]) {
-		NSAssert( [_objectsAwaitingCallbacks objectAtIndex:0]==someKindOfMagicObject, @"are you having a laugh?");
-		[someKindOfMagicObject nextRunloopCycle_fire];
+	if( 1==[_objectsAwaitingCallbacks count] ) {
+		[self _doNextAction];
 	}
 }
 
@@ -75,51 +94,52 @@
 	
 	// -- do the next queued action
 	if([_objectsAwaitingCallbacks count]){
-		AsyncTestProxy *next = [_objectsAwaitingCallbacks objectAtIndex:0];
-		[next nextRunloopCycle_fire];
+		[self _doNextAction];
 	}
 }
 
 #pragma mark OLD - callbacks for async tests on complete
-- (void)_callBackForASyncAssertTrue:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject {
-	
-	STAssertTrue(value, msg);
-	
-//	[(id)inv assertResultOfBlockIsTrue:exprBlock arg1:docCountBlock arg2:[NSNumber numberWithInt:value] msg:@"document count is wourong"];
-	
-	[self _popWaitingAsyncTest:someKindOfMagicObject];
-}
-
-- (void)_callBackForASyncAssertFalse:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject {
-
-	STAssertFalse(value, msg);
-	[self _popWaitingAsyncTest:someKindOfMagicObject];
-}
+//- (void)_callBackForASyncAssertTrue:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject {
+//	
+//	STAssertTrue(value, msg);
+//	
+////	[(id)inv assertResultOfBlockIsTrue:exprBlock arg1:docCountBlock arg2:[NSNumber numberWithInt:value] msg:@"document count is wourong"];
+//	
+//	[self _popWaitingAsyncTest:someKindOfMagicObject];
+//}
+//
+//- (void)_callBackForASyncAssertFalse:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject {
+//
+//	STAssertFalse(value, msg);
+//	[self _popWaitingAsyncTest:someKindOfMagicObject];
+//}
 
 #pragma mark OLD - USE THESE to do async tests
-- (void)aSync:(AsyncTestProxy *)someKindOfMagicObject {
-	
-	NSParameterAssert(someKindOfMagicObject);
-	
-	[self _pushWaitingAsyncTest:someKindOfMagicObject];
-}
 
-- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg {
-	
-	NSParameterAssert(someKindOfMagicObject);
-	NSParameterAssert(msg);
-	
-	[someKindOfMagicObject setFailMSg:msg];
-	[someKindOfMagicObject setFailCondition:true];
-	[self _pushWaitingAsyncTest:someKindOfMagicObject];
-}
+
+//- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg {
+//	
+//	NSParameterAssert(someKindOfMagicObject);
+//	NSParameterAssert(msg);
+//	
+//	[someKindOfMagicObject setFailMSg:msg];
+//	[someKindOfMagicObject setFailCondition:true];
+//	[self _pushWaitingAsyncTest:someKindOfMagicObject];
+//}
 
 #pragma mark New Stuff
 - (void)_startCallbackTimer {
-	//TODO: check in that downloaded stuff..
+	NSAssert(!_callbackTimer, @"gone wrong dickhead");
+	self.callbackTimer = [TestHelp makeCallbackTimer:self];
 }
+
 - (void)_stopCallbackTimer {
-	//TODO: check in that downloaded stuff..
+	[_callbackTimer invalidate];
+	self.callbackTimer = nil;
+}
+
+- (void)_callbackTimeout:(NSTimer *)arg {
+	[NSException raise:@"Unrecoverable Timeout" format:@"I should have kept a record of what i was doing!"];
 }
 
 - (void)insertResultArg:(id *)result intoInvocation:(NSInvocation *)inv {
@@ -148,13 +168,17 @@
 }
 
 #pragma mark New Assertions
+- (void)aSync:(AsyncTestProxy *)testProxyFuture {
+	
+	NSParameterAssert(testProxyFuture);
+	[self _pushWaitingAsyncTest:testProxyFuture];
+}
 
 - (void)aSyncAssertResultNotNil:(AsyncTestProxy *)testProxyFuture {
 	
 	NSParameterAssert(testProxyFuture);
 	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertResultNotNilInvocation:_tests];
 	[self _pushWaitingAsyncTest: testProxyFuture];
-	[self _startCallbackTimer];
 }
 
 - (void)aSyncAssertResultNil:(AsyncTestProxy *)testProxyFuture {
@@ -162,7 +186,6 @@
 	NSParameterAssert(testProxyFuture);
 	testProxyFuture.resultProcessObject = [NSInvocation_testFutures _assertResultNilInvocation:_tests];
 	[self _pushWaitingAsyncTest: testProxyFuture];
-	[self _startCallbackTimer];
 }
 
 - (void)aSyncAssertTrue:(AsyncTestProxy *)testProxyFuture {
@@ -178,8 +201,6 @@
 	//	-queue
 	//	-fire
 	[self _pushWaitingAsyncTest: testProxyFuture];
-	
-	[self _startCallbackTimer];
 }
 
 - (void)aSyncAssertFalse:(AsyncTestProxy *)testProxyFuture {
@@ -195,8 +216,6 @@
 	//	-queue
 	//	-fire
 	[self _pushWaitingAsyncTest: testProxyFuture];
-	
-	[self _startCallbackTimer];
 }
 
 - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxyFuture :(id)someOtherObject {
@@ -213,8 +232,6 @@
 	//	-queue
 	//	-fire
 	[self _pushWaitingAsyncTest:testProxyFuture];
-
-	[self _startCallbackTimer];
 }
 
 @end

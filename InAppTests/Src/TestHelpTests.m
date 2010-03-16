@@ -100,6 +100,26 @@ static NSAutoreleasePool *pool;
 }
 
 #pragma mark New Async Assertions
+- (void)testAsync {
+	// - (void)aSync:(AsyncTestProxy *)testProxyFuture
+
+	id mockTP = MOCK(AsyncTestProxy);
+	[[mockTP expect] setCallbackOb:_th];
+	[[mockTP expect] nextRunloopCycle_fire];
+
+	[_th aSync:mockTP];
+
+	[mockTP verify];
+
+	[[[mockTP expect] andReturn:nil] result];
+	[[[mockTP expect] andReturn:nil] resultProcessObject];
+
+	[_th _callBackForASync:mockTP];
+
+	[mockTP verify];
+}
+
+
 - (void)test_aSyncAssertResultNotNil {
 // - (void)aSyncAssertResultNotNil:(AsyncTestProxy *)someKindOfMagicObject
 

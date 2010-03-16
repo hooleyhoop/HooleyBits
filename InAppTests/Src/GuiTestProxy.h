@@ -7,34 +7,28 @@
 //
 #import "AsyncTestProxy.h"
 
-@class TestHelp, AsyncTests, FSBlock;
+// @class TestHelp, AsyncTests, FSBlock;
 
 #pragma mark -
 @interface GUITestProxy : AsyncTestProxy {
 	
-	NSString *_debugName;
-	NSString *_resultMessage;
-	BOOL _failCondition;
-	BOOL _recievesAsyncCallback;
-	
-	// oh no where is this going?
-	FSBlock *_boolExpressionBlock;
-	NSObject *_blockResult;
+//	NSString	*_resultMessage;
+//	BOOL		_failCondition;
+//	BOOL		_recievesAsyncCallback;
 }
 
-@property (retain, readwrite) NSObject *blockResult;
+// @property (retain, readwrite) NSObject *blockResult;
 
-+ (GUITestProxy *)wait;
-+ (GUITestProxy *)doTo:(id)object selector:(SEL)method;
-+ (GUITestProxy *)unlockTestRunner;
-+ (GUITestProxy *)openMainMenuItem:(NSString *)menuName;
-+ (GUITestProxy *)statusOfMenuItem:(NSString *)val1 ofMenu:(NSString *)val2;
-+ (GUITestProxy *)doMenu:(NSString *)val1 item:(NSString *)val2;
-+ (GUITestProxy *)assertDocumentCountIs:(NSUInteger)value;
+//+ (GUITestProxy *)wait;
+//+ (GUITestProxy *)doTo:(id)object selector:(SEL)method;
+//+ (GUITestProxy *)unlockTestRunner;
+//+ (GUITestProxy *)openMainMenuItem:(NSString *)menuName;
+//+ (GUITestProxy *)statusOfMenuItem:(NSString *)val1 ofMenu:(NSString *)val2;
+//+ (GUITestProxy *)doMenu:(NSString *)val1 item:(NSString *)val2;
++ (GUITestProxy *)documentCountIs:(NSUInteger)intValue;
 
-- (void)setFailMSg:(NSString *)msg;
-- (void)setFailCondition:(BOOL)value;
-
-- (void)cleanup;
+//- (void)setFailMSg:(NSString *)msg;
+//- (void)setFailCondition:(BOOL)value;
+//- (void)cleanup;
 
 @end

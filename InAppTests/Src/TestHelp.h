@@ -13,23 +13,27 @@
 
 	NSMutableArray	*_objectsAwaitingCallbacks;
 	AsyncTests		*_tests;
+	NSTimer			*_callbackTimer;
 }
 
-@property (readonly) AsyncTests *tests;
+@property (readonly)	AsyncTests	*tests;
+@property (retain)		NSTimer		*callbackTimer;
+
++ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg;
 
 + (id)makeWithTest:(AsyncTests *)value;
 - (id)initWithTests:(AsyncTests *)value;
 
 - (void)_callBackForASync:(AsyncTestProxy *)someKindOfMagicObject;
-- (void)_callBackForASyncAssertTrue:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject;
-- (void)_callBackForASyncAssertFalse:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject;
 
-- (void)aSync:(AsyncTestProxy *)someKindOfMagicObject;
-- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg;
+//- (void)_callBackForASyncAssertTrue:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject;
+//- (void)_callBackForASyncAssertFalse:(BOOL)value msg:(NSString *)msg helper:(AsyncTestProxy *)someKindOfMagicObject;
+//- (void)aSyncAssertTrue:(GUITestProxy *)someKindOfMagicObject :(NSString *)msg;
 
 #pragma mark New Stuff
 
 #pragma mark New Assertions
+- (void)aSync:(AsyncTestProxy *)someKindOfMagicObject;
 - (void)aSyncAssertTrue:(AsyncTestProxy *)testProxy;
 - (void)aSyncAssertFalse:(AsyncTestProxy *)testProxy;
 - (void)aSyncAssertEqual:(AsyncTestProxy *)testProxy :(id)someOtherObject;

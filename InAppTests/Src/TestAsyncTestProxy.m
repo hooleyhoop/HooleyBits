@@ -35,11 +35,29 @@ static NSAutoreleasePool *pool;
 	
 	id mockCallbackOb = MOCK(TestHelp);
 	id mockResultAction = MOCK(NSInvocation);
+	
+	id mockFutureAction = MOCK(NSInvocation);
+	[[mockFutureAction expect] invoke];
+	[mockFutureAction retain];
+	id mockFutureActionMethodSig = MOCK(NSMethodSignature);
+	[[[mockFutureAction expect] andReturn:mockFutureActionMethodSig] methodSignature];
+	NSUInteger returnValue = 0;
+	[[[mockFutureActionMethodSig expect] andReturnValue:OCMOCK_VALUE(returnValue)] methodReturnLength];
+	
+	SwappedInIvar *swapIn1 = [SwappedInIvar swapFor:_testProxy :"_remoteInvocation" :mockFutureAction];
+
 	[_testProxy setCallbackOb:mockCallbackOb];
 	_testProxy.resultProcessObject = mockResultAction;
 	
 	[[mockCallbackOb expect] _callBackForASync:_testProxy];
 	[_testProxy fire];
+	
+	[mockCallbackOb verify];
+	[mockResultAction verify];
+	[mockFutureAction verify];
+	[mockFutureActionMethodSig verify];
+	
+	[swapIn1 putBackOriginal];
 }
 
 @end

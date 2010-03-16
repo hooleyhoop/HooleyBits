@@ -6,19 +6,39 @@
 //  Copyright 2010 BestBefore. All rights reserved.
 //
 
-#import "GuiTestProxyTests.h"
+#import "GUITestProxy.h"
 
+@interface GuiTestProxyTests : SenTestCase {
+	
+}
+
+@end
 
 @implementation GuiTestProxyTests
 
 // move to subclass? when working
-[RunTests lock];
-[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+//[RunTests lock];
+//[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+
+- (void)_callBackForASync:(AsyncTestProxy *)futureProxy {
+	
+	FSBoolean *result = [futureProxy result];
+	STAssertTrue( [result isEqual:[FSBoolean fsTrue]], nil);
+}
+
+- (void)test_ {
+	// + (GUITestProxy *)documentCountIs:(NSUInteger)intValue;
+
+	GUITestProxy *futureProxy = [GUITestProxy documentCountIs:0];
+	[futureProxy setCallbackOb:(id)self];
+	[futureProxy fire];
+}
 
 
-[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
-[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"] :@"Menu item -New- should be enabled"];
-[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+//[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+
+//[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"] :@"Menu item -New- should be enabled"];
+//[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
 //	[_testHelper aSync:[GUITestProxy wait]];
 //	[_testHelper aSync:[GUITestProxy openMainMenuItem:@"File"]];
 //	[_testHelper aSync:[GUITestProxy closeMainMenuItem:@"File"]];

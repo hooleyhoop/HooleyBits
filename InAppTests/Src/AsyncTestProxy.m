@@ -13,6 +13,8 @@
 @implementation AsyncTestProxy
 
 @synthesize resultProcessObject =_resultProcessObject;
+@synthesize debugName=_debugName;
+@synthesize boolExpressionBlock=_boolExpressionBlock;
 
 - (void)dealloc {
 	NSAssert(_remoteInvocation==nil, @"This shouldn't happen");
@@ -25,12 +27,21 @@
 #pragma mark ONE OF These must be called when action is finished - i dont care how you do it
 - (void)cleanup {
 	
+	NSAssert(_boolExpressionBlock==nil, @"doh");
+	NSAssert(_remoteInvocation==nil, @"doh");
+
 	[_callbackOb _callBackForASync:self];
 	[_callbackOb release];
 	_callbackOb = nil;
 	
 	[_resultProcessObject release];
 	_resultProcessObject = nil;
+
+	[_blockResult release];
+	_blockResult = nil;
+
+	[_debugName release];
+	_debugName = nil;
 
 //	[_resultMessage release];
 //	_resultMessage = nil;
@@ -49,12 +60,18 @@
 	if(_remoteInvocation)
 	{
 		[_remoteInvocation invoke];
+		if( [[_remoteInvocation methodSignature] methodReturnLength] ) {
+			[_remoteInvocation getReturnValue:&_blockResult];
+			[_blockResult retain];
+		}
 		[_remoteInvocation release];
 		_remoteInvocation = nil;
 	} else {
-//		NSAssert(_boolExpressionBlock, @"must have a block if we dont have an invocation?");
-		// so we got a result - know what?
-//		_blockResult = [_boolExpressionBlock value];
+		NSAssert(_boolExpressionBlock, @"must have a block if we dont have an invocation?");
+		_blockResult = [_boolExpressionBlock value];
+		[_blockResult retain];
+		[_boolExpressionBlock release];
+		_boolExpressionBlock = nil;
 	}
 	// calls callback
 //	if(!_recievesAsyncCallback)
@@ -66,7 +83,7 @@
 }
 
 - (id)result {
-	return nil;
+	return _blockResult;
 }
 
 @end
