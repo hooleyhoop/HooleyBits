@@ -26,7 +26,7 @@
 	STAssertTrue( [result isEqual:[FSBoolean fsTrue]], nil);
 }
 
-- (void)test_ {
+- (void)test_documentCountIs {
 	// + (GUITestProxy *)documentCountIs:(NSUInteger)intValue;
 
 	GUITestProxy *futureProxy = [GUITestProxy documentCountIs:0];

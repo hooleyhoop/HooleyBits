@@ -13,7 +13,7 @@
 #import <SHTestUtilities/NSInvocation_testHelpers.h>
 
 static int _psn;
-static RunTests *_shared;
+//static RunTests *_shared;
 
 #pragma mark -
 @interface FF : SHooleyObject {
@@ -27,9 +27,13 @@ NSArray *_args;
 + (id)target:(id)target selector:(SEL)selector args:(NSArray *)vals;
 @end
 
+#pragma mark -
 @implementation FF
+
 @synthesize target=_target, selector=_selector, args=_args;
+
 + (id)target:(id)target selector:(SEL)selector args:(NSArray *)vals {
+
 	FF *stub = [[[FF alloc] init] autorelease];
 	[stub setTarget:target];
 	[stub setSelector:selector];
@@ -38,6 +42,7 @@ NSArray *_args;
 }
 
 - (void)dealloc {
+
 	[_target release];
 	[_args release];
 	[super dealloc];
@@ -101,7 +106,7 @@ static BOOL _locked;
 	if(self){
 		_queuedActions = [[NSMutableArray array] retain];
 		_arg_placeHolder = [NSObject new];
-		_shared = self;
+//		_shared = self;
 	}
 	return self;
 }
