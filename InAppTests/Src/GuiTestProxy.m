@@ -8,7 +8,7 @@
 
 #import "GuiTestProxy.h"
 //#import "RunTests.h"
-//#import <SHShared/NSInvocation(ForwardedConstruction).h>
+#import <SHShared/NSInvocation(ForwardedConstruction).h>
 //#import "TestHelp.h"
 //#import <FScript/Fscript.h>
 //#import "AsyncTests.h"
@@ -18,24 +18,24 @@
 
 // @synthesize blockResult = _blockResult;
 
-//+ (GUITestProxy *)wait {
-//
-//	GUITestProxy *aRemoteTestProxy = [[GUITestProxy alloc] init];
-//	aRemoteTestProxy->_debugName = @"wait";
-//	
-//	/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-//	[[NSInvocation newRetainedInvocationWithTarget:aRemoteTestProxy
-//	invocationOut: &(aRemoteTestProxy->_remoteInvocation)] 
-//	 wait];
-//	
-//	[aRemoteTestProxy->_remoteInvocation retain];
-//	
-//	/* _waitTimerFire */
-//	aRemoteTestProxy->_recievesAsyncCallback = YES;
-//
-//	return [aRemoteTestProxy autorelease];
-//}
-//
++ (GUITestProxy *)wait {
+
+	GUITestProxy *aRemoteTestProxy = [[GUITestProxy alloc] init];
+	aRemoteTestProxy.debugName = @"wait";
+	
+	/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
+	[[NSInvocation makeRetainedInvocationWithTarget:aRemoteTestProxy
+	invocationOut: &(aRemoteTestProxy->_remoteInvocation)] 
+	 wait];
+	
+	[aRemoteTestProxy->_remoteInvocation retain];
+	
+	/* _waitTimerFire */
+	aRemoteTestProxy.recievesAsyncCallback = YES;
+
+	return [aRemoteTestProxy autorelease];
+}
+
 //// Fire a selector on an instance
 //+ (GUITestProxy *)doTo:(id)object selector:(SEL)method {
 //	
@@ -189,23 +189,17 @@
 //}
 
 #pragma mark Hmm
-//- (void)_waitTimerFire:(id)value {
-//	[self cleanup];
-//	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"hooley_distrbuted_notification_callback" object:nil];
-//}
-//- (void)wait {
-//	[self performSelector:@selector(_waitTimerFire:) withObject:nil afterDelay:0.3];
-//}
+- (void)_waitTimerFire:(id)value {
 
-//#pragma mark ONE OF These must be called when action is finished - i dont care how you do it
-//- (void)cleanup {
-//	
-//	[_callbackOb _callBackForASync:self];
-//	[_callbackOb release];
-//	_callbackOb = nil;
-//	[_resultMessage release];
-//	_resultMessage = nil;
-//}
+	[self cleanup];
+//Not Found reason to add this yet!	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"hooley_distrbuted_notification_callback" object:nil];
+}
+
+- (void)wait {
+	[self performSelector:@selector(_waitTimerFire:) withObject:nil afterDelay:0.3];
+}
+
+
 
 //- (oneway void)getNotifiedBack:(NSNotification *)eh {
 //	

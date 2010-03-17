@@ -15,8 +15,10 @@
 @synthesize resultProcessObject =_resultProcessObject;
 @synthesize debugName=_debugName;
 @synthesize boolExpressionBlock=_boolExpressionBlock;
+@synthesize  recievesAsyncCallback = _recievesAsyncCallback;
 
 - (void)dealloc {
+
 	NSAssert(_remoteInvocation==nil, @"This shouldn't happen");
 	NSAssert(_callbackOb==nil, @"This shouldn't happen");
 	NSAssert(_resultProcessObject==nil, @"This shouldn't happen");
@@ -74,7 +76,7 @@
 		_boolExpressionBlock = nil;
 	}
 	// calls callback
-//	if(!_recievesAsyncCallback)
+	if(!_recievesAsyncCallback)
 		[self cleanup];
 }
 

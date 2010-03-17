@@ -20,6 +20,8 @@
 	NSInvocation	*_resultProcessObject;
 	
 	NSObject		*_blockResult;
+	
+	BOOL			_recievesAsyncCallback;
 }
 
 // encapsulates an action that the caller needs to do when we have called it back
@@ -27,11 +29,14 @@
 @property (retain, readwrite) NSInvocation *resultProcessObject;
 @property (retain, readwrite) NSString *debugName;
 @property (retain, readwrite) FSBlock *boolExpressionBlock;
+@property (readwrite) BOOL recievesAsyncCallback;
 
 - (void)nextRunloopCycle_fire;
 - (void)fire;
 
 - (void)setCallbackOb:(TestHelp *)val;
 - (id)result;
+
+- (void)cleanup;
 
 @end

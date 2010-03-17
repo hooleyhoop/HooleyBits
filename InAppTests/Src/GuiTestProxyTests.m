@@ -34,12 +34,18 @@
 	[futureProxy fire];
 }
 
+- (void)test_wait {
 
-//[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+	GUITestProxy *futureProxy = [GUITestProxy wait];
+	[futureProxy setCallbackOb:(id)self];
+	[futureProxy fire];
+}
+
+// [_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+// [_testHelper aSync:[GUITestProxy wait]];
 
 //[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"] :@"Menu item -New- should be enabled"];
 //[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
-//	[_testHelper aSync:[GUITestProxy wait]];
 //	[_testHelper aSync:[GUITestProxy openMainMenuItem:@"File"]];
 //	[_testHelper aSync:[GUITestProxy closeMainMenuItem:@"File"]];
 //	[_testHelper aSync:[GUITestProxy selectItems2And3]];

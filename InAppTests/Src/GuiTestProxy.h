@@ -14,12 +14,11 @@
 	
 //	NSString	*_resultMessage;
 //	BOOL		_failCondition;
-//	BOOL		_recievesAsyncCallback;
 }
 
 // @property (retain, readwrite) NSObject *blockResult;
 
-//+ (GUITestProxy *)wait;
++ (GUITestProxy *)wait;
 //+ (GUITestProxy *)doTo:(id)object selector:(SEL)method;
 //+ (GUITestProxy *)unlockTestRunner;
 //+ (GUITestProxy *)openMainMenuItem:(NSString *)menuName;
