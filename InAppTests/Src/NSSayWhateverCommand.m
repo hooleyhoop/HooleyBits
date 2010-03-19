@@ -12,10 +12,12 @@
 @implementation NSSayWhateverCommand
 - (id)sayFuck {
 	NSLog(@"w");
+	return nil;
 }
 
 - (id)sayFuck:(id)fuck {
 	NSLog(@"w");
+	return nil;
 }
 - (id)subjectsSpecifier
 {
@@ -23,9 +25,8 @@
     NSAppleEventDescriptor *subjDesc = [[self appleEvent] attributeDescriptorForKeyword: 'subj'];
     if (subjDesc)
     {
-        NSScriptObjectSpecifier *subjSpec = [NSScriptObjectSpecifier _objectSpecifierFromDescriptor: subjDesc
-																	   inCommandConstructionContext: nil];
-        objects = [subjSpec objectsByEvaluatingSpecifier];
+//        NSScriptObjectSpecifier *subjSpec = [NSScriptObjectSpecifier _objectSpecifierFromDescriptor: subjDesc inCommandConstructionContext: nil];
+//        objects = [subjSpec objectsByEvaluatingSpecifier];
     }
     return objects;
 }

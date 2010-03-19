@@ -8,7 +8,7 @@
 
 @interface GUIFiddler : NSObject {
 	
-}#import <objc/message.h>
+}
 
 @end
 

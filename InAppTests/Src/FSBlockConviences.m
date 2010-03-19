@@ -7,6 +7,7 @@
 //
 
 #import "FSBlockConviences.h"
+#import "FScript/FScript.h"
 
 
 @implementation FSBlockConviences

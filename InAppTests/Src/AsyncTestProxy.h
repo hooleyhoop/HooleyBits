@@ -7,14 +7,14 @@
 //
 #import <SHShared/SHooleyObject.h>
 
-@class TestHelp,FSBlock;
+@class TestHelp, FSBlock;
 @interface AsyncTestProxy : SHooleyObject {
 
 	NSString		*_debugName;	// can be used to track which action we are doing
 
 	// we use one or the other
 	NSInvocation	*_remoteInvocation;
-	FSBlock			*_boolExpressionBlock;
+	FSBlock			*_boolExpressionBlock, *_preAction, *_postAction;
 
 	TestHelp		*_callbackOb;
 	NSInvocation	*_resultProcessObject;
@@ -28,7 +28,7 @@
 // (it is nothing to do with us, we are just saving state fr the test)
 @property (retain, readwrite) NSInvocation *resultProcessObject;
 @property (retain, readwrite) NSString *debugName;
-@property (retain, readwrite) FSBlock *boolExpressionBlock;
+@property (retain, readwrite) FSBlock *boolExpressionBlock, *preAction, *postAction;
 @property (readwrite) BOOL recievesAsyncCallback;
 
 - (void)nextRunloopCycle_fire;

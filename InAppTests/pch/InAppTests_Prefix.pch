@@ -5,3 +5,7 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 #endif
+
+#ifndef _BLOCK
+	#define _BLOCK(x) [x asBlock]
+#endif

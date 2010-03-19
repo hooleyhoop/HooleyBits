@@ -5,7 +5,7 @@
 //  Created by steve hooley on 15/03/2010.
 //  Copyright 2010 BestBefore Ltd. All rights reserved.
 //
-
+@class FSBlock;
 @interface FSBlockConviences : NSObject {
 
 }

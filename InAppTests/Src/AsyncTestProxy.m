@@ -8,13 +8,14 @@
 
 #import "AsyncTestProxy.h"
 #import "TestHelp.h"
+#import "FScript/FScript.h"
 
 
 @implementation AsyncTestProxy
 
 @synthesize resultProcessObject =_resultProcessObject;
 @synthesize debugName=_debugName;
-@synthesize boolExpressionBlock=_boolExpressionBlock;
+@synthesize boolExpressionBlock=_boolExpressionBlock, preAction=_preAction, postAction=_postAction;
 @synthesize  recievesAsyncCallback = _recievesAsyncCallback;
 
 - (void)dealloc {
@@ -31,6 +32,11 @@
 	
 	NSAssert(_boolExpressionBlock==nil, @"doh");
 	NSAssert(_remoteInvocation==nil, @"doh");
+
+	// -- do post action
+	[_postAction value:self];
+	[_postAction release];
+	[_preAction release];
 
 	[_callbackOb _callBackForASync:self];
 	[_callbackOb release];
@@ -55,9 +61,7 @@
 
 - (void)fire {
 	
-	//-- addObserver
-//	if(_recievesAsyncCallback)
-//		[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotifiedBack:) name:@"hooley_distrbuted_notification_callback" object:nil];
+	[_preAction value:self];
 	
 	if(_remoteInvocation)
 	{
