@@ -11,7 +11,11 @@
 
 @implementation NSApplication (NSApplication_ScriptingExtras)
 
+- (void)dealloc {
 
+
+	[super dealloc];
+}
 
 
 /* kvc method for the 'special version' AppleScript property.
@@ -74,7 +78,8 @@ NSNumber* gScalingFactor = nil;
 	}
 	NSLog(@"app's scaling factor = %@", gScalingFactor);
 	/* return the scaling factor value */
-    return [[gScalingFactor retain] autorelease];
+ //   return [[gScalingFactor retain] autorelease];
+	return gScalingFactor;
 }
 
 - (void) setScalingFactor:(NSNumber*)value {

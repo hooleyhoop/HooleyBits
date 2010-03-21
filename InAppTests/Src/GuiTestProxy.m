@@ -10,6 +10,7 @@
 #import "DelayedPerformer.h"
 #import <SHShared/NSInvocation(ForwardedConstruction).h>
 #import "FScript/FScript.h"
+#import <objc/message.h>
 
 @implementation GUITestProxy
 #pragma mark The Useful stuff
