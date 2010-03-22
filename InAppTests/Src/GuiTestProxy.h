@@ -17,7 +17,8 @@
 }
 
 // @property (retain, readwrite) NSObject *blockResult;
-//+ (GUITestProxy *)unlockTestRunner;
++ (GUITestProxy *)lockTestRunner;
++ (GUITestProxy *)unlockTestRunner;
 
 + (GUITestProxy *)wait;
 + (GUITestProxy *)doTo:(id)object selector:(SEL)method;

@@ -37,13 +37,13 @@
 - (void)testShit {
 
 	// move to subclass? when working
-	[RunTests lock];
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 
 	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
 	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
 
-	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"] :@"Menu item -New- should be enabled"];
-	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"] :@"Menu item -Close- should be disabled"];
+	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
 	
 	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];

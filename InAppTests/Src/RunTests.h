@@ -30,7 +30,7 @@
 @property (retain, readwrite, nonatomic) id var2;
 
 + (void)lock;
-+ (void)unlock:(id)callee callback:(SEL)method;
++ (void)unlock;
 //+ (void)addException:(NSException *)anException;
 
 - (void)pushAction:(id)value;

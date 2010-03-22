@@ -46,25 +46,31 @@
 	return [aRemoteTestProxy autorelease];
 }
 
-//// we lock directly, brut of course need to unlock asyncronously when all queued methods have finished
-//+ (GUITestProxy *)unlockTestRunner {
-//	
-//	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
-//	aRemoteTestProxy->_debugName = @"unlockTestRunner";
-//	
-//	/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
-//	[[NSInvocation makeRetainedInvocationWithTarget: [RunTests class] 
-//								  invocationOut:&(aRemoteTestProxy->_remoteInvocation)] unlock:aRemoteTestProxy callback:@selector(cleanup)];
-//	[aRemoteTestProxy->_remoteInvocation retain];
-//		
-//	// When this is added to the queue it's callbackObject will be set
-//	// When the action has been process -_callBackForASync MUST be called on the _callbackOb to pop it off the queue
-//	//	[_callbackOb _callBackForASync:self];
-//	//	[_callbackOb release];
-//	//	_callbackOb = nil;
-//	
-//	return aRemoteTestProxy;
-//}
++ (GUITestProxy *)lockTestRunner {
+	
+	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
+	aRemoteTestProxy->_debugName = @"lockTestRunner";
+	
+	NSString *exprString = @"[RunTests lock]";
+	FSBlock *exprBlock = _BLOCK(exprString);
+	aRemoteTestProxy.boolExpressionBlock = exprBlock;
+	
+	return aRemoteTestProxy;
+}
+
+// we lock directly, brut of course need to unlock asyncronously when all queued methods have finished
++ (GUITestProxy *)unlockTestRunner {
+	
+	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
+	aRemoteTestProxy->_debugName = @"unlockTestRunner";
+
+	NSString *exprString = @"[RunTests unlock]";
+	FSBlock *exprBlock = _BLOCK(exprString);
+	aRemoteTestProxy.boolExpressionBlock = exprBlock;
+
+	return aRemoteTestProxy;
+}
+
 - (void)_setUpDistributedNotificationStuff {
 	
 	self.preAction = _BLOCK(@"[:arg1 | (NSDistributedNotificationCenter defaultCenter) addObserver:arg1 selector:#getNotifiedBack: name:'hooley_distrbuted_notification_callback' object:nil]");

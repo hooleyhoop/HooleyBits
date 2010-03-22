@@ -17,7 +17,6 @@
 		73156D7B114E995C0014341C /* NSInvocation_testFutures.m in Sources */ = {isa = PBXBuildFile; fileRef = 73156D79114E995C0014341C /* NSInvocation_testFutures.m */; };
 		73156F8F114FC8FB0014341C /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73157282114FDC750014341C /* GuiTestProxyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DAE2FC114EC50100221BC8 /* GuiTestProxyTests.m */; };
-		735AB38010F5F641008378AA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		73662EE61121CB0800E8DC9F /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
 		736D2A1010F5E9B80020CB19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 736D2A0F10F5E9B80020CB19 /* main.m */; };
 		736D2A1310F5E9C40020CB19 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 736D2A1110F5E9C40020CB19 /* MyDocument.m */; };
@@ -25,7 +24,6 @@
 		7384E12910FBBB0D0077D202 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7384E12810FBBB0D0077D202 /* ApplicationServices.framework */; };
 		7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7384E13D10FBBB930077D202 /* Carbon.framework */; };
 		7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
-		7385A6DB10FCDD9A00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73880A641126BC6E00081774 /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
 		738BE6C41121DF0E0028EB59 /* NSApplication+ScriptingExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */; };
 		73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
@@ -37,9 +35,6 @@
 		73BC1A141139C5910088135A /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
-		73C68FE911388E3A00FA2613 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
-		73C68FF211388E6D00FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
-		73C6900911388EB300FA2613 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F55410F89AD400691006 /* SHTestUtilities.framework */; };
 		73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
 		73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
@@ -51,6 +46,9 @@
 		73DF49191153F47E005E78E9 /* AunitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 735AB32E10F5F3B1008378AA /* AunitTest.m */; };
 		73E0CB4A112027AD00261F28 /* GuiTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB49112027AD00261F28 /* GuiTestProxy.m */; };
 		73E0CB551120285E00261F28 /* TestHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CB541120285E00261F28 /* TestHelp.m */; };
+		73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
+		73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
+		73E2135111582E0E00F4007E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -127,6 +125,20 @@
 			remoteGlobalIDString = 73CC082911368A3700B53CA9;
 			remoteInfo = TestUtilitiesTests;
 		};
+		73E2149B11582FCF00F4007E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738C7C760C5CDC170096EF9D /* SHShared */;
+			remoteInfo = SHShared;
+		};
+		73E2149D11582FCF00F4007E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteInfo = SHTestUtilities;
+		};
 		73EB2BC2112B03C0004F3A26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
@@ -202,7 +214,6 @@
 		736D2A0F10F5E9B80020CB19 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
 		736D2A1110F5E9C40020CB19 /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyDocument.m; path = Src/MyDocument.m; sourceTree = "<group>"; };
 		736D2A1210F5E9C40020CB19 /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyDocument.h; path = Src/MyDocument.h; sourceTree = "<group>"; };
-		7382F55410F89AD400691006 /* SHTestUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SHTestUtilities.framework; path = ../../Blake/build/Debug/SHTestUtilities.framework; sourceTree = SOURCE_ROOT; };
 		7382F57F10F89B6500691006 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = /Library/Frameworks/OCMock.framework; sourceTree = "<absolute>"; };
 		7384E12810FBBB0D0077D202 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		7384E13D10FBBB930077D202 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -256,7 +267,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */,
-				73C6900911388EB300FA2613 /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,14 +286,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
-				735AB38010F5F641008378AA /* SenTestingKit.framework in Frameworks */,
 				7382F58010F89B6500691006 /* OCMock.framework in Frameworks */,
 				7384E12910FBBB0D0077D202 /* ApplicationServices.framework in Frameworks */,
 				7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */,
-				7385A6DB10FCDD9A00ED053F /* SHTestUtilities.framework in Frameworks */,
 				73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */,
-				73C68FE911388E3A00FA2613 /* SHShared.framework in Frameworks */,
-				73C68FF211388E6D00FA2613 /* SHTestUtilities.framework in Frameworks */,
+				73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */,
+				73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */,
+				73E2135111582E0E00F4007E /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +310,6 @@
 				7384E13D10FBBB930077D202 /* Carbon.framework */,
 				73B360041116E0FF0064AF28 /* FScript.framework */,
 				7382F57F10F89B6500691006 /* OCMock.framework */,
-				7382F55410F89AD400691006 /* SHTestUtilities.framework */,
 				735AB37F10F5F641008378AA /* SenTestingKit.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
@@ -592,6 +600,8 @@
 			);
 			dependencies = (
 				730D4E9A10FC9B6B00E0F81C /* PBXTargetDependency */,
+				73E2149C11582FCF00F4007E /* PBXTargetDependency */,
+				73E2149E11582FCF00F4007E /* PBXTargetDependency */,
 			);
 			name = InAppTests;
 			productInstallPath = "$(HOME)/Applications";
@@ -785,6 +795,16 @@
 			name = SHTestUtilities;
 			targetProxy = 7385A69010FCDB7500ED053F /* PBXContainerItemProxy */;
 		};
+		73E2149C11582FCF00F4007E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHShared;
+			targetProxy = 73E2149B11582FCF00F4007E /* PBXContainerItemProxy */;
+		};
+		73E2149E11582FCF00F4007E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHTestUtilities;
+			targetProxy = 73E2149D11582FCF00F4007E /* PBXContainerItemProxy */;
+		};
 		73EB2BC3112B03C0004F3A26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SHShared;
@@ -892,7 +912,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "/Developer/Library/Frameworks @executable_path/../Frameworks";
 				PRODUCT_NAME = InAppTests;
 			};
 			name = Debug;
@@ -904,6 +926,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				PRODUCT_NAME = InAppTests;
 			};

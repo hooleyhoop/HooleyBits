@@ -87,16 +87,18 @@ static BOOL _locked;
 + (BOOL)isLocked {
 	return _locked;
 }
+
 + (void)lock {
+
 	NSAssert(NO==_locked, @"lock errror - cant lock");
 	_locked =YES;
 	[self startLockTimer];
 }
-+ (void)unlock:(id)callee callback:(SEL)method {
+
++ (void)unlock {
 
 	NSAssert(YES==_locked, @"lock errror - cant unlock");
 	[self cancelLockTimer];
-	[callee performSelector:method];
 	_locked =NO;
 }
 

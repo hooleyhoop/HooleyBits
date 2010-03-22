@@ -21,6 +21,12 @@
 //[RunTests lock];
 //[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 
+// Better form of expectation?
+//	[expectThat(app.alertView) should].exist;
+//	[[app view:@"UIThreePartButton"] touch];
+//	[expect that:mockTP equals:@"steven"]
+
+
 - (void)_callBackForASync:(AsyncTestProxy *)futureProxy {
 	
 	FSBoolean *result = [futureProxy result];
@@ -33,6 +39,17 @@
 	GUITestProxy *futureProxy = [GUITestProxy documentCountIs:0];
 	[futureProxy setCallbackOb:(id)self];
 	[futureProxy fire];
+}
+
+- (void)test_lockTestRunner {
+	//+ (GUITestProxy *)lockTestRunner
+	//+ (GUITestProxy *)unlockTestRunner
+
+	GUITestProxy *futureProxy1 = [GUITestProxy lockTestRunner];
+	[futureProxy1 fire];
+	
+	GUITestProxy *futureProxy2 = [GUITestProxy unlockTestRunner];
+	[futureProxy2 fire];
 }
 
 //+ (void)cuntDroppings {
