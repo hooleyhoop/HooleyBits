@@ -186,7 +186,7 @@ static BOOL _locked;
 			// store SenTestCaseRun *testCaseRun to @"var2"
 			id varStor2 = [FF target:self selector:@selector(store:to:) args:[NSArray arrayWithObjects:_arg_placeHolder, @"var2", nil]];
 			[self pushAction:varStor2];
-			
+
 			// RUN THE ACTUAL TEST
 			// TODO: EXPAND This into 2 runs
 			// > [eachTestCase performTest:testCaseRun];
