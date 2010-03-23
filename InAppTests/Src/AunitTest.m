@@ -37,19 +37,19 @@
 - (void)testShit {
 
 	// move to subclass? when working
-	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+//cunt	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 
-	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+//cunt	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+//cunt	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
 
-	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
-	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+//cunt	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
 	
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+//cunt	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
 
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+//cunt	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
 //	[_testHelper aSync:[GUITestProxy wait]];
 
@@ -84,7 +84,9 @@
 }
 
 
-
+- (void)testShat {
+	NSLog(@"wohh");
+}
 
 
 
