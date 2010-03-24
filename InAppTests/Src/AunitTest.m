@@ -36,6 +36,8 @@
 //-- assert the result is what we expected
 - (void)testShit {
 
+	GUITestProxy *deliberateLeak = [[GUITestProxy documentCountIs:0] retain];
+	
 	// move to subclass? when working
 //cunt	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 
@@ -72,7 +74,7 @@
 	
 //	[_testHelper aSync:[GUITestProxy doTo:self selector:@selector(_testShit)]];
 
-	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+//cunt	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
 - (void)_testShit {
@@ -85,7 +87,7 @@
 
 
 - (void)testShat {
-	NSLog(@"wohh");
+	STAssertTrue(NO,@"wohh");
 }
 
 

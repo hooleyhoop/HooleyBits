@@ -97,7 +97,7 @@ static BOOL _locked;
 
 + (void)unlock {
 
-	NSAssert(YES==_locked, @"lock errror - cant unlock");
+	NSAssert( YES==_locked, @"lock errror - cant unlock" );
 	[self cancelLockTimer];
 	_locked =NO;
 }
@@ -135,6 +135,9 @@ static BOOL _locked;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
+	
+	[NSClassFromString(@"SenTestObserver") setCurrentObserver:NSClassFromString(@"SenTestLog")];
+	
 	/* Test cases */	
 	id stub11 = [FF target:self selector:@selector(store:to:) args:[NSArray arrayWithObjects:@"Steveiee", @"var1", nil]];
 	[self pushAction:stub11];
