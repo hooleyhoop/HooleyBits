@@ -26,7 +26,7 @@
 
 + (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg {
 
-	NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:targetArg selector:@selector(_callbackTimeout) userInfo:nil repeats:NO];
+	NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:targetArg selector:@selector(_callbackTimeout:) userInfo:nil repeats:NO];
 	return newTimer;
 }
 

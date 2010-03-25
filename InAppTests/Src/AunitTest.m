@@ -35,23 +35,25 @@
 //-- GUIFiddler runs appescript and sends a return Notification with result
 //-- assert the result is what we expected
 - (void)testShit {
-
-	GUITestProxy *deliberateLeak = [[GUITestProxy documentCountIs:0] retain];
 	
 	// move to subclass? when working
-//cunt	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 
-//cunt	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-//cunt	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
 
-//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
-//cunt	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
-//cunt	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
-//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+	
+	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+	
+	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+	
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
 
-//cunt	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
-//cunt	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
 //	[_testHelper aSync:[GUITestProxy wait]];
 
@@ -74,7 +76,7 @@
 	
 //	[_testHelper aSync:[GUITestProxy doTo:self selector:@selector(_testShit)]];
 
-//cunt	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
 - (void)_testShit {
@@ -82,12 +84,6 @@
 //	NSLog(@"aaa");
 //	STAssertTrue( NO,@"hmm" );
 	NSLog(@"aaa");
-
-}
-
-
-- (void)testShat {
-	STAssertTrue(NO,@"wohh");
 }
 
 

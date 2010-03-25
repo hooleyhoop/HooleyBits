@@ -35,10 +35,10 @@
 
 // Fire a selector on an instance
 + (GUITestProxy *)doTo:(id)object selector:(SEL)method {
-	
+
 	GUITestProxy *aRemoteTestProxy = [[GUITestProxy alloc] init];
 	aRemoteTestProxy->_debugName = @"doto";
-	
+
 	NSInvocation *inv = [NSInvocation makeRetainedInvocationWithTarget:object 
 													 invocationOut:&(aRemoteTestProxy->_remoteInvocation)];
 	objc_msgSend(inv,method,nil);
@@ -47,20 +47,20 @@
 }
 
 + (GUITestProxy *)lockTestRunner {
-	
+
 	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
 	aRemoteTestProxy->_debugName = @"lockTestRunner";
-	
+
 	NSString *exprString = @"[RunTests lock]";
 	FSBlock *exprBlock = _BLOCK(exprString);
 	aRemoteTestProxy.boolExpressionBlock = exprBlock;
-	
+
 	return aRemoteTestProxy;
 }
 
 // we lock directly, brut of course need to unlock asyncronously when all queued methods have finished
 + (GUITestProxy *)unlockTestRunner {
-	
+
 	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
 	aRemoteTestProxy->_debugName = @"unlockTestRunner";
 
@@ -71,15 +71,39 @@
 	return aRemoteTestProxy;
 }
 
+- (id)init {
+	self = [super init];
+	NSLog(@"Initing %p", self);
+	return self;
+}
+
+- (void)dealloc {
+	// sheeet! If you dont have a dealloc on a hooleyObject hooley leaker wont clean it up!
+	NSLog(@"deallocing %p", self);
+	[super dealloc];
+}
+
+//- (void)release {
+//	NSLog(@"release %p", self);
+//	[super release];
+//}
+//- (id)retain {
+//	NSLog(@"retain %p", self);
+//	return [super retain];
+//}
+//- (id)autorelease {
+//	NSLog(@"autorelease %p", self);
+//	return [super autorelease];
+//}
+
 - (void)_setUpDistributedNotificationStuff {
-	
+
 	self.preAction = _BLOCK(@"[:arg1 | (NSDistributedNotificationCenter defaultCenter) addObserver:arg1 selector:#getNotifiedBack: name:'hooley_distrbuted_notification_callback' object:nil]");
 	self.postAction = _BLOCK(@"[:arg1 | (NSDistributedNotificationCenter defaultCenter) removeObserver:arg1 name:'hooley_distrbuted_notification_callback' object:nil]");
-	
 }
 
 + (GUITestProxy *)openMainMenuItem:(NSString *)menuName {
-	
+
 	GUITestProxy *aRemoteTestProxy = [[[GUITestProxy alloc] init] autorelease];
 	aRemoteTestProxy->_debugName = @"openMainMenuItem";
 
@@ -89,7 +113,7 @@
 								 currentAppName, @"ProcessName",
 								 menuName, @"MenuName",
 								 nil];
-	
+
 	/* Construct an Invocation for the Notification - we aren't going to send it till we have a callback set */
 	[[NSInvocation makeRetainedInvocationWithTarget: [NSDistributedNotificationCenter defaultCenter]
 	invocationOut:&(aRemoteTestProxy->_remoteInvocation)] 
@@ -99,7 +123,7 @@
 	 deliverImmediately:NO
 	 ];
 	[aRemoteTestProxy->_remoteInvocation retain];
-	
+
 	/* IPC callback - Every async action must have a callback */
 	aRemoteTestProxy->_recievesAsyncCallback = YES;
 
