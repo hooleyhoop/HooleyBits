@@ -137,6 +137,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	unsigned char bbit_6 = ( testByte & (((unsigned int)1) << (6  & 7)) );
 	unsigned char bbit_7 = ( testByte & (((unsigned int)1) << (7  & 7)) );
 	
+	CTFontCopyAttribute( iFont, kCTFontFormatAttribute); // 10.6 only!
 	// new muthafucking way
 	NSUInteger codept = 0; 
 	for( NSUInteger n=0; n<byteCount; n++ )
