@@ -40,7 +40,10 @@ resource 'aete' (0, "Dictionary") {
 			directParamRequired,
 			listOfItems, notEnumerated, Reserved13,
 			{
-
+				"using", 'x$$3', 'HMdK',
+				"",
+				required,
+				singleItem, enumerated, Reserved13
 			},
 
 			"mouseDoubleClickAt",
@@ -79,6 +82,11 @@ resource 'aete' (0, "Dictionary") {
 		},
 		{
 			/* Enumerations */
+			'HMdK',
+			{
+				"ModKey_SHIFT", 'LHrn', "",
+				"ModKey_COMMAND", 'RHrn', ""
+			}
 		}
 	}
 };

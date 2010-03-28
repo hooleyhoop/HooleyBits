@@ -29,7 +29,9 @@
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Steven", @"name", @"m", @"value", nil],
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Gavin", @"name", @"f", @"value", nil],
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Clara", @"name", @"f", @"value", nil], 
-							 nil];  
+					 [NSDictionary dictionaryWithObjectsAndKeys:@"Clara2", @"name", @"f", @"value", nil], 
+						
+					 nil];  
     }
     return self;
 }

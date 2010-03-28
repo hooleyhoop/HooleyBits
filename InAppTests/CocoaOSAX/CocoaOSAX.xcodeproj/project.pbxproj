@@ -31,6 +31,18 @@
 		732A47D3110B5942004D879E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		735E0884110B5A2F00DEF9AE /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		73AA0CB1110EFEC400B9E837 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		73AC98C2115E80D3001B9D97 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
+		73AC98C3115E80D3001B9D97 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
+		73AC98C4115E80D3001B9D97 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		73AC98C5115E80D3001B9D97 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		73AC98C6115E80D3001B9D97 /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Base.xcconfig"; sourceTree = "<group>"; };
+		73AC98C7115E80D3001B9D97 /* Target-CocoaDaemon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-CocoaDaemon.xcconfig"; sourceTree = "<group>"; };
+		73AC98C8115E80D3001B9D97 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Executable.xcconfig"; sourceTree = "<group>"; };
+		73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Framework.xcconfig"; sourceTree = "<group>"; };
+		73AC98CA115E80D3001B9D97 /* Target-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-iPhone.xcconfig"; sourceTree = "<group>"; };
+		73AC98CB115E80D3001B9D97 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Plugin.xcconfig"; sourceTree = "<group>"; };
+		73AC98CC115E80D3001B9D97 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
+		73AC98CD115E80D3001B9D97 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
 		73B39418110C7C4100B3E37F /* Hmmm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hmmm.m; sourceTree = "<group>"; };
 		73C1E1A9110E320C001128DA /* CocoaOSAXTestScript.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.scpt; path = CocoaOSAXTestScript.scpt; sourceTree = "<group>"; };
 		73D51732110B296A005537A5 /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
@@ -57,6 +69,7 @@
 		089C166AFE841209C02AAC07 /* CocoaOSAX */ = {
 			isa = PBXGroup;
 			children = (
+				73AC98C1115E80D3001B9D97 /* Config */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -137,6 +150,26 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		73AC98C1115E80D3001B9D97 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				73AC98C2115E80D3001B9D97 /* Project-Base.xcconfig */,
+				73AC98C3115E80D3001B9D97 /* Project-Coverage.xcconfig */,
+				73AC98C4115E80D3001B9D97 /* Project-Debug.xcconfig */,
+				73AC98C5115E80D3001B9D97 /* Project-Release.xcconfig */,
+				73AC98C6115E80D3001B9D97 /* Target-Base.xcconfig */,
+				73AC98C7115E80D3001B9D97 /* Target-CocoaDaemon.xcconfig */,
+				73AC98C8115E80D3001B9D97 /* Target-Executable.xcconfig */,
+				73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */,
+				73AC98CA115E80D3001B9D97 /* Target-iPhone.xcconfig */,
+				73AC98CB115E80D3001B9D97 /* Target-Plugin.xcconfig */,
+				73AC98CC115E80D3001B9D97 /* Target-QCPlugin.xcconfig */,
+				73AC98CD115E80D3001B9D97 /* Target-TestBundle.xcconfig */,
+			);
+			name = Config;
+			path = ../../../Blake/Config;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,6 +182,7 @@
 				8D5B49B3048680CD000E48DA /* Frameworks */,
 				730631621108C0A600C429F6 /* Compile sdef */,
 				7306316E1108C13100C429F6 /* Rez */,
+				73AC98DD115E8308001B9D97 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -216,6 +250,19 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/bin/sdp -f a -o Resources/CocoaOSAX.r CocoaOSAX.sdef";
 		};
+		73AC98DD115E8308001B9D97 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!bin/bash\n# we need to launch in debugger instead\n#osascript -e \"ignoring application responses\" -e \"tell application \\\"AppleScript Editor\\\" to quit with saving\" -e \"end ignoring\"\n#open \"${SRCROOT}/CocoaOSAXTestScript.scpt\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -243,83 +290,53 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_SYMBOL_SEPARATION = NO;
-				GCC_FAST_OBJC_DISPATCH = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CocoaOSAX_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/ScriptingAdditions/";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CocoaOSAX;
 				REZ_SHOW_DEBUG_OUTPUT = NO;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = osax;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_SYMBOL_SEPARATION = NO;
-				GCC_FAST_OBJC_DISPATCH = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CocoaOSAX_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/ScriptingAdditions/";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CocoaOSAX;
 				REZ_SHOW_DEBUG_OUTPUT = NO;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = osax;
 			};
 			name = Release;
 		};
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73AC98C4115E80D3001B9D97 /* Project-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEPLOYMENT_LOCATION = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73AC98C5115E80D3001B9D97 /* Project-Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEPLOYMENT_LOCATION = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};

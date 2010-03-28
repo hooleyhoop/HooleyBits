@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
-<dictionary title="Dictionary">
+<dictionary xmlns:xi="http://www.w3.org/2003/XInclude" title="Dictionary">
 	<suite name="CocoaOSAX" code="IaPt" description="What?">
+ 
 		<command name="monkeeeeeeey" code="EeEeeeEE"/>
-		<command name="mouseClickAt" code="EeEeeeEG">
+
+		<command name="mouseClickAt" code="EeEeeeEG">  
+		
 			<direct-parameter>
 				<type type="integer" list="yes"/>
 			</direct-parameter>
-		</command>
+			
+			<parameter name="using" code="x$$3">
+				<type type="HoModKeys" optional="yes"/>
+			</parameter>      
+			
+		</command>                                                  
+	 
 		<command name="mouseDoubleClickAt" code="EeEeeeEF">
 			<direct-parameter>
 				<type type="integer" list="yes"/>
 			</direct-parameter>
-		</command>
+		</command>                     
+	   
 		<command name="mouseDownAt" code="EeEeeeEH">
 			<direct-parameter>
 				<type type="integer" list="yes"/>
@@ -20,6 +30,22 @@
 			<parameter name="upAt" code="x$$$">
 				<type type="integer" list="yes"/>
 			</parameter>
-		</command>
+		</command>  
+        
+		<!-- -->
+		<enumeration name="HoModKeys" code="HMdK">
+			<cocoa name="HoModKeys"/>
+			<enumerator name="ModKey_SHIFT" code="LHrn" description="">
+				<cocoa name="ModKey_SHIFT"/>
+			</enumerator>
+			<enumerator name="ModKey_COMMAND" code="RHrn" description="">
+				<cocoa name="ModKey_COMMAND"/>
+			</enumerator>
+		</enumeration>		           
+	  
+	
+	   	
+	     
+		
 	</suite>
 </dictionary>

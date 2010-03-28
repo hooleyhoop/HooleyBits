@@ -65,15 +65,72 @@ void getFirstParamPoint( const AppleEvent *message, CGPoint *p ) {
 	gerParam( message, 'x$$$', p);
 }
 
+// fill in *reply to send data 
+//1) Use AECreateList to create an empty list
+//2) Use AEPutPtr or AEPutDesc to add items to the list
+//3) Use AEPutKeyDesc to put the list into the reply input parameter of the
+//Apple event handler, using the AEKeyword keyDirectObject
+//>>Despite the fact that their constants are the same, I recommend keyAEResult instead. ;)
 
-
-OSErr mouseClick_Handler( const AppleEvent *message, AppleEvent *reply, long refCon ){
+OSErr mouseClickAt_Handler( const AppleEvent *message, AppleEvent *reply, long refCon ){
 
 	OSErr result = noErr;
 	
 	CGPoint p1;
 	getDirectParamPoint( message, &p1 );
+
+	AEDesc theDesc;
+    result=AEGetParamDesc( message, 'x$$3', typeAEList, &theDesc );
+	if(!result){
+		
+		// Using Shift Down
+		long numberOfItems;
+		AECountItems( &theDesc, &numberOfItems );
+		NSCAssert( numberOfItems, @"wrong number of terms" );
+
+		AEKeyword aekw='x$$3';
+		
+		Size dataSize;
+		result = AESizeOfParam( message, aekw, NULL, &dataSize );
+		
+		int32_t val;
+		result = AEGetParamPtr( message, aekw, typeWildCard, NULL, &val, dataSize, NULL );		
+		
+//		val = EndianS32_NtoB(val);
+
+		
+//
+//		AEDesc argumentDescription;
+//		result = AEGetNthDesc( &theDesc, 1, typeWildCard, &aekw, &argumentDescription );
+//		
+//		Size dataSize2; // 4
+//		result = AESizeOfNthItem( &theDesc, 1, NULL, &dataSize2 );		
+//		
+//		int32_t xPoint, yPoint;
+//		result = noErr;
+//		result = AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &xPoint, sizeof(xPoint), NULL );
+//		
+		
+		
+//		AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &val, 1024, NULL );
+//		AEGetNthPtr( &theDesc, 2, typeSInt32, NULL, NULL, &yPoint, sizeof(yPoint), NULL );
+//		p->x = (CGFloat)xPoint;
+//		p->y = (CGFloat)yPoint;
+		
+		AEDisposeDesc(&theDesc);
+	}
+		
 	
+	// Send clicks
+	CGEventRef theEvent = CGEventCreateMouseEvent( NULL, kCGEventLeftMouseDown, p1, kCGMouseButtonLeft );  
+	CGEventSetIntegerValueField( theEvent, kCGMouseEventClickState, 2 );
+	CGEventPost(kCGHIDEventTap, theEvent);  
+	
+	CGEventSetType(theEvent, kCGEventLeftMouseUp);
+	CGEventPost(kCGHIDEventTap, theEvent);
+	
+	CFRelease(theEvent); 
+	NSBeep();
 	return result;
 }
 
@@ -155,7 +212,7 @@ OSErr mouseDownAt_upAt_Handler( const AppleEvent *message, AppleEvent *reply, lo
 	return result;
 }
 
-OSErr mouseDoubleClick_Handler( const AppleEvent *message, AppleEvent *reply, long refCon ){
+OSErr mouseDouble_ClickAtHandler( const AppleEvent *message, AppleEvent *reply, long refCon ){
 	
 	OSErr result = noErr;
 	
