@@ -135,8 +135,7 @@ static BOOL _locked;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-	
-	[NSClassFromString(@"SenTestObserver") setCurrentObserver:NSClassFromString(@"SenTestLog")];
+	[NSClassFromString(@"SenTestObserver") performSelector:@selector(setCurrentObserver:) withObject:NSClassFromString(@"SenTestLog")];
 	
 	/* Test cases */	
 	id stub11 = [FF target:self selector:@selector(store:to:) args:[NSArray arrayWithObjects:@"Steveiee", @"var1", nil]];
