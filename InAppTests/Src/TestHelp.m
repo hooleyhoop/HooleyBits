@@ -14,7 +14,7 @@
 
 @interface TestHelp() 
 - (void)_doNextAction;
-- (void)_startCallbackTimer;
+- (void)_startCallbackTimer:(NSString *)debugLabel;
 - (void)_stopCallbackTimer;
 @end
 
@@ -24,9 +24,9 @@
 @synthesize tests=_tests;
 @synthesize callbackTimer=_callbackTimer;
 
-+ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg {
++ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg debugInfo:(NSString *)arg {
 
-	NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:targetArg selector:@selector(_callbackTimeout:) userInfo:nil repeats:NO];
+	NSTimer *newTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:targetArg selector:@selector(_callbackTimeout:) userInfo:arg repeats:NO];
 	return newTimer;
 }
 
@@ -63,7 +63,7 @@
 - (void)_doNextAction {
 	
 	AsyncTestProxy *next = [_objectsAwaitingCallbacks objectAtIndex:0];
-	[self _startCallbackTimer];	
+	[self _startCallbackTimer:next.debugName];	
 	[next nextRunloopCycle_fire];
 }
 
@@ -128,18 +128,19 @@
 //}
 
 #pragma mark New Stuff
-- (void)_startCallbackTimer {
+- (void)_startCallbackTimer:(NSString *)debugLabel {
 	NSAssert(!_callbackTimer, @"gone wrong dickhead");
-	self.callbackTimer = [TestHelp makeCallbackTimer:self];
+	self.callbackTimer = [TestHelp makeCallbackTimer:self debugInfo:debugLabel];
 }
 
 - (void)_stopCallbackTimer {
+
 	[_callbackTimer invalidate];
 	self.callbackTimer = nil;
 }
 
 - (void)_callbackTimeout:(NSTimer *)arg {
-	[NSException raise:@"Unrecoverable Timeout" format:@"I should have kept a record of what i was doing!"];
+	[NSException raise:@"Unrecoverable Timeout" format:@"I was trying to do.. %@", [arg userInfo]];
 }
 
 - (void)insertResultArg:(id *)result intoInvocation:(NSInvocation *)inv {

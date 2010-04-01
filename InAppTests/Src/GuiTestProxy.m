@@ -73,13 +73,13 @@
 
 - (id)init {
 	self = [super init];
-	NSLog(@"Initing %p", self);
+	// NSLog(@"Initing %p", self);
 	return self;
 }
 
 - (void)dealloc {
 	// sheeet! If you dont have a dealloc on a hooleyObject hooley leaker wont clean it up!
-	NSLog(@"deallocing %p", self);
+	// NSLog(@"deallocing %p", self);
 	[super dealloc];
 }
 

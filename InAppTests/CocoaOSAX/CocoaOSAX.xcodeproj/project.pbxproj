@@ -12,6 +12,7 @@
 		735E0885110B5A2F00DEF9AE /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735E0884110B5A2F00DEF9AE /* ApplicationServices.framework */; };
 		73AA0CB2110EFEC400B9E837 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AA0CB1110EFEC400B9E837 /* Carbon.framework */; };
 		73B39419110C7C4100B3E37F /* Hmmm.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B39418110C7C4100B3E37F /* Hmmm.m */; };
+		73D6BA3111639DF70081F503 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D6BA3011639DF70081F503 /* IOKit.framework */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		73B39418110C7C4100B3E37F /* Hmmm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hmmm.m; sourceTree = "<group>"; };
 		73C1E1A9110E320C001128DA /* CocoaOSAXTestScript.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.scpt; path = CocoaOSAXTestScript.scpt; sourceTree = "<group>"; };
 		73D51732110B296A005537A5 /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
+		73D6BA3011639DF70081F503 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* CocoaOSAX.osax */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CocoaOSAX.osax; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -60,6 +62,7 @@
 				732A47C5110B58C3004D879E /* CoreServices.framework in Frameworks */,
 				735E0885110B5A2F00DEF9AE /* ApplicationServices.framework in Frameworks */,
 				73AA0CB2110EFEC400B9E837 /* Carbon.framework in Frameworks */,
+				73D6BA3111639DF70081F503 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +122,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73D6BA3011639DF70081F503 /* IOKit.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -292,13 +296,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				GCC_PREFIX_HEADER = CocoaOSAX_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/ScriptingAdditions/";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = CocoaOSAX;
 				REZ_SHOW_DEBUG_OUTPUT = NO;
 				SKIP_INSTALL = NO;

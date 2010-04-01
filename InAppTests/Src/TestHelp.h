@@ -19,7 +19,7 @@
 @property (readonly)	AsyncTests	*tests;
 @property (retain)		NSTimer		*callbackTimer;
 
-+ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg;
++ (NSTimer *)makeCallbackTimer:(TestHelp *)targetArg debugInfo:(NSString *)arg;
 
 + (id)makeWithTest:(AsyncTests *)value;
 - (id)initWithTests:(AsyncTests *)value;

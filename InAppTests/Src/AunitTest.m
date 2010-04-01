@@ -54,7 +54,7 @@
 
 	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-	
+		
 //	[_testHelper aSync:[GUITestProxy wait]];
 
 //	[_testHelper aSync:[GUITestProxy openMainMenuItem:@"File"]];
