@@ -29,7 +29,6 @@
 		738BE6C41121DF0E0028EB59 /* NSApplication+ScriptingExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */; };
 		73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73B361D01116E6050064AF28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B361CF1116E6050064AF28 /* AppDelegate.m */; };
-		73BB35F410F5343F000A7F01 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
 		73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73BC1A101139C5840088135A /* AsyncTestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73880A631126BC6E00081774 /* AsyncTestProxy.m */; };
 		73BC1A131139C58E0088135A /* AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73662EE51121CB0800E8DC9F /* AsyncTests.m */; };
@@ -39,7 +38,6 @@
 		73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
 		73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
-		73D47F50114FF10A00AC93D3 /* RunTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB35F310F5343F000A7F01 /* RunTests.m */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
 		73DDE66E115248CE00BAC354 /* DelayedPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DDE66D115248CE00BAC354 /* DelayedPerformer.m */; };
@@ -237,8 +235,6 @@
 		73B361CE1116E6050064AF28 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Src/AppDelegate.h; sourceTree = "<group>"; };
 		73B361CF1116E6050064AF28 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Src/AppDelegate.m; sourceTree = "<group>"; };
 		73B4B65211256676001FFB0D /* TestHelpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestHelpTests.m; path = Src/TestHelpTests.m; sourceTree = "<group>"; };
-		73BB35F210F5343F000A7F01 /* RunTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunTests.h; path = Src/RunTests.h; sourceTree = "<group>"; };
-		73BB35F310F5343F000A7F01 /* RunTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RunTests.m; path = Src/RunTests.m; sourceTree = "<group>"; };
 		73BC210A11079F7E007C33AE /* InAppTests.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; path = InAppTests.sdef; sourceTree = "<group>"; };
 		73BC21161107A6F3007C33AE /* NSSayScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSSayScriptCommand.h; path = Src/NSSayScriptCommand.h; sourceTree = "<group>"; };
 		73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSSayScriptCommand.m; path = Src/NSSayScriptCommand.m; sourceTree = "<group>"; };
@@ -358,7 +354,6 @@
 				738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */,
 				730D4EAB10FC9BCE00E0F81C /* GUIFiddler - Standalone APP */,
 				735AB3C710F5F847008378AA /* Document */,
-				735AB3C610F5F83C008378AA /* Setup - Test Runner */,
 				735AB3C510F5F832008378AA /* TestCases */,
 				735AB3C410F5F825008378AA /* GTM - Reference */,
 				73A12D451111DFF8006F58FF /* Scriptibility */,
@@ -446,15 +441,6 @@
 				735AB32E10F5F3B1008378AA /* AunitTest.m */,
 			);
 			name = TestCases;
-			sourceTree = "<group>";
-		};
-		735AB3C610F5F83C008378AA /* Setup - Test Runner */ = {
-			isa = PBXGroup;
-			children = (
-				73BB35F210F5343F000A7F01 /* RunTests.h */,
-				73BB35F310F5343F000A7F01 /* RunTests.m */,
-			);
-			name = "Setup - Test Runner";
 			sourceTree = "<group>";
 		};
 		735AB3C710F5F847008378AA /* Document */ = {
@@ -750,7 +736,6 @@
 				73156D7A114E995C0014341C /* NSInvocation_testFutures.m in Sources */,
 				73156F8F114FC8FB0014341C /* GuiTestProxy.m in Sources */,
 				73157282114FDC750014341C /* GuiTestProxyTests.m in Sources */,
-				73D47F50114FF10A00AC93D3 /* RunTests.m in Sources */,
 				73DDE66E115248CE00BAC354 /* DelayedPerformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,7 +744,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73BB35F410F5343F000A7F01 /* RunTests.m in Sources */,
 				736D2A1010F5E9B80020CB19 /* main.m in Sources */,
 				736D2A1310F5E9C40020CB19 /* MyDocument.m in Sources */,
 				73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */,
