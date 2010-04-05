@@ -16,7 +16,11 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)sender {
-	NSLog(@"eh");
+
+	id testProbeClass = NSClassFromString(@"HooAsyncTestRunner");
+	if (testProbeClass != nil) {
+		[testProbeClass performSelector:@selector(runTestsInBundle:) withObject:nil afterDelay:1];
+	}
 }
 
 @end
