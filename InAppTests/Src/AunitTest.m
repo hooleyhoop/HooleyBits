@@ -6,12 +6,9 @@
 //  Copyright 2010 BestBefore Ltd. All rights reserved.
 //
 
-#import "RunTests.h"
 #import <SHShared/NSInvocation(ForwardedConstruction).h>
 #import <SenTestingKit/SenTestCase.h>
-#import "TestHelp.h"
-#import "GUITestProxy.h"
-#import "AsyncTests.h"
+#import <SHTestUtilities/SHTestUtilities.h>
 
 @interface AunitTest : AsyncTests {
 	TestHelp *_testHelper;
