@@ -99,6 +99,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
     return CTFontDescriptorCreateWithNameAndSize( iPostScriptName, iSize );
 }
 
+
 - (void)renderAString:(CGContextRef)context {
 	
 	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"HiraMinPro-W3", 72.0f ); 
@@ -159,8 +160,21 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 				// draw glyp 2 - find the leftmost pixel
 				advance = [GlyphRenderer opticalAdvanceForGlyps:&previousGlyph :&gl ];
 
-				return 0;			
-			
+
+				-- pick the _SCALE_ to test at
+				-- get a red image of glyph 1 in its bounds
+				-- get agreen image of glyph 2 in ints bounds
+				draw image 2 into image 1 using some kind of add mode so that image 2 overlaps at the right edge by 1 pixel
+				go down that column testing if a pixel contains red and green
+				if so overlap advance is (glyph1.bounds_SCALE_.width-1.0f) / _SCALE_
+					
+				else 
+					shift image 2 left by 1 pixel (overlap is now 2)
+					draw image 2 into image 1
+					test each column in overlap, starting in rightmost, until we find red and green
+					if we find red and green advance is (glyph1.bounds_SCALE_.width-2.0f) / _SCALE_
+				
+				continue shifting left until we find overlap
 			}
 			previousGlyph = gl;
 		} else {
