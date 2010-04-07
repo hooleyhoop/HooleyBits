@@ -13,6 +13,12 @@
 
 }
 
+/*
+ * Two unrelated tests
+ *
+*/
+- (void)renderAString:(CGContextRef)context;
+
 - (CGImageRef)glyphImage;
 
 @end

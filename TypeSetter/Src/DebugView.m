@@ -112,6 +112,19 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	CGImageRef glyphImage = [gr glyphImage];
 	CGContextDrawImage( context, CGRectMake( 0, 0, CGImageGetWidth(glyphImage), CGImageGetHeight(glyphImage)), glyphImage );
 	CGImageRelease( glyphImage );
+	
+	
+	
+	
+	/* 
+	 *
+	 * A Totally different program from here on down
+	 *
+	 *
+	*/
+	[gr renderAString:context];
+
+	[gr release];
 }
 
 

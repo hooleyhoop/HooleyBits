@@ -99,6 +99,87 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
     return CTFontDescriptorCreateWithNameAndSize( iPostScriptName, iSize );
 }
 
+- (void)renderAString:(CGContextRef)context {
+	
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"HiraMinPro-W3", 72.0f ); 
+	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+	NSString *iString = @"abcdefghijklmnopqrstuvwxyz";
+    assert(iFont != NULL && iString != NULL);
+	
+    // Get our string length.
+    NSUInteger count = [iString length];
+	
+    // Allocate our buffers for characters and glyphs.
+	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+    assert(characters != NULL);
+	
+	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+    assert(glyphs != NULL);
+	
+    // Get the characters from the string.
+    CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );
+	
+    // Get the glyphs for the characters.
+    CTFontGetGlyphsForCharacters(iFont, characters, glyphs, count);
+	
+    // Do something with the glyphs here, if a character is unmapped
+	// Draw a string with low level core text primitives
+	CGGlyph previousGlyph;
+	for( NSUInteger i=0; i<count; i++ ) {
+		CGGlyph gl = glyphs[i];
+		CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, gl,  NULL );
+
+//		draw
+		CGContextSetAllowsAntialiasing( context, true );
+		CGContextSetInterpolationQuality( context, kCGInterpolationNone );		
+		CGContextBeginPath( context );
+		CGContextAddPath( context, glyphPath );
+		CGContextSetRGBFillColor( context, 1.0f, 0.0f, 0.0f, 1.0f );
+		CGContextFillPath( context );
+		
+		char advanceType[] = "METRICS_ADVANCE\n";
+		double advance = 0;
+		// advance - This is bounding box touching! Not the same as glyphs touching.
+		if( !strcmp( advanceType, "BOUNDING_BOX_ADVANCE\n" )) {
+			CGRect glyphBoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &gl, NULL, 1 ); // 5, 0, 49, 51
+			advance = glyphBoundingBox.size.width;
+			
+		// advance - This is bounding box touching! Not the same as glyphs touching.
+		} else if( !strcmp( advanceType, "METRICS_ADVANCE\n" )) {
+			advance = CTFontGetAdvancesForGlyphs(  iFont, kCTFontDefaultOrientation, &gl, NULL, 1 );
+
+		// advance so they are optically touching
+		} else if( !strcmp( advanceType, "OPTICAL_ADVANCE\n" )) {
+			if(i>0){				
+				CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, glyphRef1,  NULL );
+				CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, glyphRef2,  NULL );
+				
+				// draw glyph 1 - find the rightmost pixel
+				
+				// draw glyp 2 - find the leftmost pixel
+				advance = [GlyphRenderer opticalAdvanceForGlyps:&previousGlyph :&gl ];
+
+				return 0;			
+			
+			}
+			previousGlyph = gl;
+		} else {
+			NSLog(@"You nana");
+		}
+
+		CGContextTranslateCTM( context, (CGFloat)advance, 0.0f );
+		
+		CGPathRelease(glyphPath);
+	}
+	
+    // Free our buffers
+	free(characters);
+	free(glyphs);	
+	
+	CFRelease(fdesc);
+	CFRelease(iFont);
+}
+
 - (CGImageRef)glyphImage {
 	
 	// get the path
@@ -136,8 +217,13 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	unsigned char bbit_5 = ( testByte & (((unsigned int)1) << (5  & 7)) );
 	unsigned char bbit_6 = ( testByte & (((unsigned int)1) << (6  & 7)) );
 	unsigned char bbit_7 = ( testByte & (((unsigned int)1) << (7  & 7)) );
-	
+
+#if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5)
+	NSLog(@"Not snow leopard!");
+#else
 	CTFontCopyAttribute( iFont, kCTFontFormatAttribute); // 10.6 only!
+#endif
+			
 	// new muthafucking way
 	NSUInteger codept = 0; 
 	for( NSUInteger n=0; n<byteCount; n++ )
