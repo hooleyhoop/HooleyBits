@@ -17,6 +17,7 @@
  * Two unrelated tests
  *
 */
+- (void)testOverlapDrawing:(CGContextRef)context;
 - (void)renderAString:(CGContextRef)context;
 
 - (CGImageRef)glyphImage;

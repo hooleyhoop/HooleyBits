@@ -100,6 +100,203 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 }
 
 
+- (void)testOverlapDrawing:(CGContextRef)windowContext {
+
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"Times-Bold", 72.0f ); 
+	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+	NSString *iString = @"Aj";
+    assert(iFont != NULL && iString != NULL);
+	
+    // Get our string length.
+    NSUInteger count = [iString length];
+	
+    // Allocate our buffers for characters and glyphs.
+	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+    assert( characters != NULL );
+    assert(glyphs != NULL);
+	
+    // Get the characters from the string.
+    CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );
+	CTFontGetGlyphsForCharacters( iFont, characters, glyphs, count );
+	CGGlyph glyph1 = glyphs[0];
+	CGGlyph glyph2 = glyphs[1];
+
+	CGPathRef glyphPath1 = CTFontCreatePathForGlyph(  iFont, glyph1,  NULL );
+	CGPathRef glyphPath2 = CTFontCreatePathForGlyph(  iFont, glyph2,  NULL );
+	
+	// draw glyph 1 - find the rightmost pixel
+	//	-- pick the _SCALE_ to test at
+	//	-- get a red image of glyph 1 in its bounds
+	CGRect glyph1BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, NULL, 1 ); // 5, 0, 49, 51
+	CGRect glyph2BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph2, NULL, 1 ); // 5, 0, 49, 51
+
+
+	//-- what scale is needed to transform xHeight to 200 px
+	//-- dont scale down. ie scale >= 1.0f
+	CGFloat targetHeight = 400.f;
+	CGRect fontBoundsBox = CTFontGetBoundingBox( iFont ); // -- need the descender and every fucking thing! grrrr!s
+	CGFloat fontHeight = fontBoundsBox.size.height;
+	CGFloat glyphScale = targetHeight / fontHeight;
+	if( glyphScale<1.0f )
+		glyphScale = 1.0f;
+	
+	// draw 1 pixel
+	CGFloat pixelWidth = 1.0f/glyphScale;
+	pixelWidth = pixelWidth - pixelWidth/10.f; //make sure pixel width is slightly less than pixel incase of error
+	
+	// -- make a new context the size of glyph1 bounds
+	//	-- with backing buffer
+	CGFloat scaledGlyph1Width = ceilf(glyphScale * glyph1BoundingBox.size.width + 6*pixelWidth );
+	CGFloat scaledGlyph1Height = ceilf(glyphScale * fontHeight);
+	
+	size_t bitsPerComponent = 8;
+	size_t componentsPerPixel = 4;
+	size_t bitsPerPixel = bitsPerComponent * componentsPerPixel;
+	size_t bytesPerRow = ( scaledGlyph1Width * bitsPerPixel + 7)/8;	
+	size_t dataLength = bytesPerRow * scaledGlyph1Height;
+	UInt32 *restrict bitmap = malloc( dataLength );
+	memset( bitmap, 0, dataLength );
+	
+	CGColorSpaceRef colorspace = CGColorSpaceCreateWithName( kCGColorSpaceGenericRGB );
+	CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedFirst;
+
+	CGContextRef hittestContext = CGBitmapContextCreate (
+												  bitmap,
+												  scaledGlyph1Width, scaledGlyph1Height,
+												  bitsPerComponent,
+												  bytesPerRow,						// bytes per row
+												  colorspace,
+												  bitmapInfo
+												  );
+	
+	CGContextSetAllowsAntialiasing( hittestContext, true );
+	CGContextSetInterpolationQuality( hittestContext, kCGInterpolationNone );
+	
+	CGContextScaleCTM( hittestContext, glyphScale, glyphScale );
+
+	CGColorRef rectCol = CGColorCreateGenericRGB( 0.0f, 0.0f, 1.0f, 0.8f );
+	CGColorRef redCol = CGColorCreateGenericRGB( 1.0f, 0.0f, 0.0f, 1.0f );
+	CGColorRef greenCol = CGColorCreateGenericRGB( 0.0f, 1.0f, 0.0f, 1.0f );
+	CGColorRef blackCol = CGColorCreateGenericRGB( 0.0f, 0.0f, 0.0f, 1.0f );
+	
+	// need black background!
+	CGContextSetFillColorWithColor( hittestContext, blackCol );
+	CGContextFillRect( hittestContext, CGRectMake(0.0f,0.0f,400.0f,400.0f));
+	
+	// translate bounding box to zero - of course everything is now scaled, no need to compensate
+	CGFloat red_xTranslate = -glyph1BoundingBox.origin.x + pixelWidth;
+	CGFloat red_yTranslate = -fontBoundsBox.origin.y;
+	CGContextTranslateCTM( hittestContext, red_xTranslate, red_yTranslate );	
+	
+	// draw glyph1 bounding box
+	CGContextAddRect( hittestContext, glyph1BoundingBox );
+	CGContextSetFillColorWithColor( hittestContext, rectCol );
+	CGContextFillPath( hittestContext );		
+	
+	// draw glyph1
+	CGContextAddPath( hittestContext, glyphPath1 );
+	CGContextSetFillColorWithColor( hittestContext, redCol );
+	CGContextFillPath( hittestContext );		
+	
+	// draw glyp 2 - find the leftmost pixel
+	//	-- get a green image of glyph 2 in ints bounds
+	//	draw image 2 into image 1 using some kind of add mode so that image 2 overlaps at the right edge by 1 pixel
+	CGContextSetBlendMode( hittestContext, kCGBlendModeLighten ); // This should make us draw pure yellow where we overlap
+
+	CGFloat green_xTranslate = glyph1BoundingBox.size.width + pixelWidth*7;
+	CGFloat green_yTranslate = 0;
+	CGContextTranslateCTM( hittestContext, green_xTranslate, green_yTranslate );	
+	
+	// so, we have advanced by the width of glyph one. At this position glyph 2 could still well draw over glyph 2 (if it has a negative origin)
+	
+	// what translation gives us an overlap of 1 pixel?
+//	for( NSUInteger tryIndex = 0; tryIndex<100; tryIndex++ )
+//	{
+		CGContextTranslateCTM( hittestContext, -pixelWidth, 0 );	
+
+		// draw glyph2 bounding box
+		CGContextAddRect( hittestContext, glyph2BoundingBox );
+		CGContextSetFillColorWithColor( hittestContext, greenCol );
+		CGContextFillPath( hittestContext );	
+
+		// draw glyph2
+//		CGContextAddPath( hittestContext, glyphPath2 );
+//		CGContextSetFillColorWithColor( hittestContext, greenCol );
+//		CGContextFillPath( hittestContext );
+
+//		// grab overlap region as memory
+//		// -- fuck yeah lets start extracting columns
+//		UInt32 * restrict baseAddr = (UInt32 *)CGBitmapContextGetData(hittestContext);
+//		NSAssert(baseAddr!=nil, @"eh");
+//
+//		NSUInteger jokeWidth = scaledGlyph1Width;
+//		NSUInteger jokeHeight = scaledGlyph1Height;
+//
+//		NSUInteger overlapWidth = 3;
+//		for( NSUInteger i=0; i<overlapWidth; i++ )
+//		{
+//			for( NSUInteger j=0; j<jokeHeight; j++ )
+//			{
+//				// hunt for yellow pixel - // 3, 7, 11, 15, 2, 6, 10, 14, 1, 5, 9, 13, 0, 4, 8, 12
+//
+//				NSUInteger row = j * jokeWidth;
+//				NSUInteger col = jokeWidth - 1 - i;
+//				NSUInteger pixelIndex = row + col;
+//				
+//				UInt32 *pixAddress = (UInt32 *)baseAddr+pixelIndex;
+//
+//				UInt8 *base = (UInt8 *)pixAddress;
+//				UInt8 red = base[1];
+//				UInt8 green = base[2];
+//				UInt8 blue = base[3];
+//				UInt8 alpha = base[0];
+//				
+//				//NSLog(@"Index: %i, %i, %i %i", red, green, blue, alpha);
+//				if( red==255 && green==255){
+//					NSLog(@"HIT! %i", tryIndex);
+//					goto shitStack;
+//				}
+//			}
+//		}
+//	}
+shitStack:
+	NSLog(@"w");
+	
+	// -- draw new context into window context
+	CGDataProviderRef dataProvider = CGDataProviderCreateWithData( NULL, bitmap, dataLength, NULL);
+	CGImageRef cgImage = CGImageCreate( scaledGlyph1Width, scaledGlyph1Height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorspace, bitmapInfo, dataProvider, NULL, false, kCGRenderingIntentDefault );
+	CGContextDrawImage( windowContext, CGRectMake( 6, 6, scaledGlyph1Width, scaledGlyph1Height), cgImage );
+	
+	CGImageRelease( cgImage );
+	CGDataProviderRelease(dataProvider);
+	CGContextRelease(hittestContext);
+	CGColorSpaceRelease(colorspace);
+	free(bitmap);
+	CGColorRelease(blackCol);
+	CGColorRelease(greenCol);
+	CGColorRelease(redCol);
+	CGColorRelease(rectCol);
+	CGPathRelease(glyphPath1);
+	CGPathRelease(glyphPath2);
+	free(characters);
+	free(glyphs);
+	CFRelease(fdesc);
+	CFRelease(iFont);
+	
+
+//		if so overlap advance is (glyph1.bounds_SCALE_.width-1.0f) / _SCALE_
+//			
+//			else
+//				shift image 2 left by 1 pixel (overlap is now 2)
+//				draw image 2 into image 1
+//				test each column in overlap, starting in rightmost, until we find red and green
+//				if we find red and green advance is (glyph1.bounds_SCALE_.width-2.0f) / _SCALE_
+//					
+//					continue shifting left until we find overlap
+					
+}
+
 - (void)renderAString:(CGContextRef)context {
 	
 	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"HiraMinPro-W3", 72.0f ); 
@@ -125,8 +322,8 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	
     // Do something with the glyphs here, if a character is unmapped
 	// Draw a string with low level core text primitives
-	CGGlyph previousGlyph;
-	for( NSUInteger i=0; i<count; i++ ) {
+	for( NSUInteger i=0; i<count; i++ )
+	{
 		CGGlyph gl = glyphs[i];
 		CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, gl,  NULL );
 
@@ -152,31 +349,8 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 		// advance so they are optically touching
 		} else if( !strcmp( advanceType, "OPTICAL_ADVANCE\n" )) {
 			if(i>0){				
-				CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, glyphRef1,  NULL );
-				CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, glyphRef2,  NULL );
-				
-				// draw glyph 1 - find the rightmost pixel
-				
-				// draw glyp 2 - find the leftmost pixel
-				advance = [GlyphRenderer opticalAdvanceForGlyps:&previousGlyph :&gl ];
 
-
-				-- pick the _SCALE_ to test at
-				-- get a red image of glyph 1 in its bounds
-				-- get agreen image of glyph 2 in ints bounds
-				draw image 2 into image 1 using some kind of add mode so that image 2 overlaps at the right edge by 1 pixel
-				go down that column testing if a pixel contains red and green
-				if so overlap advance is (glyph1.bounds_SCALE_.width-1.0f) / _SCALE_
-					
-				else 
-					shift image 2 left by 1 pixel (overlap is now 2)
-					draw image 2 into image 1
-					test each column in overlap, starting in rightmost, until we find red and green
-					if we find red and green advance is (glyph1.bounds_SCALE_.width-2.0f) / _SCALE_
-				
-				continue shifting left until we find overlap
 			}
-			previousGlyph = gl;
 		} else {
 			NSLog(@"You nana");
 		}
@@ -380,6 +554,8 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGContextDrawPath( context, kCGPathStroke );
 	
 	// draw the glyph's path
+	
+	// wrong!
 	CGContextScaleCTM( context, (200.0f / glyphBoundingBox.size.width)*0.99f, (200.0f / glyphBoundingBox.size.height)*0.99f );
 	CGContextTranslateCTM( context, -glyphBoundingBox.origin.x, -glyphBoundingBox.origin.y );
 	
@@ -434,8 +610,7 @@ CTFontDescriptorRef CreateFontDescriptorFromFamilyAndTraits( CFStringRef iFamily
 	
     assert(iFamilyName != NULL);
     // Create a mutable dictionary to hold our attributes.
-    attributes = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-										   &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    attributes = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     check(attributes != NULL);
 	
     if (attributes != NULL) {
@@ -452,8 +627,7 @@ CTFontDescriptorRef CreateFontDescriptorFromFamilyAndTraits( CFStringRef iFamily
 		
         if (symTraits != NULL) {
             // Create a dictionary to hold our traits values.
-            traits = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-											   &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+            traits = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
             check(traits != NULL);
 			
             if (traits != NULL) {

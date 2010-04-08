@@ -50,69 +50,72 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 
 - (void)drawRect:(NSRect)rect {
 
-	[[NSColor blueColor] set];
-	NSRectFill(rect);
-	
-	// Initialize a graphics context and set the text matrix to a known value.
 	CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext]  graphicsPort];
-	
-	/* 
-	 * Use Core Text to draw some strings 
-	 */
-	CGContextSetTextMatrix( context, CGAffineTransformIdentity );
-	
-	// Initialize a rectangular path.
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = CGRectMake( 10.0f, 10.0f, 200.0f, 200.0f );
-	CGPathAddRect(path, NULL, bounds);
-	
-	// Initialize an attributed string.
-	CFStringRef string = CFSTR("We hold this truth to be self-evident, that  everyone is created equal.");
-	CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
-	CFAttributedStringReplaceString (attrString, CFRangeMake(0, 0), string);
-	
-	// Create a color and add it as an attribute to the string.
-	CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-	CGFloat components[] = { 1.0f, 0.0f, 0.0f, 0.8f };
-	CGColorRef red = CGColorCreate(rgbColorSpace, components);
-	CGColorSpaceRelease(rgbColorSpace);
-	CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 50), kCTForegroundColorAttributeName, red);
-	
-	// Create the framesetter with the attributed string.
-	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
-	CFRelease(attrString);
-	
-	// Create the frame and draw it into the graphics context
-	CTFrameRef frame = CTFramesetterCreateFrame( framesetter, CFRangeMake(0, 0), path, NULL);
-	CFRelease(framesetter);
-	CTFrameDraw(frame, context);
-	CFRelease(frame);
-	
-	/* 
-	 * Just try drawing a normal image
-	 *
-	 */
-	NSString *testImagePath = [[NSBundle mainBundle] pathForResource:@"Picture 4" ofType:@"png"];
-	NSURL *testImageURL = [NSURL fileURLWithPath:testImagePath];
-	CGImageRef testImage = _createPNGWithURL( (CFURLRef)testImageURL );
-	NSAssert( testImage, @"cant find test image in bundle");
-	
-	CGContextSaveGState( context );
-	CGContextSetAllowsAntialiasing( context, false );
-	CGContextSetInterpolationQuality( context, kCGInterpolationNone );
-	CGContextDrawImage( context, CGRectMake( 0, 0, CGImageGetWidth(testImage), CGImageGetHeight(testImage)), testImage );
-	CGContextRestoreGState( context );
-	
-	CGImageRelease( testImage );
-	
-	/* 
-	 * Draw a glyph image
-	*/
 	GlyphRenderer *gr = [[GlyphRenderer alloc] init];
-	CGImageRef glyphImage = [gr glyphImage];
-	CGContextDrawImage( context, CGRectMake( 0, 0, CGImageGetWidth(glyphImage), CGImageGetHeight(glyphImage)), glyphImage );
-	CGImageRelease( glyphImage );
-	
+
+	if(false)
+	{
+		[[NSColor blueColor] set];
+		NSRectFill(rect);
+		
+		// Initialize a graphics context and set the text matrix to a known value.
+		
+		/* 
+		 * Use Core Text to draw some strings 
+		 */
+		CGContextSetTextMatrix( context, CGAffineTransformIdentity );
+		
+		// Initialize a rectangular path.
+		CGMutablePathRef path = CGPathCreateMutable();
+		CGRect bounds = CGRectMake( 10.0f, 10.0f, 200.0f, 200.0f );
+		CGPathAddRect(path, NULL, bounds);
+		
+		// Initialize an attributed string.
+		CFStringRef string = CFSTR("We hold this truth to be self-evident, that  everyone is created equal.");
+		CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
+		CFAttributedStringReplaceString (attrString, CFRangeMake(0, 0), string);
+		
+		// Create a color and add it as an attribute to the string.
+		CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+		CGFloat components[] = { 1.0f, 0.0f, 0.0f, 0.8f };
+		CGColorRef red = CGColorCreate(rgbColorSpace, components);
+		CGColorSpaceRelease(rgbColorSpace);
+		CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 50), kCTForegroundColorAttributeName, red);
+		
+		// Create the framesetter with the attributed string.
+		CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
+		CFRelease(attrString);
+		
+		// Create the frame and draw it into the graphics context
+		CTFrameRef frame = CTFramesetterCreateFrame( framesetter, CFRangeMake(0, 0), path, NULL);
+		CFRelease(framesetter);
+		CTFrameDraw(frame, context);
+		CFRelease(frame);
+		
+		/* 
+		 * Just try drawing a normal image
+		 *
+		 */
+		NSString *testImagePath = [[NSBundle mainBundle] pathForResource:@"Picture 4" ofType:@"png"];
+		NSURL *testImageURL = [NSURL fileURLWithPath:testImagePath];
+		CGImageRef testImage = _createPNGWithURL( (CFURLRef)testImageURL );
+		NSAssert( testImage, @"cant find test image in bundle");
+		
+		CGContextSaveGState( context );
+		CGContextSetAllowsAntialiasing( context, false );
+		CGContextSetInterpolationQuality( context, kCGInterpolationNone );
+		CGContextDrawImage( context, CGRectMake( 0, 0, CGImageGetWidth(testImage), CGImageGetHeight(testImage)), testImage );
+		CGContextRestoreGState( context );
+		
+		CGImageRelease( testImage );
+		
+		/* 
+		 * Draw a glyph image
+		*/
+		CGImageRef glyphImage = [gr glyphImage];
+		CGContextDrawImage( context, CGRectMake( 0, 0, CGImageGetWidth(glyphImage), CGImageGetHeight(glyphImage)), glyphImage );
+		CGImageRelease( glyphImage );
+	}
 	
 	
 	
@@ -122,7 +125,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	 *
 	 *
 	*/
-	[gr renderAString:context];
+	[gr testOverlapDrawing:context];
+
+//	[gr renderAString:context];
 
 	[gr release];
 }
