@@ -208,13 +208,13 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGFloat green_yTranslate = 0;
 	CGContextTranslateCTM( hittestContext, green_xTranslate, green_yTranslate );	
 	
-	// so, we have advanced by the width of glyph one. At this position glyph 2 could still well draw over glyph 2 (if it has a negative origin)
+	// so, we have advanced by the width of glyph-one. At this position glyph-two bounding-box could still well draw over glyph 2 bounding-box (if it has a negative origin)
+	// This is probably what we want -- and we assume the actual glyphs are not overlapping -- Just to be certain tho we will assert it (we do the first translation at the end of the loop)
 	
-	// what translation gives us an overlap of 1 pixel?
-//	for( NSUInteger tryIndex = 0; tryIndex<100; tryIndex++ )
-//	{
-		CGContextTranslateCTM( hittestContext, -pixelWidth, 0 );	
-
+	// What limit do we have on this loop?
+	NSUInteger iterationLimit = 
+	for( NSUInteger tryIndex=0; tryIndex<iterationLimit; tryIndex++ )
+	{
 		// draw glyph2 bounding box
 		CGContextAddRect( hittestContext, glyph2BoundingBox );
 		CGContextSetFillColorWithColor( hittestContext, greenCol );
@@ -254,11 +254,14 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 //				
 //				//NSLog(@"Index: %i, %i, %i %i", red, green, blue, alpha);
 //				if( red==255 && green==255){
+					assert tryIndex!=0 @"fucked up our assumption that the glyphs dont start in overlapping position"
 //					NSLog(@"HIT! %i", tryIndex);
 //					goto shitStack;
 //				}
 //			}
 //		}
+	CGContextTranslateCTM( hittestContext, -pixelWidth, 0 );	
+
 //	}
 shitStack:
 	NSLog(@"w");
