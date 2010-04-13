@@ -125,7 +125,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	 *
 	 *
 	*/
-	[gr testOverlapDrawing:context];
+	[gr drawTwoNonOverlappingGlphs: context];
+	
+//	[gr testOverlapDrawing:context];
 
 //	[gr renderAString:context];
 
@@ -133,6 +135,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 }
 
 
+- (IBAction)textChanged:(id)sender {
+	[self setNeedsDisplay:YES];
+}
 
 
 @end

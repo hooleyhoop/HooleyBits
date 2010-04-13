@@ -19,6 +19,27 @@
 
 @implementation GlyphRendererTests
 
+//SEE http://www.mulle-kybernetik.com/artikel/Optimization/opti-5.html
+// to write your own alloc
+
+// niave implementation
++ alloc
+{
+	NSObject   *p;
+	
+	p = (NSObject *) malloc( sizeof( NSCalendarDate));
+	memset( p, 0, sizeof( *p));
+	p->isa = self;
+	return( p);
+}
+
++ (id)allocWithZone:(NSZone *)zone {
+
+	NSZone *zone1 = NSCreateZone( 0x1000, 0x1000, YES);
+
+	return( NSAllocateObject( self, 0, zone)); //  mallocs and sets isa
+}
+
 - (void)setUp {
 	NSLog(@"oh yeah");
 }

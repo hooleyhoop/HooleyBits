@@ -19,6 +19,8 @@
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
+		73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A621174ACC4000B0D56 /* AppDelegate.m */; };
+		73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A671174ACE2000B0D56 /* WindowController.m */; };
 		73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -136,6 +138,10 @@
 		73AECE8510469B7B0003D9CB /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		73AECF2210469BF50003D9CB /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		73BD7A611174ACC3000B0D56 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Src/AppDelegate.h; sourceTree = "<group>"; };
+		73BD7A621174ACC4000B0D56 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Src/AppDelegate.m; sourceTree = "<group>"; };
+		73BD7A661174ACE2000B0D56 /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WindowController.h; path = Src/WindowController.h; sourceTree = "<group>"; };
+		73BD7A671174ACE2000B0D56 /* WindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WindowController.m; path = Src/WindowController.m; sourceTree = "<group>"; };
 		73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UFIStringAdditions.m; sourceTree = "<group>"; };
 		73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFIStringAdditions.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TypeSetter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeSetter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +173,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73BD7A611174ACC3000B0D56 /* AppDelegate.h */,
+				73BD7A621174ACC4000B0D56 /* AppDelegate.m */,
+				73BD7A661174ACE2000B0D56 /* WindowController.h */,
+				73BD7A671174ACE2000B0D56 /* WindowController.m */,
 				7344137C0F67CACD00D6CF73 /* DebugView.h */,
 				7344137D0F67CACD00D6CF73 /* DebugView.m */,
 				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
@@ -493,6 +503,8 @@
 				735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */,
 				735F814F1146808F000AC142 /* ImageWindow.m in Sources */,
 				73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */,
+				73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */,
+				73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

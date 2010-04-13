@@ -99,13 +99,177 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
     return CTFontDescriptorCreateWithNameAndSize( iPostScriptName, iSize );
 }
 
+- (void)drawTwoNonOverlappingGlphs:(CGContextRef)windowContext {
+	
+	// get font and string
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"Times-Bold", 72.0f ); 
+	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+	NSString *iString = @"AjV";
+    assert(iFont != NULL && iString != NULL);
+	
+    // Get our string length.
+    NSUInteger count = [iString length];
+	
+    // Allocate our buffers for characters and glyphs.
+	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+    assert( characters != NULL );
+    assert( glyphs != NULL );
+	
+    // Get the characters from the string.
+    CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );
+	CTFontGetGlyphsForCharacters( iFont, characters, glyphs, count );
+	CGGlyph glyph1 = glyphs[0];
+	CGGlyph glyph2 = glyphs[1];
+	CGGlyph glyph3 = glyphs[2];
+	
+	CGPathRef glyphPath1 = CTFontCreatePathForGlyph( iFont, glyph1, NULL );
+	CGPathRef glyphPath2 = CTFontCreatePathForGlyph( iFont, glyph2, NULL );
+	CGPathRef glyphPath3 = CTFontCreatePathForGlyph( iFont, glyph3, NULL );
+
+	// draw glyph 1 - find the rightmost pixel
+	//	-- pick the _SCALE_ to test at
+	//	-- get a red image of glyph 1 in its bounds
+	CGRect glyph1BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, NULL, 1 ); // 5, 0, 49, 51
+	CGRect glyph2BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph2, NULL, 1 ); // 5, 0, 49, 51
+	CGRect glyph3BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph3, NULL, 1 ); // 5, 0, 49, 51
+	
+	//-- what scale is needed to transform xHeight to 200 px
+	//-- dont scale down. ie scale >= 1.0f
+	CGFloat targetHeight = 400.f;
+	CGRect fontBoundsBox = CTFontGetBoundingBox( iFont ); // -- need the descender and every fucking thing! grrrr!
+	CGFloat fontHeight = fontBoundsBox.size.height; // 122.554688
+	CGFloat glyphScale = targetHeight / fontHeight; // 3.26384902
+	if( glyphScale<1.0f )
+		glyphScale = 1.0f;
+	
+	// draw 1 pixel
+	CGFloat pixelWidth = 1.0f/glyphScale;
+	
+	CGFloat scaledFontHeight = ceilf( glyphScale * fontHeight);
+
+	//TODO: why the fudge?
+	//fudge pixelWidth = pixelWidth - pixelWidth/10.f; //make sure pixel width is slightly less than pixel incase of error
+	
+	// -- make a new context the size of glyph1 bounds
+	//	-- with backing buffer
+	//TODO: why the fudge?
+//	CGFloat scaledGlyph1Width = ceilf( glyphScale * glyph1BoundingBox.size.width );
+	//fudge + 6*pixelWidth
+	
+//	CGFloat scaledGlyph1Height = ceilf( glyphScale * glyph1BoundingBox.size.height );
+
+	CGContextSetAllowsAntialiasing( windowContext, true );
+	CGContextSetInterpolationQuality( windowContext, kCGInterpolationNone );
+	
+	CGContextScaleCTM( windowContext, glyphScale, glyphScale );
+	
+	CGColorRef rectCol = CGColorCreateGenericRGB( 0.3f, 0.3f, 1.0f, 0.5f );
+	CGColorRef redCol = CGColorCreateGenericRGB( 1.0f, 0.0f, 0.0f, 1.0f );
+	CGColorRef greenCol = CGColorCreateGenericRGB( 0.0f, 1.0f, 0.0f, 1.0f );
+	CGColorRef blackCol = CGColorCreateGenericRGB( 0.0f, 0.0f, 0.0f, 1.0f );
+	
+	// need black background!
+	CGContextSetFillColorWithColor( windowContext, blackCol );
+	CGContextFillRect( windowContext, CGRectMake(0.0f,0.0f,1000.0f, 1000.0f));
+	
+	// translate bounding box (rect comprising font height and glyph width) to zero - of course everything is now scaled, no need to compensate
+	CGFloat red_xTranslate = -glyph1BoundingBox.origin.x;
+	//fudge red_xTranslate = red_xTranslate+pixelWidth
+	CGFloat red_yTranslate = -fontBoundsBox.origin.y;
+	CGContextTranslateCTM( windowContext, red_xTranslate, red_yTranslate );	
+	
+	// draw glyph1 bounding box
+	CGContextAddRect( windowContext, glyph1BoundingBox );
+	CGContextSetFillColorWithColor( windowContext, rectCol );
+	CGContextFillPath( windowContext );		
+	
+	// draw glyph1
+	CGContextAddPath( windowContext, glyphPath1 );
+	CGContextSetFillColorWithColor( windowContext, redCol );
+	CGContextFillPath( windowContext );		
+	
+	// draw glyp 2 - find the leftmost pixel
+	//	-- get a green image of glyph 2 in ints bounds
+	//	draw image 2 into image 1 using some kind of add mode so that image 2 overlaps at the right edge by 1 pixel
+//	CGContextSetBlendMode( windowContext, kCGBlendModeOverlay ); // This should make us draw pure yellow where we overlap
+	
+	// TODO: This makes no sense..
+	CGFloat green_xTranslate = glyph1BoundingBox.size.width;
+	//fudge green_xTranslate = green_xTranslate+pixelWidth*7;
+	CGFloat green_yTranslate = 0;
+	CGContextTranslateCTM( windowContext, green_xTranslate, green_yTranslate );	
+	
+	// so, we have advanced by the width of glyph-one. At this position glyph-two bounding-box could still well draw over glyph 2 bounding-box (if it has a negative origin)
+	// This is probably what we want -- and we assume the actual glyphs are not overlapping -- Just to be certain tho we will assert it (we do the first translation at the end of the loop)
+
+	// hmm - no overlap!
+	CGContextTranslateCTM( windowContext, glyph1BoundingBox.origin.x, 0 );	
+	CGContextTranslateCTM( windowContext, -glyph2BoundingBox.origin.x, 0 );
+	// 1 pixel overlap
+	CGContextTranslateCTM( windowContext, -pixelWidth, 0 );	
+
+	// draw glyph2 bounding box
+		//glyph1BoundingBox.origin.x = 0;
+		CGContextAddRect( windowContext, glyph2BoundingBox );
+		CGContextSetFillColorWithColor( windowContext, rectCol );
+		CGContextFillPath( windowContext );	
+		
+		// draw glyph2
+		CGContextAddPath( windowContext, glyphPath2 );
+		CGContextSetFillColorWithColor( windowContext, greenCol );
+		CGContextFillPath( windowContext );
+		
+	CGContextTranslateCTM( windowContext, glyph2BoundingBox.size.width, green_yTranslate );	
+	CGContextTranslateCTM( windowContext, glyph2BoundingBox.origin.x, 0 );	
+	CGContextTranslateCTM( windowContext, -glyph3BoundingBox.origin.x, 0 );
+	// 1 pixel overlap
+	CGContextTranslateCTM( windowContext, -pixelWidth, 0 );	
+	
+	// draw glyph 3 bounding box
+	CGContextAddRect( windowContext, glyph3BoundingBox );
+	CGContextSetFillColorWithColor( windowContext, rectCol );
+	CGContextFillPath( windowContext );	
+	
+	// draw glyph 3
+	CGContextAddPath( windowContext, glyphPath3 );
+	CGContextSetFillColorWithColor( windowContext, redCol );
+	CGContextFillPath( windowContext );
+	
+		CGColorRelease(blackCol);
+		CGColorRelease(greenCol);
+		CGColorRelease(redCol);
+		CGColorRelease(rectCol);
+	
+		CGPathRelease(glyphPath1);
+		CGPathRelease(glyphPath2);
+		CGPathRelease(glyphPath3);
+	
+		free(characters);
+		free(glyphs);
+		CFRelease(fdesc);
+		CFRelease(iFont);
+		
+		//		if so overlap advance is (glyph1.bounds_SCALE_.width-1.0f) / _SCALE_
+		//			
+		//			else
+		//				shift image 2 left by 1 pixel (overlap is now 2)
+		//				draw image 2 into image 1
+		//				test each column in overlap, starting in rightmost, until we find red and green
+		//				if we find red and green advance is (glyph1.bounds_SCALE_.width-2.0f) / _SCALE_
+		//					
+		//					continue shifting left until we find overlap
+		
+	}
+
+	
 
 - (void)testOverlapDrawing:(CGContextRef)windowContext {
 
 	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)@"Times-Bold", 72.0f ); 
 	CTFontRef iFont = CreateFont( fdesc, 72.0f );
 	NSString *iString = @"Aj";
-    assert(iFont != NULL && iString != NULL);
+   assert(iFont != NULL && iString != NULL);
 	
     // Get our string length.
     NSUInteger count = [iString length];
@@ -122,8 +286,8 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGGlyph glyph1 = glyphs[0];
 	CGGlyph glyph2 = glyphs[1];
 
-	CGPathRef glyphPath1 = CTFontCreatePathForGlyph(  iFont, glyph1,  NULL );
-	CGPathRef glyphPath2 = CTFontCreatePathForGlyph(  iFont, glyph2,  NULL );
+	CGPathRef glyphPath1 = CTFontCreatePathForGlyph( iFont, glyph1, NULL );
+	CGPathRef glyphPath2 = CTFontCreatePathForGlyph( iFont, glyph2, NULL );
 	
 	// draw glyph 1 - find the rightmost pixel
 	//	-- pick the _SCALE_ to test at
@@ -204,6 +368,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	//	draw image 2 into image 1 using some kind of add mode so that image 2 overlaps at the right edge by 1 pixel
 	CGContextSetBlendMode( hittestContext, kCGBlendModeLighten ); // This should make us draw pure yellow where we overlap
 
+	// TODO: This makes no sense..
 	CGFloat green_xTranslate = glyph1BoundingBox.size.width + pixelWidth*7;
 	CGFloat green_yTranslate = 0;
 	CGContextTranslateCTM( hittestContext, green_xTranslate, green_yTranslate );	
@@ -212,7 +377,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	// This is probably what we want -- and we assume the actual glyphs are not overlapping -- Just to be certain tho we will assert it (we do the first translation at the end of the loop)
 	
 	// What limit do we have on this loop?
-	NSUInteger iterationLimit = 
+	NSUInteger iterationLimit = glyph1BoundingBox.size.width;
 	for( NSUInteger tryIndex=0; tryIndex<iterationLimit; tryIndex++ )
 	{
 		// draw glyph2 bounding box
@@ -254,7 +419,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 //				
 //				//NSLog(@"Index: %i, %i, %i %i", red, green, blue, alpha);
 //				if( red==255 && green==255){
-					assert tryIndex!=0 @"fucked up our assumption that the glyphs dont start in overlapping position"
+//TODO:					assert tryIndex!=0 @"fucked up our assumption that the glyphs dont start in overlapping position"
 //					NSLog(@"HIT! %i", tryIndex);
 //					goto shitStack;
 //				}
@@ -262,7 +427,7 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 //		}
 	CGContextTranslateCTM( hittestContext, -pixelWidth, 0 );	
 
-//	}
+	}
 shitStack:
 	NSLog(@"w");
 	
@@ -328,7 +493,7 @@ shitStack:
 	for( NSUInteger i=0; i<count; i++ )
 	{
 		CGGlyph gl = glyphs[i];
-		CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, gl,  NULL );
+		CGPathRef glyphPath = CTFontCreatePathForGlyph( iFont, gl, NULL );
 
 //		draw
 		CGContextSetAllowsAntialiasing( context, true );
@@ -347,7 +512,7 @@ shitStack:
 			
 		// advance - This is bounding box touching! Not the same as glyphs touching.
 		} else if( !strcmp( advanceType, "METRICS_ADVANCE\n" )) {
-			advance = CTFontGetAdvancesForGlyphs(  iFont, kCTFontDefaultOrientation, &gl, NULL, 1 );
+			advance = CTFontGetAdvancesForGlyphs( iFont, kCTFontDefaultOrientation, &gl, NULL, 1 );
 
 		// advance so they are optically touching
 		} else if( !strcmp( advanceType, "OPTICAL_ADVANCE\n" )) {
@@ -379,7 +544,7 @@ shitStack:
 	
 	CFCharacterSetRef charSet = CTFontCopyCharacterSet(iFont );
 	NSData *charsetBitmap = [(NSCharacterSet *)charSet bitmapRepresentation];
-	unsigned char *restrict bitmapRep  = (unsigned char *)[charsetBitmap bytes];
+	unsigned char *restrict bitmapRep = (unsigned char *)[charsetBitmap bytes];
 	
 	NSUInteger myGlyphCount = 0;
 	NSUInteger byteCount = [charsetBitmap length];
@@ -400,14 +565,14 @@ shitStack:
 	unsigned char bit_6 = ( testByte & mask_table[ 6 ] )!= 0x00;
 	unsigned char bit_7 = ( testByte & mask_table[ 7 ] )!= 0x00;
 	
-	unsigned char bbit_0 = ( testByte & (((unsigned int)1) << (0  & 7)) );
-	unsigned char bbit_1 = ( testByte & (((unsigned int)1) << (1  & 7)) );
-	unsigned char bbit_2 = ( testByte & (((unsigned int)1) << (2  & 7)) );
-	unsigned char bbit_3 = ( testByte & (((unsigned int)1) << (3  & 7)) );
-	unsigned char bbit_4 = ( testByte & (((unsigned int)1) << (4  & 7)) );
-	unsigned char bbit_5 = ( testByte & (((unsigned int)1) << (5  & 7)) );
-	unsigned char bbit_6 = ( testByte & (((unsigned int)1) << (6  & 7)) );
-	unsigned char bbit_7 = ( testByte & (((unsigned int)1) << (7  & 7)) );
+	unsigned char bbit_0 = ( testByte & (((unsigned int)1) << (0 & 7)) );
+	unsigned char bbit_1 = ( testByte & (((unsigned int)1) << (1 & 7)) );
+	unsigned char bbit_2 = ( testByte & (((unsigned int)1) << (2 & 7)) );
+	unsigned char bbit_3 = ( testByte & (((unsigned int)1) << (3 & 7)) );
+	unsigned char bbit_4 = ( testByte & (((unsigned int)1) << (4 & 7)) );
+	unsigned char bbit_5 = ( testByte & (((unsigned int)1) << (5 & 7)) );
+	unsigned char bbit_6 = ( testByte & (((unsigned int)1) << (6 & 7)) );
+	unsigned char bbit_7 = ( testByte & (((unsigned int)1) << (7 & 7)) );
 
 #if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5)
 	NSLog(@"Not snow leopard!");
@@ -421,7 +586,7 @@ shitStack:
 	{
 		unsigned char theByte = bitmapRep[n];
 		for( NSUInteger j=0; j<8; j++ ){
-			BOOL bbit = ( theByte & (((unsigned int)1) << (j  & 7)) );
+			BOOL bbit = ( theByte & (((unsigned int)1) << (j & 7)) );
 			UTF32Char codePt = (n << 3) + j;
 			UTF16Char lead = LEAD_OFFSET + (codePt >> 10);
 			UTF16Char trail = 0xDC00 + (codePt & 0x3FF);
@@ -473,7 +638,7 @@ shitStack:
 		UTF16Char trail = 0xDC00 + (n & 0x3FF);
 		UTF32Char codepoint = (lead << 10) + trail + SURROGATE_OFFSET;		
 
-		if( bitmapRep[n >> 3] & (((unsigned int)1) << (n  & 7)) ) {
+		if( bitmapRep[n >> 3] & (((unsigned int)1) << (n & 7)) ) {
 			/* Character is present. */
 			myGlyphCount++;
 			
@@ -513,7 +678,7 @@ shitStack:
 	} 
 	GlyphHolder *theGlyphs = [GlyphHolder glyphsForCharacters:@"M" ofFont:iFont];
 	
-	CGPathRef glyphPath = CTFontCreatePathForGlyph(  iFont, [theGlyphs glyphAtIndex:0],  NULL );
+	CGPathRef glyphPath = CTFontCreatePathForGlyph( iFont, [theGlyphs glyphAtIndex:0], NULL );
 	
 	// create an image
 	size_t width = 200;

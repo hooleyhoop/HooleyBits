@@ -17,6 +17,7 @@
  * Two unrelated tests
  *
 */
+- (void)drawTwoNonOverlappingGlphs:(CGContextRef)context;
 - (void)testOverlapDrawing:(CGContextRef)context;
 - (void)renderAString:(CGContextRef)context;
 

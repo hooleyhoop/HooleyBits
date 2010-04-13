@@ -13,4 +13,6 @@
 
 }
 
+- (IBAction)textChanged:(id)sender;
+
 @end
