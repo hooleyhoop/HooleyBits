@@ -7,10 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+@class DebugView;
 
 @interface WindowController : NSWindowController {
 
+	NSTextField *_inputText;
+	DebugView *_typeSetterView;
 }
 
+@property (assign) IBOutlet NSTextField *inputText;
+@property (assign) IBOutlet DebugView *typeSetterView;
+
+- (IBAction)textChanged:(id)sender;
+- (NSString *)textToDraw;
 @end

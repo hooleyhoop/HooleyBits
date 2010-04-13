@@ -7,8 +7,14 @@
 //
 
 #import "AppDelegate.h"
-
+#import "WindowController.h"
 
 @implementation AppDelegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+	WindowController *controller = [[WindowController alloc] initWithWindowNibName:@"TypeSetWindow"];
+	[controller showWindow:nil];
+}
 
 @end

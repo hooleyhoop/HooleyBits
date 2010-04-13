@@ -13,6 +13,6 @@
 
 }
 
-- (IBAction)textChanged:(id)sender;
+- (IBAction)pdfIfy:(id)sender;
 
 @end

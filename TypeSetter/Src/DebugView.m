@@ -125,7 +125,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	 *
 	 *
 	*/
-	[gr drawTwoNonOverlappingGlphs: context];
+	NSString *textToDraw = [[self.window windowController] textToDraw];
+
+	[gr drawNonOverlappingGlphs:textToDraw inContext:context];
 	
 //	[gr testOverlapDrawing:context];
 
@@ -134,9 +136,21 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	[gr release];
 }
 
+- (IBAction)pdfIfy:(id)sender {
+	
+	NSData *pdfData = [self dataWithPDFInsideRect: [self bounds]];
+	NSPDFImageRep *pdfRep = [NSPDFImageRep imageRepWithData:pdfData];
+    NSData *imageData = [pdfRep PDFRepresentation];
 
-- (IBAction)textChanged:(id)sender {
-	[self setNeedsDisplay:YES];
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setExtensionHidden:NO];
+	[savePanel setAllowedFileTypes:[NSImage imageTypes]];
+	[savePanel setAllowsOtherFileTypes:NO];
+	int runResult = [savePanel runModalForDirectory:[[NSString stringWithString:@"~/Desktop"] stringByExpandingTildeInPath] file:@"Picture.pdf"];
+	if(runResult == NSOKButton)
+	{
+		[imageData writeToURL:[savePanel URL] atomically:YES];
+	}
 }
 
 

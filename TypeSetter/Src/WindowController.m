@@ -7,8 +7,22 @@
 //
 
 #import "WindowController.h"
-
+#import "DebugView.h"
 
 @implementation WindowController
+
+@synthesize inputText=_inputText;
+@synthesize typeSetterView=_typeSetterView;
+
+
+- (IBAction)textChanged:(id)sender {
+	
+	[_typeSetterView setNeedsDisplay:YES];
+}
+
+- (NSString *)textToDraw {
+	
+	return _inputText.stringValue;
+}
 
 @end
