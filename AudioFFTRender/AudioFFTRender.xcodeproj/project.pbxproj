@@ -1,0 +1,659 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73B45B9A1173CEC600060626 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B45B991173CEC600060626 /* Foundation.framework */; };
+		73C8B3E11175122E00CC62A0 /* FlagsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C8B3E01175122E00CC62A0 /* FlagsTests.m */; };
+		73C8B3EB1175127C00CC62A0 /* AudioFFTRender.r in Rez */ = {isa = PBXBuildFile; fileRef = 73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */; };
+		73C8B3F01175128900CC62A0 /* AudioFFTRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */; };
+		73C8B53F1175137800CC62A0 /* AE_General.r in Rez */ = {isa = PBXBuildFile; fileRef = 73C8B53E1175137800CC62A0 /* AE_General.r */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73C8B4791175130200CC62A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C8B4751175130200CC62A0 /* SDK_Backwards.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4E618CC095A3CE80012CA3F /* SDK_Backwards.plugin */;
+			remoteInfo = SDK_Backwards;
+		};
+		73C8B48A1175131200CC62A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C8B4861175131200CC62A0 /* SmartyPants.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4E618CC095A3CE80012CA3F /* SmartyPants.plugin */;
+			remoteInfo = SmartyPants;
+		};
+		73C8B49E1175132700CC62A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C8B49A1175132700CC62A0 /* Checkout.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4E618CC095A3CE80012CA3F /* Checkout.plugin */;
+			remoteInfo = Checkout;
+		};
+		73C8B4AE1175134000CC62A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C8B4AA1175134000CC62A0 /* Gamma_Table.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4E618CC095A3CE80012CA3F /* GammaTable.plugin */;
+			remoteInfo = GammaTable;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7370DC4A1171E68F009FA356 /* AudioFFTrenderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioFFTrenderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73B45B991173CEC600060626 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		73C8B2A21174FB5600CC62A0 /* AEFX_ArbParseHelper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AEFX_ArbParseHelper.c; sourceTree = "<group>"; };
+		73C8B2A31174FB5600CC62A0 /* AEFX_ArbParseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEFX_ArbParseHelper.h; sourceTree = "<group>"; };
+		73C8B2A41174FB5600CC62A0 /* AEFX_ChannelDepthTpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEFX_ChannelDepthTpl.h; sourceTree = "<group>"; };
+		73C8B2A51174FB5600CC62A0 /* AEGP_SuiteHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AEGP_SuiteHandler.cpp; sourceTree = "<group>"; };
+		73C8B2A61174FB5600CC62A0 /* AEGP_SuiteHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEGP_SuiteHandler.h; sourceTree = "<group>"; };
+		73C8B2A71174FB5600CC62A0 /* AEGP_Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AEGP_Utils.cpp; sourceTree = "<group>"; };
+		73C8B2A81174FB5600CC62A0 /* AEGP_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEGP_Utils.h; sourceTree = "<group>"; };
+		73C8B2A91174FB5600CC62A0 /* DuckSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuckSuite.h; sourceTree = "<group>"; };
+		73C8B2AA1174FB5600CC62A0 /* entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entry.h; sourceTree = "<group>"; };
+		73C8B2AB1174FB5600CC62A0 /* MissingSuiteError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MissingSuiteError.cpp; sourceTree = "<group>"; };
+		73C8B2AC1174FB5600CC62A0 /* Param_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param_Utils.h; sourceTree = "<group>"; };
+		73C8B2AD1174FB5600CC62A0 /* PF_Draw_Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PF_Draw_Utils.c; sourceTree = "<group>"; };
+		73C8B2AE1174FB5600CC62A0 /* PF_Draw_Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PF_Draw_Utils.cpp; sourceTree = "<group>"; };
+		73C8B2AF1174FB5600CC62A0 /* PF_Draw_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PF_Draw_Utils.h; sourceTree = "<group>"; };
+		73C8B2B01174FB5600CC62A0 /* PF_Suite_Helper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PF_Suite_Helper.c; sourceTree = "<group>"; };
+		73C8B2B11174FB5600CC62A0 /* PF_Suite_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PF_Suite_Helper.h; sourceTree = "<group>"; };
+		73C8B2B21174FB5600CC62A0 /* Smart_Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Smart_Utils.cpp; sourceTree = "<group>"; };
+		73C8B2B31174FB5600CC62A0 /* Smart_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Smart_Utils.h; sourceTree = "<group>"; };
+		73C8B2B41174FB5600CC62A0 /* String_Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = String_Utils.c; sourceTree = "<group>"; };
+		73C8B2B51174FB5600CC62A0 /* String_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = String_Utils.h; sourceTree = "<group>"; };
+		73C8B2BF1174FCAC00CC62A0 /* A.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A.h; sourceTree = "<group>"; };
+		73C8B2C01174FCAC00CC62A0 /* AE_AdvEffectSuites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_AdvEffectSuites.h; sourceTree = "<group>"; };
+		73C8B2C11174FCAC00CC62A0 /* AE_ChannelSuites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_ChannelSuites.h; sourceTree = "<group>"; };
+		73C8B2C21174FCAC00CC62A0 /* AE_CreatorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_CreatorInfo.h; sourceTree = "<group>"; };
+		73C8B2C31174FCAC00CC62A0 /* AE_Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_Effect.h; sourceTree = "<group>"; };
+		73C8B2C41174FCAC00CC62A0 /* AE_EffectCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectCB.h; sourceTree = "<group>"; };
+		73C8B2C51174FCAC00CC62A0 /* AE_EffectCBSuites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectCBSuites.h; sourceTree = "<group>"; };
+		73C8B2C61174FCAC00CC62A0 /* AE_EffectPixelFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectPixelFormat.h; sourceTree = "<group>"; };
+		73C8B2C71174FCAC00CC62A0 /* AE_EffectSuites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectSuites.h; sourceTree = "<group>"; };
+		73C8B2C81174FCAC00CC62A0 /* AE_EffectSuitesHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectSuitesHelper.h; sourceTree = "<group>"; };
+		73C8B2C91174FCAC00CC62A0 /* AE_EffectUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectUI.h; sourceTree = "<group>"; };
+		73C8B2CA1174FCAC00CC62A0 /* AE_EffectVers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_EffectVers.h; sourceTree = "<group>"; };
+		73C8B2CB1174FCAC00CC62A0 /* AE_FPF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_FPF.h; sourceTree = "<group>"; };
+		73C8B2CC1174FCAC00CC62A0 /* AE_GeneralPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_GeneralPlug.h; sourceTree = "<group>"; };
+		73C8B2CD1174FCAC00CC62A0 /* AE_GeneralPlugOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_GeneralPlugOld.h; sourceTree = "<group>"; };
+		73C8B2CE1174FCAC00CC62A0 /* AE_GeneralPlugPanels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_GeneralPlugPanels.h; sourceTree = "<group>"; };
+		73C8B2CF1174FCAC00CC62A0 /* AE_GeneralPlugPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_GeneralPlugPost.h; sourceTree = "<group>"; };
+		73C8B2D01174FCAC00CC62A0 /* AE_GeneralPlugPre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_GeneralPlugPre.h; sourceTree = "<group>"; };
+		73C8B2D11174FCAC00CC62A0 /* AE_Hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_Hook.h; sourceTree = "<group>"; };
+		73C8B2D21174FCAC00CC62A0 /* AE_IO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_IO.h; sourceTree = "<group>"; };
+		73C8B2D31174FCAC00CC62A0 /* AE_Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AE_Macros.h; sourceTree = "<group>"; };
+		73C8B2D41174FCAC00CC62A0 /* AEConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEConfig.h; sourceTree = "<group>"; };
+		73C8B2D51174FCAC00CC62A0 /* FIEL_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FIEL_Public.h; sourceTree = "<group>"; };
+		73C8B2D61174FCAC00CC62A0 /* Mach-O_prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mach-O_prefix.h"; sourceTree = "<group>"; };
+		73C8B2D71174FCAC00CC62A0 /* PF_Masks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PF_Masks.h; sourceTree = "<group>"; };
+		73C8B2D81174FCAC00CC62A0 /* PIFormatT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIFormatT.h; sourceTree = "<group>"; };
+		73C8B2D91174FCAC00CC62A0 /* PR_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PR_Public.h; sourceTree = "<group>"; };
+		73C8B2DA1174FCAC00CC62A0 /* PrSDKAESupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrSDKAESupport.h; sourceTree = "<group>"; };
+		73C8B2DB1174FCAC00CC62A0 /* PrSDKPixelFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrSDKPixelFormat.h; sourceTree = "<group>"; };
+		73C8B2DC1174FCAC00CC62A0 /* PT_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PT_Public.h; sourceTree = "<group>"; };
+		73C8B2DE1174FCAC00CC62A0 /* SPAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPAccess.h; sourceTree = "<group>"; };
+		73C8B2DF1174FCAC00CC62A0 /* SPAdapts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPAdapts.h; sourceTree = "<group>"; };
+		73C8B2E01174FCAC00CC62A0 /* SPBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBasic.h; sourceTree = "<group>"; };
+		73C8B2E11174FCAC00CC62A0 /* SPBckDbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBckDbg.h; sourceTree = "<group>"; };
+		73C8B2E21174FCAC00CC62A0 /* SPBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBlocks.h; sourceTree = "<group>"; };
+		73C8B2E31174FCAC00CC62A0 /* SPCaches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCaches.h; sourceTree = "<group>"; };
+		73C8B2E41174FCAC00CC62A0 /* SPCOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCOM.h; sourceTree = "<group>"; };
+		73C8B2E51174FCAC00CC62A0 /* SPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPConfig.h; sourceTree = "<group>"; };
+		73C8B2E61174FCAC00CC62A0 /* SPEDebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SPEDebug.c; sourceTree = "<group>"; };
+		73C8B2E71174FCAC00CC62A0 /* SPErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPErrorCodes.h; sourceTree = "<group>"; };
+		73C8B2E81174FCAC00CC62A0 /* SPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPErrors.h; sourceTree = "<group>"; };
+		73C8B2E91174FCAC00CC62A0 /* SPFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPFiles.h; sourceTree = "<group>"; };
+		73C8B2EA1174FCAC00CC62A0 /* SPHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPHost.h; sourceTree = "<group>"; };
+		73C8B2EB1174FCAC00CC62A0 /* SPInterf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPInterf.h; sourceTree = "<group>"; };
+		73C8B2EC1174FCAC00CC62A0 /* SPMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPMData.h; sourceTree = "<group>"; };
+		73C8B2ED1174FCAC00CC62A0 /* SPObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPObject.h; sourceTree = "<group>"; };
+		73C8B2EE1174FCAC00CC62A0 /* SPPiPL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPiPL.h; sourceTree = "<group>"; };
+		73C8B2EF1174FCAC00CC62A0 /* SPPlugs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPlugs.h; sourceTree = "<group>"; };
+		73C8B2F01174FCAC00CC62A0 /* SPProps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPProps.h; sourceTree = "<group>"; };
+		73C8B2F11174FCAC00CC62A0 /* SPRuntme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPRuntme.h; sourceTree = "<group>"; };
+		73C8B2F21174FCAC00CC62A0 /* SPStrngs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPStrngs.h; sourceTree = "<group>"; };
+		73C8B2F31174FCAC00CC62A0 /* SPSTSPrp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPSTSPrp.h; sourceTree = "<group>"; };
+		73C8B2F41174FCAC00CC62A0 /* SPSuites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPSuites.h; sourceTree = "<group>"; };
+		73C8B2F51174FCAC00CC62A0 /* SPTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTypes.h; sourceTree = "<group>"; };
+		73C8B2F61174FCAC00CC62A0 /* SuiteHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuiteHelper.h; sourceTree = "<group>"; };
+		73C8B3E01175122E00CC62A0 /* FlagsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlagsTests.m; path = Tests/FlagsTests.m; sourceTree = "<group>"; };
+		73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AudioFFTRender.r; sourceTree = "<group>"; };
+		73C8B3EE1175128900CC62A0 /* AudioFFTRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFFTRender.h; path = Src/AudioFFTRender.h; sourceTree = "<group>"; };
+		73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFFTRender.m; path = Src/AudioFFTRender.m; sourceTree = "<group>"; };
+		73C8B4751175130200CC62A0 /* SDK_Backwards.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDK_Backwards.xcodeproj; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Effect/SDK_Backwards/Mac/SDK_Backwards.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		73C8B4861175131200CC62A0 /* SmartyPants.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SmartyPants.xcodeproj; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Effect/SmartyPants/Mac/SmartyPants.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		73C8B49A1175132700CC62A0 /* Checkout.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Checkout.xcodeproj; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Effect/Checkout/Mac/Checkout.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		73C8B4AA1175134000CC62A0 /* Gamma_Table.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gamma_Table.xcodeproj; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Effect/Gamma_Table/Mac/Gamma_Table.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		73C8B53E1175137800CC62A0 /* AE_General.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = AE_General.r; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Resources/AE_General.r"; sourceTree = SOURCE_ROOT; };
+		73C8B547117513D800CC62A0 /* AEGP_SuiteHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AEGP_SuiteHandler.cpp; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Util/AEGP_SuiteHandler.cpp"; sourceTree = SOURCE_ROOT; };
+		73C8B548117513D800CC62A0 /* AEGP_SuiteHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AEGP_SuiteHandler.h; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Util/AEGP_SuiteHandler.h"; sourceTree = SOURCE_ROOT; };
+		73C8B549117513E700CC62A0 /* MissingSuiteError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MissingSuiteError.cpp; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Util/MissingSuiteError.cpp"; sourceTree = SOURCE_ROOT; };
+		73C8B54A117513F900CC62A0 /* AudioFFTRender_Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioFFTRender_Strings.cpp; path = Src/AudioFFTRender_Strings.cpp; sourceTree = "<group>"; };
+		73C8B54B117513F900CC62A0 /* AudioFFTRender_Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFFTRender_Strings.h; path = Src/AudioFFTRender_Strings.h; sourceTree = "<group>"; };
+		C4E618CC095A3CE80012CA3F /* AudioFFTRender.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioFFTRender.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7370DC471171E68F009FA356 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618CA095A3CE80012CA3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73B45B9A1173CEC600060626 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7370DC521171E697009FA356 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B3E01175122E00CC62A0 /* FlagsTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		73C8B2991174FB3200CC62A0 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B2BE1174FCAC00CC62A0 /* Headers */,
+				73C8B2A11174FB5600CC62A0 /* Util */,
+			);
+			name = SDK;
+			sourceTree = "<group>";
+		};
+		73C8B2A11174FB5600CC62A0 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B2A21174FB5600CC62A0 /* AEFX_ArbParseHelper.c */,
+				73C8B2A31174FB5600CC62A0 /* AEFX_ArbParseHelper.h */,
+				73C8B2A41174FB5600CC62A0 /* AEFX_ChannelDepthTpl.h */,
+				73C8B2A51174FB5600CC62A0 /* AEGP_SuiteHandler.cpp */,
+				73C8B2A61174FB5600CC62A0 /* AEGP_SuiteHandler.h */,
+				73C8B2A71174FB5600CC62A0 /* AEGP_Utils.cpp */,
+				73C8B2A81174FB5600CC62A0 /* AEGP_Utils.h */,
+				73C8B2A91174FB5600CC62A0 /* DuckSuite.h */,
+				73C8B2AA1174FB5600CC62A0 /* entry.h */,
+				73C8B2AB1174FB5600CC62A0 /* MissingSuiteError.cpp */,
+				73C8B2AC1174FB5600CC62A0 /* Param_Utils.h */,
+				73C8B2AD1174FB5600CC62A0 /* PF_Draw_Utils.c */,
+				73C8B2AE1174FB5600CC62A0 /* PF_Draw_Utils.cpp */,
+				73C8B2AF1174FB5600CC62A0 /* PF_Draw_Utils.h */,
+				73C8B2B01174FB5600CC62A0 /* PF_Suite_Helper.c */,
+				73C8B2B11174FB5600CC62A0 /* PF_Suite_Helper.h */,
+				73C8B2B21174FB5600CC62A0 /* Smart_Utils.cpp */,
+				73C8B2B31174FB5600CC62A0 /* Smart_Utils.h */,
+				73C8B2B41174FB5600CC62A0 /* String_Utils.c */,
+				73C8B2B51174FB5600CC62A0 /* String_Utils.h */,
+			);
+			name = Util;
+			path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Util";
+			sourceTree = SOURCE_ROOT;
+		};
+		73C8B2BE1174FCAC00CC62A0 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B2BF1174FCAC00CC62A0 /* A.h */,
+				73C8B2C01174FCAC00CC62A0 /* AE_AdvEffectSuites.h */,
+				73C8B2C11174FCAC00CC62A0 /* AE_ChannelSuites.h */,
+				73C8B2C21174FCAC00CC62A0 /* AE_CreatorInfo.h */,
+				73C8B2C31174FCAC00CC62A0 /* AE_Effect.h */,
+				73C8B2C41174FCAC00CC62A0 /* AE_EffectCB.h */,
+				73C8B2C51174FCAC00CC62A0 /* AE_EffectCBSuites.h */,
+				73C8B2C61174FCAC00CC62A0 /* AE_EffectPixelFormat.h */,
+				73C8B2C71174FCAC00CC62A0 /* AE_EffectSuites.h */,
+				73C8B2C81174FCAC00CC62A0 /* AE_EffectSuitesHelper.h */,
+				73C8B2C91174FCAC00CC62A0 /* AE_EffectUI.h */,
+				73C8B2CA1174FCAC00CC62A0 /* AE_EffectVers.h */,
+				73C8B2CB1174FCAC00CC62A0 /* AE_FPF.h */,
+				73C8B2CC1174FCAC00CC62A0 /* AE_GeneralPlug.h */,
+				73C8B2CD1174FCAC00CC62A0 /* AE_GeneralPlugOld.h */,
+				73C8B2CE1174FCAC00CC62A0 /* AE_GeneralPlugPanels.h */,
+				73C8B2CF1174FCAC00CC62A0 /* AE_GeneralPlugPost.h */,
+				73C8B2D01174FCAC00CC62A0 /* AE_GeneralPlugPre.h */,
+				73C8B2D11174FCAC00CC62A0 /* AE_Hook.h */,
+				73C8B2D21174FCAC00CC62A0 /* AE_IO.h */,
+				73C8B2D31174FCAC00CC62A0 /* AE_Macros.h */,
+				73C8B2D41174FCAC00CC62A0 /* AEConfig.h */,
+				73C8B2D51174FCAC00CC62A0 /* FIEL_Public.h */,
+				73C8B2D61174FCAC00CC62A0 /* Mach-O_prefix.h */,
+				73C8B2D71174FCAC00CC62A0 /* PF_Masks.h */,
+				73C8B2D81174FCAC00CC62A0 /* PIFormatT.h */,
+				73C8B2D91174FCAC00CC62A0 /* PR_Public.h */,
+				73C8B2DA1174FCAC00CC62A0 /* PrSDKAESupport.h */,
+				73C8B2DB1174FCAC00CC62A0 /* PrSDKPixelFormat.h */,
+				73C8B2DC1174FCAC00CC62A0 /* PT_Public.h */,
+				73C8B2DD1174FCAC00CC62A0 /* SP */,
+				73C8B2F61174FCAC00CC62A0 /* SuiteHelper.h */,
+			);
+			name = Headers;
+			path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Headers";
+			sourceTree = SOURCE_ROOT;
+		};
+		73C8B2DD1174FCAC00CC62A0 /* SP */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B2DE1174FCAC00CC62A0 /* SPAccess.h */,
+				73C8B2DF1174FCAC00CC62A0 /* SPAdapts.h */,
+				73C8B2E01174FCAC00CC62A0 /* SPBasic.h */,
+				73C8B2E11174FCAC00CC62A0 /* SPBckDbg.h */,
+				73C8B2E21174FCAC00CC62A0 /* SPBlocks.h */,
+				73C8B2E31174FCAC00CC62A0 /* SPCaches.h */,
+				73C8B2E41174FCAC00CC62A0 /* SPCOM.h */,
+				73C8B2E51174FCAC00CC62A0 /* SPConfig.h */,
+				73C8B2E61174FCAC00CC62A0 /* SPEDebug.c */,
+				73C8B2E71174FCAC00CC62A0 /* SPErrorCodes.h */,
+				73C8B2E81174FCAC00CC62A0 /* SPErrors.h */,
+				73C8B2E91174FCAC00CC62A0 /* SPFiles.h */,
+				73C8B2EA1174FCAC00CC62A0 /* SPHost.h */,
+				73C8B2EB1174FCAC00CC62A0 /* SPInterf.h */,
+				73C8B2EC1174FCAC00CC62A0 /* SPMData.h */,
+				73C8B2ED1174FCAC00CC62A0 /* SPObject.h */,
+				73C8B2EE1174FCAC00CC62A0 /* SPPiPL.h */,
+				73C8B2EF1174FCAC00CC62A0 /* SPPlugs.h */,
+				73C8B2F01174FCAC00CC62A0 /* SPProps.h */,
+				73C8B2F11174FCAC00CC62A0 /* SPRuntme.h */,
+				73C8B2F21174FCAC00CC62A0 /* SPStrngs.h */,
+				73C8B2F31174FCAC00CC62A0 /* SPSTSPrp.h */,
+				73C8B2F41174FCAC00CC62A0 /* SPSuites.h */,
+				73C8B2F51174FCAC00CC62A0 /* SPTypes.h */,
+			);
+			path = SP;
+			sourceTree = "<group>";
+		};
+		73C8B3E41175124400CC62A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73B45B991173CEC600060626 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73C8B3E51175124C00CC62A0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B53E1175137800CC62A0 /* AE_General.r */,
+				73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		73C8B3E61175126700CC62A0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B3EE1175128900CC62A0 /* AudioFFTRender.h */,
+				73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */,
+				D0FE57630993C4FD00139A60 /* Supporting Code */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		73C8B4761175130200CC62A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B47A1175130200CC62A0 /* SDK_Backwards.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73C8B4871175131200CC62A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B48B1175131200CC62A0 /* SmartyPants.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73C8B49B1175132700CC62A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B49F1175132700CC62A0 /* Checkout.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73C8B4AB1175134000CC62A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B4AF1175134000CC62A0 /* GammaTable.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4E6187C095A3C800012CA3F = {
+			isa = PBXGroup;
+			children = (
+				73C8B3E61175126700CC62A0 /* Classes */,
+				7370DC521171E697009FA356 /* Tests */,
+				73C8B2991174FB3200CC62A0 /* SDK */,
+				73C8B3E51175124C00CC62A0 /* Resources */,
+				73C8B3E41175124400CC62A0 /* Frameworks */,
+				C4E6188C095A3C800012CA3F /* Products */,
+				73C8B4751175130200CC62A0 /* SDK_Backwards.xcodeproj */,
+				73C8B4861175131200CC62A0 /* SmartyPants.xcodeproj */,
+				73C8B49A1175132700CC62A0 /* Checkout.xcodeproj */,
+				73C8B4AA1175134000CC62A0 /* Gamma_Table.xcodeproj */,
+			);
+			comments = "This is the first pass at a skeletal XCode sample. I'm not sure whether a lot of the project-related cruft is necessary, and will attempt to trim down / standardize the header and frameworks inclusion, but for now, it works, so I'm jiggling nadda.  -bbb 2/3/06";
+			sourceTree = "<group>";
+		};
+		C4E6188C095A3C800012CA3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4E618CC095A3CE80012CA3F /* AudioFFTRender.plugin */,
+				7370DC4A1171E68F009FA356 /* AudioFFTrenderTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0FE57630993C4FD00139A60 /* Supporting Code */ = {
+			isa = PBXGroup;
+			children = (
+				73C8B548117513D800CC62A0 /* AEGP_SuiteHandler.h */,
+				73C8B547117513D800CC62A0 /* AEGP_SuiteHandler.cpp */,
+				73C8B549117513E700CC62A0 /* MissingSuiteError.cpp */,
+				73C8B54B117513F900CC62A0 /* AudioFFTRender_Strings.h */,
+				73C8B54A117513F900CC62A0 /* AudioFFTRender_Strings.cpp */,
+			);
+			name = "Supporting Code";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7370DC491171E68F009FA356 /* AudioFFTrenderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7370DC4D1171E690009FA356 /* Build configuration list for PBXNativeTarget "AudioFFTrenderTests" */;
+			buildPhases = (
+				7370DC451171E68F009FA356 /* Resources */,
+				7370DC461171E68F009FA356 /* Sources */,
+				7370DC471171E68F009FA356 /* Frameworks */,
+				7370DC481171E68F009FA356 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioFFTrenderTests;
+			productName = AudioFFTrenderTests;
+			productReference = 7370DC4A1171E68F009FA356 /* AudioFFTrenderTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		C4E618CB095A3CE80012CA3F /* AudioFFTRender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "AudioFFTRender" */;
+			buildPhases = (
+				C4E618C8095A3CE80012CA3F /* Resources */,
+				C4E618C9095A3CE80012CA3F /* Sources */,
+				C4E618CA095A3CE80012CA3F /* Frameworks */,
+				C4E618EA095A3E040012CA3F /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioFFTRender;
+			productName = Skeleton.plugin;
+			productReference = C4E618CC095A3CE80012CA3F /* AudioFFTRender.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4E6187E095A3C800012CA3F /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "AudioFFTRender" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = C4E6187C095A3C800012CA3F;
+			productRefGroup = C4E6188C095A3C800012CA3F /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 73C8B49B1175132700CC62A0 /* Products */;
+					ProjectRef = 73C8B49A1175132700CC62A0 /* Checkout.xcodeproj */;
+				},
+				{
+					ProductGroup = 73C8B4AB1175134000CC62A0 /* Products */;
+					ProjectRef = 73C8B4AA1175134000CC62A0 /* Gamma_Table.xcodeproj */;
+				},
+				{
+					ProductGroup = 73C8B4761175130200CC62A0 /* Products */;
+					ProjectRef = 73C8B4751175130200CC62A0 /* SDK_Backwards.xcodeproj */;
+				},
+				{
+					ProductGroup = 73C8B4871175131200CC62A0 /* Products */;
+					ProjectRef = 73C8B4861175131200CC62A0 /* SmartyPants.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C4E618CB095A3CE80012CA3F /* AudioFFTRender */,
+				7370DC491171E68F009FA356 /* AudioFFTrenderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		73C8B47A1175130200CC62A0 /* SDK_Backwards.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SDK_Backwards.plugin;
+			remoteRef = 73C8B4791175130200CC62A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73C8B48B1175131200CC62A0 /* SmartyPants.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SmartyPants.plugin;
+			remoteRef = 73C8B48A1175131200CC62A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73C8B49F1175132700CC62A0 /* Checkout.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Checkout.plugin;
+			remoteRef = 73C8B49E1175132700CC62A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73C8B4AF1175134000CC62A0 /* GammaTable.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GammaTable.plugin;
+			remoteRef = 73C8B4AE1175134000CC62A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7370DC451171E68F009FA356 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618C8095A3CE80012CA3F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		C4E618EA095A3E040012CA3F /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73C8B3EB1175127C00CC62A0 /* AudioFFTRender.r in Rez */,
+				73C8B53F1175137800CC62A0 /* AE_General.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7370DC481171E68F009FA356 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7370DC461171E68F009FA356 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73C8B3E11175122E00CC62A0 /* FlagsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4E618C9095A3CE80012CA3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73C8B3F01175128900CC62A0 /* AudioFFTRender.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7370DC4C1171E690009FA356 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "AudioFFTrenderTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AudioFFTrenderTests;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		C4E61880095A3C800012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../Headers,
+					../../../Util,
+					../../../Headers/SP,
+					../../../Resources,
+				);
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+			};
+			name = Debug;
+		};
+		C4E618CF095A3CE90012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_SYMBOL_SEPARATION = NO;
+				GCC_FAST_OBJC_DISPATCH = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = pch/AudioFFTRender_Prefix.pch;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "infoplist/AudioFFTRender.plugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-Wno-write-strings";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AudioFFTRender;
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7370DC4D1171E690009FA356 /* Build configuration list for PBXNativeTarget "AudioFFTrenderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7370DC4C1171E690009FA356 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "AudioFFTRender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E61880095A3C800012CA3F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "AudioFFTRender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E618CF095A3CE90012CA3F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4E6187E095A3C800012CA3F /* Project object */;
+}

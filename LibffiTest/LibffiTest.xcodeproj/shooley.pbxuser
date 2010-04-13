@@ -9,6 +9,7 @@
 		);
 		breakpoints = (
 			73A0E99911637405003EC55E /* LibffiExperiments.m:287 */,
+			73E1021F116D2D93007800EA /* LibffiExperiments.m:322 */,
 		);
 		codeSenseManager = 73A0E78711635169003EC55E /* Code sense */;
 		executables = (
@@ -20,7 +21,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					636,
+					882,
 					20,
 					48,
 					43,
@@ -59,15 +60,13 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 291721546;
-			PBXWorkspaceStateSaveDate = 291721546;
+			PBXPerProjectTemplateStateSaveDate = 292367687;
+			PBXWorkspaceStateSaveDate = 292367687;
 		};
 		perUserProjectItems = {
 			73A0E80311635C72003EC55E /* PBXTextBookmark */ = 73A0E80311635C72003EC55E /* PBXTextBookmark */;
-			73A0E80511635C72003EC55E /* PBXTextBookmark */ = 73A0E80511635C72003EC55E /* PBXTextBookmark */;
-			73A0E81711635D03003EC55E /* PBXTextBookmark */ = 73A0E81711635D03003EC55E /* PBXTextBookmark */;
-			73A0E9661163719B003EC55E /* PBXTextBookmark */ = 73A0E9661163719B003EC55E /* PBXTextBookmark */;
-			73A0E9A11163743C003EC55E /* PBXTextBookmark */ = 73A0E9A11163743C003EC55E /* PBXTextBookmark */;
+			73E10221116D2DA7007800EA /* PBXTextBookmark */ = 73E10221116D2DA7007800EA /* PBXTextBookmark */;
+			73E10233116D2E1F007800EA /* PBXTextBookmark */ = 73E10233116D2E1F007800EA /* PBXTextBookmark */;
 		};
 		sourceControlManager = 73A0E78611635169003EC55E /* Source Control */;
 		userBuildSettings = {
@@ -91,6 +90,9 @@
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
 		dylibVariantSuffix = "";
@@ -103,6 +105,7 @@
 		name = LibffiTest;
 		savedGlobals = {
 		};
+		showTypeColumn = 0;
 		sourceDirectories = (
 		);
 		variableFormatDictionary = {
@@ -113,6 +116,9 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
 		};
 	};
 	73A0E78711635169003EC55E /* Code sense */ = {
@@ -128,9 +134,9 @@
 	};
 	73A0E7F711635A08003EC55E /* LibffiExperiments.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1060, 5460}}";
-			sepNavSelRange = "{7582, 0}";
-			sepNavVisRange = "{6819, 1357}";
+			sepNavIntBoundsRect = "{{0, 0}, {1060, 4381}}";
+			sepNavSelRange = "{10917, 20}";
+			sepNavVisRange = "{9541, 1491}";
 		};
 	};
 	73A0E80311635C72003EC55E /* PBXTextBookmark */ = {
@@ -143,34 +149,6 @@
 		vrLen = 1278;
 		vrLoc = 363;
 	};
-	73A0E80511635C72003EC55E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
-		name = "main.m: 69";
-		rLen = 0;
-		rLoc = 198;
-		rType = 0;
-		vrLen = 1278;
-		vrLoc = 363;
-	};
-	73A0E81711635D03003EC55E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
-		name = "LibffiExperiments.m: 89";
-		rLen = 0;
-		rLoc = 9086;
-		rType = 0;
-		vrLen = 678;
-		vrLoc = 1676;
-	};
-	73A0E9661163719B003EC55E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "warning: passing argument 1 of 'ffi_prep_cif' from incompatible pointer type";
-		fRef = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
-		rLen = 1;
-		rLoc = 208;
-		rType = 1;
-	};
 	73A0E99911637405003EC55E /* LibffiExperiments.m:287 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -181,22 +159,51 @@
 		delayBeforeContinue = 0;
 		fileReference = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
 		functionName = "-releasePoolExperiment2";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 287;
 		location = LibffiTest;
-		modificationTime = 291730474.994583;
+		modificationTime = 292367772.682507;
+		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	73A0E9A11163743C003EC55E /* PBXTextBookmark */ = {
+	73E1021F116D2D93007800EA /* LibffiExperiments.m:322 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
+		functionName = "-awakeFromNib";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 322;
+		location = LibffiTest;
+		modificationTime = 292367784.021362;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73E10221116D2DA7007800EA /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
-		name = "LibffiExperiments.m: 220";
-		rLen = 0;
-		rLoc = 7582;
+		name = "LibffiExperiments.m: 321";
+		rLen = 20;
+		rLoc = 10917;
 		rType = 0;
-		vrLen = 1357;
-		vrLoc = 6819;
+		vrLen = 1475;
+		vrLoc = 9557;
+	};
+	73E10233116D2E1F007800EA /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73A0E7F711635A08003EC55E /* LibffiExperiments.m */;
+		name = "LibffiExperiments.m: 321";
+		rLen = 20;
+		rLoc = 10917;
+		rType = 0;
+		vrLen = 1491;
+		vrLoc = 9541;
 	};
 	8D1107260486CEB800E47090 /* LibffiTest */ = {
 		activeExec = 0;

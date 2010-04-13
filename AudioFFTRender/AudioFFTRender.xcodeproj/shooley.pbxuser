@@ -1,0 +1,818 @@
+// !$*UTF8*$!
+{
+	7370DC491171E68F009FA356 /* AudioFFTrenderTests */ = {
+		activeExec = 0;
+	};
+	73B459BA1173A35A00060626 /* FlagsTests.m:22 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3E01175122E00CC62A0 /* FlagsTests.m */;
+		functionName = "-testSomeFlagValues";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 22;
+		location = AudioFFTrenderTests;
+		modificationTime = 292885227.194787;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73B459BF1173A36000060626 /* AE_Effect.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = AE_Effect.h;
+		path = "/Users/shooley/Desktop/Programming/Adobe After Effects CS4 SDK Mac/Examples/Headers/AE_Effect.h";
+		sourceTree = "<absolute>";
+	};
+	73B459C51173A39D00060626 /* Test Runner (otool) */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+			YES,
+			YES,
+		);
+		argumentStrings = (
+			"-SenTest All",
+			AudioFFTrenderTests.octest,
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				commandLineArgs = (
+				);
+				displayName = "Executable Runner";
+				environment = {
+				};
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = DYLD_LIBRARY_PATH;
+				value = "$(BUILT_PRODUCTS_DIR)";
+			},
+			{
+				active = YES;
+				name = DYLD_FRAMEWORK_PATH;
+				value = "$(BUILT_PRODUCTS_DIR)";
+			},
+			{
+				active = YES;
+				name = MallocPreScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = MallocScribble;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = NSDebugEnabled;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSHangOnUncaughtException;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = MallocStackLogging;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = NSZombieEnabled;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = OBJC_DISABLE_GC;
+				value = YES;
+			},
+			{
+				active = YES;
+				name = ARCHPREFERENCE;
+				value = i386;
+			},
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = 73B459C61173A39D00060626 /* otest */;
+		libgmallocEnabled = 0;
+		name = "Test Runner (otool)";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			"testValue-NSUInteger--[FlagsTests testSomeFlagValues]" = 1;
+			"testValue1-NSUInteger--[FlagsTests testSomeFlagValues]" = 1;
+			"testValue2-NSUInteger--[FlagsTests testSomeFlagValues]" = 1;
+		};
+	};
+	73B459C61173A39D00060626 /* otest */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = "compiled.mach-o.executable";
+		name = otest;
+		path = /Developer/Tools/otest;
+		sourceTree = "<absolute>";
+	};
+	73B45B0F1173C16A00060626 /* AudioFFTRender.m:58 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "GlobalSetup( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output )";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 58;
+		location = AudioFFTRender;
+		modificationTime = 292885227.195677;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B351173C45900060626 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73B459BF1173A36000060626 /* AE_Effect.h */;
+		name = "AE_Effect.h: 867";
+		rLen = 0;
+		rLoc = 2807;
+		rType = 0;
+		vrLen = 854;
+		vrLoc = 36082;
+	};
+	73B45B531173C92F00060626 /* AudioFFTRender.m:289 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "SmartRender( PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 289;
+		location = AudioFFTRender;
+		modificationTime = 292885227.195831;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B7C1173CC8700060626 /* AudioFFTRender.m:316 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 316;
+		location = AudioFFTRender;
+		modificationTime = 292885227.195936;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B7E1173CC8A00060626 /* AudioFFTRender.m:313 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 313;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196009;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B801173CC8C00060626 /* AudioFFTRender.m:310 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 310;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196079;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B821173CCAF00060626 /* AudioFFTRender.m:323 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 323;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196151;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B841173CCB100060626 /* AudioFFTRender.m:326 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 326;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196237;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B861173CCB300060626 /* AudioFFTRender.m:329 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 329;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196305;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73B45B941173CE8B00060626 /* AudioFFTRender.m:336 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output, void *extra )";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 336;
+		location = AudioFFTRender;
+		modificationTime = 292885227.196372;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73C3F5FC11706EBC00888447 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	73C3F5FD11706EBC00888447 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	73C3F67C117072CC00888447 /* AE */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+			YES,
+			YES,
+			YES,
+		);
+		argumentStrings = (
+			"-s \"alert(\"You just sent an alert to After Effects\")\"",
+			"-project",
+			/Users/shooley/Desktop/Untitled_Project.aep,
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				commandLineArgs = (
+				);
+				displayName = "Executable Runner";
+				environment = {
+				};
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = ARCHPREFERENCE;
+				value = i386;
+			},
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = 73C3F67D117072CC00888447 /* Adobe After Effects CS4.app */;
+		libgmallocEnabled = 0;
+		name = AE;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	73C3F67D117072CC00888447 /* Adobe After Effects CS4.app */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = wrapper.application;
+		name = "Adobe After Effects CS4.app";
+		path = "/Applications/Adobe After Effects CS4/Adobe After Effects CS4.app";
+		sourceTree = "<absolute>";
+	};
+	73C8B2A41174FB5600CC62A0 /* AEFX_ChannelDepthTpl.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 767}}";
+			sepNavSelRange = "{235, 0}";
+			sepNavVisRange = "{698, 697}";
+		};
+	};
+	73C8B2A61174FB5600CC62A0 /* AEGP_SuiteHandler.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 6955}}";
+			sepNavSelRange = "{3308, 0}";
+			sepNavVisRange = "{3003, 757}";
+		};
+	};
+	73C8B2B01174FB5600CC62A0 /* PF_Suite_Helper.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 1053}}";
+			sepNavSelRange = "{1542, 49}";
+			sepNavVisRange = "{1190, 779}";
+		};
+	};
+	73C8B2B51174FB5600CC62A0 /* String_Utils.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 624}}";
+			sepNavSelRange = "{1609, 12}";
+			sepNavVisRange = "{1400, 262}";
+		};
+	};
+	73C8B2C11174FCAC00CC62A0 /* AE_ChannelSuites.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 6500}}";
+			sepNavSelRange = "{13914, 42}";
+			sepNavVisRange = "{13559, 819}";
+		};
+	};
+	73C8B2C41174FCAC00CC62A0 /* AE_EffectCB.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 16640}}";
+			sepNavSelRange = "{15385, 49}";
+			sepNavVisRange = "{14532, 1054}";
+		};
+	};
+	73C8B2C51174FCAC00CC62A0 /* AE_EffectCBSuites.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 10153}}";
+			sepNavSelRange = "{3420, 50}";
+			sepNavVisRange = "{2441, 1167}";
+		};
+	};
+	73C8B2CC1174FCAC00CC62A0 /* AE_GeneralPlug.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {934, 61425}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1542}";
+		};
+	};
+	73C8B2D31174FCAC00CC62A0 /* AE_Macros.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {908, 2106}}";
+			sepNavSelRange = "{2873, 0}";
+			sepNavVisRange = "{2582, 977}";
+			sepNavWindowFrame = "{{15, 4}, {1353, 869}}";
+		};
+	};
+	73C8B387117504ED00CC62A0 /* AudioFFTRender.m:149 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		functionName = "DescribeDependencies()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 149;
+		location = AudioFFTRender;
+		modificationTime = 292885227.19644;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73C8B3DA1175120700CC62A0 /* Mach-O_prefix.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = "Mach-O_prefix.h";
+		path = "/Users/shooley/Desktop/Programming/Adobe After Effects CS4 SDK Mac/Examples/Resources/Mach-O_prefix.h";
+		sourceTree = "<absolute>";
+	};
+	73C8B3E01175122E00CC62A0 /* FlagsTests.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {817, 468}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 283}";
+		};
+	};
+	73C8B3E71175127300CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B3DA1175120700CC62A0 /* Mach-O_prefix.h */;
+		name = "Mach-O_prefix.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 18;
+		vrLoc = 0;
+	};
+	73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {433, 819}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 414}";
+		};
+	};
+	73C8B3EE1175128900CC62A0 /* AudioFFTRender.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {495, 1417}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{1479, 610}";
+		};
+	};
+	73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1083, 4641}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1513}";
+		};
+	};
+	73C8B3F3117512A200CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B3E01175122E00CC62A0 /* FlagsTests.m */;
+		name = "FlagsTests.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 283;
+		vrLoc = 0;
+	};
+	73C8B53E1175137800CC62A0 /* AE_General.r */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {908, 6643}}";
+			sepNavSelRange = "{113, 0}";
+			sepNavVisRange = "{11435, 724}";
+		};
+	};
+	73C8B544117513C800CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */;
+		name = "AudioFFTRender.r: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 414;
+		vrLoc = 0;
+	};
+	73C8B548117513D800CC62A0 /* AEGP_SuiteHandler.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {663, 6487}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1516}";
+		};
+	};
+	73C8B549117513E700CC62A0 /* MissingSuiteError.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {495, 481}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1536}";
+		};
+	};
+	73C8B54B117513F900CC62A0 /* AudioFFTRender_Strings.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {495, 481}}";
+			sepNavSelRange = "{1080, 0}";
+			sepNavVisRange = "{0, 1457}";
+		};
+	};
+	73C8B54E1175141000CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B53E1175137800CC62A0 /* AE_General.r */;
+		name = "AE_General.r: 9";
+		rLen = 0;
+		rLoc = 113;
+		rType = 0;
+		vrLen = 724;
+		vrLoc = 11435;
+	};
+	73C8B54F1175141000CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B548117513D800CC62A0 /* AEGP_SuiteHandler.h */;
+		name = "AEGP_SuiteHandler.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1516;
+		vrLoc = 0;
+	};
+	73C8B5501175141000CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B549117513E700CC62A0 /* MissingSuiteError.cpp */;
+		name = "MissingSuiteError.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1536;
+		vrLoc = 0;
+	};
+	73C8B561117517EC00CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B54B117513F900CC62A0 /* AudioFFTRender_Strings.h */;
+		name = "AudioFFTRender_Strings.h: 16";
+		rLen = 0;
+		rLoc = 1080;
+		rType = 0;
+		vrLen = 1457;
+		vrLoc = 0;
+	};
+	73C8B562117517EC00CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B3EF1175128900CC62A0 /* AudioFFTRender.m */;
+		name = "AudioFFTRender.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1513;
+		vrLoc = 0;
+	};
+	73C8B563117517EC00CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B3EE1175128900CC62A0 /* AudioFFTRender.h */;
+		name = "AudioFFTRender.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 610;
+		vrLoc = 1479;
+	};
+	73C8B564117517EC00CC62A0 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "\"ABS\" redefined";
+		fRef = 73C8B2D31174FCAC00CC62A0 /* AE_Macros.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 81;
+		rType = 1;
+	};
+	73C8B56E117517EC00CC62A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C8B2D31174FCAC00CC62A0 /* AE_Macros.h */;
+		name = "AE_Macros.h: 82";
+		rLen = 0;
+		rLoc = 2873;
+		rType = 0;
+		vrLen = 977;
+		vrLoc = 2582;
+	};
+	C4E6187E095A3C800012CA3F /* Project object */ = {
+		activeArchitecturePreference = i386;
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 73C3F67C117072CC00888447 /* AE */;
+		activeSDKPreference = macosx10.6;
+		activeTarget = C4E618CB095A3CE80012CA3F /* AudioFFTRender */;
+		addToTargets = (
+		);
+		breakpoints = (
+			73B459BA1173A35A00060626 /* FlagsTests.m:22 */,
+			73B45B0F1173C16A00060626 /* AudioFFTRender.m:58 */,
+			73B45B531173C92F00060626 /* AudioFFTRender.m:289 */,
+			73B45B7C1173CC8700060626 /* AudioFFTRender.m:316 */,
+			73B45B7E1173CC8A00060626 /* AudioFFTRender.m:313 */,
+			73B45B801173CC8C00060626 /* AudioFFTRender.m:310 */,
+			73B45B821173CCAF00060626 /* AudioFFTRender.m:323 */,
+			73B45B841173CCB100060626 /* AudioFFTRender.m:326 */,
+			73B45B861173CCB300060626 /* AudioFFTRender.m:329 */,
+			73B45B941173CE8B00060626 /* AudioFFTRender.m:336 */,
+			73C8B387117504ED00CC62A0 /* AudioFFTRender.m:149 */,
+		);
+		codeSenseManager = 73C3F5FD11706EBC00888447 /* Code sense */;
+		executables = (
+			73C3F67C117072CC00888447 /* AE */,
+			73B459C51173A39D00060626 /* Test Runner (otool) */,
+		);
+		perUserDictionary = {
+			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA23EDF0692099D00951B8B" = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXBreakpointsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					308,
+					20,
+					208,
+					208,
+					138,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXBreakpointsDataSource_ActionID,
+					PBXBreakpointsDataSource_TypeID,
+					PBXBreakpointsDataSource_BreakpointID,
+					PBXBreakpointsDataSource_UseID,
+					PBXBreakpointsDataSource_LocationID,
+					PBXBreakpointsDataSource_ConditionID,
+					PBXBreakpointsDataSource_IgnoreCountID,
+					PBXBreakpointsDataSource_ContinueID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					640,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					255,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					540,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					502,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					215,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 292885227;
+			PBXWorkspaceStateSaveDate = 292885227;
+		};
+		perUserProjectItems = {
+			73B45B351173C45900060626 /* PBXTextBookmark */ = 73B45B351173C45900060626 /* PBXTextBookmark */;
+			73C8B3E71175127300CC62A0 /* PBXTextBookmark */ = 73C8B3E71175127300CC62A0 /* PBXTextBookmark */;
+			73C8B3F3117512A200CC62A0 /* PBXTextBookmark */ = 73C8B3F3117512A200CC62A0 /* PBXTextBookmark */;
+			73C8B544117513C800CC62A0 /* PBXTextBookmark */ = 73C8B544117513C800CC62A0 /* PBXTextBookmark */;
+			73C8B54E1175141000CC62A0 /* PBXTextBookmark */ = 73C8B54E1175141000CC62A0 /* PBXTextBookmark */;
+			73C8B54F1175141000CC62A0 /* PBXTextBookmark */ = 73C8B54F1175141000CC62A0 /* PBXTextBookmark */;
+			73C8B5501175141000CC62A0 /* PBXTextBookmark */ = 73C8B5501175141000CC62A0 /* PBXTextBookmark */;
+			73C8B561117517EC00CC62A0 /* PBXTextBookmark */ = 73C8B561117517EC00CC62A0 /* PBXTextBookmark */;
+			73C8B562117517EC00CC62A0 /* PBXTextBookmark */ = 73C8B562117517EC00CC62A0 /* PBXTextBookmark */;
+			73C8B563117517EC00CC62A0 /* PBXTextBookmark */ = 73C8B563117517EC00CC62A0 /* PBXTextBookmark */;
+			73C8B564117517EC00CC62A0 /* XCBuildMessageTextBookmark */ = 73C8B564117517EC00CC62A0 /* XCBuildMessageTextBookmark */;
+			73C8B56E117517EC00CC62A0 /* PBXTextBookmark */ = 73C8B56E117517EC00CC62A0 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 73C3F5FC11706EBC00888447 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	C4E618CB095A3CE80012CA3F /* AudioFFTRender */ = {
+		activeExec = 0;
+	};
+}
