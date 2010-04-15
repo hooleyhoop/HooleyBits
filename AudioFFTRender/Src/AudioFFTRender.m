@@ -37,7 +37,7 @@
 */
 
 #import "AudioFFTRender.h"
-#import <PF_Suite_Helper.h>
+#import "PF_Suite_Helper.h"
 #import <AE_ChannelSuites.h>
 #import "AE_Macros.h"
 #import "Param_Utils.h"
@@ -67,15 +67,17 @@ static PF_Err GlobalSetup( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef
 	out_data->my_version = PF_VERSION( MAJOR_VERSION, MINOR_VERSION, BUG_VERSION, STAGE_VERSION, BUILD_VERSION );
 
 	// if you change these, update the pipl
-	out_data->out_flags =	PF_OutFlag_PIX_INDEPENDENT	|
-							PF_OutFlag_DEEP_COLOR_AWARE	|	// just 16bpc, not 32bpc
-//							PF_OutFlag_I_USE_AUDIO;			// visual effects that check out audio data, but don’t modify it.
+	out_data->out_flags =	
+//							PF_OutFlag_PIX_INDEPENDENT	|
+//							PF_OutFlag_DEEP_COLOR_AWARE	|	// just 16bpc, not 32bpc
+							PF_OutFlag_I_USE_AUDIO	|		// visual effects that check out audio data, but don’t modify it.
 							PF_OutFlag_AUDIO_EFFECT_TOO;
 	
-	out_data->out_flags2 =  PF_OutFlag2_SUPPORTS_QUERY_DYNAMIC_FLAGS |
-							PF_OutFlag2_SUPPORTS_SMART_RENDER |
-							PF_OutFlag2_FLOAT_COLOR_AWARE |
-							PF_OutFlag2_REVEALS_ZERO_ALPHA;	// See the test to determine if you need this 
+//	out_data->out_flags2 =
+			//				PF_OutFlag2_SUPPORTS_QUERY_DYNAMIC_FLAGS |
+			//				PF_OutFlag2_SUPPORTS_SMART_RENDER |
+			//				PF_OutFlag2_FLOAT_COLOR_AWARE; // |
+			//				PF_OutFlag2_REVEALS_ZERO_ALPHA;	// See the test to determine if you need this 
 
 	return PF_Err_NONE;
 }
@@ -132,6 +134,8 @@ static PF_Err FrameSetup( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	out_data->origin.h = (short)border_x;
 	out_data->origin.v = (short)border_y;
 
+	out_data->out_flags &= PF_OutFlag_I_USE_AUDIO;
+	
 	return PF_Err_NONE;
 }
 
@@ -141,6 +145,12 @@ static PF_Err Render( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *par
 //	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
 	/* Put interesting code here. */
+	PF_LayerAudio audio = NULL;
+	ERR( PF_CHECKOUT_LAYER_AUDIO( in_data, 0, in_data->start_sampL, in_data->dur_sampL, in_data->time_scale, SND_RATE_44100, PF_SSS_4, PF_Channels_MONO, PF_SIGNED_FLOAT, &audio ));
+	
+	PF_SndSamplePtr data0 = NULL;
+	A_long num_samples_bufferL = 0;
+	ERR( PF_GET_AUDIO_DATA( in_data, audio, &data0, &num_samples_bufferL, NULL, NULL, NULL, NULL));  
 	
 	// Premiere Pro/Elements doesn't support the PF World Transform Suite,
 	// but it does support many of the callbacks in utils
@@ -362,9 +372,9 @@ static PF_Err _actuallyRender( PF_InData *in_data, PF_EffectWorld *input, PF_Par
 //			areaR.right		= 1;
 //			areaR.bottom	= output->height;
 //			
-			PF_PixelFormat format =	PF_PixelFormat_INVALID;
-			ERR( wsP->PF_GetPixelFormat(input, &format) );			
-			switch(format) {
+//dodo			PF_PixelFormat format =	PF_PixelFormat_INVALID;
+//dodo			ERR( wsP->PF_GetPixelFormat(input, &format) );			
+//dodo			switch(format) {
 //					
 //				case PF_PixelFormat_ARGB128:
 //					
@@ -411,8 +421,8 @@ static PF_Err _actuallyRender( PF_InData *in_data, PF_EffectWorld *input, PF_Par
 //					break;
 //			}
 //		}
-	}
-//	ERR2( AEFX_ReleaseSuite( in_data, out_data, kPFWorldSuite, kPFWorldSuiteVersion2, "Couldn't release suite.") );
+//dodo	}
+//dodo	ERR2( AEFX_ReleaseSuite( in_data, out_data, kPFWorldSuite, kPFWorldSuiteVersion2, "Couldn't release suite.") );
 	return err;
 }
 
@@ -435,7 +445,6 @@ DllExport PF_Err EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out
 
 	PF_Err err = PF_Err_NONE;
 	
-	NSMutableArray *cock = [[NSMutableArray alloc] initWithCapacity:10000];
 //	try {
 		switch (cmd) {
 			case PF_Cmd_ABOUT:
@@ -449,6 +458,8 @@ DllExport PF_Err EntryPointFunc( PF_Cmd cmd, PF_InData *in_data, PF_OutData *out
 				break;
 			case PF_Cmd_FRAME_SETUP:
 				err = FrameSetup( in_data, out_data, params, output );
+				break;
+			case PF_Cmd_FRAME_SETDOWN:
 				break;
 			case PF_Cmd_RENDER:
 				err = Render( in_data, out_data, params, output );

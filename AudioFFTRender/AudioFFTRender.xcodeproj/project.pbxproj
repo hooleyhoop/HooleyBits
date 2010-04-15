@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73B285DA11770DD10017F79C /* PF_Suite_Helper.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B285D911770DD10017F79C /* PF_Suite_Helper.c */; };
 		73B45B9A1173CEC600060626 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B45B991173CEC600060626 /* Foundation.framework */; };
 		73C8B3E11175122E00CC62A0 /* FlagsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C8B3E01175122E00CC62A0 /* FlagsTests.m */; };
 		73C8B3EB1175127C00CC62A0 /* AudioFFTRender.r in Rez */ = {isa = PBXBuildFile; fileRef = 73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		7370DC4A1171E68F009FA356 /* AudioFFTrenderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioFFTrenderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73B285D911770DD10017F79C /* PF_Suite_Helper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PF_Suite_Helper.c; path = "../../../Adobe After Effects CS4 SDK Mac/Examples/Util/PF_Suite_Helper.c"; sourceTree = SOURCE_ROOT; };
 		73B45B991173CEC600060626 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		73C8B3E01175122E00CC62A0 /* FlagsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlagsTests.m; path = Tests/FlagsTests.m; sourceTree = "<group>"; };
 		73C8B3EA1175127C00CC62A0 /* AudioFFTRender.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AudioFFTRender.r; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		D0FE57630993C4FD00139A60 /* Supporting Code */ = {
 			isa = PBXGroup;
 			children = (
+				73B285D911770DD10017F79C /* PF_Suite_Helper.c */,
 				73C8B548117513D800CC62A0 /* AEGP_SuiteHandler.h */,
 				73C8B547117513D800CC62A0 /* AEGP_SuiteHandler.cpp */,
 				73C8B549117513E700CC62A0 /* MissingSuiteError.cpp */,
@@ -423,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73DF32A7117626610081C7B9 /* AudioFFTRender.m in Sources */,
+				73B285DA11770DD10017F79C /* PF_Suite_Helper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +437,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73DF2E381175C3EA0081C7B9 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"\"../../../Adobe After Effects CS4 SDK Mac/Examples/Headers\"/**",
+					"\"../../../Adobe After Effects CS4 SDK Mac/Examples/Util\"/**",
+					"\"../../../Adobe After Effects CS4 SDK Mac/Examples/Headers/SP\"/**",
+					"\"../../../Adobe After Effects CS4 SDK Mac/Examples/Resources\"/**",
+				);
 				PRODUCT_NAME = AudioFFTrenderTests;
 			};
 			name = Debug;
@@ -455,6 +465,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73DF2E361175C3EA0081C7B9 /* Target-Plugin.xcconfig */;
 			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../../Adobe After Effects CS4 SDK Mac/Examples/Headers\"/**",

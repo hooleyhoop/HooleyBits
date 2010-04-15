@@ -18,6 +18,8 @@
  *
 */
 
+- (void)randomFont_drawNonOverlappingGlphs:(NSString *)iString inContext:(CGContextRef)windowContext;
+
 - (void)drawNonOverlappingGlphs:(NSString *)str inContext:(CGContextRef)context;
 
 - (void)testOverlapDrawing:(CGContextRef)context;

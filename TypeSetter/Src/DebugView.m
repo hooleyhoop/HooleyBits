@@ -127,8 +127,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	*/
 	NSString *textToDraw = [[self.window windowController] textToDraw];
 
-	[gr drawNonOverlappingGlphs:textToDraw inContext:context];
-	
+//	[gr drawNonOverlappingGlphs:textToDraw inContext:context];
+	[gr randomFont_drawNonOverlappingGlphs:textToDraw inContext:context];
+
 //	[gr testOverlapDrawing:context];
 
 //	[gr renderAString:context];

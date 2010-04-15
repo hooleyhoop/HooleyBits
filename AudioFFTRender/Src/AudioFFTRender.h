@@ -28,15 +28,15 @@
 //#ifndef SKELETON_H
 //#define SKELETON_H
 //
-//typedef unsigned char		u_char;
-//typedef unsigned short		u_short;
-//typedef unsigned short		u_int16;
-//typedef unsigned long		u_long;
-//typedef short int			int16;
-//#define PF_TABLE_BITS	12
-//#define PF_TABLE_SZ_16	4096
-//
-//#define PF_DEEP_COLOR_AWARE 1	// make sure we get 16bpc pixels; 
+typedef unsigned char		u_char;
+typedef unsigned short		u_short;
+typedef unsigned short		u_int16;
+typedef unsigned long		u_long;
+typedef short int			int16;
+#define PF_TABLE_BITS	12
+#define PF_TABLE_SZ_16	4096
+
+#define PF_DEEP_COLOR_AWARE 1	// make sure we get 16bpc pixels; 
 								// AE_Effect.h checks for this.
 
 #import "AEConfig.h"
@@ -61,6 +61,8 @@
 #define	SKELETON_AMOUNT_MIN		0
 #define	SKELETON_AMOUNT_MAX		100
 #define	SKELETON_AMOUNT_DFLT	50
+
+#define 	SND_RATE_44100			0xac440000
 
 enum {
 	SKELETON_INPUT = 0,
