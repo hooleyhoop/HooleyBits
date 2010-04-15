@@ -37,9 +37,18 @@
 */
 
 #import "AudioFFTRender.h"
-#import "PF_Suite_Helper.h"
-#import "AE_ChannelSuites.h"
+#import <PF_Suite_Helper.h>
+#import <AE_ChannelSuites.h>
+#import "AE_Macros.h"
+#import "Param_Utils.h"
+#import "AE_EffectCBSuites.h"
+#import "AE_EffectCB.h"
 
+////#import "String_Utils.h"
+////#import "AE_GeneralPlug.h"
+////#import "AEFX_ChannelDepthTpl.h"
+////#import "AEGP_SuiteHandler.h"
+////#import "AudioFFTRender_Strings.h"
 
 static PF_Err About( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output ) {
 
@@ -60,7 +69,7 @@ static PF_Err GlobalSetup( PF_InData *in_data, PF_OutData *out_data, PF_ParamDef
 	// if you change these, update the pipl
 	out_data->out_flags =	PF_OutFlag_PIX_INDEPENDENT	|
 							PF_OutFlag_DEEP_COLOR_AWARE	|	// just 16bpc, not 32bpc
-//							PF_OutFlag_I_USE_AUDIO;			// visual effects that check out audio data, but don�t modify it.
+//							PF_OutFlag_I_USE_AUDIO;			// visual effects that check out audio data, but don’t modify it.
 							PF_OutFlag_AUDIO_EFFECT_TOO;
 	
 	out_data->out_flags2 =  PF_OutFlag2_SUPPORTS_QUERY_DYNAMIC_FLAGS |
@@ -273,20 +282,152 @@ static PF_Err SequenceResetup( register PF_InData *in_data, PF_OutData *out_data
 	return SequenceSetup(in_data, out_data, params, output);
 }
 
-
+// An effect cannot access pixels it has not checked out during PF_Cmd_SMART_PRE_RENDER
+// If an effect might need pixels (or other parameter values), they must be checked out now, even if they are not actually used during rendering.
+// Note that no parameter array is passed to SmartFX during PF_Cmd_SMART_PRE_RENDER or PF_Cmd_SMART_RENDER; all values must be checked out using checkout_layer. 
+// All non-layer parameters must be accessed through PF_CHECKOUT_PARAM
 static PF_Err PreRender( PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra ) {
 
 	PF_Err err = PF_Err_NONE;
-	printf("Holey preRender");
+		
+	// what does after effects want rendered?
+	PF_RenderRequest req = extra->input->output_request;
+
+	// check out the input:pixels. (index 0). Indexes 1 to ..n are out parameters. 
+	PF_CheckoutResult in_result;
+	NSUInteger uid = 0;
+	ERR( extra->cb->checkout_layer( in_data->effect_ref, 0, uid, &req, in_data->current_time, in_data->time_step, in_data->time_scale, &in_result ));
+
+	// YOU MUST SET THESE CORRECTLY
+	extra->output->result_rect = in_result.result_rect;
+	extra->output->max_result_rect = in_result.max_result_rect; // ie MAX EVER! ie must be the same regardless of which bit AE has requested, can depend on params etc, but ie can ask for a zero request_rect -- ie it is trying to find out maxRsultRect and the fact that request_rect is empty must not change max_result_rect
+	
+	// Every layer input has a max_result_rect
+	
+	// Note that the ref_width/height and max_result_rect for an input may be obtained without rendering, by calling checkout_layer with an empty request_rect. This is fairly efficient, and can be useful if the layer “size” is needed first to determine exactly which pixels are required for rendering. This is an example of requesting a layer in pre-render and then never calling checkout_layer (in this case, there are none).
 	
 	return	err;
+}
+
+static PF_Err _actuallyRender( PF_InData *in_data, PF_EffectWorld *input, PF_ParamDef *blend_paramP, PF_ParamDef *channel_paramP, PF_OutData *out_data, PF_EffectWorld *output ) {
+	
+	PF_Err err = PF_Err_NONE, err2 = PF_Err_NONE;
+
+//	SmartyPantsData *id;
+//	SmartyPantsDataPlus	idp;
+//	PF_Point origin;
+//	PF_Rect src_rect, areaR;
+//	
+//	AEGP_SuiteHandler suites(in_data->pica_basicP);
+//	
+//	src_rect.left = -in_data->output_origin_x;
+//	src_rect.top = -in_data->output_origin_y;
+//	src_rect.bottom = src_rect.top + output->height;
+//	src_rect.right = src_rect.left + output->width;
+//	
+	PF_WorldSuite2 *wsP	= NULL;
+	ERR( AEFX_AcquireSuite( in_data, out_data, kPFWorldSuite, kPFWorldSuiteVersion2, "Couldn't load suite.", (void**)&wsP) );
+	
+	
+//	if (!in_data->sequence_data) {
+//		PF_COPY(input, output, &src_rect, NULL);
+//		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+//	}
+//	
+//	if (!err){
+//		id = (SmartyPantsData*)*(in_data->sequence_data);
+//		
+//		id->blend = (A_short)(2.56 * blend_paramP->u.fs_d.value);
+//		
+//		idp.id 			= id;
+//		idp.in_data 	= in_data;
+//		idp.RGBtoYIQcb 	= ((PF_UtilCallbacks*)(in_data->utils))->colorCB.RGBtoYIQ;
+//		idp.RGBtoHLScb 	= ((PF_UtilCallbacks*)(in_data->utils))->colorCB.RGBtoHLS;
+//		idp.HLStoRGBcb 	= ((PF_UtilCallbacks*)(in_data->utils))->colorCB.HLStoRGB;
+//		idp.YIQtoRGBcb 	= ((PF_UtilCallbacks*)(in_data->utils))->colorCB.YIQtoRGB;
+//		idp.outputP 	= output;
+//		
+//		if (id->blend == 256) {
+//			err = PF_COPY(input, output, &src_rect, NULL);
+//		} else {
+//			if (id->channel != channel_paramP->u.pd.value) {
+//				id->channel = channel_paramP->u.pd.value;
+//			}
+//			
+//			origin.h = in_data->output_origin_x;
+//			origin.v = in_data->output_origin_y;
+//			
+//			areaR.top		= 
+//			areaR.left 		= 0;
+//			areaR.right		= 1;
+//			areaR.bottom	= output->height;
+//			
+			PF_PixelFormat format =	PF_PixelFormat_INVALID;
+			ERR( wsP->PF_GetPixelFormat(input, &format) );			
+			switch(format) {
+//					
+//				case PF_PixelFormat_ARGB128:
+//					
+//					ERR(suites.IterateFloatSuite1()->iterate_origin(in_data,
+//																	0,
+//																	output->height,
+//																	input,
+//																	&areaR,
+//																	&origin,
+//																	(A_long)(&idp),
+//																	InvertPixelFloat,
+//																	output));
+//					break;
+//					
+//				case PF_PixelFormat_ARGB64:
+//					
+//					ERR(suites.Iterate16Suite1()->iterate_origin(	in_data,
+//																 0,
+//																 output->height,
+//																 input,
+//																 &areaR,
+//																 &origin,
+//																 (A_long)(&idp),
+//																 InvertPixel16,
+//																 output));
+//					break;
+//					
+//				case PF_PixelFormat_ARGB32:
+//					
+//					
+//					ERR(suites.Iterate8Suite1()->iterate_origin(	in_data,
+//																0,
+//																output->height,
+//																input,
+//																&areaR,
+//																&origin,
+//																(A_long)(&idp),
+//																InvertPixel8,
+//																output));
+//					break;
+//					
+//				default:
+//					err = PF_Err_BAD_CALLBACK_PARAM;
+//					break;
+//			}
+//		}
+	}
+//	ERR2( AEFX_ReleaseSuite( in_data, out_data, kPFWorldSuite, kPFWorldSuiteVersion2, "Couldn't release suite.") );
+	return err;
 }
 
 static PF_Err SmartRender( PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra) {
 	
 	PF_Err err = PF_Err_NONE, err2 = PF_Err_NONE;
-	printf("Smart Render");
 
+	// checkout input & output buffers.
+	PF_EffectWorld *input_worldP = NULL, *output_worldP = NULL;
+	NSUInteger uid = 0;
+//	ERR( (extra->cb->checkout_layer_pixels(	in_data->effect_ref, uid, &input_worldP)) );
+//	ERR( extra->cb->checkout_output( in_data->effect_ref, &output_worldP) );
+	
+	ERR( _actuallyRender( in_data, input_worldP, NULL, NULL, out_data, output_worldP));
+	
 	return	err;
 }
 
