@@ -69,6 +69,8 @@
 		73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		73CB05DD10DBE28600AE25C8 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */; };
 		73CB05DF10DBE28600AE25C8 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */; };
+		73D20D2211789F0400F1E41A /* AudioQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D2111789F0400F1E41A /* AudioQueueTests.m */; };
+		73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */; };
 		73D4A39610DF8BFE0091B586 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
 		73D515C0110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */; };
@@ -151,6 +153,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
 			remoteInfo = SHShared;
+		};
+		73D20B5711785F7F00F1E41A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73B051B81168EEF70054CE44;
+			remoteInfo = GUIFiddler;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -240,6 +249,10 @@
 		73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		73D20D2111789F0400F1E41A /* AudioQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueTests.m; path = Tests/AudioQueueTests.m; sourceTree = "<group>"; };
+		73D20D261178A2AB00F1E41A /* OfflineAudioQueueWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfflineAudioQueueWrapper.h; path = Classes/OfflineAudioQueueWrapper.h; sourceTree = "<group>"; };
+		73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfflineAudioQueueWrapper.m; path = Classes/OfflineAudioQueueWrapper.m; sourceTree = "<group>"; };
+		73D20DD41178BC9500F1E41A /* OffLineAudioQueueCallbackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OffLineAudioQueueCallbackProtocol.h; path = Classes/OffLineAudioQueueCallbackProtocol.h; sourceTree = "<group>"; };
 		73D4A39410DF8BFE0091B586 /* ProcessingStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingStuff.h; sourceTree = "<group>"; };
 		73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProcessingStuff.mm; sourceTree = "<group>"; };
 		73D4A78510DFC77E0091B586 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
@@ -295,6 +308,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73D20DD41178BC9500F1E41A /* OffLineAudioQueueCallbackProtocol.h */,
 				7382437D10EFFC6C00C69483 /* bridge */,
 				7382435F10EFFB1900C69483 /* c++ */,
 				73F51E9C10E4E91400A012D2 /* HooleyStuff.h */,
@@ -303,6 +317,8 @@
 				73095FDA10E262C9008B4C08 /* BufferStore.m */,
 				73CB05D310DBE23300AE25C8 /* AudioFileParser.h */,
 				73CB05D410DBE23300AE25C8 /* AudioFileParser.m */,
+				73D20D261178A2AB00F1E41A /* OfflineAudioQueueWrapper.h */,
+				73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -398,6 +414,7 @@
 				738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */,
 				738F25D810EF71E700A35230 /* FFTHelperTests.m */,
 				73D937A71122BE67007D44EF /* FFTTetsts.m */,
+				73D20D2111789F0400F1E41A /* AudioQueueTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -432,6 +449,7 @@
 				7309611710E26B2F008B4C08 /* SHSharedUITests.octest */,
 				7309611910E26B2F008B4C08 /* SHTestUtilities.framework */,
 				73156B74114E3C870014341C /* TestUtilitiesTests.octest */,
+				73D20B5811785F7F00F1E41A /* GUIFiddler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -655,6 +673,13 @@
 			remoteRef = 73156B73114E3C870014341C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		73D20B5811785F7F00F1E41A /* GUIFiddler */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = GUIFiddler;
+			remoteRef = 73D20B5711785F7F00F1E41A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -721,6 +746,8 @@
 				73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
 				73D937A81122BE67007D44EF /* FFTTetsts.m in Sources */,
 				73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */,
+				73D20D2211789F0400F1E41A /* AudioQueueTests.m in Sources */,
+				73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

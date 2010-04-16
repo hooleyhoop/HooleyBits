@@ -6,17 +6,19 @@
 //  Copyright 2009 BestBefore Ltd. All rights reserved.
 //
 #import <CoreAudio/CoreAudioTypes.h>
-
+#import "OffLineAudioQueueCallbackProtocol.h"
 @class FFTHelper, BufferStore;
 
-@interface AudioFileParser : NSObject {
+@interface AudioFileParser : NSObject <OffLineAudioQueueCallbackProtocol> {
 
-	FFTHelper		*_fft;
-	BufferStore		*_bufferStore;
-	
-	AudioChannelLayout *_inputChannelLayout;
-	AudioStreamBasicDescription *_captureFormat;
+	FFTHelper					*_fft;
+	BufferStore					*_bufferStore;
+		
+	NSString					*_in_AudioFilePath, *_out_graphicsDirPath;
 }
+
+@property (retain) NSString *in_AudioFilePath;
+@property (retain) NSString *out_graphicsDirPath;
 
 + (AudioFileParser *)afp;
 
@@ -24,4 +26,5 @@
 
 - (AudioChannelLayout *)inputChannelLayout;
 - (AudioStreamBasicDescription *)captureFormat;
+
 @end

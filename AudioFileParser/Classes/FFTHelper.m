@@ -92,7 +92,7 @@
 									 bytesPerRow:rowBytes 
 									 bitsPerPixel:pixelBits];
 	
-	for( NSUInteger row=0; row<height; row++ )
+	for( NSUInteger row=0; row<height; row++ ) // is this shit the wrong war round?
 	{
 		for( NSUInteger col=0; col<width; col++ )
 		{
@@ -121,5 +121,55 @@
 	free(data_ptr);
 }
 
+- (void)saveImageSequence {
+
+	BOOL hasAlpha = NO;
+	BOOL isPlanar = NO;
+	
+	NSPointerArray *allMags = [_processor allFFTMagnitudes];
+	NSInteger frameCount = [allMags count];
+	for( NSUInteger frameIndex = 0; frameIndex<frameCount; frameIndex++ )
+	{
+		// make a new image
+		NSInteger width = 1024;
+		NSInteger height = 513;
+		NSInteger bitsPerSample = 8; // 1, 2, 4, 8, or 16
+		NSInteger spp = 1;
+		NSString *colorSpaceName = NSCalibratedWhiteColorSpace;
+		NSBitmapFormat bitmapFormat = 0;
+		NSInteger rowBytes = spp*width;
+		NSInteger pixelBits = bitsPerSample*spp;
+		unsigned char *data_ptr = calloc(width*height, sizeof(unsigned char));
+		unsigned char **planes = &data_ptr;// 1 buffer as not planar
+		NSBitmapImageRep *outImageRep = [[NSBitmapImageRep alloc]
+										 initWithBitmapDataPlanes:planes 
+										 pixelsWide:width 
+										 pixelsHigh:(NSInteger)height 
+										 bitsPerSample:pixelBits
+										 samplesPerPixel:spp 
+										 hasAlpha:hasAlpha 
+										 isPlanar:isPlanar 
+										 colorSpaceName:colorSpaceName 
+										 bitmapFormat:bitmapFormat 
+										 bytesPerRow:rowBytes 
+										 bitsPerPixel:pixelBits];
+		
+		Float32 *buffer = (Float32 *)[allMags pointerAtIndex:frameIndex];
+		
+		for( NSUInteger i=0; i<513; i++ ){
+			Float32 floatVal = buffer[i];
+			NSLog(@"%i %f", i, floatVal );
+		}
+
+		// save the image
+		NSData *zNsDataTiffData2 = [outImageRep TIFFRepresentation];
+		NSString *fileName = [NSString stringWithFormat:@"~/Desktop/fftSeq_%i.tif", frameIndex];
+		BOOL result = [zNsDataTiffData2 writeToFile:fileName atomically:YES];
+		NSLog(@"saved file %i", result);
+		[outImageRep release];
+		free(data_ptr);		
+	}
+	
+}
 
 @end

@@ -167,13 +167,17 @@ static ExtAudioFileRef captureFile;
 	dstFormat.mBitsPerChannel = 16;
 	dstFormat.mBytesPerPacket = dstFormat.mBytesPerFrame = 2 * dstFormat.mChannelsPerFrame;
 	dstFormat.mFramesPerPacket = 1;
-	OSStatus result = ExtAudioFileCreateWithURL( url, kAudioFileCAFType, &dstFormat, [[AudioFileParser afp] inputChannelLayout], kAudioFileFlags_EraseFile, &captureFile );
+	AudioChannelLayout* chanLayout = [[AudioFileParser afp] inputChannelLayout];
+	NSAssert( nil!=chanLayout, @"fuck" );
+	OSStatus result = ExtAudioFileCreateWithURL( url, kAudioFileCAFType, &dstFormat, chanLayout, kAudioFileFlags_EraseFile, &captureFile );
 	if(result!=noErr)
 	[NSException raise:@"ExtAudioFileCreateWithURL" format:@""];
 	CFRelease (url);
 
 	// set the capture file's client format to be the canonical format from the queue
-	result = ExtAudioFileSetProperty( captureFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), [[AudioFileParser afp] captureFormat]);
+	AudioStreamBasicDescription *captureFormat = [[AudioFileParser afp] captureFormat];
+	NSAssert( nil!=captureFormat, @"fuck" );
+	result = ExtAudioFileSetProperty( captureFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), captureFormat );
 	if(result!=noErr)
 		[NSException raise:@"set ExtAudioFile client format" format:@""];
 }
@@ -215,7 +219,7 @@ void callBackFunction_storeMagnitudes( SpectralBufferList *inSpectra, void *inUs
 	for( int i=0;i<1024; i++ ){
 //		if( realp[i]>maxRealp ) {
 			maxRealp = realp[i];
-			printf("realp: %f - \n", realp[i]);
+//			printf("realp: %f - \n", realp[i]);
 //		}
 	}
 	
@@ -251,7 +255,7 @@ void callBackFunction_storeMagnitudes( SpectralBufferList *inSpectra, void *inUs
 	//	imagp[i] = imagp[i]=0;
 		
 		/* Show freqs */
-			printf("Freq: %f - \n", outputFreqs_ptr[i]);
+//			printf("Freq: %f - \n", outputFreqs_ptr[i]);
 		
 	
 //put back		if(outputMags_ptr[i]>2.0f){
@@ -265,7 +269,7 @@ void callBackFunction_storeMagnitudes( SpectralBufferList *inSpectra, void *inUs
 
 //put back		}
 	}
-	exit(0);
+
 	free(outputFreqs_ptr);
 
 //	free(aBuf_ptr);

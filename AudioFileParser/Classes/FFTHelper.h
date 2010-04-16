@@ -14,7 +14,9 @@
 }
 
 - (void)processSomeAudio:(UInt32)inFramesToProcess :(Float32 *)aSingleBlock;
+
 - (void)saveImage;
+- (void)saveImageSequence;
 
 - (void)open;
 - (void)close;
