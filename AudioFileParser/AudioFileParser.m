@@ -23,13 +23,6 @@
 @synthesize in_AudioFilePath = _in_AudioFilePath;
 @synthesize out_graphicsDirPath = _out_graphicsDirPath;
 
-- (void)awakeFromNib {
-	_in_AudioFilePath = @"/in.wav";
-	_out_graphicsDirPath = @"shit";
-}
-
-
-
 // ***********************
 #pragma mark-
 static AudioFileParser *afp;
@@ -41,13 +34,22 @@ static AudioFileParser *afp;
 	self = [super init];
 	if(self){
 		afp = self;
+		_in_AudioFilePath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Desktop/in.wav"] retain];
+		_out_graphicsDirPath = [@"shit" retain];
 	}
 	return self;
 }
 
 - (void)dealloc {
+	[_in_AudioFilePath release];
+	[_out_graphicsDirPath release];
 	[super dealloc];
 }
+
+- (void)awakeFromNib {
+	
+}
+
 
 #pragma mark protocol
 - (void)_callback_error:(id)hmm {
@@ -110,5 +112,13 @@ static AudioFileParser *afp;
 //put back		return _captureFormat;
 	return nil;
 }
+
+//- (NSString *)in_AudioFilePath {
+//	return _in_AudioFilePath;
+//}
+//
+//- (void)setIn_AudioFilePath:(NSString *)value {
+//	_in_AudioFilePath = [value retain];
+//}
 
 @end

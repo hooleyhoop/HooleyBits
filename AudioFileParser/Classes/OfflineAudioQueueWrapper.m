@@ -190,13 +190,14 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		struct AQTestInfo myInfo;
 		myInfo.mDone = false;
 		myInfo.mFlushed = false;
-		myInfo.mCurrentPacket = 0;		
+		myInfo.mCurrentPacket = 0;
+	
 		// get the source file
 		CFURLRef srcFile = CFURLCreateFromFileSystemRepresentation (NULL, (const UInt8 *)inputPath, strlen(inputPath), false);
 		if(!srcFile) 
 			[NSException raise:@"can't parse file path" format:@""];
 		
-		OSStatus result = AudioFileOpenURL(srcFile, 0x1/*fsRdPerm*/, 0/*inFileTypeHint*/, &myInfo.mAudioFile);
+		OSStatus result = AudioFileOpenURL( srcFile, 0x01, kAudioFileWAVEType/*inFileTypeHint*/, &myInfo.mAudioFile );
 		CFRelease(srcFile);
 		if(result!=noErr)
 			[NSException raise:@"AudioFileOpen failed" format:@""];
@@ -235,7 +236,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 			// than our allocation default size, that needs to become larger
 			UInt32 maxPacketSize;
 			size = sizeof(maxPacketSize);
-			result = AudioFileGetProperty(myInfo.mAudioFile, kAudioFilePropertyPacketSizeUpperBound, &size, &maxPacketSize);
+			result = AudioFileGetProperty( myInfo.mAudioFile, kAudioFilePropertyPacketSizeUpperBound, &size, &maxPacketSize );
 			if(result!=noErr)
 				[NSException raise:@"couldn't get file's max packet size" format:@""];
 			
@@ -283,7 +284,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		}
 		
 		//allocate the input read buffer
-		result = AudioQueueAllocateBuffer(myInfo.mQueue, bufferByteSize, &myInfo.mBuffer);
+		result = AudioQueueAllocateBuffer( myInfo.mQueue, bufferByteSize, &myInfo.mBuffer );
 		if(result!=noErr)
 			[NSException raise:@"AudioQueueAllocateBuffer" format:@""];
 		
@@ -293,7 +294,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		_captureFormat->mSampleRate = myInfo.mDataFormat.mSampleRate;
 		SetAUCanonical( _captureFormat, myInfo.mDataFormat.mChannelsPerFrame, true ); // interleaved
 		
-		result = AudioQueueSetOfflineRenderFormat(myInfo.mQueue, _captureFormat, _inputChannelLayout);
+		result = AudioQueueSetOfflineRenderFormat( myInfo.mQueue, _captureFormat, _inputChannelLayout );
 		if(result!=noErr)
 			[NSException raise:@"set offline render format" format:@""];
 
@@ -306,7 +307,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		AudioQueueBufferRef captureBuffer;
 		AudioBufferList captureABL;
 		
-		result = AudioQueueAllocateBuffer(myInfo.mQueue, captureBufferByteSize, &captureBuffer);
+		result = AudioQueueAllocateBuffer( myInfo.mQueue, captureBufferByteSize, &captureBuffer );
 		if(result!=noErr)
 			[NSException raise:@"AudioQueueAllocateBuffer" format:@""];
 		
@@ -338,6 +339,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		{
 			UInt32 reqFrames = captureBufferByteSize / _captureFormat->mBytesPerFrame;
 			
+			// sooo, we supply a buffer for the output
 			result = AudioQueueOfflineRender( myInfo.mQueue, &ts, captureBuffer, reqFrames );
 			if(result!=noErr)
 				[NSException raise:@"AudioQueueOfflineRender" format:@""];
@@ -423,8 +425,6 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 	@catch (NSException *exception) {
 		NSLog(@"Caught %@: %@", [exception name], [exception reason]);
 	}	
-	
-	NSLog(@"Read the input file successfuly");		
 }
 
 @end

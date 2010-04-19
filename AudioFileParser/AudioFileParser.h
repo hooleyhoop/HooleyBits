@@ -27,4 +27,7 @@
 - (AudioChannelLayout *)inputChannelLayout;
 - (AudioStreamBasicDescription *)captureFormat;
 
+- (NSString *)in_AudioFilePath;
+- (void)setIn_AudioFilePath:(NSString *)value;
+
 @end

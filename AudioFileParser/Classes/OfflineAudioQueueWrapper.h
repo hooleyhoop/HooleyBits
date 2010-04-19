@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <CoreAudio/CoreAudioTypes.h>
 
 @protocol OffLineAudioQueueCallbackProtocol;
 
