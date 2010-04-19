@@ -19,6 +19,7 @@
 		730960EE10E26A6B008B4C08 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */; };
 		730960EF10E26A6C008B4C08 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
 		7309612910E26B36008B4C08 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309611910E26B2F008B4C08 /* SHTestUtilities.framework */; };
+		731ECCC1117C629900394239 /* BufferStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */; };
 		736395D510E0DB7700F74307 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D410E0DB7700F74307 /* QuartzCore.framework */; };
 		736395D910E0DB8100F74307 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D810E0DB8100F74307 /* CoreServices.framework */; };
 		736395EF10E0DC1100F74307 /* AUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395E210E0DC1100F74307 /* AUBase.cpp */; };
@@ -70,13 +71,11 @@
 		73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		73CB05DD10DBE28600AE25C8 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */; };
 		73CB05DF10DBE28600AE25C8 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */; };
-		73D20D2211789F0400F1E41A /* AudioQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D2111789F0400F1E41A /* AudioQueueTests.m */; };
 		73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */; };
 		73D4A39610DF8BFE0091B586 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
 		73D515C0110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */; };
 		73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */; };
-		73D937A81122BE67007D44EF /* FFTTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D937A71122BE67007D44EF /* FFTTetsts.m */; };
 		73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */; };
 		73F51F0E10E5364F00A012D2 /* HooleyStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F51F0C10E5364F00A012D2 /* HooleyStuff.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -745,10 +744,9 @@
 				7382437510EFFC3100C69483 /* ProcessingStuff.mm in Sources */,
 				7382438710EFFE0300C69483 /* FFTHelper.m in Sources */,
 				73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
-				73D937A81122BE67007D44EF /* FFTTetsts.m in Sources */,
 				73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */,
-				73D20D2211789F0400F1E41A /* AudioQueueTests.m in Sources */,
 				73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */,
+				731ECCC1117C629900394239 /* BufferStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

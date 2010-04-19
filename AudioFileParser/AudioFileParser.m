@@ -57,9 +57,13 @@ static AudioFileParser *afp;
 }
 
 - (void)_callback_withData:(struct HooAudioBuffer *)hmm {
+
+	// copy the input data - This needs to be released later
+	struct HooAudioBuffer *dataCpy = copyHooAudioBuffer(hmm);
+	
 	// copy all frames to 1024 size blocks
 	//	tempHooBuffer is invalid after we return from this call 
-	//	[_bufferStore addFrames:writeFrames :tempHooBuffer];
+//	[_bufferStore addFrames:writeFrames :hmm];
 }
 
 - (void)_callback_complete:(id)hmm {
@@ -70,17 +74,15 @@ static AudioFileParser *afp;
 
 - (IBAction)processFiles:(id)sender {
 
+	_bufferStore = [[BufferStore alloc] init];
+	[_bufferStore setBlockSize:1024];
+	
 	OfflineAudioQueueWrapper *qw = [[OfflineAudioQueueWrapper alloc] initWithAudioFilePath:_in_AudioFilePath dataConsumer:self];
 	[qw beginProcessing];
 	
 	[qw release];
 
-	
-	_bufferStore = [[BufferStore alloc] init];
-	[_bufferStore setBlockSize:1024];
-	
 
-	
 	_fft = [FFTHelper new];
 	[_fft open];
 	

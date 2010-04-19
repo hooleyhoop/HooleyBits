@@ -208,6 +208,57 @@
 	free(outAudioBuffer);
 }
 
+- (void)testBufferWithCopy {
+
+	AudioBuffer *outAudioBuffer = audioBuffer( 6, 0 );
+	struct HooAudioBuffer *hooBuff = newHooAudioBuffer_copy( outAudioBuffer, 6, 0 );
+	Float32 *memAddr1 = memAddr_HooAudioBuffer(hooBuff);
+	STAssertTrue( memAddr1!=outAudioBuffer->mData, @"should be a copy");
+	
+	free(outAudioBuffer);
+	STAssertTrue( G3DCompareFloat(0.0f,memAddr1[0],0.001f)==0, @"doh");
+	STAssertTrue( G3DCompareFloat(1.0f,memAddr1[1],0.001f)==0, @"doh");
+	STAssertTrue( G3DCompareFloat(2.0f,memAddr1[2],0.001f)==0, @"doh");
+	STAssertTrue( G3DCompareFloat(3.0f,memAddr1[3],0.001f)==0, @"doh");
+	STAssertTrue( G3DCompareFloat(4.0f,memAddr1[4],0.001f)==0, @"doh");
+	STAssertTrue( G3DCompareFloat(5.0f,memAddr1[5],0.001f)==0, @"doh");
+	free(hooBuff);
+}
+
+- (void)testHooBufferWithCopy {
+	
+	AudioBuffer *outAudioBuffer = audioBuffer( 6, 0 );
+	struct HooAudioBuffer *hooBuff = newHooAudioBuffer_copy( outAudioBuffer, 6, 0 );
+	Float32 *memAddr1 = memAddr_HooAudioBuffer(hooBuff);
+	STAssertTrue( memAddr1!=outAudioBuffer->mData, @"should be a copy");
+
+	memAddr1[0] = 5.0f;
+	memAddr1[1] = 4.0f;
+	memAddr1[2] = 3.0f;
+	memAddr1[3] = 2.0f;
+	memAddr1[4] = 1.0f;
+	memAddr1[5] = 0.0f;
+
+	// fiddle with input data so we can see if it works
+	struct HooAudioBuffer *hooBuffCopy = copyHooAudioBuffer( hooBuff );
+	STAssertTrue( hooBuff!=hooBuffCopy, @"should be a copy");
+	Float32 *memAddr2 = memAddr_HooAudioBuffer(hooBuffCopy);
+
+	STAssertTrue( memAddr1!=memAddr2, @"should be a copy");
+	
+	free(outAudioBuffer);
+
+	STAssertTrue( G3DCompareFloat(5.0f, memAddr2[0], 0.001f)==0, @"doh %f",  memAddr2[0]);
+	STAssertTrue( G3DCompareFloat(4.0f, memAddr2[1], 0.001f)==0, @"doh %f",  memAddr2[1]);
+	STAssertTrue( G3DCompareFloat(3.0f, memAddr2[2], 0.001f)==0, @"doh %f",  memAddr2[2]);
+	STAssertTrue( G3DCompareFloat(2.0f, memAddr2[3], 0.001f)==0, @"doh %f",  memAddr2[3]);
+	STAssertTrue( G3DCompareFloat(1.0f, memAddr2[4], 0.001f)==0, @"doh %f", memAddr2[4]);
+	STAssertTrue( G3DCompareFloat(0.0f, memAddr2[5], 0.001f)==0, @"doh %f",  memAddr2[5]);
+	
+	free(hooBuff);
+	free(hooBuffCopy);
+}
+
 - (void)testCloseInput {
 	
 	[_testStore setBlockSize:6];
@@ -249,7 +300,7 @@
 	struct HooAudioBuffer *hooBuff1 = newHooAudioBuffer(12,0);
 	[_testStore addFrames:12 :hooBuff1];
 	[_testStore closeInput];
-	STAssertTrue(3==[_testStore numberOfWholeBuffers], @"oops %i", [_testStore numberOfWholeBuffers]);
+	STAssertTrue( 3==[_testStore numberOfWholeBuffers], @"oops %i", [_testStore numberOfWholeBuffers] );
 
 	[_testStore resetReading];
 	NSUInteger blockCount=0;
@@ -264,5 +315,64 @@
 	STAssertTrue(3==blockCount, @"blockCount %i", blockCount);
 	freeHooAudioBuffer(hooBuff1);
 }
+
+//- (void)testOverlappingRead {
+//	
+//	// write 1-2-3-4 5-6-7-8 9-10-11-12
+//	// read 1-2-3-4 3-4-5-6 -5-6-7-8 7-8-9-10 9-10-11-12
+//	[_testStore setBlockSize:4];
+//	struct HooAudioBuffer *hooBuff1 = newHooAudioBuffer(12,0); // currently filled with index - useful for testing
+//	[_testStore addFrames:12 :hooBuff1];
+//	[_testStore closeInput];
+//	STAssertTrue( 3==[_testStore numberOfWholeBuffers], @"oops %i", [_testStore numberOfWholeBuffers] );
+//	
+//	[_testStore resetReading];
+//	
+//	[_testStore setReadSize:4 overlap:2];
+//
+//	STAssertTrue( [_testStore hasMoreSamples], nil );
+//	
+//	Float32 *aSingleBlock1 = [_testStore nextSamples];
+//	STAssertTrue( [_testStore hasMoreSamples], nil );
+//	for(NSUInteger i=0; i<4; i++){
+//		NSUInteger blockCount = 0;
+//		Float32 expectedValue = (i*1.f+(blockCount*4));
+//		STAssertTrue( G3DCompareFloat( aSingleBlock1[i], expectedValue, 0.001f)==0, @"doh %i, %f", i, aSingleBlock1[i]);
+//	}
+//	
+//	Float32 *aSingleBlock2 = [_testStore nextSamples];
+//	STAssertTrue( [_testStore hasMoreSamples], nil );
+//	for(NSUInteger i=0; i<4; i++){
+//		NSUInteger blockCount = 2;
+//		Float32 expectedValue = (i*1.f+(blockCount*4));
+//		STAssertTrue( G3DCompareFloat( aSingleBlock2[i], expectedValue, 0.001f)==0, @"doh %i, %f", i, aSingleBlock2[i]);
+//	}
+//	
+//	Float32 *aSingleBlock3 = [_testStore nextSamples];
+//	STAssertTrue( [_testStore hasMoreSamples], nil );
+//	for(NSUInteger i=0; i<4; i++){
+//		NSUInteger blockCount = 4;
+//		Float32 expectedValue = (i*1.f+(blockCount*4));
+//		STAssertTrue( G3DCompareFloat( aSingleBlock3[i], expectedValue, 0.001f)==0, @"doh %i, %f", i, aSingleBlock3[i]);
+//	}
+//
+//	Float32 *aSingleBlock4 = [_testStore nextSamples];
+//	STAssertTrue( [_testStore hasMoreSamples], nil );
+//	for(NSUInteger i=0; i<4; i++){
+//		NSUInteger blockCount = 7;
+//		Float32 expectedValue = (i*1.f+(blockCount*4));
+//		STAssertTrue( G3DCompareFloat( aSingleBlock4[i], expectedValue, 0.001f)==0, @"doh %i, %f", i, aSingleBlock4[i]);
+//	}
+//	
+//	Float32 *aSingleBlock5 = [_testStore nextSamples];
+//	STAssertFalse( [_testStore hasMoreSamples], nil );
+//	for(NSUInteger i=0; i<4; i++){
+//		NSUInteger blockCount = 9;
+//		Float32 expectedValue = (i*1.f+(blockCount*4));
+//		STAssertTrue( G3DCompareFloat( aSingleBlock5[i], expectedValue, 0.001f)==0, @"doh %i, %f", i, aSingleBlock5[i]);
+//	}
+//	
+//	freeHooAudioBuffer(hooBuff1);
+//}
 
 @end

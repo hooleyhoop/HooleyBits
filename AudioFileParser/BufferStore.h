@@ -13,6 +13,8 @@
 	NSPointerArray	*_allBuffers;
 	Float32			*_partialStore;
 	NSUInteger		_readIteration;
+	NSUInteger		_readSize;
+	NSUInteger		_overlap;
 }
 
 - (void)addFrames:(NSUInteger)frameCount :(struct HooAudioBuffer *)inputBuffer;
@@ -23,6 +25,7 @@
 - (BOOL)hasMoreSamples;
 - (Float32 *)nextSamples;
 
+- (void)setReadSize:(NSUInteger)arg1 overlap:(NSUInteger)arg2;
 - (void)setBlockSize:(NSUInteger)value;
 - (NSUInteger)numberOfWholeBlocksFrom:(NSUInteger)value;
 - (NSUInteger)remainderFrom:(NSUInteger)value;

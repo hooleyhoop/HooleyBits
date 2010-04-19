@@ -88,7 +88,7 @@ extern void callBackFunction_storeMagnitudes( SpectralBufferList* inSpectra, voi
 	
 //	bool success = _mSpectralProcessor->ProcessForwards(inFramesToProcess, inputBufList);
 	/* Temporarily see what we get out */
-	_mSpectralProcessor->Process(inFramesToProcess, inputBufList, outputBufList);
+	_mSpectralProcessor->Process( inFramesToProcess, inputBufList, outputBufList );
 
 	[self addDataToWriteFile:outputBufList :1024];
 

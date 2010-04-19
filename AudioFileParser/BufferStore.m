@@ -138,8 +138,8 @@
 		memcpy(newBuffer, data, _blockSize*sizeof(Float32));
 		Float32 one2 = newBuffer[0];
 		Float32 two2 = newBuffer[1];
-		NSAssert( G3DCompareFloat(one1,one2,0.001f)==0, @"fucker");
-		NSAssert( G3DCompareFloat(two1,two2,0.001f)==0, @"fucker");
+		NSAssert( G3DCompareFloat(one1,one2,0.001f)==0, @"fucker" );
+		NSAssert( G3DCompareFloat(two1,two2,0.001f)==0, @"fucker" );
 	
 		[_allBuffers addPointer:newBuffer];
 		advanceDataPtr( inputBuffer, _blockSize );
@@ -167,9 +167,14 @@
 
 - (Float32 *)nextSamples {
 	
-	void *ptr = [_allBuffers pointerAtIndex:_readIteration];
+	void *ptr = [_allBuffers pointerAtIndex:_readIteration]; // uint8_t
 	_readIteration++;
 	return (Float32 *)ptr;
+}
+
+- (void)setReadSize:(NSUInteger)arg1 overlap:(NSUInteger)arg2 {
+	_readSize = arg1;
+	_overlap = arg2;
 }
 
 - (void)setBlockSize:(NSUInteger)value {

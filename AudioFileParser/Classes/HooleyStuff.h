@@ -13,15 +13,17 @@ struct HooAudioBuffer
 {
     AudioBuffer *theBuffer;
     UInt32 theOffset;
+    UInt32 length;
 	bool weak;
 };
 
 Float32 * memAddr_HooAudioBuffer( struct HooAudioBuffer *buff );
-
+struct HooAudioBuffer * copyHooAudioBuffer( struct HooAudioBuffer *buff );
 void freeHooAudioBuffer( struct HooAudioBuffer *buff );
 
 struct HooAudioBuffer * newHooAudioBuffer( UInt32 length, Float32 offset );
 struct HooAudioBuffer * newHooAudioBuffer_weak( AudioBuffer *outAudioBuffer, UInt32 length, Float32 offset );
+struct HooAudioBuffer * newHooAudioBuffer_copy( AudioBuffer *outAudioBuffer, UInt32 length, Float32 offset );
 
 AudioBuffer * audioBuffer( UInt32 length, Float32 offset );
 

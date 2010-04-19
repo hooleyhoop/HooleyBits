@@ -126,13 +126,13 @@ void SHCASpectralProcessor::SineWindow()
 	}
 }
 
-void SHCASpectralProcessor::Process(UInt32 inNumFrames, AudioBufferList* inInput, AudioBufferList* outOutput)
-{
+void SHCASpectralProcessor::Process( UInt32 inNumFrames, AudioBufferList *inInput, AudioBufferList *outOutput ) {
+
 	// copy from buffer list to input buffer
 	CopyInput(inNumFrames, inInput);
 	
 	// if enough input to process, then process.
-	while (mInputSize >= mFFTSize) 
+	while( mInputSize >= mFFTSize ) 
 	{
 		CopyInputToFFT(); // copy from input buffer to fft buffer
 		DoWindowing();
@@ -160,13 +160,13 @@ void SHCASpectralProcessor::DoWindowing()
 
 
 
-void SHCASpectralProcessor::CopyInput(UInt32 inNumFrames, AudioBufferList* inInput)
-{
+void SHCASpectralProcessor::CopyInput( UInt32 inNumFrames, AudioBufferList *inInput ) {
+
 	UInt32 numBytes = inNumFrames * sizeof(Float32);
 	UInt32 firstPart = mIOBufSize - mInputPos;
-	
 
-	if (firstPart < inNumFrames) {
+	if( firstPart < inNumFrames )
+	{
 		UInt32 firstPartBytes = firstPart * sizeof(Float32);
 		UInt32 secondPartBytes = numBytes - firstPartBytes;
 		for (UInt32 i=0; i<mNumChannels; ++i) {		

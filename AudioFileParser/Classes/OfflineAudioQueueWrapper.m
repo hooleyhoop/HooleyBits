@@ -184,7 +184,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 
 - (void)beginProcessing {
 
-	const char *inputPath = [_in_AudioFilePath cStringUsingEncoding:NSUnicodeStringEncoding]; 
+	const char *inputPath = [_in_AudioFilePath cStringUsingEncoding:NSUTF8StringEncoding]; 
 	// main audio queue code
 	@try {
 		struct AQTestInfo myInfo;
@@ -202,7 +202,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		if(result!=noErr)
 			[NSException raise:@"AudioFileOpen failed" format:@""];
 		
-		UInt32 size = sizeof(myInfo.mDataFormat);
+		UInt32 size = sizeof( myInfo.mDataFormat );
 		result = AudioFileGetProperty(myInfo.mAudioFile, kAudioFilePropertyDataFormat, &size, &myInfo.mDataFormat);
 		if(result!=noErr)
 			[NSException raise:@"couldn't get file's data format" format:@""];
