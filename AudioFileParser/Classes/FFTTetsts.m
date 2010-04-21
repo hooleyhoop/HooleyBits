@@ -168,7 +168,7 @@
 		NSLog(@"freq %f: %f - %f : Mag. %f", freq, complexData->realp[i], complexData->imagp[i], outputMags[i] );
 	}
 
-	
+
 	/*
 	 * INVERSE
 	*/

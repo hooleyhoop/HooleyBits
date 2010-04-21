@@ -51,6 +51,7 @@
 
 SHCASpectralProcessor::SHCASpectralProcessor(UInt32 inFFTSize, UInt32 inHopSize, UInt32 inNumChannels, UInt32 inMaxFrames)
 	: mFFTSize(inFFTSize), mHopSize(inHopSize), mNumChannels(inNumChannels), mMaxFrames(inMaxFrames),
+
 	mLog2FFTSize(Log2Ceil(mFFTSize)), 
 	mFFTMask(mFFTSize - 1),
 	mFFTByteSize(mFFTSize * sizeof(Float32)),
@@ -150,7 +151,7 @@ void SHCASpectralProcessor::Process( UInt32 inNumFrames, AudioBufferList *inInpu
 void SHCASpectralProcessor::DoWindowing()
 {
 	Float32 *win = mWindow();
-	if (!win) return;
+  
 	for (UInt32 i=0; i<mNumChannels; ++i) {
 		Float32 *x = mChannels[i].mFFTBuf();
 		vDSP_vmul(x, 1, win, 1, x, 1, mFFTSize);

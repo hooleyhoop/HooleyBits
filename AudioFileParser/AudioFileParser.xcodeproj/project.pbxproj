@@ -18,8 +18,9 @@
 		730960ED10E26A6A008B4C08 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		730960EE10E26A6B008B4C08 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */; };
 		730960EF10E26A6C008B4C08 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
-		7309612910E26B36008B4C08 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309611910E26B2F008B4C08 /* SHTestUtilities.framework */; };
-		731ECCC1117C629900394239 /* BufferStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */; };
+		734A94F6117E1060009F90B4 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */; };
+		734A94F7117E1060009F90B4 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */; };
+		734A9588117E1824009F90B4 /* HooSpectralProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */; };
 		736395D510E0DB7700F74307 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D410E0DB7700F74307 /* QuartzCore.framework */; };
 		736395D910E0DB8100F74307 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D810E0DB8100F74307 /* CoreServices.framework */; };
 		736395EF10E0DC1100F74307 /* AUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395E210E0DC1100F74307 /* AUBase.cpp */; };
@@ -39,8 +40,6 @@
 		736398D810E10E5700F74307 /* CABufferList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736398D710E10E5700F74307 /* CABufferList.cpp */; };
 		738111B810E3D19100D73143 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D810E0DB8100F74307 /* CoreServices.framework */; };
 		738111B910E3D19200D73143 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D410E0DB7700F74307 /* QuartzCore.framework */; };
-		738111BE10E3D2E000D73143 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		738111C110E3D2EA00D73143 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		7381126E10E3D68300D73143 /* CABufferList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736398D710E10E5700F74307 /* CABufferList.cpp */; };
 		7381126F10E3D68400D73143 /* CAHostTimeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7363962E10E0DE7400F74307 /* CAHostTimeBase.cpp */; };
 		7381127010E3D68500D73143 /* CAAudioChannelLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7363961E10E0DD8E00F74307 /* CAAudioChannelLayout.cpp */; };
@@ -65,7 +64,6 @@
 		7382438710EFFE0300C69483 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */; };
 		738F25D410EF71CD00A35230 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */; };
 		73B7661C1179C64200E8D843 /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */; };
-		73BE8C4710F20094005B3C08 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309610D10E26B2F008B4C08 /* SHShared.framework */; };
 		73CB05D510DBE23300AE25C8 /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */; };
 		73CB05D910DBE28600AE25C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */; };
 		73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
@@ -82,86 +80,6 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		7309610C10E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
-		7309610E10E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 732360B80C5E75BD0039CC7F;
-			remoteInfo = SHSharedTests;
-		};
-		7309611010E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73AC00F70F4037DF00FA9887;
-			remoteInfo = SHShared_static;
-		};
-		7309611210E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
-			remoteInfo = SHShared_iphone;
-		};
-		7309611410E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2;
-			remoteInfo = SHSharedUI;
-		};
-		7309611610E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2;
-			remoteInfo = SHSharedUITests;
-		};
-		7309611810E26B2F008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88;
-			remoteInfo = SHTestUtilities;
-		};
-		7309612A10E26B48008B4C08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
-			remoteInfo = SHTestUtilities;
-		};
-		73156B73114E3C870014341C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73CC082911368A3700B53CA9;
-			remoteInfo = TestUtilitiesTests;
-		};
-		738FC26110F0B1A0005CFFC7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
-			remoteInfo = SHShared;
-		};
-		73D20B5711785F7F00F1E41A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73B051B81168EEF70054CE44;
-			remoteInfo = GUIFiddler;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -191,7 +109,9 @@
 		730960B510E26948008B4C08 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Plugin.xcconfig"; sourceTree = "<group>"; };
 		730960B610E26948008B4C08 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
 		730960B710E26948008B4C08 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
-		7309610210E26B2F008B4C08 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		734A94F4117E1060009F90B4 /* HooSpectralProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooSpectralProcessor.h; path = Classes/HooSpectralProcessor.h; sourceTree = "<group>"; };
+		734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooSpectralProcessor.m; path = Classes/HooSpectralProcessor.m; sourceTree = "<group>"; };
+		734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooSpectralProcessorTests.m; path = Tests/HooSpectralProcessorTests.m; sourceTree = "<group>"; };
 		736395D410E0DB7700F74307 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		736395D810E0DB8100F74307 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		736395E210E0DC1100F74307 /* AUBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AUBase.cpp; path = Examples/CoreAudio/AudioUnits/AUPublic/AUBase/AUBase.cpp; sourceTree = DEVELOPER_DIR; };
@@ -278,11 +198,8 @@
 				730960ED10E26A6A008B4C08 /* AudioUnit.framework in Frameworks */,
 				730960EE10E26A6B008B4C08 /* AudioToolbox.framework in Frameworks */,
 				730960EF10E26A6C008B4C08 /* vecLib.framework in Frameworks */,
-				7309612910E26B36008B4C08 /* SHTestUtilities.framework in Frameworks */,
 				738111B810E3D19100D73143 /* CoreServices.framework in Frameworks */,
 				738111B910E3D19200D73143 /* QuartzCore.framework in Frameworks */,
-				738111BE10E3D2E000D73143 /* Cocoa.framework in Frameworks */,
-				738111C110E3D2EA00D73143 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +215,6 @@
 				73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */,
 				736395D510E0DB7700F74307 /* QuartzCore.framework in Frameworks */,
 				736395D910E0DB8100F74307 /* CoreServices.framework in Frameworks */,
-				73BE8C4710F20094005B3C08 /* SHShared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +235,8 @@
 				73CB05D410DBE23300AE25C8 /* AudioFileParser.m */,
 				73D20D261178A2AB00F1E41A /* OfflineAudioQueueWrapper.h */,
 				73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */,
+				734A94F4117E1060009F90B4 /* HooSpectralProcessor.h */,
+				734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -326,6 +244,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				736395D410E0DB7700F74307 /* QuartzCore.framework */,
+				736395D810E0DB8100F74307 /* CoreServices.framework */,
 				7309603010E26873008B4C08 /* SHShared.framework */,
 				7309602110E2681C008B4C08 /* OCMock.framework */,
 				7309601610E267C7008B4C08 /* SHTestUtilities.framework */,
@@ -334,7 +254,6 @@
 				73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */,
 				73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */,
 				73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */,
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -342,6 +261,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -366,12 +286,9 @@
 				7366459D10E134850049510B /* beat_detect.pde.txt */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				7309610210E26B2F008B4C08 /* SHShared.xcodeproj */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				736395D410E0DB7700F74307 /* QuartzCore.framework */,
-				736395D810E0DB8100F74307 /* CoreServices.framework */,
 				73095FF210E266E6008B4C08 /* AudioFileParserTests-Info.plist */,
 			);
 			name = AudioFileParser;
@@ -415,6 +332,7 @@
 				738F25D810EF71E700A35230 /* FFTHelperTests.m */,
 				73D937A71122BE67007D44EF /* FFTTetsts.m */,
 				73D20D2111789F0400F1E41A /* AudioQueueTests.m */,
+				734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -437,22 +355,6 @@
 			name = Config;
 			path = ../../Blake/Config;
 			sourceTree = SOURCE_ROOT;
-		};
-		7309610310E26B2F008B4C08 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7309610D10E26B2F008B4C08 /* SHShared.framework */,
-				7309610F10E26B2F008B4C08 /* SHSharedTests.octest */,
-				7309611110E26B2F008B4C08 /* libSHShared_static.a */,
-				7309611310E26B2F008B4C08 /* libSHShared_iphone.a */,
-				7309611510E26B2F008B4C08 /* SHSharedUI.framework */,
-				7309611710E26B2F008B4C08 /* SHSharedUITests.octest */,
-				7309611910E26B2F008B4C08 /* SHTestUtilities.framework */,
-				73156B74114E3C870014341C /* TestUtilitiesTests.octest */,
-				73D20B5811785F7F00F1E41A /* GUIFiddler */,
-			);
-			name = Products;
-			sourceTree = "<group>";
 		};
 		736395DF10E0DBBE00F74307 /* Bah */ = {
 			isa = PBXGroup;
@@ -566,7 +468,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7309612B10E26B48008B4C08 /* PBXTargetDependency */,
 			);
 			name = AudioFileParserTests;
 			productName = AudioFileParserTests;
@@ -584,7 +485,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				738FC26210F0B1A0005CFFC7 /* PBXTargetDependency */,
 			);
 			name = AudioFileParser;
 			productInstallPath = "$(HOME)/Applications";
@@ -602,12 +502,6 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* AudioFileParser */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 7309610310E26B2F008B4C08 /* Products */;
-					ProjectRef = 7309610210E26B2F008B4C08 /* SHShared.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* AudioFileParser */,
@@ -615,72 +509,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		7309610D10E26B2F008B4C08 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 7309610C10E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309610F10E26B2F008B4C08 /* SHSharedTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SHSharedTests.octest;
-			remoteRef = 7309610E10E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309611110E26B2F008B4C08 /* libSHShared_static.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSHShared_static.a;
-			remoteRef = 7309611010E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309611310E26B2F008B4C08 /* libSHShared_iphone.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSHShared_iphone.a;
-			remoteRef = 7309611210E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309611510E26B2F008B4C08 /* SHSharedUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHSharedUI.framework;
-			remoteRef = 7309611410E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309611710E26B2F008B4C08 /* SHSharedUITests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SHSharedUITests.octest;
-			remoteRef = 7309611610E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7309611910E26B2F008B4C08 /* SHTestUtilities.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHTestUtilities.framework;
-			remoteRef = 7309611810E26B2F008B4C08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73156B74114E3C870014341C /* TestUtilitiesTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = TestUtilitiesTests.octest;
-			remoteRef = 73156B73114E3C870014341C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73D20B5811785F7F00F1E41A /* GUIFiddler */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = GUIFiddler;
-			remoteRef = 73D20B5711785F7F00F1E41A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		73095FEC10E266E6008B4C08 /* Resources */ = {
@@ -746,7 +574,8 @@
 				73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
 				73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */,
 				73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */,
-				731ECCC1117C629900394239 /* BufferStoreTests.m in Sources */,
+				734A94F7117E1060009F90B4 /* HooSpectralProcessor.m in Sources */,
+				734A9588117E1824009F90B4 /* HooSpectralProcessorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,23 +608,11 @@
 				738F25D410EF71CD00A35230 /* FFTHelper.m in Sources */,
 				73D515C0110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
 				73B7661C1179C64200E8D843 /* OfflineAudioQueueWrapper.m in Sources */,
+				734A94F6117E1060009F90B4 /* HooSpectralProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7309612B10E26B48008B4C08 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHTestUtilities;
-			targetProxy = 7309612A10E26B48008B4C08 /* PBXContainerItemProxy */;
-		};
-		738FC26210F0B1A0005CFFC7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared;
-			targetProxy = 738FC26110F0B1A0005CFFC7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -830,6 +647,7 @@
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = 4.2;
+				HEADER_SEARCH_PATHS = /Developer/Examples/CoreAudio/PublicUtility;
 				INFOPLIST_FILE = "AudioFileParserTests-Info.plist";
 				PRODUCT_NAME = AudioFileParserTests;
 			};
