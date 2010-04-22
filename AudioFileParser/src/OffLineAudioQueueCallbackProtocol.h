@@ -9,8 +9,8 @@
 
 @protocol OffLineAudioQueueCallbackProtocol <NSObject>
 
-- (void)_callback_error:(id)hmm;
-- (void)_callback_withData:(struct HooAudioBuffer *)hmm;
-- (void)_callback_complete:(id)hmm;
+- (void)_aq_callback_error:(id)hmm;
+- (void)_aq_callback_withData:(struct HooAudioBuffer *)hmm;
+- (void)_aq_callback_complete:(id)hmm;
 
 @end

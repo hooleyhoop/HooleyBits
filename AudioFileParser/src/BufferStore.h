@@ -18,6 +18,7 @@
 }
 
 - (void)addFrames:(NSUInteger)frameCount :(struct HooAudioBuffer *)inputBuffer;
+- (void)noMoreData;
 
 - (void)closeInput;
 
@@ -34,5 +35,4 @@
 - (NSUInteger)framesNeededToCompletePartialStore;
 
 - (Float32 *)bufferAtIndex:(NSUInteger)i;
-
 @end

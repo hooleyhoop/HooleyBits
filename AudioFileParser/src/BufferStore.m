@@ -156,6 +156,10 @@
 	}
 }
 
+- (void)noMoreData {
+	logError(@"make sure we fluuuuush!");
+}
+
 - (void)resetReading {
 	_readIteration = 0;
 }

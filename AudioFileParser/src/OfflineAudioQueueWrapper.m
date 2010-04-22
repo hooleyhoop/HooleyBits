@@ -258,7 +258,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 		
 		if (!result && size) {
 			
-			char* cookie = (char *)malloc(sizeof(char)*size);
+			char *cookie = (char *)malloc(sizeof(char)*size);
 			result = AudioFileGetProperty (myInfo.mAudioFile, kAudioFilePropertyMagicCookieData, &size, cookie);
 			if(result!=noErr)
 				[NSException raise:@"get cookie from file" format:@""];
@@ -341,9 +341,10 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 			
 			// sooo, we supply a buffer for the output
 			result = AudioQueueOfflineRender( myInfo.mQueue, &ts, captureBuffer, reqFrames );
-			if(result!=noErr)
+			if(result!=noErr){
+				[_callbackDelegate _aq_callback_error:nil];
 				[NSException raise:@"AudioQueueOfflineRender" format:@""];
-			
+			}
 			// mono wav
 			//			bytesperpacket = 4
 			//			framesperpacket = 1
@@ -383,7 +384,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 			struct HooAudioBuffer *tempHooBuffer = newHooAudioBuffer_weak( &outAudioBuffer, writeFrames, 0 );
 			
 			// copy all frames to 1024 size blocks
-			[_callbackDelegate _callback_withData:tempHooBuffer];
+			[_callbackDelegate _aq_callback_withData:tempHooBuffer];
 			
 			freeHooAudioBuffer(tempHooBuffer);
 			
@@ -408,7 +409,7 @@ void CalculateBytesForTime( AudioStreamBasicDescription *inDesc, UInt32 inMaxPac
 			
 			ts.mSampleTime += writeFrames;
 		}
-		
+		[_callbackDelegate _aq_callback_complete:nil];
 		
 		CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1, false);
 		

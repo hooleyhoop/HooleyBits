@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		73084E8610EE6E9A001CD210 /* SHCASpectralProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */; };
-		73095FDB10E262C9008B4C08 /* BufferStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73095FDA10E262C9008B4C08 /* BufferStore.m */; };
 		7309601710E267C7008B4C08 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309601610E267C7008B4C08 /* SHTestUtilities.framework */; };
 		7309602210E2681C008B4C08 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309602110E2681C008B4C08 /* OCMock.framework */; };
 		7309603110E26873008B4C08 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309603010E26873008B4C08 /* SHShared.framework */; };
@@ -18,9 +16,25 @@
 		730960ED10E26A6A008B4C08 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		730960EE10E26A6B008B4C08 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */; };
 		730960EF10E26A6C008B4C08 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
-		734A94F6117E1060009F90B4 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */; };
-		734A94F7117E1060009F90B4 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */; };
-		734A9588117E1824009F90B4 /* HooSpectralProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */; };
+		7325303411804C68000932A8 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325303211804C68000932A8 /* FFTHelper.m */; };
+		7325303511804C68000932A8 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325303211804C68000932A8 /* FFTHelper.m */; };
+		7325304D11804C7B000932A8 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7325304B11804C7B000932A8 /* ProcessingStuff.mm */; };
+		7325304E11804C7B000932A8 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7325304B11804C7B000932A8 /* ProcessingStuff.mm */; };
+		7325305211804C87000932A8 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7325305011804C87000932A8 /* BacwardsProcessTests.mm */; };
+		7325305311804C87000932A8 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7325305011804C87000932A8 /* BacwardsProcessTests.mm */; };
+		7325305711804C91000932A8 /* SHCASpectralProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7325305511804C91000932A8 /* SHCASpectralProcessor.cpp */; };
+		7325305811804C91000932A8 /* SHCASpectralProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7325305511804C91000932A8 /* SHCASpectralProcessor.cpp */; };
+		7325305E11804CA1000932A8 /* HooleyStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325305C11804CA1000932A8 /* HooleyStuff.m */; };
+		7325305F11804CA1000932A8 /* HooleyStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325305C11804CA1000932A8 /* HooleyStuff.m */; };
+		7325306311804CB0000932A8 /* BufferStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306111804CB0000932A8 /* BufferStore.m */; };
+		7325306411804CB0000932A8 /* BufferStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306111804CB0000932A8 /* BufferStore.m */; };
+		7325306811804CBA000932A8 /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306611804CBA000932A8 /* AudioFileParser.m */; };
+		7325306911804CBA000932A8 /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306611804CBA000932A8 /* AudioFileParser.m */; };
+		7325306F11804CC5000932A8 /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306D11804CC5000932A8 /* OfflineAudioQueueWrapper.m */; };
+		7325307011804CC5000932A8 /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325306D11804CC5000932A8 /* OfflineAudioQueueWrapper.m */; };
+		7325307411804CCF000932A8 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325307211804CCF000932A8 /* HooSpectralProcessor.m */; };
+		7325307511804CCF000932A8 /* HooSpectralProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325307211804CCF000932A8 /* HooSpectralProcessor.m */; };
+		7325307911804CE2000932A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325307811804CE2000932A8 /* main.m */; };
 		736395D510E0DB7700F74307 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D410E0DB7700F74307 /* QuartzCore.framework */; };
 		736395D910E0DB8100F74307 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736395D810E0DB8100F74307 /* CoreServices.framework */; };
 		736395EF10E0DC1100F74307 /* AUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395E210E0DC1100F74307 /* AUBase.cpp */; };
@@ -29,7 +43,6 @@
 		736395F210E0DC1100F74307 /* AUOutputElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395E810E0DC1100F74307 /* AUOutputElement.cpp */; };
 		736395F310E0DC1100F74307 /* AUScopeElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395EB10E0DC1100F74307 /* AUScopeElement.cpp */; };
 		736395F410E0DC1100F74307 /* ComponentBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395ED10E0DC1100F74307 /* ComponentBase.cpp */; };
-		736395F810E0DC4C00F74307 /* SHCASpectralProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */; };
 		7363960710E0DCCF00F74307 /* AUEffectBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 736395FD10E0DCCF00F74307 /* AUEffectBase.cpp */; };
 		7363960810E0DCCF00F74307 /* AUBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7363960010E0DCCF00F74307 /* AUBuffer.cpp */; };
 		7363960910E0DCCF00F74307 /* AUDebugDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7363960210E0DCCF00F74307 /* AUDebugDispatcher.cpp */; };
@@ -58,26 +71,17 @@
 		7381128C10E3D73200D73143 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7381128910E3D73200D73143 /* CAXException.cpp */; };
 		7381129110E3D76D00D73143 /* AUBaseHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7381128F10E3D76D00D73143 /* AUBaseHelper.cpp */; };
 		7381129210E3D76D00D73143 /* AUBaseHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7381128F10E3D76D00D73143 /* AUBaseHelper.cpp */; };
-		7382437010EFFC0600C69483 /* HooleyStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F51F0C10E5364F00A012D2 /* HooleyStuff.m */; };
-		7382437110EFFC0900C69483 /* BufferStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73095FDA10E262C9008B4C08 /* BufferStore.m */; };
-		7382437510EFFC3100C69483 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */; };
-		7382438710EFFE0300C69483 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */; };
-		738F25D410EF71CD00A35230 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 738F25D210EF71CD00A35230 /* FFTHelper.m */; };
-		73B7661C1179C64200E8D843 /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */; };
-		73CB05D510DBE23300AE25C8 /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */; };
 		73CB05D910DBE28600AE25C8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */; };
 		73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		73CB05DD10DBE28600AE25C8 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */; };
 		73CB05DF10DBE28600AE25C8 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */; };
-		73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */; };
-		73D4A39610DF8BFE0091B586 /* ProcessingStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
-		73D515C0110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */; };
-		73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */; };
-		73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CB05D410DBE23300AE25C8 /* AudioFileParser.m */; };
-		73F51F0E10E5364F00A012D2 /* HooleyStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F51F0C10E5364F00A012D2 /* HooleyStuff.m */; };
+		73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325301F1180497E000932A8 /* AudioFileParserTests.m */; };
+		73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
+		73F7F99B1180B3BF00DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
+		73F7F9C91180B7CD00DD6DB2 /* SpectrumResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */; };
+		73F7F9CD1180B88300DD6DB2 /* SpectrumResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,14 +90,9 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* AudioFileParser_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileParser_Prefix.pch; sourceTree = "<group>"; };
-		73095FD910E262C9008B4C08 /* BufferStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferStore.h; sourceTree = "<group>"; };
-		73095FDA10E262C9008B4C08 /* BufferStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BufferStore.m; sourceTree = "<group>"; };
 		73095FF110E266E6008B4C08 /* AudioFileParserTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioFileParserTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		73095FF210E266E6008B4C08 /* AudioFileParserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioFileParserTests-Info.plist"; sourceTree = "<group>"; };
 		7309601310E26779008B4C08 /* BufferStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferStoreTests.m; path = Tests/BufferStoreTests.m; sourceTree = "<group>"; };
 		7309601610E267C7008B4C08 /* SHTestUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SHTestUtilities.framework; path = ../../Blake/build/Debug/SHTestUtilities.framework; sourceTree = SOURCE_ROOT; };
 		7309602110E2681C008B4C08 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = /Library/Frameworks/OCMock.framework; sourceTree = "<absolute>"; };
@@ -109,8 +108,28 @@
 		730960B510E26948008B4C08 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Plugin.xcconfig"; sourceTree = "<group>"; };
 		730960B610E26948008B4C08 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
 		730960B710E26948008B4C08 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
-		734A94F4117E1060009F90B4 /* HooSpectralProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooSpectralProcessor.h; path = Classes/HooSpectralProcessor.h; sourceTree = "<group>"; };
-		734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooSpectralProcessor.m; path = Classes/HooSpectralProcessor.m; sourceTree = "<group>"; };
+		7325301F1180497E000932A8 /* AudioFileParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileParserTests.m; path = Tests/AudioFileParserTests.m; sourceTree = "<group>"; };
+		7325302111804B2C000932A8 /* FFTTetsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTTetsts.m; path = Tests/FFTTetsts.m; sourceTree = "<group>"; };
+		7325302311804B38000932A8 /* OffLineAudioQueueCallbackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OffLineAudioQueueCallbackProtocol.h; path = src/OffLineAudioQueueCallbackProtocol.h; sourceTree = "<group>"; };
+		7325303211804C68000932A8 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = src/FFTHelper.m; sourceTree = "<group>"; };
+		7325303311804C68000932A8 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = src/FFTHelper.h; sourceTree = "<group>"; };
+		7325304B11804C7B000932A8 /* ProcessingStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProcessingStuff.mm; path = src/ProcessingStuff.mm; sourceTree = "<group>"; };
+		7325304C11804C7B000932A8 /* ProcessingStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcessingStuff.h; path = src/ProcessingStuff.h; sourceTree = "<group>"; };
+		7325305011804C87000932A8 /* BacwardsProcessTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BacwardsProcessTests.mm; path = src/BacwardsProcessTests.mm; sourceTree = "<group>"; };
+		7325305111804C87000932A8 /* BacwardsProcessTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BacwardsProcessTests.h; path = src/BacwardsProcessTests.h; sourceTree = "<group>"; };
+		7325305511804C91000932A8 /* SHCASpectralProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SHCASpectralProcessor.cpp; path = src/SHCASpectralProcessor.cpp; sourceTree = "<group>"; };
+		7325305611804C91000932A8 /* SHCASpectralProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHCASpectralProcessor.h; path = src/SHCASpectralProcessor.h; sourceTree = "<group>"; };
+		7325305C11804CA1000932A8 /* HooleyStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooleyStuff.m; path = src/HooleyStuff.m; sourceTree = "<group>"; };
+		7325305D11804CA1000932A8 /* HooleyStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooleyStuff.h; path = src/HooleyStuff.h; sourceTree = "<group>"; };
+		7325306111804CB0000932A8 /* BufferStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferStore.m; path = src/BufferStore.m; sourceTree = "<group>"; };
+		7325306211804CB0000932A8 /* BufferStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferStore.h; path = src/BufferStore.h; sourceTree = "<group>"; };
+		7325306611804CBA000932A8 /* AudioFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileParser.m; path = src/AudioFileParser.m; sourceTree = "<group>"; };
+		7325306711804CBA000932A8 /* AudioFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileParser.h; path = src/AudioFileParser.h; sourceTree = "<group>"; };
+		7325306D11804CC5000932A8 /* OfflineAudioQueueWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfflineAudioQueueWrapper.m; path = src/OfflineAudioQueueWrapper.m; sourceTree = "<group>"; };
+		7325306E11804CC5000932A8 /* OfflineAudioQueueWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfflineAudioQueueWrapper.h; path = src/OfflineAudioQueueWrapper.h; sourceTree = "<group>"; };
+		7325307211804CCF000932A8 /* HooSpectralProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooSpectralProcessor.m; path = src/HooSpectralProcessor.m; sourceTree = "<group>"; };
+		7325307311804CCF000932A8 /* HooSpectralProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooSpectralProcessor.h; path = src/HooSpectralProcessor.h; sourceTree = "<group>"; };
+		7325307811804CE2000932A8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/main.m; sourceTree = "<group>"; };
 		734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooSpectralProcessorTests.m; path = Tests/HooSpectralProcessorTests.m; sourceTree = "<group>"; };
 		736395D410E0DB7700F74307 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		736395D810E0DB8100F74307 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -127,8 +146,6 @@
 		736395EC10E0DC1100F74307 /* AUScopeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AUScopeElement.h; path = Examples/CoreAudio/AudioUnits/AUPublic/AUBase/AUScopeElement.h; sourceTree = DEVELOPER_DIR; };
 		736395ED10E0DC1100F74307 /* ComponentBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentBase.cpp; path = Examples/CoreAudio/AudioUnits/AUPublic/AUBase/ComponentBase.cpp; sourceTree = DEVELOPER_DIR; };
 		736395EE10E0DC1100F74307 /* ComponentBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComponentBase.h; path = Examples/CoreAudio/AudioUnits/AUPublic/AUBase/ComponentBase.h; sourceTree = DEVELOPER_DIR; };
-		736395F610E0DC4C00F74307 /* SHCASpectralProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHCASpectralProcessor.h; sourceTree = "<group>"; };
-		736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHCASpectralProcessor.cpp; sourceTree = "<group>"; };
 		736395FD10E0DCCF00F74307 /* AUEffectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AUEffectBase.cpp; path = Examples/CoreAudio/AudioUnits/AUPublic/OtherBases/AUEffectBase.cpp; sourceTree = DEVELOPER_DIR; };
 		736395FE10E0DCCF00F74307 /* AUEffectBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AUEffectBase.h; path = Examples/CoreAudio/AudioUnits/AUPublic/OtherBases/AUEffectBase.h; sourceTree = DEVELOPER_DIR; };
 		7363960010E0DCCF00F74307 /* AUBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AUBuffer.cpp; path = Examples/CoreAudio/AudioUnits/AUPublic/Utility/AUBuffer.cpp; sourceTree = DEVELOPER_DIR; };
@@ -160,28 +177,17 @@
 		7381128F10E3D76D00D73143 /* AUBaseHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AUBaseHelper.cpp; path = Examples/CoreAudio/AudioUnits/AUPublic/Utility/AUBaseHelper.cpp; sourceTree = DEVELOPER_DIR; };
 		7381129010E3D76D00D73143 /* AUBaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AUBaseHelper.h; path = Examples/CoreAudio/AudioUnits/AUPublic/Utility/AUBaseHelper.h; sourceTree = DEVELOPER_DIR; };
 		738F25CC10EF719D00A35230 /* ProcessingStuffTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProcessingStuffTests.mm; path = Tests/ProcessingStuffTests.mm; sourceTree = "<group>"; };
-		738F25D110EF71CD00A35230 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = Classes/FFTHelper.h; sourceTree = "<group>"; };
-		738F25D210EF71CD00A35230 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = Classes/FFTHelper.m; sourceTree = "<group>"; };
 		738F25D810EF71E700A35230 /* FFTHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelperTests.m; path = Tests/FFTHelperTests.m; sourceTree = "<group>"; };
-		73CB05D310DBE23300AE25C8 /* AudioFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileParser.h; sourceTree = "<group>"; };
-		73CB05D410DBE23300AE25C8 /* AudioFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileParser.m; sourceTree = "<group>"; };
 		73CB05D810DBE28600AE25C8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		73D20D2111789F0400F1E41A /* AudioQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueTests.m; path = Tests/AudioQueueTests.m; sourceTree = "<group>"; };
-		73D20D261178A2AB00F1E41A /* OfflineAudioQueueWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfflineAudioQueueWrapper.h; path = Classes/OfflineAudioQueueWrapper.h; sourceTree = "<group>"; };
-		73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfflineAudioQueueWrapper.m; path = Classes/OfflineAudioQueueWrapper.m; sourceTree = "<group>"; };
-		73D20DD41178BC9500F1E41A /* OffLineAudioQueueCallbackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OffLineAudioQueueCallbackProtocol.h; path = Classes/OffLineAudioQueueCallbackProtocol.h; sourceTree = "<group>"; };
-		73D4A39410DF8BFE0091B586 /* ProcessingStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingStuff.h; sourceTree = "<group>"; };
-		73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProcessingStuff.mm; sourceTree = "<group>"; };
 		73D4A78510DFC77E0091B586 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
-		73D515BE110B1A3D005537A5 /* BacwardsProcessTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BacwardsProcessTests.h; path = Classes/BacwardsProcessTests.h; sourceTree = "<group>"; };
-		73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BacwardsProcessTests.mm; path = Classes/BacwardsProcessTests.mm; sourceTree = "<group>"; };
-		73D937A71122BE67007D44EF /* FFTTetsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTTetsts.m; path = Classes/FFTTetsts.m; sourceTree = "<group>"; };
-		73F51E9C10E4E91400A012D2 /* HooleyStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooleyStuff.h; path = Classes/HooleyStuff.h; sourceTree = "<group>"; };
-		73F51F0C10E5364F00A012D2 /* HooleyStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooleyStuff.m; path = Classes/HooleyStuff.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		73F7F98D1180AF4000DD6DB2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = src/AppController.h; sourceTree = "<group>"; };
+		73F7F98E1180AF4000DD6DB2 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = src/AppController.m; sourceTree = "<group>"; };
+		73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectrumResults.h; path = src/SpectrumResults.h; sourceTree = "<group>"; };
+		73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectrumResults.m; path = src/SpectrumResults.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* AudioFileParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFileParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -224,19 +230,23 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				73D20DD41178BC9500F1E41A /* OffLineAudioQueueCallbackProtocol.h */,
+				73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */,
+				73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */,
+				7325302311804B38000932A8 /* OffLineAudioQueueCallbackProtocol.h */,
+				73F7F98D1180AF4000DD6DB2 /* AppController.h */,
+				73F7F98E1180AF4000DD6DB2 /* AppController.m */,
 				7382437D10EFFC6C00C69483 /* bridge */,
 				7382435F10EFFB1900C69483 /* c++ */,
-				73F51E9C10E4E91400A012D2 /* HooleyStuff.h */,
-				73F51F0C10E5364F00A012D2 /* HooleyStuff.m */,
-				73095FD910E262C9008B4C08 /* BufferStore.h */,
-				73095FDA10E262C9008B4C08 /* BufferStore.m */,
-				73CB05D310DBE23300AE25C8 /* AudioFileParser.h */,
-				73CB05D410DBE23300AE25C8 /* AudioFileParser.m */,
-				73D20D261178A2AB00F1E41A /* OfflineAudioQueueWrapper.h */,
-				73D20D271178A2AB00F1E41A /* OfflineAudioQueueWrapper.m */,
-				734A94F4117E1060009F90B4 /* HooSpectralProcessor.h */,
-				734A94F5117E1060009F90B4 /* HooSpectralProcessor.m */,
+				7325305D11804CA1000932A8 /* HooleyStuff.h */,
+				7325305C11804CA1000932A8 /* HooleyStuff.m */,
+				7325306211804CB0000932A8 /* BufferStore.h */,
+				7325306111804CB0000932A8 /* BufferStore.m */,
+				7325306711804CBA000932A8 /* AudioFileParser.h */,
+				7325306611804CBA000932A8 /* AudioFileParser.m */,
+				7325306E11804CC5000932A8 /* OfflineAudioQueueWrapper.h */,
+				7325306D11804CC5000932A8 /* OfflineAudioQueueWrapper.m */,
+				7325307311804CCF000932A8 /* HooSpectralProcessor.h */,
+				7325307211804CCF000932A8 /* HooSpectralProcessor.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -289,7 +299,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				73095FF210E266E6008B4C08 /* AudioFileParserTests-Info.plist */,
 			);
 			name = AudioFileParser;
 			sourceTree = "<group>";
@@ -298,8 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				736395DF10E0DBBE00F74307 /* Bah */,
-				32CA4F630368D1EE00C91783 /* AudioFileParser_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
+				7325307811804CE2000932A8 /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -307,7 +315,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
@@ -330,9 +337,10 @@
 				7309601310E26779008B4C08 /* BufferStoreTests.m */,
 				738111B310E3D08700D73143 /* SHCASpectralProcessorTests.mm */,
 				738F25D810EF71E700A35230 /* FFTHelperTests.m */,
-				73D937A71122BE67007D44EF /* FFTTetsts.m */,
+				7325302111804B2C000932A8 /* FFTTetsts.m */,
 				73D20D2111789F0400F1E41A /* AudioQueueTests.m */,
 				734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */,
+				7325301F1180497E000932A8 /* AudioFileParserTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -434,8 +442,8 @@
 		7382435F10EFFB1900C69483 /* c++ */ = {
 			isa = PBXGroup;
 			children = (
-				736395F610E0DC4C00F74307 /* SHCASpectralProcessor.h */,
-				736395F710E0DC4C00F74307 /* SHCASpectralProcessor.cpp */,
+				7325305611804C91000932A8 /* SHCASpectralProcessor.h */,
+				7325305511804C91000932A8 /* SHCASpectralProcessor.cpp */,
 			);
 			name = "c++";
 			sourceTree = "<group>";
@@ -443,12 +451,12 @@
 		7382437D10EFFC6C00C69483 /* bridge */ = {
 			isa = PBXGroup;
 			children = (
-				738F25D110EF71CD00A35230 /* FFTHelper.h */,
-				738F25D210EF71CD00A35230 /* FFTHelper.m */,
-				73D4A39410DF8BFE0091B586 /* ProcessingStuff.h */,
-				73D4A39510DF8BFE0091B586 /* ProcessingStuff.mm */,
-				73D515BE110B1A3D005537A5 /* BacwardsProcessTests.h */,
-				73D515BF110B1A3D005537A5 /* BacwardsProcessTests.mm */,
+				7325303311804C68000932A8 /* FFTHelper.h */,
+				7325303211804C68000932A8 /* FFTHelper.m */,
+				7325304C11804C7B000932A8 /* ProcessingStuff.h */,
+				7325304B11804C7B000932A8 /* ProcessingStuff.mm */,
+				7325305111804C87000932A8 /* BacwardsProcessTests.h */,
+				7325305011804C87000932A8 /* BacwardsProcessTests.mm */,
 			);
 			name = bridge;
 			sourceTree = "<group>";
@@ -566,16 +574,18 @@
 				7381127B10E3D69A00D73143 /* ComponentBase.cpp in Sources */,
 				7381128B10E3D73200D73143 /* CAXException.cpp in Sources */,
 				7381129110E3D76D00D73143 /* AUBaseHelper.cpp in Sources */,
-				73084E8610EE6E9A001CD210 /* SHCASpectralProcessor.cpp in Sources */,
-				7382437010EFFC0600C69483 /* HooleyStuff.m in Sources */,
-				7382437110EFFC0900C69483 /* BufferStore.m in Sources */,
-				7382437510EFFC3100C69483 /* ProcessingStuff.mm in Sources */,
-				7382438710EFFE0300C69483 /* FFTHelper.m in Sources */,
-				73D515C1110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
-				73D937B61122C7E6007D44EF /* AudioFileParser.m in Sources */,
-				73D20D281178A2AB00F1E41A /* OfflineAudioQueueWrapper.m in Sources */,
-				734A94F7117E1060009F90B4 /* HooSpectralProcessor.m in Sources */,
-				734A9588117E1824009F90B4 /* HooSpectralProcessorTests.m in Sources */,
+				7325303411804C68000932A8 /* FFTHelper.m in Sources */,
+				7325304D11804C7B000932A8 /* ProcessingStuff.mm in Sources */,
+				7325305211804C87000932A8 /* BacwardsProcessTests.mm in Sources */,
+				7325305711804C91000932A8 /* SHCASpectralProcessor.cpp in Sources */,
+				7325305E11804CA1000932A8 /* HooleyStuff.m in Sources */,
+				7325306311804CB0000932A8 /* BufferStore.m in Sources */,
+				7325306811804CBA000932A8 /* AudioFileParser.m in Sources */,
+				7325306F11804CC5000932A8 /* OfflineAudioQueueWrapper.m in Sources */,
+				7325307411804CCF000932A8 /* HooSpectralProcessor.m in Sources */,
+				73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */,
+				73F7F99B1180B3BF00DD6DB2 /* AppController.m in Sources */,
+				73F7F9CD1180B88300DD6DB2 /* SpectrumResults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,16 +593,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				73CB05D510DBE23300AE25C8 /* AudioFileParser.m in Sources */,
-				73D4A39610DF8BFE0091B586 /* ProcessingStuff.mm in Sources */,
 				736395EF10E0DC1100F74307 /* AUBase.cpp in Sources */,
 				736395F010E0DC1100F74307 /* AUDispatch.cpp in Sources */,
 				736395F110E0DC1100F74307 /* AUInputElement.cpp in Sources */,
 				736395F210E0DC1100F74307 /* AUOutputElement.cpp in Sources */,
 				736395F310E0DC1100F74307 /* AUScopeElement.cpp in Sources */,
 				736395F410E0DC1100F74307 /* ComponentBase.cpp in Sources */,
-				736395F810E0DC4C00F74307 /* SHCASpectralProcessor.cpp in Sources */,
 				7363960710E0DCCF00F74307 /* AUEffectBase.cpp in Sources */,
 				7363960810E0DCCF00F74307 /* AUBuffer.cpp in Sources */,
 				7363960910E0DCCF00F74307 /* AUDebugDispatcher.cpp in Sources */,
@@ -601,14 +607,20 @@
 				7363962010E0DD8E00F74307 /* CAAudioChannelLayout.cpp in Sources */,
 				7363963010E0DE7400F74307 /* CAHostTimeBase.cpp in Sources */,
 				736398D810E10E5700F74307 /* CABufferList.cpp in Sources */,
-				73095FDB10E262C9008B4C08 /* BufferStore.m in Sources */,
 				7381128C10E3D73200D73143 /* CAXException.cpp in Sources */,
 				7381129210E3D76D00D73143 /* AUBaseHelper.cpp in Sources */,
-				73F51F0E10E5364F00A012D2 /* HooleyStuff.m in Sources */,
-				738F25D410EF71CD00A35230 /* FFTHelper.m in Sources */,
-				73D515C0110B1A3D005537A5 /* BacwardsProcessTests.mm in Sources */,
-				73B7661C1179C64200E8D843 /* OfflineAudioQueueWrapper.m in Sources */,
-				734A94F6117E1060009F90B4 /* HooSpectralProcessor.m in Sources */,
+				7325303511804C68000932A8 /* FFTHelper.m in Sources */,
+				7325304E11804C7B000932A8 /* ProcessingStuff.mm in Sources */,
+				7325305311804C87000932A8 /* BacwardsProcessTests.mm in Sources */,
+				7325305811804C91000932A8 /* SHCASpectralProcessor.cpp in Sources */,
+				7325305F11804CA1000932A8 /* HooleyStuff.m in Sources */,
+				7325306411804CB0000932A8 /* BufferStore.m in Sources */,
+				7325306911804CBA000932A8 /* AudioFileParser.m in Sources */,
+				7325307011804CC5000932A8 /* OfflineAudioQueueWrapper.m in Sources */,
+				7325307511804CCF000932A8 /* HooSpectralProcessor.m in Sources */,
+				7325307911804CE2000932A8 /* main.m in Sources */,
+				73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */,
+				73F7F9C91180B7CD00DD6DB2 /* SpectrumResults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,7 +660,6 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = /Developer/Examples/CoreAudio/PublicUtility;
-				INFOPLIST_FILE = "AudioFileParserTests-Info.plist";
 				PRODUCT_NAME = AudioFileParserTests;
 			};
 			name = Debug;
