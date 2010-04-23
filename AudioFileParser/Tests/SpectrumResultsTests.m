@@ -52,6 +52,9 @@
 
 	[_specResults processInputData];
 	STAssertTrue([_specResults frameCount]==2, nil);
+	
+	struct HooSpectralBufferList *aFrame = [_specResults frameAtIndex:0];
+
 	[_mockData verify];
 }
 

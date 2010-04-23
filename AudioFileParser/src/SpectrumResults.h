@@ -20,5 +20,6 @@
 - (id)initWithFormattedData:(BufferStore *)arg;
 - (void)processInputData;
 - (NSUInteger)frameCount;
+- (struct HooSpectralBufferList *)frameAtIndex:(NSUInteger)arg;
 
 @end

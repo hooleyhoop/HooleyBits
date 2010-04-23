@@ -10,14 +10,20 @@
 #import "BufferStore.h"
 #import "AudioFileParser.h"
 #import "SpectrumResults.h"
-
+#import "SpectralImage.h"
 #import <SHShared/SHShared.h>
+
+@interface AppController()
+
+- (void)requestImageAtFrame:(NSUInteger)arg;
+
+@end
 
 @implementation AppController
 
 @synthesize in_AudioFilePath = _in_AudioFilePath;
 @synthesize out_graphicsDirPath = _out_graphicsDirPath;
-
+@synthesize frameLabel = _frameLabel;
 
 - (id)init {
 
@@ -25,6 +31,7 @@
 	if(self){
 		_in_AudioFilePath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Desktop/in.wav"] retain];
 		_out_graphicsDirPath = [@"shit" retain];
+		_frameLabel = [[NSNumber numberWithInt:70] retain];
 	}
 	return self;
 }
@@ -33,43 +40,63 @@
 	
 	[_in_AudioFilePath release];
 	[_out_graphicsDirPath release];
+	[_frameLabel release];
+	
+	[_spectroResults release];
 	
 	[super dealloc];
 }
 
 - (void)awakeFromNib {
-	logError(@"what the fuuuuuu!");
 	
 }
 
-- (void)doIt {
+- (IBAction)openPath:(id)sender {
 	
+}
+- (IBAction)savePath:(id)sender {
+	
+}
+
+- (IBAction)doit:(id)sender {
+	
+}
+
+- (IBAction)stepperClicked:(id)sender {
+	self.frameLabel = [NSNumber numberWithInt:[sender intValue]];
+	[self requestImageAtFrame:[sender intValue]];
+}
+
+- (void)doIt {
+
+	NSAssert( _spectroResults==nil, @"Hai");
+
 	// processed audio goes into here
-	_bufferStore = [[BufferStore alloc] init];
-	[_bufferStore setBlockSize:1024];
+	BufferStore *bufferStore = [[BufferStore alloc] init];
+	[bufferStore setBlockSize:1024];
 
 	AudioFileParser *afp = [[AudioFileParser alloc] initWithAudioFileURL:_in_AudioFilePath];
 	
 	NSInvocation *progressActionInv;
-	[[NSInvocation makeRetainedInvocationWithTarget:_bufferStore invocationOut:&progressActionInv] addFrames:0 :nil];
+	[[NSInvocation makeRetainedInvocationWithTarget:bufferStore invocationOut:&progressActionInv] addFrames:0 :nil];
 	[afp setAQ_progressCallbackCustomInv: progressActionInv ];
 	
 	// make sure bufferstore flushes
 	NSInvocation *completActionInv;
-	[[NSInvocation makeRetainedInvocationWithTarget:_bufferStore invocationOut:&completActionInv] closeInput];
+	[[NSInvocation makeRetainedInvocationWithTarget:bufferStore invocationOut:&completActionInv] closeInput];
 	[afp setAQ_completeCallbackCustomInv: completActionInv ];
 	
 	[afp processInputFile];
 	[afp release];
 	
-	SpectrumResults *spectroResults = [[SpectrumResults alloc] initWithFormattedData:_bufferStore];
-	[spectroResults processInputData];
-	[_bufferStore release];
+	_spectroResults = [[SpectrumResults alloc] initWithFormattedData:bufferStore];
+	[_spectroResults processInputData];
+	[bufferStore release];
 
-	// -- now we can get frames from spectroResults and render them to a movie!
-	NSAssert( [spectroResults frameCount]==([_bufferStore numberOfWholeBuffers]*2 - 1),  nil);
+	// -- now we can get frames from _spectroResults and render them to a movie!
+	NSAssert( [_spectroResults frameCount]==([bufferStore numberOfWholeBuffers]*2 - 1),  nil);
 	
-	[spectroResults release];
+	[_spectroResults release];
 	
 	// generate spectrum data from the audio
 	//	[movieWriter release];
@@ -93,9 +120,16 @@
 	
 	//[_fft release];
 	
-	
-
-	 
 }
  
+- (void)requestImageAtFrame:(NSUInteger)arg {
+	
+	struct HooSpectralBufferList *specList = [_spectroResults frameAtIndex:arg];
+	SpectralImage *si = [[[SpectralImage alloc] initWithSpectrum:specList] autorelease];
+	
+	[_imageView setImage:[si imageRef] imageProperties:nil];
+	 
+
+}
+
 @end

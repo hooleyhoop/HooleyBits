@@ -78,6 +78,14 @@
 		73CDC86E11819B8E00091BE5 /* SpectrumResultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */; };
 		73CDC88F11819E4700091BE5 /* BufferStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */; };
 		73CDC8D11181A31200091BE5 /* HooSpectralProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */; };
+		73CDCAE81181EEA400091BE5 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7309603010E26873008B4C08 /* SHShared.framework */; };
+		73CDCBB11181F39200091BE5 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCBB01181F39200091BE5 /* Quartz.framework */; };
+		73CDCCBA1181FE9F00091BE5 /* SpectralImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDCCB91181FE9F00091BE5 /* SpectralImage.m */; };
+		73CDCCBB1181FE9F00091BE5 /* SpectralImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDCCB91181FE9F00091BE5 /* SpectralImage.m */; };
+		73CDCCCA1181FFB700091BE5 /* SpectralImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDCCC91181FFB700091BE5 /* SpectralImageTests.m */; };
+		73CDCCD21182043700091BE5 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCBB01181F39200091BE5 /* Quartz.framework */; };
+		73CDCCD51182044200091BE5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCCD41182044200091BE5 /* ApplicationServices.framework */; };
+		73CDCD9E1182044A00091BE5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCCD41182044200091BE5 /* ApplicationServices.framework */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
 		73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325301F1180497E000932A8 /* AudioFileParserTests.m */; };
 		73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
@@ -85,7 +93,6 @@
 		73F7F9C91180B7CD00DD6DB2 /* SpectrumResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */; };
 		73F7F9CD1180B88300DD6DB2 /* SpectrumResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,6 +193,11 @@
 		73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectrumResultsTests.m; path = Tests/SpectrumResultsTests.m; sourceTree = "<group>"; };
+		73CDCBB01181F39200091BE5 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		73CDCCB81181FE9F00091BE5 /* SpectralImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectralImage.h; path = src/SpectralImage.h; sourceTree = "<group>"; };
+		73CDCCB91181FE9F00091BE5 /* SpectralImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectralImage.m; path = src/SpectralImage.m; sourceTree = "<group>"; };
+		73CDCCC91181FFB700091BE5 /* SpectralImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectralImageTests.m; path = Tests/SpectralImageTests.m; sourceTree = "<group>"; };
+		73CDCCD41182044200091BE5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		73D20D2111789F0400F1E41A /* AudioQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueTests.m; path = Tests/AudioQueueTests.m; sourceTree = "<group>"; };
 		73D4A78510DFC77E0091B586 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
 		73F7F98D1180AF4000DD6DB2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = src/AppController.h; sourceTree = "<group>"; };
@@ -210,6 +222,8 @@
 				730960EF10E26A6C008B4C08 /* vecLib.framework in Frameworks */,
 				738111B810E3D19100D73143 /* CoreServices.framework in Frameworks */,
 				738111B910E3D19200D73143 /* QuartzCore.framework in Frameworks */,
+				73CDCCD21182043700091BE5 /* Quartz.framework in Frameworks */,
+				73CDCD9E1182044A00091BE5 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +231,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				73CB05D910DBE28600AE25C8 /* AudioToolbox.framework in Frameworks */,
 				73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */,
 				73CB05DD10DBE28600AE25C8 /* CoreAudio.framework in Frameworks */,
@@ -225,6 +238,9 @@
 				73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */,
 				736395D510E0DB7700F74307 /* QuartzCore.framework in Frameworks */,
 				736395D910E0DB8100F74307 /* CoreServices.framework in Frameworks */,
+				73CDCAE81181EEA400091BE5 /* SHShared.framework in Frameworks */,
+				73CDCBB11181F39200091BE5 /* Quartz.framework in Frameworks */,
+				73CDCCD51182044200091BE5 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +267,8 @@
 				7325307211804CCF000932A8 /* HooSpectralProcessor.m */,
 				73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */,
 				73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */,
+				73CDCCB81181FE9F00091BE5 /* SpectralImage.h */,
+				73CDCCB91181FE9F00091BE5 /* SpectralImage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -258,6 +276,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73CDCCD41182044200091BE5 /* ApplicationServices.framework */,
+				73CDCBB01181F39200091BE5 /* Quartz.framework */,
 				736395D410E0DB7700F74307 /* QuartzCore.framework */,
 				736395D810E0DB8100F74307 /* CoreServices.framework */,
 				7309603010E26873008B4C08 /* SHShared.framework */,
@@ -346,6 +366,7 @@
 				734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */,
 				7325301F1180497E000932A8 /* AudioFileParserTests.m */,
 				73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */,
+				73CDCCC91181FFB700091BE5 /* SpectralImageTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -594,6 +615,8 @@
 				73CDC86E11819B8E00091BE5 /* SpectrumResultsTests.m in Sources */,
 				73CDC88F11819E4700091BE5 /* BufferStoreTests.m in Sources */,
 				73CDC8D11181A31200091BE5 /* HooSpectralProcessorTests.m in Sources */,
+				73CDCCBA1181FE9F00091BE5 /* SpectralImage.m in Sources */,
+				73CDCCCA1181FFB700091BE5 /* SpectralImageTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +652,7 @@
 				7325307911804CE2000932A8 /* main.m in Sources */,
 				73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */,
 				73F7F9C91180B7CD00DD6DB2 /* SpectrumResults.m in Sources */,
+				73CDCCBB1181FE9F00091BE5 /* SpectralImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +742,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AudioFileParser_Prefix.pch;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = AudioFileParser;
 			};

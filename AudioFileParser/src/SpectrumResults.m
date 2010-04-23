@@ -118,4 +118,8 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 	return CFDictionaryGetCount(_spectraDict);
 }
 
+- (struct HooSpectralBufferList *)frameAtIndex:(NSUInteger)arg {
+	
+}
+
 @end
