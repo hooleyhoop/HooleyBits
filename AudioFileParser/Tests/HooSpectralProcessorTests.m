@@ -191,9 +191,9 @@ BOOL _dSPSplitComplexCompare( DSPSplitComplex *data1, DSPSplitComplex *data2 ) {
 	
 	
 	// process the test data and (hopefully) receive callback - _complexOutputData2 is filled via our callback	
-	
+	NSUInteger startCallbackCount = _callbackCount;
 	[hooSpectralProcessor processForwards:1024 :&testDataInBufferList];
-	STAssertTrue( _callbackCount==1, @"oops, did we callback with our data?");
+	STAssertTrue( _callbackCount==(startCallbackCount+1), @"oops, did we callback with our data?");
 	
 	// not going to work becuase hooSpectralProcessor is windowed
 	// STAssertTrue( _dSPSplitComplexCompare( complexOutputData1, _complexOutputData2 ), nil );
@@ -235,7 +235,49 @@ BOOL _dSPSplitComplexCompare( DSPSplitComplex *data1, DSPSplitComplex *data2 ) {
 	}
 }
 
+- (void)testFlush {
+	
+	// spoof some input data
+	UInt32 fftSize = 1024;
+	UInt32 fftSizeOver2 = 512;
+	UInt32 overlapBetweenFrames = 512;
+	UInt32 numberOfChannes = 1;
+	UInt32 mMaxFramesPerSlice = 1024;
+	UInt32 numberOfResults = fftSizeOver2+1;
+	
+	// add a short buffer - shouldnt be enough to process…
+	Float32 *testInData = (Float32 *)calloc( 1000, sizeof( Float32 ) );	
+	for( UInt32 i=0; i<fftSize; i++ ) {
+		NSInteger evenOdd = i & 1; // 0,1,0,1,0,1,0,1,...
+		if(evenOdd==0)
+			evenOdd = -1.0f;
+		testInData[i] = 1.0f*evenOdd;
+	}
+	
+	HooSpectralProcessor *hooSpectralProcessor = [[[HooSpectralProcessor alloc] init:fftSize :overlapBetweenFrames :numberOfChannes :mMaxFramesPerSlice] autorelease];
+	
+	// sheesh! wrap our data in an AudioBufferList
+	struct AudioBufferList testDataInBufferList;
+	testDataInBufferList.mNumberBuffers = 1;
+	
+	//	struct AudioBuffer testData_audioBuf;
+	//	testDataInBufferList.mBuffers[0] = testData_audioBuf;
+	
+	testDataInBufferList.mBuffers[0].mNumberChannels = 1;
+	testDataInBufferList.mBuffers[0].mDataByteSize = 1024;
+	testDataInBufferList.mBuffers[0].mData = testInData;
+	
+	// process the test data and (hopefully) receive callback - _complexOutputData2 is filled via our callback	
+	NSUInteger startCallbackCount = _callbackCount;	
+	[hooSpectralProcessor setDelegate:self];
+	[hooSpectralProcessor processForwards:1000 :&testDataInBufferList];
+	STAssertTrue( _callbackCount==startCallbackCount, @"ohow can we, we didnt have enough frames?");	
 
+	[hooSpectralProcessor flushForward];
+	STAssertTrue( _callbackCount==(startCallbackCount+1), @"we shoud have padded with zeros and done what we had (if we had any at all)");	
+	
+	free( testInData );	
+}
 
 
 @end

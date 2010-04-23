@@ -13,9 +13,12 @@
 
 	HooSpectralProcessor	*_spectralProcessor;
 	BufferStore				*_bufferStore;
+	
+	CFMutableDictionaryRef	_spectraDict;
 }
 
 - (id)initWithFormattedData:(BufferStore *)arg;
 - (void)processInputData;
+- (NSUInteger)frameCount;
 
 @end

@@ -167,17 +167,18 @@ static ExtAudioFileRef captureFile;
 	dstFormat.mBitsPerChannel = 16;
 	dstFormat.mBytesPerPacket = dstFormat.mBytesPerFrame = 2 * dstFormat.mChannelsPerFrame;
 	dstFormat.mFramesPerPacket = 1;
-	AudioChannelLayout* chanLayout = [[AudioFileParser afp] inputChannelLayout];
-	NSAssert( nil!=chanLayout, @"fuck" );
-	OSStatus result = ExtAudioFileCreateWithURL( url, kAudioFileCAFType, &dstFormat, chanLayout, kAudioFileFlags_EraseFile, &captureFile );
+	OSStatus result = noErr;
+//eek	AudioChannelLayout *chanLayout = [[AudioFileParser afp] inputChannelLayout];
+//eek	NSAssert( nil!=chanLayout, @"fuck" );
+//eek	result = ExtAudioFileCreateWithURL( url, kAudioFileCAFType, &dstFormat, chanLayout, kAudioFileFlags_EraseFile, &captureFile );
 	if(result!=noErr)
 	[NSException raise:@"ExtAudioFileCreateWithURL" format:@""];
 	CFRelease (url);
 
 	// set the capture file's client format to be the canonical format from the queue
-	AudioStreamBasicDescription *captureFormat = [[AudioFileParser afp] captureFormat];
-	NSAssert( nil!=captureFormat, @"fuck" );
-	result = ExtAudioFileSetProperty( captureFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), captureFormat );
+//eek	AudioStreamBasicDescription *captureFormat = [[AudioFileParser afp] captureFormat];
+//eek	NSAssert( nil!=captureFormat, @"fuck" );
+//eek	result = ExtAudioFileSetProperty( captureFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), captureFormat );
 	if(result!=noErr)
 		[NSException raise:@"set ExtAudioFile client format" format:@""];
 }

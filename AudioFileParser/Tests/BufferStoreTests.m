@@ -316,6 +316,16 @@
 	freeHooAudioBuffer(hooBuff1);
 }
 
+- (void)testFrameCount {
+	
+	[_testStore setBlockSize:4];
+	struct HooAudioBuffer *hooBuff1 = newHooAudioBuffer(11,0);
+	[_testStore addFrames:11 :hooBuff1];
+	[_testStore closeInput];
+	STAssertTrue( 3==[_testStore numberOfWholeBuffers], @"oops %i", [_testStore numberOfWholeBuffers] );
+	
+	freeHooAudioBuffer(hooBuff1);
+}
 
 //- (void)testOverlappingRead {
 //	

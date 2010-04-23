@@ -75,6 +75,9 @@
 		73CB05DB10DBE28600AE25C8 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */; };
 		73CB05DD10DBE28600AE25C8 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */; };
 		73CB05DF10DBE28600AE25C8 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */; };
+		73CDC86E11819B8E00091BE5 /* SpectrumResultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */; };
+		73CDC88F11819E4700091BE5 /* BufferStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7309601310E26779008B4C08 /* BufferStoreTests.m */; };
+		73CDC8D11181A31200091BE5 /* HooSpectralProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
 		73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325301F1180497E000932A8 /* AudioFileParserTests.m */; };
 		73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
@@ -182,6 +185,7 @@
 		73CB05DA10DBE28600AE25C8 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		73CB05DC10DBE28600AE25C8 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		73CB05DE10DBE28600AE25C8 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectrumResultsTests.m; path = Tests/SpectrumResultsTests.m; sourceTree = "<group>"; };
 		73D20D2111789F0400F1E41A /* AudioQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueTests.m; path = Tests/AudioQueueTests.m; sourceTree = "<group>"; };
 		73D4A78510DFC77E0091B586 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
 		73F7F98D1180AF4000DD6DB2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = src/AppController.h; sourceTree = "<group>"; };
@@ -230,8 +234,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */,
-				73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */,
 				7325302311804B38000932A8 /* OffLineAudioQueueCallbackProtocol.h */,
 				73F7F98D1180AF4000DD6DB2 /* AppController.h */,
 				73F7F98E1180AF4000DD6DB2 /* AppController.m */,
@@ -247,6 +249,8 @@
 				7325306D11804CC5000932A8 /* OfflineAudioQueueWrapper.m */,
 				7325307311804CCF000932A8 /* HooSpectralProcessor.h */,
 				7325307211804CCF000932A8 /* HooSpectralProcessor.m */,
+				73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */,
+				73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -341,6 +345,7 @@
 				73D20D2111789F0400F1E41A /* AudioQueueTests.m */,
 				734A9587117E1824009F90B4 /* HooSpectralProcessorTests.m */,
 				7325301F1180497E000932A8 /* AudioFileParserTests.m */,
+				73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -586,6 +591,9 @@
 				73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */,
 				73F7F99B1180B3BF00DD6DB2 /* AppController.m in Sources */,
 				73F7F9CD1180B88300DD6DB2 /* SpectrumResults.m in Sources */,
+				73CDC86E11819B8E00091BE5 /* SpectrumResultsTests.m in Sources */,
+				73CDC88F11819E4700091BE5 /* BufferStoreTests.m in Sources */,
+				73CDC8D11181A31200091BE5 /* HooSpectralProcessorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,7 +719,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AudioFileParser_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = AudioFileParser;
 			};

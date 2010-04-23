@@ -56,7 +56,7 @@
 	
 	// make sure bufferstore flushes
 	NSInvocation *completActionInv;
-	[[NSInvocation makeRetainedInvocationWithTarget:_bufferStore invocationOut:&completActionInv] noMoreData];
+	[[NSInvocation makeRetainedInvocationWithTarget:_bufferStore invocationOut:&completActionInv] closeInput];
 	[afp setAQ_completeCallbackCustomInv: completActionInv ];
 	
 	[afp processInputFile];
@@ -66,7 +66,8 @@
 	[spectroResults processInputData];
 	[_bufferStore release];
 
-	-- now we can get frames from spectroResults and render them to a movie!
+	// -- now we can get frames from spectroResults and render them to a movie!
+	NSAssert( [spectroResults frameCount]==([_bufferStore numberOfWholeBuffers]*2 - 1),  nil);
 	
 	[spectroResults release];
 	

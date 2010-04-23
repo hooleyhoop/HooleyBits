@@ -18,8 +18,6 @@
 }
 
 - (void)addFrames:(NSUInteger)frameCount :(struct HooAudioBuffer *)inputBuffer;
-- (void)noMoreData;
-
 - (void)closeInput;
 
 - (void)resetReading;

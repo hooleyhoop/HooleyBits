@@ -106,7 +106,8 @@ extern UInt32 NextPowerOfTwo(UInt32 x);
 	{
 		UInt32 firstPartBytes = firstPart * sizeof(Float32);
 		UInt32 secondPartBytes = numBytes - firstPartBytes;
-		for (UInt32 i=0; i<mNumChannels; ++i) {
+		for( UInt32 i=0; i<mNumChannels; ++i )
+		{
 			// fill to the end of the ring buffer?
 			memcpy( mChannels[i].mInputBuf + mInputPos, inInput->mBuffers[i].mData, firstPartBytes );
 			// fill the remainder to the end of the ringbuffer?
@@ -128,7 +129,8 @@ extern UInt32 NextPowerOfTwo(UInt32 x);
 
 	UInt32 firstPart = mIOBufSize - mInFFTPos;
 	UInt32 firstPartBytes = firstPart * sizeof(Float32);
-	if( firstPartBytes < mFFTByteSize ) {
+	if( firstPartBytes < mFFTByteSize )
+	{
 		UInt32 secondPartBytes = mFFTByteSize - firstPartBytes;
 		for (UInt32 i=0; i<mNumChannels; ++i) {
 			memcpy( mChannels[i].mFFTBuf, mChannels[i].mInputBuf + mInFFTPos, firstPartBytes );
@@ -216,7 +218,7 @@ extern UInt32 NextPowerOfTwo(UInt32 x);
 		UInt32 firstPartBytes = firstPart * sizeof(Float32);
 		UInt32 secondPartBytes = numBytes - firstPartBytes;
 		for (UInt32 i=0; i<mNumChannels; ++i) {
-			memcpy(outOutput->mBuffers[i].mData, mChannels[i].mOutputBuf + mOutputPos, firstPartBytes);
+			memcpy( outOutput->mBuffers[i].mData, mChannels[i].mOutputBuf + mOutputPos, firstPartBytes);
 			memcpy((UInt8*)outOutput->mBuffers[i].mData + firstPartBytes, mChannels[i].mOutputBuf, secondPartBytes);
 			memset(mChannels[i].mOutputBuf + mOutputPos, 0, firstPartBytes);
 			memset(mChannels[i].mOutputBuf, 0, secondPartBytes);
@@ -288,6 +290,29 @@ extern UInt32 NextPowerOfTwo(UInt32 x);
 	
 	// copy from output buffer to buffer list
 	[self copyOutput:inNumFrames :outOutput];
+}
+
+- (void)flushForward {
+
+//	-- how can i check that i have no frames left to process?
+	if( mInputSize )
+	{
+		NSUInteger framesToAdd = mFFTSize-mInputSize;
+		Float32 *zeroMemory = (Float32 *)calloc( framesToAdd, sizeof( Float32 ) );
+		
+		struct AudioBufferList *zeroBufferToFillToEnd;
+		zeroBufferToFillToEnd = malloc( sizeof *zeroBufferToFillToEnd + (mNumChannels - 1) * sizeof zeroBufferToFillToEnd->mBuffers[0] );
+		zeroBufferToFillToEnd->mNumberBuffers = mNumChannels;
+
+		for( UInt32 i=0; i<mNumChannels; ++i )
+		{
+			zeroBufferToFillToEnd->mBuffers[i].mNumberChannels = mNumChannels;
+			zeroBufferToFillToEnd->mBuffers[i].mDataByteSize = framesToAdd;
+			zeroBufferToFillToEnd->mBuffers[i].mData = zeroMemory;
+		}
+
+		[self processForwards:framesToAdd :zeroBufferToFillToEnd];
+	}
 }
 
 @end

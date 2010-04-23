@@ -63,5 +63,6 @@ struct HooSpectralBufferList
 - (void)process:(UInt32)inNumFrames :(AudioBufferList *)inInput :(AudioBufferList *)outOutput;
 - (BOOL)processForwards:(UInt32)inNumFrames :(AudioBufferList *)inInput;
 - (BOOL)processBackwards:(UInt32)inNumFrames :(AudioBufferList *)outOutput;
+- (void)flushForward;
 
 @end
