@@ -28,17 +28,13 @@
 	[_testHelper release];
 }
 
-//-- send to GUIFiddler applescript to call and arguments - return Notification to call with results
-//-- GUIFiddler runs appescript and sends a return Notification with result
-//-- assert the result is what we expected
-- (void)testShit {
-	
-	// move to subclass? when working
-	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+- (void)atestMenuItems { 
 
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	
 	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
 	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
-
+	
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
 	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
@@ -48,9 +44,54 @@
 	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
 	
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
-
+	
 	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	
+	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+}
+
+- (void)testDropDownMenuButton {
+
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	
+	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+	
+	[_testHelper aSyncAssertEqual:[GUITestProxy dropDownMenuButtonText] :@"male" ];
+
+	
+	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+}
+
+//-- send to GUIFiddler applescript to call and arguments - return Notification to call with results
+//-- GUIFiddler runs appescript and sends a return Notification with result
+//-- assert the result is what we expected
+- (void)testShit {
+	
+	// move to subclass? when working
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+
+//	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+//	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+//
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+//	
+//	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+//	
+//	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+//	
+//	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+//	
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+//
+//	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 		
 //	[_testHelper aSync:[GUITestProxy wait]];
 
