@@ -15,13 +15,13 @@
 		7382F58010F89B6500691006 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
 		7384E12910FBBB0D0077D202 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7384E12810FBBB0D0077D202 /* ApplicationServices.framework */; };
 		7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7384E13D10FBBB930077D202 /* Carbon.framework */; };
-		7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		738BE6C41121DF0E0028EB59 /* NSApplication+ScriptingExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 738BE6C31121DF0E0028EB59 /* NSApplication+ScriptingExtras.m */; };
 		73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73B361D01116E6050064AF28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B361CF1116E6050064AF28 /* AppDelegate.m */; };
 		73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		73BC210B11079F7E007C33AE /* InAppTests.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 73BC210A11079F7E007C33AE /* InAppTests.sdef */; };
 		73BC21181107A6F3007C33AE /* NSSayScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BC21171107A6F3007C33AE /* NSSayScriptCommand.m */; };
+		73C8285F1187342300451EF9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
 		73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
 		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
@@ -29,7 +29,6 @@
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
 		73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
-		73E2135111582E0E00F4007E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -83,13 +82,6 @@
 			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88;
-			remoteInfo = SHTestUtilities;
-		};
-		7385A69010FCDB7500ED053F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
 		73B051C21168EF160054CE44 /* PBXContainerItemProxy */ = {
@@ -166,7 +158,6 @@
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		730D4E8610FC9B5900E0F81C /* GUIFiddler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GUIFiddler; sourceTree = BUILT_PRODUCTS_DIR; };
 		735AB32E10F5F3B1008378AA /* AunitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AunitTest.m; path = Src/AunitTest.m; sourceTree = "<group>"; };
 		735AB37F10F5F641008378AA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7364E1FF10F65BC2002B5E45 /* AppKitScripting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKitScripting.framework; path = System/Library/Frameworks/AppKitScripting.framework; sourceTree = SDKROOT; };
@@ -209,14 +200,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		730D4E8410FC9B5900E0F81C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7385A69210FCDB7F00ED053F /* SHTestUtilities.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		73880A841126BF6300081774 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,7 +222,7 @@
 				73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */,
 				73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */,
 				73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */,
-				73E2135111582E0E00F4007E /* SenTestingKit.framework in Frameworks */,
+				73C8285F1187342300451EF9 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* InAppTests.app */,
-				730D4E8610FC9B5900E0F81C /* GUIFiddler */,
 				73880A871126BF6300081774 /* TestTests.octest */,
 			);
 			name = Products;
@@ -432,23 +414,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		730D4E8510FC9B5900E0F81C /* GUIFiddler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 730D4E9C10FC9B8A00E0F81C /* Build configuration list for PBXNativeTarget "GUIFiddler" */;
-			buildPhases = (
-				730D4E8310FC9B5900E0F81C /* Sources */,
-				730D4E8410FC9B5900E0F81C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7385A69110FCDB7500ED053F /* PBXTargetDependency */,
-			);
-			name = GUIFiddler;
-			productName = GUIFiddler;
-			productReference = 730D4E8610FC9B5900E0F81C /* GUIFiddler */;
-			productType = "com.apple.product-type.tool";
-		};
 		73880A861126BF6300081774 /* TestTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 73880A8B1126BF6400081774 /* Build configuration list for PBXNativeTarget "TestTests" */;
@@ -513,7 +478,6 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* InAppTests */,
-				730D4E8510FC9B5900E0F81C /* GUIFiddler */,
 				73880A861126BF6300081774 /* TestTests */,
 			);
 		};
@@ -624,13 +588,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		730D4E8310FC9B5900E0F81C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		73880A831126BF6300081774 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -656,11 +613,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7385A69110FCDB7500ED053F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHTestUtilities;
-			targetProxy = 7385A69010FCDB7500ED053F /* PBXContainerItemProxy */;
-		};
 		73E2149C11582FCF00F4007E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SHShared;
@@ -719,30 +671,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		730D4E8810FC9B5A00E0F81C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73880AB71126C01F00081774 /* Target-CocoaDaemon.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Blake/build/Debug\"",
-				);
-				PRODUCT_NAME = GUIFiddler;
-			};
-			name = Debug;
-		};
-		730D4E8910FC9B5A00E0F81C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73880AB71126C01F00081774 /* Target-CocoaDaemon.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Blake/build/Debug\"",
-				);
-				PRODUCT_NAME = GUIFiddler;
-			};
-			name = Release;
-		};
 		73880A891126BF6400081774 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73880AB21126BF9000081774 /* Target-TestBundle.xcconfig */;
@@ -815,15 +743,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		730D4E9C10FC9B8A00E0F81C /* Build configuration list for PBXNativeTarget "GUIFiddler" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				730D4E8810FC9B5A00E0F81C /* Debug */,
-				730D4E8910FC9B5A00E0F81C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		73880A8B1126BF6400081774 /* Build configuration list for PBXNativeTarget "TestTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

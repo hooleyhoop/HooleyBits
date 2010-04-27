@@ -19,7 +19,7 @@
 
 	id testProbeClass = NSClassFromString(@"HooAsyncTestRunner");
 	if (testProbeClass != nil) {
-		[testProbeClass performSelector:@selector(runTestsInBundle:) withObject:nil afterDelay:1];
+		[testProbeClass performSelector:@selector(runTestsInBundle:) withObject:[NSBundle bundleForClass:[self class]] afterDelay:1];
 	}
 }
 
