@@ -24,6 +24,9 @@
 - (void)tearDown {
 	
 }
+// 8 by 8 (64) fft results in
+// = 64 actual results, packed wierdly
+//
 
 //	8 * 8 image
 //	do each row at a time

@@ -89,8 +89,8 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 
 	for( NSUInteger i=0; i<inSpectra->mNumberSpectra; i++ )
 	{
-		Float32 val1 = inSpectra->mDSPSplitComplex[i].realp[0];
-		Float32 val2 = inSpectra->mDSPSplitComplex[i].imagp[0];
+		Float32 val1 = inSpectra->mDSPSplitComplex[i].realp[6];
+		Float32 val2 = inSpectra->mDSPSplitComplex[i].imagp[6];
 		
 		float *realp_cpy = malloc( sizeof(Float32) * 513 );
 		float *imagp_cpy = malloc( sizeof(Float32) * 513 );
@@ -99,11 +99,17 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 		memcpy( realp_cpy, complexData->realp, 512*sizeof(Float32) );
 		memcpy( imagp_cpy, complexData->imagp, 512*sizeof(Float32) );
 		
+		// unpack the data we have 513 complex values packed into 512 value
+		// see http://developer.apple.com/mac/library/documentation/Performance/Conceptual/vDSP_Programming_Guide/UsingFourierTransforms/UsingFourierTransforms.html#//apple_ref/doc/uid/TP40005147-CH202-15398
+		realp_cpy[512] = imagp_cpy[0];
+		imagp_cpy[512] = 0;
+		imagp_cpy[0] = 0;
+		
 		spectraCpy->mDSPSplitComplex[i].realp = realp_cpy;
 		spectraCpy->mDSPSplitComplex[i].imagp = imagp_cpy;
 		
-		Float32 val3 = spectraCpy->mDSPSplitComplex[i].realp[0];
-		Float32 val4 = spectraCpy->mDSPSplitComplex[i].imagp[0];
+		Float32 val3 = spectraCpy->mDSPSplitComplex[i].realp[6];
+		Float32 val4 = spectraCpy->mDSPSplitComplex[i].imagp[6];
 		
 		NSAssert( G3DCompareFloat(val1, val3, 0.001f)==0, nil );
 		NSAssert( G3DCompareFloat(val2, val4, 0.001f)==0, nil );
@@ -119,7 +125,10 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 }
 
 - (struct HooSpectralBufferList *)frameAtIndex:(NSUInteger)arg {
-	
+
+	NSNumber *key = [NSNumber numberWithInteger:arg];
+	NSAssert(CFDictionaryContainsKey(_spectraDict,key), @"Must use valid key");
+	return (struct HooSpectralBufferList *)CFDictionaryGetValue(_spectraDict,key);
 }
 
 @end

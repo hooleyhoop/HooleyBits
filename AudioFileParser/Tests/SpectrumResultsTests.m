@@ -9,6 +9,7 @@
 #import "SpectrumResults.h"
 #import "BufferStore.h"
 #import <SHShared/SHShared.h>
+#import "HooSpectralProcessor.h"
 
 @interface SpectrumResultsTests : SenTestCase {
 	
@@ -54,7 +55,8 @@
 	STAssertTrue([_specResults frameCount]==2, nil);
 	
 	struct HooSpectralBufferList *aFrame = [_specResults frameAtIndex:0];
-
+	STAssertTrue( aFrame->mNumberSpectra==1, @"doh");
+	
 	[_mockData verify];
 }
 
