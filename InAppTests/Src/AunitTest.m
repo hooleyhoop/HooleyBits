@@ -28,7 +28,7 @@
 	[_testHelper release];
 }
 
-- (void)atestMenuItems { 
+- (void)testMenuItems { 
 
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 	
@@ -51,7 +51,7 @@
 	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
-- (void)testDropDownMenuButton {
+- (void)aaaatestDropDownMenuButton {
 
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
 	
@@ -62,7 +62,8 @@
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
 	
 	[_testHelper aSyncAssertEqual:[GUITestProxy dropDownMenuButtonText] :@"male" ];
-
+	[_testHelper aSync:[GUITestProxy selectPopUpButtonItem:@"female"]];
+	[_testHelper aSyncAssertEqual:[GUITestProxy dropDownMenuButtonText] :@"female" ];
 	
 	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
@@ -72,7 +73,7 @@
 //-- send to GUIFiddler applescript to call and arguments - return Notification to call with results
 //-- GUIFiddler runs appescript and sends a return Notification with result
 //-- assert the result is what we expected
-- (void)testShit {
+- (void)disabled_testShit {
 	
 	// move to subclass? when working
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
