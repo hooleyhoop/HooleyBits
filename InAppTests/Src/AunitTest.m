@@ -28,6 +28,23 @@
 	[_testHelper release];
 }
 
+- (void)_singleDocSetup {
+
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+}
+
+- (void)_singleDoctearDown {
+	
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+}
+
 - (void)testMenuItems { 
 
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
@@ -37,15 +54,15 @@
 	
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
-	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
 	
-	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
 	
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
 	
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
 	
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	
 	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
@@ -53,21 +70,26 @@
 
 - (void)aaaatestDropDownMenuButton {
 
-	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	[self _singleDocSetup];
 	
-	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+	NSString *windowName = @"Untitled";
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"male" ];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy selectPopUpButtonItem:@"female" window:windowName]];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"female" ];
+
+	[self _singleDoctearDown];
+}
+
+- (void)testTextField {
 	
-	[_testHelper aSyncAssertEqual:[GUITestProxy dropDownMenuButtonText] :@"male" ];
-	[_testHelper aSync:[GUITestProxy selectPopUpButtonItem:@"female"]];
-	[_testHelper aSyncAssertEqual:[GUITestProxy dropDownMenuButtonText] :@"female" ];
+	[self _singleDocSetup];
+
+	NSString *windowName = @"Untitled";
+	[_testHelper aSync:[GUI_ApplescriptTestProxy setValueOfTextfield:1 ofWindow:windowName toValue:@"dirtbag"]];
+	[_testHelper aSyncAssertNotEqual:[GUI_ApplescriptTestProxy getValueOfTextField:1 ofWindow:windowName] :@"crotch" ];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy getValueOfTextField:1 ofWindow:windowName] :@"dirtbag" ];
 	
-	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+	[self _singleDoctearDown];
 }
 
 //-- send to GUIFiddler applescript to call and arguments - return Notification to call with results
@@ -83,31 +105,31 @@
 //
 //	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 //	
-//	[_testHelper aSyncAssertTrue:[GUITestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+//	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
 //	
-//	[_testHelper aSyncAssertFalse:[GUITestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+//	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
 //	
-//	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"New"]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
 //	
 //	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
 //
-//	[_testHelper aSync:[GUITestProxy doMenu:@"File" item:@"Close"]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
 //	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 		
 //	[_testHelper aSync:[GUITestProxy wait]];
 
-//	[_testHelper aSync:[GUITestProxy openMainMenuItem:@"File"]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy openMainMenuItem:@"File"]];
 //	[_testHelper aSync:[GUITestProxy wait]];
 
 // 	STAssertTrue( 0==[[dc documents] count], @"should have made a new doc" );
 
-//	[_testHelper aSync:[GUITestProxy closeMainMenuItem:@"File"]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy closeMainMenuItem:@"File"]];
 
 
 	
-//	[_testHelper aSync:[GUITestProxy selectItems2And3]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectItems2And3]];
 
-//	[_testHelper aSync:[GUITestProxy dropFileOnTableView]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy dropFileOnTableView]];
 
 
 //	STFail(@"ARRRRRRRRRRRGGGGGGGGGGGGGGGGGGGG");
