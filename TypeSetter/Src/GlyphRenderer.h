@@ -27,4 +27,6 @@
 
 - (CGImageRef)glyphImage;
 
+- (void)inspectFont:(NSString *)fontName glyph:(NSString *)glyph size:(CGFloat)size;
+
 @end

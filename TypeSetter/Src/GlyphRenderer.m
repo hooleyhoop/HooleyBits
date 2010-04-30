@@ -975,5 +975,35 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
     return CTFontCreateCopyWithFamily(iFont, 0.0f, NULL, iFamily);
 }
 
+- (void)inspectFont:(NSString *)fontName glyph:(NSString *)iString size:(CGFloat)size {
+	
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, size );
+	CTFontRef iFont = CreateFont( fdesc, size );
+	assert(iFont != NULL && iString != NULL);
+    NSUInteger count = [iString length];
+	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+    assert( characters != NULL );
+    assert(glyphs != NULL);
+    CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );
+	CTFontGetGlyphsForCharacters( iFont, characters, glyphs, count );
+
+	CGGlyph glyph1 = glyphs[0];
+	CGGlyph glyph2 = glyphs[1];
+
+	CGPathRef glyphPath1 = CTFontCreatePathForGlyph( iFont, glyph1, NULL );
+	CGPathRef glyphPath2 = CTFontCreatePathForGlyph( iFont, glyph2, NULL );
+
+	CGRect boundingRects[2];
+	CGSize advances[2];
+	CGRect glyph1BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, boundingRects, count ); // -0.72, 0 <> 25.692, 25.29
+	double advance = CTFontGetAdvancesForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, advances, count );	// 24.1523
+	CGSize advance0 = advances[0]; // 24.15
+	CGSize advance1 = advances[1]; //23.99
+	free(characters);
+	free(glyphs);
+	CFRelease(fdesc);
+	CFRelease(iFont);
+}
 
 @end

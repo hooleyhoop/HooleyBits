@@ -117,7 +117,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 		CGImageRelease( glyphImage );
 	}
 	
-	
+	// question
+	[gr inspectFont:@"Georgia" glyph:@"AV" size:36];
+	[gr inspectFont:@"Georgia" glyph:@"AA" size:36];
 	
 	/* 
 	 *
