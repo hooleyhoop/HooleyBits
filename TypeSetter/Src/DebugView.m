@@ -118,8 +118,10 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	}
 	
 	// question
-	[gr inspectFont:@"Georgia" glyph:@"AV" size:36];
-	[gr inspectFont:@"Georgia" glyph:@"AA" size:36];
+	// [gr inspectFont:@"FreeSans" glyph:@"AB" size:36];
+	// [gr inspectFont:@"FreeSans" glyph:@"AC" size:36]; // c is offset left
+	// [gr inspectFont:@"FreeSans" glyph:@"AD" size:36]; // D is kerned left
+	// [gr inspectFont:@"FreeSans" glyph:@"AE" size:36]; // e is offset right
 	
 	/* 
 	 *
@@ -129,8 +131,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	*/
 	NSString *textToDraw = [[self.window windowController] textToDraw];
 
-//	[gr drawNonOverlappingGlphs:textToDraw inContext:context];
-	[gr randomFont_drawNonOverlappingGlphs:textToDraw inContext:context];
+//1	[gr drawNonOverlappingGlphs:textToDraw inContext:context];
+//2	[gr randomFont_drawNonOverlappingGlphs:textToDraw inContext:context];
+	[gr drawWithSuggestedAdvance:@"FreeSans" text:textToDraw inContext:context];
 
 //	[gr testOverlapDrawing:context];
 

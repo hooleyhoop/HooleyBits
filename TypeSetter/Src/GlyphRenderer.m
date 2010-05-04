@@ -286,6 +286,113 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGColorRelease(rectCol);
 }
 
+- (void)drawWithSuggestedAdvance:(NSString *)fontName text:(NSString *)iString inContext:(CGContextRef)windowContext {
+
+	NSParameterAssert(fontName);
+	NSParameterAssert(iString);
+	NSParameterAssert(windowContext);
+	
+	// get font and string
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, 72.0f ); 
+	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+    assert(iFont != NULL && iString != NULL);
+	
+    // Get our string length.
+    NSUInteger count = [iString length];
+	
+    // Allocate our buffers for characters and glyphs.
+	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+    assert( characters != NULL );
+    assert( glyphs != NULL );
+	
+    // Get the characters from the string.
+    CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );
+	CTFontGetGlyphsForCharacters( iFont, characters, glyphs, count );
+	
+	CGFloat targetHeight = 400.f;
+	CGRect fontBoundsBox = CTFontGetBoundingBox( iFont ); // -- need the descender and every fucking thing! grrrr!
+	
+	CGFloat fontHeight = fontBoundsBox.size.height; // 122.554688
+	CGFloat glyphScale = targetHeight / fontHeight; // 3.26384902
+	if( glyphScale<1.0f )
+		glyphScale = 1.0f;
+	
+	CGFloat pixelWidth = 1.0f/glyphScale;
+	
+	CGFloat scaledFontHeight = ceilf( glyphScale * fontHeight);
+	
+	// prepare context
+	CGContextSetAllowsAntialiasing( windowContext, true );
+	CGContextSetInterpolationQuality( windowContext, kCGInterpolationNone );
+	
+	CGColorRef rectCol = CGColorCreateGenericRGB( 0.3f, 0.3f, 1.0f, 0.5f );
+	CGColorRef redCol = CGColorCreateGenericRGB( 1.0f, 0.0f, 0.0f, 0.5f );
+	CGColorRef greenCol = CGColorCreateGenericRGB( 0.0f, 1.0f, 0.0f, 0.5f );
+	CGColorRef blackCol = CGColorCreateGenericRGB( 0.0f, 0.0f, 0.0f, 0.8f );
+	
+	CGContextScaleCTM( windowContext, glyphScale, glyphScale );
+	
+	// need black background!
+	CGContextSetFillColorWithColor( windowContext, blackCol );
+	CGContextFillRect( windowContext, CGRectMake(0.0f,0.0f,1000.0f, 1000.0f));
+	
+	CGPoint startPos = alignPointToUserSpace( windowContext, CGPointMake( 0, -fontBoundsBox.origin.y ) );
+	CGContextTranslateCTM( windowContext, startPos.x, startPos.y );	
+	
+	CGSize advances[count];
+	CTFontGetAdvancesForGlyphs( iFont, kCTFontDefaultOrientation, glyphs, advances, count );
+
+	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionNoOptions );
+	uint8_t panose[10];
+    CFDataGetBytes(os2Table, (CFRange){ 32, 10 }, panose);
+	CFRelease(kernTable);
+	
+	// draw each glyph
+	for( NSUInteger glyphIndex=0; glyphIndex<count; glyphIndex++ ) {
+		
+		CGGlyph glyphToPaint = glyphs[glyphIndex];
+//		CGRect glyphToPaintBoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyphToPaint, NULL, 1 );
+		CGPathRef glyphToPaint_path = CTFontCreatePathForGlyph( iFont, glyphToPaint, NULL );
+		
+		CGFloat advance = advances[glyphIndex].width;
+		
+		// translate bounding box (rect comprising font height and glyph width) to zero - of course everything is now scaled, no need to compensate
+	//	CGPoint originPos = ( windowContext, CGPointMake( -glyphToPaintBoundingBox.origin.x, 0 ) );
+	//	CGContextTranslateCTM( windowContext, originPos.x, originPos.y );	
+		
+		// draw glyph body
+		CGContextAddRect( windowContext, CGRectMake( 0, fontBoundsBox.origin.y, advance, fontBoundsBox.size.height ) );
+		CGContextSetFillColorWithColor( windowContext, rectCol );
+		//		CGContextFillPath( windowContext );		
+		
+		
+		// draw glyph1
+		CGContextAddPath( windowContext, glyphToPaint_path );
+		CGContextSetFillColorWithColor( windowContext, redCol );
+		CGContextFillPath( windowContext );		
+		
+		// TODO: This makes no sense..
+//		originPos = ( windowContext, CGPointMake( glyphToPaintBoundingBox.size.width + pixelWidth*1.1, 0 ) );
+//		CGContextTranslateCTM( windowContext, originPos.x, originPos.y );
+		
+		// hmm - no overlap!
+		CGContextTranslateCTM( windowContext, advance, 0 );
+		
+		CGPathRelease(glyphToPaint_path);
+	}
+	
+	CGColorRelease(blackCol);
+	CGColorRelease(greenCol);
+	CGColorRelease(redCol);
+	CGColorRelease(rectCol);
+	
+	free(characters);
+	free(glyphs);
+	CFRelease(fdesc);
+	CFRelease(iFont);	
+}
+
 - (void)drawNonOverlappingGlphs:(NSString *)iString inContext:(CGContextRef)windowContext {
 	
 	NSParameterAssert(iString);
@@ -998,7 +1105,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CGSize advances[2];
 	CGRect glyph1BoundingBox = CTFontGetBoundingRectsForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, boundingRects, count ); // -0.72, 0 <> 25.692, 25.29
 	double advance = CTFontGetAdvancesForGlyphs( iFont, kCTFontDefaultOrientation, &glyph1, advances, count );	// 24.1523
-	CGSize advance0 = advances[0]; // 24.15
+	CGSize advance0 = advances[0]; // 60.7
 	CGSize advance1 = advances[1]; //23.99
 	free(characters);
 	free(glyphs);

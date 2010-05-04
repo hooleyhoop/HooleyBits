@@ -22,6 +22,8 @@
 
 - (void)drawNonOverlappingGlphs:(NSString *)str inContext:(CGContextRef)context;
 
+- (void)drawWithSuggestedAdvance:(NSString *)fontName text:(NSString *)textToDraw inContext:(CGContextRef)windowContext;
+
 - (void)testOverlapDrawing:(CGContextRef)context;
 - (void)renderAString:(CGContextRef)context;
 
