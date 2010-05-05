@@ -286,6 +286,49 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGColorRelease(rectCol);
 }
 
+- (void)useCoreText:(NSString *)fontName text:(NSString *)iString inContext:(CGContextRef)windowContext {
+	
+	// get font and string
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, 72.0f ); 
+	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+    assert(iFont != NULL && iString != NULL);
+	
+	CFStringRef keys[] = { kCTFontAttributeName };
+	CFTypeRef values[] = { iFont };
+	CFDictionaryRef attributes = CFDictionaryCreate(kCFAllocatorDefault, (const void**)&keys,
+					   (const void**)&values, sizeof(keys) / sizeof(keys[0]),
+					   &kCFTypeDictionaryKeyCallBacks,
+					   &kCFTypeDictionaryValueCallBacks);
+	
+	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:iString attributes:attributes] autorelease];
+	CFRelease(attributes);
+
+	//    CGSize textSize = CTFramesetterSuggestFrameSizeWithConstraints( framesetter, CFRangeMake(0,0), NULL, CGSizeMake(rect.size.width, CGFLOAT_MAX), NULL);
+
+	CGContextSetTextMatrix( windowContext, CGAffineTransformIdentity );
+	
+	// Initialize a rectangular path.
+	CGMutablePathRef path = CGPathCreateMutable();
+	CGRect bounds = CGRectMake(10.0f, 10.0f, 200.0f, 200.0f);
+	CGPathAddRect(path, NULL, bounds);
+	
+	// Create a color and add it as an attribute to the string.
+	CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+	CGFloat components[] = { 1.0f, 0.0f, 0.0f, 0.8f };
+	CGColorRef red = CGColorCreate(rgbColorSpace, components);
+	CGColorSpaceRelease(rgbColorSpace);
+	CFAttributedStringSetAttribute( string, CFRangeMake(0, [iString length]), kCTForegroundColorAttributeName, red);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef) string);
+	// Create the frame and draw it into the graphics context
+	CTFrameRef frame = CTFramesetterCreateFrame( framesetter, CFRangeMake(0, 0), path, NULL);
+	
+	CTFrameDraw(frame, windowContext);
+
+	CFRelease(framesetter);
+	CFRelease(frame);
+	CFRelease(iFont);
+}
+
 - (void)drawWithSuggestedAdvance:(NSString *)fontName text:(NSString *)iString inContext:(CGContextRef)windowContext {
 
 	NSParameterAssert(fontName);
@@ -343,10 +386,29 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	CGSize advances[count];
 	CTFontGetAdvancesForGlyphs( iFont, kCTFontDefaultOrientation, glyphs, advances, count );
 
-	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionNoOptions );
-	uint8_t panose[10];
-    CFDataGetBytes(os2Table, (CFRange){ 32, 10 }, panose);
-	CFRelease(kernTable);
+	// These dont seem to exist
+//	CGContextShowGlyphsWithAdvancements();
+//	CGContextShowGlyphsAtLocations
+	
+	NSArray *availableFontTables = (NSArray *)CTFontCopyAvailableTables( iFont, kCTFontTableOptionNoOptions );
+	for( CFIndex i=0; i<(CFIndex)[availableFontTables count] ; i++ ){
+		CTFontTableTag tableTag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex((CFArrayRef)availableFontTables, i);
+		CFDataRef fontTable = CTFontCopyTable( iFont, tableTag, kCTFontTableOptionNoOptions ); // kCTFontTableHdmx kCTFontTableHmtx
+		//	NSLog(@"%@", fontTable);
+		CFRelease( fontTable );
+	} 
+	// fourcc()
+
+//	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionNoOptions );
+//	Fixed version;
+//	uint32 nTables; 
+//	NSAssert1( sizeof(version) == 4 , @"dih %i", sizeof(version) );
+//	CFDataGetBytes(kernTable, CFRangeMake(0,4), &version);
+//	CFDataGetBytes(kernTable, CFRangeMake(4,4), &nTables);
+	
+//	uint8_t panose[10];
+//    CFDataGetBytes(os2Table, (CFRange){ 32, 10 }, panose);
+//	CFRelease(kernTable);
 	
 	// draw each glyph
 	for( NSUInteger glyphIndex=0; glyphIndex<count; glyphIndex++ ) {
