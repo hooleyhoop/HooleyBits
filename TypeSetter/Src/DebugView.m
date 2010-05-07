@@ -137,7 +137,7 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	// As is, doesnt use kerning. If we use the bezier wont be hinted. cant find the symbols to draaw glyphs directly
 //	[gr drawWithSuggestedAdvance:@"FreeSans" text:textToDraw inContext:context];
 
-	[gr useCoreText:@"FreeSans" text:textToDraw inContext:context];
+	[gr useCoreText:@"Georgia" text:textToDraw inContext:context];
 
 //	[gr testOverlapDrawing:context];
 

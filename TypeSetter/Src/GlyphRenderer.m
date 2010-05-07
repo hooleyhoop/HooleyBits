@@ -289,41 +289,112 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 - (void)useCoreText:(NSString *)fontName text:(NSString *)iString inContext:(CGContextRef)windowContext {
 	
 	// get font and string
-	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, 72.0f ); 
-	CTFontRef iFont = CreateFont( fdesc, 72.0f );
+	CGFloat fontPtSize = 144.0;
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, fontPtSize ); 
+	CTFontRef iFont = CreateFont( fdesc, fontPtSize );
     assert(iFont != NULL && iString != NULL);
 	
-	CFStringRef keys[] = { kCTFontAttributeName };
-	CFTypeRef values[] = { iFont };
+	// Apply your paragraph style attribute over the entire string
+	NSMutableParagraphStyle *aMutableParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	
+	// Now adjust our NSMutableParagraphStyle formatting to be whatever we want.
+	// The numeric values below are in points (72 points per inch)
+	[aMutableParagraphStyle setAlignment:NSLeftTextAlignment];
+	[aMutableParagraphStyle setLineSpacing:0.0f];
+	[aMutableParagraphStyle setParagraphSpacing:0];
+	[aMutableParagraphStyle setHeadIndent:0];
+	[aMutableParagraphStyle setTailIndent:0];
+	// setTailIndent: if negative, offset from right margin (right margin mark does
+	//      NOT appear); if positive, offset from left margin (margin mark DOES appear)
+	[aMutableParagraphStyle setFirstLineHeadIndent:0];
+	[aMutableParagraphStyle setLineBreakMode:NSLineBreakByClipping];
+	[aMutableParagraphStyle setMinimumLineHeight: 0];
+	[aMutableParagraphStyle setMaximumLineHeight: 0];
+	[aMutableParagraphStyle setLineHeightMultiple:0];
+	[aMutableParagraphStyle setParagraphSpacingBefore:0];
+	[aMutableParagraphStyle setTighteningFactorForTruncation: .01];
+	[aMutableParagraphStyle setHeaderLevel:1];
+	/*
+	 possible allignments
+	 NSLeftTextAlignment
+	 NSRightTextAlignment
+	 NSCenterTextAlignment
+	 NSJustifiedTextAlignment
+	 NSNaturalTextAlignment
+	 possible line wraps
+	 NSLineBreakByWordWrapping
+	 NSLineBreakByCharWrapping
+	 NSLineBreakByClipping
+	 */
+	
+	CFStringRef keys[] = { kCTFontAttributeName, kCTParagraphStyleAttributeName };
+	CFTypeRef values[] = { iFont, aMutableParagraphStyle };
 	CFDictionaryRef attributes = CFDictionaryCreate(kCFAllocatorDefault, (const void**)&keys,
 					   (const void**)&values, sizeof(keys) / sizeof(keys[0]),
 					   &kCFTypeDictionaryKeyCallBacks,
 					   &kCFTypeDictionaryValueCallBacks);
 	
-	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:iString attributes:attributes] autorelease];
-	CFRelease(attributes);
+	NSMutableAttributedString *string = [[[NSMutableAttributedString alloc] initWithString:iString attributes:(NSDictionary *)attributes] autorelease];
 
-	//    CGSize textSize = CTFramesetterSuggestFrameSizeWithConstraints( framesetter, CFRangeMake(0,0), NULL, CGSizeMake(rect.size.width, CGFLOAT_MAX), NULL);
 
-	CGContextSetTextMatrix( windowContext, CGAffineTransformIdentity );
+//	[string addAttribute:NSParagraphStyleAttributeName value:aMutableParagraphStyle range:NSMakeRange(0,[string length])];
+
 	
-	// Initialize a rectangular path.
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = CGRectMake(10.0f, 10.0f, 200.0f, 200.0f);
-	CGPathAddRect(path, NULL, bounds);
+	CGContextSaveGState(windowContext);
+	CGContextSetTextMatrix( windowContext, CGAffineTransformIdentity );
+	CGAffineTransform ctm = CGContextGetCTM ( windowContext );
+//	CGContextTranslateCTM( windowContext, 0, 10);
+	CGContextSetTextPosition(windowContext,0,0);
+	CGContextSetCharacterSpacing(windowContext,0);
 	
 	// Create a color and add it as an attribute to the string.
 	CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
 	CGFloat components[] = { 1.0f, 0.0f, 0.0f, 0.8f };
 	CGColorRef red = CGColorCreate(rgbColorSpace, components);
 	CGColorSpaceRelease(rgbColorSpace);
-	CFAttributedStringSetAttribute( string, CFRangeMake(0, [iString length]), kCTForegroundColorAttributeName, red);
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef) string);
+	CFAttributedStringSetAttribute( (CFMutableAttributedStringRef)string, CFRangeMake(0, [iString length]), kCTForegroundColorAttributeName, red);
+	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef) string);
+		
+	CFRange fitRange;
+	CGRect bounds = CGRectMake(0.0f, 0.0f, 200.0f, 10000);
+	CGSize textSize = CTFramesetterSuggestFrameSizeWithConstraints( framesetter, CFRangeMake(0,[string length]), attributes, bounds.size, &fitRange );
+	bounds.size = textSize; //69.3, 50
+	bounds.size.height += (fontPtSize/2.0);
+	bounds.size.width = ceil(bounds.size.width);
+	bounds.size.height = ceil(bounds.size.height);
+	
+//	bounds.size = CGContextConvertSizeToUserSpace( windowContext, bounds.size);
+	CGContextSetShouldSmoothFonts(windowContext,true);
+	CGContextSetAllowsFontSmoothing(windowContext,true);
+	CGContextSetShouldSubpixelPositionFonts(windowContext,true);
+	CGContextSetAllowsFontSubpixelPositioning(windowContext,true);
+	CGContextSetShouldSubpixelQuantizeFonts(windowContext,true);
+	CGContextSetAllowsFontSubpixelQuantization(windowContext,true);
+	
+	CGColorRef greenCol = CGColorCreateGenericRGB( 0.0f, 1.0f, 0.0f, 0.5f );
+	
+	CGContextSetFillColorWithColor( windowContext, greenCol );
+	CGContextFillRect( windowContext, bounds);
+	
+	// Initialize a rectangular path.
+	CGMutablePathRef path = CGPathCreateMutable();
+	CGPathAddRect(path, NULL, bounds);
+	
 	// Create the frame and draw it into the graphics context
-	CTFrameRef frame = CTFramesetterCreateFrame( framesetter, CFRangeMake(0, 0), path, NULL);
+//	CTTypesetterRef CTFramesetterGetTypesetter( framesetter );
+	CTFrameRef frame = CTFramesetterCreateFrame( framesetter, CFRangeMake(0,[string length]), path, attributes);
+	CFDictionaryRef dictAtts = CTFrameGetFrameAttributes( frame );
+	
 	
 	CTFrameDraw(frame, windowContext);
+	
+	CGContextRestoreGState(windowContext);
 
+	CFRelease(attributes);
+	CFRelease(path);
+	CFRelease(fdesc);
+	CGColorRelease(red);
+	CGColorRelease(greenCol);
 	CFRelease(framesetter);
 	CFRelease(frame);
 	CFRelease(iFont);
