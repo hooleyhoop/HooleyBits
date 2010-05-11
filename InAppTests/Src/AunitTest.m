@@ -45,43 +45,43 @@
 	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
-- (void)testMenuItems { 
+//- (void)testMenuItems { 
+//
+//	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+//	
+//	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+//	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+//	
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+//	
+//	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+//	
+//	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+//	
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
+//	
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+//	
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+//	
+//	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+//}
 
-	[_testHelper aSync:[GUITestProxy lockTestRunner]];
-	
-	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
-	
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-	
-	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
-	
-	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
-	
-	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
-	
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
-	
-	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-	
-	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
-}
-
-- (void)aaaatestDropDownMenuButton {
-
-	[self _singleDocSetup];
-	
-	NSString *windowName = @"Untitled";
-	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"male" ];
-	[_testHelper aSync:[GUI_ApplescriptTestProxy selectPopUpButtonItem:@"female" window:windowName]];
-	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"female" ];
-
-	[self _singleDoctearDown];
-}
+//- (void)testDropDownMenuButton {
+//
+//	[self _singleDocSetup];
+//
+//	NSString *windowName = @"Untitled";
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"male" ];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectPopUpButtonItem:@"female" window:windowName]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"female" ];
+//
+//	[self _singleDoctearDown];
+//}
 
 - (void)testTextField {
-	
+
 	[self _singleDocSetup];
 
 	NSString *windowName = @"Untitled";

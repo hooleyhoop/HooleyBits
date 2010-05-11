@@ -182,10 +182,10 @@ NSString *MovedRowsType = @"MOVED_ROWS_TYPE";
 - (NSDragOperation)tableView:(NSTableView*)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)proposedRow proposedDropOperation:(NSTableViewDropOperation)op 
 {
 	// logInfo(@"TableView validateDrop %i", op);
-	int result = NSDragOperationNone;
+	NSUInteger result = NSDragOperationNone;
 	
 	/* Limiting it to only accept drops 'between' rows */
-	if (op == NSTableViewDropAbove) 
+	if(op == NSTableViewDropAbove) 
 	{	
 		NSPasteboard* pb = [info draggingPasteboard];
 	//	id sourceTable = [info draggingSource];
