@@ -31,8 +31,10 @@
 - (void)_singleDocSetup {
 
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
-	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+//	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+//	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
+
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
 	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
@@ -41,7 +43,7 @@
 - (void)_singleDoctearDown {
 	
 	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
-	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
