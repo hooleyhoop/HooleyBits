@@ -9,6 +9,7 @@
 #import <SHShared/NSInvocation(ForwardedConstruction).h>
 #import <SenTestingKit/SenTestCase.h>
 #import <SHTestUtilities/SHTestUtilities.h>
+#import <SHShared/SHShared.h>
 
 @interface AunitTest : AsyncTests {
 	TestHelp *_testHelper;
@@ -28,6 +29,7 @@
 	[_testHelper release];
 }
 
+#pragma mark -
 - (void)_singleDocSetup {
 
 	[_testHelper aSync:[GUITestProxy lockTestRunner]];
@@ -43,44 +45,45 @@
 - (void)_singleDoctearDown {
 	
 	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
-//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
 	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
 }
 
-//- (void)testMenuItems { 
-//
-//	[_testHelper aSync:[GUITestProxy lockTestRunner]];
-//	
-//	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
-//	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
-//	
-//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-//	
-//	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
-//	
-//	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
-//	
-//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
-//	
-//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
-//	
-//	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
-//	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
-//	
-//	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
-//}
+#pragma mark -
+- (void)testMenuItems { 
 
-//- (void)testDropDownMenuButton {
-//
-//	[self _singleDocSetup];
-//
-//	NSString *windowName = @"Untitled";
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"male" ];
-//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectPopUpButtonItem:@"female" window:windowName]];
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"female" ];
-//
-//	[self _singleDoctearDown];
-//}
+	[_testHelper aSync:[GUITestProxy lockTestRunner]];
+	
+	NSDocumentController *dc = [NSDocumentController sharedDocumentController];
+	[dc closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:nil];
+	
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	
+	[_testHelper aSyncAssertTrue:[GUI_ApplescriptTestProxy statusOfMenuItem:@"New" ofMenu:@"File"]];
+	
+	[_testHelper aSyncAssertFalse:[GUI_ApplescriptTestProxy statusOfMenuItem:@"Close" ofMenu:@"File"]];
+	
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"New"]];
+	
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:1]];
+	
+	[_testHelper aSync:[GUI_ApplescriptTestProxy doMenu:@"File" item:@"Close"]];
+	[_testHelper aSyncAssertTrue:[GUITestProxy documentCountIs:0]];
+	
+	[_testHelper aSync:[GUITestProxy unlockTestRunner]];
+}
+
+- (void)testDropDownMenuButton {
+
+	[self _singleDocSetup];
+
+	NSString *windowName = @"Untitled";
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"male" ];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy selectPopUpButtonItem:@"female" window:windowName]];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy dropDownMenuButtonText:windowName] :@"female" ];
+
+	[self _singleDoctearDown];
+}
 
 - (void)testTextField {
 
@@ -90,6 +93,21 @@
 	[_testHelper aSync:[GUI_ApplescriptTestProxy setValueOfTextfield:1 ofWindow:windowName toValue:@"dirtbag"]];
 	[_testHelper aSyncAssertNotEqual:[GUI_ApplescriptTestProxy getValueOfTextField:1 ofWindow:windowName] :@"crotch" ];
 	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy getValueOfTextField:1 ofWindow:windowName] :@"dirtbag" ];
+	
+	[self _singleDoctearDown];
+}
+
+- (void)testTable {
+	
+	[self _singleDocSetup];
+	
+	NSString *windowName = @"Untitled";
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy countOfRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :INT(4)];
+
+	//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectItems2And3]];
+	
+	//	[_testHelper aSync:[GUI_ApplescriptTestProxy dropFileOnTableView]];
+
 	
 	[self _singleDoctearDown];
 }
