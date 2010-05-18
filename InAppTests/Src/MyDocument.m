@@ -7,6 +7,7 @@
 //
 
 #import "MyDocument.h"
+#import <SHShared/SHShared.h>
 
 @implementation MyDocument
 
@@ -25,7 +26,7 @@
 				   nil];
 		
 		
-		 employees= [[NSArray alloc] initWithObjects:
+		 employees = [[NSMutableArray alloc] initWithObjects:
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Steven", @"name", @"m", @"value", nil],
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Gavin", @"name", @"f", @"value", nil],
 							[NSDictionary dictionaryWithObjectsAndKeys:@"Clara", @"name", @"f", @"value", nil], 
@@ -52,6 +53,21 @@ NSString *MovedRowsType = @"MOVED_ROWS_TYPE";
 	[tableView setDraggingSourceOperationMask:NSDragOperationCopy|NSDragOperationMove forLocal:YES];
 	[tableView setVerticalMotionCanBeginDrag: YES];
 }
+
+//- (int)numberOfRowsInTableView:(NSTableView *)tableViewArg {
+//
+//	if(tableView==tableViewArg){
+//		return [[tableArrayController arrangedObjects] count];
+//	}
+//	return 0;
+//} 
+
+//- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row {
+//	return nil;
+//}
+//- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex {
+//	NSLog(@"boo");
+//}
 
 // tableView: methods indicates delegate method
 /* If you are in 'All' mode we only support drags of one type at a time */
@@ -87,57 +103,59 @@ NSString *MovedRowsType = @"MOVED_ROWS_TYPE";
 	return result;
 }
 
+- (void)moveObjects:(NSArray *)children atIndexes:(NSIndexSet *)objectIndexes toIndexes:(NSIndexSet *)indexes {
+	
+	NSParameterAssert( [children count] );
+	NSParameterAssert( [children count]==[indexes count] );
+	NSParameterAssert( [indexes lastIndex]<[employees count] );
+	
+//	NSIndexSet *objectIndexes = [self indexesOfObjects:children];
+//	// dont bother if not moving anywhere
+//	if([objectIndexes isEqualToIndexSet:indexes] )
+//		return;
+	
+//	NSArray *selectedObjects=nil;
+//	if([_selection count]){
+//		selectedObjects = [_array objectsAtIndexes:_selection];
+//		
+//		// this doesnt trigger a notification
+//		//		[_selection removeAllIndexes];
+//		
+//		// i think we must trigger a deselct or proxy selection will get out of sync
+//		[self setSelection:[NSIndexSet indexSet]];
+//		
+//	}
+	
+	[employees removeObjectsAtIndexes:objectIndexes];
+	[employees insertObjects:children atIndexes:indexes];
+}
+
 - (BOOL)_acceptSameTableDrop:(id <NSDraggingInfo>)info row:(int)row proposedDropOperation:(NSTableViewDropOperation)op {
 	
 	NSLog(@"Drop on Row %i", row);
 	BOOL result = false;
 	
-	
 	NSPasteboard *pb = [info draggingPasteboard];
 	NSData *rowData = [pb dataForType:MovedRowsType];
 	NSIndexSet *draggedRowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-	NSString* altPressed = [pb availableTypeFromArray:[NSArray arrayWithObject:@"ALTKEY_PRESSED"]];
-	BOOL wasAltPressed = altPressed!=nil;
-//	
-//
-//	int firstRowKind = [self kindOfObjectAtIndex:[draggedRowIndexes firstIndex]];
-//	int lastRowKind = [self kindOfObjectAtIndex:[draggedRowIndexes lastIndex]];
-//	
-//	id obsToDrag = [[displayedNodesArrayController arrangedObjects] objectsAtIndexes:draggedRowIndexes];
-//	
-//	if([filterType isEqualToString:@"All"])
-//	{
-//		obsToDrag = [obsToDrag collectResultsOfSelector:@selector(originalNode)];
-//		
-//		/*	We can only drag amongst the same type. ie - we cant reorder a node into the inputs section 
-//		 That is, the drag destinaton row for each row must be in the same section it began the drag in
-//		 */
-//		int nodeCount = [currentNodeGroup.nodesInside count];
-//		int inputCount = [currentNodeGroup.inputs count];
-//		int outputCount = [currentNodeGroup.outputs count];
-//		// what kind is the dragged row?
-//		// It is ok to drop an item after the current row of that kind OR BEFORE THE FIRST row of that kind - This still counts as being in the same section
-//		if(firstRowKind==0){													// if dragging a node
-//			if(row>nodeCount)
-//				return NO;
-//			
-//		} else if(firstRowKind==1){												// if dragging an input
-//			if( row<nodeCount || row>(nodeCount+inputCount))
-//				return NO;
-//			row = row - nodeCount;// compensate dest row
-//			
-//		} else if(firstRowKind==2){												// if dragging an output
-//			if( row<(nodeCount+inputCount) || row>(nodeCount+inputCount+outputCount))						
-//				return NO;
-//			row = row - (nodeCount+inputCount); // compensate dest row
-//			
-//		} else if(firstRowKind==3){												// if dragging a connector
-//			return NO;
-//		}
-//	}
-//	
-//	// new way
-//	[[docWindowController document]  moveChildren:obsToDrag toInsertionIndex:row shouldCopy:wasAltPressed];
+
+	id obsToDrag = [[tableArrayController arrangedObjects] objectsAtIndexes:draggedRowIndexes];
+
+	NSParameterAssert( [obsToDrag count] );
+	//NSIndexSet *currentIndexes = [targetArray indexesOfObjects:obsToDrag];
+	
+	NSIndexSet *currentIndexesLessThanInsertionPt = [draggedRowIndexes indexesLessThan:row];
+	NSIndexSet *currentIndexesGreaterThanEqualInsertionPt = [draggedRowIndexes indexesGreaterThanOrEqualTo:row];
+	NSAssert([currentIndexesLessThanInsertionPt count]+[currentIndexesGreaterThanEqualInsertionPt count]==[draggedRowIndexes count], @"my indexset dividing has gone wrong");
+	
+	NSIndexSet *newIndexesLessThanSplit = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row-[currentIndexesLessThanInsertionPt count], [currentIndexesLessThanInsertionPt count])];
+	NSIndexSet *newIndexesGreaterThanSplit = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, [currentIndexesGreaterThanEqualInsertionPt count])];
+	NSMutableIndexSet *combined = [NSMutableIndexSet indexSet];
+	[combined addIndexes:newIndexesLessThanSplit];
+	[combined addIndexes:newIndexesGreaterThanSplit];
+	NSAssert([combined count]==[obsToDrag count], @"number of indexes has got out of whack somewhere");
+	[self moveObjects:obsToDrag atIndexes:draggedRowIndexes toIndexes:combined];
+	
 	return YES;
 	
 

@@ -10,13 +10,13 @@
 {
 	// pop up
 	NSArray						*genders;
-	NSString					*selectedGender;
+	NSString						*selectedGender;
 	IBOutlet NSArrayController	*popupArrayController;
 	
 	// table
-	NSArray						*employees;
+	NSMutableArray				*employees;
 	IBOutlet NSArrayController	*tableArrayController;
-	IBOutlet NSTableView		*tableView;
+	IBOutlet NSTableView			*tableView;
 
 }
 @property (nonatomic, copy) NSString *selectedGender;

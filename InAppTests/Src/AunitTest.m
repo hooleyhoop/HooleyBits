@@ -104,13 +104,15 @@
 	NSString *windowName = @"Untitled";
 //	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy countOfRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :INT(4)];
 
-	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray array]];
-	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:2 inTableScroll:@"table1Scroll" ofWindow:windowName]];
-	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(2)]];
-	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:1 inTableScroll:@"table1Scroll" ofWindow:windowName]];
-	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(1)]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray array]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:2 inTableScroll:@"table1Scroll" ofWindow:windowName]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(2)]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:1 inTableScroll:@"table1Scroll" ofWindow:windowName]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(1)]];
 
-	//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectItems2And3]];
+//break	[_testHelper aSync:[GUI_ApplescriptTestProxy setSelectedRows:[NSArray arrayWithObjects:INT(1),INT(2),INT(3),nil] inTableScroll:@"table1Scroll" ofWindow:windowName]];
+//break	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObjects:INT(1),INT(2),INT(3), nil]];
+
 	
 	//	[_testHelper aSync:[GUI_ApplescriptTestProxy dropFileOnTableView]];
 

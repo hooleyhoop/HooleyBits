@@ -10,6 +10,11 @@
 //#import <CoreServices/CoreServices.h>
 //#import <ApplicationServices/ApplicationServices.h>
 
+struct CGPointList {
+	NSUInteger numberOfPts;
+	CGPoint pts[1];
+};
+
 OSErr monkeeeeHandler( const AppleEvent *message, AppleEvent *reply, long refCon );
 OSErr mouseDoubleClick_Handler( const AppleEvent *message, AppleEvent *reply, long refCon );
 OSErr mouseClick_Handler( const AppleEvent *message, AppleEvent *reply, long refCon );

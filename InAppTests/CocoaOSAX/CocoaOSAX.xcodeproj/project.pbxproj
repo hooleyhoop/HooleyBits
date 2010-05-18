@@ -296,15 +296,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73AC98C9115E80D3001B9D97 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				GCC_PREFIX_HEADER = CocoaOSAX_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/ScriptingAdditions/";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = CocoaOSAX;
 				REZ_SHOW_DEBUG_OUTPUT = NO;
+				SDKROOT = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = osax;
 			};

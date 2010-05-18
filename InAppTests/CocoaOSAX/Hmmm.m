@@ -80,21 +80,44 @@ OSErr mouseClickAt_Handler( const AppleEvent *message, AppleEvent *reply, long r
 	CGEventRef shiftUpEvent = NULL;
 	CGEventRef shiftDownEvent = NULL;
 
-	CGPoint p1;
-	getDirectParamPoint( message, &p1 );
+	NSUInteger MAXPTS = 10;
+	struct CGPointList *allPts;
+	allPts = malloc( sizeof allPts + (MAXPTS-1) * sizeof allPts->pts[0] ); // malloc enough space for 10 pts
+	// parse the incoming arguments
+	AEDesc theDirectParamDesc;
+
+	result=AEGetParamDesc(message, keyDirectObject, typeAEList, &theDirectParamDesc);
+	if(!result){
+		long numberOfItems;
+		AECountItems( &theDirectParamDesc, &numberOfItems );
+		NSCAssert1( numberOfItems>0 && numberOfItems%2==0, @"wrong number of terms %i", numberOfItems );
+		
+		allPts->numberOfPts = numberOfItems/2;
+		for( NSUInteger i=0; i<allPts->numberOfPts; i++ )
+		{
+			int32_t xPoint, yPoint;
+			NSUInteger pIndexx = i*2+1;
+			NSUInteger pIndexy = i*2+2;
+			AEGetNthPtr( &theDirectParamDesc, pIndexx, typeSInt32, NULL, NULL, &xPoint, sizeof(xPoint), NULL );
+			AEGetNthPtr( &theDirectParamDesc, pIndexy, typeSInt32, NULL, NULL, &yPoint, sizeof(yPoint), NULL );
+			allPts->pts[i].x = (CGFloat)xPoint;
+			allPts->pts[i].y = (CGFloat)yPoint;
+		}
+
+		AEDisposeDesc(&theDirectParamDesc);
+	}
+	
 	CGEventSourceRef source = CGEventSourceCreate( kCGEventSourceStatePrivate );
-
-
+	
 	AEDesc theDesc;
     result=AEGetParamDesc( message, 'x$$3', typeAEList, &theDesc );
 	if(!result){
-
-
+		
 		// Using Shift Down
 		long numberOfItems;
 		AECountItems( &theDesc, &numberOfItems );
 		NSCAssert( numberOfItems, @"wrong number of terms" );
-
+		
 		AEKeyword aekw='x$$3';
 		
 		Size dataSize;
@@ -106,53 +129,93 @@ OSErr mouseClickAt_Handler( const AppleEvent *message, AppleEvent *reply, long r
 		shiftDownEvent = CGEventCreateKeyboardEvent( source, (CGKeyCode)56, true );
 		shiftUpEvent = CGEventCreateKeyboardEvent( source, (CGKeyCode)56, false );
 		
-//		CGEventSetIntegerValueField( shiftDownEvent, kCGKeyboardEventKeycode, new_keycode);
+		//		CGEventSetIntegerValueField( shiftDownEvent, kCGKeyboardEventKeycode, new_keycode);
 		
-//
-//		AEDesc argumentDescription;
-//		result = AEGetNthDesc( &theDesc, 1, typeWildCard, &aekw, &argumentDescription );
-//		
-//		Size dataSize2; // 4
-//		result = AESizeOfNthItem( &theDesc, 1, NULL, &dataSize2 );		
-//		
-//		int32_t xPoint, yPoint;
-//		result = noErr;
-//		result = AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &xPoint, sizeof(xPoint), NULL );
-//		
+		//
+		//		AEDesc argumentDescription;
+		//		result = AEGetNthDesc( &theDesc, 1, typeWildCard, &aekw, &argumentDescription );
+		//		
+		//		Size dataSize2; // 4
+		//		result = AESizeOfNthItem( &theDesc, 1, NULL, &dataSize2 );		
+		//		
+		//		int32_t xPoint, yPoint;
+		//		result = noErr;
+		//		result = AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &xPoint, sizeof(xPoint), NULL );
+		//		
 		
-//		AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &val, 1024, NULL );
-//		AEGetNthPtr( &theDesc, 2, typeSInt32, NULL, NULL, &yPoint, sizeof(yPoint), NULL );
-//		p->x = (CGFloat)xPoint;
-//		p->y = (CGFloat)yPoint;
+		//		AEGetNthPtr( &theDesc, 1, typeSInt32, NULL, NULL, &val, 1024, NULL );
+		//		AEGetNthPtr( &theDesc, 2, typeSInt32, NULL, NULL, &yPoint, sizeof(yPoint), NULL );
+		//		p->x = (CGFloat)xPoint;
+		//		p->y = (CGFloat)yPoint;
 		
 		AEDisposeDesc(&theDesc);
 	}
 	result = noErr;
 	
-	CGAssociateMouseAndMouseCursorPosition(false);
+	NXEventHandle evs = NXOpenEventStatus();
+	double clickTime = NXClickTime(evs);
+	useconds_t safeClickTime = (useconds_t)(clickTime*1*1000000.0f);
 	
+	CGAssociateMouseAndMouseCursorPosition(false);
+
 	// shift down
 	if(shiftDownEvent)
 		CGEventPost( kCGHIDEventTap, shiftDownEvent );  
 	
+	FlushEventQueue(GetMainEventQueue());
+	FlushEventQueue(GetCurrentEventQueue());
+	usleep(safeClickTime);
+	
 	// Send clicks
-	CGEventRef theClickEvent = CGEventCreateMouseEvent( source, kCGEventLeftMouseDown, p1, kCGMouseButtonLeft );  
-	CGEventSetIntegerValueField( theClickEvent, kCGMouseEventClickState, 1 );
-	CGEventPost( kCGHIDEventTap, theClickEvent );  
+	for( NSUInteger i=0; i<allPts->numberOfPts; i++ )
+	{
+		CGPoint p1 = allPts->pts[i];
 		
-	CGEventSetType( theClickEvent, kCGEventLeftMouseUp );
-	CGEventPost( kCGHIDEventTap, theClickEvent );
+		// move to down pt
+		CGEventRef theMoveEvent = CGEventCreateMouseEvent( NULL, kCGEventMouseMoved, p1, kCGMouseButtonLeft ); 
+		CGEventSetType( theMoveEvent, kCGEventMouseMoved);
+		CGEventSetFlags( theMoveEvent,0 ); // Cancel any of the modifier keys - this caused me a day of bug-hunting!
+		CGEventSetFlags( theMoveEvent, kCGEventFlagMaskShift );
+		CGEventPost( kCGHIDEventTap, theMoveEvent );  
+		
+		FlushEventQueue(GetMainEventQueue());
+		FlushEventQueue(GetCurrentEventQueue());
+		usleep(safeClickTime);
+		
+		// click down
+		CGEventRef theClickEvent = CGEventCreateMouseEvent( NULL, kCGEventLeftMouseDown, p1, kCGMouseButtonLeft );
+		CGEventSetType( theClickEvent, kCGEventLeftMouseDown );
+		CGEventSetIntegerValueField( theClickEvent, kCGMouseEventClickState, 1 );
+		CGEventSetFlags( theClickEvent,0 ); // Cancel any of the modifier keys - this caused me a day of bug-hunting!
+		CGEventSetFlags( theClickEvent, kCGEventFlagMaskShift );
+		CGEventPost( kCGHIDEventTap, theClickEvent );  
+		
+		FlushEventQueue(GetMainEventQueue());
+		FlushEventQueue(GetCurrentEventQueue());
+		usleep(safeClickTime);
+
+		// click up
+		CGEventSetType( theClickEvent, kCGEventLeftMouseUp );
+//		CGEventSetLocation( theClickEvent, p1 );
+		CGEventPost( kCGHIDEventTap, theClickEvent );
+		
+		FlushEventQueue(GetMainEventQueue());
+		FlushEventQueue(GetCurrentEventQueue());
+		usleep(safeClickTime*2);
+		
+		CFRelease(theMoveEvent);
+		CFRelease(theClickEvent);
+	}
 	
 	// shift UP
 	if(shiftUpEvent)
 		CGEventPost( kCGHIDEventTap, shiftUpEvent );  
 	
-	
-	CGAssociateMouseAndMouseCursorPosition(true);
 	FlushEventQueue(GetMainEventQueue());
 	FlushEventQueue(GetCurrentEventQueue());
+	usleep(safeClickTime);
 	
-	CFRelease(theClickEvent);
+	free(allPts);	
 	CFRelease(source);
 	
 	if(shiftDownEvent)
@@ -160,10 +223,8 @@ OSErr mouseClickAt_Handler( const AppleEvent *message, AppleEvent *reply, long r
 	if(shiftUpEvent)
 		CFRelease(shiftUpEvent);
 	
-	NXEventHandle evs = NXOpenEventStatus();
-	double clickTime = NXClickTime(evs);
-	useconds_t safeClickTime = (useconds_t)(clickTime*1*1000000.0f);
-	usleep(safeClickTime);
+	CGAssociateMouseAndMouseCursorPosition(true);
+	
 	return result;
 }
 
@@ -268,7 +329,7 @@ OSErr mouseDownAt_upAt_Handler( const AppleEvent *message, AppleEvent *reply, lo
 	
 	CGAssociateMouseAndMouseCursorPosition(true);
 
-	
+	CFRelease (theDragEvent2);
 	CFRelease( theMoveEvent );
 	CFRelease( theClickEvent ); 
 	CFRelease( theDragEvent ); 
