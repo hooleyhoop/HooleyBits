@@ -102,17 +102,30 @@
 	[self _singleDocSetup];
 	
 	NSString *windowName = @"Untitled";
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy countOfRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :INT(4)];
+	NSString *tableScrollName = @"table1Scroll";
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy countOfRowsInTableScroll:tableScrollName ofWindow:windowName] :INT(4)];
 
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray array]];
-//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:2 inTableScroll:@"table1Scroll" ofWindow:windowName]];
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(2)]];
-//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:1 inTableScroll:@"table1Scroll" ofWindow:windowName]];
-//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObject:INT(1)]];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:1 ofTableScroll:tableScrollName ofWindow:windowName] :@"Steven"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:2 ofTableScroll:tableScrollName ofWindow:windowName] :@"Gavin"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:3 ofTableScroll:tableScrollName ofWindow:windowName] :@"Clara"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:4 ofTableScroll:tableScrollName ofWindow:windowName] :@"Clara2"];
+	
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:tableScrollName ofWindow:windowName] :[NSArray array]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:2 inTableScroll:tableScrollName ofWindow:windowName]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:tableScrollName ofWindow:windowName] :[NSArray arrayWithObject:INT(2)]];
+//	[_testHelper aSync:[GUI_ApplescriptTestProxy selectRowAtIndex:1 inTableScroll:tableScrollName ofWindow:windowName]];
+//	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:tableScrollName ofWindow:windowName] :[NSArray arrayWithObject:INT(1)]];
 
-//break	[_testHelper aSync:[GUI_ApplescriptTestProxy setSelectedRows:[NSArray arrayWithObjects:INT(1),INT(2),INT(3),nil] inTableScroll:@"table1Scroll" ofWindow:windowName]];
-//break	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:@"table1Scroll" ofWindow:windowName] :[NSArray arrayWithObjects:INT(1),INT(2),INT(3), nil]];
+//break	[_testHelper aSync:[GUI_ApplescriptTestProxy setSelectedRows:[NSArray arrayWithObjects:INT(1),INT(2),INT(3),nil] inTableScroll:tableScrollName ofWindow:windowName]];
+//break	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy indexesOfSelectedRowsInTableScroll:tableScrollName ofWindow:windowName] :[NSArray arrayWithObjects:INT(1),INT(2),INT(3), nil]];
 
+	[_testHelper aSync:[GUI_ApplescriptTestProxy setSelectedRows:[NSArray arrayWithObjects:INT(3),INT(4),nil] inTableScroll:tableScrollName ofWindow:windowName]];
+	[_testHelper aSync:[GUI_ApplescriptTestProxy dragSelectedRowsToIndex:0 ofTableScroll:tableScrollName ofWindow:windowName]];
+
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:1 ofTableScroll:tableScrollName ofWindow:windowName] :@"Clara"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:2 ofTableScroll:tableScrollName ofWindow:windowName] :@"Clara2"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:3 ofTableScroll:tableScrollName ofWindow:windowName] :@"Steven"];
+	[_testHelper aSyncAssertEqual:[GUI_ApplescriptTestProxy itemNameAtIndex:4 ofTableScroll:tableScrollName ofWindow:windowName] :@"Gavin"];
 	
 	//	[_testHelper aSync:[GUI_ApplescriptTestProxy dropFileOnTableView]];
 

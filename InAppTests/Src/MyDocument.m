@@ -100,6 +100,7 @@ NSString *MovedRowsType = @"MOVED_ROWS_TYPE";
 	NSData* rowData = [pb dataForType:MovedRowsType];
 //	NSIndexSet* draggedRowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
 	result = NSDragOperationMove;
+		 
 	return result;
 }
 
