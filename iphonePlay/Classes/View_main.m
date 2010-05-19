@@ -67,7 +67,7 @@
 	//		if(tapCount>1)
 	//			logError(@"TAP TAP Began");
 		CGPoint touchPoint = [touch locationInView:self];
-	//		//logInfo(@"Touch Began (%f, %f), (%f, %f)", (float)touchPoint.x, (float)previousPt.y, (float)previousPt.x, (float)touchPoint.y );
+	//		//logInfo(@"Touch Began (%f, %f), (%f, %f)", (CGFloat)touchPoint.x, (CGFloat)previousPt.y, (CGFloat)previousPt.x, (CGFloat)touchPoint.y );
 			/* touchTracker will attempt to keep track of open touches */
 		HooleyTouchEvent *newTouch = [touchTracker beganTouch:touch atLoc:touchPoint];
 
@@ -84,7 +84,7 @@
 	
 		CGPoint previousTouchPoint = [touch previousLocationInView:self];
 		CGPoint touchPoint = [touch locationInView:self];
-		//logInfo(@"Touch Moved Frm (%f, %f) to (%f, %f)", (float)previousTouchPoint.x, (float)previousTouchPoint.y, (float)touchPoint.x, (float)touchPoint.y);
+		//logInfo(@"Touch Moved Frm (%f, %f) to (%f, %f)", (CGFloat)previousTouchPoint.x, (CGFloat)previousTouchPoint.y, (CGFloat)touchPoint.x, (CGFloat)touchPoint.y);
 		HooleyTouchEvent *movedTouch = [touchTracker movedTouch:touch from:previousTouchPoint to:touchPoint];
 		[controller touchMoved:movedTouch];
 	}
@@ -100,7 +100,7 @@
 //		NSUInteger tapCount = touch.tapCount; 
 //		if(tapCount>1)
 //			logError(@"TAP TAP Ended");
-		// logInfo(@"Touch Ended (%f, %f), (%f, %f)\n", (float)touchPoint.x, (float)previousPt.y, (float)previousPt.x, (float)touchPoint.y );
+		// logInfo(@"Touch Ended (%f, %f), (%f, %f)\n", (CGFloat)touchPoint.x, (CGFloat)previousPt.y, (CGFloat)previousPt.x, (CGFloat)touchPoint.y );
 		HooleyTouchEvent *endedTouch = [touchTracker endedTouch:touch at:touchPoint prevPt:previousPt];
 		[controller touchEnded:endedTouch];
 	}

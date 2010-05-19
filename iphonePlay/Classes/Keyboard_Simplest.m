@@ -56,7 +56,7 @@
 	BOOL success = NO;
 	if([pressedKeys containsIndex:keyIndex]==NO)
 	{
-		double hz = [noteLookup hzForStepsAboveA4:keyIndex+offset];
+		CGFloat hz = [noteLookup hzForStepsAboveA4:keyIndex+offset];
 		//logInfo(@"hz is %f", (float)hz );
 		//NSAssert(hz>50 && hz<5000, @"Invalid Hz");
 		
@@ -75,7 +75,7 @@
 
 	if([pressedKeys containsIndex:keyIndex]==YES)
 	{
-		double hz = [noteLookup hzForStepsAboveA4:keyIndex+offset];
+		CGFloat hz = [noteLookup hzForStepsAboveA4:keyIndex+offset];
 		//NSAssert(hz>50 && hz<5000, @"Invalid Hz");
 		[_connectedSoundSource stopSine:hz];
 		[pressedKeys removeIndex:keyIndex];

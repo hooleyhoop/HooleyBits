@@ -18,7 +18,7 @@
  *
  */
 
-#include "G3DFunctions.h"
+#import "G3DFunctions.h"
 
 /******************************************************************************
  *
@@ -103,8 +103,7 @@ __G3DI__ void G3DLinearInterpolateVector3fv(float res[3], CFLOAT a[3],
 }
 
 
-__G3DI__ void G3DLinearInterpolateVector3dv(double res[3], CDOUBLE a[3], 
-                                            CDOUBLE b[3], CDOUBLE lambda)
+__G3DI__ void G3DLinearInterpolateVector3dv(double res[3], CDOUBLE a[3], CDOUBLE b[3], CDOUBLE lambda)
 {
   double d1mlambda = 1.0 - lambda;
 

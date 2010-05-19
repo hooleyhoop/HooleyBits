@@ -23,8 +23,8 @@
 #ifndef __G3DDefs_h_INCLUDE
 #define __G3DDefs_h_INCLUDE
 
-#include <limits.h>
-#include <math.h>
+#import <limits.h>
+#import <math.h>
 
 /******************************************************************************
  *
@@ -50,14 +50,14 @@
 /*!
    @defined __G3DIE__
 */
-#define __G3DIE__ __inline__ extern
+#define __G3DIE__ extern // __inline__ 
 #endif
 
 #ifndef __G3DI__
 /*!
    @defined __G3DI__
 */
-#define __G3DI__ __inline__
+#define __G3DI__ __inline__ // 
 #endif
 
 #ifndef __G3DE__
@@ -87,13 +87,13 @@
  *
  *****************************************************************************/
 
-#ifndef ABS
-/*!
-   @defined ABS
-   @discussion Returns the absolut value of a.
-*/
-#define ABS(a) (((a)<0) ? -(a) : (a))
-#endif
+//#ifndef ABS
+///*!
+//   @defined ABS
+//   @discussion Returns the absolut value of a.
+//*/
+//#define ABS(a) (((a)<0) ? -(a) : (a))
+//#endif
 
 #ifndef FLOOR
 /*!
@@ -149,21 +149,21 @@
  *
  *****************************************************************************/
 
-#ifndef MIN
-/*!
-   @defined MIN
-   @discussion Returns the minimum of a and b.
-*/
-#define MIN(a,b) (((a)<(b)) ? (a) : (b)) 
-#endif
+//#ifndef MIN
+///*!
+//   @defined MIN
+//   @discussion Returns the minimum of a and b.
+//*/
+//#define MIN(a,b) (((a)<(b)) ? (a) : (b)) 
+//#endif
 
-#ifndef MAX
-/*!
-   @defined MAX
-   @discussion Returns the maximum of a and b.
-*/
-#define MAX(a,b) (((a)>(b)) ? (a) : (b)) 
-#endif
+//#ifndef MAX
+///*!
+//   @defined MAX
+//   @discussion Returns the maximum of a and b.
+//*/
+//#define MAX(a,b) (((a)>(b)) ? (a) : (b)) 
+//#endif
 
 #ifndef SWAP
 /*!

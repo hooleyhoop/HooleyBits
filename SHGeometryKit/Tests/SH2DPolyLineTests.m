@@ -6,10 +6,21 @@
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "SH2DPolyLineTests.h"
+
 //#import "SH2DPolyLine.h"
 #include <math.h>
 #import "SHGeometryKit.h"
+
+
+#import <Cocoa/Cocoa.h>
+#import <SenTestingKit/SenTestingKit.h>
+
+@interface SH2DPolyLineTests : SenTestCase {
+	
+}
+
+@end
+
 
 @implementation SH2DPolyLineTests
 

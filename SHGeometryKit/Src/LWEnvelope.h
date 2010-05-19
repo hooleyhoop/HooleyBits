@@ -5,7 +5,7 @@
 //  Created by Steven Hooley on 30/11/2006.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
-#import <SHShared/SHooleyObject.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @class LWKey;
 

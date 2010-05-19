@@ -20,7 +20,7 @@ void onStart(void) {
 	
 	[SwizzleList setupSwizzles];
 #else
-#warning SHIT
+	#warning SHIT - enable NSDEBUGENABLED
 #endif
 }
 

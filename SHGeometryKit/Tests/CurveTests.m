@@ -6,7 +6,14 @@
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "CurveTests.h"
+#import <SenTestingKit/SenTestingKit.h>
+
+
+@interface CurveTests : SenTestCase {
+	
+}
+
+@end
 
 
 @implementation CurveTests

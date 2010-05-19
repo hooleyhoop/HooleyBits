@@ -19,12 +19,12 @@ enum _noteStatus {
 
 struct SineData
 {
-	double phase;
-	double freq, freqz;
-	double amp, ampz;
-	double MAX_AMP_FOR_FREQ;
-	double UP_SLOPE_FOR_FREQ, MINIMUM_SUSTAIN_DURATION, DOWN_SLOPE_FOR_FREQ;
-	double sustainDuration;
+	CGFloat phase;
+	CGFloat freq, freqz;
+	CGFloat amp, ampz;
+	CGFloat MAX_AMP_FOR_FREQ;
+	CGFloat UP_SLOPE_FOR_FREQ, MINIMUM_SUSTAIN_DURATION, DOWN_SLOPE_FOR_FREQ;
+	CGFloat sustainDuration;
 	enum _noteStatus status;
 };
 
@@ -65,7 +65,7 @@ struct SineData
 - (void)turnOffAllInputs;
 - (void)setInput:(UInt8)inputIndex isEnabled:(AudioUnitParameterValue)status;
 
-- (void)turnOnSine:(UInt8)inputIndex freq:(float)freq amp:(CGFloat)amplitude;
+- (void)turnOnSine:(UInt8)inputIndex freq:(CGFloat)freq amp:(CGFloat)amplitude;
 - (void)turnOffSine:(UInt8)inputIndex;
 
 - (AudioUnitParameterValue)volumeOfInput:(UInt8)inputIndex;

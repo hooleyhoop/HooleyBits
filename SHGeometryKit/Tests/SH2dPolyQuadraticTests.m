@@ -6,10 +6,19 @@
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "SH2dPolyQuadraticTests.h"
 #import "SHGeometryKit.h"
 #import "SH2DPolyQuadraticBezier.h"
 #import "SH2dBezierPt.h"
+
+#import <SenTestingKit/SenTestingKit.h>
+
+
+@interface SH2dPolyQuadraticTests : SenTestCase {
+	
+}
+
+@end
+
 
 /*
  *

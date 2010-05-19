@@ -20,7 +20,7 @@
 	if(self){
 		// frequency / decibel curve
 		envelope = [[LWEnvelope lWEnvelopeWithPoint:CGPointMake(0, 0)] retain];
-		[envelope curveToPoint:CGPointMake(31.5, -38.0)];
+		[envelope curveToPoint:CGPointMake(31.5f, -38.0f)];
 		[envelope curveToPoint:CGPointMake(125, -16)];
 		[envelope curveToPoint:CGPointMake(500, -4)];
 		[envelope curveToPoint:CGPointMake(2000, 2)];
@@ -29,8 +29,8 @@
 		[envelope setPreBehavoir:5];
 		[envelope setPostBehavoir:5];
 		
-		_referenceAmplitude = 0.6;		// when we convert from decibels to amplitudes all value are amp/_referenceAmplitude. ie _referenceAmplitude is a scaleFactor
-		_minAmp = 0.3, _maxAmp = 0.6;	// we will then map the amplitude value to this range
+		_referenceAmplitude = 0.6f;		// when we convert from decibels to amplitudes all value are amp/_referenceAmplitude. ie _referenceAmplitude is a scaleFactor
+		_minAmp = 0.3f, _maxAmp = 0.6f;	// we will then map the amplitude value to this range
 	}
 	return self;
 }
@@ -55,7 +55,7 @@
 
 // 10^(-6.0205db/20) = Xamp/1.0amp
 + (CGFloat)decibelToAmplitudeOverReferenceAmplitude:(CGFloat)decibel {
-	return powf(10.0, decibel/20.0); //  = Xamp/1.0amp;
+	return powf( 10.0f, decibel/20.0f ); //  = Xamp/1.0amp;
 }
 
 - (CGFloat)_earAmplitudeResponceForFrequency:(CGFloat)freq {
@@ -66,7 +66,7 @@
 
 - (CGFloat)mapEarResponseToAmplitudeForFreq:(CGFloat)freq {
 
-	CGFloat maxEarResponse = 2.2;
+	CGFloat maxEarResponse = 2.2f;
 	CGFloat highValue = _maxAmp-_minAmp;
 		
 	CGFloat earAmp = [self _earAmplitudeResponceForFrequency:freq];

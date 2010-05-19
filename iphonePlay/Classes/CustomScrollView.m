@@ -9,6 +9,7 @@
 #import "CustomScrollView.h"
 #import "TouchMeter.h"
 #import "ScrollController.h"
+#import <UIKit/UIKit.h>
 
 @implementation CustomScrollView
 
@@ -180,7 +181,7 @@
 }
 
 // scale between minimum and maximum. called after any 'bounce' animations
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
 }
 
 // return a yes if you want to scroll to the top. if not defined, assumes YES

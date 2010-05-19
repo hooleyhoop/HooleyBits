@@ -9,6 +9,6 @@
 
 @protocol NoteLookupProtocol
 
-- (double)hzForStepsAboveA4:(int)steps;
+- (CGFloat)hzForStepsAboveA4:(int)steps;
 
 @end

@@ -24,17 +24,17 @@
 */
 @interface LWKey : SHooleyObject <NSCoding> {
 
-	LWKey		*_prev, *_next;
+	LWKey			*_prev, *_next;
 
 	CGFloat		_value;	// y
 	CGFloat		_time;	// x
-	NSUInteger	_shape;
+	NSUInteger		_shape;
 	CGFloat		_tension;
 	CGFloat		_continuity;
 	CGFloat		_bias;
 	CGFloat		_param[4];
 	
-   LWEnvelope*	_envelope;
+   LWEnvelope		*_envelope;
 }
 
 @property (nonatomic, assign) LWKey *prev;

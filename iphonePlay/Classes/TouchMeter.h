@@ -6,7 +6,7 @@
 //  Copyright 2009 BestBefore Ltd. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "SHooleyObject.h"
 
 @interface TouchMeter : SHooleyObject {

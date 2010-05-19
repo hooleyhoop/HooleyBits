@@ -51,8 +51,8 @@ static TouchMeter *sharedTouchMeter;
 		circleLayer2.opacity = 0;	
 
 		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		float colVals1[4] = { 0/255.0f, 255/255.0f, 0/255.0f, 1.0};
-		float colVals2[4] = { 255/255.0f, 0/255.0f, 0/255.0f, 1.0};
+		float colVals1[4] = { 0/255.0f, 255/255.0f, 0/255.0f, 1.0f };
+		float colVals2[4] = { 255/255.0f, 0/255.0f, 0/255.0f, 1.0f };
 		CGColorRef col1 = CGColorCreate(colorSpace, colVals1);
 		CGColorRef col2 = CGColorCreate(colorSpace, colVals2);
 		circleLayer1.backgroundColor = col1;

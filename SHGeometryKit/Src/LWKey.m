@@ -34,12 +34,12 @@
 		_next = nil;
 		_prev = nil;
 		_envelope = nil;
-		_value=0.0;	// y
-		_time=0.0;	// x
+		_value=0.0f;	// y
+		_time=0.0f;	// x
 		_shape=0;
-		_tension=0.0;
-		_continuity=0.0;
-		_bias=0.0;
+		_tension=0.0f;
+		_continuity=0.0f;
+		_bias=0.0f;
 		_param[0] = 0;
 		_param[1] = 0;
 		_param[2] = 100;
@@ -277,7 +277,7 @@
 				if(_next)
 					nextx = [_next x];
 				else
-					nextx = 5.0;
+					nextx = 5.0f;
 				[self setParam0: -((_time-prex)/20)];	// arbitrarily 20 % toawards previous pt without
 				[self setParam1: 0];					// any checking to see if it clashes with previous pts 
 				[self setParam2:(nextx-_time)/20];		// control pts

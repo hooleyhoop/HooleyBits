@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
 @class View_main, ScrollController;
 
 @interface CustomScrollView : UIScrollView <UIScrollViewDelegate> {

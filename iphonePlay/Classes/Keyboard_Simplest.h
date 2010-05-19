@@ -14,11 +14,11 @@
 
 @interface Keyboard_Simplest : SHooleyObject <KeyboardProtocol> {
 
-	AmplitudeCurve *_amplitudeLookup;
-	SHooleyObject<SoundsSourceProtocol> *_connectedSoundSource;
-	SHooleyObject<NoteLookupProtocol> *noteLookup;
-	NSMutableIndexSet *pressedKeys;
-	int offset;
+	AmplitudeCurve							*_amplitudeLookup;
+	SHooleyObject<SoundsSourceProtocol>	*_connectedSoundSource;
+	SHooleyObject<NoteLookupProtocol>		*noteLookup;
+	NSMutableIndexSet							*pressedKeys;
+	int											offset;
 }
 
 @property (readonly) SHooleyObject<SoundsSourceProtocol> *connectedSoundSource;

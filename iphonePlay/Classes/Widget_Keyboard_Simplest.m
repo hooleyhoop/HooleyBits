@@ -30,11 +30,11 @@
 		widgetLayer = [[Layer_Base layer] retain];
 		
 		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		float onColVals[4] = { 255/255.0f, 255/255.0f, 0/255.0f, 1.0};
-		float offColVals[4] = { 255/255.0f, 255/255.0f, 255/255.0f, 1.0};
-		float errColVals[4] = { 255/255.0f, 0/255.0f, 0/255.0f, 1.0};
-		float backgroundColVals[4] = { 125/255.0f, 0/255.0f, 0/255.0f, 0.65};
-		float borderColVals[4] = { 0/255.0f, 127/255.0f, 127/255.0f, 1.0};
+		float onColVals[4] = { 255/255.0f, 255/255.0f, 0/255.0f, 1.0f };
+		float offColVals[4] = { 255/255.0f, 255/255.0f, 255/255.0f, 1.0f };
+		float errColVals[4] = { 255/255.0f, 0/255.0f, 0/255.0f, 1.0f };
+		float backgroundColVals[4] = { 125/255.0f, 0/255.0f, 0/255.0f, 0.65f };
+		float borderColVals[4] = { 0/255.0f, 127/255.0f, 127/255.0f, 1.0f };
 		onColour = CGColorCreate( colorSpace, onColVals );
 		offColour = CGColorCreate( colorSpace, offColVals );
 		errColour = CGColorCreate( colorSpace, errColVals );

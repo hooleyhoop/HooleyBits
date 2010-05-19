@@ -18,42 +18,41 @@
  */
 #ifndef FixedToFloat
 #define fixed1              ((Fixed) 0x00010000L)
-#define FixedToFloat(a)     ((float)(a) / fixed1)
-#define FloatToFixed(a)     ((Fixed)((float)(a) * fixed1))
+#define FixedToFloat(a)     ((CGFloat)(a) / fixed1)
+#define FloatToFixed(a)     ((Fixed)((CGFloat)(a) * fixed1))
 #endif
 
-const Float64 kGraphSampleRate = 44100.;
-const double twopi = 2.0 * M_PI;
-double pow3(double x) { return x*x*x; }
-double pow5(double x) { double x2 = x*x; return x2*x2*x; }
+const CGFloat kGraphSampleRate = 44100.f;
+CGFloat pow3(CGFloat x) { return x*x*x; }
+CGFloat pow5(CGFloat x) { CGFloat x2 = x*x; return x2*x2*x; }
 
 OSStatus renderInput(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData)
 {	
 	struct SineData* myData = (struct SineData *)inRefCon;
-	double phase = myData->phase;
-	double freq = myData->freq;
-//	double amp = myData->amp;
-    double ampz = myData->ampz;
-//    double freqz = myData->freqz;
+	CGFloat phase = myData->phase;
+	CGFloat freq = myData->freq;
+//	CGFloat amp = myData->amp;
+	CGFloat ampz = myData->ampz;
+//    CGFloat freqz = myData->freqz;
 	
 	Fixed *outA = (Fixed *)ioData->mBuffers[0].mData;
-	CGFloat wave = 0.;
+	CGFloat wave = 0.f;
 	
 	switch( myData->status ){
 		case NOTE_FREE :
-			for (UInt32 i=0; i<inNumberFrames; ++i){
+			for( NSUInteger i=0; i<inNumberFrames; ++i ){
 				outA[i] = FloatToFixed(0.0f);
 			}
 			break;
 			
 		case NOTE_ATTACK :
-			for (UInt32 i=0; i<inNumberFrames; ++i) 
+			for( NSUInteger i=0; i<inNumberFrames; ++i ) 
 			{				
-				wave = pow3(sin(phase)) * ampz; // between -1 and 1 // the pow3 smooths transition from zero - stops crackles?
-				outA[i] = FloatToFixed((float)(wave*127.0f));
+				wave = pow3(sinf(phase)) * ampz; // between -1 and 1 // the pow3 smooths transition from zero - stops crackles?
+				outA[i] = FloatToFixed((CGFloat)(wave*127.0f));
 				phase += freq;
-				if (phase > twopi) 
-					phase -= twopi;
+				if (phase > TWOPI) 
+					phase -= (CGFloat)TWOPI;
 				// de-zipper controls - seems fucked if zero?
 				if (ampz < myData->MAX_AMP_FOR_FREQ) {
 					ampz += myData->UP_SLOPE_FOR_FREQ;
@@ -84,7 +83,7 @@ OSStatus renderInput(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, 
 				
 				//if(amp<0.0)
 				//	amp = 0.0;
-				wave = pow3(sin(phase)) * ampz; // between -1 and 1
+				wave = pow3(sinf(phase)) * ampz; // between -1 and 1
 				Fixed outVal = FloatToFixed((float)(wave*127.0f));
 				outA[i] = outVal;
 				phase += freq;
@@ -134,7 +133,7 @@ OSStatus renderInput(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, 
 	
 	int waitCount=0;
 	while([self numberOfActiveInputs]>0 && waitCount<20){
-		sleep(0.1);
+		sleep(0.1f);
 		logInfo(@"waiting for shutdown..");
 		waitCount++;
 	}
@@ -315,7 +314,7 @@ AUNode inputMixerNodes[NUMBER_OF_INPUT_MIXERS];
 
 - (void)setInput:(UInt8)inputIndex isEnabled:(AudioUnitParameterValue)status
 {
-	// logInfo(@"Enable:%f - %i", (float)status, inputIndex);
+	// logInfo(@"Enable:%f - %i", (CGFloat)status, inputIndex);
 	NSParameterAssert( inputIndex<MAX_INPUTS );
 	if(_audioGraph==NULL)
 		[NSException raise:@"Graph Not Ready" format:@"-- --"];
@@ -400,17 +399,17 @@ AUNode inputMixerNodes[NUMBER_OF_INPUT_MIXERS];
 	return maxLoad;
 }
 
-- (void)turnOnSine:(UInt8)inputIndex freq:(float)freq amp:(CGFloat)amplitude {
+- (void)turnOnSine:(UInt8)inputIndex freq:(CGFloat)freq amp:(CGFloat)amplitude {
 
 	NSParameterAssert(inputIndex<MAX_INPUTS);
 	NSParameterAssert(amplitude>=0. && amplitude<=1.0);
 
 	// convert freq from Hz to samplerate-adjusted freq
-	double freqForSampleRate = freq * (twopi/kGraphSampleRate);
+	CGFloat freqForSampleRate = freq * ((CGFloat)TWOPI/kGraphSampleRate);
 
 	struct SineData *playingData = sineDatas[inputIndex];
 
-	NSAssert1( G3DCompareFloat(playingData->amp, 0.0f, 0.00001f)==0, @"channel %i hmm, doesnt seem to have been cleaned up properly", inputIndex );
+	NSAssert1( G3DCompareFloat(playingData->amp, 0.0f, 0.00001f )==0, @"channel %i hmm, doesnt seem to have been cleaned up properly", inputIndex );
 	playingData->freq = freqForSampleRate;
 	playingData->phase = 0.0f;
 	playingData->amp = 1.0f;	// This will be dezippered
@@ -420,23 +419,24 @@ AUNode inputMixerNodes[NUMBER_OF_INPUT_MIXERS];
 
 	// calculate MAX_AMP, UPSLOPE, DOWNSLOPE based on the frequency
 	// Here we decrease the volume linearly with frequence. Dont know how to do it logarthmically line between 2 points y = m(x-x1)+y1
-	CGPoint p1 = CGPointMake(0.0, 0.7); CGPoint p2 = CGPointMake(2000.0, 0.3);
+	CGPoint p1 = CGPointMake(0.0f, 0.7f); 
+	CGPoint p2 = CGPointMake(2000.0f, 0.3f);
 	CGFloat m = (p2.y-p1.y)/(p2.x-p1.x);
 	
 	/* we need to make this a more sophisticated og curve */
 	playingData->MAX_AMP_FOR_FREQ = amplitude;
 
 	NSUInteger numberOfWavelengthsToFadeInOver = 50;
-	double distanceWeMustFadeInOver = (kGraphSampleRate/freq) * numberOfWavelengthsToFadeInOver;
-	double frequencyDependantUpSloap = playingData->MAX_AMP_FOR_FREQ / distanceWeMustFadeInOver;
+	CGFloat distanceWeMustFadeInOver = (kGraphSampleRate/freq) * numberOfWavelengthsToFadeInOver;
+	CGFloat frequencyDependantUpSloap = playingData->MAX_AMP_FOR_FREQ / distanceWeMustFadeInOver;
 	
-	playingData->UP_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.01 * kGraphSampleRate);
+	playingData->UP_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.01f * kGraphSampleRate);
 	playingData->UP_SLOPE_FOR_FREQ  = frequencyDependantUpSloap;
 
-	// playingData->UP_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.005 * kGraphSampleRate);
-	playingData->DOWN_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.005 * kGraphSampleRate);
-	playingData->sustainDuration = 0.0;
-	playingData->MINIMUM_SUSTAIN_DURATION = kGraphSampleRate/17.0;
+	// playingData->UP_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.005f * kGraphSampleRate);
+	playingData->DOWN_SLOPE_FOR_FREQ = playingData->MAX_AMP_FOR_FREQ / (0.005f * kGraphSampleRate);
+	playingData->sustainDuration = 0.0f;
+	playingData->MINIMUM_SUSTAIN_DURATION = kGraphSampleRate/17.0f;
 	
 	// Now we should be ready to set the callback, turn on the input, etc.
 	[self setInput:inputIndex isEnabled:1.0f];
@@ -451,7 +451,7 @@ AUNode inputMixerNodes[NUMBER_OF_INPUT_MIXERS];
 	playingData->amp = 0.0f;
 	playingData->status = NOTE_RELEASE;
 
-//	double currentAmplitudeCheck = playingData->amp;
+//	CGFloat currentAmplitudeCheck = playingData->amp;
 	//logInfo(@"Turning off inputIndex %i, current Vol = %f", inputIndex, (float)currentAmplitudeCheck );
 
 	// -- turn off when we get to the end of the fade out - !nightmare to test!
@@ -467,7 +467,7 @@ AUNode inputMixerNodes[NUMBER_OF_INPUT_MIXERS];
 	struct SineData *playingData = sineDatas[inIndex];
 	if( playingData->status==NOTE_ENDED)
 	{
-		double currentAmplitudeCheck = playingData->amp;
+		CGFloat currentAmplitudeCheck = playingData->amp;
 		NSAssert( currentAmplitudeCheck<0.0001, @"We are turning off the channel before its volume faded to Zero" );
 		
 		[self setInput:inIndex isEnabled:0.0f];

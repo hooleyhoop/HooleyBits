@@ -19,11 +19,11 @@
   @header G3DFunctions
   Some assorted C functions and constants.
 */
+#import "G3DDefs.h"
 
 #ifndef __G3DFunctions_h_INCLUDE
 #define __G3DFunctions_h_INCLUDE
 
-#include "G3DDefs.h"
 
 /******************************************************************************
  *

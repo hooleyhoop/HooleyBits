@@ -7,6 +7,7 @@
 //
 
 #import "SHooleyObject.h"
+#import<CoreGraphics/CoreGraphics.h>
 
 @class LWEnvelope;
 @interface AmplitudeCurve : SHooleyObject {

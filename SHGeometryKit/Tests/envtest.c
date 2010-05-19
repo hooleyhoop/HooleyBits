@@ -11,18 +11,18 @@ envelope for the camera, then compares what evalEnvelope() returns to
 what LWEnvelopeFuncs->evaluate() says.
 ====================================================================== */
 
-#include <lwserver.h>
-#include <lwgeneric.h>
-#include <lwrender.h>
-#include <lwenvel.h>
-#include <lwchannel.h>
-#include <lwhost.h>
-#include <lwpanel.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "envelope.h"
+#import <lwserver.h>
+#import <lwgeneric.h>
+#import <lwrender.h>
+#import <lwenvel.h>
+#import <lwchannel.h>
+#import <lwhost.h>
+#import <lwpanel.h>
+#import <stdio.h>
+#import <stdlib.h>
+#import <string.h>
+#import <math.h>
+#import "envelope.h"
 
 
 /* IDs for reading ENVL chunks in read_envb() */

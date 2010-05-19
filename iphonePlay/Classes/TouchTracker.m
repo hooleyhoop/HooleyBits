@@ -10,6 +10,12 @@
 #import "HooleyTouchEvent.h"
 #import "G3DFunctions.h"
 
+@interface TouchTracker ()
+
+- (HooleyTouchEvent *)findOpenTouch:(UITouch *)value;
+
+@end
+
 @implementation TouchTracker
 
 
@@ -133,7 +139,7 @@
 			nearestTouch = each;
 		}
 	}
-	NSAssert(G3DCompareFloat(nearestDist, 99999., 0.00001f)!=0 && nearestTouch!=nil, @"gone wrong somewhere");
+	NSAssert( G3DCompareDouble(nearestDist, 99999.0f, 0.00001f)!=0 && nearestTouch!=nil, @"gone wrong somewhere");
 	return nearestTouch;
 }
 

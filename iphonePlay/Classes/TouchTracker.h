@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "SHooleyObject.h"
+
 @class HooleyTouchEvent;
 
 @interface TouchTracker : SHooleyObject {

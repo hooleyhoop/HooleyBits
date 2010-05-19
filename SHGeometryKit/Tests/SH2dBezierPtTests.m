@@ -6,8 +6,18 @@
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "SH2dBezierPtTests.h"
+
 #import "SHGeometryKit.h"
+
+#import <SenTestingKit/SenTestingKit.h>
+
+
+@interface SH2dBezierPtTests : SenTestCase {
+	
+}
+
+@end
+
 
 @implementation SH2dBezierPtTests
 

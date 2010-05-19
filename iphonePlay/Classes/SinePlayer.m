@@ -35,7 +35,7 @@
 	return [newSinPlayer autorelease];
 }
 
-- (int)playSine:(double)freq amp:(CGFloat)amplitude {
+- (int)playSine:(CGFloat)freq amp:(CGFloat)amplitude {
 	
 	NSParameterAssert(amplitude>=0.0 && amplitude<=1.0);
 
@@ -51,7 +51,7 @@
 	return channelID;
 }
 
-- (void)stopSine:(double)freq {
+- (void)stopSine:(CGFloat)freq {
 	
 	NSNumber *channel = [channelFreqLookup objectForKey:[NSNumber numberWithDouble:freq]];
 	NSAssert1( channel, @"can't find a playing channel with that frequency - %f", (float)freq );

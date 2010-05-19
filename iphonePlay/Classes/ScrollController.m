@@ -54,7 +54,7 @@
 	dragBarLayer.frame = CGRectMake(0, 0, CGRectGetWidth(dragBarView.frame), CGRectGetHeight(dragBarView.frame));
 
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	float onColVals[4] = { 0/255.0f, 255/255.0f, 0/255.0f, 0.67};
+	float onColVals[4] = { 0/255.0f, 255/255.0f, 0/255.0f, 0.67f };
 	CGColorRef onColour = CGColorCreate( colorSpace, onColVals );
 	dragBarLayer.backgroundColor = onColour;
 	dragBarView.backgroundColor = [UIColor clearColor];

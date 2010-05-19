@@ -72,9 +72,9 @@
 - (void)viewDidLoad {
 
 	
-	for( NSString *familyName in [UIFont familyNames] )
-		for( NSString *fntName in [UIFont fontNamesForFamilyName:familyName] )
-			NSLog(@"%@", fntName);
+//	for( NSString *familyName in [UIFont familyNames] )
+//		for( NSString *fntName in [UIFont fontNamesForFamilyName:familyName] )
+//			NSLog(@"%@", fntName);
 
 			
 	UIFont *f1 = [UIFont fontWithName:@"Helvetica" size:15];

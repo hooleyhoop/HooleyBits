@@ -334,25 +334,25 @@ static CGFloat bez2( LWKey* key0, LWKey* key1, CGFloat time ) // t between 0.0-1
  * these are integrated to get the 'distance' traveled at any time     *
  * --------------------------------------------------------------------*
  */
-double ease(double t, double t1, double t2)
+CGFloat ease(CGFloat t, CGFloat t1, CGFloat t2)
 {
-  double  a,b,c,rt;
-  double  v,a1,a2;
+  CGFloat  a,b,c,rt;
+  CGFloat  v,a1,a2;
 
   v = 2/(1+t2-t1);  /* constant velocity attained */
   a1 = v/t1;        /* acceleration of first leg */
   a2 = -v/(1-t2);   /* deceleration of last leg */
 
   if (t<t1) {
-    rt = 0.5*a1*t*t;       /* pos = 1/2 * acc * t*t */
+    rt = 0.5f*a1*t*t;       /* pos = 1/2 * acc * t*t */
   }
   else if (t<t2) {
-    a = 0.5*a1*t1*t1;      /* distance from first leg */
+    a = 0.5f*a1*t1*t1;      /* distance from first leg */
     b = v*(t-t1);            /* distance = vel * time  of second leg */
     rt = a + b;
   }
   else {
-    a = 0.5*a1*t1*t1;      /* distance from first leg */
+    a = 0.5f*a1*t1*t1;      /* distance from first leg */
     b = v*(t2-t1);           /* distance from second leg */
     c = ((v + v + (t-t2)*a2)/2) * (t-t2);  /* distance = ave vel. * time */
     rt = a + b + c;
@@ -363,7 +363,7 @@ double ease(double t, double t1, double t2)
 static CGFloat ease2( LWKey* key0, LWKey* key1, CGFloat time ) // t between 0.0-1.0
 {
 //	double x
-	double y, t;
+	CGFloat y, t;
 //	double t0 = 0.0f;
 //	double t1 = 1.0f;
 //	double time0 = [key0 time], time1 = [key1 time];
@@ -389,7 +389,7 @@ static CGFloat ease2( LWKey* key0, LWKey* key1, CGFloat time ) // t between 0.0-
 //	y = [key0 value] + t * ( [key1 value] - [key0 value] );
 
 
-	t = ease( t, 0.33, 0.66 ); // t is now a non-linear value between 0 & 1
+	t = ease( t, 0.33f, 0.66f ); // t is now a non-linear value between 0 & 1
 	y = [key0 value] + t * ( [key1 value] - [key0 value] );
 
 //	double newTime = t*( [key1 time] - [key0 time] )+[key0 time];
@@ -759,7 +759,7 @@ envelope at that time.
 //=========================================================== 
 - (CGRect) bounds
 {
-	double x1=0,x2=0,y1=0,y2=0;
+	CGFloat x1=0,x2=0,y1=0,y2=0;
 	if(_nkeys>0)
 	{
 		LWKey *bpt = _key;
@@ -789,8 +789,8 @@ envelope at that time.
 		while( (bpt=[bpt next]) ) 
 		{
 			// bpt = [bpt next];
-			double newX = [bpt time];
-			double newY = [bpt value];
+			CGFloat newX = [bpt time];
+			CGFloat newY = [bpt value];
 
 			if(newX<x1)
 				x1=newX;

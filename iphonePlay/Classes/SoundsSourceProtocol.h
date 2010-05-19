@@ -6,6 +6,7 @@
  *  Copyright 2009 BestBefore Ltd. All rights reserved.
  *
  */
+#import <CoreGraphics/CoreGraphics.h>
 
 @protocol SoundsSourceProtocol
 

@@ -6,7 +6,7 @@
 //  Copyright 2009 Bestbefore. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class View_main, CustomScrollView;
 

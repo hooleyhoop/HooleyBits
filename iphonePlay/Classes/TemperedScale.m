@@ -20,21 +20,21 @@
 	[super dealloc];
 }
 
-- (double)hzForStepsAboveA4:(int)steps {
+- (CGFloat)hzForStepsAboveA4:(int)steps {
 
 	return [self hzForStepsAbove440:steps];
 }
 
-- (double)hzForStepsAbove440:(int)steps {
+- (CGFloat)hzForStepsAbove440:(int)steps {
 
 	// f = 2n/12 × 440 Hz
-	return pow(2.0, steps/12.0)*440.0;
+	return powf(2.0f, steps/12.0f)*440.0f;
 }
 
 // p = 69 + 12 × log2 (f / (440 Hz))
-- (double)midiNoteForHz:(double)freq {
+- (CGFloat)midiNoteForHz:(CGFloat)freq {
 
-	return 69 + 12 * log2(freq/440.0);
+	return 69 + 12 * log2f(freq/440.0f);
 }
 
 @end

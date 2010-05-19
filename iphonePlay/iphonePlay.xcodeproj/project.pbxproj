@@ -10,70 +10,40 @@
 		1D3623260D0F684500981E51 /* iphonePlayAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphonePlayAppDelegate.m */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		730E2C2311A42D3300C7CDAA /* VerifyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2B9311A429AB00C7CDAA /* VerifyTests.m */; };
+		730E300F11A4424500C7CDAA /* G3DFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 730E300E11A4424500C7CDAA /* G3DFunctions.c */; };
+		730E302811A4429900C7CDAA /* LWKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E302511A4429900C7CDAA /* LWKey.m */; };
+		730E302911A4429900C7CDAA /* LWEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E302711A4429900C7CDAA /* LWEnvelope.m */; };
 		73284AC40FD30DBD00B9ABDA /* CustomApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 73284AC30FD30DBD00B9ABDA /* CustomApplication.m */; };
 		733748520F443DBB0087B2E7 /* TemperedScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 733748510F443DBB0087B2E7 /* TemperedScale.m */; };
-		733E62420F4C372A0073D9F9 /* TouchTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E62410F4C372A0073D9F9 /* TouchTracker.m */; };
 		733E62430F4C372A0073D9F9 /* TouchTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E62410F4C372A0073D9F9 /* TouchTracker.m */; };
-		734A40B30F4AD85B00C5163C /* Layer_key.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A40B20F4AD85B00C5163C /* Layer_key.m */; };
 		734A40B40F4AD85B00C5163C /* Layer_key.m in Sources */ = {isa = PBXBuildFile; fileRef = 734A40B20F4AD85B00C5163C /* Layer_key.m */; };
-		735592C30F44762A0074F151 /* CoreAudioSineGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFDFCB0F2FB1A400160FE0 /* CoreAudioSineGenerator.m */; };
-		735592E40F44773D0074F151 /* SinePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390106D0F2F815900B78FD6 /* SinePlayer.m */; };
-		735592E50F44773E0074F151 /* TemperedScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 733748510F443DBB0087B2E7 /* TemperedScale.m */; };
-		735592EA0F44774D0074F151 /* iphonePlayAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphonePlayAppDelegate.m */; };
-		735593850F447CDD0074F151 /* GTMIPhoneUnitTestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 735593830F447CDD0074F151 /* GTMIPhoneUnitTestDelegate.m */; };
-		735593880F447CEB0074F151 /* GTMSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 735593860F447CEB0074F151 /* GTMSenTestCase.m */; };
-		7355938B0F447D4F0074F151 /* GTMIPhoneUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 7355938A0F447D4F0074F151 /* GTMIPhoneUnitTestMain.m */; };
-		7355946B0F44877B0074F151 /* Keyboard_Simplest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7355946A0F44877B0074F151 /* Keyboard_Simplest.m */; };
 		7355946C0F44877B0074F151 /* Keyboard_Simplest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7355946A0F44877B0074F151 /* Keyboard_Simplest.m */; };
-		735594A60F4492F90074F151 /* Widget_Keyboard_Simplest.m in Sources */ = {isa = PBXBuildFile; fileRef = 735594A50F4492F90074F151 /* Widget_Keyboard_Simplest.m */; };
 		735594A70F4492F90074F151 /* Widget_Keyboard_Simplest.m in Sources */ = {isa = PBXBuildFile; fileRef = 735594A50F4492F90074F151 /* Widget_Keyboard_Simplest.m */; };
 		7355957E0F4588E70074F151 /* ViewController_info.m in Sources */ = {isa = PBXBuildFile; fileRef = 7355957D0F4588E70074F151 /* ViewController_info.m */; };
-		7355957F0F4588E70074F151 /* ViewController_info.m in Sources */ = {isa = PBXBuildFile; fileRef = 7355957D0F4588E70074F151 /* ViewController_info.m */; };
 		735595970F4589AC0074F151 /* ViewController_mainScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 735595960F4589AC0074F151 /* ViewController_mainScreen.m */; };
-		735595980F4589AC0074F151 /* ViewController_mainScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 735595960F4589AC0074F151 /* ViewController_mainScreen.m */; };
 		735595FD0F458FC60074F151 /* View_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 735595FC0F458FC60074F151 /* View_main.m */; };
-		735595FE0F458FC60074F151 /* View_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 735595FC0F458FC60074F151 /* View_main.m */; };
-		735598840F45B69A0074F151 /* SwizzleList.m in Sources */ = {isa = PBXBuildFile; fileRef = 735598830F45B69A0074F151 /* SwizzleList.m */; };
 		735783640FD1B7D600D56515 /* ScrollController.m in Sources */ = {isa = PBXBuildFile; fileRef = 735783630FD1B7D600D56515 /* ScrollController.m */; };
-		735E2BE60F4C6DEB007C76E5 /* HooleyTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 735E2BE50F4C6DEB007C76E5 /* HooleyTouchEvent.m */; };
 		735E2BE70F4C6DEB007C76E5 /* HooleyTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 735E2BE50F4C6DEB007C76E5 /* HooleyTouchEvent.m */; };
-		736886F60F963B0800369A7E /* CustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 736886F50F963B0800369A7E /* CustomScrollView.m */; };
 		736886F70F963B0800369A7E /* CustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 736886F50F963B0800369A7E /* CustomScrollView.m */; };
 		738E359D11A41AB10066DBC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 738E359C11A41AB10066DBC6 /* main.m */; };
 		738E35A111A41ACF0066DBC6 /* Window_main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 738E35A011A41ACF0066DBC6 /* Window_main.xib */; };
 		738E35A311A41AD50066DBC6 /* View_main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 738E35A211A41AD50066DBC6 /* View_main.xib */; };
 		738E35A511A41ADA0066DBC6 /* FlipsideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 738E35A411A41ADA0066DBC6 /* FlipsideView.xib */; };
-		738E35A711A41AE20066DBC6 /* Window_empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 738E35A611A41AE20066DBC6 /* Window_empty.xib */; };
 		738E35F811A41CFE0066DBC6 /* TouchMeter.m in Sources */ = {isa = PBXBuildFile; fileRef = 738E35F711A41CFE0066DBC6 /* TouchMeter.m */; };
 		738E35FB11A41D4C0066DBC6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		7390106E0F2F815900B78FD6 /* SinePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390106D0F2F815900B78FD6 /* SinePlayer.m */; };
 		739A50D40F5158F5002C53D0 /* SwizzleList.m in Sources */ = {isa = PBXBuildFile; fileRef = 735598830F45B69A0074F151 /* SwizzleList.m */; };
 		73AEEA9E0F483A6300862D98 /* libSHShared_iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AEEA9D0F483A5B00862D98 /* libSHShared_iphone.a */; };
-		73B5123A0F6D26440010DE0D /* LWKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A6D30F6C357B00795867 /* LWKey.m */; };
-		73B5123B0F6D26460010DE0D /* LWEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A6D50F6C357B00795867 /* LWEnvelope.m */; };
 		73C2EACF0F4D64DC009D45E7 /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C2EACE0F4D64DC009D45E7 /* GridLayout.m */; };
-		73C2EAD00F4D64DC009D45E7 /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C2EACE0F4D64DC009D45E7 /* GridLayout.m */; };
 		73C843F90F5342D200B450CF /* Window_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C843F70F5342D200B450CF /* Window_Base.m */; };
-		73C843FA0F5342D200B450CF /* Window_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C843F70F5342D200B450CF /* Window_Base.m */; };
 		73CD08B40F4F090C001F0C0D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD08B30F4F090C001F0C0D /* RootViewController.m */; };
-		73CD08B50F4F090C001F0C0D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD08B30F4F090C001F0C0D /* RootViewController.m */; };
 		73CD09510F4F0F4F001F0C0D /* ViewController_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09500F4F0F4F001F0C0D /* ViewController_Base.m */; };
-		73CD09520F4F0F4F001F0C0D /* ViewController_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09500F4F0F4F001F0C0D /* ViewController_Base.m */; };
 		73CD09850F4F1074001F0C0D /* View_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09840F4F1074001F0C0D /* View_Base.m */; };
-		73CD09860F4F1074001F0C0D /* View_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09840F4F1074001F0C0D /* View_Base.m */; };
 		73CD099B0F4F1145001F0C0D /* FlipsideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD099A0F4F1145001F0C0D /* FlipsideView.m */; };
-		73CD099C0F4F1145001F0C0D /* FlipsideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD099A0F4F1145001F0C0D /* FlipsideView.m */; };
 		73CD09FA0F4F1472001F0C0D /* Layer_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09F90F4F1472001F0C0D /* Layer_Base.m */; };
-		73CD09FB0F4F1472001F0C0D /* Layer_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD09F90F4F1472001F0C0D /* Layer_Base.m */; };
 		73CFDFCC0F2FB1A400160FE0 /* CoreAudioSineGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFDFCB0F2FB1A400160FE0 /* CoreAudioSineGenerator.m */; };
 		73D41D080F6E6B26006D49B8 /* AmplitudeCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D41D070F6E6B26006D49B8 /* AmplitudeCurve.m */; };
-		73D41D090F6E6B26006D49B8 /* AmplitudeCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D41D070F6E6B26006D49B8 /* AmplitudeCurve.m */; };
-		73D4AFCE0FD67C07008DEDF3 /* ScrollController.m in Sources */ = {isa = PBXBuildFile; fileRef = 735783630FD1B7D600D56515 /* ScrollController.m */; };
-		73D4AFD00FD67C0A008DEDF3 /* CustomApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 73284AC30FD30DBD00B9ABDA /* CustomApplication.m */; };
-		73D4B0230FD684D1008DEDF3 /* G3DFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 73D4B0220FD684D1008DEDF3 /* G3DFunctions.c */; };
-		73D4B0240FD684D1008DEDF3 /* G3DFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 73D4B0220FD684D1008DEDF3 /* G3DFunctions.c */; };
-		73E7A6D60F6C357B00795867 /* LWKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A6D30F6C357B00795867 /* LWKey.m */; };
-		73E7A7220F6C526700795867 /* LWEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A6D50F6C357B00795867 /* LWEnvelope.m */; };
 		73FBF9A10F2C8ABB009D4FE6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73FBF9A00F2C8ABB009D4FE6 /* AudioToolbox.framework */; };
 		73FBF9AE0F2C8AC5009D4FE6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73FBF9AD0F2C8AC5009D4FE6 /* AVFoundation.framework */; };
 		73FBF9B00F2C8ACD009D4FE6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73FBF9AF0F2C8ACD009D4FE6 /* CoreAudio.framework */; };
@@ -138,13 +108,6 @@
 			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
 		};
-		73AEEAA40F483A8500862D98 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73AEEA8A0F483A5A00862D98 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73AC016A0F4039D100FA9887;
-			remoteInfo = SHShared_iphone;
-		};
 		73CB051D10DBDE6900AE25C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73AEEA8A0F483A5A00862D98 /* SHShared.xcodeproj */;
@@ -175,9 +138,19 @@
 		1D6058910D05DD3D006BFB54 /* iphoneplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iphoneplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		730E2B9311A429AB00C7CDAA /* VerifyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerifyTests.m; path = Tests/VerifyTests.m; sourceTree = "<group>"; };
+		730E2BFD11A42C2500C7CDAA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Volumes/Leopard/Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
+		730E2C1A11A42CCC00C7CDAA /* iPhonePlayTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPhonePlayTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		730E2C2211A42D2600C7CDAA /* Target-iPhoneTestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-iPhoneTestBundle.xcconfig"; path = "../../Blake/Config/Target-iPhoneTestBundle.xcconfig"; sourceTree = SOURCE_ROOT; };
+		730E300D11A4424500C7CDAA /* G3DFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G3DFunctions.h; sourceTree = "<group>"; };
+		730E300E11A4424500C7CDAA /* G3DFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = G3DFunctions.c; sourceTree = "<group>"; };
+		730E301311A4425A00C7CDAA /* G3DDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DDefs.h; path = ../SHGeometryKit/Src/G3DDefs.h; sourceTree = SOURCE_ROOT; };
+		730E302411A4429900C7CDAA /* LWKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWKey.h; path = ../SHGeometryKit/Src/LWKey.h; sourceTree = SOURCE_ROOT; };
+		730E302511A4429900C7CDAA /* LWKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWKey.m; path = ../SHGeometryKit/Src/LWKey.m; sourceTree = SOURCE_ROOT; };
+		730E302611A4429900C7CDAA /* LWEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWEnvelope.h; path = ../SHGeometryKit/Src/LWEnvelope.h; sourceTree = SOURCE_ROOT; };
+		730E302711A4429900C7CDAA /* LWEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelope.m; path = ../SHGeometryKit/Src/LWEnvelope.m; sourceTree = SOURCE_ROOT; };
 		73284AC20FD30DBD00B9ABDA /* CustomApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomApplication.h; sourceTree = "<group>"; };
 		73284AC30FD30DBD00B9ABDA /* CustomApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomApplication.m; sourceTree = "<group>"; };
-		732F831C0F44690800F02CF5 /* NewTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		733748490F443D340087B2E7 /* TemperedScaleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemperedScaleTests.m; path = Tests/TemperedScaleTests.m; sourceTree = "<group>"; };
 		733748500F443DBB0087B2E7 /* TemperedScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperedScale.h; sourceTree = "<group>"; };
 		733748510F443DBB0087B2E7 /* TemperedScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperedScale.m; sourceTree = "<group>"; };
@@ -270,15 +243,9 @@
 		73CFDFCB0F2FB1A400160FE0 /* CoreAudioSineGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreAudioSineGenerator.m; sourceTree = "<group>"; };
 		73D41D060F6E6B26006D49B8 /* AmplitudeCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmplitudeCurve.h; sourceTree = "<group>"; };
 		73D41D070F6E6B26006D49B8 /* AmplitudeCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmplitudeCurve.m; sourceTree = "<group>"; };
-		73D4B0210FD684D1008DEDF3 /* G3DFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DFunctions.h; path = ../SHGeometryKit/G3DFunctions.h; sourceTree = SOURCE_ROOT; };
-		73D4B0220FD684D1008DEDF3 /* G3DFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = G3DFunctions.c; path = ../SHGeometryKit/G3DFunctions.c; sourceTree = SOURCE_ROOT; };
 		73E7A52B0F6C2F2000795867 /* AmplitudeCurveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmplitudeCurveTests.m; path = Tests/AmplitudeCurveTests.m; sourceTree = "<group>"; };
 		73E7A6CC0F6C353000795867 /* LWEnvelopeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelopeTests.m; path = ../SHGeometryKit/LWEnvelopeTests.m; sourceTree = SOURCE_ROOT; };
 		73E7A6CD0F6C353000795867 /* LWKeyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWKeyTests.m; path = ../SHGeometryKit/LWKeyTests.m; sourceTree = SOURCE_ROOT; };
-		73E7A6D20F6C357B00795867 /* LWKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWKey.h; path = ../SHGeometryKit/LWKey.h; sourceTree = SOURCE_ROOT; };
-		73E7A6D30F6C357B00795867 /* LWKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWKey.m; path = ../SHGeometryKit/LWKey.m; sourceTree = SOURCE_ROOT; };
-		73E7A6D40F6C357B00795867 /* LWEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWEnvelope.h; path = ../SHGeometryKit/LWEnvelope.h; sourceTree = SOURCE_ROOT; };
-		73E7A6D50F6C357B00795867 /* LWEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelope.m; path = ../SHGeometryKit/LWEnvelope.m; sourceTree = SOURCE_ROOT; };
 		73EDC6670F30A695005693A2 /* AppTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppTests.m; path = Tests/AppTests.m; sourceTree = "<group>"; };
 		73EDC7750F30ACCC005693A2 /* hamcrest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hamcrest.framework; path = /Library/Frameworks/hamcrest.framework; sourceTree = "<absolute>"; };
 		73EDC7760F30ACCC005693A2 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = ../../Blake/build/OCMock.framework; sourceTree = "<group>"; };
@@ -312,7 +279,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		732F831A0F44690800F02CF5 /* Frameworks */ = {
+		730E2C1711A42CCC00C7CDAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -341,7 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* iphoneplay.app */,
-				732F831C0F44690800F02CF5 /* NewTests.app */,
+				730E2C1A11A42CCC00C7CDAA /* iPhonePlayTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -386,6 +353,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				730E2BFD11A42C2500C7CDAA /* SenTestingKit.framework */,
 				73CA2B0C0F4431CE001E7ABC /* libSHShared_iphone.a */,
 				73EDC7750F30ACCC005693A2 /* hamcrest.framework */,
 				73EDC7760F30ACCC005693A2 /* OCMock.framework */,
@@ -492,8 +460,9 @@
 		73900E6D0F2F146000B78FD6 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				73D4B0210FD684D1008DEDF3 /* G3DFunctions.h */,
-				73D4B0220FD684D1008DEDF3 /* G3DFunctions.c */,
+				730E301311A4425A00C7CDAA /* G3DDefs.h */,
+				730E300D11A4424500C7CDAA /* G3DFunctions.h */,
+				730E300E11A4424500C7CDAA /* G3DFunctions.c */,
 				73E7A6D10F6C356B00795867 /* LWCurve */,
 				734C059E0F30780E0065D042 /* LowLevelSoundGeneratorProtocol.h */,
 				73CFDFCA0F2FB1A400160FE0 /* CoreAudioSineGenerator.h */,
@@ -545,6 +514,7 @@
 		739D04A30F2F85A000F090B8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				730E2B9311A429AB00C7CDAA /* VerifyTests.m */,
 				7355980A0F45A93D0074F151 /* Setup - teardown */,
 				733E62510F4C37580073D9F9 /* Utility */,
 				7355953E0F449B2A0074F151 /* Views */,
@@ -569,13 +539,13 @@
 		73AEEA8B0F483A5A00862D98 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				73AEEA970F483A5B00862D98 /* SHShared.framework */,
+				73AEEA970F483A5B00862D98 /* SHShared */,
 				73AEEA990F483A5B00862D98 /* SHSharedTests.octest */,
 				73AEEA9B0F483A5B00862D98 /* libSHShared_static.a */,
 				73AEEA9D0F483A5B00862D98 /* libSHShared_iphone.a */,
-				73CB051E10DBDE6900AE25C8 /* SHSharedUI.framework */,
+				73CB051E10DBDE6900AE25C8 /* SHSharedUI */,
 				73CB052010DBDE6900AE25C8 /* SHSharedUITests.octest */,
-				73CB052210DBDE6900AE25C8 /* SHTestUtilities.framework */,
+				73CB052210DBDE6900AE25C8 /* SHTestUtilities */,
 				736C30B711A3FF9800812E21 /* TestUtilitiesTests.octest */,
 				736C30B911A3FF9800812E21 /* GUIFiddler */,
 				736C30BB11A3FF9800812E21 /* PerformanceTests.octest */,
@@ -614,6 +584,7 @@
 				738E357511A418120066DBC6 /* Target-Plugin.xcconfig */,
 				738E357611A418120066DBC6 /* Target-QCPlugin.xcconfig */,
 				738E357711A418120066DBC6 /* Target-TestBundle.xcconfig */,
+				730E2C2211A42D2600C7CDAA /* Target-iPhoneTestBundle.xcconfig */,
 			);
 			name = Target;
 			sourceTree = "<group>";
@@ -681,10 +652,10 @@
 		73E7A6D10F6C356B00795867 /* LWCurve */ = {
 			isa = PBXGroup;
 			children = (
-				73E7A6D20F6C357B00795867 /* LWKey.h */,
-				73E7A6D30F6C357B00795867 /* LWKey.m */,
-				73E7A6D40F6C357B00795867 /* LWEnvelope.h */,
-				73E7A6D50F6C357B00795867 /* LWEnvelope.m */,
+				730E302411A4429900C7CDAA /* LWKey.h */,
+				730E302511A4429900C7CDAA /* LWKey.m */,
+				730E302611A4429900C7CDAA /* LWEnvelope.h */,
+				730E302711A4429900C7CDAA /* LWEnvelope.m */,
 			);
 			name = LWCurve;
 			sourceTree = "<group>";
@@ -732,24 +703,23 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* iphoneplay.app */;
 			productType = "com.apple.product-type.application";
 		};
-		732F831B0F44690800F02CF5 /* NewTests */ = {
+		730E2C1911A42CCC00C7CDAA /* iPhonePlayTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 732F83210F44690A00F02CF5 /* Build configuration list for PBXNativeTarget "NewTests" */;
+			buildConfigurationList = 730E2C1F11A42CCC00C7CDAA /* Build configuration list for PBXNativeTarget "iPhonePlayTests" */;
 			buildPhases = (
-				732F83180F44690800F02CF5 /* Resources */,
-				732F83190F44690800F02CF5 /* Sources */,
-				732F831A0F44690800F02CF5 /* Frameworks */,
-				735593740F447C780074F151 /* ShellScript */,
+				730E2C1511A42CCC00C7CDAA /* Resources */,
+				730E2C1611A42CCC00C7CDAA /* Sources */,
+				730E2C1711A42CCC00C7CDAA /* Frameworks */,
+				730E2C1811A42CCC00C7CDAA /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				73AEEAA50F483A8500862D98 /* PBXTargetDependency */,
 			);
-			name = NewTests;
-			productName = NewTests;
-			productReference = 732F831C0F44690800F02CF5 /* NewTests.app */;
-			productType = "com.apple.product-type.application";
+			name = iPhonePlayTests;
+			productName = iPhonePlayTests;
+			productReference = 730E2C1A11A42CCC00C7CDAA /* iPhonePlayTests.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -770,7 +740,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* iphonePlay */,
-				732F831B0F44690800F02CF5 /* NewTests */,
+				730E2C1911A42CCC00C7CDAA /* iPhonePlayTests */,
 			);
 		};
 /* End PBXProject section */
@@ -797,10 +767,10 @@
 			remoteRef = 736C30BA11A3FF9800812E21 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73AEEA970F483A5B00862D98 /* SHShared.framework */ = {
+		73AEEA970F483A5B00862D98 /* SHShared */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHShared.framework;
+			path = SHShared;
 			remoteRef = 73AEEA960F483A5B00862D98 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -825,10 +795,10 @@
 			remoteRef = 73AEEA9C0F483A5B00862D98 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73CB051E10DBDE6900AE25C8 /* SHSharedUI.framework */ = {
+		73CB051E10DBDE6900AE25C8 /* SHSharedUI */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHSharedUI.framework;
+			path = SHSharedUI;
 			remoteRef = 73CB051D10DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -839,10 +809,10 @@
 			remoteRef = 73CB051F10DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73CB052210DBDE6900AE25C8 /* SHTestUtilities.framework */ = {
+		73CB052210DBDE6900AE25C8 /* SHTestUtilities */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHTestUtilities.framework;
+			path = SHTestUtilities;
 			remoteRef = 73CB052110DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -859,18 +829,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		732F83180F44690800F02CF5 /* Resources */ = {
+		730E2C1511A42CCC00C7CDAA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				738E35A711A41AE20066DBC6 /* Window_empty.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		735593740F447C780074F151 /* ShellScript */ = {
+		730E2C1811A42CCC00C7CDAA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -881,7 +850,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Users/shooley/Desktop/Programming/Source_Code/google-toolBox-for-mac-read-only/UnitTesting/RunIPhoneUnitTest.sh";
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -910,52 +879,23 @@
 				73CD09FA0F4F1472001F0C0D /* Layer_Base.m in Sources */,
 				739A50D40F5158F5002C53D0 /* SwizzleList.m in Sources */,
 				73C843F90F5342D200B450CF /* Window_Base.m in Sources */,
-				73E7A6D60F6C357B00795867 /* LWKey.m in Sources */,
-				73E7A7220F6C526700795867 /* LWEnvelope.m in Sources */,
 				73D41D080F6E6B26006D49B8 /* AmplitudeCurve.m in Sources */,
 				736886F70F963B0800369A7E /* CustomScrollView.m in Sources */,
 				735783640FD1B7D600D56515 /* ScrollController.m in Sources */,
 				73284AC40FD30DBD00B9ABDA /* CustomApplication.m in Sources */,
-				73D4B0230FD684D1008DEDF3 /* G3DFunctions.c in Sources */,
 				738E359D11A41AB10066DBC6 /* main.m in Sources */,
 				738E35F811A41CFE0066DBC6 /* TouchMeter.m in Sources */,
+				730E300F11A4424500C7CDAA /* G3DFunctions.c in Sources */,
+				730E302811A4429900C7CDAA /* LWKey.m in Sources */,
+				730E302911A4429900C7CDAA /* LWEnvelope.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		732F83190F44690800F02CF5 /* Sources */ = {
+		730E2C1611A42CCC00C7CDAA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				735592C30F44762A0074F151 /* CoreAudioSineGenerator.m in Sources */,
-				735592E40F44773D0074F151 /* SinePlayer.m in Sources */,
-				735592E50F44773E0074F151 /* TemperedScale.m in Sources */,
-				735592EA0F44774D0074F151 /* iphonePlayAppDelegate.m in Sources */,
-				735593850F447CDD0074F151 /* GTMIPhoneUnitTestDelegate.m in Sources */,
-				735593880F447CEB0074F151 /* GTMSenTestCase.m in Sources */,
-				7355938B0F447D4F0074F151 /* GTMIPhoneUnitTestMain.m in Sources */,
-				7355946B0F44877B0074F151 /* Keyboard_Simplest.m in Sources */,
-				735594A60F4492F90074F151 /* Widget_Keyboard_Simplest.m in Sources */,
-				7355957F0F4588E70074F151 /* ViewController_info.m in Sources */,
-				735595980F4589AC0074F151 /* ViewController_mainScreen.m in Sources */,
-				735595FE0F458FC60074F151 /* View_main.m in Sources */,
-				735598840F45B69A0074F151 /* SwizzleList.m in Sources */,
-				734A40B30F4AD85B00C5163C /* Layer_key.m in Sources */,
-				733E62420F4C372A0073D9F9 /* TouchTracker.m in Sources */,
-				735E2BE60F4C6DEB007C76E5 /* HooleyTouchEvent.m in Sources */,
-				73C2EAD00F4D64DC009D45E7 /* GridLayout.m in Sources */,
-				73CD08B50F4F090C001F0C0D /* RootViewController.m in Sources */,
-				73CD09520F4F0F4F001F0C0D /* ViewController_Base.m in Sources */,
-				73CD09860F4F1074001F0C0D /* View_Base.m in Sources */,
-				73CD099C0F4F1145001F0C0D /* FlipsideView.m in Sources */,
-				73CD09FB0F4F1472001F0C0D /* Layer_Base.m in Sources */,
-				73C843FA0F5342D200B450CF /* Window_Base.m in Sources */,
-				73B5123A0F6D26440010DE0D /* LWKey.m in Sources */,
-				73B5123B0F6D26460010DE0D /* LWEnvelope.m in Sources */,
-				73D41D090F6E6B26006D49B8 /* AmplitudeCurve.m in Sources */,
-				736886F60F963B0800369A7E /* CustomScrollView.m in Sources */,
-				73D4AFCE0FD67C07008DEDF3 /* ScrollController.m in Sources */,
-				73D4AFD00FD67C0A008DEDF3 /* CustomApplication.m in Sources */,
-				73D4B0240FD684D1008DEDF3 /* G3DFunctions.c in Sources */,
+				730E2C2311A42D3300C7CDAA /* VerifyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -967,11 +907,6 @@
 			name = SHShared_iphone;
 			targetProxy = 739F17860F59FF7B007A973F /* PBXContainerItemProxy */;
 		};
-		73AEEAA50F483A8500862D98 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared_iphone;
-			targetProxy = 73AEEAA40F483A8500862D98 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -979,9 +914,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 738E357411A418120066DBC6 /* Target-iPhone.xcconfig */;
 			buildSettings = {
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				PRODUCT_NAME = iphoneplay;
-				PROVISIONING_PROFILE = "256A1426-5EF9-417D-A775-7970DB600BF8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "256A1426-5EF9-417D-A775-7970DB600BF8";
 			};
 			name = Debug;
 		};
@@ -1015,66 +949,41 @@
 			};
 			name = Release;
 		};
-		732F831F0F44690900F02CF5 /* Debug */ = {
+		730E2C1D11A42CCC00C7CDAA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 730E2C2211A42D2600C7CDAA /* Target-iPhoneTestBundle.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Entitlement.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/Frameworks/CoreServices.framework/Versions/A/Frameworks\"",
-					"$(PROJECT_DIR)/../../Blake/build/",
-					/Code/Frameworks,
-					/Developer/Library/Frameworks,
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "NewTests-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/../../Blake/build/";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Blake/build\"",
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = NewTests;
-				SDKROOT = iphoneos2.2.1;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_VERSION = 4.2;
+				PRODUCT_NAME = iPhonePlayTests;
 			};
 			name = Debug;
 		};
-		732F83200F44690900F02CF5 /* Release */ = {
+		730E2C1E11A42CCC00C7CDAA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Blake/build\"",
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = "NewTests-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Blake/build\"",
-				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				INFOPLIST_FILE = "iPhonePlayTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-framework",
+					SenTestingKit,
+					"-framework",
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = NewTests;
-				SDKROOT = iphoneos2.2.1;
+				PRODUCT_NAME = iPhonePlayTests;
+				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1114,11 +1023,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		732F83210F44690A00F02CF5 /* Build configuration list for PBXNativeTarget "NewTests" */ = {
+		730E2C1F11A42CCC00C7CDAA /* Build configuration list for PBXNativeTarget "iPhonePlayTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				732F831F0F44690900F02CF5 /* Debug */,
-				732F83200F44690900F02CF5 /* Release */,
+				730E2C1D11A42CCC00C7CDAA /* Debug */,
+				730E2C1E11A42CCC00C7CDAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

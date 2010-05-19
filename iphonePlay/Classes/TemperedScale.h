@@ -16,10 +16,10 @@
 + (TemperedScale *)temperedScale;
 
 // f = 2^(n/12) × 440 Hz
-- (double)hzForStepsAbove440:(int)steps;
-- (double)hzForStepsAboveA4:(int)steps;
+- (CGFloat)hzForStepsAbove440:(int)steps;
+- (CGFloat)hzForStepsAboveA4:(int)steps;
 
 // p = 69 + 12 × log2 (f / (440 Hz))
-- (double)midiNoteForHz:(double)freq;
+- (CGFloat)midiNoteForHz:(CGFloat)freq;
 
 @end

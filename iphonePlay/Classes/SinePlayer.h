@@ -20,7 +20,7 @@
 
 + (id)SinePlayerWithInfrastructure:(NSObject<LowLevelSoundGeneratorProtocol>*)soundInfrastructure;
 
-- (int)playSine:(double)freq amp:(CGFloat)amplitude;	
-- (void)stopSine:(double)freq;
+- (int)playSine:(CGFloat)freq amp:(CGFloat)amplitude;	
+- (void)stopSine:(CGFloat)freq;
 
 @end

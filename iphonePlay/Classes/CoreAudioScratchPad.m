@@ -71,7 +71,7 @@ OSStatus renderInput(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, 
 		//			
 		//			// write output
 		//			*out++ = wave * (1.0-panz);		// left channel
-		//		float downsampledWave = (float)(wave*0.1f);
+		//		float downsampledWave = (CGFloat)(wave*0.1f);
 		//		Fixed new = (Fixed)FloatToFixed(downsampledWave);
 		
 		if (inBusNumber==0) {
