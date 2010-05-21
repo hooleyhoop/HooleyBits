@@ -3,30 +3,50 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7309CB9A0C463BA70084FBC7 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 737029470C43AA31008DAD99 /* GridCell.m */; };
-		7309CB9C0C463BAB0084FBC7 /* FloorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E86570C43C9E10061B89D /* FloorGrid.m */; };
-		7309CB9E0C463BAF0084FBC7 /* PBCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 73303ED00C44DD420066B789 /* PBCamera.m */; };
-		7309CBA00C463BB20084FBC7 /* PBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73303EC90C44DD350066B789 /* PBView.m */; };
-		7309CBD50C463BE90084FBC7 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 733E865E0C43CA0D0061B89D /* AppControl.m */; };
 		731387CB0C676EA9005657E5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731387CA0C676EA9005657E5 /* GLUT.framework */; };
 		731387DF0C676EF3005657E5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731387CA0C676EA9005657E5 /* GLUT.framework */; };
-		7318AD0B0C478B620018E8C7 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318AD0A0C478B620018E8C7 /* Engine.m */; };
 		7318AD770C479C180018E8C7 /* PB3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318AD760C479C180018E8C7 /* PB3DView.m */; };
-		7318ADAA0C479E4D0018E8C7 /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318ADA90C479E4D0018E8C7 /* SHGeometryKit.framework */; };
 		7318AF2A0C47A80B0018E8C7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318AF290C47A80B0018E8C7 /* OpenGL.framework */; };
-		731A6E780C4FBD6900AC033F /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731A6E770C4FBD6900AC033F /* SHGeometryKit.framework */; };
+		735C5EDB11A44F2A00A6BA88 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EDA11A44F2A00A6BA88 /* AppControl.m */; };
+		735C5EE111A44F4600A6BA88 /* PBCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE011A44F4600A6BA88 /* PBCamera.m */; };
+		735C5EE411A44F5000A6BA88 /* FloorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE311A44F5000A6BA88 /* FloorGrid.m */; };
+		735C5EE711A44F5900A6BA88 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE611A44F5900A6BA88 /* GridCell.m */; };
+		735C5EEA11A44F6300A6BA88 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE911A44F6300A6BA88 /* Engine.m */; };
+		735C5EFA11A44FC100A6BA88 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EF911A44FC100A6BA88 /* main.m */; };
+		735C5F3011A4500200A6BA88 /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */; };
+		735C5F9311A4530200A6BA88 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F9211A4530200A6BA88 /* Accelerate.framework */; };
+		735C5FCC11A453E400A6BA88 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5FCB11A453E400A6BA88 /* OpenCL.framework */; };
 		7397471D0C61EC500016221A /* GridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397471C0C61EC500016221A /* GridTests.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		735C5F2C11A4500000A6BA88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = SHGeometryKit;
+		};
+		735C5F2E11A4500000A6BA88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7311E2D80AD64FB4005062FE;
+			remoteInfo = SHGeometryKitTest;
+		};
+		735C5F3111A4500C00A6BA88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = SHGeometryKit;
+		};
 		739747110C61EBD70016221A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -40,31 +60,41 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* PinkAndBlueTriangles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinkAndBlueTriangles_Prefix.pch; sourceTree = "<group>"; };
 		731387CA0C676EA9005657E5 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
-		7318AD090C478B620018E8C7 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
-		7318AD0A0C478B620018E8C7 /* Engine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Engine.m; sourceTree = "<group>"; };
 		7318AD750C479C180018E8C7 /* PB3DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PB3DView.h; sourceTree = "<group>"; };
 		7318AD760C479C180018E8C7 /* PB3DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PB3DView.m; sourceTree = "<group>"; };
-		7318ADA90C479E4D0018E8C7 /* SHGeometryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SHGeometryKit.framework; path = ../../../../../../../Shared/Library/PrivateFrameworks/SHGeometryKit.framework; sourceTree = SOURCE_ROOT; };
 		7318AF290C47A80B0018E8C7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		731A6E770C4FBD6900AC033F /* SHGeometryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SHGeometryKit.framework; path = ../../../../../../Shared/Library/PrivateFrameworks/SHGeometryKit.framework; sourceTree = SOURCE_ROOT; };
-		73303EC80C44DD350066B789 /* PBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBView.h; sourceTree = "<group>"; };
-		73303EC90C44DD350066B789 /* PBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBView.m; sourceTree = "<group>"; };
-		73303ECF0C44DD420066B789 /* PBCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCamera.h; sourceTree = "<group>"; };
-		73303ED00C44DD420066B789 /* PBCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCamera.m; sourceTree = "<group>"; };
-		733E86560C43C9E10061B89D /* FloorGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorGrid.h; sourceTree = "<group>"; };
-		733E86570C43C9E10061B89D /* FloorGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorGrid.m; sourceTree = "<group>"; };
-		733E865D0C43CA0D0061B89D /* AppControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControl.h; sourceTree = "<group>"; };
-		733E865E0C43CA0D0061B89D /* AppControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControl.m; sourceTree = "<group>"; };
-		737029460C43AA31008DAD99 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
-		737029470C43AA31008DAD99 /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
+		735C5EA411A44D9D00A6BA88 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
+		735C5EA511A44D9D00A6BA88 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
+		735C5EA611A44D9D00A6BA88 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		735C5EA711A44D9D00A6BA88 /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		735C5EA811A44D9D00A6BA88 /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Base.xcconfig"; sourceTree = "<group>"; };
+		735C5EA911A44D9D00A6BA88 /* Target-CocoaDaemon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-CocoaDaemon.xcconfig"; sourceTree = "<group>"; };
+		735C5EAA11A44D9D00A6BA88 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Executable.xcconfig"; sourceTree = "<group>"; };
+		735C5EAB11A44D9D00A6BA88 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Framework.xcconfig"; sourceTree = "<group>"; };
+		735C5EAC11A44D9D00A6BA88 /* Target-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-iPhone.xcconfig"; sourceTree = "<group>"; };
+		735C5EAD11A44D9D00A6BA88 /* Target-iPhoneTestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-iPhoneTestBundle.xcconfig"; sourceTree = "<group>"; };
+		735C5EAE11A44D9D00A6BA88 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Plugin.xcconfig"; sourceTree = "<group>"; };
+		735C5EAF11A44D9D00A6BA88 /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
+		735C5EB011A44D9D00A6BA88 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
+		735C5ED911A44F2A00A6BA88 /* AppControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppControl.h; path = Src/AppControl.h; sourceTree = "<group>"; };
+		735C5EDA11A44F2A00A6BA88 /* AppControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppControl.m; path = Src/AppControl.m; sourceTree = "<group>"; };
+		735C5EDF11A44F4600A6BA88 /* PBCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCamera.h; sourceTree = "<group>"; };
+		735C5EE011A44F4600A6BA88 /* PBCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCamera.m; sourceTree = "<group>"; };
+		735C5EE211A44F5000A6BA88 /* FloorGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorGrid.h; sourceTree = "<group>"; };
+		735C5EE311A44F5000A6BA88 /* FloorGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorGrid.m; sourceTree = "<group>"; };
+		735C5EE511A44F5900A6BA88 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
+		735C5EE611A44F5900A6BA88 /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
+		735C5EE811A44F6300A6BA88 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		735C5EE911A44F6300A6BA88 /* Engine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Engine.m; sourceTree = "<group>"; };
+		735C5EF911A44FC100A6BA88 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHGeometryKit.xcodeproj; path = ../SHGeometryKit/SHGeometryKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		735C5F9211A4530200A6BA88 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		735C5FCB11A453E400A6BA88 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = /System/Library/Frameworks/OpenCL.framework; sourceTree = "<absolute>"; };
 		7397470A0C61EBC90016221A /* PinkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7397470B0C61EBC90016221A /* PinkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PinkTests-Info.plist"; sourceTree = "<group>"; };
 		7397471B0C61EC500016221A /* GridTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridTests.h; sourceTree = "<group>"; };
 		7397471C0C61EC500016221A /* GridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridTests.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -84,11 +114,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				7318ADAA0C479E4D0018E8C7 /* SHGeometryKit.framework in Frameworks */,
 				7318AF2A0C47A80B0018E8C7 /* OpenGL.framework in Frameworks */,
-				731A6E780C4FBD6900AC033F /* SHGeometryKit.framework in Frameworks */,
 				731387DF0C676EF3005657E5 /* GLUT.framework in Frameworks */,
+				735C5F3011A4500200A6BA88 /* SHGeometryKit.framework in Frameworks */,
+				735C5F9311A4530200A6BA88 /* Accelerate.framework in Frameworks */,
+				735C5FCC11A453E400A6BA88 /* OpenCL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,20 +128,18 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				733E865D0C43CA0D0061B89D /* AppControl.h */,
-				733E865E0C43CA0D0061B89D /* AppControl.m */,
-				73303EC80C44DD350066B789 /* PBView.h */,
-				73303EC90C44DD350066B789 /* PBView.m */,
+				735C5ED911A44F2A00A6BA88 /* AppControl.h */,
+				735C5EDA11A44F2A00A6BA88 /* AppControl.m */,
 				7318AD750C479C180018E8C7 /* PB3DView.h */,
 				7318AD760C479C180018E8C7 /* PB3DView.m */,
-				73303ECF0C44DD420066B789 /* PBCamera.h */,
-				73303ED00C44DD420066B789 /* PBCamera.m */,
-				733E86560C43C9E10061B89D /* FloorGrid.h */,
-				733E86570C43C9E10061B89D /* FloorGrid.m */,
-				737029460C43AA31008DAD99 /* GridCell.h */,
-				737029470C43AA31008DAD99 /* GridCell.m */,
-				7318AD090C478B620018E8C7 /* Engine.h */,
-				7318AD0A0C478B620018E8C7 /* Engine.m */,
+				735C5EDF11A44F4600A6BA88 /* PBCamera.h */,
+				735C5EE011A44F4600A6BA88 /* PBCamera.m */,
+				735C5EE211A44F5000A6BA88 /* FloorGrid.h */,
+				735C5EE311A44F5000A6BA88 /* FloorGrid.m */,
+				735C5EE511A44F5900A6BA88 /* GridCell.h */,
+				735C5EE611A44F5900A6BA88 /* GridCell.m */,
+				735C5EE811A44F6300A6BA88 /* Engine.h */,
+				735C5EE911A44F6300A6BA88 /* Engine.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -119,10 +147,10 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				735C5FCB11A453E400A6BA88 /* OpenCL.framework */,
+				735C5F9211A4530200A6BA88 /* Accelerate.framework */,
 				731387CA0C676EA9005657E5 /* GLUT.framework */,
-				731A6E770C4FBD6900AC033F /* SHGeometryKit.framework */,
 				7318AF290C47A80B0018E8C7 /* OpenGL.framework */,
-				7318ADA90C479E4D0018E8C7 /* SHGeometryKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -150,13 +178,14 @@
 		29B97314FDCFA39411CA2CEA /* PinkAndBlueTriangles */ = {
 			isa = PBXGroup;
 			children = (
+				735C5EA311A44D9D00A6BA88 /* Config */,
 				739747040C61EBB90016221A /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				7397470B0C61EBC90016221A /* PinkTests-Info.plist */,
+				735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */,
 			);
 			name = PinkAndBlueTriangles;
 			sourceTree = "<group>";
@@ -164,8 +193,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* PinkAndBlueTriangles_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
+				735C5EF911A44FC100A6BA88 /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -187,6 +215,36 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		735C5EA311A44D9D00A6BA88 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				735C5EA411A44D9D00A6BA88 /* Project-Base.xcconfig */,
+				735C5EA511A44D9D00A6BA88 /* Project-Coverage.xcconfig */,
+				735C5EA611A44D9D00A6BA88 /* Project-Debug.xcconfig */,
+				735C5EA711A44D9D00A6BA88 /* Project-Release.xcconfig */,
+				735C5EA811A44D9D00A6BA88 /* Target-Base.xcconfig */,
+				735C5EA911A44D9D00A6BA88 /* Target-CocoaDaemon.xcconfig */,
+				735C5EAA11A44D9D00A6BA88 /* Target-Executable.xcconfig */,
+				735C5EAB11A44D9D00A6BA88 /* Target-Framework.xcconfig */,
+				735C5EAC11A44D9D00A6BA88 /* Target-iPhone.xcconfig */,
+				735C5EAD11A44D9D00A6BA88 /* Target-iPhoneTestBundle.xcconfig */,
+				735C5EAE11A44D9D00A6BA88 /* Target-Plugin.xcconfig */,
+				735C5EAF11A44D9D00A6BA88 /* Target-QCPlugin.xcconfig */,
+				735C5EB011A44D9D00A6BA88 /* Target-TestBundle.xcconfig */,
+			);
+			name = Config;
+			path = ../../Blake/Config;
+			sourceTree = SOURCE_ROOT;
+		};
+		735C5F2811A4500000A6BA88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */,
+				735C5F2F11A4500000A6BA88 /* SHGeometryKitTest.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		739747040C61EBB90016221A /* Tests */ = {
@@ -231,6 +289,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				735C5F3211A4500C00A6BA88 /* PBXTargetDependency */,
 			);
 			name = PinkAndBlueTriangles;
 			productInstallPath = "$(HOME)/Applications";
@@ -244,10 +303,16 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PinkAndBlueTriangles" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* PinkAndBlueTriangles */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 735C5F2811A4500000A6BA88 /* Products */;
+					ProjectRef = 735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* PinkAndBlueTriangles */,
@@ -255,6 +320,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHGeometryKit.framework;
+			remoteRef = 735C5F2C11A4500000A6BA88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		735C5F2F11A4500000A6BA88 /* SHGeometryKitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHGeometryKitTest.octest;
+			remoteRef = 735C5F2E11A4500000A6BA88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		739747050C61EBC90016221A /* Resources */ = {
@@ -304,20 +386,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				7309CB9A0C463BA70084FBC7 /* GridCell.m in Sources */,
-				7309CB9C0C463BAB0084FBC7 /* FloorGrid.m in Sources */,
-				7309CB9E0C463BAF0084FBC7 /* PBCamera.m in Sources */,
-				7309CBA00C463BB20084FBC7 /* PBView.m in Sources */,
-				7309CBD50C463BE90084FBC7 /* AppControl.m in Sources */,
-				7318AD0B0C478B620018E8C7 /* Engine.m in Sources */,
 				7318AD770C479C180018E8C7 /* PB3DView.m in Sources */,
+				735C5EDB11A44F2A00A6BA88 /* AppControl.m in Sources */,
+				735C5EE111A44F4600A6BA88 /* PBCamera.m in Sources */,
+				735C5EE411A44F5000A6BA88 /* FloorGrid.m in Sources */,
+				735C5EE711A44F5900A6BA88 /* GridCell.m in Sources */,
+				735C5EEA11A44F6300A6BA88 /* Engine.m in Sources */,
+				735C5EFA11A44FC100A6BA88 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		735C5F3211A4500C00A6BA88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHGeometryKit;
+			targetProxy = 735C5F3111A4500C00A6BA88 /* PBXContainerItemProxy */;
+		};
 		739747120C61EBD70016221A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D1107260486CEB800E47090 /* PinkAndBlueTriangles */;
@@ -409,29 +495,16 @@
 		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5EAA11A44D9D00A6BA88 /* Target-Executable.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../../../../../Shared/Library/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../../../../Shared/Library/PrivateFrameworks\"";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = PinkAndBlueTriangles;
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5EAA11A44D9D00A6BA88 /* Target-Executable.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					ppc,
@@ -455,24 +528,20 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5EA611A44D9D00A6BA88 /* Project-Debug.xcconfig */;
 			buildSettings = {
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_FAST_OBJC_DISPATCH = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5EA711A44D9D00A6BA88 /* Project-Release.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};

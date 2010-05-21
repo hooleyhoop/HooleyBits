@@ -71,7 +71,7 @@
 /*!
    @defined CFLOAT
 */
-#define CFLOAT const float
+#define CFLOAT const CGFloat
 #endif
 
 #ifndef CDOUBLE

@@ -25,47 +25,20 @@ NSString *G3DTuple2dException = @"G3DTuple2dException";
 
 @implementation G3DTuple2d
 
-//-----------------------------------------------------------------------------
-// Class methods
-//-----------------------------------------------------------------------------
 
-static Class NSArrayClass;
-static Class NSMutableArrayClass;
-static Class NSStringClass;
-
-+ (void)initialize
-{
-  if (self == [G3DTuple2d class]) {
-    NSStringClass = [NSString class];
-    NSArrayClass  = [NSArray class];
-    NSMutableArrayClass  = [NSMutableArray class];
-  }
-}
-
-// ===========================================================
-// - tupleWithX: y:
-// ===========================================================
-+ (id) tupleWithX:(double)x y:(double)y
-{
++ (id)tupleWithX:(CGFloat)x y:(CGFloat)y {
 	return [[[G3DTuple2d alloc] initWithX:x y:y] autorelease];
 }
 
-//-----------------------------------------------------------------------------
-// init and free
-//-----------------------------------------------------------------------------
-
-- (id)init
-{
+- (id)init {
   return [self initWithX:0.0 y:0.0];
 }
 
-- (id)initWithElements:(const double *)vals
-{
+- (id)initWithElements:(const double *)vals {
   return [self initWithX:vals[0] y:vals[1]];
 }
 
-- (id)initWithX:(double)x y:(double)y
-{
+- (id)initWithX:(CGFloat)x y:(CGFloat)y {
   if ((self = [super init])) {
     _tuple[0] = x;
     _tuple[1] = y;
@@ -73,29 +46,21 @@ static Class NSStringClass;
   return self;
 }
 
-- (id)initWithTuple:(G3DTuple2d *)aTuple
-{
+- (id)initWithTuple:(G3DTuple2d *)aTuple {
   return [self initWithX:[aTuple x] y:[aTuple y]];
 }
 
-//-----------------------------------------------------------------------------
-// Math
-//-----------------------------------------------------------------------------
-
-- (void)absolute
-{
+- (void)absolute {
   _tuple[0] = ABS(_tuple[0]);
   _tuple[1] = ABS(_tuple[1]);
 }
 
-- (void)clamp
-{
+- (void)clamp {
   _tuple[0] = CLAMP(_tuple[0],0.0,1.0);
   _tuple[1] = CLAMP(_tuple[1],0.0,1.0);
 }
 
-- (void)clampLow:(double)low high:(double)high
-{
+- (void)clampLow:(CGFloat)low high:(CGFloat)high {
   if (low > high) {
     double tmp = low;
     low = high;
@@ -105,40 +70,32 @@ static Class NSStringClass;
   _tuple[1] = CLAMP(_tuple[1],low,high);
 }
 
-- (void)addTuple2d:(G3DTuple2d *)aTuple
-{
+- (void)addTuple2d:(G3DTuple2d *)aTuple {
   const double *tmp = [aTuple elements];
 
   _tuple[0] += tmp[0];
   _tuple[1] += tmp[1];
 }
 
-//=========================================================== 
-// - translateByX: y:
-//=========================================================== 
-- (void)translateByX:(float)x byY:(float)y
-{
+- (void)translateByX:(CGFloat)x byY:(CGFloat)y {
   _tuple[0] += x;
   _tuple[1] += y;
 }
 
 
-- (void)subTuple2d:(G3DTuple2d *)aTuple
-{
+- (void)subTuple2d:(G3DTuple2d *)aTuple {
   const double *tmp = [aTuple elements];
 
   _tuple[0] -= tmp[0];
   _tuple[1] -= tmp[1];
 }
 
-- (void)multiplyBy:(double)aScalar
-{
+- (void)multiplyBy:(CGFloat)aScalar {
   _tuple[0] *= aScalar;
   _tuple[1] *= aScalar;
 }
 
-- (void)divideBy:(double)aScalar
-{
+- (void)divideBy:(CGFloat)aScalar {
   double tmp;
   
   if (aScalar == 0.0) {
@@ -151,11 +108,8 @@ static Class NSStringClass;
   _tuple[1] *= tmp;
 }
 
-//=========================================================== 
-// - interpolateBetween
-//=========================================================== 
-- (void)interpolateBetween:(G3DTuple2d *)first and:(G3DTuple2d *)second factor:(double)factor
-{
+
+- (void)interpolateBetween:(G3DTuple2d *)first and:(G3DTuple2d *)second factor:(CGFloat)factor {
   double ifac = 1 - factor;
   const double *a = [first elements];
   const double *b = [second elements];
@@ -164,117 +118,83 @@ static Class NSStringClass;
   _tuple[1] = ifac*a[0] + factor*b[0];
 }
 
-//=========================================================== 
-// - ispointX:x py:y withDistX:mx distX:my;
-//=========================================================== 
-- (BOOL)ispointX:(float)x py:(float)y withDistX:(float)mx distX:(float)my
-{
+- (BOOL)ispointX:(CGFloat)x py:(CGFloat)y withDistX:(CGFloat)mx distX:(CGFloat)my {
 	//NSLog(@"point is [%f, %f], we are [%f, %f]", x, y, _tuple[0], _tuple[1]);
 	NSPoint p  = NSMakePoint(x, y);
 	NSRect r = NSMakeRect( _tuple[0]-mx, _tuple[1]-my, mx*2, my*2);
 	return NSPointInRect(p,r);
 }
 
-//=========================================================== 
-// - negate
-//=========================================================== 
-- (void)negate
-{
+- (void)negate {
   _tuple[0] *= -1.0;
   _tuple[1] *= -1.0;
 }
 
-- (BOOL)isEqualToTuple:(id)aTuple
-{
-  if ([aTuple isKindOfClass:[G3DTuple2d class]]) {
-    if (_tuple[0] == [aTuple x] && _tuple[1] == [aTuple y]) {
+- (BOOL)isEqualToTuple:(id)aTuple {
+  if ([aTuple isKindOfClass:[G3DTuple2d class]]) 
+  {
+	  BOOL equalX = G3DCompareFloat( _tuple[0], [aTuple x], 0.001f)==0;
+	  BOOL equalY = G3DCompareFloat( _tuple[1], [aTuple y], 0.001f)==0;
+	  
+    if( equalX && equalY ) {
       return YES;
     }
   }
   return NO;
 }
 
-//-----------------------------------------------------------------------------
-// Accessing
-//-----------------------------------------------------------------------------
-
-- (const double *)elements
-{
+- (const double *)elements {
   return (const double*)_tuple;
 }
 
-- (void)setElements:(const double *)values
-{
+- (void)setElements:(const double *)values {
   G3DCopyVector2dv(_tuple,values);
 }
 
-- (void)getElements:(double *)values
-{
+- (void)getElements:(double *)values {
   G3DCopyVector2dv(values,_tuple);
 }
 
-- (double)x
-{
+- (CGFloat)x {
   return _tuple[0];
 }
 
-- (void)setX:(double)x
-{
+- (void)setX:(CGFloat)x {
   _tuple[0] = x;
 }
 
-- (double)y
-{
+- (CGFloat)y {
   return _tuple[1];
 }
 
-- (void)setY:(double)y
-{
+- (void)setY:(CGFloat)y {
   _tuple[1] = y;
 }
 
-- (void)setValuesWithTuple:(G3DTuple2d *)aTuple
-{
+- (void)setValuesWithTuple:(G3DTuple2d *)aTuple {
   const double *tmp = [aTuple elements];
  
   _tuple[0] = tmp[0];
   _tuple[1] = tmp[1];
 }
 
-- (NSString *)description
-{
-  return [NSStringClass stringWithFormat:@"<%@ %x %x>: x = %f, y = %f",[self class],self,[NSThread currentThread],_tuple[0],_tuple[1]];
+- (NSString *)description {
+  return [NSString stringWithFormat:@"<%@ %x %x>: x = %f, y = %f",[self class],self,[NSThread currentThread],_tuple[0],_tuple[1]];
 }
 
-//-----------------------------------------------------------------------------
-// NSCoding
-//-----------------------------------------------------------------------------
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-  [aCoder encodeArrayOfObjCType:@encode(double) count:2 at:_tuple];
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeArrayOfObjCType:@encode(CGFloat) count:2 at:_tuple];
 }
 
-- (id)initWithCoder:(NSCoder *)aCoder
-{
+- (id)initWithCoder:(NSCoder *)aCoder {
   self = [super init];
-  [aCoder decodeArrayOfObjCType:@encode(double) count:2 at:_tuple];
+  [aCoder decodeArrayOfObjCType:@encode(CGFloat) count:2 at:_tuple];
   return self;
 }
 
-//-----------------------------------------------------------------------------
-// NSCopying
-//-----------------------------------------------------------------------------
 
-- (id)copyWithZone:(NSZone *)zone
-{
+- (id)copyWithZone:(NSZone *)zone {
   return [[[self class] allocWithZone:zone] initWithTuple:self];
 }
 
 @end
-
-
-
-
-
-

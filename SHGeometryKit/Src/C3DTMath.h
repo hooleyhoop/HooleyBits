@@ -11,7 +11,6 @@
  *
 
 
-/*!
     @header C3DTMath
     @abstract   Math functions for Cocoa3DTutorial
     @discussion Contains all the basic functions to manipulate vectors & matrices, plus some utility functions specific for 3D
@@ -66,6 +65,7 @@
 // Noise cache
 extern float	*cachedNoise;
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -80,7 +80,7 @@ extern "C" {
      @param      b Second vector
      @result     The sum of the two vectors (a + b)
      */
-    inline _C3DTVector	vectorAdd(const _C3DTVector a, const _C3DTVector b);
+    inline C3DTVector	vectorAdd(const C3DTVector a, const C3DTVector b);
     
     /*!
      @function vectorSubtract
@@ -89,7 +89,7 @@ extern "C" {
      @param      b Second vector
      @result     The difference of the two vectors (a - b)
      */
-    inline _C3DTVector	vectorSubtract(const _C3DTVector a, const _C3DTVector b);
+    inline C3DTVector	vectorSubtract(const C3DTVector a, const C3DTVector b);
 
     /*!
      @function vectorDotProduct
@@ -98,7 +98,7 @@ extern "C" {
      @param      b Second vector
      @result     The dot product of the two vectors (a . b)
      */
-    inline float		vectorDotProduct(const _C3DTVector a, const _C3DTVector b);
+    inline float		vectorDotProduct(const C3DTVector a, const C3DTVector b);
 
     /*!
      @function vectorCrossProduct
@@ -107,7 +107,7 @@ extern "C" {
      @param      b Second vector
      @result     The cross product of the two vectors (a x b)
      */
-    inline _C3DTVector	vectorCrossProduct(const _C3DTVector a, const _C3DTVector b);
+    inline C3DTVector	vectorCrossProduct(const C3DTVector a, const C3DTVector b);
 
     /*!
      @function vectorCrossProductTri
@@ -117,7 +117,7 @@ extern "C" {
      @param      c Second vector
      @result     The cross product of the 3 vectors (b - a) x (c - a)
      */
-    inline _C3DTVector	vectorCrossProductTri(const _C3DTVector a, const _C3DTVector b, const _C3DTVector c);
+    inline C3DTVector	vectorCrossProductTri(const C3DTVector a, const C3DTVector b, const C3DTVector c);
 
     /*!
      @function vectorLength
@@ -125,7 +125,7 @@ extern "C" {
      @param      v The vector
      @result     The length of a vector
      */
-    inline float		vectorLength(const _C3DTVector v);
+    float vectorLength(const C3DTVector v);
 
     /*!
      @function vectorNormalize
@@ -133,7 +133,7 @@ extern "C" {
      @param      v The vector
      @result     The normalized vector
      */
-    inline _C3DTVector	vectorNormalize(_C3DTVector v);
+    inline C3DTVector	vectorNormalize(C3DTVector v);
 
     /*!
      @function vectorNormal
@@ -142,7 +142,7 @@ extern "C" {
      @param      b Second vector
      @result     The normal vector (normalized)
      */
-    inline _C3DTVector	vectorNormal(const _C3DTVector a, const _C3DTVector b);
+    inline C3DTVector	vectorNormal(const C3DTVector a, const C3DTVector b);
 
     /*!
      @function vectorNormalTri
@@ -152,7 +152,7 @@ extern "C" {
      @param      c Third vector
      @result     The normal & normalized vector for vectors b & c centered in position a
      */
-    inline _C3DTVector	vectorNormalTri(_C3DTVector a, _C3DTVector b, _C3DTVector c);
+    inline C3DTVector	vectorNormalTri(C3DTVector a, C3DTVector b, C3DTVector c);
 
     /*!
      @function vectorScale
@@ -161,7 +161,7 @@ extern "C" {
      @param      a The vector
      @result     The scaled vector
      */
-    inline _C3DTVector	vectorScale(const float s, const _C3DTVector a);
+    inline C3DTVector	vectorScale(const float s, const C3DTVector a);
 
     /*!
      @function vectorAngleCos
@@ -170,7 +170,7 @@ extern "C" {
      @param      b Second vector
      @result     The cosinus of the angle between the 2 vectors
      */
-    inline float		vectorAngleCos(const _C3DTVector a, const _C3DTVector b);
+    inline float		vectorAngleCos(const C3DTVector a, const C3DTVector b);
 
 
     /*!
@@ -180,26 +180,26 @@ extern "C" {
      @param      m The matrix
      @result     The transformed vector
      */
-    _C3DTVector	vectorTransform(const _C3DTVector v, const _C3DTMatrix m);
+    C3DTVector	vectorTransform(const C3DTVector v, const C3DTMatrix m);
 
     /*
      * Conversion operations
      */
-    inline _C3DTVector cartesianToSpherical(_C3DTVector v);
-    inline _C3DTVector sphericalToCartesian(_C3DTVector v);
+    inline C3DTVector cartesianToSpherical(C3DTVector v);
+    inline C3DTVector sphericalToCartesian(C3DTVector v);
     
     /*
      * Matrix operations
      */
-    inline _C3DTMatrix	matrixIdentity(void);
-    _C3DTMatrix	matrixMultiply(const _C3DTMatrix m1, const _C3DTMatrix m2);
-    void		matrixTransform(_C3DTMatrix *m, const _C3DTMatrix n);
-    _C3DTMatrix matrixTranspose(const _C3DTMatrix m);
-    _C3DTMatrix	matrixInverse(const _C3DTMatrix m);
-    void		matrixTranslate(_C3DTMatrix *m, const float dx, const float dy, const float dz);
-    void		matrixScale(_C3DTMatrix *m, const float sx, const float sy, const float sz);
-    void		matrixUniformScale(_C3DTMatrix *m, const float s);
-    void		matrixRotate(_C3DTMatrix *m, const float ax, const float ay, const float az);
+    inline C3DTMatrix	matrixIdentity(void);
+    C3DTMatrix	matrixMultiply(const C3DTMatrix m1, const C3DTMatrix m2);
+    void		matrixTransform(C3DTMatrix *m, const C3DTMatrix n);
+    C3DTMatrix matrixTranspose(const C3DTMatrix m);
+    C3DTMatrix	matrixInverse(const C3DTMatrix m);
+    void		matrixTranslate(C3DTMatrix *m, const float dx, const float dy, const float dz);
+    void		matrixScale(C3DTMatrix *m, const float sx, const float sy, const float sz);
+    void		matrixUniformScale(C3DTMatrix *m, const float s);
+    void		matrixRotate(C3DTMatrix *m, const float ax, const float ay, const float az);
 
     /*
      * Quaternion operations
@@ -209,9 +209,9 @@ extern "C" {
     inline float			quaternionLength(_C3DTQuaternion q);
     inline _C3DTQuaternion	quaternionNormalize(_C3DTQuaternion q);
     inline _C3DTQuaternion	quaternionMultiply(_C3DTQuaternion a, _C3DTQuaternion b);
-    _C3DTVector	quaternionToDirectionVector(_C3DTQuaternion q);
-    _C3DTMatrix	quaternionToMatrix(_C3DTQuaternion q);
-    _C3DTMatrix	quaternionToInvertedMatrix(_C3DTQuaternion q);
+    C3DTVector	quaternionToDirectionVector(_C3DTQuaternion q);
+    C3DTMatrix	quaternionToMatrix(_C3DTQuaternion q);
+    C3DTMatrix	quaternionToInvertedMatrix(_C3DTQuaternion q);
 
     /*
      * Noise generation functions
@@ -223,11 +223,11 @@ extern "C" {
     /*
      * Some practical use of the above
      */
-    inline _C3DTPlane	planeNormalize(_C3DTPlane p);
-    _C3DTFrustum	viewFrustum(const _C3DTMatrix projection, const _C3DTMatrix model);
-    int				pointNearFrustum(_C3DTFrustum f, _C3DTVector p, float dist);
-    int				isSphereInFrustum (_C3DTFrustum f, _C3DTSpheroid s);
-    int				sphereDistanceFromFrustum(_C3DTFrustum f, _C3DTSpheroid s, float *dist);
+    inline C3DTPlane	planeNormalize(C3DTPlane p);
+    C3DTFrustum viewFrustum(const C3DTMatrix projection, const C3DTMatrix model);
+    int				pointNearFrustum(C3DTFrustum f, C3DTVector p, float dist);
+    int				isSphereInFrustum (C3DTFrustum f, _C3DTSpheroid s);
+    int				sphereDistanceFromFrustum(C3DTFrustum f, _C3DTSpheroid s, float *dist);
     _C3DTSpheroid	sphereFromBounds(_C3DTBounds b);
 	
 	_C3DTBounds unionOfBounds(_C3DTBounds a, _C3DTBounds b);

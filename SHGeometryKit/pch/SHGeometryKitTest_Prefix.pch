@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'SHGeometryKit' target in the 'SHGeometryKit' project.
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+	#import <SenTestingKit/SenTestingKit.h>
+	#import <SHGeometryKit/SHGeometryKit.h>
+#endif

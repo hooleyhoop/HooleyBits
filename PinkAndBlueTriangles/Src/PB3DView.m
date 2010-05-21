@@ -10,7 +10,7 @@
 #import "FloorGrid.h"
 #import <GLUT/glut.h>
 #import <OpenGL/CGLMacro.h>
-//#import "SHGeometryKit/SHGeometryKit.h"
+#import <SHGeometryKit/SHGeometryKit.h>
 #import "PBCamera.h"
 #import <sys/time.h>
 #import <unistd.h>
@@ -71,7 +71,7 @@ CGLContextObj cgl_ctx;
 //  glClearAccum( 0.0, 0.0, 0.0, 0.5 );
  	[camera setUseOrtho: NO];
 
-	C3DTVector cameraPos = {{ 50, -200, 70, 1.0 }}; // minus x moves to the right, minus y moves towards,
+	_C3DTVector cameraPos = {{ 50, -200, 70, 1.0 }}; // minus x moves to the right, minus y moves towards,
 	[camera setPos: cameraPos];
 	[camera setLookAtX: -30.0f Y:20 Z:0]; // minus x moves to the right, minus y moves towards,
 	// Optional: sets orthographic view instead of perspective

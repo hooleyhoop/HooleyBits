@@ -23,7 +23,8 @@
 #ifndef __G3DVectorFunc_h_INCLUDE
 #define __G3DVectorFunc_h_INCLUDE
 
-#include "G3DFunctions.h"
+#import "G3DFunctions.h"
+#import <Quartz/Quartz.h>
 
 /*! 
   @function G3DAddScaledVector3fv
@@ -33,7 +34,7 @@
   @param q The second vector
   @param lambda The scaling factor
 */
-__G3DIE__ void G3DAddScaledVector3fv(float res[3], CFLOAT p[3], CFLOAT q[3], CFLOAT lambda);
+__G3DIE__ void G3DAddScaledVector3fv(CGFloat res[3], CFLOAT p[3], CFLOAT q[3], CFLOAT lambda);
 
 /*! 
   @function G3DAddScaledVector3dv
@@ -55,7 +56,7 @@ __G3DIE__ void G3DAddScaledVector3dv(double res[3], CDOUBLE p[3], CDOUBLE q[3], 
   @param lambda1 The fist scaling factor
   @param lambda2 The second scaling factor
 */
-__G3DIE__ void G3DAddScaledVectors3fv(float res[3], CFLOAT p[3], CFLOAT q[3], CFLOAT lambda1, CFLOAT r[3], CFLOAT lambda2);
+__G3DIE__ void G3DAddScaledVectors3fv(CGFloat res[3], CFLOAT p[3], CFLOAT q[3], CFLOAT lambda1, CFLOAT r[3], CFLOAT lambda2);
 
 /*! 
   @function G3DAddScaledVectors3dv
@@ -75,7 +76,7 @@ __G3DIE__ void G3DAddScaledVectors3dv(double res[3], CDOUBLE p[3], CDOUBLE q[3],
   @param res The resulting vector
   @param src The Euler angles
 */
-__G3DIE__ void G3DVector3fFromEulerRep(float res[3], CFLOAT src[3]);
+__G3DIE__ void G3DVector3fFromEulerRep(CGFloat res[3], CFLOAT src[3]);
 
 /*! 
   @function G3DVector3dFromEulerRep
@@ -92,7 +93,7 @@ __G3DIE__ void G3DVector3dFromEulerRep(double res[3], CDOUBLE src[3]);
   @param res The resulting vector
   @param src The Euler angles
 */
-__G3DIE__ void G3DEulerRepFromVector3f(float res[3], CFLOAT src[3]);
+__G3DIE__ void G3DEulerRepFromVector3f(CGFloat res[3], CFLOAT src[3]);
 
 /*! 
   @function G3DEulerRepFromVector3d
@@ -111,7 +112,7 @@ __G3DIE__ void G3DEulerRepFromVector3d(double res[3], CDOUBLE src[3]);
   @param src The original vector
   @param mat The transformation matrix
 */
-__G3DIE__ void G3DTransformVector3fv(float res[3],CFLOAT src[3], CFLOAT mat[16]);
+__G3DIE__ void G3DTransformVector3fv(CGFloat res[3],CFLOAT src[3], CFLOAT mat[16]);
 
 /*! 
   @function G3DTransformVector3dv
@@ -131,7 +132,7 @@ __G3DIE__ void G3DTransformVector3dv(double res[3],CDOUBLE src[3], CDOUBLE mat[1
   @param src The original vector
   @param mat The transformation matrix
 */
-__G3DIE__ void G3DTransformVector4fv(float res[4],CFLOAT src[4], CFLOAT mat[16]);
+__G3DIE__ void G3DTransformVector4fv(CGFloat res[4],CFLOAT src[4], CFLOAT mat[16]);
 
 /*! 
   @function G3DTransformVector4dv
@@ -150,7 +151,7 @@ __G3DIE__ void G3DTransformVector4dv(double res[4],CDOUBLE src[4], CDOUBLE mat[1
   @param a The first vector
   @param a The second vector
 */
-__G3DIE__ void G3DMultiplyVector3fv(float res[3], CFLOAT a[3], CFLOAT b[3]);
+__G3DIE__ void G3DMultiplyVector3fv(CGFloat res[3], CFLOAT a[3], CFLOAT b[3]);
 
 /*! 
   @function G3DMultiplyVector3dv
@@ -168,7 +169,7 @@ __G3DIE__ void G3DMultiplyVector3dv(double res[3], CDOUBLE a[3], CDOUBLE b[3]);
   @param x The first element
   @param y The second element
 */
-__G3DIE__ void G3DCopyVector2f(float res[2], CFLOAT x, CFLOAT y);
+__G3DIE__ void G3DCopyVector2f(CGFloat res[2], CFLOAT x, CFLOAT y);
 
 /*! 
   @function G3DCopyVector2d
@@ -187,7 +188,7 @@ __G3DIE__ void G3DCopyVector2d(double res[2], CDOUBLE x, CDOUBLE y);
   @param y The second element
   @param z The third element
 */
-__G3DIE__ void G3DCopyVector3f(float res[3], CFLOAT x, CFLOAT y, CFLOAT z);
+__G3DIE__ void G3DCopyVector3f(CGFloat res[3], CFLOAT x, CFLOAT y, CFLOAT z);
 
 /*! 
   @function G3DCopyVector3d
@@ -208,7 +209,7 @@ __G3DIE__ void G3DCopyVector3d(double res[3], CDOUBLE x, CDOUBLE y, CDOUBLE z);
   @param z The third element
   @param h The forth element
 */
-__G3DIE__ void G3DCopyVector4f(float res[4], CFLOAT x, CFLOAT y, CFLOAT z, CFLOAT h);
+__G3DIE__ void G3DCopyVector4f(CGFloat res[4], CFLOAT x, CFLOAT y, CFLOAT z, CFLOAT h);
 
 /*! 
   @function G3DCopyVector4d
@@ -227,7 +228,7 @@ __G3DIE__ void G3DCopyVector4d(double res[4], CDOUBLE x, CDOUBLE y, CDOUBLE z, C
   @param cpy The destination
   @param orig The source vector
 */
-__G3DIE__ void G3DCopyVector2fv(float cpy[2], CFLOAT orig[2]);
+__G3DIE__ void G3DCopyVector2fv(CGFloat cpy[2], CFLOAT orig[2]);
 
 /*! 
   @function G3DCopyVector2dv
@@ -243,7 +244,7 @@ __G3DIE__ void G3DCopyVector2dv(double cpy[2], CDOUBLE orig[2]);
   @param cpy The destination
   @param orig The source vector
 */
-__G3DIE__ void G3DCopyVector3fv(float cpy[3], CFLOAT orig[3]);
+__G3DIE__ void G3DCopyVector3fv(CGFloat cpy[3], CFLOAT orig[3]);
 
 /*! 
   @function G3DCopyVector3dv
@@ -259,7 +260,7 @@ __G3DIE__ void G3DCopyVector3dv(double cpy[3], CDOUBLE orig[3]);
   @param cpy The destination
   @param orig The source vector
 */
-__G3DIE__ void G3DCopyVector4fv(float cpy[4], CFLOAT orig[4]);
+__G3DIE__ void G3DCopyVector4fv(CGFloat cpy[4], CFLOAT orig[4]);
 
 /*! 
   @function G3DCopyVector4dv
@@ -276,7 +277,7 @@ __G3DIE__ void G3DCopyVector4dv(double cpy[4], CDOUBLE orig[4]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DAddVectors2fv(float res[2],CFLOAT a[2],CFLOAT b[2]);
+__G3DIE__ void G3DAddVectors2fv(CGFloat res[2],CFLOAT a[2],CFLOAT b[2]);
 
 /*! 
   @function G3DAddVectors3fv
@@ -285,7 +286,7 @@ __G3DIE__ void G3DAddVectors2fv(float res[2],CFLOAT a[2],CFLOAT b[2]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DAddVectors3fv(float res[3],CFLOAT a[3],CFLOAT b[3]);
+__G3DIE__ void G3DAddVectors3fv(CGFloat res[3],CFLOAT a[3],CFLOAT b[3]);
 
 /*! 
   @function G3DAddVectors4fv
@@ -294,7 +295,7 @@ __G3DIE__ void G3DAddVectors3fv(float res[3],CFLOAT a[3],CFLOAT b[3]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DAddVectors4fv(float res[4],CFLOAT a[4],CFLOAT b[4]);
+__G3DIE__ void G3DAddVectors4fv(CGFloat res[4],CFLOAT a[4],CFLOAT b[4]);
 
 /*! 
   @function G3DAddVectors2dv
@@ -331,7 +332,7 @@ __G3DIE__ void G3DAddVectors4dv(double res[4],CDOUBLE a[4],CDOUBLE b[4]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DSubVectors2fv(float res[2],CFLOAT a[2],CFLOAT b[2]);
+__G3DIE__ void G3DSubVectors2fv(CGFloat res[2],CFLOAT a[2],CFLOAT b[2]);
 
 /*! 
   @function G3DSubVectors3fv
@@ -341,7 +342,7 @@ __G3DIE__ void G3DSubVectors2fv(float res[2],CFLOAT a[2],CFLOAT b[2]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DSubVectors3fv(float res[3],CFLOAT a[3],CFLOAT b[3]);
+__G3DIE__ void G3DSubVectors3fv(CGFloat res[3],CFLOAT a[3],CFLOAT b[3]);
 
 /*! 
   @function G3DSubVectors4fv
@@ -351,7 +352,7 @@ __G3DIE__ void G3DSubVectors3fv(float res[3],CFLOAT a[3],CFLOAT b[3]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DSubVectors4fv(float res[4],CFLOAT a[4],CFLOAT b[4]);
+__G3DIE__ void G3DSubVectors4fv(CGFloat res[4],CFLOAT a[4],CFLOAT b[4]);
 
 /*! 
   @function G3DSubVectors2dv
@@ -389,7 +390,7 @@ __G3DIE__ void G3DSubVectors4dv(double res[4],CDOUBLE a[4],CDOUBLE b[4]);
   @param res The destination
   @param src The source vector
 */
-__G3DIE__ void G3DNegateVector2fv(float res[2],CFLOAT src[2]);
+__G3DIE__ void G3DNegateVector2fv(CGFloat res[2],CFLOAT src[2]);
 
 /*! 
   @function G3DNegateVector3fv
@@ -397,7 +398,7 @@ __G3DIE__ void G3DNegateVector2fv(float res[2],CFLOAT src[2]);
   @param res The destination
   @param src The source vector
 */
-__G3DIE__ void G3DNegateVector3fv(float res[3],CFLOAT src[3]);
+__G3DIE__ void G3DNegateVector3fv(CGFloat res[3],CFLOAT src[3]);
 
 /*! 
   @function G3DNegateVector4fv
@@ -405,7 +406,7 @@ __G3DIE__ void G3DNegateVector3fv(float res[3],CFLOAT src[3]);
   @param res The destination
   @param src The source vector
 */
-__G3DIE__ void G3DNegateVector4fv(float res[4],CFLOAT src[4]);
+__G3DIE__ void G3DNegateVector4fv(CGFloat res[4],CFLOAT src[4]);
 
 /*! 
   @function G3DNegateVector2dv
@@ -439,7 +440,7 @@ __G3DIE__ void G3DNegateVector4dv(double res[4],CDOUBLE src[4]);
   @param src The source vector
   @param scalar The scaling factor
 */
-__G3DIE__ void G3DScaleVector2fv(float res[2],CFLOAT src[2],CFLOAT scalar);
+__G3DIE__ void G3DScaleVector2fv(CGFloat res[2],CFLOAT src[2],CFLOAT scalar);
 
 /*! 
   @function G3DScaleVector3fv
@@ -449,7 +450,7 @@ __G3DIE__ void G3DScaleVector2fv(float res[2],CFLOAT src[2],CFLOAT scalar);
   @param src The source vector
   @param scalar The scaling factor
 */
-__G3DIE__ void G3DScaleVector3fv(float res[3],CFLOAT src[3],CFLOAT scalar);
+__G3DIE__ void G3DScaleVector3fv(CGFloat res[3],CFLOAT src[3],CFLOAT scalar);
 
 /*! 
   @function G3DScaleVector4fv
@@ -459,7 +460,7 @@ __G3DIE__ void G3DScaleVector3fv(float res[3],CFLOAT src[3],CFLOAT scalar);
   @param src The source vector
   @param scalar The scaling factor
 */
-__G3DIE__ void G3DScaleVector4fv(float res[4],CFLOAT src[4],CFLOAT scalar);
+__G3DIE__ void G3DScaleVector4fv(CGFloat res[4],CFLOAT src[4],CFLOAT scalar);
 
 /*! 
   @function G3DScaleVector2dv
@@ -499,7 +500,7 @@ __G3DIE__ void G3DScaleVector4dv(double res[4],CDOUBLE src[4],CDOUBLE scalar);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector2fv(CFLOAT a[2],CFLOAT b[2],CFLOAT tol);
+__G3DIE__ NSInteger G3DCompareVector2fv(CFLOAT a[2],CFLOAT b[2],CFLOAT tol);
 
 /*! 
   @function G3DCompareVector3fv
@@ -509,7 +510,7 @@ __G3DIE__ int G3DCompareVector2fv(CFLOAT a[2],CFLOAT b[2],CFLOAT tol);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector3fv(CFLOAT a[3],CFLOAT b[3],CFLOAT tol);
+__G3DIE__ NSInteger G3DCompareVector3fv(CFLOAT a[3],CFLOAT b[3],CFLOAT tol);
 
 /*! 
   @function G3DCompareVector4fv
@@ -519,7 +520,7 @@ __G3DIE__ int G3DCompareVector3fv(CFLOAT a[3],CFLOAT b[3],CFLOAT tol);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector4fv(CFLOAT a[4],CFLOAT b[4],CFLOAT tol);
+__G3DIE__ NSInteger G3DCompareVector4fv(CFLOAT a[4],CFLOAT b[4],CFLOAT tol);
 
 /*! 
   @function G3DCompareVector2dv
@@ -529,7 +530,7 @@ __G3DIE__ int G3DCompareVector4fv(CFLOAT a[4],CFLOAT b[4],CFLOAT tol);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector2dv(CDOUBLE a[2],CDOUBLE b[2],CDOUBLE tol);
+__G3DIE__ NSInteger G3DCompareVector2dv(CDOUBLE a[2],CDOUBLE b[2],CDOUBLE tol);
 
 /*! 
   @function G3DCompareVector3dv
@@ -539,7 +540,7 @@ __G3DIE__ int G3DCompareVector2dv(CDOUBLE a[2],CDOUBLE b[2],CDOUBLE tol);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector3dv(CDOUBLE a[3],CDOUBLE b[3],CDOUBLE tol);
+__G3DIE__ NSInteger G3DCompareVector3dv(CDOUBLE a[3],CDOUBLE b[3],CDOUBLE tol);
 
 /*! 
   @function G3DCompareVector4dv
@@ -549,7 +550,7 @@ __G3DIE__ int G3DCompareVector3dv(CDOUBLE a[3],CDOUBLE b[3],CDOUBLE tol);
   @param tol The factor
   @result Returns -1, 0 or 1 according to the result of G3DCompareFloat().
 */
-__G3DIE__ int G3DCompareVector4dv(CDOUBLE a[4],CDOUBLE b[4],CDOUBLE tol);
+__G3DIE__ NSInteger G3DCompareVector4dv(CDOUBLE a[4],CDOUBLE b[4],CDOUBLE tol);
 
 /*! 
   @function G3DIsEqualToVector2fv
@@ -612,7 +613,7 @@ __G3DIE__ int G3DIsEqualToVector4dv(CDOUBLE a[4],CDOUBLE b[4]);
   @param b The second vector
   @result Returns the single-precision scalar product.
 */
-__G3DIE__ float G3DScalarProduct2fv(CFLOAT a[2],CFLOAT b[2]);
+__G3DIE__ CGFloat G3DScalarProduct2fv(CFLOAT a[2],CFLOAT b[2]);
 
 /*! 
   @function G3DScalarProduct3fv
@@ -621,7 +622,7 @@ __G3DIE__ float G3DScalarProduct2fv(CFLOAT a[2],CFLOAT b[2]);
   @param b The second vector
   @result Returns the single-precision scalar product.
 */
-__G3DIE__ float G3DScalarProduct3fv(CFLOAT a[3],CFLOAT b[3]);
+__G3DIE__ CGFloat G3DScalarProduct3fv(CFLOAT a[3],CFLOAT b[3]);
 
 /*! 
   @function G3DScalarProduct4fv
@@ -630,7 +631,7 @@ __G3DIE__ float G3DScalarProduct3fv(CFLOAT a[3],CFLOAT b[3]);
   @param b The second vector
   @result Returns the single-precision scalar product.
 */
-__G3DIE__ float G3DScalarProduct4fv(CFLOAT a[4],CFLOAT b[4]);
+__G3DIE__ CGFloat G3DScalarProduct4fv(CFLOAT a[4],CFLOAT b[4]);
 
 /*! 
   @function G3DScalarProduct2dv
@@ -667,7 +668,7 @@ __G3DIE__ double G3DScalarProduct4dv(CDOUBLE a[4],CDOUBLE b[4]);
   @param a The first vector
   @param b The second vector
 */
-__G3DIE__ void G3DVectorProduct3fv(float res[3],CFLOAT a[3],CFLOAT b[3]);
+__G3DIE__ void G3DVectorProduct3fv(CGFloat res[3],CFLOAT a[3],CFLOAT b[3]);
 
 /*! 
   @function G3DVectorProduct3dv
@@ -687,7 +688,7 @@ __G3DIE__ void G3DVectorProduct3dv(double res[3],CDOUBLE a[3],CDOUBLE b[3]);
   @param b The third vector
   @result Returns a single-precision value.
 */
-__G3DIE__ float G3DMixedProduct3fv(CFLOAT a[3], CFLOAT b[3], CFLOAT c[3]);
+__G3DIE__ CGFloat G3DMixedProduct3fv(CFLOAT a[3], CFLOAT b[3], CFLOAT c[3]);
 
 /*! 
   @function G3DMixedProduct3dv
@@ -706,7 +707,7 @@ __G3DIE__ double G3DMixedProduct3dv(CDOUBLE a[3], CDOUBLE b[3], CDOUBLE c[3]);
   @param b The second vector
   @result Returns the single-precision distance.
 */
-__G3DIE__ float G3DDistance2fv(CFLOAT a[2],CFLOAT b[2]);
+__G3DIE__ CGFloat G3DDistance2fv(CFLOAT a[2],CFLOAT b[2]);
 
 /*! 
   @function G3DDistance3fv
@@ -715,7 +716,7 @@ __G3DIE__ float G3DDistance2fv(CFLOAT a[2],CFLOAT b[2]);
   @param b The second vector
   @result Returns the single-precision distance.
 */
-__G3DIE__ float G3DDistance3fv(CFLOAT a[3],CFLOAT b[3]);
+__G3DIE__ CGFloat G3DDistance3fv(CFLOAT a[3],CFLOAT b[3]);
 
 /*! 
   @function G3DDistance4fv
@@ -724,7 +725,7 @@ __G3DIE__ float G3DDistance3fv(CFLOAT a[3],CFLOAT b[3]);
   @param b The second vector
   @result Returns the single-precision distance.
 */
-__G3DIE__ float G3DDistance4fv(CFLOAT a[4],CFLOAT b[4]);
+__G3DIE__ CGFloat G3DDistance4fv(CFLOAT a[4],CFLOAT b[4]);
 
 /*! 
   @function G3DDistance2dv
@@ -759,7 +760,7 @@ __G3DIE__ double G3DDistance4dv(CDOUBLE a[4],CDOUBLE b[4]);
   @param a The 2-element vector
   @result Returns the single-precision length.
 */
-__G3DIE__ float G3DLength2fv(CFLOAT a[2]);
+__G3DIE__ CGFloat G3DLength2fv(CFLOAT a[2]);
 
 /*! 
   @function G3DLength3fv
@@ -767,7 +768,7 @@ __G3DIE__ float G3DLength2fv(CFLOAT a[2]);
   @param a The 3-element vector
   @result Returns the single-precision length.
 */
-__G3DIE__ float G3DLength3fv(CFLOAT a[3]);
+__G3DIE__ CGFloat G3DLength3fv(CFLOAT a[3]);
 
 /*! 
   @function G3DLength4fv
@@ -775,7 +776,7 @@ __G3DIE__ float G3DLength3fv(CFLOAT a[3]);
   @param a The 4-element vector
   @result Returns the single-precision length.
 */
-__G3DIE__ float G3DLength4fv(CFLOAT a[4]);
+__G3DIE__ CGFloat G3DLength4fv(CFLOAT a[4]);
 
 /*! 
   @function G3DLength2dv
@@ -807,7 +808,7 @@ __G3DIE__ double G3DLength4dv(CDOUBLE a[4]);
   @param res The normalised vector
   @param src The original vector
 */
-__G3DIE__ void G3DNormalise2fv(float res[2],CFLOAT src[2]);
+__G3DIE__ void G3DNormalise2fv(CGFloat res[2],CFLOAT src[2]);
 
 /*! 
   @function G3DNormalise3fv
@@ -815,7 +816,7 @@ __G3DIE__ void G3DNormalise2fv(float res[2],CFLOAT src[2]);
   @param res The normalised vector
   @param src The original vector
 */
-__G3DIE__ void G3DNormalise3fv(float res[3],CFLOAT src[3]);
+__G3DIE__ void G3DNormalise3fv(CGFloat res[3],CFLOAT src[3]);
 
 /*! 
   @function G3DNormalise4fv
@@ -823,7 +824,7 @@ __G3DIE__ void G3DNormalise3fv(float res[3],CFLOAT src[3]);
   @param res The normalised vector
   @param src The original vector
 */
-__G3DIE__ void G3DNormalise4fv(float res[4],CFLOAT src[4]);
+__G3DIE__ void G3DNormalise4fv(CGFloat res[4],CFLOAT src[4]);
 
 /*! 
   @function G3DNormalise2dv

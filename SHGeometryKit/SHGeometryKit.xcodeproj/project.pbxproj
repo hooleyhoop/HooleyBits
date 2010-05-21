@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		730E2E5311A43D9A00C7CDAA /* CurveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E5211A43D9A00C7CDAA /* CurveTests.m */; };
-		730E2E5511A43DA500C7CDAA /* SH2DPolyLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E5411A43DA500C7CDAA /* SH2DPolyLineTests.m */; };
-		730E2E5711A43DAE00C7CDAA /* SH2dBezierPtTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E5611A43DAE00C7CDAA /* SH2dBezierPtTests.m */; };
-		730E2E5D11A43DB600C7CDAA /* SH2dPolyQuadraticTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E5C11A43DB600C7CDAA /* SH2dPolyQuadraticTests.m */; };
-		730E2E5F11A43DBB00C7CDAA /* LWEnvelopeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E5E11A43DBB00C7CDAA /* LWEnvelopeTests.m */; };
-		730E2E6111A43DBE00C7CDAA /* LWKeyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E6011A43DBE00C7CDAA /* LWKeyTests.m */; };
-		730E2E6311A43DCA00C7CDAA /* envtest.c in Sources */ = {isa = PBXBuildFile; fileRef = 730E2E6211A43DCA00C7CDAA /* envtest.c */; };
-		730E2EF511A43F8900C7CDAA /* G3DFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 730E2EF311A43F8900C7CDAA /* G3DFunctions.c */; };
-		730E2EF611A43F8900C7CDAA /* G3DFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EF411A43F8900C7CDAA /* G3DFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		730E2F0411A4401200C7CDAA /* G3DDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7311E3BD0AD653AC005062FE /* SHGeometryKit.h in Resources */ = {isa = PBXBuildFile; fileRef = 7311E2F40AD6500B005062FE /* SHGeometryKit.h */; };
 		7311E3E80AD654B2005062FE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7311E3E70AD654B2005062FE /* SenTestingKit.framework */; };
 		7311E5200AD6586D005062FE /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* SHGeometryKit.framework */; };
+		7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */; };
 		7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734826401004CC5A00E80278 /* SHShared.framework */; };
+		735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
+		735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
 		736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		736C73A00B4BF3F600D8D0D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
+		7399D76511A6DA4A00A3E4E5 /* NewC3DTmath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */; };
+		7399D76A11A6DA5A00A3E4E5 /* NewC3DTmath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */; };
+		73AB7C8711A57C9100EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
+		73AB7CAB11A57C9B00EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
+		73EB5E6C11A5624900B612D6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
+		73EB5E6D11A5624A00B612D6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
+		73EB5E6E11A5624B00B612D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
+		73EB5E6F11A5624B00B612D6 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,7 +138,6 @@
 		730E2E5E11A43DBB00C7CDAA /* LWEnvelopeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelopeTests.m; path = Tests/LWEnvelopeTests.m; sourceTree = "<group>"; };
 		730E2E6011A43DBE00C7CDAA /* LWKeyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWKeyTests.m; path = Tests/LWKeyTests.m; sourceTree = "<group>"; };
 		730E2E6211A43DCA00C7CDAA /* envtest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = envtest.c; path = Tests/envtest.c; sourceTree = "<group>"; };
-		730E2EF311A43F8900C7CDAA /* G3DFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = G3DFunctions.c; path = Src/G3DFunctions.c; sourceTree = "<group>"; };
 		730E2EF411A43F8900C7CDAA /* G3DFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DFunctions.h; path = Src/G3DFunctions.h; sourceTree = "<group>"; };
 		730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DDefs.h; path = Src/G3DDefs.h; sourceTree = "<group>"; };
 		730E301C11A4428000C7CDAA /* LWKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWKey.h; path = Src/LWKey.h; sourceTree = "<group>"; };
@@ -147,7 +146,6 @@
 		730E302111A4428D00C7CDAA /* LWEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelope.m; path = Src/LWEnvelope.m; sourceTree = "<group>"; };
 		7311E2D80AD64FB4005062FE /* SHGeometryKitTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHGeometryKitTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7311E2EE0AD65000005062FE /* G3DDefsIntl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DDefsIntl.h; sourceTree = "<group>"; };
-		7311E2F40AD6500B005062FE /* SHGeometryKit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SHGeometryKit.h; sourceTree = "<group>"; };
 		7311E3030AD65063005062FE /* G3DTrigonometry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DTrigonometry.h; sourceTree = "<group>"; };
 		7311E3040AD65063005062FE /* G3DTrigonometry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DTrigonometry.m; sourceTree = "<group>"; };
 		7311E3050AD65063005062FE /* G3DBezier.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DBezier.h; sourceTree = "<group>"; };
@@ -187,8 +185,6 @@
 		7311E32C0AD65063005062FE /* G3DVector4d.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DVector4d.m; sourceTree = "<group>"; };
 		7311E32D0AD65063005062FE /* G3DVector4f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DVector4f.h; sourceTree = "<group>"; };
 		7311E32E0AD65063005062FE /* G3DVector4f.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DVector4f.m; sourceTree = "<group>"; };
-		7311E3300AD65063005062FE /* G3DTuple2d.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DTuple2d.h; sourceTree = "<group>"; };
-		7311E3310AD65063005062FE /* G3DTuple2d.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DTuple2d.m; sourceTree = "<group>"; };
 		7311E3320AD65063005062FE /* G3DTuple2f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DTuple2f.h; sourceTree = "<group>"; };
 		7311E3330AD65063005062FE /* G3DTuple2f.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DTuple2f.m; sourceTree = "<group>"; };
 		7311E3340AD65063005062FE /* G3DTuple3d.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DTuple3d.h; sourceTree = "<group>"; };
@@ -203,26 +199,36 @@
 		7311E3400AD65063005062FE /* G3DMatrixFunc.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = G3DMatrixFunc.c; sourceTree = "<group>"; };
 		7311E3410AD65063005062FE /* G3DQuatFunc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DQuatFunc.h; sourceTree = "<group>"; };
 		7311E3420AD65063005062FE /* G3DQuatFunc.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = G3DQuatFunc.c; sourceTree = "<group>"; };
-		7311E3430AD65063005062FE /* G3DVectorFunc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DVectorFunc.h; sourceTree = "<group>"; };
-		7311E3440AD65063005062FE /* G3DVectorFunc.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = G3DVectorFunc.c; sourceTree = "<group>"; };
 		7311E3E70AD654B2005062FE /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7311EB000AD6789C005062FE /* SH2DPolyQuadraticBezier.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SH2DPolyQuadraticBezier.m; sourceTree = "<group>"; };
 		7311EB010AD6789C005062FE /* SH2DPolyQuadraticBezier.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SH2DPolyQuadraticBezier.h; sourceTree = "<group>"; };
 		7311EB140AD67D79005062FE /* SH2dBezierPt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2dBezierPt.h; sourceTree = "<group>"; };
 		7311EB150AD67D79005062FE /* SH2dBezierPt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2dBezierPt.m; sourceTree = "<group>"; };
+		7333F34211A69610004F4CAC /* C3DTMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DTMath.h; path = Src/C3DTMath.h; sourceTree = "<group>"; };
 		733736F40ADE46BF000792C9 /* FindRoots x=0 y= */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FindRoots x=0 y="; sourceTree = "<group>"; };
 		734826381004CC5A00E80278 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		7351FA0811A54CA000BF4D6F /* G3DFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = G3DFunctions.m; path = Src/G3DFunctions.m; sourceTree = "<group>"; };
+		7351FA2011A54E3F00BF4D6F /* G3DVectorFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = G3DVectorFunc.m; path = Src/G3DVectorFunc.m; sourceTree = "<group>"; };
+		7351FAB111A5516C00BF4D6F /* C3DTTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DTTypes.h; path = Src/C3DTTypes.h; sourceTree = "<group>"; };
+		7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGeometryKit.h; path = Src/SHGeometryKit.h; sourceTree = "<group>"; };
 		735959310B24702300626359 /* SH2DGraphCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2DGraphCurve.h; sourceTree = "<group>"; };
 		735959320B24702300626359 /* SH2DGraphCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2DGraphCurve.m; sourceTree = "<group>"; };
-		7360ABFF0AE261BE005B0196 /* C3DTMath.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = C3DTMath.c; sourceTree = "<group>"; };
-		7360AC000AE261BE005B0196 /* C3DTMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = C3DTMath.h; sourceTree = "<group>"; };
-		7360AC010AE261BE005B0196 /* C3DTTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = C3DTTypes.h; sourceTree = "<group>"; };
+		735C62B911A53B7B00A6BA88 /* G3DTuple2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DTuple2d.h; path = Src/G3DTuple2d.h; sourceTree = "<group>"; };
+		735C62BA11A53B7B00A6BA88 /* G3DTuple2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = G3DTuple2d.m; path = Src/G3DTuple2d.m; sourceTree = "<group>"; };
+		735C62CA11A53D7C00A6BA88 /* G3DVectorFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = G3DVectorFunc.h; path = Src/G3DVectorFunc.h; sourceTree = "<group>"; };
+		735C62D511A53E2800A6BA88 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		735C62D711A53E2800A6BA88 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		736C739D0B4BF3F600D8D0D1 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		7399D69711A6D39D00A3E4E5 /* C3DTMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = C3DTMath.m; path = Src/C3DTMath.m; sourceTree = "<group>"; };
+		7399D6DC11A6D5F100A3E4E5 /* NewC3DTmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewC3DTmath.h; path = Src/NewC3DTmath.h; sourceTree = "<group>"; };
+		7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewC3DTmath.m; path = Src/NewC3DTmath.m; sourceTree = "<group>"; };
+		73AB7C8611A57C9100EDFDED /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		73C665E20B0A3B3D00B1AC57 /* SH2dCatmull-Rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SH2dCatmull-Rom.h"; sourceTree = "<group>"; };
 		73C665E30B0A3B3D00B1AC57 /* SH2dCatmull-Rom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SH2dCatmull-Rom.m"; sourceTree = "<group>"; };
 		73E19EC90ADB9A4C00F0F8ED /* SH2DPolyCubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2DPolyCubicBezier.h; sourceTree = "<group>"; };
 		73E19ECA0ADB9A4C00F0F8ED /* SH2DPolyCubicBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2DPolyCubicBezier.m; sourceTree = "<group>"; };
+		73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ByteAlignmentTests.m; path = Tests/ByteAlignmentTests.m; sourceTree = "<group>"; };
 		73EB7B380B0B1E5C006AD5A5 /* SH2DTCBSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2DTCBSpline.h; sourceTree = "<group>"; };
 		73EB7B390B0B1E5C006AD5A5 /* SH2DTCBSpline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2DTCBSpline.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -237,6 +243,11 @@
 			files = (
 				7311E5200AD6586D005062FE /* SHGeometryKit.framework in Frameworks */,
 				7311E3E80AD654B2005062FE /* SenTestingKit.framework in Frameworks */,
+				73EB5E6C11A5624900B612D6 /* OpenGL.framework in Frameworks */,
+				73EB5E6D11A5624A00B612D6 /* GLUT.framework in Frameworks */,
+				73EB5E6E11A5624B00B612D6 /* QuartzCore.framework in Frameworks */,
+				73EB5E6F11A5624B00B612D6 /* Quartz.framework in Frameworks */,
+				73AB7CAB11A57C9B00EDFDED /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,9 +255,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */,
 				736C73A00B4BF3F600D8D0D1 /* OpenGL.framework in Frameworks */,
+				736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */,
 				7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */,
+				735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */,
+				735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */,
+				73AB7C8711A57C9100EDFDED /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				73E7A63C0F6C304A00795867 /* Config */,
-				7311E2F40AD6500B005062FE /* SHGeometryKit.h */,
+				7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */,
 				730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */,
 				7311E2EE0AD65000005062FE /* G3DDefsIntl.h */,
 				7311E2FB0AD65019005062FE /* Tests */,
@@ -317,10 +331,12 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73AB7C8611A57C9100EDFDED /* Accelerate.framework */,
+				735C62D511A53E2800A6BA88 /* Quartz.framework */,
+				735C62D711A53E2800A6BA88 /* QuartzCore.framework */,
 				736C739D0B4BF3F600D8D0D1 /* GLUT.framework */,
 				736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */,
 				7311E3E70AD654B2005062FE /* SenTestingKit.framework */,
-				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -328,6 +344,7 @@
 		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				D2F7E79907B2D74100F64583 /* CoreData.framework */,
 				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
@@ -346,6 +363,7 @@
 		7311E2FB0AD65019005062FE /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */,
 				730E2E6211A43DCA00C7CDAA /* envtest.c */,
 				730E2E5411A43DA500C7CDAA /* SH2DPolyLineTests.m */,
 				730E2E5211A43D9A00C7CDAA /* CurveTests.m */,
@@ -455,8 +473,8 @@
 		7311E32F0AD65063005062FE /* Tuples */ = {
 			isa = PBXGroup;
 			children = (
-				7311E3300AD65063005062FE /* G3DTuple2d.h */,
-				7311E3310AD65063005062FE /* G3DTuple2d.m */,
+				735C62B911A53B7B00A6BA88 /* G3DTuple2d.h */,
+				735C62BA11A53B7B00A6BA88 /* G3DTuple2d.m */,
 				7311E3320AD65063005062FE /* G3DTuple2f.h */,
 				7311E3330AD65063005062FE /* G3DTuple2f.m */,
 				7311E3340AD65063005062FE /* G3DTuple3d.h */,
@@ -475,13 +493,13 @@
 			isa = PBXGroup;
 			children = (
 				730E2EF411A43F8900C7CDAA /* G3DFunctions.h */,
-				730E2EF311A43F8900C7CDAA /* G3DFunctions.c */,
+				7351FA0811A54CA000BF4D6F /* G3DFunctions.m */,
 				7311E33F0AD65063005062FE /* G3DMatrixFunc.h */,
 				7311E3400AD65063005062FE /* G3DMatrixFunc.c */,
 				7311E3410AD65063005062FE /* G3DQuatFunc.h */,
 				7311E3420AD65063005062FE /* G3DQuatFunc.c */,
-				7311E3430AD65063005062FE /* G3DVectorFunc.h */,
-				7311E3440AD65063005062FE /* G3DVectorFunc.c */,
+				735C62CA11A53D7C00A6BA88 /* G3DVectorFunc.h */,
+				7351FA2011A54E3F00BF4D6F /* G3DVectorFunc.m */,
 			);
 			name = "C Functions";
 			sourceTree = "<group>";
@@ -493,9 +511,9 @@
 				734826421004CC5A00E80278 /* SHSharedTests.octest */,
 				734826441004CC5A00E80278 /* libSHShared_static.a */,
 				734826461004CC5A00E80278 /* libSHShared_iphone.a */,
-				730E2E1311A438A600C7CDAA /* SHSharedUI */,
+				730E2E1311A438A600C7CDAA /* SHSharedUI.framework */,
 				730E2E1511A438A600C7CDAA /* SHSharedUITests.octest */,
-				730E2E1711A438A600C7CDAA /* SHTestUtilities */,
+				730E2E1711A438A600C7CDAA /* SHTestUtilities.framework */,
 				730E2E1911A438A600C7CDAA /* TestUtilitiesTests.octest */,
 				730E2E1B11A438A600C7CDAA /* GUIFiddler */,
 				730E2E1D11A438A600C7CDAA /* PerformanceTests.octest */,
@@ -522,9 +540,11 @@
 		7360ABFE0AE261A0005B0196 /* C3DT to merge */ = {
 			isa = PBXGroup;
 			children = (
-				7360ABFF0AE261BE005B0196 /* C3DTMath.c */,
-				7360AC000AE261BE005B0196 /* C3DTMath.h */,
-				7360AC010AE261BE005B0196 /* C3DTTypes.h */,
+				7333F34211A69610004F4CAC /* C3DTMath.h */,
+				7399D69711A6D39D00A3E4E5 /* C3DTMath.m */,
+				7399D6DC11A6D5F100A3E4E5 /* NewC3DTmath.h */,
+				7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */,
+				7351FAB111A5516C00BF4D6F /* C3DTTypes.h */,
 			);
 			name = "C3DT to merge";
 			sourceTree = "<group>";
@@ -568,8 +588,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				730E2EF611A43F8900C7CDAA /* G3DFunctions.h in Headers */,
-				730E2F0411A4401200C7CDAA /* G3DDefs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,10 +659,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		730E2E1311A438A600C7CDAA /* SHSharedUI */ = {
+		730E2E1311A438A600C7CDAA /* SHSharedUI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHSharedUI;
+			path = SHSharedUI.framework;
 			remoteRef = 730E2E1211A438A600C7CDAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -655,10 +673,10 @@
 			remoteRef = 730E2E1411A438A600C7CDAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		730E2E1711A438A600C7CDAA /* SHTestUtilities */ = {
+		730E2E1711A438A600C7CDAA /* SHTestUtilities.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHTestUtilities;
+			path = SHTestUtilities.framework;
 			remoteRef = 730E2E1611A438A600C7CDAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -718,7 +736,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7311E3BD0AD653AC005062FE /* SHGeometryKit.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,13 +769,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				730E2E5311A43D9A00C7CDAA /* CurveTests.m in Sources */,
-				730E2E5511A43DA500C7CDAA /* SH2DPolyLineTests.m in Sources */,
-				730E2E5711A43DAE00C7CDAA /* SH2dBezierPtTests.m in Sources */,
-				730E2E5D11A43DB600C7CDAA /* SH2dPolyQuadraticTests.m in Sources */,
-				730E2E5F11A43DBB00C7CDAA /* LWEnvelopeTests.m in Sources */,
-				730E2E6111A43DBE00C7CDAA /* LWKeyTests.m in Sources */,
-				730E2E6311A43DCA00C7CDAA /* envtest.c in Sources */,
+				7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */,
+				7399D76511A6DA4A00A3E4E5 /* NewC3DTmath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,7 +778,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				730E2EF511A43F8900C7CDAA /* G3DFunctions.c in Sources */,
+				7399D76A11A6DA5A00A3E4E5 /* NewC3DTmath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,7 +813,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 730E2E4511A438C300C7CDAA /* Target-Framework.xcconfig */;
 			buildSettings = {
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = 4.2;
+				"GCC_VERSION[sdk=macosx10.5][arch=ppc]" = 4.2;
+				"GCC_VERSION[sdk=macosx10.6][arch=i386]" = 4.2;
+				"GCC_VERSION[sdk=macosx10.6][arch=x86_64]" = 4.2;
 				PRODUCT_NAME = SHGeometryKit;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 			};
 			name = Debug;
 		};
@@ -856,6 +876,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 730E2E4A11A438C300C7CDAA /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				"GCC_VERSION[sdk=macosx10.6][arch=i386]" = 4.2;
 				PRODUCT_NAME = SHGeometryKitTest;
 			};
 			name = Debug;

@@ -24,14 +24,14 @@
 #ifndef __G3DTuple2d_h_INCLUDE
 #define __G3DTuple2d_h_INCLUDE
 
-#import <Foundation/Foundation.h>
 
-@interface G3DTuple2d : NSObject <NSCoding, NSCopying>
-{
-  double _tuple[2];
+@interface G3DTuple2d : NSObject <NSCoding, NSCopying> {
+	
+	// See good explanation of GCC vector types http://lists.apple.com/archives/perfoptimization-dev/2009/Mar/msg00006.html
+	CGFloat _tuple[2] __attribute__((__aligned__(16)));
 }
 
-+ (id) tupleWithX:(double)x y:(double)y;
++ (id)tupleWithX:(CGFloat)x y:(CGFloat)y;
 
 //-----------------------------------------------------------------------------
 // init and free
@@ -52,7 +52,7 @@
    @param vals A C array specifying the tuple
    @result  Returns the newly initialised tuple object or nil on error.
 */
-- (id)initWithElements:(const double *)vals;
+- (id)initWithElements:(const CGFloat *)vals;
 
 /*! 
    @method initWithX:y:   
@@ -62,7 +62,7 @@
    @param y double-precision y value
    @result  Returns the newly initialised tuple object or nil on error.
 */
-- (id)initWithX:(double)x y:(double)y;
+- (id)initWithX:(CGFloat)x y:(CGFloat)y;
 
 /*! 
    @method initWithTuple:   
@@ -95,7 +95,7 @@
    @param low The lowest value in this tuple after clamping.
    @param high The highest value in this tuple after clamping.
 */
-- (void)clampLow:(double)low high:(double)high;
+- (void)clampLow:(CGFloat)low high:(CGFloat)high;
 
 /*! 
    @method addTuple2d:   
@@ -104,7 +104,7 @@
 */
 - (void)addTuple2d:(G3DTuple2d *)aTuple;
 
-- (void)translateByX:(float)x byY:(float)y;
+- (void)translateByX:(CGFloat)x byY:(CGFloat)y;
 
 /*! 
    @method subTuple2d:   
@@ -120,7 +120,7 @@
              the passed double-precision value.
    @param aScalar The scalar value.
 */
-- (void)multiplyBy:(double)aScalar;
+- (void)multiplyBy:(CGFloat)aScalar;
 
 /*! 
    @method divideBy:   
@@ -129,7 +129,7 @@
              if aScalar is equal to 0.0.
    @param aScalar The scalar value.
 */
-- (void)divideBy:(double)aScalar;
+- (void)divideBy:(CGFloat)aScalar;
 
 /*! 
    @method interpolateBetween:and:
@@ -140,12 +140,12 @@
    @param factor The factor scalar value.
    @result Sets the values of the tuple to (1-factor)*first + factor*second
 */
-- (void)interpolateBetween:(G3DTuple2d *)first and:(G3DTuple2d *)second factor:(double)factor;
+- (void)interpolateBetween:(G3DTuple2d *)first and:(G3DTuple2d *)second factor:(CGFloat)factor;
 
 /*
  * is a point within a specified distance of this point
 */
-- (BOOL)ispointX:(float)x py:(float)y withDistX:(float)mx distX:(float)my;
+- (BOOL)ispointX:(CGFloat)x py:(CGFloat)y withDistX:(CGFloat)mx distX:(CGFloat)my;
 
 /*! 
    @method negate:   
@@ -172,14 +172,14 @@
    @abstract Returns the pointer to the receiver's double-precision element values.
    @result Returns double pointer.
 */
-- (const double *)elements;
+- (const CGFloat *)elements;
 
 /*! 
    @method setElements:   
    @abstract Set the values of the receiver to the passed double-precision elements.
    @param values The new double-precision tuple values.
 */
-- (void)setElements:(const double *)values;
+- (void)setElements:(const CGFloat *)values;
 
 /*! 
    @method getElements:   
@@ -187,35 +187,35 @@
    @param values A 2-element double-precision array.
    @result Returns the receivers elements.
 */
-- (void)getElements:(double *)values;
+- (void)getElements:(CGFloat *)values;
 
 /*! 
    @method x   
    @abstract Returns the 1st element of the tuple.
    @result Returns a double-precision value representing the 1st element of the tuple.
 */
-- (double)x;
+- (CGFloat)x;
 
 /*! 
    @method setX:
    @abstract Sets the 1st element of the tuple.
    @param x A double-precision value.
 */
-- (void)setX:(double)x;
+- (void)setX:(CGFloat)x;
 
 /*! 
    @method y
    @abstract Returns the 2nd element of the tuple.
    @result Returns a double-precision value representing the 2nd element of the tuple.
 */
-- (double)y;
+- (CGFloat)y;
 
 /*! 
    @method setY:
    @abstract Sets the 2nd element of the tuple.
    @param y A double-precision value.
 */
-- (void)setY:(double)y;
+- (void)setY:(CGFloat)y;
 
 /*! 
    @method setValuesWithTuple:
