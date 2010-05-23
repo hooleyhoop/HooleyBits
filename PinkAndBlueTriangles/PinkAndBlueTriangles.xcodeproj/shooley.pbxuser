@@ -95,7 +95,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					364,
+					781,
 					20,
 					48,
 					43,
@@ -134,12 +134,17 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 296331212;
-			PBXWorkspaceStateSaveDate = 296331212;
+			PBXPerProjectTemplateStateSaveDate = 296331693;
+			PBXWorkspaceStateSaveDate = 296331693;
 		};
 		perUserProjectItems = {
-			73DE042911A9A82200BDF39F /* XCBuildMessageTextBookmark */ = 73DE042911A9A82200BDF39F /* XCBuildMessageTextBookmark */;
-			73DE042A11A9A82200BDF39F /* PBXTextBookmark */ = 73DE042A11A9A82200BDF39F /* PBXTextBookmark */;
+			73DE049C11A9DEB800BDF39F /* PBXTextBookmark */ = 73DE049C11A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE049D11A9DEB800BDF39F /* PBXTextBookmark */ = 73DE049D11A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE049E11A9DEB800BDF39F /* PBXTextBookmark */ = 73DE049E11A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE049F11A9DEB800BDF39F /* PBXTextBookmark */ = 73DE049F11A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE04A011A9DEB800BDF39F /* PBXTextBookmark */ = 73DE04A011A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE04A211A9DEB800BDF39F /* PBXTextBookmark */ = 73DE04A211A9DEB800BDF39F /* PBXTextBookmark */;
+			73DE04A311A9DEB800BDF39F /* PBXTextBookmark */ = 73DE04A311A9DEB800BDF39F /* PBXTextBookmark */;
 		};
 		sourceControlManager = 737028E40C439EDF008DAD99 /* Source Control */;
 		userBuildSettings = {
@@ -282,30 +287,30 @@
 	};
 	735C5EDA11A44F2A00A6BA88 /* AppControl.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {959, 2886}}";
-			sepNavSelRange = "{3833, 2}";
-			sepNavVisRange = "{3510, 603}";
+			sepNavIntBoundsRect = "{{0, 0}, {959, 2756}}";
+			sepNavSelRange = "{3421, 2}";
+			sepNavVisRange = "{3288, 222}";
 		};
 	};
 	735C5EDF11A44F4600A6BA88 /* PBCamera.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {959, 897}}";
+			sepNavIntBoundsRect = "{{0, 0}, {959, 871}}";
 			sepNavSelRange = "{143, 0}";
-			sepNavVisRange = "{0, 629}";
+			sepNavVisRange = "{0, 419}";
 		};
 	};
 	735C5EE011A44F4600A6BA88 /* PBCamera.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1573, 6916}}";
+			sepNavIntBoundsRect = "{{0, 0}, {959, 7072}}";
 			sepNavSelRange = "{4488, 14}";
-			sepNavVisRange = "{4140, 975}";
+			sepNavVisRange = "{4307, 349}";
 		};
 	};
 	735C5EE211A44F5000A6BA88 /* FloorGrid.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {959, 1066}}";
-			sepNavSelRange = "{459, 0}";
-			sepNavVisRange = "{183, 357}";
+			sepNavIntBoundsRect = "{{0, 0}, {959, 1040}}";
+			sepNavSelRange = "{333, 0}";
+			sepNavVisRange = "{241, 298}";
 		};
 	};
 	735C5EE311A44F5000A6BA88 /* FloorGrid.m */ = {
@@ -348,18 +353,6 @@
 			sepNavIntBoundsRect = "{{0, 0}, {959, 355}}";
 			sepNavSelRange = "{149, 0}";
 			sepNavVisRange = "{0, 246}";
-		};
-	};
-	735C601A11A454F200A6BA88 /* PBCamera.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = PBCamera.h;
-		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/PinkAndBlueTriangles/Src/PBCamera.h;
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {542, 949}}";
-			sepNavSelRange = "{256, 0}";
-			sepNavVisRange = "{153, 195}";
 		};
 	};
 	737028DB0C439EDC008DAD99 /* PinkAndBlueTriangles */ = {
@@ -575,30 +568,93 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	73DE042911A9A82200BDF39F /* XCBuildMessageTextBookmark */ = {
-		isa = PBXTextBookmark;
-		comments = "Unknown type name '_C3DTVector'; did you mean 'C3DTVector'?";
-		fRef = 735C601A11A454F200A6BA88 /* PBCamera.h */;
-		fallbackIsa = XCBuildMessageTextBookmark;
-		rLen = 1;
-		rLoc = 13;
-		rType = 1;
-	};
-	73DE042A11A9A82200BDF39F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73DE042B11A9A82200BDF39F /* PBCamera.h */;
-		name = "PBCamera.h: 14";
-		rLen = 0;
-		rLoc = 256;
-		rType = 0;
-		vrLen = 195;
-		vrLoc = 153;
-	};
 	73DE042B11A9A82200BDF39F /* PBCamera.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = PBCamera.h;
 		path = /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/PinkAndBlueTriangles/Src/PBCamera.h;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {959, 923}}";
+			sepNavSelRange = "{1732, 0}";
+			sepNavVisRange = "{1349, 408}";
+		};
+	};
+	73DE049C11A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 735C5EE211A44F5000A6BA88 /* FloorGrid.h */;
+		name = "FloorGrid.h: 22";
+		rLen = 0;
+		rLoc = 333;
+		rType = 0;
+		vrLen = 298;
+		vrLoc = 241;
+	};
+	73DE049D11A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DE042B11A9A82200BDF39F /* PBCamera.h */;
+		name = "PBCamera.h: 66";
+		rLen = 0;
+		rLoc = 1732;
+		rType = 0;
+		vrLen = 408;
+		vrLoc = 1349;
+	};
+	73DE049E11A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 735C5EDF11A44F4600A6BA88 /* PBCamera.h */;
+		name = "PBCamera.h: 6";
+		rLen = 0;
+		rLoc = 143;
+		rType = 0;
+		vrLen = 419;
+		vrLoc = 0;
+	};
+	73DE049F11A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 735C5EDA11A44F2A00A6BA88 /* AppControl.m */;
+		name = "AppControl.m: 133";
+		rLen = 2;
+		rLoc = 3421;
+		rType = 0;
+		vrLen = 222;
+		vrLoc = 3288;
+	};
+	73DE04A011A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DE04A111A9DEB800BDF39F /* C3DTTypes.h */;
+		name = "C3DTTypes.h: 117";
+		rLen = 10;
+		rLoc = 3440;
+		rType = 0;
+		vrLen = 170;
+		vrLoc = 3287;
+	};
+	73DE04A111A9DEB800BDF39F /* C3DTTypes.h */ = {
+		isa = PBXFileReference;
+		name = C3DTTypes.h;
+		path = /Users/shooley/Desktop/Programming/Cocoa/Blake/build/Debug/SHGeometryKit.framework/Versions/A/Headers/C3DTTypes.h;
+		sourceTree = "<absolute>";
+	};
+	73DE04A211A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 735C5EE011A44F4600A6BA88 /* PBCamera.m */;
+		name = "PBCamera.m: 154";
+		rLen = 0;
+		rLoc = 4481;
+		rType = 0;
+		vrLen = 349;
+		vrLoc = 4307;
+	};
+	73DE04A311A9DEB800BDF39F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 735C5EE011A44F4600A6BA88 /* PBCamera.m */;
+		name = "PBCamera.m: 154";
+		rLen = 14;
+		rLoc = 4488;
+		rType = 0;
+		vrLen = 349;
+		vrLoc = 4307;
 	};
 	8D1107260486CEB800E47090 /* PinkAndBlueTriangles */ = {
 		activeExec = 0;

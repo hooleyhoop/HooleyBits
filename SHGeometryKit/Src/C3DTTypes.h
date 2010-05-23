@@ -62,6 +62,8 @@ typedef union {
 //#ifdef	ALTIVEC
 //    vector float	a_vec;
 //#endif
+	
+	// On Clang you dont need the GLfloat flts[4] as you can do vflts[0], etc, but this doesnt work on GCC
     GLfloat flts[4];
 	vFloat vflts;	// vFloat is from accelerate, it is 4 floats
     struct {
