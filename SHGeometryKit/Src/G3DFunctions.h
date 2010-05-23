@@ -23,6 +23,8 @@
 #ifndef __G3DFunctions_h_INCLUDE
 #define __G3DFunctions_h_INCLUDE
 
+#include <Foundation/NSObjCRuntime.h>
+#import <QuartzCore/CABase.h>
 #import "G3DDefs.h"
 
 /******************************************************************************
@@ -35,7 +37,7 @@
    @const G3DIdentityMatrix3f
    @discussion 3 by 3 single-precision identity matrix
 */
-extern const float  G3DIdentityMatrix3f[9];
+extern const CGFloat G3DIdentityMatrix3f[9];
 
 /*!
    @const G3DIdentityMatrix3d
@@ -47,7 +49,7 @@ extern const double G3DIdentityMatrix3d[9];
    @const G3DIdentityMatrix4f
    @discussion 4 by 4 single-precision identity matrix
 */
-extern const float  G3DIdentityMatrix4f[16];
+extern const CGFloat G3DIdentityMatrix4f[16];
 
 /*!
    @const G3DIdentityMatrix4d
@@ -59,7 +61,7 @@ extern const double G3DIdentityMatrix4d[16];
    @const G3DDefaultPlane4f
    @discussion Single-precision default plane
 */
-extern const float  G3DDefaultPlane4f[4];
+extern const CGFloat G3DDefaultPlane4f[4];
 
 /*!
    @const G3DDefaultPlane4d
@@ -82,8 +84,7 @@ extern const double G3DDefaultPlane4d[4];
   @param lambda The scalar interpolation factor
   @result Returns a 3-element vector lambda * a + (1 - lambda) * b.
 */
-__G3DIE__ void G3DLinearInterpolateVector3fv(float res[3], CFLOAT a[3], 
-                                             CFLOAT b[3], CFLOAT lambda);
+__G3DIE__ void G3DLinearInterpolateVector3fv( CGFloat res[3], CFLOAT a[3], CFLOAT b[3], CFLOAT lambda );
 
 /*! 
   @function G3DLinearInterpolateVector3dv
@@ -94,8 +95,7 @@ __G3DIE__ void G3DLinearInterpolateVector3fv(float res[3], CFLOAT a[3],
   @param lambda The scalar interpolation factor
   @result Returns a 3-element vector lambda * a + (1 - lambda) * b.
 */
-__G3DIE__ void G3DLinearInterpolateVector3dv(double res[3], CDOUBLE a[3], 
-                                             CDOUBLE b[3], CDOUBLE lambda);
+__G3DIE__ void G3DLinearInterpolateVector3dv(double res[3], CDOUBLE a[3], CDOUBLE b[3], CDOUBLE lambda);
 
 /*
  *
@@ -108,7 +108,7 @@ __G3DIE__ void G3DLinearInterpolateVector3dv(double res[3], CDOUBLE a[3],
   @param plane The plane to compute the distance
   @result Returns a single-precision distance value.
 */
-__G3DIE__ float  G3DDistanceFromPlanef(CFLOAT point[3],CFLOAT plane[4]);
+__G3DIE__ CGFloat G3DDistanceFromPlanef(CFLOAT point[3],CFLOAT plane[4]);
 
 /*! 
   @function G3DDistanceFromPlaned
@@ -129,8 +129,7 @@ __G3DIE__ double G3DDistanceFromPlaned(CDOUBLE point[3],CDOUBLE plane[4]);
   @result Returns 1 if an intersection occurs, 0 otherwise. The intersection is stored
           in isect.
 */
-__G3DIE__ int G3DIntersectLinePlanef(float isect[3], CFLOAT ldir[3], 
-                                     CFLOAT lpos[3], CFLOAT plane[4]);
+__G3DIE__ int G3DIntersectLinePlanef(CGFloat isect[3], CFLOAT ldir[3], CFLOAT lpos[3], CFLOAT plane[4]);
 
 /*! 
   @function G3DIntersectLinePlaned
@@ -142,8 +141,7 @@ __G3DIE__ int G3DIntersectLinePlanef(float isect[3], CFLOAT ldir[3],
   @result Returns 1 if an intersection occurs, 0 otherwise. The intersection is stored
           in isect.
 */
-__G3DIE__ int G3DIntersectLinePlaned(double isect[3], CDOUBLE ldir[3], 
-                                     CDOUBLE lpos[3], CDOUBLE plane[4]);
+__G3DIE__ int G3DIntersectLinePlaned(double isect[3], CDOUBLE ldir[3], CDOUBLE lpos[3], CDOUBLE plane[4]);
 
 /*
  *
@@ -157,7 +155,7 @@ __G3DIE__ int G3DIntersectLinePlaned(double isect[3], CDOUBLE ldir[3],
   @param tol The tolerance value
   @result Returns -1 if a+tol < b, 1 if b+tol < a, 0 otherwise.
 */
-__G3DIE__ int G3DCompareFloat(float a, float b, float tol);
+__G3DIE__ NSInteger G3DCompareFloat( CGFloat a, CGFloat b, CGFloat tol );
 
 /*! 
   @function G3DCompareDouble
@@ -167,13 +165,13 @@ __G3DIE__ int G3DCompareFloat(float a, float b, float tol);
   @param tol The tolerance value
   @result Returns -1 if a+tol < b, 1 if b+tol < a, 0 otherwise.
 */
-__G3DIE__ int G3DCompareDouble(double a, double b, double tol);
+__G3DIE__ NSInteger G3DCompareDouble(double a, double b, double tol);
 
 /*
  *
  */
 
-__G3DIE__ void G3DFloatsFromDoubles(float* dest, CDOUBLE *src, const int size);
+__G3DIE__ void G3DFloatsFromDoubles(CGFloat* dest, CDOUBLE *src, const int size);
 __G3DIE__ void G3DDoublesFromFloats(double* dest, CFLOAT *src, const int size);
 
 

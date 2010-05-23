@@ -29,22 +29,25 @@
 #ifndef __C3DTTYPES_H__
 #define __C3DTTYPES_H__
 
-	#include <math.h>
-	#include <OpenGL/gl.h>
-	
-#ifndef NULL
-#define	NULL	0
-#endif
+	#import <math.h>
+	#import <OpenGL/gl.h>
+	#import <Accelerate/Accelerate.h>
 
-#ifndef true
-#define	true	1
-#define	false	0
-#endif
+//#ifndef NULL
+//#warning What?
+//#define NULL	0
+//#endif
+//
+//#ifndef true
+//#warning What?
+//#define	true	1
+//#define	false	0
+//#endif
 
 // Multiple appearance for floats, vectors and matrices, to be easy to use
 // yet compatible with AltiVec operation
 /*!
- @typedef _C3DTVector
+ @typedef C3DTVector
  @abstract   Coordinate vector
  @discussion The base unit for calculation: a "weight" component is present, but actually ignored
  @field      x The X coordinate
@@ -56,23 +59,24 @@
  @field      phi The phi (elevation) angle (spherical coordinates)
  */
 typedef union {
-#ifdef	ALTIVEC
-    vector float	a_vec;
-#endif
-    float			flts[4];
+//#ifdef	ALTIVEC
+//    vector float	a_vec;
+//#endif
+    GLfloat flts[4];
+	vFloat vflts;	// vFloat is from accelerate, it is 4 floats
     struct {
         GLfloat	r;
         GLfloat	theta;
         GLfloat	phi;
         GLfloat	w;
-    };
+    } radial;
     struct {
         GLfloat	x;
         GLfloat	y;
         GLfloat	z;
         GLfloat	w;
-    };
-} _C3DTVector;
+    } cartesian;
+} C3DTVector __attribute__((__aligned__(16)));
 
 
 
@@ -85,17 +89,17 @@ typedef union {
  with rotations, as it represents a better solution that avoids "gimbal lock"
  (see http://gamedev.net/reference/articles/article1095.asp)
 */
-typedef _C3DTVector		_C3DTQuaternion;
+typedef C3DTVector		_C3DTQuaternion;
 
 /*!
- @typedef _C3DTPlane
+ @typedef C3DTPlane
  @abstract   Plane representation
  @discussion Represents a plane equation (ax + by + cz + d = 0): used to define a view frustum
   */
-typedef _C3DTVector		_C3DTPlane;
+typedef C3DTVector		C3DTPlane;
 
 /*!
- @typedef _C3DTMatrix
+ @typedef C3DTMatrix
  @abstract   Matrix type
  @discussion The type used to transform the coordinates: is implemented as a union to allow different presentation possibilities
  @field      vectors An array of 4 vectors
@@ -104,9 +108,11 @@ typedef union {
 #ifdef	ALTIVEC
     vector float	a_vec[4];
 #endif
-    float			flts[16];
-    _C3DTVector		vectors[4];
-} _C3DTMatrix;
+	
+#warning! i think we can use a matrix from accelerate or something?
+    float flts[16];
+    C3DTVector vectors[4];
+} C3DTMatrix;
 
 /*!
  @typedef _C3DTVertex
@@ -116,8 +122,8 @@ typedef union {
  @field      norm The spatial orientation of the vertex, to define facing and lighting
  */
 typedef struct {
-    _C3DTVector	pos;
-    _C3DTVector	norm;
+    C3DTVector	pos;
+    C3DTVector	norm;
 } _C3DTVertex;
 
 /*!
@@ -147,8 +153,8 @@ typedef struct {
  @field      planes The 6 planes defining the frustum, in the order right, left, bottom, top, far, near
  */
 typedef struct {
-    _C3DTPlane	planes[6];
-} _C3DTFrustum;
+    C3DTPlane	planes[6];
+} C3DTFrustum;
 
 /*!
  @typedef _C3DTSpheroid
@@ -158,7 +164,7 @@ typedef struct {
  @field      radius The sphere radius
  */
 typedef struct {
-    _C3DTVector	center;
+    C3DTVector	center;
     float		radius;
 } _C3DTSpheroid;
 
@@ -170,8 +176,8 @@ typedef struct {
  @field      topRightFar The highest and farest coordinate on the right
  */
 typedef struct {
-    _C3DTVector	bottomLeftNear;
-    _C3DTVector	topRightFar;
+    C3DTVector	bottomLeftNear;
+    C3DTVector	topRightFar;
 } _C3DTBounds;
 
 

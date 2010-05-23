@@ -79,6 +79,10 @@
 
 	vFloat flts = {10.0f,20.0f,30.0f,40.0f};
 	NSLog(@"%f", flts[0]);
+<<<<<<< HEAD
+	flts = flts/3.0f;
+//	GLfloat yval = aVectorFloat.y;
+=======
 
 	aa.flts[0];
 	aa.flts[1];
@@ -88,10 +92,13 @@
 
 	
 	//	GLfloat yval = aVectorFloat.y;
+>>>>>>> 953206604904b66254fdbee0c1212d50c6e6aeda
 //	GLfloat zval = aVectorFloat.z;
 
 }
 
+<<<<<<< HEAD
+=======
 - (void)testVectorLength {
 
 	C3DTVector aa = {{ 2.0f, 10.0f, 150.0f, 800.0f }};
@@ -113,4 +120,5 @@
 
 
 
+>>>>>>> 953206604904b66254fdbee0c1212d50c6e6aeda
 @end

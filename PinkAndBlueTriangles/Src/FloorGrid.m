@@ -160,7 +160,7 @@
 
 	NSPoint distToAnchorFromTopLeft = NSMakePoint(_anchorIndex.x*_cellSz, _anchorIndex.y*_cellSz);
 	NSPoint topLeftPoint = NSMakePoint(-distToAnchorFromTopLeft.x, -distToAnchorFromTopLeft.y);
-	C3DTMatrix f = [camera OPENGLViewFrustum];
+	_C3DTFrustum f = [camera OPENGLViewFrustum];
 	
 	int currentRow;
 	for(i=0; i<_rows; i++)
@@ -174,7 +174,7 @@
 	
 			// draw a sq
 			float xpos = topLeftPoint.x + j*size + (size/2.0);
-			C3DTVector p = {xpos,ypos, 0, 1};
+			_C3DTVector p = {xpos,ypos, 0, 1};
 			_C3DTSpheroid s = {p,_cellSz};
 			
 			int visibleFlag = isSphereInFrustum( f, s );
@@ -356,11 +356,11 @@
 	// draw the camera
 	[[NSColor yellowColor] set];
 
-	C3DTVector campos = [[PBCamera camera] pos];
-	C3DTVector lookAt = [[PBCamera camera] lookAt];
+	_C3DTVector campos = [[PBCamera camera] pos];
+	_C3DTVector lookAt = [[PBCamera camera] lookAt];
 
-	NSRectFill( NSMakeRect( p.x-campos.cartesian.x-15, p.y-campos.cartesian.y-15, 30, 30) );
-	NSRectFill( NSMakeRect( p.x-lookAt.cartesian.x-8, p.y-lookAt.cartesian.y-8, 16, 16) );
+	NSRectFill( NSMakeRect( p.x-campos.x-15, p.y-campos.y-15, 30, 30) );
+	NSRectFill( NSMakeRect( p.x-lookAt.x-8, p.y-lookAt.y-8, 16, 16) );
 
 }
 
