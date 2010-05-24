@@ -15,10 +15,13 @@
 		735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
 		736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		736C73A00B4BF3F600D8D0D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
-		7399D76511A6DA4A00A3E4E5 /* NewC3DTmath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */; };
-		7399D76A11A6DA5A00A3E4E5 /* NewC3DTmath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */; };
 		73AB7C8711A57C9100EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
 		73AB7CAB11A57C9B00EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
+		73DE03E911A9A72700BDF39F /* C3DTTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FAB111A5516C00BF4D6F /* C3DTTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73DE047F11A9AAA900BDF39F /* G3DDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73DE048011A9AAAB00BDF39F /* SHGeometryKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D69711A6D39D00A3E4E5 /* C3DTMath.m */; };
+		73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7333F34211A69610004F4CAC /* C3DTMath.h */; };
 		73EB5E6C11A5624900B612D6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
 		73EB5E6D11A5624A00B612D6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		73EB5E6E11A5624B00B612D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
@@ -221,8 +224,6 @@
 		736C739D0B4BF3F600D8D0D1 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		7399D69711A6D39D00A3E4E5 /* C3DTMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = C3DTMath.m; path = Src/C3DTMath.m; sourceTree = "<group>"; };
-		7399D6DC11A6D5F100A3E4E5 /* NewC3DTmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewC3DTmath.h; path = Src/NewC3DTmath.h; sourceTree = "<group>"; };
-		7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewC3DTmath.m; path = Src/NewC3DTmath.m; sourceTree = "<group>"; };
 		73AB7C8611A57C9100EDFDED /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		73C665E20B0A3B3D00B1AC57 /* SH2dCatmull-Rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SH2dCatmull-Rom.h"; sourceTree = "<group>"; };
 		73C665E30B0A3B3D00B1AC57 /* SH2dCatmull-Rom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SH2dCatmull-Rom.m"; sourceTree = "<group>"; };
@@ -542,8 +543,6 @@
 			children = (
 				7333F34211A69610004F4CAC /* C3DTMath.h */,
 				7399D69711A6D39D00A3E4E5 /* C3DTMath.m */,
-				7399D6DC11A6D5F100A3E4E5 /* NewC3DTmath.h */,
-				7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */,
 				7351FAB111A5516C00BF4D6F /* C3DTTypes.h */,
 			);
 			name = "C3DT to merge";
@@ -588,6 +587,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73DE03E911A9A72700BDF39F /* C3DTTypes.h in Headers */,
+				73DE047F11A9AAA900BDF39F /* G3DDefs.h in Headers */,
+				73DE048011A9AAAB00BDF39F /* SHGeometryKit.h in Headers */,
+				73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,7 +773,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */,
-				7399D76511A6DA4A00A3E4E5 /* NewC3DTmath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +780,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7399D76A11A6DA5A00A3E4E5 /* NewC3DTmath.m in Sources */,
+				73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
