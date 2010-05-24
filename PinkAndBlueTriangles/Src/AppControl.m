@@ -113,92 +113,93 @@
 	}
 }
 
-- (NSNumber *)cameraX { 
+- (NSNumber *)cameraX {
+
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-		return [NSNumber numberWithFloat:[camera pos].x];
+		return [NSNumber numberWithFloat:[camera pos].cartesian.x];
 	else return [NSNumber numberWithInt:-1];
 }
 
 - (NSNumber *)cameraY { 
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-		return [NSNumber numberWithFloat:[camera pos].y];
+		return [NSNumber numberWithFloat:[camera pos].cartesian.y];
 	else return [NSNumber numberWithInt:-1];	
 }
 
 - (NSNumber *)cameraZ {
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-		return [NSNumber numberWithFloat:[camera pos].z];
+		return [NSNumber numberWithFloat:[camera pos].cartesian.z];
 	else return [NSNumber numberWithInt:-1];
 }
 
 - (void)setCameraX:(NSNumber *)value {
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setPosX:[value floatValue] Y:pos.y Z:pos.z ];
+		C3DTVector pos = [camera pos];
+		[camera setPosX:[value floatValue] Y:pos.cartesian.y Z:pos.cartesian.z ];
 	}
 }
 
 - (void)setCameraY:(NSNumber *)value { 
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setPosX:pos.x Y:[value floatValue] Z:pos.z ];
+		C3DTVector pos = [camera pos];
+		[camera setPosX:pos.cartesian.x Y:[value floatValue] Z:pos.cartesian.z ];
 	}
 }
 - (void)setCameraZ:(NSNumber *)value {
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setPosX:pos.x Y:pos.y Z:[value floatValue] ];
+		C3DTVector pos = [camera pos];
+		[camera setPosX:pos.cartesian.x Y:pos.cartesian.y Z:[value floatValue] ];
 	}
 }
 
 - (NSNumber *)lookAtX {
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-			return [NSNumber numberWithFloat:[camera lookAt].x];
+			return [NSNumber numberWithFloat:[camera lookAt].cartesian.x];
 	else return [NSNumber numberWithInt:-1];
 }
 
 - (NSNumber *)lookAtY {
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-		return [NSNumber numberWithFloat:[camera lookAt].y];
+		return [NSNumber numberWithFloat:[camera lookAt].cartesian.y];
 	else return [NSNumber numberWithInt:-1];
 }
 
 - (NSNumber *)lookAtZ {
 	PBCamera* camera = [pb3dView camera];
 	if(camera)
-		return [NSNumber numberWithFloat:[camera lookAt].z];
+		return [NSNumber numberWithFloat:[camera lookAt].cartesian.z];
 	else return [NSNumber numberWithInt:-1];
 }
 
 - (void)setLookAtX:(NSNumber *)value {
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setLookAtX:[value floatValue] Y:pos.y Z:pos.z ];
+		C3DTVector pos = [camera pos];
+		[camera setLookAtX:[value floatValue] Y:pos.cartesian.y Z:pos.cartesian.z ];
 	}
 }
 
 - (void)setLookAtY:(NSNumber *)value {
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setLookAtX:pos.x Y:[value floatValue] Z:pos.z ];
+		C3DTVector pos = [camera pos];
+		[camera setLookAtX:pos.cartesian.x Y:[value floatValue] Z:pos.cartesian.z ];
 	}
 }
 
 - (void)setLookAtZ:(NSNumber *)value {
 	PBCamera* camera = [pb3dView camera];
 	if(camera){
-		_C3DTVector pos = [camera pos];
-		[camera setLookAtX:pos.x Y:pos.y Z:[value floatValue] ];
+		C3DTVector pos = [camera pos];
+		[camera setLookAtX:pos.cartesian.x Y:pos.cartesian.y Z:[value floatValue] ];
 	}
 }
 @end

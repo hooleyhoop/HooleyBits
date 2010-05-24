@@ -111,8 +111,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 296146751;
-			PBXWorkspaceStateSaveDate = 296146751;
+			PBXPerProjectTemplateStateSaveDate = 296153720;
+			PBXWorkspaceStateSaveDate = 296153720;
 		};
 		perUserProjectItems = {
 			730E2E9111A43E6300C7CDAA /* PBXTextBookmark */ = 730E2E9111A43E6300C7CDAA /* PBXTextBookmark */;
@@ -151,10 +151,10 @@
 			7399D6FA11A6D67F00A3E4E5 /* PBXTextBookmark */ = 7399D6FA11A6D67F00A3E4E5 /* PBXTextBookmark */;
 			7399D6FB11A6D67F00A3E4E5 /* PBXTextBookmark */ = 7399D6FB11A6D67F00A3E4E5 /* PBXTextBookmark */;
 			7399D6FC11A6D67F00A3E4E5 /* PBXTextBookmark */ = 7399D6FC11A6D67F00A3E4E5 /* PBXTextBookmark */;
-			7399D80F11A6DABC00A3E4E5 /* PBXTextBookmark */ = 7399D80F11A6DABC00A3E4E5 /* PBXTextBookmark */;
 			7399D81011A6DABC00A3E4E5 /* PBXTextBookmark */ = 7399D81011A6DABC00A3E4E5 /* PBXTextBookmark */;
-			7399D81111A6DABC00A3E4E5 /* XCBuildMessageTextBookmark */ = 7399D81111A6DABC00A3E4E5 /* XCBuildMessageTextBookmark */;
-			7399D81211A6DABC00A3E4E5 /* PBXTextBookmark */ = 7399D81211A6DABC00A3E4E5 /* PBXTextBookmark */;
+			7399D9F111A6F3DC00A3E4E5 /* PBXTextBookmark */ = 7399D9F111A6F3DC00A3E4E5 /* PBXTextBookmark */;
+			7399D9F211A6F3DC00A3E4E5 /* XCBuildMessageTextBookmark */ = 7399D9F211A6F3DC00A3E4E5 /* XCBuildMessageTextBookmark */;
+			7399D9F311A6F3DC00A3E4E5 /* PBXTextBookmark */ = 7399D9F311A6F3DC00A3E4E5 /* PBXTextBookmark */;
 			73AB7BF011A5794900EDFDED /* PBXTextBookmark */ = 73AB7BF011A5794900EDFDED /* PBXTextBookmark */;
 			73AB7CFD11A581D700EDFDED /* PBXTextBookmark */ = 73AB7CFD11A581D700EDFDED /* PBXTextBookmark */;
 			73AB7CFF11A581D700EDFDED /* PBXTextBookmark */ = 73AB7CFF11A581D700EDFDED /* PBXTextBookmark */;
@@ -1089,9 +1089,9 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/vecLibTypes.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1018, 2106}}";
-			sepNavSelRange = "{2421, 6}";
-			sepNavVisRange = "{1644, 1681}";
+			sepNavIntBoundsRect = "{{0, 0}, {1018, 2132}}";
+			sepNavSelRange = "{3385, 88}";
+			sepNavVisRange = "{3060, 821}";
 		};
 	};
 	7388D0E211A574B300795F44 /* PBXTextBookmark */ = {
@@ -1173,7 +1173,7 @@
 	7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1018, 338}}";
-			sepNavSelRange = "{345, 0}";
+			sepNavSelRange = "{374, 0}";
 			sepNavVisRange = "{0, 458}";
 		};
 	};
@@ -1257,16 +1257,6 @@
 		vrLen = 939;
 		vrLoc = 1800;
 	};
-	7399D80F11A6DABC00A3E4E5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 7388D07411A571E100795F44 /* vecLibTypes.h */;
-		name = "vecLibTypes.h: 68";
-		rLen = 6;
-		rLoc = 2421;
-		rType = 0;
-		vrLen = 1681;
-		vrLoc = 1644;
-	};
 	7399D81011A6DABC00A3E4E5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */;
@@ -1277,21 +1267,31 @@
 		vrLen = 814;
 		vrLoc = 0;
 	};
-	7399D81111A6DABC00A3E4E5 /* XCBuildMessageTextBookmark */ = {
+	7399D9F111A6F3DC00A3E4E5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
-		comments = "Compile /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SHGeometryKit/Src/NewC3DTmath.m";
+		fRef = 7388D07411A571E100795F44 /* vecLibTypes.h */;
+		name = "vecLibTypes.h: 91";
+		rLen = 88;
+		rLoc = 3385;
+		rType = 0;
+		vrLen = 821;
+		vrLoc = 3060;
+	};
+	7399D9F211A6F3DC00A3E4E5 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Subscripted value is neither array nor pointer";
 		fRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
-		rLen = 0;
-		rLoc = 18;
+		rLen = 1;
+		rLoc = 19;
 		rType = 1;
 	};
-	7399D81211A6DABC00A3E4E5 /* PBXTextBookmark */ = {
+	7399D9F311A6F3DC00A3E4E5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 7399D6DD11A6D5F100A3E4E5 /* NewC3DTmath.m */;
-		name = "NewC3DTmath.m: 19";
+		name = "NewC3DTmath.m: 20";
 		rLen = 0;
-		rLoc = 345;
+		rLoc = 374;
 		rType = 0;
 		vrLen = 458;
 		vrLoc = 0;

@@ -6,9 +6,21 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "GridTests.h"
 #import "FloorGrid.h"
 #import "GridCell.h"
+
+#import <SenTestingKit/SenTestingKit.h>
+@class FloorGrid;
+
+
+@interface GridTests : SenTestCase {
+	
+	FloorGrid* _grid;
+	
+}
+
+@end
+
 
 @implementation GridTests
 

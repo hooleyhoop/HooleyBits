@@ -41,6 +41,7 @@
  */
 
 #import "C3DTMath.h"
+#import <Accelerate/Accelerate.h>
 
 
 /*************************************
@@ -48,115 +49,120 @@
 *************************************/
 
 // adds 2 vectors
-inline _C3DTVector vectorAdd(const _C3DTVector a, const _C3DTVector b)
+inline C3DTVector vectorAdd(const C3DTVector a, const C3DTVector b)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
 
-    r.x = a.x + b.x;
-    r.y = a.y + b.y;
-    r.z = a.z + b.z;
+    r.cartesian.x = a.cartesian.x + b.cartesian.x;
+    r.cartesian.y = a.cartesian.y + b.cartesian.y;
+    r.cartesian.z = a.cartesian.z + b.cartesian.z;
     
     return r;
 }
 
 // subtracts 2 vectors
-inline _C3DTVector vectorSubtract(const _C3DTVector a, const _C3DTVector b)
+C3DTVector vectorSubtract(const C3DTVector a, const C3DTVector b)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
 
-    r.x = a.x - b.x;
-    r.y = a.y - b.y;
-    r.z = a.z - b.z;
+    r.cartesian.x = a.cartesian.x - b.cartesian.x;
+    r.cartesian.y = a.cartesian.y - b.cartesian.y;
+    r.cartesian.z = a.cartesian.z - b.cartesian.z;
     
     return r;
 }
 
 // Dot product of 2 vectors
-inline float vectorDotProduct(const _C3DTVector a, const _C3DTVector b)
+inline float vectorDotProduct(const C3DTVector a, const C3DTVector b)
 {
-    return (a.x*b.x + a.y*b.y + a.z*b.z);
+    return (a.cartesian.x*b.cartesian.x + a.cartesian.y*b.cartesian.y + a.cartesian.z*b.cartesian.z);
 }
 
 // Returns vector product a x b
-inline _C3DTVector vectorCrossProduct(const _C3DTVector a, const _C3DTVector b)
+inline C3DTVector vectorCrossProduct(const C3DTVector a, const C3DTVector b)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
 
-    r.x = a.y*b.z - b.y*a.z;
-    r.y = a.z*b.x - b.z*a.x;
-    r.z = a.x*b.y - b.x*a.y;
+    r.cartesian.x = a.cartesian.y*b.cartesian.z - b.cartesian.y*a.cartesian.z;
+    r.cartesian.y = a.cartesian.z*b.cartesian.x - b.cartesian.z*a.cartesian.x;
+    r.cartesian.z = a.cartesian.x*b.cartesian.y - b.cartesian.x*a.cartesian.y;
 
     return r;
 }
 
 // Returns (b-a) x (c-a)
-inline _C3DTVector vectorCrossProductTri(const _C3DTVector a, const _C3DTVector b, const _C3DTVector c)
-{
-    return vectorCrossProduct(vectorSubtract(b,a), vectorSubtract(c,a));
+inline C3DTVector vectorCrossProductTri(const C3DTVector a, const C3DTVector b, const C3DTVector c) {
+
+	return vectorCrossProduct(vectorSubtract(b,a), vectorSubtract(c,a));
 }
 
+float vectorLength2(const C3DTVector v) {	
 
-// Lenght of a vector
-inline float vectorLength(const _C3DTVector v)
-{
-    return (float)sqrt(v.flts[0]*v.flts[0] + v.flts[1]*v.flts[1] + v.flts[2]*v.flts[2]);
+	C3DTVector aa = {{ 2.0f, 10.0f, 150.0f, 800.0f }};
+
+	vFloat woohoo = aa.flts;
+	v.cartesian.x;
+	
+	aa[0];
+	
+//	return sqrt( f[0]*f[0] + f[1]*f[1] + f[2]*f[2] );
 }
 
 // Normalizing of a vector
-inline _C3DTVector vectorNormalize(_C3DTVector v)
+C3DTVector vectorNormalize(C3DTVector v)
 {
     float		dist = vectorLength(v);
-    _C3DTVector	r;
+    C3DTVector	r;
 
     if (dist == 0.0f) {
         return v;
     }
 
-    r.x = v.x / dist;
-    r.y = v.y / dist;
-    r.z = v.z / dist;
+    r.cartesian.x = v.cartesian.x / dist;
+    r.cartesian.y = v.cartesian.y / dist;
+    r.cartesian.z = v.cartesian.z / dist;
 
     return r;
 }
 
 // Normal of 2 vectors (0 centered)
-inline _C3DTVector vectorNormal(const _C3DTVector a, const _C3DTVector b)
+inline C3DTVector vectorNormal(const C3DTVector a, const C3DTVector b)
 {
     return vectorNormalize(vectorCrossProduct(a, b));
 }
 
 // Normal of 2 vectors (centered on a 3rd point)
-inline _C3DTVector vectorNormalTri(const _C3DTVector a, const _C3DTVector b, const _C3DTVector c)
+inline C3DTVector vectorNormalTri(const C3DTVector a, const C3DTVector b, const C3DTVector c)
 {
     return vectorNormalize(vectorCrossProductTri(a, b, c));
 }
 
 // Multiplies a vector by a scalar
-inline _C3DTVector vectorScale(const float s, const _C3DTVector a)
+inline C3DTVector vectorScale(const float s, const C3DTVector a)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
     
-    r.x = a.x * s;
-    r.y = a.y * s;
-    r.z = a.z * s;
+    r.cartesian.x = a.cartesian.x * s;
+    r.cartesian.y = a.cartesian.y * s;
+    r.cartesian.z = a.cartesian.z * s;
 
     return r;
 }
 
 // Returns the cos() of the angle between 2 vectors
-inline float vectorAngleCos(const _C3DTVector a, const _C3DTVector b)
+inline float vectorAngleCos(const C3DTVector a, const C3DTVector b)
 {
     return vectorDotProduct(vectorNormalize(a), vectorNormalize(b));
 }
 
 // Transforms the vector by matrix m
-_C3DTVector vectorTransform(const _C3DTVector v, const _C3DTMatrix m)
+C3DTVector vectorTransform(const C3DTVector v, const C3DTMatrix m)
 {
-    _C3DTVector				r;
+    C3DTVector				r;
     
-    r.x = v.x*m.flts[0] + v.y*m.flts[4] + v.z*m.flts[8] + m.flts[12];
-    r.y = v.x*m.flts[1] + v.y*m.flts[5] + v.z*m.flts[9] + m.flts[13];
-    r.z = v.x*m.flts[2] + v.y*m.flts[6] + v.z*m.flts[10] + m.flts[14];
+    r.cartesian.x = v.cartesian.x*m.flts[0] + v.cartesian.y*m.flts[4] + v.cartesian.z*m.flts[8] + m.flts[12];
+    r.cartesian.y = v.cartesian.x*m.flts[1] + v.cartesian.y*m.flts[5] + v.cartesian.z*m.flts[9] + m.flts[13];
+    r.cartesian.z = v.cartesian.x*m.flts[2] + v.cartesian.y*m.flts[6] + v.cartesian.z*m.flts[10] + m.flts[14];
 
     return r;
 }
@@ -165,26 +171,26 @@ _C3DTVector vectorTransform(const _C3DTVector v, const _C3DTMatrix m)
 * C O N V E R S I O N   O P E R A T I O N S
 *******************************************/
 
-inline _C3DTVector cartesianToSpherical(_C3DTVector v)
+inline C3DTVector cartesianToSpherical(C3DTVector v)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
 
-    r.theta	= atan2(v.z, v.x);
-    r.phi	= atan2(v.y, sqrt(v.x*v.x + v.z*v.z));
-    r.r		= sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-    r.w		= 0.0;
+    r.radial.theta	= atan2(v.cartesian.z, v.cartesian.x);
+    r.radial.phi	= atan2(v.cartesian.y, sqrt(v.cartesian.x*v.cartesian.x + v.cartesian.z*v.cartesian.z));
+    r.radial.r		= sqrt(v.cartesian.x*v.cartesian.x + v.cartesian.y*v.cartesian.y + v.cartesian.z*v.cartesian.z);
+    r.radial.w		= 0.0f;
     
     return r;
 }
 
-inline _C3DTVector sphericalToCartesian(_C3DTVector v)
+inline C3DTVector sphericalToCartesian(C3DTVector v)
 {
-    _C3DTVector	r;
+    C3DTVector	r;
 
-    r.x	= v.r * cos(v.phi) * cos(v.theta);
-    r.y	= v.r * sin(v.phi);
-    r.z	= v.r * cos(v.phi) * sin(v.theta);
-    r.w	= 0.0;
+    r.cartesian.x	= v.radial.r * cos(v.radial.phi) * cos(v.radial.theta);
+    r.cartesian.y	= v.radial.r * sin(v.radial.phi);
+    r.cartesian.z	= v.radial.r * cos(v.radial.phi) * sin(v.radial.theta);
+    r.cartesian.w	= 0.0f;
     
     return r;
 }
@@ -195,14 +201,14 @@ inline _C3DTVector sphericalToCartesian(_C3DTVector v)
 *************************************/
 
 // Returns the identity (i.e. standard) matrix
-inline _C3DTMatrix matrixIdentity(void)
+C3DTMatrix matrixIdentity(void)
 {
-    _C3DTMatrix	m = {
+    C3DTMatrix m = {
     {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 0.0, 1.0,
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f,
     }
     };
     
@@ -210,9 +216,9 @@ inline _C3DTMatrix matrixIdentity(void)
 }
 
 // Return a matrix multiplication from right (mostly for transformation)
-_C3DTMatrix matrixMultiply(const _C3DTMatrix m1, const _C3DTMatrix m2)
+C3DTMatrix matrixMultiply(const C3DTMatrix m1, const C3DTMatrix m2)
 {
-    _C3DTMatrix	m;
+    C3DTMatrix	m;
 
     m.flts[0]	= m1.flts[0]*m2.flts[0] + m1.flts[4]*m2.flts[1] + m1.flts[8]*m2.flts[2] + m1.flts[12]*m2.flts[3];
     m.flts[1]	= m1.flts[1]*m2.flts[0] + m1.flts[5]*m2.flts[1] + m1.flts[9]*m2.flts[2] + m1.flts[13]*m2.flts[3];
@@ -235,15 +241,15 @@ _C3DTMatrix matrixMultiply(const _C3DTMatrix m1, const _C3DTMatrix m2)
 }
 
 // Operates a generic transform on a given matrix (m = n x m)
-void matrixTransform(_C3DTMatrix *m, const _C3DTMatrix n)
+void matrixTransform(C3DTMatrix *m, const C3DTMatrix n)
 {
     *m = matrixMultiply(*m, n);
 }
 
 // Return the transpose of a matrix
-_C3DTMatrix matrixTranspose(const _C3DTMatrix m)
+C3DTMatrix matrixTranspose(const C3DTMatrix m)
 {
-    _C3DTMatrix	t;
+    C3DTMatrix	t;
 
     t.flts[0]	= m.flts[0];
     t.flts[1]	= m.flts[4];
@@ -266,9 +272,9 @@ _C3DTMatrix matrixTranspose(const _C3DTMatrix m)
 }
 
 // Returns the inverse of a matrix: we only support matrix whose last row is (0, 0, 0, 1)
-_C3DTMatrix matrixInverse(const _C3DTMatrix m)
+C3DTMatrix matrixInverse(const C3DTMatrix m)
 {
-    _C3DTMatrix		r;
+    C3DTMatrix		r;
 
     register float	det;
     float			pos = 0.0f;
@@ -333,9 +339,9 @@ _C3DTMatrix matrixInverse(const _C3DTMatrix m)
 
 
 // Returns a matrix to operate translations
-static _C3DTMatrix matrixForTranslation(const float dx, const float dy, const float dz)
+static C3DTMatrix matrixForTranslation(const float dx, const float dy, const float dz)
 {
-    _C3DTMatrix	m = matrixIdentity();
+    C3DTMatrix	m = matrixIdentity();
 
     m.flts[3] = dx;
     m.flts[7] = dy;
@@ -345,9 +351,9 @@ static _C3DTMatrix matrixForTranslation(const float dx, const float dy, const fl
 }
 
 // Returns a matrix to operate non-uniform scaling
-static _C3DTMatrix matrixForScaling(const float sx, const float sy, const float sz)
+static C3DTMatrix matrixForScaling(const float sx, const float sy, const float sz)
 {
-    _C3DTMatrix	m = matrixIdentity();
+    C3DTMatrix	m = matrixIdentity();
 
     m.flts[3] = sx;
     m.flts[5] = sy;
@@ -357,21 +363,21 @@ static _C3DTMatrix matrixForScaling(const float sx, const float sy, const float 
 }
 
 // Returns a matrix to operate uniform scaling
-static _C3DTMatrix matrixForUniformScaling(const float s)
+static C3DTMatrix matrixForUniformScaling(const float s)
 {
     return matrixForScaling(s, s, s);
 }
 
 // Returns a matrix to operate rotation
-static _C3DTMatrix matrixForRotation(const float ax, const float ay, const float az)
+static C3DTMatrix matrixForRotation(const float ax, const float ay, const float az)
 {
-    _C3DTMatrix	r = matrixIdentity();
+    C3DTMatrix	r = matrixIdentity();
     float		s;
     float		c;
 
     if (fabs(ax) > EPSILON)
     {
-        _C3DTMatrix	m = matrixIdentity();
+        C3DTMatrix	m = matrixIdentity();
 
         s = sin(ax);
         c = cos(ax);
@@ -386,7 +392,7 @@ static _C3DTMatrix matrixForRotation(const float ax, const float ay, const float
 
     if (fabs(ay) > EPSILON)
     {
-        _C3DTMatrix	m = matrixIdentity();
+        C3DTMatrix	m = matrixIdentity();
 
         s = sin(ay);
         c = cos(ay);
@@ -401,7 +407,7 @@ static _C3DTMatrix matrixForRotation(const float ax, const float ay, const float
 
     if (fabs(az) > EPSILON)
     {
-        _C3DTMatrix	m = matrixIdentity();
+        C3DTMatrix	m = matrixIdentity();
 
         s = sin(az);
         c = cos(az);
@@ -418,25 +424,25 @@ static _C3DTMatrix matrixForRotation(const float ax, const float ay, const float
 }
 
 // Operates a translation on a matrix
-void matrixTranslate(_C3DTMatrix *m, const float dx, const float dy, const float dz)
+void matrixTranslate(C3DTMatrix *m, const float dx, const float dy, const float dz)
 {
     matrixTransform(m, matrixForTranslation(dx,dy,dz));
 }
 
 // Operates a scaling on a matrix non-uniformly
-void matrixScale(_C3DTMatrix *m, const float sx, const float sy, const float sz)
+void matrixScale(C3DTMatrix *m, const float sx, const float sy, const float sz)
 {
     matrixTransform(m, matrixForScaling(sx, sy, sz));
 }
 
 // Operates a scaling on a matrix uniformly
-void matrixUniformScale(_C3DTMatrix *m, const float s)
+void matrixUniformScale(C3DTMatrix *m, const float s)
 {
     matrixTransform(m, matrixForUniformScaling(s));
 }
 
 // Operates a rotation on a matrix
-void matrixRotate(_C3DTMatrix *m, const float ax, const float ay, const float az)
+void matrixRotate(C3DTMatrix *m, const float ax, const float ay, const float az)
 {
     matrixTransform(m, matrixForRotation(ax,ay,az));
 }
@@ -460,127 +466,125 @@ inline _C3DTQuaternion quaternionInverse(_C3DTQuaternion q)
 {
     _C3DTQuaternion	r;
 
-    r.x = -q.x;
-    r.y = -q.y;
-    r.z = -q.z;
-    r.w = q.w;
+    r.cartesian.x = -q.cartesian.x;
+    r.cartesian.y = -q.cartesian.y;
+    r.cartesian.z = -q.cartesian.z;
+    r.cartesian.w = q.cartesian.w;
 
     return r;
 }
 
-inline float quaternionLength(_C3DTQuaternion q)
+float quaternionLength(_C3DTQuaternion q)
 {
-    return sqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
+    return sqrt(q.cartesian.x*q.cartesian.x + q.cartesian.y*q.cartesian.y + q.cartesian.z*q.cartesian.z + q.cartesian.w*q.cartesian.w);
 }
 
 // Normalizing of a quaternion
-inline _C3DTQuaternion quaternionNormalize(_C3DTQuaternion q)
+_C3DTQuaternion quaternionNormalize(_C3DTQuaternion q)
 {
-    float			dist = quaternionLength(q);
+    float dist = quaternionLength(q);
     _C3DTQuaternion	r;
 
     if (dist == 0.0f) {
         return q;
     }
 
-    r.x = q.x / dist;
-    r.y = q.y / dist;
-    r.z = q.z / dist;
-    r.w = q.w / dist;
+    r.cartesian.x = q.cartesian.x / dist;
+    r.cartesian.y = q.cartesian.y / dist;
+    r.cartesian.z = q.cartesian.z / dist;
+    r.cartesian.w = q.cartesian.w / dist;
 
     return r;
 }
 
-inline _C3DTQuaternion quaternionMultiply(_C3DTQuaternion a, _C3DTQuaternion b)
-{
+inline _C3DTQuaternion quaternionMultiply(_C3DTQuaternion a, _C3DTQuaternion b) {
     _C3DTQuaternion	q;
 
-    q.x = a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y;
-    q.y = a.w*b.y + a.y*b.w + a.z*b.x - a.x*b.z;
-    q.z = a.w*b.z + a.z*b.w + a.x*b.y - a.y*b.x;
-    q.w = a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z;
+    q.cartesian.x = a.cartesian.w*b.cartesian.x + a.cartesian.x*b.cartesian.w + a.cartesian.y*b.cartesian.z - a.cartesian.z*b.cartesian.y;
+    q.cartesian.y = a.cartesian.w*b.cartesian.y + a.cartesian.y*b.cartesian.w + a.cartesian.z*b.cartesian.x - a.cartesian.x*b.cartesian.z;
+    q.cartesian.z = a.cartesian.w*b.cartesian.z + a.cartesian.z*b.cartesian.w + a.cartesian.x*b.cartesian.y - a.cartesian.y*b.cartesian.x;
+    q.cartesian.w = a.cartesian.w*b.cartesian.w - a.cartesian.x*b.cartesian.x - a.cartesian.y*b.cartesian.y - a.cartesian.z*b.cartesian.z;
 
     return q;
 }
 
-_C3DTQuaternion quaternionFromAxisAngle(_C3DTVector v)
-{
+_C3DTQuaternion quaternionFromAxisAngle(C3DTVector v) {
+
     v = vectorNormalize(v);
 
     _C3DTQuaternion	q;
-    float			sinHalfAngle = sin(v.w / 2.0f);
+    float sinHalfAngle = sin(v.cartesian.w / 2.0f);
 
-
-    q.x = v.x * sinHalfAngle;
-    q.y = v.y * sinHalfAngle;
-    q.z = v.z * sinHalfAngle;
-    q.w = cos(v.w / 2.0f);
+    q.cartesian.x = v.cartesian.x * sinHalfAngle;
+    q.cartesian.y = v.cartesian.y * sinHalfAngle;
+    q.cartesian.z = v.cartesian.z * sinHalfAngle;
+    q.cartesian.w = cos(v.cartesian.w / 2.0f);
 
     return q;
 }
 
-_C3DTVector quaternionToAxisAngle(_C3DTQuaternion q)
+C3DTVector quaternionToAxisAngle(_C3DTQuaternion q)
 {
     float		lenOfVector = vectorLength(q);
-    _C3DTVector	r;
+    C3DTVector	r;
 
     if(lenOfVector < EPSILON)
     {
         // Arbitrary vector, no rotation
-        r.x = 1.0f;
-        r.y = 0.0f;
-        r.z = 0.0f;
-        r.w = 0.0f;
+        r.cartesian.x = 1.0f;
+        r.cartesian.y = 0.0f;
+        r.cartesian.z = 0.0f;
+        r.cartesian.w = 0.0f;
     }
     else
     {
         float invLen = 1.0 / lenOfVector;
 
-        r.x = q.x * invLen;
-        r.y = q.y * invLen;
-        r.z = q.z * invLen;
-        r.w = 2.0f * acos(q.w);
+        r.cartesian.x = q.cartesian.x * invLen;
+        r.cartesian.y = q.cartesian.y * invLen;
+        r.cartesian.z = q.cartesian.z * invLen;
+        r.cartesian.w = 2.0f * acos(q.cartesian.w);
     }
 
     return r;
 }
 
-_C3DTVector quaternionToDirectionVector(_C3DTQuaternion q)
+C3DTVector quaternionToDirectionVector(_C3DTQuaternion q)
 {
-    _C3DTVector	v;
+    C3DTVector	v;
     
     q = quaternionNormalize(q);
 
-    v.x = 2.0f * (q.x*q.z - q.w*q.y);
-    v.y = 2.0f * (q.y*q.z + q.w*q.x);
-    v.z = 1.0f - 2.0f * (q.x*q.x + q.y*q.y);
-    v.w = 0.0;
+    v.cartesian.x = 2.0f * (q.cartesian.x*q.cartesian.z - q.cartesian.w*q.cartesian.y);
+    v.cartesian.y = 2.0f * (q.cartesian.y*q.cartesian.z + q.cartesian.w*q.cartesian.x);
+    v.cartesian.z = 1.0f - 2.0f * (q.cartesian.x*q.cartesian.x + q.cartesian.y*q.cartesian.y);
+    v.cartesian.w = 0.0;
     
     return v;
 }
 
-_C3DTMatrix quaternionToMatrix(_C3DTQuaternion q)
+C3DTMatrix quaternionToMatrix(_C3DTQuaternion q)
 {
-    _C3DTMatrix	m;
+    C3DTMatrix	m;
     
     q = quaternionNormalize(q);
     
-    float		xx	= q.x * q.x;
-    float		yy	= q.y * q.y;
-    float		zz	= q.z * q.z;
+    float		xx	= q.cartesian.x * q.cartesian.x;
+    float		yy	= q.cartesian.y * q.cartesian.y;
+    float		zz	= q.cartesian.z * q.cartesian.z;
 
     m.flts[0]	= 1.0f - 2.0f * (yy + zz);
-    m.flts[1]	= 2.0f * (q.x*q.y + q.w*q.z);
-    m.flts[2]	= 2.0f * (q.x*q.z - q.w*q.y);
+    m.flts[1]	= 2.0f * (q.cartesian.x*q.cartesian.y + q.cartesian.w*q.cartesian.z);
+    m.flts[2]	= 2.0f * (q.cartesian.x*q.cartesian.z - q.cartesian.w*q.cartesian.y);
     m.flts[3]	= 0.0f;
 
-    m.flts[4]	= 2.0f * (q.x*q.y - q.w*q.z);
+    m.flts[4]	= 2.0f * (q.cartesian.x*q.cartesian.y - q.cartesian.w*q.cartesian.z);
     m.flts[5]	= 1.0f - 2.0f * (xx + zz);
-    m.flts[6]	= 2.0f * (q.y *q.z + q.w*q.x);
+    m.flts[6]	= 2.0f * (q.cartesian.y *q.cartesian.z + q.cartesian.w*q.cartesian.x);
     m.flts[7]	= 0.0f;
 
-    m.flts[8]	= 2.0f * (q.x*q.z + q.w*q.y);
-    m.flts[9]	= 2.0f * (q.y*q.z - q.w*q.x);
+    m.flts[8]	= 2.0f * (q.cartesian.x*q.cartesian.z + q.cartesian.w*q.cartesian.y);
+    m.flts[9]	= 2.0f * (q.cartesian.y*q.cartesian.z - q.cartesian.w*q.cartesian.x);
     m.flts[10]	= 1.0f - 2.0f * (xx + yy);
     m.flts[11]	= 0.0f;
 
@@ -592,28 +596,28 @@ _C3DTMatrix quaternionToMatrix(_C3DTQuaternion q)
     return m;
 }
 
-_C3DTMatrix quaternionToInvertedMatrix(_C3DTQuaternion q)
+C3DTMatrix quaternionToInvertedMatrix(_C3DTQuaternion q)
 {
-    _C3DTMatrix	m;
+    C3DTMatrix	m;
 
     q = quaternionNormalize(q);
 
-    float		xx = q.x * q.x;
-    float		yy = q.y * q.y;
-    float		zz = q.z * q.z;
+    float		xx = q.cartesian.x * q.cartesian.x;
+    float		yy = q.cartesian.y * q.cartesian.y;
+    float		zz = q.cartesian.z * q.cartesian.z;
 
     m.flts[0]	= -(1.0f - 2.0f * (yy + zz));
-    m.flts[1]	= -(2.0f * (q.x*q.y + q.w*q.z));
-    m.flts[2]	= -(2.0f * (q.x*q.z - q.w*q.y));
+    m.flts[1]	= -(2.0f * (q.cartesian.x*q.cartesian.y + q.cartesian.w*q.cartesian.z));
+    m.flts[2]	= -(2.0f * (q.cartesian.x*q.cartesian.z - q.cartesian.w*q.cartesian.y));
     m.flts[3]	= 0.0f;
 
-    m.flts[4]	= 2.0f * (q.x*q.y - q.w*q.z);
+    m.flts[4]	= 2.0f * (q.cartesian.x*q.cartesian.y - q.cartesian.w*q.cartesian.z);
     m.flts[5]	= 1.0f - 2.0f * (xx + zz);
-    m.flts[6]	= 2.0f * (q.y*q.z + q.w*q.x);
+    m.flts[6]	= 2.0f * (q.cartesian.y*q.cartesian.z + q.cartesian.w*q.cartesian.x);
     m.flts[7]	= 0.0f;
 
-    m.flts[8]	= 2.0f * (q.x*q.z + q.w*q.y);
-    m.flts[9]	= 2.0f * (q.y*q.z - q.w*q.x);
+    m.flts[8]	= 2.0f * (q.cartesian.x*q.cartesian.z + q.cartesian.w*q.cartesian.y);
+    m.flts[9]	= 2.0f * (q.cartesian.y*q.cartesian.z - q.cartesian.w*q.cartesian.x);
     m.flts[10]	= 1.0f - 2.0f * (xx + yy);
     m.flts[11]	= 0.0f;
 
@@ -627,19 +631,19 @@ _C3DTMatrix quaternionToInvertedMatrix(_C3DTQuaternion q)
 
 
 // Normalizing of a plane
-inline _C3DTPlane planeNormalize(_C3DTPlane p)
+inline C3DTPlane planeNormalize(C3DTPlane p)
 {
     float		dist = vectorLength(p);
-    _C3DTPlane	r;
+    C3DTPlane	r;
 
     if (dist == 0.0f) {
         return p;
     }
 
-    r.x = p.x / dist;
-    r.y = p.y / dist;
-    r.z = p.z / dist;
-    r.w = p.w / dist;
+    r.cartesian.x = p.cartesian.x / dist;
+    r.cartesian.y = p.cartesian.y / dist;
+    r.cartesian.z = p.cartesian.z / dist;
+    r.cartesian.w = p.cartesian.w / dist;
 
     return r;
 }
@@ -650,7 +654,7 @@ inline _C3DTPlane planeNormalize(_C3DTPlane p)
 
 float	*cachedNoise	= NULL;
 
-float _noise(int x, int octave)
+float _MANGLEDnoise(int x, int octave)
 {
     int sample	= octave & 0x3;
     int n		= (x << 13) ^ x;
@@ -667,12 +671,12 @@ float _noise(int x, int octave)
     return (1.0 - (float)((n * (n * n * 16267 + 694541) + 1345679501) & 0x7FFFFFFF) / 1073741824.0);
 }
 
-inline float noise(int x, int y, int octave)
+float noise(int x, int y, int octave)
 {
     return cachedNoise[((octave & 3) << 12) + ((x + y * 31) & 0x0FFF)];
 }
 
-inline float noise3(int x, int y, int z, int octave)
+float noise3(int x, int y, int z, int octave)
 {
     return cachedNoise[((octave & 3) << 12) + ((x + y * 31 + z * 63) & 0x0FFF)];
 }
@@ -719,7 +723,7 @@ float interpolatedNoise3(float x, float y, float z, float maxx, float maxy, floa
     return interpolate(i5, i6, fracz);
 }
 
-void initNoiseBuffer()
+void initNoiseBuffer( void )
 {
     register float	*pCachedNoise;
     register int	octave, i;
@@ -729,7 +733,7 @@ void initNoiseBuffer()
 
     for (octave = 0; octave < 4; octave++)
         for (i = 0; i < 4096; i++)
-            *pCachedNoise++ = _noise(i, octave);
+            *pCachedNoise++ = _MANGLEDnoise(i, octave);
 }
 
 float perlinNoise2d(int x, int y, int maxx, int maxy, float period, float persistence, int octaves)
@@ -753,19 +757,18 @@ float perlinNoise2d(int x, int y, int maxx, int maxy, float period, float persis
 float perlinNoise3d(int x, int y, int z, int maxx, int maxy, int maxz, float period, float persistence, int octaves)
 {
     float	sum			= 0;
-    float	freq		= 1.0 / period;
+    float	freq		= 1.0f / period;
     float	amplitude	= persistence;
     int		i;
 
     for (i = 0; i < octaves; i++)
     {
-        sum			+= amplitude * interpolatedNoise3((float)x * freq, (float)y * freq, (float)z * freq,
-                                                (float)maxx * freq, (float)maxy * freq, (float)maxz * freq, i);
+        sum += amplitude * interpolatedNoise3((float)x * freq, (float)y * freq, (float)z * freq, (float)maxx * freq, (float)maxy * freq, (float)maxz * freq, i);
         amplitude	*= persistence;
-        freq		*= 2;
+        freq *= 2.f;
     }
 
-    return trim(sum / persistence * 0.5 + 0.5, 0.0, 1.0);
+    return trim(sum / persistence * 0.5f + 0.5f, 0.0f, 1.0f);
 }
 
 
@@ -775,53 +778,53 @@ float perlinNoise3d(int x, int y, int z, int maxx, int maxy, int maxz, float per
 ***********************************/
 
 // Define the view frustum for culling
-_C3DTFrustum viewFrustum(const _C3DTMatrix projection, const _C3DTMatrix model)
+C3DTFrustum viewFrustum(const C3DTMatrix projection, const C3DTMatrix model)
 {
-    _C3DTMatrix	clip;
-    _C3DTFrustum	r;
+    C3DTMatrix	clip;
+    C3DTFrustum	r;
 
     clip = matrixMultiply(projection, model);
 
     // Right plane
-    r.planes[0].x = clip.flts[3] - clip.flts[0];
-    r.planes[0].y = clip.flts[7] - clip.flts[4];
-    r.planes[0].z = clip.flts[11] - clip.flts[8];
-    r.planes[0].w = clip.flts[15] - clip.flts[12];
+    r.planes[0].cartesian.x = clip.flts[3] - clip.flts[0];
+    r.planes[0].cartesian.y = clip.flts[7] - clip.flts[4];
+    r.planes[0].cartesian.z = clip.flts[11] - clip.flts[8];
+    r.planes[0].cartesian.w = clip.flts[15] - clip.flts[12];
     r.planes[0] = vectorNormalize(r.planes[0]);
 
     // Left plane
-    r.planes[1].x = clip.flts[3] + clip.flts[0];
-    r.planes[1].y = clip.flts[7] + clip.flts[4];
-    r.planes[1].z = clip.flts[11] + clip.flts[8];
-    r.planes[1].w = clip.flts[15] + clip.flts[12];
+    r.planes[1].cartesian.x = clip.flts[3] + clip.flts[0];
+    r.planes[1].cartesian.y = clip.flts[7] + clip.flts[4];
+    r.planes[1].cartesian.z = clip.flts[11] + clip.flts[8];
+    r.planes[1].cartesian.w = clip.flts[15] + clip.flts[12];
     r.planes[1] = vectorNormalize(r.planes[1]);
 
     // Bottom plane
-    r.planes[2].x = clip.flts[3] + clip.flts[1];
-    r.planes[2].y = clip.flts[7] + clip.flts[5];
-    r.planes[2].z = clip.flts[11] + clip.flts[9];
-    r.planes[2].w = clip.flts[15] + clip.flts[13];
+    r.planes[2].cartesian.x = clip.flts[3] + clip.flts[1];
+    r.planes[2].cartesian.y = clip.flts[7] + clip.flts[5];
+    r.planes[2].cartesian.z = clip.flts[11] + clip.flts[9];
+    r.planes[2].cartesian.w = clip.flts[15] + clip.flts[13];
     r.planes[2] = vectorNormalize(r.planes[2]);
 
     // Top plane
-    r.planes[3].x = clip.flts[3] - clip.flts[1];
-    r.planes[3].y = clip.flts[7] - clip.flts[5];
-    r.planes[3].z = clip.flts[11] - clip.flts[9];
-    r.planes[3].w = clip.flts[15] - clip.flts[13];
+    r.planes[3].cartesian.x = clip.flts[3] - clip.flts[1];
+    r.planes[3].cartesian.y = clip.flts[7] - clip.flts[5];
+    r.planes[3].cartesian.z = clip.flts[11] - clip.flts[9];
+    r.planes[3].cartesian.w = clip.flts[15] - clip.flts[13];
     r.planes[3] = vectorNormalize(r.planes[3]);
 
     // Far plane
-    r.planes[4].x = clip.flts[3] - clip.flts[2];
-    r.planes[4].y = clip.flts[7] - clip.flts[6];
-    r.planes[4].z = clip.flts[11] - clip.flts[10];
-    r.planes[4].w = clip.flts[15] - clip.flts[14];
+    r.planes[4].cartesian.x = clip.flts[3] - clip.flts[2];
+    r.planes[4].cartesian.y = clip.flts[7] - clip.flts[6];
+    r.planes[4].cartesian.z = clip.flts[11] - clip.flts[10];
+    r.planes[4].cartesian.w = clip.flts[15] - clip.flts[14];
     r.planes[4] = vectorNormalize(r.planes[4]);
 
     // Near plane
-    r.planes[5].x = clip.flts[3] + clip.flts[2];
-    r.planes[5].y = clip.flts[7] + clip.flts[6];
-    r.planes[5].z = clip.flts[11] + clip.flts[10];
-    r.planes[5].w = clip.flts[15] + clip.flts[14];
+    r.planes[5].cartesian.x = clip.flts[3] + clip.flts[2];
+    r.planes[5].cartesian.y = clip.flts[7] + clip.flts[6];
+    r.planes[5].cartesian.z = clip.flts[11] + clip.flts[10];
+    r.planes[5].cartesian.w = clip.flts[15] + clip.flts[14];
     r.planes[5] = vectorNormalize(r.planes[5]);
 
     return r;
@@ -831,37 +834,37 @@ _C3DTFrustum viewFrustum(const _C3DTMatrix projection, const _C3DTMatrix model)
 // if dist is negative, that means that the point is allowed to stay OUTSIDE the frustum by at most dist
 // if dist is 0.0, then the point MUST be included in the frustum itself
 // if dist is positive, the point must be INSIDE the frustum by at least dist
-int pointNearFrustum(_C3DTFrustum f, _C3DTVector p, float dist)
+int pointNearFrustum(C3DTFrustum f, C3DTVector p, float dist)
 {
     int		ii;
 
     for( ii = 0; ii < 6; ii++ )
-        if( f.planes[ii].x * p.x + f.planes[ii].y * p.y +
-            f.planes[ii].z * p.z + f.planes[ii].w < dist )
+        if( f.planes[ii].cartesian.x * p.cartesian.x + f.planes[ii].cartesian.y * p.cartesian.y +
+            f.planes[ii].cartesian.z * p.cartesian.z + f.planes[ii].cartesian.w < dist )
             return NOT_IN_FRUSTUM;
 
     return ALL_IN_FRUSTUM;
 }
 
 // Tells if a sphere has at least a part in the frustum
-int isSphereInFrustum (_C3DTFrustum f, _C3DTSpheroid s)
+int isSphereInFrustum (C3DTFrustum f, _C3DTSpheroid s)
 {
     return pointNearFrustum(f, s.center, -s.radius);
 }
 
 // Variation of the above, but returns a distance useful for LevelOfDetail calculations
 // and an int reporting flags of the planes it's in
-int sphereDistanceFromFrustum(_C3DTFrustum f, _C3DTSpheroid s, float *dist)
+int sphereDistanceFromFrustum(C3DTFrustum f, _C3DTSpheroid s, float *dist)
 {
     int		ii, flag;
     float	d;
 
     for( ii = 0, flag = 0; ii < 6; ii++ )
     {
-        d = f.planes[ii].x * s.center.x + f.planes[ii].y * s.center.y +
-        f.planes[ii].z * s.center.z + f.planes[ii].w;
+        d = f.planes[ii].cartesian.x * s.center.cartesian.x + f.planes[ii].cartesian.y * s.center.cartesian.y +
+        f.planes[ii].cartesian.z * s.center.cartesian.z + f.planes[ii].cartesian.w;
         if( d < -s.radius ) {
-            *dist = 0.0;
+            *dist = 0.0f;
             return NOT_IN_FRUSTUM;
         }
 
@@ -880,9 +883,9 @@ _C3DTSpheroid sphereFromBounds(_C3DTBounds b)
     _C3DTSpheroid	s;
 
     // Center is the middle point between the 2 bounds coordinate
-    s.center.x = (b.topRightFar.x + b.bottomLeftNear.x) / 2.0;
-    s.center.y = (b.topRightFar.y + b.bottomLeftNear.y) / 2.0;
-    s.center.z = (b.topRightFar.z + b.bottomLeftNear.z) / 2.0;
+    s.center.cartesian.x = (b.topRightFar.cartesian.x + b.bottomLeftNear.cartesian.x) / 2.0f;
+    s.center.cartesian.y = (b.topRightFar.cartesian.y + b.bottomLeftNear.cartesian.y) / 2.0f;
+    s.center.cartesian.z = (b.topRightFar.cartesian.z + b.bottomLeftNear.cartesian.z) / 2.0f;
 
     s.radius = vectorLength(vectorSubtract(b.topRightFar, s.center));
 
@@ -892,12 +895,12 @@ _C3DTSpheroid sphereFromBounds(_C3DTBounds b)
 _C3DTBounds unionOfBounds(_C3DTBounds a, _C3DTBounds b)
 {
 	_C3DTBounds resultBounds;
-	// _C3DTVector	bottomLeftNear;
-	// _C3DTVector	topRightFar;
-	resultBounds.bottomLeftNear.x = (a.bottomLeftNear.x < b.bottomLeftNear.x) ? a.bottomLeftNear.x : b.bottomLeftNear.x;
-	resultBounds.bottomLeftNear.y = (a.bottomLeftNear.y < b.bottomLeftNear.y) ? a.bottomLeftNear.y : b.bottomLeftNear.y;
-	resultBounds.topRightFar.x = (a.topRightFar.x > b.topRightFar.x) ? a.topRightFar.x : b.topRightFar.x;
-	resultBounds.topRightFar.y = (a.topRightFar.y > b.topRightFar.y) ? a.topRightFar.y : b.topRightFar.y;
+	// C3DTVector	bottomLeftNear;
+	// C3DTVector	topRightFar;
+	resultBounds.bottomLeftNear.cartesian.x = (a.bottomLeftNear.cartesian.x < b.bottomLeftNear.cartesian.x) ? a.bottomLeftNear.cartesian.x : b.bottomLeftNear.cartesian.x;
+	resultBounds.bottomLeftNear.cartesian.y = (a.bottomLeftNear.cartesian.y < b.bottomLeftNear.cartesian.y) ? a.bottomLeftNear.cartesian.y : b.bottomLeftNear.cartesian.y;
+	resultBounds.topRightFar.cartesian.x = (a.topRightFar.cartesian.x > b.topRightFar.cartesian.x) ? a.topRightFar.cartesian.x : b.topRightFar.cartesian.x;
+	resultBounds.topRightFar.cartesian.y = (a.topRightFar.cartesian.y > b.topRightFar.cartesian.y) ? a.topRightFar.cartesian.y : b.topRightFar.cartesian.y;
 	
 	return resultBounds;
 }
