@@ -3,6 +3,10 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+	#import <Cocoa/Cocoa.h>
+	#import <SenTestingKit/SenTestingKit.h>
+	#import <SHGeometrykit/SHGeometrykit.h>
+	#import <OpenGL/OpenGL.h>
 	#import <OpenGL/CGLMacro.h>
+	#import <GLUT/glut.h>
 #endif

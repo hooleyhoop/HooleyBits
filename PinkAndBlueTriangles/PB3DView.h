@@ -10,17 +10,17 @@
 
 @interface PB3DView : NSView {
 
-	NSTimer* drawTimer;
-	NSPoint mousePt;
-	FloorGrid* floorGrid;
-	NSTrackingRectTag trackingRect;
+	NSTimer				*drawTimer;
+	NSPoint				mousePt;
+	FloorGrid				*floorGrid;
+	NSTrackingRectTag		trackingRect;
 
-    PBCamera	*camera;
+    PBCamera				*camera;
 
-	NSOpenGLContext *context;
-	NSOpenGLPixelFormat* pixelFormat;
+	NSOpenGLContext		*context;
+	NSOpenGLPixelFormat	*pixelFormat;
 	
-	double currentTime, startTime;
+	double					currentTime, startTime;
 }
 
 #pragma mark action methods

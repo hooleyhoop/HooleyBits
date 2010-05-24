@@ -70,6 +70,15 @@ extern float	*cachedNoise;
 extern "C" {
 #endif
 
+#pragma mark -
+#pragma mark REWriting
+
+// seems like extern int is the way to inline?
+extern inline float vectorLength( const C3DTVector v );
+	
+#pragma mark -
+#pragma mark OLD
+	
     /*
      * Vector operations
      */
@@ -80,7 +89,7 @@ extern "C" {
      @param      b Second vector
      @result     The sum of the two vectors (a + b)
      */
-    inline C3DTVector	vectorAdd(const C3DTVector a, const C3DTVector b);
+    extern inline C3DTVector vectorAdd( const C3DTVector a, const C3DTVector b );
     
     /*!
      @function vectorSubtract
@@ -117,15 +126,8 @@ extern "C" {
      @param      c Second vector
      @result     The cross product of the 3 vectors (b - a) x (c - a)
      */
-    inline C3DTVector	vectorCrossProductTri(const C3DTVector a, const C3DTVector b, const C3DTVector c);
+    inline C3DTVector vectorCrossProductTri(const C3DTVector a, const C3DTVector b, const C3DTVector c);
 
-    /*!
-     @function vectorLength
-     @discussion Length of a vector
-     @param      v The vector
-     @result     The length of a vector
-     */
-    float vectorLength(const C3DTVector v);
 
     /*!
      @function vectorNormalize
@@ -133,7 +135,7 @@ extern "C" {
      @param      v The vector
      @result     The normalized vector
      */
-    inline C3DTVector	vectorNormalize(C3DTVector v);
+    inline C3DTVector vectorNormalize(C3DTVector v);
 
     /*!
      @function vectorNormal
@@ -142,7 +144,7 @@ extern "C" {
      @param      b Second vector
      @result     The normal vector (normalized)
      */
-    inline C3DTVector	vectorNormal(const C3DTVector a, const C3DTVector b);
+    inline C3DTVector vectorNormal(const C3DTVector a, const C3DTVector b);
 
     /*!
      @function vectorNormalTri
@@ -152,7 +154,7 @@ extern "C" {
      @param      c Third vector
      @result     The normal & normalized vector for vectors b & c centered in position a
      */
-    inline C3DTVector	vectorNormalTri(C3DTVector a, C3DTVector b, C3DTVector c);
+    inline C3DTVector vectorNormalTri(C3DTVector a, C3DTVector b, C3DTVector c);
 
     /*!
      @function vectorScale
@@ -161,7 +163,7 @@ extern "C" {
      @param      a The vector
      @result     The scaled vector
      */
-    inline C3DTVector	vectorScale(const float s, const C3DTVector a);
+    inline C3DTVector vectorScale(const float s, const C3DTVector a);
 
     /*!
      @function vectorAngleCos
@@ -185,8 +187,8 @@ extern "C" {
     /*
      * Conversion operations
      */
-    inline C3DTVector cartesianToSpherical(C3DTVector v);
-    inline C3DTVector sphericalToCartesian(C3DTVector v);
+    extern inline C3DTVector cartesianToSpherical(C3DTVector v);
+    extern inline C3DTVector sphericalToCartesian(C3DTVector v);
     
     /*
      * Matrix operations

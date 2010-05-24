@@ -5,7 +5,6 @@
 //  Created by Steven Hooley on 30/11/2006.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
-#import <CoreGraphics/CoreGraphics.h>
 
 @class LWKey;
 
@@ -19,7 +18,7 @@
 /*
  *
 */
-@interface LWEnvelope : SHooleyObject <NSCoding> {
+@interface LWEnvelope : NSObject <NSCoding> {
 
 	LWKey*		_key;
 	NSUInteger	_nkeys;

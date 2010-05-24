@@ -49,8 +49,8 @@
 *************************************/
 
 // adds 2 vectors
-inline C3DTVector vectorAdd(const C3DTVector a, const C3DTVector b)
-{
+C3DTVector vectorAdd(const C3DTVector a, const C3DTVector b) {
+
     C3DTVector	r;
 
     r.cartesian.x = a.cartesian.x + b.cartesian.x;
@@ -96,23 +96,14 @@ inline C3DTVector vectorCrossProductTri(const C3DTVector a, const C3DTVector b, 
 	return vectorCrossProduct(vectorSubtract(b,a), vectorSubtract(c,a));
 }
 
-float vectorLength2(const C3DTVector v) {	
-
-	C3DTVector aa = {{ 2.0f, 10.0f, 150.0f, 800.0f }};
-
-	vFloat woohoo = aa.flts;
-	v.cartesian.x;
-	
-	aa[0];
-	
-//	return sqrt( f[0]*f[0] + f[1]*f[1] + f[2]*f[2] );
+float vectorLength( const C3DTVector v ) {
+    return sqrtf(v.flts[0]*v.flts[0] + v.flts[1]*v.flts[1] + v.flts[2]*v.flts[2] );
 }
 
-// Normalizing of a vector
-C3DTVector vectorNormalize(C3DTVector v)
-{
-    float		dist = vectorLength(v);
-    C3DTVector	r;
+C3DTVector vectorNormalize(C3DTVector v) {
+
+    float dist = vectorLength(v);
+    C3DTVector r;
 
     if (dist == 0.0f) {
         return v;
@@ -171,25 +162,25 @@ C3DTVector vectorTransform(const C3DTVector v, const C3DTMatrix m)
 * C O N V E R S I O N   O P E R A T I O N S
 *******************************************/
 
-inline C3DTVector cartesianToSpherical(C3DTVector v)
+C3DTVector cartesianToSpherical(C3DTVector v)
 {
     C3DTVector	r;
 
-    r.radial.theta	= atan2(v.cartesian.z, v.cartesian.x);
-    r.radial.phi	= atan2(v.cartesian.y, sqrt(v.cartesian.x*v.cartesian.x + v.cartesian.z*v.cartesian.z));
-    r.radial.r		= sqrt(v.cartesian.x*v.cartesian.x + v.cartesian.y*v.cartesian.y + v.cartesian.z*v.cartesian.z);
+    r.radial.theta	= atan2f(v.cartesian.z, v.cartesian.x);
+    r.radial.phi	= atan2f(v.cartesian.y, sqrtf(v.cartesian.x*v.cartesian.x + v.cartesian.z*v.cartesian.z));
+    r.radial.r		= sqrtf(v.cartesian.x*v.cartesian.x + v.cartesian.y*v.cartesian.y + v.cartesian.z*v.cartesian.z);
     r.radial.w		= 0.0f;
     
     return r;
 }
 
-inline C3DTVector sphericalToCartesian(C3DTVector v)
-{
-    C3DTVector	r;
+C3DTVector sphericalToCartesian(C3DTVector v) {
 
-    r.cartesian.x	= v.radial.r * cos(v.radial.phi) * cos(v.radial.theta);
-    r.cartesian.y	= v.radial.r * sin(v.radial.phi);
-    r.cartesian.z	= v.radial.r * cos(v.radial.phi) * sin(v.radial.theta);
+    C3DTVector r;
+
+    r.cartesian.x	= v.radial.r * cosf(v.radial.phi) * cosf(v.radial.theta);
+    r.cartesian.y	= v.radial.r * sinf(v.radial.phi);
+    r.cartesian.z	= v.radial.r * cosf(v.radial.phi) * sinf(v.radial.theta);
     r.cartesian.w	= 0.0f;
     
     return r;
@@ -377,10 +368,10 @@ static C3DTMatrix matrixForRotation(const float ax, const float ay, const float 
 
     if (fabs(ax) > EPSILON)
     {
-        C3DTMatrix	m = matrixIdentity();
+        C3DTMatrix m = matrixIdentity();
 
-        s = sin(ax);
-        c = cos(ax);
+        s = sinf(ax);
+        c = cosf(ax);
 
         m.flts[5] = c;
         m.flts[6] = s;
@@ -394,8 +385,8 @@ static C3DTMatrix matrixForRotation(const float ax, const float ay, const float 
     {
         C3DTMatrix	m = matrixIdentity();
 
-        s = sin(ay);
-        c = cos(ay);
+        s = sinf(ay);
+        c = cosf(ay);
 
         m.flts[0] = c;
         m.flts[2] = s;
@@ -409,8 +400,8 @@ static C3DTMatrix matrixForRotation(const float ax, const float ay, const float 
     {
         C3DTMatrix	m = matrixIdentity();
 
-        s = sin(az);
-        c = cos(az);
+        s = sinf(az);
+        c = cosf(az);
 
         m.flts[0] = c;
         m.flts[1] = s;
@@ -455,7 +446,7 @@ inline _C3DTQuaternion quaternionIdentity(void)
 {
     _C3DTQuaternion q = {
     {
-        1.0, 0.0, 0.0, 0.0
+        1.0f, 0.0f, 0.0f, 0.0f
     }
     };
 
@@ -476,7 +467,7 @@ inline _C3DTQuaternion quaternionInverse(_C3DTQuaternion q)
 
 float quaternionLength(_C3DTQuaternion q)
 {
-    return sqrt(q.cartesian.x*q.cartesian.x + q.cartesian.y*q.cartesian.y + q.cartesian.z*q.cartesian.z + q.cartesian.w*q.cartesian.w);
+    return sqrtf( q.cartesian.x*q.cartesian.x + q.cartesian.y*q.cartesian.y + q.cartesian.z*q.cartesian.z + q.cartesian.w*q.cartesian.w );
 }
 
 // Normalizing of a quaternion
@@ -513,20 +504,20 @@ _C3DTQuaternion quaternionFromAxisAngle(C3DTVector v) {
     v = vectorNormalize(v);
 
     _C3DTQuaternion	q;
-    float sinHalfAngle = sin(v.cartesian.w / 2.0f);
+    float sinHalfAngle = sinf(v.cartesian.w / 2.0f);
 
     q.cartesian.x = v.cartesian.x * sinHalfAngle;
     q.cartesian.y = v.cartesian.y * sinHalfAngle;
     q.cartesian.z = v.cartesian.z * sinHalfAngle;
-    q.cartesian.w = cos(v.cartesian.w / 2.0f);
+    q.cartesian.w = cosf(v.cartesian.w / 2.0f);
 
     return q;
 }
 
 C3DTVector quaternionToAxisAngle(_C3DTQuaternion q)
 {
-    float		lenOfVector = vectorLength(q);
-    C3DTVector	r;
+    float lenOfVector = vectorLength(q);
+    C3DTVector r;
 
     if(lenOfVector < EPSILON)
     {
@@ -538,12 +529,12 @@ C3DTVector quaternionToAxisAngle(_C3DTQuaternion q)
     }
     else
     {
-        float invLen = 1.0 / lenOfVector;
+        float invLen = 1.0f / lenOfVector;
 
         r.cartesian.x = q.cartesian.x * invLen;
         r.cartesian.y = q.cartesian.y * invLen;
         r.cartesian.z = q.cartesian.z * invLen;
-        r.cartesian.w = 2.0f * acos(q.cartesian.w);
+        r.cartesian.w = 2.0f * acosf(q.cartesian.w);
     }
 
     return r;
@@ -558,7 +549,7 @@ C3DTVector quaternionToDirectionVector(_C3DTQuaternion q)
     v.cartesian.x = 2.0f * (q.cartesian.x*q.cartesian.z - q.cartesian.w*q.cartesian.y);
     v.cartesian.y = 2.0f * (q.cartesian.y*q.cartesian.z + q.cartesian.w*q.cartesian.x);
     v.cartesian.z = 1.0f - 2.0f * (q.cartesian.x*q.cartesian.x + q.cartesian.y*q.cartesian.y);
-    v.cartesian.w = 0.0;
+    v.cartesian.w = 0.0f;
     
     return v;
 }
@@ -633,7 +624,7 @@ C3DTMatrix quaternionToInvertedMatrix(_C3DTQuaternion q)
 // Normalizing of a plane
 inline C3DTPlane planeNormalize(C3DTPlane p)
 {
-    float		dist = vectorLength(p);
+    float dist = vectorLength(p);
     C3DTPlane	r;
 
     if (dist == 0.0f) {
@@ -661,18 +652,18 @@ float _MANGLEDnoise(int x, int octave)
 
     switch (sample) {
         case 0:
-            return (1.0 - (float)((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
+            return (1.0f - (float)((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f);
         case 1:
-            return (1.0 - (float)((n * (n * n * 12497 + 604727) + 1345679039) & 0x7FFFFFFF) / 1073741824.0);
+            return (1.0f - (float)((n * (n * n * 12497 + 604727) + 1345679039) & 0x7FFFFFFF) / 1073741824.0f);
         case 2:
-            return (1.0 - (float)((n * (n * n * 19087 + 659047) + 1345679627) & 0x7FFFFFFF) / 1073741824.0);
+            return (1.0f - (float)((n * (n * n * 19087 + 659047) + 1345679627) & 0x7FFFFFFF) / 1073741824.0f);
     }
 
-    return (1.0 - (float)((n * (n * n * 16267 + 694541) + 1345679501) & 0x7FFFFFFF) / 1073741824.0);
+    return (1.0f - (float)((n * (n * n * 16267 + 694541) + 1345679501) & 0x7FFFFFFF) / 1073741824.0f);
 }
 
-float noise(int x, int y, int octave)
-{
+float noise(int x, int y, int octave) {
+	
     return cachedNoise[((octave & 3) << 12) + ((x + y * 31) & 0x0FFF)];
 }
 
@@ -681,9 +672,9 @@ float noise3(int x, int y, int z, int octave)
     return cachedNoise[((octave & 3) << 12) + ((x + y * 31 + z * 63) & 0x0FFF)];
 }
 
-float interpolate(float a, float b, float d)
-{
-    float	f	= (1.0 - cos(d * M_PI)) * 0.5f;
+float interpolate(float a, float b, float d) {
+
+    float	f = (1.0f - cosf(d * (float)M_PI)) * 0.5f;
 
     return a + f * (b - a);
 }
@@ -738,8 +729,8 @@ void initNoiseBuffer( void )
 
 float perlinNoise2d(int x, int y, int maxx, int maxy, float period, float persistence, int octaves)
 {
-    float	sum			= 0;
-    float	freq		= 1.0 / period;
+    float	sum = 0;
+    float	freq = 1.0f / period;
     float	amplitude	= persistence;
     int		i;
     
@@ -751,7 +742,7 @@ float perlinNoise2d(int x, int y, int maxx, int maxy, float period, float persis
         freq		*= 2;
     }
 
-    return trim(sum / persistence * 0.5 + 0.5, 0.0, 1.0);
+    return trim(sum / persistence * 0.5f + 0.5f, 0.0f, 1.0f );
 }
 
 float perlinNoise3d(int x, int y, int z, int maxx, int maxy, int maxz, float period, float persistence, int octaves)
@@ -887,7 +878,7 @@ _C3DTSpheroid sphereFromBounds(_C3DTBounds b)
     s.center.cartesian.y = (b.topRightFar.cartesian.y + b.bottomLeftNear.cartesian.y) / 2.0f;
     s.center.cartesian.z = (b.topRightFar.cartesian.z + b.bottomLeftNear.cartesian.z) / 2.0f;
 
-    s.radius = vectorLength(vectorSubtract(b.topRightFar, s.center));
+    s.radius = vectorLength( vectorSubtract(b.topRightFar, s.center));
 
     return s;
 }

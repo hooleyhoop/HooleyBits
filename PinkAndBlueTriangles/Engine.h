@@ -21,7 +21,7 @@
 	// multiply y by max accel : multiply x by max speed.
 	// Then for a given speed (x) read Accel (y) value
 	// multiply my current throttle
-	LWEnvelope* unitAccelerationCurve;
+	LWEnvelope *unitAccelerationCurve;
 }
 
 #pragma mark accessor methods

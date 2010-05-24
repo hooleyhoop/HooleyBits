@@ -16,15 +16,13 @@
 #pragma mark class methods
 
 #pragma mark init methods
-//=========================================================== 
-// - init
-//=========================================================== 
-- (id)init
-{
-	if ((self = [super init]) != nil) 
-	{
-		unitAccelerationCurve = [[LWEnvelope lWEnvelopeWithPoint:[G3DTuple2d tupleWithX:0.0 y:1.0]] retain];
-		[unitAccelerationCurve lineToPoint:[G3DTuple2d tupleWithX:1.0 y:0]];
+- (id)init {
+
+	self = [super init];
+	if(self) {
+	
+		unitAccelerationCurve = [[LWEnvelope lWEnvelopeWithPoint:CGPointMake(0.0f,1.0f)] retain];
+		[unitAccelerationCurve lineToPoint:CGPointMake(1.0f, 0.0f)];
 		
 		
 		// test some values
@@ -42,13 +40,10 @@
 	return self;
 }
 
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
-{
+- (void)dealloc {
+
 	[unitAccelerationCurve release];
-	unitAccelerationCurve = nil;
+
 	[super dealloc];
 }
 

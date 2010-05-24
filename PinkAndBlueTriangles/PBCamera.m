@@ -8,9 +8,11 @@
 
 #import "PBCamera.h"
 #import <OpenGL/CGLMacro.h>
+#import <OpenGL/glu.h>
 #import <SHGeometryKit/SHGeometryKit.h>
 
-extern CGLContextObj cgl_ctx; // defined in millicent view
+// GLOBAL
+extern CGLContextObj cgl_ctx; // defined in the view
 
 static PBCamera* camera;
 /*
@@ -21,19 +23,16 @@ static PBCamera* camera;
 
 #pragma mark -
 #pragma mark class methods
-+ (PBCamera *)camera
-{
++ (PBCamera *)camera {
 	return camera;
 }
 
 #pragma mark init methods
-// ===========================================================
-// - initWithBounds:
-// ===========================================================
-- (id)initWithBounds:(NSRect)boundsRect
-{
-    if ((self = [super init]) != nil) 
-	{
+
+- (id)initWithBounds:(NSRect)boundsRect {
+
+	self = [super init];
+    if(self) {
 		[self setBounds: boundsRect];
 		[self setFov: 110.0f];
 		_zoomEnabled = YES;
@@ -44,11 +43,8 @@ static PBCamera* camera;
     return self;
 }
 
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
-{
+- (void)dealloc {
+
 	[super dealloc];
 }
 
@@ -60,7 +56,7 @@ static PBCamera* camera;
 - (void)useWith:(id)anObject atTime:(double)time
 {
 	// @try {
-	 // C3DTVector	offset = cartesianToSpherical(vectorSubtract(_pos, _lookAt));
+	 // C3DTVector offset = cartesianToSpherical(vectorSubtract(_pos, _lookAt));
 	C3DTVector offset = _pos;
 	glViewport( 0, 0, _frustum.cartesian.x, _frustum.cartesian.y ); // this needs to be in window co-ords i think
 	// move this somewhere else	glViewport( 0, 0, 768, 576); // this needs to be in window co-ords i think
@@ -124,7 +120,7 @@ static PBCamera* camera;
     glRotatef(rad2deg(offset.radial.phi), 1.0f, 0.0f, 0.0f );
     // Rotate azimuth (- π/2, 0 is on Z while spherical 0 is on X)
 
-    glRotatef(rad2deg(offset.radial.theta - M_PI_2), 0.0, 1.0, 0.0);
+    glRotatef(rad2deg(offset.radial.theta - M_PI_2), 0.0f, 1.0f, 0.0f);
 	/* should we do this every time ? */
 		glMatrixMode( GL_MODELVIEW );    // Select the modelview matrix
 
@@ -145,8 +141,8 @@ static PBCamera* camera;
 
      // Retrieve matrices from OpenGL
 	C3DTMatrix modelMatrix, projectionMatrix;
-	glGetFloatv(GL_MODELVIEW_MATRIX, modelMatrix.flts);
-	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrix.flts);
+	glGetFloatv( GL_MODELVIEW_MATRIX, modelMatrix.flts );
+	glGetFloatv( GL_PROJECTION_MATRIX, projectionMatrix.flts );
 	
 	/* test geometry kit multiply */
 	
@@ -160,7 +156,7 @@ static PBCamera* camera;
    _frustum2.planes[0].cartesian.w = clip.flts[15] - clip.flts[12];
 
    /* Normalize the result */
-   float t = sqrt( _frustum2.planes[0].cartesian.x * _frustum2.planes[0].cartesian.x + _frustum2.planes[0].cartesian.y * _frustum2.planes[0].cartesian.y + _frustum2.planes[0].cartesian.z * _frustum2.planes[0].cartesian.z );
+   float t = sqrtf( _frustum2.planes[0].cartesian.x * _frustum2.planes[0].cartesian.x + _frustum2.planes[0].cartesian.y * _frustum2.planes[0].cartesian.y + _frustum2.planes[0].cartesian.z * _frustum2.planes[0].cartesian.z );
    _frustum2.planes[0].cartesian.x /= t;
    _frustum2.planes[0].cartesian.y /= t;
    _frustum2.planes[0].cartesian.z /= t;
@@ -173,7 +169,7 @@ static PBCamera* camera;
    _frustum2.planes[1].cartesian.w = clip.flts[15] + clip.flts[12];
 
    /* Normalize the result */
-   t = sqrt( _frustum2.planes[1].cartesian.x * _frustum2.planes[1].cartesian.x + _frustum2.planes[1].cartesian.y * _frustum2.planes[1].cartesian.y + _frustum2.planes[1].cartesian.z * _frustum2.planes[1].cartesian.z );
+   t = sqrtf( _frustum2.planes[1].cartesian.x * _frustum2.planes[1].cartesian.x + _frustum2.planes[1].cartesian.y * _frustum2.planes[1].cartesian.y + _frustum2.planes[1].cartesian.z * _frustum2.planes[1].cartesian.z );
    _frustum2.planes[1].cartesian.x /= t;
    _frustum2.planes[1].cartesian.y /= t;
    _frustum2.planes[1].cartesian.z /= t;
@@ -186,7 +182,7 @@ static PBCamera* camera;
    _frustum2.planes[2].cartesian.w = clip.flts[15] + clip.flts[13];
 
    /* Normalize the result */
-   t = sqrt( _frustum2.planes[2].cartesian.x * _frustum2.planes[2].cartesian.x + _frustum2.planes[2].cartesian.y * _frustum2.planes[2].cartesian.y + _frustum2.planes[2].cartesian.z * _frustum2.planes[2].cartesian.z );
+   t = sqrtf( _frustum2.planes[2].cartesian.x * _frustum2.planes[2].cartesian.x + _frustum2.planes[2].cartesian.y * _frustum2.planes[2].cartesian.y + _frustum2.planes[2].cartesian.z * _frustum2.planes[2].cartesian.z );
    _frustum2.planes[2].cartesian.x /= t;
    _frustum2.planes[2].cartesian.y /= t;
    _frustum2.planes[2].cartesian.z /= t;
@@ -199,7 +195,7 @@ static PBCamera* camera;
    _frustum2.planes[3].cartesian.w = clip.flts[15] - clip.flts[13];
 
    /* Normalize the result */
-   t = sqrt( _frustum2.planes[3].cartesian.x * _frustum2.planes[3].cartesian.x + _frustum2.planes[3].cartesian.y * _frustum2.planes[3].cartesian.y + _frustum2.planes[3].cartesian.z * _frustum2.planes[3].cartesian.z );
+   t = sqrtf( _frustum2.planes[3].cartesian.x * _frustum2.planes[3].cartesian.x + _frustum2.planes[3].cartesian.y * _frustum2.planes[3].cartesian.y + _frustum2.planes[3].cartesian.z * _frustum2.planes[3].cartesian.z );
    _frustum2.planes[3].cartesian.x /= t;
    _frustum2.planes[3].cartesian.y /= t;
    _frustum2.planes[3].cartesian.z /= t;
@@ -212,7 +208,7 @@ static PBCamera* camera;
    _frustum2.planes[4].cartesian.w = clip.flts[15] - clip.flts[14];
 
    /* Normalize the result */
-   t = sqrt( _frustum2.planes[4].cartesian.x * _frustum2.planes[4].cartesian.x + _frustum2.planes[4].cartesian.y * _frustum2.planes[4].cartesian.y + _frustum2.planes[4].cartesian.z * _frustum2.planes[4].cartesian.z );
+   t = sqrtf( _frustum2.planes[4].cartesian.x * _frustum2.planes[4].cartesian.x + _frustum2.planes[4].cartesian.y * _frustum2.planes[4].cartesian.y + _frustum2.planes[4].cartesian.z * _frustum2.planes[4].cartesian.z );
    _frustum2.planes[4].cartesian.x /= t;
    _frustum2.planes[4].cartesian.y /= t;
    _frustum2.planes[4].cartesian.z /= t;
@@ -225,7 +221,7 @@ static PBCamera* camera;
    _frustum2.planes[5].cartesian.w = clip.flts[15] + clip.flts[14];
 
    /* Normalize the result */
-   t = sqrt( _frustum2.planes[5].cartesian.x * _frustum2.planes[5].cartesian.x + _frustum2.planes[5].cartesian.y * _frustum2.planes[5].cartesian.y + _frustum2.planes[5].cartesian.z * _frustum2.planes[5].cartesian.z );
+   t = sqrtf( _frustum2.planes[5].cartesian.x * _frustum2.planes[5].cartesian.x + _frustum2.planes[5].cartesian.y * _frustum2.planes[5].cartesian.y + _frustum2.planes[5].cartesian.z * _frustum2.planes[5].cartesian.z );
    _frustum2.planes[5].cartesian.x /= t;
    _frustum2.planes[5].cartesian.y /= t;
    _frustum2.planes[5].cartesian.z /= t;
@@ -300,20 +296,14 @@ static PBCamera* camera;
 	return left;
 }
 
-// ===========================================================
-// - frustumRight:
-// ===========================================================
-- (GLdouble)frustumRight
-{
+- (GLdouble)frustumRight {
+
 	GLdouble right = -_lookAt.cartesian.x + [self frustumWidth]/2;
 	return right;
 }
 
-// ===========================================================
-// - frustumTop:
-// ===========================================================
-- (GLdouble)frustumTop
-{
+- (GLdouble)frustumTop {
+
 	GLdouble top = -_lookAt.cartesian.y + [self frustumHeight]/2.0f;
 	return top;
 }
@@ -325,13 +315,10 @@ static PBCamera* camera;
 }
 
 
-// ===========================================================
-// - setBounds:
-// ===========================================================
 // for some reason the bounds seem to short - 
 // adding a bit on. Could it be to do with the menu bar?
-- (void)setBounds:(NSRect)boundsRect
-{
+- (void)setBounds:(NSRect)boundsRect {
+
     // Set camera parameters based on the view frame
     // As a default, we put depth == width
 	// NSLog(@"setting frustrum %f", boundsRect.size.width );
@@ -364,40 +351,27 @@ static PBCamera* camera;
     _frustum = newPos;
 }
 
+- (GLdouble)fov {
 
-/*
- *
- */
-- (GLdouble)fov
-{
     return _fov;
 }
 
-/*
- *
- */
-- (void)setFov: (GLdouble)newFov
-{
+- (void)setFov:(GLdouble)newFov {
+	
     if ((_fov = newFov) < 0.1)
         _fov = 0.1;
     else if (_fov > 179.0)
         _fov = 179.0;
 }
 
-// ===========================================================
-// - zoom:
-// ===========================================================
-- (NSPoint*)zoom
-{
+- (NSPoint *)zoom {
+
     return &_zoom;
 }
 
 
-// ===========================================================
-// - setZoom:
-// ===========================================================
-- (void)setZoom:(NSPoint*)newZoom
-{
+- (void)setZoom:(NSPoint*)newZoom {
+
 	if(_zoomEnabled==YES)
 	{
 		if(newZoom->x==0.0f) 
@@ -531,7 +505,7 @@ static PBCamera* camera;
         _pos.radial.r = G3DEPSILON;
 }
 
-- (C3DTMatrix)OPENGLViewFrustum {
+- (C3DTFrustum)OPENGLViewFrustum {
 
 	return _OPENGLViewFrustum;
 }

@@ -30,4 +30,6 @@
 - (BOOL)visible;
 - (void)setVisible:(BOOL)value;
 
+- (void)renderCrapGLText:(NSString *)text at:(NSPoint)point;
+
 @end

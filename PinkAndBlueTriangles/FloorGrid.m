@@ -10,6 +10,11 @@
 #import "GridCell.h"
 #import "PBCamera.h"
 #import "Engine.h"
+#import <OpenGL/CGLMacro.h>
+#import <OpenGL/gl.h>
+
+// GLOBAL
+extern CGLContextObj cgl_ctx; // defined in the view
 
 @interface FloorGrid (Private)
 
@@ -29,21 +34,15 @@
 #pragma mark init methods
 
 
+- (id)init {
 
-//=========================================================== 
-// - init
-//=========================================================== 
-- (id)init
-{
 	return [self initWithSize:500 divisions:10];
 }
 
-//=========================================================== 
-// - initWithSize: divisions:
-//=========================================================== 
-- (id)initWithSize:(int)aValue divisions:(int)divs
-{
-	if ((self = [super init]) != nil) 
+- (id)initWithSize:(int)aValue divisions:(int)divs {
+	
+	self = [super init];
+	if(self) 
 	{
 		_rows = divs; 
 		_columns = divs;
@@ -61,22 +60,16 @@
 	return self;
 }
 
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
-{
+- (void)dealloc {
+
 	[_engine release];
-	_engine = nil;
 	[_rowArray release];
-	_rowArray = nil;
+
 	[super dealloc];
 }
 
-//=========================================================== 
-// - remakeGrid
-//=========================================================== 
 - (void)remakeGrid {
+
 	unsigned currentRows, currentCols;
 	currentRows = [_rowArray count];
 	currentCols = (currentRows > 0) ? [[_rowArray objectAtIndex:0] count] : 0;
@@ -151,19 +144,16 @@
 	}
 }
 
-//=========================================================== 
-// - drawGLCells: atSize: withCamera:
-//=========================================================== 
-- (void)drawGLCells:(NSMutableArray *)rowsToDraw atSize:(float)size withCamera:(PBCamera *)camera
-{
-	unsigned i, j;
+- (void)drawGLCells:(NSMutableArray *)rowsToDraw atSize:(float)size withCamera:(PBCamera *)camera {
+	
+	NSUInteger i, j;
 
 	NSPoint distToAnchorFromTopLeft = NSMakePoint(_anchorIndex.x*_cellSz, _anchorIndex.y*_cellSz);
 	NSPoint topLeftPoint = NSMakePoint(-distToAnchorFromTopLeft.x, -distToAnchorFromTopLeft.y);
-	C3DTMatrix f = [camera OPENGLViewFrustum];
+	C3DTFrustum f = [camera OPENGLViewFrustum];
 	
 	int currentRow;
-	for(i=0; i<_rows; i++)
+	for( i=0; i<_rows; i++ )
 	{
 		currentRow = i;
 	//	currentRow = _rows-1-i;
@@ -174,7 +164,7 @@
 	
 			// draw a sq
 			float xpos = topLeftPoint.x + j*size + (size/2.0);
-			C3DTVector p = {xpos,ypos, 0, 1};
+			C3DTVector p = {{ xpos, ypos, 0, 1}};
 			_C3DTSpheroid s = {p,_cellSz};
 			
 			int visibleFlag = isSphereInFrustum( f, s );
@@ -365,11 +355,8 @@
 }
 
 
-//=========================================================== 
-// - useWith: atTime:
-//=========================================================== 
-- (void)useWith:(PBCamera *)camera atTime:(double)time
-{
+- (void)useWith:(PBCamera *)camera atTime:(double)time {
+
 	[self drawBackingQuad];
 //	double lastTime = _time;
 	_time = time; // _startTime;
@@ -403,6 +390,7 @@
 
 	
 	glPushMatrix();
+	
 //	float rotx = 180;
 //	float roty = 0;
 //	float rotz = 0;
@@ -454,12 +442,12 @@
 	// draw clipping bounds
 	glColor3f(0.0, 1.0, 1.0f);
 	
-	float halfSize = _boundsSize/2.0;
+	float halfSize = _boundsSize/2.0f;
 	glBegin(GL_QUADS);
-		glVertex3f( -halfSize-5, halfSize+5, 0.);	// top left
-		glVertex3f(	-halfSize-5, -halfSize-5, 0.);	// bottom left
-		glVertex3f( halfSize+5 , -halfSize-5, 0.);
-		glVertex3f( halfSize+5, halfSize+5, 0.);
+		glVertex3f( -halfSize-5, halfSize+5, 0.f);	// top left
+		glVertex3f(	-halfSize-5, -halfSize-5, 0.f);	// bottom left
+		glVertex3f( halfSize+5 , -halfSize-5, 0.f);
+		glVertex3f( halfSize+5, halfSize+5, 0.f);
 	glEnd();
 
 
@@ -471,17 +459,15 @@
 	glColor3f(0.5f, 0.5f, 0.5f);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glBegin(GL_QUADS);
-		glVertex3f( -1000, 1000, 0.);	// top left
-		glVertex3f(	-1000, -1000, 0.);	// bottom left
-		glVertex3f( 1000 , -1000, 0.);
-		glVertex3f( 1000, 1000, 0.);
+		glVertex3f( -1000.0f, 1000.0f, 0.0f);	// top left
+		glVertex3f( -1000.0f, -1000.0f, 0.0f);	// bottom left
+		glVertex3f( 1000.0f, -1000.0f, 0.0f);
+		glVertex3f( 1000.0f, 1000.0f, 0.0f);
 	glEnd();		
 }
 
-static float val = 0.0;
-//=========================================================== 
-// - addRow_top
-//=========================================================== 
+static float val = 0.0f;
+
 - (void)addRow_top {
 	NSMutableArray* newRow = [NSMutableArray arrayWithCapacity: _columns];
 	unsigned j;
@@ -502,10 +488,8 @@ static float val = 0.0;
 }
 
 
-//=========================================================== 
-// - addRow_bottom
-//=========================================================== 
 - (void)addRow_bottom {
+
 	NSMutableArray* newRow = [NSMutableArray arrayWithCapacity: _columns];
 	unsigned j;
 	for(j=0; j<_columns; j++){
@@ -525,10 +509,8 @@ static float val = 0.0;
 }
 
 
-//=========================================================== 
-// - addColumn_left
-//=========================================================== 
 - (void)addColumn_left {
+
 	unsigned i;
 	for(i=0; i<_rows; i++){
 		NSMutableArray* thisRow = [_rowArray objectAtIndex: i];
@@ -539,10 +521,8 @@ static float val = 0.0;
 	_columns++;
 }
 
-//=========================================================== 
-// - addColumn_right
-//=========================================================== 
 - (void)addColumn_right {
+
 	unsigned i;
 	for(i=0; i<_rows; i++){
 		NSMutableArray* thisRow = [_rowArray objectAtIndex: i];
@@ -554,10 +534,8 @@ static float val = 0.0;
 	_columns++;
 }
 
-//=========================================================== 
-// - removeRow_top
-//=========================================================== 
 - (void)removeRow_top {
+
 	if(_rows>1){
 //		[_rowArray removeLastObject]; // remember - 0,0 is top left of screen
 		[_rowArray removeObjectAtIndex:0];
@@ -566,10 +544,9 @@ static float val = 0.0;
 	}
 }
 
-//=========================================================== 
-// - removeRow_bottom
-//=========================================================== 
+
 - (void)removeRow_bottom {
+	
 	if(_rows>1){
 //		[_rowArray removeObjectAtIndex:0];
 		[_rowArray removeLastObject]; // remember - 0,0 is top left of screen
@@ -578,10 +555,8 @@ static float val = 0.0;
 	}
 }
 
-//=========================================================== 
-// - removeColumn_left
-//=========================================================== 
 - (void)removeColumn_left {
+
 	if(_columns>1){
 		unsigned i;
 		for(i=0; i<_rows; i++){
@@ -593,10 +568,8 @@ static float val = 0.0;
 	}
 }
 
-//=========================================================== 
-// - removeColumn_right
-//=========================================================== 
 - (void)removeColumn_right {
+	
 	if(_columns>1){
 		unsigned i;
 		for(i=0; i<_rows; i++){

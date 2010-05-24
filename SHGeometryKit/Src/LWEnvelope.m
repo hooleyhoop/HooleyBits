@@ -25,7 +25,7 @@ For example, range( 3 pi, 0, 2 pi, i ) returns pi, with i = 1.
 /*
  * sort of wraps a value to a given range. eg.. 540, 0-360 = 180 where i is the number of times it is outside the range: ie 1
 */
-static float range( CGFloat v, CGFloat lo, CGFloat hi, int *i )
+static CGFloat range( CGFloat v, CGFloat lo, CGFloat hi, int *i )
 {
    CGFloat v2, r = hi - lo;
 

@@ -6,9 +6,6 @@
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "SHooleyObject.h"
-#import <CoreGraphics/CoreGraphics.h>
-
 #define SHAPE_TCB   0
 #define SHAPE_HERM  1
 #define SHAPE_BEZI  2
@@ -22,7 +19,7 @@
 /*
  *
 */
-@interface LWKey : SHooleyObject <NSCoding> {
+@interface LWKey : NSObject <NSCoding> {
 
 	LWKey			*_prev, *_next;
 
@@ -39,7 +36,7 @@
 
 @property (nonatomic, assign) LWKey *prev;
 @property (nonatomic, retain) LWKey *next;
-@property (nonatomic) float tension, continuity, bias;
+@property (nonatomic) CGFloat tension, continuity, bias;
 
 #pragma mark -
 #pragma mark class methods

@@ -9,14 +9,12 @@
 #import "FloorGrid.h"
 #import "GridCell.h"
 
-#import <SenTestingKit/SenTestingKit.h>
-@class FloorGrid;
-
+// GLOBAL
+extern CGLContextObj cgl_ctx; // defined in the view
 
 @interface GridTests : SenTestCase {
 	
-	FloorGrid* _grid;
-	
+	FloorGrid		*_grid;
 }
 
 @end
@@ -24,27 +22,20 @@
 
 @implementation GridTests
 
-// ===========================================================
-// - setUp
-// ===========================================================
-- (void)setUp
-{
+- (void)setUp {
+
 	_grid =  [[FloorGrid alloc] initWithSize:10 divisions:10];
-	STAssertNotNil(_grid, @"GridTests ERROR.. Couldnt make a FloorGrid");
 }
 
-// ===========================================================
-// - tearDown
-// ===========================================================
-- (void)tearDown
-{
+- (void)tearDown {
+
 	[_grid release];
-	_grid = nil;
 }
 
-- (void)testinitWithSize
-{
-	// - (id)initWithSize:(int)aValue divisions:(int)divs
+- (void)testinitWithSize {
+
+// - (id)initWithSize:(int)aValue divisions:(int)divs
+	
 	Class test = NSClassFromString(@"FloorGrid");
 	if(test){
 		NSLog(@"Yay");
@@ -63,9 +54,10 @@
 }
 
 
-- (void)testsetBoundsSize
-{
-	// - (void)setBoundsSize:(unsigned)value;
+- (void)testsetBoundsSize {
+
+// - (void)setBoundsSize:(unsigned)value;
+	
 	[_grid setBoundsSize:20];
 	unsigned cols = [_grid columns];
 	unsigned rows = [_grid rows];
@@ -73,8 +65,8 @@
 	STAssertTrue(rows==20, [NSString stringWithFormat:@"GridTests ERROR.. %i", rows]);
 }
 
-- (void)testsetCellSz
-{
+- (void)testsetCellSz {
+
 	// - (void)setCellSz:(unsigned)value;
 	[_grid setCellSz:5];
 	unsigned cols = [_grid columns];
@@ -83,13 +75,14 @@
 	STAssertTrue(rows==2, [NSString stringWithFormat:@"GridTests ERROR.. %i", rows]);
 }
 
-- (void)testremakeGrid
-{
-	// - (void)remakeGrid;
+- (void)testremakeGrid {
+
+// - (void)remakeGrid;
 	[_grid setBoundsSize:100];
 	[_grid setCellSz:5];
 	[_grid remakeGrid];
 	NSArray *rowArray = [_grid rowArray];
 	STAssertTrue([rowArray count]==20, [NSString stringWithFormat:@"GridTests ERROR.. %i", [rowArray count]]);
 }
+
 @end

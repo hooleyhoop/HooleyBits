@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7311E3E80AD654B2005062FE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7311E3E70AD654B2005062FE /* SenTestingKit.framework */; };
 		7311E5200AD6586D005062FE /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* SHGeometryKit.framework */; };
+		73320CDC11AAB05C00A8CD32 /* LWEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E302011A4428D00C7CDAA /* LWEnvelope.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73320CDD11AAB05C00A8CD32 /* LWEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E302111A4428D00C7CDAA /* LWEnvelope.m */; };
+		73320D0B11AAB1FA00A8CD32 /* LWKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E301C11A4428000C7CDAA /* LWKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73320D0C11AAB1FA00A8CD32 /* LWKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E301D11A4428000C7CDAA /* LWKey.m */; };
 		7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */; };
 		7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734826401004CC5A00E80278 /* SHShared.framework */; };
 		735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
@@ -21,7 +25,7 @@
 		73DE047F11A9AAA900BDF39F /* G3DDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DE048011A9AAAB00BDF39F /* SHGeometryKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D69711A6D39D00A3E4E5 /* C3DTMath.m */; };
-		73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7333F34211A69610004F4CAC /* C3DTMath.h */; };
+		73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7333F34211A69610004F4CAC /* C3DTMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73EB5E6C11A5624900B612D6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
 		73EB5E6D11A5624A00B612D6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		73EB5E6E11A5624B00B612D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
@@ -591,6 +595,8 @@
 				73DE047F11A9AAA900BDF39F /* G3DDefs.h in Headers */,
 				73DE048011A9AAAB00BDF39F /* SHGeometryKit.h in Headers */,
 				73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */,
+				73320CDC11AAB05C00A8CD32 /* LWEnvelope.h in Headers */,
+				73320D0B11AAB1FA00A8CD32 /* LWKey.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +787,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */,
+				73320CDD11AAB05C00A8CD32 /* LWEnvelope.m in Sources */,
+				73320D0C11AAB1FA00A8CD32 /* LWKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

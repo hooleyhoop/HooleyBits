@@ -21,7 +21,7 @@
 //#import <SHGeometryKit/G3DMatrix4f.h>
 //#import <SHGeometryKit/G3DQuaternionf.h>
 //#import <SHGeometryKit/G3DQuaterniond.h>
-#import <SHGeometryKit/G3DTuple2d.h>
+//#import <SHGeometryKit/G3DTuple2d.h>
 //#import <SHGeometryKit/G3DTuple3d.h>
 //#import <SHGeometryKit/G3DTuple4d.h>
 //#import <SHGeometryKit/G3DTuple2f.h>
@@ -52,11 +52,11 @@
 //#import <SHGeometryKit/SH2dBezierPt.h>
 //#import <SHGeometryKit/SH2DPolyQuadraticBezier.h>
 
-//#import <SHGeometryKit/C3DTMath.h>
+#import <SHGeometryKit/C3DTMath.h>
 #import <SHGeometryKit/C3DTTypes.h>
 
-//#import <SHGeometryKit/LWKey.h>
-//#import <SHGeometryKit/LWEnvelope.h>
+#import <SHGeometryKit/LWKey.h>
+#import <SHGeometryKit/LWEnvelope.h>
 
 
 

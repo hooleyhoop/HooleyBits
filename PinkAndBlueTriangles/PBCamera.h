@@ -15,13 +15,13 @@
     C3DTVector	_lookAt;		// Looking at this point
     C3DTVector	_frustum;		// height,width & depth of the view
 	
-	C3DTMatrix _OPENGLViewFrustum; // so far i havent compared this to the one above. This one is obtained from opengl
-	C3DTMatrix _frustum2;
+	C3DTFrustum	_OPENGLViewFrustum; // so far i havent compared this to the one above. This one is obtained from opengl
+	C3DTFrustum	_frustum2;
 
-	GLfloat	_fov;			// Angle of the view
-	NSPoint	_zoom;			// ortho zoom
-	BOOL		_zoomEnabled;	
-	BOOL		_useOrtho;		// Use orthographic view instead of perspective
+	GLfloat		_fov;			// Angle of the view
+	NSPoint		_zoom;			// ortho zoom
+	BOOL			_zoomEnabled;	
+	BOOL			_useOrtho;		// Use orthographic view instead of perspective
 	
 }
 
@@ -46,22 +46,23 @@
 - (GLdouble)frustumBottom;
 
 - (void)setBounds:(NSRect)boundsRect;
-- (void)setFrustumWidth:(GLdouble)w height: (GLdouble)h depth: (GLdouble)d;
+- (void)setFrustumWidth:(GLdouble)w height:(GLdouble)h depth:(GLdouble)d;
 - (GLdouble)fov;
 - (void)setFov:(GLdouble)newFov;
 
 - (NSPoint*)zoom;
 - (void)setZoom:(NSPoint*)newZoom;
-- (void) setXZoom:(double)xZoom yZoom:(double) yZoom;
+- (void) setXZoom:(double)xZoom yZoom:(double)yZoom;
 
 - (C3DTVector)pos;
 - (void)setPos:(C3DTVector)newPos;
-- (void)setPosX: (float)x Y: (float)y Z: (float)z;
+- (void)setPosX:(float)x Y:(float)y Z:(float)z;
 
 - (C3DTVector)lookAt;
 - (void)setLookAt:(C3DTVector)newPos;
 - (void)setLookAtX:(GLdouble)x Y:(GLdouble)y Z:(GLdouble)z;
 - (void)setUseOrtho:(BOOL)ortho;
 
-- (C3DTMatrix)OPENGLViewFrustum;
+- (C3DTFrustum)OPENGLViewFrustum;
+
 @end

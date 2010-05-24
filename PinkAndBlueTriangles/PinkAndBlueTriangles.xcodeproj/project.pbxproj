@@ -11,6 +11,16 @@
 		731387DF0C676EF3005657E5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731387CA0C676EA9005657E5 /* GLUT.framework */; };
 		7318AD770C479C180018E8C7 /* PB3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318AD760C479C180018E8C7 /* PB3DView.m */; };
 		7318AF2A0C47A80B0018E8C7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318AF290C47A80B0018E8C7 /* OpenGL.framework */; };
+		7328AD4611AAB92400025001 /* GridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7328AD4511AAB92400025001 /* GridTests.m */; };
+		7328AD4F11AAB9C100025001 /* FloorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE311A44F5000A6BA88 /* FloorGrid.m */; };
+		7328AD5211AAB9CB00025001 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318AF290C47A80B0018E8C7 /* OpenGL.framework */; };
+		7328AD5311AAB9CE00025001 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F9211A4530200A6BA88 /* Accelerate.framework */; };
+		7328AD5611AAB9D600025001 /* PBCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE011A44F4600A6BA88 /* PBCamera.m */; };
+		7328AD5911AAB9DF00025001 /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */; };
+		7328AD6A11AABA3900025001 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE611A44F5900A6BA88 /* GridCell.m */; };
+		7328AD6D11AABA4300025001 /* Engine.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE911A44F6300A6BA88 /* Engine.m */; };
+		7328ADA211AABF7800025001 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7328ADA111AABF7800025001 /* OpenGL.framework */; };
+		7328AEDA11AACE1D00025001 /* PB3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318AD760C479C180018E8C7 /* PB3DView.m */; };
 		735C5EDB11A44F2A00A6BA88 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EDA11A44F2A00A6BA88 /* AppControl.m */; };
 		735C5EE111A44F4600A6BA88 /* PBCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE011A44F4600A6BA88 /* PBCamera.m */; };
 		735C5EE411A44F5000A6BA88 /* FloorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE311A44F5000A6BA88 /* FloorGrid.m */; };
@@ -20,7 +30,6 @@
 		735C5F3011A4500200A6BA88 /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */; };
 		735C5F9311A4530200A6BA88 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F9211A4530200A6BA88 /* Accelerate.framework */; };
 		735C5FCC11A453E400A6BA88 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5FCB11A453E400A6BA88 /* OpenCL.framework */; };
-		7397471D0C61EC500016221A /* GridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397471C0C61EC500016221A /* GridTests.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
@@ -67,6 +76,8 @@
 		7318AD750C479C180018E8C7 /* PB3DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PB3DView.h; sourceTree = "<group>"; };
 		7318AD760C479C180018E8C7 /* PB3DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PB3DView.m; sourceTree = "<group>"; };
 		7318AF290C47A80B0018E8C7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		7328AD4511AAB92400025001 /* GridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridTests.m; path = Tests/GridTests.m; sourceTree = "<group>"; };
+		7328ADA111AABF7800025001 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		735C5EA411A44D9D00A6BA88 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
 		735C5EA511A44D9D00A6BA88 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
 		735C5EA611A44D9D00A6BA88 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -95,9 +106,6 @@
 		735C5F9211A4530200A6BA88 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		735C5FCB11A453E400A6BA88 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = /System/Library/Frameworks/OpenCL.framework; sourceTree = "<absolute>"; };
 		7397470A0C61EBC90016221A /* PinkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7397471B0C61EC500016221A /* GridTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridTests.h; sourceTree = "<group>"; };
-		7397471C0C61EC500016221A /* GridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridTests.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* PinkAndBlueTriangles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinkAndBlueTriangles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -107,6 +115,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				731387CB0C676EA9005657E5 /* GLUT.framework in Frameworks */,
+				7328AD5211AAB9CB00025001 /* OpenGL.framework in Frameworks */,
+				7328AD5311AAB9CE00025001 /* Accelerate.framework in Frameworks */,
+				7328AD5911AAB9DF00025001 /* SHGeometryKit.framework in Frameworks */,
+				7328ADA211AABF7800025001 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +198,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				735C5F2711A4500000A6BA88 /* SHGeometryKit.xcodeproj */,
+				7328ADA111AABF7800025001 /* OpenGL.framework */,
 			);
 			name = PinkAndBlueTriangles;
 			sourceTree = "<group>";
@@ -201,7 +214,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 			);
@@ -250,8 +262,7 @@
 		739747040C61EBB90016221A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7397471B0C61EC500016221A /* GridTests.h */,
-				7397471C0C61EC500016221A /* GridTests.m */,
+				7328AD4511AAB92400025001 /* GridTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -378,7 +389,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7397471D0C61EC500016221A /* GridTests.m in Sources */,
+				7328AD4611AAB92400025001 /* GridTests.m in Sources */,
+				7328AD4F11AAB9C100025001 /* FloorGrid.m in Sources */,
+				7328AD5611AAB9D600025001 /* PBCamera.m in Sources */,
+				7328AD6A11AABA3900025001 /* GridCell.m in Sources */,
+				7328AD6D11AABA4300025001 /* Engine.m in Sources */,
+				7328AEDA11AACE1D00025001 /* PB3DView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,34 +449,13 @@
 /* Begin XCBuildConfiguration section */
 		7397470D0C61EBCA0016221A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5EB011A44D9D00A6BA88 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				ARCHS = i386;
 				BUNDLE_LOADER = "$(CONFIGURATION_BUILD_DIR)/PinkAndBlueTriangles.app/Contents/MacOS/PinkAndBlueTriangles";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(value)",
-					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "PinkTests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
+				GCC_VERSION = "";
 				PRODUCT_NAME = PinkTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -497,6 +492,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 735C5EAA11A44D9D00A6BA88 /* Target-Executable.xcconfig */;
 			buildSettings = {
+				GCC_VERSION = 4.2;
 				PRODUCT_NAME = PinkAndBlueTriangles;
 				SDKROOT = "";
 			};

@@ -10,7 +10,8 @@
 #import <OpenGL/CGLMacro.h>
 #import <GLUT/glut.h>
 
-extern CGLContextObj cgl_ctx;
+// GLOBAL
+extern CGLContextObj cgl_ctx; // defined in the view
 
 /*
  *
@@ -22,23 +23,22 @@ extern CGLContextObj cgl_ctx;
 #pragma mark class methods
 
 #pragma mark init methods
-//=========================================================== 
-// - init
-//=========================================================== 
-- (id)init
-{
+
+- (id)init {
+
 	/* random color */
 	return [self initWithColourR:(float)random()/RAND_MAX g:(float)random()/RAND_MAX b:(float)random()/RAND_MAX ];
 }
 
-- (id)initWithColourR:(float)r g:(float)g b:(float)b
-{
-	if ((self = [super init]) != nil) 
-	{
+- (id)initWithColourR:(float)r g:(float)g b:(float)b {
+	
+	self = [super init];
+	if(self) {
+	
 		_red = r;
 		_green = g;
 		_blue = b;
-		fillColour = [[NSColor colorWithDeviceRed:_red green:_green blue:_blue alpha:1.0] retain];
+		fillColour = [[NSColor colorWithDeviceRed:_red green:_green blue:_blue alpha:1.0f] retain];
 	}
 	return self;
 }
@@ -55,32 +55,27 @@ extern CGLContextObj cgl_ctx;
 }
 
 #pragma mark action methods
-//=========================================================== 
-// - drawAtPoint:
-//=========================================================== 
-- (void)drawAtPoint:(NSPoint)p cellSize:(int)size
-{
+
+- (void)drawAtPoint:(NSPoint)p cellSize:(int)size {
+
 	if(_visible){
 		NSPoint centrePos = p;
 		int width = size;
 		int height = size;
 		
 		// draw a sq - anti clockwise from top left
-		float xpos = centrePos.x - width/2.0;
-		float ypos = centrePos.y - height/2.0;
+		float xpos = centrePos.x - width/2.0f;
+		float ypos = centrePos.y - height/2.0f;
 
 		[fillColour set];
 		NSRectFill( NSMakeRect( xpos, ypos, width, height) );
 	}	
 }
 
-//=========================================================== 
-// - drawAtPoint:
-//=========================================================== 
-- (void)useAtPoint:(NSPoint)p cellSize:(int)size row:(int)r col:(int)c
-{
+- (void)useAtPoint:(NSPoint)p cellSize:(int)size row:(int)r col:(int)c {
+
 	if(_visible){
-		double offset = size/2.0;
+		double offset = size/2.0f;
 
 		// draw a sq - anti clockwise from top left
 	//	float xpos = centrePos.x - width/2.0
@@ -89,8 +84,8 @@ extern CGLContextObj cgl_ctx;
 	//	NSRectFill( NSMakeRect( xpos, ypos, width, height) )
 		
 		glPushMatrix();
-		if ((p.x != 0.0) || (p.y != 0.0) ) {
-			glTranslatef(p.x, p.y, 0.0);
+		if ((p.x != 0.0f) || (p.y != 0.0f) ) {
+			glTranslatef(p.x, p.y, 0.0f);
 		}
 
 		// Scaling
@@ -101,10 +96,10 @@ extern CGLContextObj cgl_ctx;
 		glColor3f(_red, _green, _blue);
 
 		glBegin(GL_QUADS);
-			glVertex3f( -offset, offset, 0); // top left
-			glVertex3f(	-offset, -offset, 0); // bottom left
-			glVertex3f( offset , -offset, 0);
-			glVertex3f( offset , offset, 0);
+			glVertex3f( -offset, offset, 0.0f); // top left
+			glVertex3f( -offset, -offset, 0.0f); // bottom left
+			glVertex3f( offset , -offset, 0.0f);
+			glVertex3f( offset , offset, 0.0f);
 		glEnd();
 		
 		[self renderCrapGLText:[NSString stringWithFormat:@"[%i,%i]", r,c] at:NSMakePoint(-offset,-offset)];
@@ -116,11 +111,12 @@ extern CGLContextObj cgl_ctx;
 
 // Cheap and nasty text, for quick hacks only.  I mean it : this is really fucking slow.
 - (void)renderCrapGLText:(NSString *)text at:(NSPoint)point {
+	
     int len = [text length];
     glColor3f(1,1,1);
     glRasterPos2f(point.x, point.y);
 	int i;
-    for(i  = 0; i < len; i++) {
+    for( i=0; i<len; i++ ) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, [text characterAtIndex:i]);
     }
 }

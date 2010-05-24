@@ -21,29 +21,21 @@
 #pragma mark class methods
 
 #pragma mark init methods
-//=========================================================== 
-// - init
-//=========================================================== 
-- (id)init
-{
-	if ((self = [super init]) != nil) 
+- (id)init {
+
+	self = [super init];
+	if(self) 
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:NSApplicationDidFinishLaunchingNotification object:NSApp];
 	}
 	return self;
 }
 
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
-{
+- (void)dealloc {
+
 	[super dealloc];
 }
 
-//=========================================================== 
-// - awakeFromNib
-//=========================================================== 
 - (void)awakeFromNib
 {
 		if (!NSClassFromString(@"FScriptMenuItem"))	
@@ -65,9 +57,6 @@
 		}
 }
 
-//=========================================================== 
-// - applicationDidFinishLaunching:
-//=========================================================== 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification 
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:NSApp];
