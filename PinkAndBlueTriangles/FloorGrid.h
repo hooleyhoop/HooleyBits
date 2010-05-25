@@ -6,19 +6,19 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-@class Engine, PBCamera;
+@class Engine, FloorGridStorage, PBCamera;
 
 /*
  *
 */
 @interface FloorGrid : NSObject {
 
-	unsigned _rows;
-	unsigned _columns;
-	unsigned _boundsSize;
-	unsigned _cellSz;
+	NSUInteger			_rows;
+	NSUInteger			_columns;
+	NSUInteger			_boundsSize;
+	NSUInteger			_cellSz;
 	
-	NSMutableArray* _rowArray;
+	FloorGridStorage *_cellStore;
 
 	NSPoint _translation;
 	NSPoint _anchorIndex;
@@ -34,14 +34,13 @@
 
 }
 
-- (id)initWithSize:(int)aValue divisions:(int)divs;
+- (id)initWithSize:(NSUInteger)aValue divisions:(NSUInteger)divs;
 
 #pragma mark action methods
 - (void)remakeGrid;
-- (void)moveForwardAtTime:(double)time;
 
-- (void)drawAtPoint:(NSPoint)p;
-- (void)useWith:(PBCamera *)camera atTime:(double)time;
+//- (void)drawAtPoint:(NSPoint)p;
+//- (void)useWith:(PBCamera *)camera atTime:(double)time;
 
 
 - (void)addRow_top;
@@ -54,20 +53,23 @@
 - (void)removeColumn_left;
 - (void)removeColumn_right;
 
-- (unsigned)rows;
-- (void)setRows:(unsigned)value;
-- (unsigned)columns;
-- (void)setColumns:(unsigned)value;
-- (unsigned)boundsSize;
-- (void)setBoundsSize:(unsigned)value;
-- (unsigned)cellSz;
-- (void)setCellSz:(unsigned)value;
+- (NSUInteger)rows;
+//- (void)setRows:(unsigned)value;
+//
+- (NSUInteger)columns;
+//- (void)setColumns:(unsigned)value;
+
+- (NSUInteger)boundsSize;
+- (void)setBoundsSize:(NSUInteger)value;
+
+- (NSUInteger)cellSz;
+- (void)setCellSz:(NSUInteger)value;
 	
 - (float)xVelocity;
 - (void)setXVelocity:(float)value;
 - (float)yVelocity;
 - (void)setYVelocity:(float)value;
 
-- (NSArray *)rowArray;
+// - (NSArray *)rowArray;
 
 @end

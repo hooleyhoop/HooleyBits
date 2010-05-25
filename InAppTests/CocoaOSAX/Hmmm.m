@@ -73,6 +73,8 @@ void getFirstParamPoint( const AppleEvent *message, CGPoint *p ) {
 //Apple event handler, using the AEKeyword keyDirectObject
 //>>Despite the fact that their constants are the same, I recommend keyAEResult instead. ;)
 
+>> SEE CGEventPostToPSN <<
+
 OSErr mouseClickAt_Handler( const AppleEvent *message, AppleEvent *reply, long refCon ){
 
 	OSErr result = noErr;

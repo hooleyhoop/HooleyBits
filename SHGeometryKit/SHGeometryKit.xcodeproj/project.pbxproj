@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		7311E3E80AD654B2005062FE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7311E3E70AD654B2005062FE /* SenTestingKit.framework */; };
 		7311E5200AD6586D005062FE /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* SHGeometryKit.framework */; };
+		7328AF2C11AAD59500025001 /* C3DTMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7328AF2B11AAD59500025001 /* C3DTMathTests.m */; };
+		7328AF3B11AAD6CB00025001 /* G3DFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EF411A43F8900C7CDAA /* G3DFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7328AF3C11AAD6CB00025001 /* G3DFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351FA0811A54CA000BF4D6F /* G3DFunctions.m */; };
 		73320CDC11AAB05C00A8CD32 /* LWEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E302011A4428D00C7CDAA /* LWEnvelope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73320CDD11AAB05C00A8CD32 /* LWEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E302111A4428D00C7CDAA /* LWEnvelope.m */; };
 		73320D0B11AAB1FA00A8CD32 /* LWKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E301C11A4428000C7CDAA /* LWKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73320D0C11AAB1FA00A8CD32 /* LWKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 730E301D11A4428000C7CDAA /* LWKey.m */; };
-		7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */; };
 		7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734826401004CC5A00E80278 /* SHShared.framework */; };
 		735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
 		735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
@@ -24,12 +26,12 @@
 		73DE03E911A9A72700BDF39F /* C3DTTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FAB111A5516C00BF4D6F /* C3DTTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DE047F11A9AAA900BDF39F /* G3DDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73DE048011A9AAAB00BDF39F /* SHGeometryKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7399D69711A6D39D00A3E4E5 /* C3DTMath.m */; };
 		73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7333F34211A69610004F4CAC /* C3DTMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73EB5E6C11A5624900B612D6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
 		73EB5E6D11A5624A00B612D6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		73EB5E6E11A5624B00B612D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
 		73EB5E6F11A5624B00B612D6 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
+		73F1C29211ABDBB00052CA20 /* C3DTMath.c in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C29111ABDBB00052CA20 /* C3DTMath.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +213,7 @@
 		7311EB010AD6789C005062FE /* SH2DPolyQuadraticBezier.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SH2DPolyQuadraticBezier.h; sourceTree = "<group>"; };
 		7311EB140AD67D79005062FE /* SH2dBezierPt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2dBezierPt.h; sourceTree = "<group>"; };
 		7311EB150AD67D79005062FE /* SH2dBezierPt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2dBezierPt.m; sourceTree = "<group>"; };
+		7328AF2B11AAD59500025001 /* C3DTMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = C3DTMathTests.m; path = Tests/C3DTMathTests.m; sourceTree = "<group>"; };
 		7333F34211A69610004F4CAC /* C3DTMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DTMath.h; path = Src/C3DTMath.h; sourceTree = "<group>"; };
 		733736F40ADE46BF000792C9 /* FindRoots x=0 y= */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FindRoots x=0 y="; sourceTree = "<group>"; };
 		734826381004CC5A00E80278 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -227,7 +230,6 @@
 		735C62D711A53E2800A6BA88 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		736C739D0B4BF3F600D8D0D1 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		7399D69711A6D39D00A3E4E5 /* C3DTMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = C3DTMath.m; path = Src/C3DTMath.m; sourceTree = "<group>"; };
 		73AB7C8611A57C9100EDFDED /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		73C665E20B0A3B3D00B1AC57 /* SH2dCatmull-Rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SH2dCatmull-Rom.h"; sourceTree = "<group>"; };
 		73C665E30B0A3B3D00B1AC57 /* SH2dCatmull-Rom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SH2dCatmull-Rom.m"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 		73EB5E1511A55F7600B612D6 /* ByteAlignmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ByteAlignmentTests.m; path = Tests/ByteAlignmentTests.m; sourceTree = "<group>"; };
 		73EB7B380B0B1E5C006AD5A5 /* SH2DTCBSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SH2DTCBSpline.h; sourceTree = "<group>"; };
 		73EB7B390B0B1E5C006AD5A5 /* SH2DTCBSpline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SH2DTCBSpline.m; sourceTree = "<group>"; };
+		73F1C29111ABDBB00052CA20 /* C3DTMath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = C3DTMath.c; path = Src/C3DTMath.c; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* SHGeometryKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SHGeometryKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -376,6 +379,7 @@
 				730E2E5C11A43DB600C7CDAA /* SH2dPolyQuadraticTests.m */,
 				730E2E5E11A43DBB00C7CDAA /* LWEnvelopeTests.m */,
 				730E2E6011A43DBE00C7CDAA /* LWKeyTests.m */,
+				7328AF2B11AAD59500025001 /* C3DTMathTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -546,7 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				7333F34211A69610004F4CAC /* C3DTMath.h */,
-				7399D69711A6D39D00A3E4E5 /* C3DTMath.m */,
+				73F1C29111ABDBB00052CA20 /* C3DTMath.c */,
 				7351FAB111A5516C00BF4D6F /* C3DTTypes.h */,
 			);
 			name = "C3DT to merge";
@@ -597,6 +601,7 @@
 				73DE049011A9DE7300BDF39F /* C3DTMath.h in Headers */,
 				73320CDC11AAB05C00A8CD32 /* LWEnvelope.h in Headers */,
 				73320D0B11AAB1FA00A8CD32 /* LWKey.h in Headers */,
+				7328AF3B11AAD6CB00025001 /* G3DFunctions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +783,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7333F33511A695E6004F4CAC /* ByteAlignmentTests.m in Sources */,
+				7328AF2C11AAD59500025001 /* C3DTMathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,9 +791,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73DE048F11A9DE7200BDF39F /* C3DTMath.m in Sources */,
 				73320CDD11AAB05C00A8CD32 /* LWEnvelope.m in Sources */,
 				73320D0C11AAB1FA00A8CD32 /* LWKey.m in Sources */,
+				7328AF3C11AAD6CB00025001 /* G3DFunctions.m in Sources */,
+				73F1C29211ABDBB00052CA20 /* C3DTMath.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,23 +843,12 @@
 		};
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 730E2E4511A438C300C7CDAA /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SHGeometryKit_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = /Users/Shared/Library/PrivateFrameworks;
-				PREBINDING = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_VERSION = "";
 				PRODUCT_NAME = SHGeometryKit;
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -893,30 +888,17 @@
 		};
 		7311E2DC0AD64FB4005062FE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 730E2E4A11A438C300C7CDAA /* Target-TestBundle.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(value)",
-					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+					/Users/Shared/Library/PrivateFrameworks,
+					/Developer/Library/Frameworks,
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "SHGeometryKitTest-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
+				GCC_VERSION = "";
 				PRODUCT_NAME = SHGeometryKitTest;
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};

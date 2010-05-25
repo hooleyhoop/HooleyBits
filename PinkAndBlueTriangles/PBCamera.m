@@ -358,10 +358,10 @@ static PBCamera* camera;
 
 - (void)setFov:(GLdouble)newFov {
 	
-    if ((_fov = newFov) < 0.1)
-        _fov = 0.1;
-    else if (_fov > 179.0)
-        _fov = 179.0;
+    if((_fov = newFov) < 0.1f)
+        _fov = 0.1f;
+    else if (_fov > 179.0f)
+        _fov = 179.0f;
 }
 
 - (NSPoint *)zoom {
@@ -460,8 +460,8 @@ static PBCamera* camera;
 - (void)rotateToAzimuth:(float)theta elevation:(float)phi distance:(float)d {
 	
     //C3DTVector	newPos	= cartesianToSpherical(vectorSubtract(_pos, _lookAt));
-    C3DTVector	newPos	= _pos;
-    float		pi2		= 2.0 * M_PI;
+    C3DTVector newPos	= _pos;
+    float pi2 = 2.0f * M_PI;
 
     // Limit angles to +/- 180 degrees
     if ((newPos.radial.theta = theta) > M_PI)
@@ -501,7 +501,7 @@ static PBCamera* camera;
 
 - (void)setDistance:(float)d {
 
-    if ((_pos.radial.r = d) <= 0.0)
+    if ((_pos.radial.r = d) <= 0.0f )
         _pos.radial.r = G3DEPSILON;
 }
 

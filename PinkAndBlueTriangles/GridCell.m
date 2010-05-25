@@ -113,7 +113,7 @@ extern CGLContextObj cgl_ctx; // defined in the view
 - (void)renderCrapGLText:(NSString *)text at:(NSPoint)point {
 	
     int len = [text length];
-    glColor3f(1,1,1);
+    glColor3f( 1.0f, 1.0f, 1.0f );
     glRasterPos2f(point.x, point.y);
 	int i;
     for( i=0; i<len; i++ ) {

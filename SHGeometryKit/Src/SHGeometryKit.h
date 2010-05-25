@@ -43,7 +43,7 @@
 #import <SHGeometryKit/G3DDefs.h>
 //#import <SHGeometryKit/G3DIntersecting.h>
 
-//#import <SHGeometryKit/G3DFunctions.h>
+#import <SHGeometryKit/G3DFunctions.h>
 //#import <SHGeometryKit/G3DQuatFunc.h>
 //#import <SHGeometryKit/G3DMatrixFunc.h>
 //#import <SHGeometryKit/G3DVectorFunc.h>

@@ -144,7 +144,7 @@ static CGFloat outgoing( LWKey *key0, LWKey *key1 )
 	CGFloat a, b, d, t, out;
 
 	CGFloat time0 = [key0 time], time1 = [key1 time];
-	int shape0 = [key0 shape];
+	NSUInteger shape0 = [key0 shape];
 	CGFloat val0 = [key0 value], val1 = [key1 value];
 	CGFloat tension0 = [key0 tension];
 	CGFloat continuity0 = [key0 continuity];
@@ -221,7 +221,7 @@ static CGFloat incoming( LWKey *key0, LWKey *key1 )
 	CGFloat a, b, d, t, in;
 
 	CGFloat time0 = [key0 time], time1 = [key1 time];
-	int shape1 = [key1 shape];
+	NSUInteger shape1 = [key1 shape];
 	CGFloat val0 = [key0 value], val1 = [key1 value];
 	CGFloat tension1=[key1 tension];
 	CGFloat continuity1 = [key1 continuity];
@@ -298,7 +298,7 @@ static CGFloat bez2( LWKey* key0, LWKey* key1, CGFloat time ) // t between 0.0-1
 {
 	CGFloat x, y, t, t0 = 0.0f, t1 = 1.0f;
 	CGFloat time0 = [key0 time], time1 = [key1 time];
-	int shape0 = [key0 shape];
+	NSUInteger shape0 = [key0 shape];
 	CGFloat val0 = [key0 value], val1 = [key1 value];
 	CGFloat *param0 = [key0 param], *param1 = [key1 param];
 	
@@ -862,7 +862,7 @@ envelope at that time.
 	CGFloat* vertexPositions = malloc(sizeof(CGFloat)*numberOfFrames*2);
 	[self getPts_Start:prevTime end:nextTime count:numberOfFrames into:vertexPositions];
 	int i;
-	float xPos, prevXpos = vertexPositions[0];
+	CGFloat xPos, prevXpos = vertexPositions[0];
 	for(i=1;i<numberOfFrames;i++)
 	{
 		xPos = vertexPositions[i*2];
@@ -947,15 +947,15 @@ envelope at that time.
 
 #pragma mark NSCoding methods
 
-- (void)encodeWithCoder:(NSCoder *)coder
-{
+- (void)encodeWithCoder:(NSCoder *)coder {
+
 	// NSLog(@"LWEnvelope: encodeWithCoder");
 	// [super encodeWithCoder:coder];
 	[coder encodeObject:_key forKey:@"_key"];
-    [coder encodeInt:_nkeys forKey:@"_nkeys"];
+	[coder encodeInt:_nkeys forKey:@"_nkeys"];
 	[coder encodeArrayOfObjCType:@encode(int) count:2 at:_behavior];
 	[coder encodeObject:_name forKey:@"_name"];	
-    return;
+	return;
 }
 
 - (id)initWithCoder:(NSCoder *)aCoder {

@@ -64,20 +64,20 @@ typedef union {
 //#endif
 	
 	// On Clang you dont need the GLfloat flts[4] as you can do vflts[0], etc, but this doesnt work on GCC
-    GLfloat flts[4];
+	GLfloat flts[4];
 	vFloat vflts;	// vFloat is from accelerate, it is 4 floats
-    struct {
-        GLfloat	r;
-        GLfloat	theta;
-        GLfloat	phi;
-        GLfloat	w;
-    } radial;
-    struct {
-        GLfloat	x;
-        GLfloat	y;
-        GLfloat	z;
-        GLfloat	w;
-    } cartesian;
+	struct {
+		GLfloat r;
+		GLfloat theta;
+		GLfloat phi;
+		GLfloat w;
+	} radial;
+	struct {
+		GLfloat x;
+		GLfloat y;
+		GLfloat z;
+		GLfloat w;
+	} cartesian;
 } C3DTVector __attribute__((__aligned__(16)));
 
 

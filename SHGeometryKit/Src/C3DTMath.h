@@ -75,6 +75,7 @@ extern "C" {
 
 // seems like extern int is the way to inline?
 extern inline float vectorLength( const C3DTVector v );
+extern inline C3DTVector vectorNormalize( C3DTVector v );
 	
 #pragma mark -
 #pragma mark OLD
@@ -128,14 +129,6 @@ extern inline float vectorLength( const C3DTVector v );
      */
     inline C3DTVector vectorCrossProductTri(const C3DTVector a, const C3DTVector b, const C3DTVector c);
 
-
-    /*!
-     @function vectorNormalize
-     @discussion Calculates a "normalized" version of the vector, i.e. a vector with the same orientation but length 1.0
-     @param      v The vector
-     @result     The normalized vector
-     */
-    inline C3DTVector vectorNormalize(C3DTVector v);
 
     /*!
      @function vectorNormal

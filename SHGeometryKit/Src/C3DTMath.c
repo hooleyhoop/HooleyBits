@@ -43,6 +43,41 @@
 #import "C3DTMath.h"
 #import <Accelerate/Accelerate.h>
 
+#pragma mark -
+#pragma mark REWriting
+
+// Without vec is much faster
+// Clang is faster than GCC
+// inline does nothing
+
+//#define USEVEC 1
+
+inline float vectorLength( const C3DTVector v ) {
+
+#ifdef USEVEC
+	return vSnorm2( 4, &v.vflts );
+#else
+	return sqrtf( v.flts[0]*v.flts[0] + v.flts[1]*v.flts[1] + v.flts[2]*v.flts[2] );
+#endif
+}
+
+inline C3DTVector vectorNormalize( C3DTVector v ) {
+
+	float vecLength = vectorLength(v);
+	if(vecLength==0.0f){
+		return v;
+	}
+	C3DTVector r;
+
+#ifdef USEVEC
+    vDSP_vsdiv( (float *)&v.flts, 1, &vecLength, (float *)&r.flts, 1, 4);
+#else	
+	r.cartesian.x = v.cartesian.x / vecLength;
+	r.cartesian.y = v.cartesian.y / vecLength;
+	r.cartesian.z = v.cartesian.z / vecLength;
+#endif
+	return r;
+}
 
 /*************************************
 * V E C T O R   O P E R A T I O N S
@@ -96,25 +131,6 @@ inline C3DTVector vectorCrossProductTri(const C3DTVector a, const C3DTVector b, 
 	return vectorCrossProduct(vectorSubtract(b,a), vectorSubtract(c,a));
 }
 
-float vectorLength( const C3DTVector v ) {
-    return sqrtf(v.flts[0]*v.flts[0] + v.flts[1]*v.flts[1] + v.flts[2]*v.flts[2] );
-}
-
-C3DTVector vectorNormalize(C3DTVector v) {
-
-    float dist = vectorLength(v);
-    C3DTVector r;
-
-    if (dist == 0.0f) {
-        return v;
-    }
-
-    r.cartesian.x = v.cartesian.x / dist;
-    r.cartesian.y = v.cartesian.y / dist;
-    r.cartesian.z = v.cartesian.z / dist;
-
-    return r;
-}
 
 // Normal of 2 vectors (0 centered)
 inline C3DTVector vectorNormal(const C3DTVector a, const C3DTVector b)

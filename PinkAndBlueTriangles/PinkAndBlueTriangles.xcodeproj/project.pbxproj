@@ -11,7 +11,6 @@
 		731387DF0C676EF3005657E5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731387CA0C676EA9005657E5 /* GLUT.framework */; };
 		7318AD770C479C180018E8C7 /* PB3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7318AD760C479C180018E8C7 /* PB3DView.m */; };
 		7318AF2A0C47A80B0018E8C7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318AF290C47A80B0018E8C7 /* OpenGL.framework */; };
-		7328AD4611AAB92400025001 /* GridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7328AD4511AAB92400025001 /* GridTests.m */; };
 		7328AD4F11AAB9C100025001 /* FloorGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 735C5EE311A44F5000A6BA88 /* FloorGrid.m */; };
 		7328AD5211AAB9CB00025001 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7318AF290C47A80B0018E8C7 /* OpenGL.framework */; };
 		7328AD5311AAB9CE00025001 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F9211A4530200A6BA88 /* Accelerate.framework */; };
@@ -30,6 +29,12 @@
 		735C5F3011A4500200A6BA88 /* SHGeometryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F2D11A4500000A6BA88 /* SHGeometryKit.framework */; };
 		735C5F9311A4530200A6BA88 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5F9211A4530200A6BA88 /* Accelerate.framework */; };
 		735C5FCC11A453E400A6BA88 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C5FCB11A453E400A6BA88 /* OpenCL.framework */; };
+		73F1C49211AC18400052CA20 /* FloorGridStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C49111AC18400052CA20 /* FloorGridStorage.m */; };
+		73F1C49311AC18400052CA20 /* FloorGridStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C49111AC18400052CA20 /* FloorGridStorage.m */; };
+		73F1C4C111AC197E0052CA20 /* FloorGridStorageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4C011AC197E0052CA20 /* FloorGridStorageTests.m */; };
+		73F1C62611AC3A1A0052CA20 /* FloorGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4AB11AC18D70052CA20 /* FloorGridTests.m */; };
+		73F1C63511AC3F8C0052CA20 /* FloorGridScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C63411AC3F8C0052CA20 /* FloorGridScroller.m */; };
+		73F1C63611AC3F8C0052CA20 /* FloorGridScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C63411AC3F8C0052CA20 /* FloorGridScroller.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
@@ -76,7 +81,6 @@
 		7318AD750C479C180018E8C7 /* PB3DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PB3DView.h; sourceTree = "<group>"; };
 		7318AD760C479C180018E8C7 /* PB3DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PB3DView.m; sourceTree = "<group>"; };
 		7318AF290C47A80B0018E8C7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		7328AD4511AAB92400025001 /* GridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridTests.m; path = Tests/GridTests.m; sourceTree = "<group>"; };
 		7328ADA111AABF7800025001 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		735C5EA411A44D9D00A6BA88 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
 		735C5EA511A44D9D00A6BA88 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
@@ -106,6 +110,12 @@
 		735C5F9211A4530200A6BA88 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		735C5FCB11A453E400A6BA88 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = /System/Library/Frameworks/OpenCL.framework; sourceTree = "<absolute>"; };
 		7397470A0C61EBC90016221A /* PinkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F1C49011AC18400052CA20 /* FloorGridStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorGridStorage.h; path = Src/FloorGridStorage.h; sourceTree = "<group>"; };
+		73F1C49111AC18400052CA20 /* FloorGridStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloorGridStorage.m; path = Src/FloorGridStorage.m; sourceTree = "<group>"; };
+		73F1C4AB11AC18D70052CA20 /* FloorGridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloorGridTests.m; path = Tests/FloorGridTests.m; sourceTree = "<group>"; };
+		73F1C4C011AC197E0052CA20 /* FloorGridStorageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloorGridStorageTests.m; path = Tests/FloorGridStorageTests.m; sourceTree = "<group>"; };
+		73F1C63311AC3F8C0052CA20 /* FloorGridScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorGridScroller.h; path = Src/FloorGridScroller.h; sourceTree = "<group>"; };
+		73F1C63411AC3F8C0052CA20 /* FloorGridScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloorGridScroller.m; path = Src/FloorGridScroller.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* PinkAndBlueTriangles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PinkAndBlueTriangles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -140,16 +150,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73F1C4F511AC1D190052CA20 /* Model */,
 				735C5ED911A44F2A00A6BA88 /* AppControl.h */,
 				735C5EDA11A44F2A00A6BA88 /* AppControl.m */,
 				7318AD750C479C180018E8C7 /* PB3DView.h */,
 				7318AD760C479C180018E8C7 /* PB3DView.m */,
 				735C5EDF11A44F4600A6BA88 /* PBCamera.h */,
 				735C5EE011A44F4600A6BA88 /* PBCamera.m */,
-				735C5EE211A44F5000A6BA88 /* FloorGrid.h */,
-				735C5EE311A44F5000A6BA88 /* FloorGrid.m */,
-				735C5EE511A44F5900A6BA88 /* GridCell.h */,
-				735C5EE611A44F5900A6BA88 /* GridCell.m */,
+				73F1C48711AC18160052CA20 /* FloorGridSupport */,
 				735C5EE811A44F6300A6BA88 /* Engine.h */,
 				735C5EE911A44F6300A6BA88 /* Engine.m */,
 			);
@@ -262,9 +270,32 @@
 		739747040C61EBB90016221A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7328AD4511AAB92400025001 /* GridTests.m */,
+				73F1C4AB11AC18D70052CA20 /* FloorGridTests.m */,
+				73F1C4C011AC197E0052CA20 /* FloorGridStorageTests.m */,
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		73F1C48711AC18160052CA20 /* FloorGridSupport */ = {
+			isa = PBXGroup;
+			children = (
+				73F1C63311AC3F8C0052CA20 /* FloorGridScroller.h */,
+				73F1C63411AC3F8C0052CA20 /* FloorGridScroller.m */,
+				735C5EE211A44F5000A6BA88 /* FloorGrid.h */,
+				735C5EE311A44F5000A6BA88 /* FloorGrid.m */,
+				73F1C49011AC18400052CA20 /* FloorGridStorage.h */,
+				73F1C49111AC18400052CA20 /* FloorGridStorage.m */,
+				735C5EE511A44F5900A6BA88 /* GridCell.h */,
+				735C5EE611A44F5900A6BA88 /* GridCell.m */,
+			);
+			name = FloorGridSupport;
+			sourceTree = "<group>";
+		};
+		73F1C4F511AC1D190052CA20 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,12 +420,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7328AD4611AAB92400025001 /* GridTests.m in Sources */,
 				7328AD4F11AAB9C100025001 /* FloorGrid.m in Sources */,
 				7328AD5611AAB9D600025001 /* PBCamera.m in Sources */,
 				7328AD6A11AABA3900025001 /* GridCell.m in Sources */,
 				7328AD6D11AABA4300025001 /* Engine.m in Sources */,
 				7328AEDA11AACE1D00025001 /* PB3DView.m in Sources */,
+				73F1C49311AC18400052CA20 /* FloorGridStorage.m in Sources */,
+				73F1C4C111AC197E0052CA20 /* FloorGridStorageTests.m in Sources */,
+				73F1C62611AC3A1A0052CA20 /* FloorGridTests.m in Sources */,
+				73F1C63511AC3F8C0052CA20 /* FloorGridScroller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +443,8 @@
 				735C5EE711A44F5900A6BA88 /* GridCell.m in Sources */,
 				735C5EEA11A44F6300A6BA88 /* Engine.m in Sources */,
 				735C5EFA11A44FC100A6BA88 /* main.m in Sources */,
+				73F1C49211AC18400052CA20 /* FloorGridStorage.m in Sources */,
+				73F1C63611AC3F8C0052CA20 /* FloorGridScroller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,11 +487,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 735C5EB011A44D9D00A6BA88 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
-				ARCHS = i386;
-				BUNDLE_LOADER = "$(CONFIGURATION_BUILD_DIR)/PinkAndBlueTriangles.app/Contents/MacOS/PinkAndBlueTriangles";
 				GCC_VERSION = "";
 				PRODUCT_NAME = PinkTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
 		};

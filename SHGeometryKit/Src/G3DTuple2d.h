@@ -28,6 +28,7 @@
 @interface G3DTuple2d : NSObject <NSCoding, NSCopying> {
 	
 	// See good explanation of GCC vector types http://lists.apple.com/archives/perfoptimization-dev/2009/Mar/msg00006.html
+	// See this regarding vecLib naming conventions http://www.ffnn.nl/pages/articles/apple-mac-os-x/vectorizing-with-vdsp-and-veclib.php
 	CGFloat _tuple[2] __attribute__((__aligned__(16)));
 }
 
