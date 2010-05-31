@@ -10,9 +10,20 @@
 
 
 @interface FontWrapper : NSObject {
-
+	
+	CTFontRef _iFont;
 }
 
+CTFontRef CreateFont( CTFontDescriptorRef iFontDescriptor, CGFloat iSize );
+CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, CGFloat iSize );
+
++ (NSString *)randomFontName;
++ (void)getRandomFont:(CTFontRef *)iFont size:(CGFloat)floatSize;
+
 - (void)inspectFont:(NSString *)fontName glyph:(NSString *)glyph size:(CGFloat)size;
+
+
+#pragma mark -
+- (id)initWithName:(NSString *)arg1 size:(CGFloat)arg2;
 
 @end

@@ -20,6 +20,7 @@
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
 		73B0185B1174B77E00E43F88 /* TypeSetWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73B018591174B77E00E43F88 /* TypeSetWindow.xib */; };
+		73B587B811B3E06D00AAEC90 /* FontWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B587B711B3E06D00AAEC90 /* FontWrapper.m */; };
 		73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A621174ACC4000B0D56 /* AppDelegate.m */; };
 		73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A671174ACE2000B0D56 /* WindowController.m */; };
 		73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */; };
@@ -147,6 +148,8 @@
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		73AECF2210469BF50003D9CB /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		73B0185A1174B77E00E43F88 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TypeSetWindow.xib; sourceTree = "<group>"; };
+		73B587B611B3E06D00AAEC90 /* FontWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontWrapper.h; path = Src/FontWrapper.h; sourceTree = "<group>"; };
+		73B587B711B3E06D00AAEC90 /* FontWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontWrapper.m; path = Src/FontWrapper.m; sourceTree = "<group>"; };
 		73BD7A611174ACC3000B0D56 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Src/AppDelegate.h; sourceTree = "<group>"; };
 		73BD7A621174ACC4000B0D56 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Src/AppDelegate.m; sourceTree = "<group>"; };
 		73BD7A661174ACE2000B0D56 /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WindowController.h; path = Src/WindowController.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 				73BD7A671174ACE2000B0D56 /* WindowController.m */,
 				7344137C0F67CACD00D6CF73 /* DebugView.h */,
 				7344137D0F67CACD00D6CF73 /* DebugView.m */,
+				73B587B611B3E06D00AAEC90 /* FontWrapper.h */,
+				73B587B711B3E06D00AAEC90 /* FontWrapper.m */,
 				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
 				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
 				73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */,
@@ -200,6 +205,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73AECF2210469BF50003D9CB /* ApplicationServices.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -235,10 +241,6 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				735F80AF11467360000AC142 /* SHShared.xcodeproj */,
-				73AECE8210469B2A0003D9CB /* DebugSymbols.framework */,
-				73AECE8510469B7B0003D9CB /* Quartz.framework */,
-				73AECE8710469B7B0003D9CB /* QuartzCore.framework */,
-				73AECF2210469BF50003D9CB /* ApplicationServices.framework */,
 			);
 			name = TypeSetter;
 			sourceTree = "<group>";
@@ -265,6 +267,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73AECE8210469B2A0003D9CB /* DebugSymbols.framework */,
+				73AECE8510469B7B0003D9CB /* Quartz.framework */,
+				73AECE8710469B7B0003D9CB /* QuartzCore.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -524,6 +529,7 @@
 				73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */,
 				73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */,
 				73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */,
+				73B587B811B3E06D00AAEC90 /* FontWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

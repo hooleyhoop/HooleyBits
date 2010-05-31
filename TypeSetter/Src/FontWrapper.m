@@ -7,26 +7,12 @@
 //
 
 #import "FontWrapper.h"
+#import <ApplicationServices/ApplicationServices.h>
 
 
 @implementation FontWrapper
 
-CTFontRef CreateFont( CTFontDescriptorRef iFontDescriptor, CGFloat iSize ) {
-    check( iFontDescriptor != NULL );
-	
-    // Create the font from the font descriptor and input size. Pass
-    // NULL for the matrix parameter to use the default matrix (identity).
-	
-    return CTFontCreateWithFontDescriptor( iFontDescriptor, iSize, NULL );
-}
-
-CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, CGFloat iSize ) {
-	
-    assert(iPostScriptName != NULL);
-    return CTFontDescriptorCreateWithNameAndSize( iPostScriptName, iSize );
-}
-
-- (NSString *)randomFontName {
++ (NSString *)randomFontName {
 	
 	static NSArray *allFonts;
 	if(!allFonts)
@@ -40,19 +26,35 @@ CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, C
 	return [allFonts objectAtIndex:randomFontIndex];
 }
 
-- (void)getRandomFont:(CTFontRef *)iFont {
++ (void)getRandomFont:(CTFontRef *)iFont size:(CGFloat)floatSize {
 	
 	NSString *fontName = [self randomFontName];
-	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, 72.0f );
+	CTFontDescriptorRef fdesc = CreateFontDescriptorFromName( (CFStringRef)fontName, floatSize );
 	assert( fdesc!=NULL );
 	//	CGFontRef cgFont = CGFontCreateWithFontName( (CFStringRef)fontName );
 	
 	
-	*iFont = CreateFont( fdesc, 72.0f );
+	*iFont = CreateFont( fdesc, floatSize );
 	assert( iFont!=NULL);
 	
 	CFRelease(fdesc);
 	//	CFRelease(cgFont);
+}
+
+CTFontRef CreateFont( CTFontDescriptorRef iFontDescriptor, CGFloat iSize ) {
+
+    check( iFontDescriptor != NULL );
+	
+    // Create the font from the font descriptor and input size. Pass
+    // NULL for the matrix parameter to use the default matrix (identity).
+	
+    return CTFontCreateWithFontDescriptor( iFontDescriptor, iSize, NULL );
+}
+
+CTFontDescriptorRef CreateFontDescriptorFromName( CFStringRef iPostScriptName, CGFloat iSize ) {
+	
+    assert(iPostScriptName != NULL);
+    return CTFontDescriptorCreateWithNameAndSize( iPostScriptName, iSize );
 }
 
 CGFloat GetLineHeightForFont( CTFontRef iFont ) {
@@ -186,5 +188,74 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFRelease(iFont);
 }
 
+#pragma mark -
+- (id)initWithName:(NSString *)arg1 size:(CGFloat)arg2 {
+
+	self = [super init];
+	if(self){
+		CTFontDescriptorRef fontDesc = CreateFontDescriptorFromName( (CFStringRef)arg1, arg2 );
+		_iFont = CreateFont( fontDesc, arg2 );
+		assert( _iFont!=NULL );
+		CFRelease(fontDesc);
+		
+		NSArray *availableFontTables = (NSArray *)CTFontCopyAvailableTables( _iFont, kCTFontTableOptionNoOptions );
+		for( CFIndex i=0; i<(CFIndex)[availableFontTables count] ; i++ ){
+			CTFontTableTag tableTag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex((CFArrayRef)availableFontTables, i);
+			NSString *fourCC = NSFileTypeForHFSTypeCode(tableTag);
+		//	CFDataRef fontTable = CTFontCopyTable( _iFont, tableTag, kCTFontTableOptionNoOptions );
+			NSLog(@"%@", fourCC);
+		//	CFRelease( fontTable );
+		}
+		CFRelease(availableFontTables);
+	}
+	return self;
+}
+
+- (void)dealloc {
+	
+	CFRelease(_iFont);
+
+	[super dealloc];
+}
+
+// fourcc()
+
+//	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionNoOptions );
+//	Fixed version;
+//	uint32 nTables; 
+//	NSAssert1( sizeof(version) == 4 , @"dih %i", sizeof(version) );
+//	CFDataGetBytes(kernTable, CFRangeMake(0,4), &version);
+//	CFDataGetBytes(kernTable, CFRangeMake(4,4), &nTables);
+
+//	uint8_t panose[10];
+//    CFDataGetBytes(os2Table, (CFRange){ 32, 10 }, panose);
+//	CFRelease(kernTable);
+
+/* Tables in Georgia */
+//	'DSIG' - Digital signature
+//	'GDEF' - Glyph definition data
+//	'GPOS' - Glyph positioning data
+//	'GSUB' - Glyph substitution data
+//	'LTSH' - Linear threshold data
+//	'OS/2' - OS/2:
+//	'VDMX' - Vertical Device Metrics (line heights?)
+//	'cmap' - character to glyph mapping:
+//	'cvt ' - control value:
+//	'edt0' - embed font tool stuff (not needed for layout)
+//	'fpgm' - font program:
+//	'gasp' - (grid-fitting and scan-conversion procedure) table
+//	'glyf' - glyph data:
+//	'hdmx' - horizontal device metrics:
+//	'head' - font header:
+//	'hhea' - horizontal header:
+//	'hmtx' - horizontal metrics:
+//	'loca' - index to location:
+//	'maxp' - maximum profile: memory requirements, including nmber of glyphs
+//	'name' - naming:
+//	'post' - PostScript:
+//	'prep' - control value program:
+
+/* Not Found in Georgia */
+// 'kern' - kerning:
 
 @end

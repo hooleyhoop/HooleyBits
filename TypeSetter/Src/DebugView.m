@@ -10,6 +10,9 @@
 #import "GlyphRenderer.h"
 #import "PlaceHolderImage.h"
 #import "ImageWindow.h"
+#import "WindowController.h"
+#import "FontWrapper.h"
+
 
 @implementation DebugView
 
@@ -51,6 +54,9 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 - (void)drawRect:(NSRect)rect {
 
 	CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext]  graphicsPort];
+	
+	FontWrapper *hooFont = [[[FontWrapper alloc] initWithName:@"Georgia" size:72.0f] autorelease];
+
 	GlyphRenderer *gr = [[GlyphRenderer alloc] init];
 
 	if(false)
@@ -156,7 +162,7 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 	[savePanel setExtensionHidden:NO];
 	[savePanel setAllowedFileTypes:[NSImage imageTypes]];
 	[savePanel setAllowsOtherFileTypes:NO];
-	int runResult = [savePanel runModalForDirectory:[[NSString stringWithString:@"~/Desktop"] stringByExpandingTildeInPath] file:@"Picture.pdf"];
+	NSInteger runResult = [savePanel runModalForDirectory:[[NSString stringWithString:@"~/Desktop"] stringByExpandingTildeInPath] file:@"Picture.pdf"];
 	if(runResult == NSOKButton)
 	{
 		[imageData writeToURL:[savePanel URL] atomically:YES];
