@@ -209,8 +209,21 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	self = [super init];
 	if(self){
+		
+		NSFont *hmmFont = [NSFont fontWithName:arg1 size:72.0f];
+		NSLog(@"number of glyphs is %i", [hmmFont numberOfGlyphs]);
+		
 		CTFontDescriptorRef fontDesc = CreateFontDescriptorFromName( (CFStringRef)arg1, arg2 );
-		_iFont = CreateFont( fontDesc, arg2 );
+	
+		NSDictionary *attributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+										kCTFontNameAttribute, arg1,
+										kCTFontSizeAttribute, [NSNumber numberWithFloat:arg2],
+										[NSArray array], kCTFontCascadeListAttribute,
+										nil];
+		CTFontDescriptorRef fontDesc2 = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)attributesDict);
+		CTFontDescriptorRef fontDesc3 = [hmmFont fontDescriptor];
+		
+		_iFont = CreateFont( fontDesc3, arg2 );
 		assert( _iFont!=NULL );
 		CFRelease(fontDesc);
 		
@@ -922,7 +935,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 		NSLog(@"End %i, start %i", endCode_i, startCode_i);
 	}
-	NSAssert(loc<length, @"well this was obviously wrong dick sweart");
+	NSAssert(loc<length, @"well this was obviously wrong dick sweart %i, %i", loc, length );
 	
 	// variable length array if glyph indexes
 	UInt16 glyphIndexArray_variable;
