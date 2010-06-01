@@ -13,8 +13,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-	WindowController *controller = [[WindowController alloc] initWithWindowNibName:@"TypeSetWindow"];
-	[controller showWindow:nil];
+	// enable font - 'Free Sans'
+	NSString *pathForEmbeddedFont = [[NSBundle mainBundle] pathForResource:@"FREESANS" ofType:@"ttf" inDirectory:nil];
+	NSURL *fontURL = [NSURL fileURLWithPath:pathForEmbeddedFont];
+	CFErrorRef err;
+	bool success = CTFontManagerRegisterFontsForURL( (CFURLRef)fontURL, kCTFontManagerScopeProcess, &err );
+	NSAssert(success, @"Failed to load font FREESANS.ttf");
+
+	_controller = [[WindowController alloc] initWithWindowNibName:@"TypeSetWindow"];
+	[_controller showWindow:nil];
 }
 
 @end

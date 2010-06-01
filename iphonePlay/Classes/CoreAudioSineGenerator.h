@@ -40,7 +40,7 @@ struct SineData
 
 @interface CoreAudioSineGenerator : NSObject <LowLevelSoundGeneratorProtocol> {
 
-	AUGraph		_audioGraph;
+	AUGraph	_audioGraph;
 	AudioUnit	_mixer;
 	BOOL		_isPlaying;
 	

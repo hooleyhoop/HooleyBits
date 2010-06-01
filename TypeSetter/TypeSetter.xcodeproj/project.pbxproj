@@ -16,6 +16,7 @@
 		735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */; };
 		735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F81491146807C000AC142 /* PlaceHolderImage.m */; };
 		735F814F1146808F000AC142 /* ImageWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F814E1146808F000AC142 /* ImageWindow.m */; };
+		7369211B11B5163C006A81BD /* FREESANS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7369211A11B5163C006A81BD /* FREESANS.ttf */; };
 		73AECE8610469B7B0003D9CB /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8510469B7B0003D9CB /* Quartz.framework */; };
 		73AECE8810469B7B0003D9CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECE8710469B7B0003D9CB /* QuartzCore.framework */; };
 		73AECF2310469BF50003D9CB /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AECF2210469BF50003D9CB /* ApplicationServices.framework */; };
@@ -143,6 +144,7 @@
 		735F81491146807C000AC142 /* PlaceHolderImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceHolderImage.m; path = Src/PlaceHolderImage.m; sourceTree = "<group>"; };
 		735F814D1146808F000AC142 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageWindow.h; path = Src/ImageWindow.h; sourceTree = "<group>"; };
 		735F814E1146808F000AC142 /* ImageWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageWindow.m; path = Src/ImageWindow.m; sourceTree = "<group>"; };
+		7369211A11B5163C006A81BD /* FREESANS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FREESANS.ttf; path = Resources/FREESANS.ttf; sourceTree = "<group>"; };
 		73AECE8210469B2A0003D9CB /* DebugSymbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DebugSymbols.framework; path = System/Library/PrivateFrameworks/DebugSymbols.framework; sourceTree = SDKROOT; };
 		73AECE8510469B7B0003D9CB /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		73AECE8710469B7B0003D9CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -256,6 +258,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7369211A11B5163C006A81BD /* FREESANS.ttf */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				73B018591174B77E00E43F88 /* TypeSetWindow.xib */,
 				7331A9BD1145746300EFCB8F /* Picture 4.png */,
@@ -486,6 +489,7 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				7331A9BE1145746300EFCB8F /* Picture 4.png in Resources */,
 				73B0185B1174B77E00E43F88 /* TypeSetWindow.xib in Resources */,
+				7369211B11B5163C006A81BD /* FREESANS.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

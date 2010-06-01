@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class WindowController;
 
 @interface AppDelegate : NSObject {
 
+	WindowController *_controller;
 }
 
 @end

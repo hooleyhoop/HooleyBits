@@ -11,6 +11,8 @@
 
 @implementation FloorGridScroller
 
+copyWithZone
+
 - (void)moveForwardAtTime:(double)time {
 	
 	//	NSLog(@"Moving forward at time %f", (float)time);

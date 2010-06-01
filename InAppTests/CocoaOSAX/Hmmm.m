@@ -339,6 +339,17 @@ OSErr mouseDownAt_upAt_Handler( const AppleEvent *message, AppleEvent *reply, lo
 	return result;
 }
 
+// looks useful
+static int eventNumber = 1;
+...
+if (mouseType == kCGEventLeftMouseDown)
+++eventNumber;
+...
+CGEventSetIntegerValueField(event, kCGMouseEventNumber, eventNumber);
+
+
+
+
 OSErr mouseDouble_ClickAtHandler( const AppleEvent *message, AppleEvent *reply, long refCon ){
 	
 	OSErr result = noErr;

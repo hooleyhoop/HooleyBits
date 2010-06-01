@@ -539,13 +539,13 @@
 		73AEEA8B0F483A5A00862D98 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				73AEEA970F483A5B00862D98 /* SHShared */,
+				73AEEA970F483A5B00862D98 /* SHShared.framework */,
 				73AEEA990F483A5B00862D98 /* SHSharedTests.octest */,
 				73AEEA9B0F483A5B00862D98 /* libSHShared_static.a */,
 				73AEEA9D0F483A5B00862D98 /* libSHShared_iphone.a */,
-				73CB051E10DBDE6900AE25C8 /* SHSharedUI */,
+				73CB051E10DBDE6900AE25C8 /* SHSharedUI.framework */,
 				73CB052010DBDE6900AE25C8 /* SHSharedUITests.octest */,
-				73CB052210DBDE6900AE25C8 /* SHTestUtilities */,
+				73CB052210DBDE6900AE25C8 /* SHTestUtilities.framework */,
 				736C30B711A3FF9800812E21 /* TestUtilitiesTests.octest */,
 				736C30B911A3FF9800812E21 /* GUIFiddler */,
 				736C30BB11A3FF9800812E21 /* PerformanceTests.octest */,
@@ -767,10 +767,10 @@
 			remoteRef = 736C30BA11A3FF9800812E21 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73AEEA970F483A5B00862D98 /* SHShared */ = {
+		73AEEA970F483A5B00862D98 /* SHShared.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHShared;
+			path = SHShared.framework;
 			remoteRef = 73AEEA960F483A5B00862D98 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -795,10 +795,10 @@
 			remoteRef = 73AEEA9C0F483A5B00862D98 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73CB051E10DBDE6900AE25C8 /* SHSharedUI */ = {
+		73CB051E10DBDE6900AE25C8 /* SHSharedUI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHSharedUI;
+			path = SHSharedUI.framework;
 			remoteRef = 73CB051D10DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -809,10 +809,10 @@
 			remoteRef = 73CB051F10DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		73CB052210DBDE6900AE25C8 /* SHTestUtilities */ = {
+		73CB052210DBDE6900AE25C8 /* SHTestUtilities.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SHTestUtilities;
+			path = SHTestUtilities.framework;
 			remoteRef = 73CB052110DBDE6900AE25C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
