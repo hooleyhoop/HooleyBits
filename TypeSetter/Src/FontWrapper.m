@@ -22,6 +22,7 @@
 	- (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	
+	- (void)_processGLYFTable;
 	- (void)_processLOCATable;
 
 @end
@@ -209,6 +210,11 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	self = [super init];
 	if(self){
+		
+//		_glyfTableLength = 
+//		_numberOfGlyphs = 
+//		_indexToLocFormat = -1;
+		
 		CTFontDescriptorRef fontDesc = CreateFontDescriptorFromName( (CFStringRef)arg1, arg2 );
 		_iFont = CreateFont( fontDesc, arg2 );
 		assert( _iFont!=NULL );
@@ -229,12 +235,12 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 - (void)_processFontTables {
 	
 	// lets see what we have got
-	NSArray *availableFontTables = (NSArray *)CTFontCopyAvailableTables( _iFont, kCTFontTableOptionNoOptions );
+	NSArray *availableFontTables = (NSArray *)CTFontCopyAvailableTables( _iFont, kCTFontTableOptionExcludeSynthetic );
 	for( CFIndex i=0; i<(CFIndex)[availableFontTables count] ; i++ )
 	{
 		CTFontTableTag tableTag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex((CFArrayRef)availableFontTables, i);
 		NSString *fourCC = NSFileTypeForHFSTypeCode(tableTag);
-		//	CFDataRef fontTable = CTFontCopyTable( _iFont, tableTag, kCTFontTableOptionNoOptions );
+		//	CFDataRef fontTable = CTFontCopyTable( _iFont, tableTag, kCTFontTableOptionExcludeSynthetic );
 		NSLog(@"%@", fourCC);
 		//	CFRelease( fontTable );
 	}
@@ -280,12 +286,13 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// post
 	
 	/* Optional Tables */
+	[self _processGLYFTable];
 	[self _processLOCATable];
 }
 
 // fourcc()
 
-//	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionNoOptions );
+//	CFDataRef kernTable = CTFontCopyTable( iFont, kCTFontTableKern, kCTFontTableOptionExcludeSynthetic );
 //	Fixed version;
 //	uint32 nTables; 
 //	NSAssert1( sizeof(version) == 4 , @"dih %i", sizeof(version) );
@@ -356,7 +363,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 - (void)_processHEADTable {
 
-	CFDataRef headTable = CTFontCopyTable( _iFont, kCTFontTableHead, kCTFontTableOptionNoOptions );
+	CFDataRef headTable = CTFontCopyTable( _iFont, kCTFontTableHead, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 
 	Fixed version;
@@ -476,7 +483,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 - (void)_processHHEATable {
 	
-	CFDataRef hheaTable = CTFontCopyTable( _iFont, kCTFontTableHhea, kCTFontTableOptionNoOptions );
+	CFDataRef hheaTable = CTFontCopyTable( _iFont, kCTFontTableHhea, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 
 	Fixed version;
@@ -569,7 +576,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 #pragma mark OS/2 Table 
 - (void)_processOS2 {
 	
-	CFDataRef os2Table = CTFontCopyTable( _iFont, kCTFontTableOS2, kCTFontTableOptionNoOptions );
+	CFDataRef os2Table = CTFontCopyTable( _iFont, kCTFontTableOS2, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 
 	uint16	version;
@@ -760,7 +767,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 #pragma mark hmtx Table 
 - (void)_processHMTXTable {
 	
-	CFDataRef hmtxTable = CTFontCopyTable( _iFont, kCTFontTableHmtx, kCTFontTableOptionNoOptions );
+	CFDataRef hmtxTable = CTFontCopyTable( _iFont, kCTFontTableHmtx, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 	
 //	longHorMetric hMetrics
@@ -775,7 +782,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	So, i see now that many unicode values could map to the same glyphID, so the cmap tables dont really tell us how many glyphs we have or what their ID's are */
 - (void)_processCMAPTable {
 	
-	CFDataRef cmapTable = CTFontCopyTable( _iFont, kCTFontTableCmap, kCTFontTableOptionNoOptions );
+	CFDataRef cmapTable = CTFontCopyTable( _iFont, kCTFontTableCmap, kCTFontTableOptionExcludeSynthetic );
 
 	uint loc = 0;
 	uint16 version, numberOfTables;
@@ -979,7 +986,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 #pragma mark Maxp Table 
 - (void)_processMAXPTable {
 
-	CFDataRef maxpTable = CTFontCopyTable( _iFont, kCTFontTableMaxp, kCTFontTableOptionNoOptions );
+	CFDataRef maxpTable = CTFontCopyTable( _iFont, kCTFontTableMaxp, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 
 	Fixed version;
@@ -997,11 +1004,20 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 #pragma mark -
 #pragma mark * Optional tables *
 
+#pragma mark glyf Table
+
+- (void)_processGLYFTable {
+	
+	CFDataRef glyfTable = CTFontCopyTable( _iFont, kCTFontTableGlyf, kCTFontTableOptionExcludeSynthetic );
+	_glyfTableLength = CFDataGetLength(glyfTable);
+	CFRelease(glyfTable);
+}
+
 #pragma mark loca Table
 // for a given glyph id, get the offset in the glyf table
 - (void)_processLOCATable {
 	
-	CFDataRef locaTable = CTFontCopyTable( _iFont, kCTFontTableLoca, kCTFontTableOptionNoOptions );
+	CFDataRef locaTable = CTFontCopyTable( _iFont, kCTFontTableLoca, kCTFontTableOptionExcludeSynthetic );
 
 	/* FOR ONE OF THESE (SHORT OR LONG) There is some dividing by 2 done or needs to be done, i dont know which THESE ARE THE SAME FOR NOW */
 	// TODO: work out where the divide goes
@@ -1009,40 +1025,52 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// SHORT OFFSETS
 	if(_indexToLocFormat==0){
 		
-		// jusr loooping thru all of them to test it
-		for( uint i=0; i<_numberOfGlyphs; i++ ){
-			
-			UInt16 arrayLoc = i * 2;
-			UInt16 offsetLoc = arrayLoc+2; // dont worry, there are n+1 entries
-
-			UInt16 offset, length;
-			CFDataGetBytes( locaTable, CFRangeMake( arrayLoc, 2 ), (UInt8 *)&offset );
-			CFDataGetBytes( locaTable, CFRangeMake( offsetLoc, 2 ), (UInt8 *)&length );
-			offset = OSSwapBigToHostInt16(offset);
-			length = OSSwapBigToHostInt16(length); // this is actually just the next entry, so subtract to find the length of this entry (last 1 is a special case and is taken care of)
-			length = length - offset;
-
-			NSLog(@"Glyph id:%i Offset:%i Length:%i", i, offset, length );
-		}
+		[NSException raise:@"Havent done this yet" format:nil];
+	
+//		// jusr loooping thru all of them to test it
+//		for( uint i=0; i<_numberOfGlyphs; i++ ){
+//			
+//			UInt16 arrayLoc = i * 2;
+//			UInt16 offsetLoc = arrayLoc+2; // dont worry, there are n+1 entries
+//
+//			UInt16 offset, nextOffset, length;
+//			CFDataGetBytes( locaTable, CFRangeMake( offsetValueLoc, sizeof offset ), (UInt8 *)&offset );
+//			CFDataGetBytes( locaTable, CFRangeMake( nextOffsetValueLoc, sizeof nextOffset ), (UInt8 *)&nextOffset );
+//			offset = OSSwapBigToHostInt16(offset);
+//			nextOffset = OSSwapBigToHostInt16(nextOffset); // this is actually just the next entry, so subtract to find the length of this entry (last 1 is a special case and is taken care of)
+//			offset = offset*2;
+//			nextOffset = nextOffset*2;
+//			length = nextOffset - offset;
+//
+//			NSLog(@"Glyph id:%i Offset:%i Length:%i", i, offset, length );
+//		}
 		
 	// LONG OFFSETS
 	} else if(_indexToLocFormat==1) {
 
+		int nonNullGlyphCount=0;
+
 		// jusr loooping thru all of them to test it
 		for( uint i=0; i<_numberOfGlyphs; i++ ){
 			
-			UInt16 arrayLoc = i * 2;
-			UInt16 offsetLoc = (i+1) * 2; // dont worry, there are n+1 entries
+			UInt32 offset, nextOffset, length;
+
+			UInt16 offsetValueLoc = i * sizeof offset;
+			UInt16 nextOffsetValueLoc = offsetValueLoc + sizeof offset; // dont worry, there are n+1 entries
+			NSAssert(offsetValueLoc<CFDataGetLength(locaTable), @"oops, overstepped the loca table?");
+
+			CFDataGetBytes( locaTable, CFRangeMake( offsetValueLoc, sizeof offset ), (UInt8 *)&offset );
+			CFDataGetBytes( locaTable, CFRangeMake( nextOffsetValueLoc, sizeof nextOffset ), (UInt8 *)&nextOffset );
+			offset = OSSwapBigToHostInt32(offset);
+			nextOffset = OSSwapBigToHostInt32(nextOffset); // this is actually just the next entry, so subtract to find the length of this entry (last 1 is a special case and is taken care of)
 			
-			UInt16 offset, length;
-			CFDataGetBytes( locaTable, CFRangeMake( arrayLoc, 2 ), (UInt8 *)&offset );
-			CFDataGetBytes( locaTable, CFRangeMake( offsetLoc, 2 ), (UInt8 *)&length );
-			offset = OSSwapBigToHostInt16(offset);
-			length = OSSwapBigToHostInt16(length); // this is actually just the next entry, so subtract to find the length of this entry (last 1 is a special case and is taken care of)
-			length = length - offset;
-			int nonNullGlyphCount=0;
+			if(i==(_numberOfGlyphs-1))
+				NSLog(@"woah, last offset? %i : glyf table length %i", nextOffset, _glyfTableLength);
+			NSAssert(nextOffset<=_glyfTableLength, @"Opps - this doesnt appear to be doing what i thought");
+			
+			length = nextOffset - offset;
 			if(offset>0){
-				nonNullGlyphCount++;
+				nonNullGlyphCount=nonNullGlyphCount+1;
 				NSLog(@"%i Glyph id:%i Offset:%i Length:%i", nonNullGlyphCount, i, offset, length );
 			}
 		}

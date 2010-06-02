@@ -11,9 +11,10 @@
 
 @interface FontWrapper : NSObject {
 	
-	CTFontRef _iFont;
-	uint16 _numberOfGlyphs;
-	int16_t _indexToLocFormat;
+	CTFontRef	_iFont;
+	uint16		_numberOfGlyphs;
+	CFIndex		_glyfTableLength;
+	int16_t		_indexToLocFormat;
 }
 
 CTFontRef CreateFont( CTFontDescriptorRef iFontDescriptor, CGFloat iSize );
