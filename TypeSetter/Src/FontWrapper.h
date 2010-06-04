@@ -13,6 +13,7 @@
 	
 	CTFontRef	_iFont;
 	uint16		_numberOfGlyphs;
+	uint16		_numOfLongHorMetrics;
 	CFIndex		_glyfTableLength;
 	int16_t		_indexToLocFormat;
 }
