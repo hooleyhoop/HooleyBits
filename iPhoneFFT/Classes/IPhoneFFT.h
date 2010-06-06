@@ -8,17 +8,22 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
+@class OouraFFT;
 
-@interface IPhoneFFT : NSObject {
+@interface IPhoneFFT : NSObject <NSPortDelegate> {
 
 	//without graph
 	AudioUnit		_inputRemoteIOUnit;
 	
 	// Graph way
-	AUGraph			_audioGraph;
+	AUGraph		_audioGraph;
 	AUNode			_inputNode1, _mixerNode;
 	AudioUnit		_inputUnit1;
 
+	// Background thread
+	NSPort			*_distantPort;
+	int32_t		_hasData;
+	OouraFFT		*_myFFT
 }
 
 - (void)beginRecording;

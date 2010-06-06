@@ -8,6 +8,8 @@
 
 #import "IPhoneFFT.h"
 #import <AVFoundation/AVFoundation.h>
+#import "MyWorkerClass.h"
+#include <libkern/OSAtomic.h>
 
 #define RequireNoErr(error)	do { if( (error) != noErr ) [NSException raise:@"CoreAudio ERROR" format:@"%i", error]; } while (false)
 
@@ -60,13 +62,162 @@
 
 - (void)beginRecording {
 
-	// single way
-	[self setUpInputRemoteIO];
+	_myFFT = [OouraFFT initForSignalsOfLength:1024 numberOfWindows:10];
 	
+	// single way
+//	[self setUpInputRemoteIO];
+	
+	
+	// Use an NSPort so the background thread can sen the main thread messages
+    NSPort *myPort = [NSMachPort port];
+	// This class handles incoming port messages.
+	[myPort setDelegate:self];
+	// Install the port as an input source on the current run loop.
+	[[NSRunLoop currentRunLoop] addPort:myPort forMode:NSDefaultRunLoopMode];
+
+	[self performSelectorInBackground:@selector(_processDataInBackground:) withObject:myPort];
+	
+	[self performSelectorInBackground:@selector(_mockCoreAudioThread:) withObject:myPort];
+
 // GRAPH WAY
 //	[self setUpGraph];
 //	[self _beginRecording];
 }
+
+#pragma mark -
+#pragma mark Background Thread Stuf
+#define kCheckinMessage 100
+
+// Handle responses from the worker thread. - port delegate method
+- (void)handlePortMessage:(NSPortMessage *)portMessage {
+
+    unsigned int message = [portMessage msgid];
+    NSPort *distantPort = nil;
+    if( message==kCheckinMessage ) {
+        // Get the worker thread’s communications port.
+        _distantPort = [[portMessage sendPort] retain];
+    }
+    else
+    {
+        // Handle other messages.
+    }
+}
+
+- (void)_processDataInBackground:(NSPort *)inData {
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	// Set up the connection between this thread and the main thread.
+    NSPort *distantPort = (NSPort *)inData;
+
+	MyWorkerClass *workerOb = [[MyWorkerClass alloc] init];
+	[workerOb sendCheckinMessage:distantPort];
+	[distantPort release];
+	
+	BOOL moreWorkToDo = YES;
+	BOOL exitNow = NO;
+	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+	
+	// Add the exitNow BOOL to the thread dictionary.
+	NSMutableDictionary *threadDict = [[NSThread currentThread] threadDictionary];
+	[threadDict setValue:[NSNumber numberWithBool:exitNow] forKey:@"ThreadShouldExitNow"];
+		
+    while( moreWorkToDo && !exitNow )
+    {
+        // Do one chunk of a larger body of work here.
+        // Change the value of the moreWorkToDo Boolean when done.
+		// -- if more data is needed..
+		if(_hasData==1) {
+			
+			/** DO FFT HERE **/
+			@synchronized(self)
+			{			
+				// 2. Then fill up an array with data with your own function
+				// fillUpInputSignalWithMyData( _myFFT.inputData );
+			
+				// 3. And then compute the FFT
+				[_myFFT calculateWelchPeriodogramWithNewSignalSegment];
+			
+				// 4. ... then finally, plot the signal with your own function
+				// doSomethingWithTheFrequencyData(myFFT.spectrumData)
+			
+				// Repeat steps 2-4 for any new data you acquire
+			
+//	OouraFFT.spectrumData contains the frequencies in the signal you plopped into OouraFFT.inputData, then computed by 
+//	calling calculateWelchPeriodogramWithNewSignalSegment.
+//	Now, which frequencies correspond to which entries in the array?
+//	Say your signal has a sampling rate of 48,000 Hz, and you are computing the FFT on chunks of your signal 1024 samples 
+//	long. Then, OouraFFT.spectrumData has 1024/2 = 512 frequencies in it, evenly spaced between 0 and 48,000/2 = 24,000.
+//
+//	So, for 0 < i < OouraFFT.numFrequencies,
+//	spectrumData[i] holds data for (i*samplingRate)/(2*numFrequencies)
+//
+//	Why is the highest frequency computed equal to half the sampling rate? This frequency is called the "Nyquist Rate", and 
+//	frankly, I don't think I can explain it very well. Check out the Wikipedia article for some more info.
+			}
+
+			//-- set more data not needed
+			OSAtomicDecrement32(&_hasData);
+		}
+		
+        // Run the run loop but timeout immediately if the input source isn't waiting to fire.
+        [runLoop runUntilDate:[NSDate date]];
+		
+        // Check to see if an input source handler changed the exitNow value.
+        exitNow = [[threadDict valueForKey:@"ThreadShouldExitNow"] boolValue];
+    }
+	[workerOb release];
+	[pool release];
+}
+
+- (void)_mockCoreAudioThread:(NSPort *)inData {
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	// Set up the connection between this thread and the main thread.
+    NSPort *distantPort = (NSPort *)inData;
+	[distantPort release];
+	
+	BOOL moreWorkToDo = YES;
+	BOOL exitNow = NO;
+	NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
+	
+	// Add the exitNow BOOL to the thread dictionary.
+	NSMutableDictionary *threadDict = [[NSThread currentThread] threadDictionary];
+	[threadDict setValue:[NSNumber numberWithBool:exitNow] forKey:@"ThreadShouldExitNow"];
+	
+    while( moreWorkToDo && !exitNow )
+    {
+        // Do one chunk of a larger body of work here.
+        // Change the value of the moreWorkToDo Boolean when done.
+		float *mockAudioData = malloc(sizeof(float)*1024);
+		
+			// -- if more data is needed..
+			if(_hasData==0) {
+				//-- copy audio data to shared memory
+				NSLog(@"Writing new memory");
+				// 2. Then fill up an array with data with your own function
+				fillUpInputSignalWithMyData( _myFFT.inputData );
+				
+				//-- set more data not needed
+				OSAtomicIncrement32(&_hasData);
+			} else {
+				NSLog(@"__");
+			}
+
+				
+		free(mockAudioData);
+	
+        // Run the run loop but timeout immediately if the input source isn't waiting to fire.
+        [runLoop runUntilDate:[NSDate date]];
+		
+        // Check to see if an input source handler changed the exitNow value.
+        exitNow = [[threadDict valueForKey:@"ThreadShouldExitNow"] boolValue];
+    }
+	[pool release];
+}
+
+#pragma mark -
 
 void _tweakInputStreamDesc( AudioStreamBasicDescription *desc, AudioUnit *unit ) {
 	

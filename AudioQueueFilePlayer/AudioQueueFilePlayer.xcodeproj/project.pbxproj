@@ -62,6 +62,48 @@
 			remoteGlobalIDString = 73AC016A0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
 		};
+		73BE6EC811BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteInfo = SHSharedUI;
+		};
+		73BE6ECA11BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteInfo = SHSharedUITests;
+		};
+		73BE6ECC11BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteInfo = SHTestUtilities;
+		};
+		73BE6ECE11BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteInfo = TestUtilitiesTests;
+		};
+		73BE6ED011BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73B051B81168EEF70054CE44 /* GUIFiddler */;
+			remoteInfo = GUIFiddler;
+		};
+		73BE6ED211BA9393004591D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732E93681189AFEA00DD3435 /* PerformanceTests.octest */;
+			remoteInfo = PerformanceTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -200,6 +242,12 @@
 				7336768B0F4188C300E40357 /* SHSharedTests.octest */,
 				7336768D0F4188C300E40357 /* libSHShared_static.a */,
 				7336768F0F4188C300E40357 /* libSHShared_iphone.a */,
+				73BE6EC911BA9393004591D2 /* SHSharedUI.framework */,
+				73BE6ECB11BA9393004591D2 /* SHSharedUITests.octest */,
+				73BE6ECD11BA9393004591D2 /* SHTestUtilities.framework */,
+				73BE6ECF11BA9393004591D2 /* TestUtilitiesTests.octest */,
+				73BE6ED111BA9393004591D2 /* GUIFiddler */,
+				73BE6ED311BA9393004591D2 /* PerformanceTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -339,6 +387,48 @@
 			fileType = archive.ar;
 			path = libSHShared_iphone.a;
 			remoteRef = 7336768E0F4188C300E40357 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6EC911BA9393004591D2 /* SHSharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHSharedUI.framework;
+			remoteRef = 73BE6EC811BA9393004591D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6ECB11BA9393004591D2 /* SHSharedUITests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedUITests.octest;
+			remoteRef = 73BE6ECA11BA9393004591D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6ECD11BA9393004591D2 /* SHTestUtilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHTestUtilities.framework;
+			remoteRef = 73BE6ECC11BA9393004591D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6ECF11BA9393004591D2 /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 73BE6ECE11BA9393004591D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6ED111BA9393004591D2 /* GUIFiddler */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = GUIFiddler;
+			remoteRef = 73BE6ED011BA9393004591D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE6ED311BA9393004591D2 /* PerformanceTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PerformanceTests.octest;
+			remoteRef = 73BE6ED211BA9393004591D2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

@@ -11,6 +11,7 @@
 #import "IPhoneFFT.h";
 #import "AudioSessionStuff.h";
 
+
 @implementation iPhoneFFTAppDelegate
 
 @synthesize window;
@@ -41,5 +42,8 @@
     [super dealloc];
 }
 
+have a timer that gets myFFT.spectrumData
+
+and draw It
 
 @end
