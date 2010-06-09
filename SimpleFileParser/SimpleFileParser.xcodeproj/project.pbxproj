@@ -1,0 +1,395 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
+		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
+		732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFD2811BF9FFE008030ED /* InputParseTests.m */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleFileParserAppDelegate.m; path = Src/SimpleFileParserAppDelegate.m; sourceTree = "<group>"; };
+		732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleFileParserAppDelegate.h; path = Src/SimpleFileParserAppDelegate.h; sourceTree = "<group>"; };
+		732CFCD911BF9E5E008030ED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
+		732CFCDC11BF9E72008030ED /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
+		732CFCDD11BF9E72008030ED /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
+		732CFCDE11BF9E72008030ED /* Project-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		732CFCDF11BF9E72008030ED /* Project-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		732CFCE011BF9E72008030ED /* Target-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Base.xcconfig"; sourceTree = "<group>"; };
+		732CFCE111BF9E72008030ED /* Target-CocoaDaemon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-CocoaDaemon.xcconfig"; sourceTree = "<group>"; };
+		732CFCE211BF9E72008030ED /* Target-Executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Executable.xcconfig"; sourceTree = "<group>"; };
+		732CFCE311BF9E72008030ED /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Framework.xcconfig"; sourceTree = "<group>"; };
+		732CFCE411BF9E72008030ED /* Target-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-iPhone.xcconfig"; sourceTree = "<group>"; };
+		732CFCE511BF9E72008030ED /* Target-iPhoneTestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-iPhoneTestBundle.xcconfig"; sourceTree = "<group>"; };
+		732CFCE611BF9E72008030ED /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-Plugin.xcconfig"; sourceTree = "<group>"; };
+		732CFCE711BF9E72008030ED /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
+		732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
+		732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleFileParser_Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		732CFD2811BF9FFE008030ED /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParseTests.m; path = Tests/InputParseTests.m; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* SimpleFileParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleFileParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		732CFCED11BF9EA3008030ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
+				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* SimpleFileParser.app */,
+				732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* SimpleFileParser */ = {
+			isa = PBXGroup;
+			children = (
+				732CFD1F11BF9F8A008030ED /* Tests */,
+				732CFCDB11BF9E72008030ED /* Config */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = SimpleFileParser;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				732CFCD911BF9E5E008030ED /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		732CFCDB11BF9E72008030ED /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				732CFCDC11BF9E72008030ED /* Project-Base.xcconfig */,
+				732CFCDD11BF9E72008030ED /* Project-Coverage.xcconfig */,
+				732CFCDE11BF9E72008030ED /* Project-Debug.xcconfig */,
+				732CFCDF11BF9E72008030ED /* Project-Release.xcconfig */,
+				732CFCE011BF9E72008030ED /* Target-Base.xcconfig */,
+				732CFCE111BF9E72008030ED /* Target-CocoaDaemon.xcconfig */,
+				732CFCE211BF9E72008030ED /* Target-Executable.xcconfig */,
+				732CFCE311BF9E72008030ED /* Target-Framework.xcconfig */,
+				732CFCE411BF9E72008030ED /* Target-iPhone.xcconfig */,
+				732CFCE511BF9E72008030ED /* Target-iPhoneTestBundle.xcconfig */,
+				732CFCE611BF9E72008030ED /* Target-Plugin.xcconfig */,
+				732CFCE711BF9E72008030ED /* Target-QCPlugin.xcconfig */,
+				732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */,
+			);
+			name = Config;
+			path = ../../Blake/Config;
+			sourceTree = SOURCE_ROOT;
+		};
+		732CFD1F11BF9F8A008030ED /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				732CFD2811BF9FFE008030ED /* InputParseTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		732CFCEF11BF9EA3008030ED /* SimpleFileParser_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 732CFCF411BF9EA3008030ED /* Build configuration list for PBXNativeTarget "SimpleFileParser_Tests" */;
+			buildPhases = (
+				732CFCEB11BF9EA3008030ED /* Resources */,
+				732CFCEC11BF9EA3008030ED /* Sources */,
+				732CFCED11BF9EA3008030ED /* Frameworks */,
+				732CFCEE11BF9EA3008030ED /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleFileParser_Tests;
+			productName = SimpleFileParser_Tests;
+			productReference = 732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8D1107260486CEB800E47090 /* SimpleFileParser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SimpleFileParser" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleFileParser;
+			productInstallPath = "$(HOME)/Applications";
+			productName = SimpleFileParser;
+			productReference = 8D1107320486CEB800E47090 /* SimpleFileParser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SimpleFileParser" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* SimpleFileParser */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* SimpleFileParser */,
+				732CFCEF11BF9EA3008030ED /* SimpleFileParser_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		732CFCEB11BF9EA3008030ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		732CFCEE11BF9EA3008030ED /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		732CFCEC11BF9EA3008030ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */,
+				732CFCDA11BF9E5E008030ED /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		732CFCF211BF9EA3008030ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SimpleFileParser_Tests;
+			};
+			name = Debug;
+		};
+		732CFCF311BF9EA3008030ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SimpleFileParser_Tests;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE211BF9E72008030ED /* Target-Executable.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SimpleFileParser;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE211BF9E72008030ED /* Target-Executable.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SimpleFileParser;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCDE11BF9E72008030ED /* Project-Debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCDF11BF9E72008030ED /* Project-Release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		732CFCF411BF9EA3008030ED /* Build configuration list for PBXNativeTarget "SimpleFileParser_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				732CFCF211BF9EA3008030ED /* Debug */,
+				732CFCF311BF9EA3008030ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SimpleFileParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SimpleFileParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
