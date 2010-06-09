@@ -22,7 +22,93 @@
 	
 	static NSArray *knownInstructions;
 	if(knownInstructions == nil)
-		knownInstructions = [[NSArray arrayWithObjects: 
+		knownInstructions = [[NSArray arrayWithObjects:
+							 // aad,
+//							  aam,
+//							  addpd,
+//							  cli,
+//							  cmc,
+//							  cmpsl,
+//							  daa,
+//							  enter,
+//							  fadd,
+//							  faddl,
+//							  faddp,
+//							  fadds,
+//							  fchs,
+//							  fcompl,
+//							  fcoms,
+//							  fdiv,
+//							  fdivp,
+//							  fdivr,
+//							  fdivrp,
+//							  fiaddl,
+//							  fiadds,
+//							  ficompl,
+//							  ficomps,
+//							  ficoms,
+//							  filds,
+//							  fld,
+//							  fldt,
+//							  fmul,
+//							  fmulp,
+//							  fstpt,
+//							  fsub,
+//							  fsubp,
+//							  fsubr,
+//							  fsubrl,
+//							  fsubrp,
+//							  fucomi,
+//							  fucomip,
+//							  inb,
+//							  inl,
+//							  int,
+//							  into,
+//							  iret,
+//							  jno,
+//							  lahf,
+//							  lcall,
+//							  les,
+//							  ljmpl,
+//							  "lock/addb",
+//							  "lock/cmpxchgl",
+//							  "lock/pushl",
+//							  "lock/sbbl",
+//							  "lock/xaddl",
+//							  lodsb,
+//							  lret,
+//							  mov,
+//							  movhpd,
+//							  movsb,
+//							  outb,
+//							  punpckldq,
+//							  pushw,
+//							  rcrl,
+//							  "repnz/addb",
+//							  "repz/addl",
+//							  "repz/orb",
+//							  "repz/pushl",
+//							  rorb,
+//							  rorl,
+//							  sahf,
+//							  scasb,
+//							  scasl,
+//							  setp,
+//							  shlb,
+//							  shldl,
+//							  stc,
+//							  sti,
+//							  stosb,
+//							  stosl,
+//							  "wait/addb",
+//							  "wait/addl",
+//							  "wait/sbbb",
+//							  xlat							  
+							  
+@".byte",		@"",							  
+@"aaa",		@"",	
+@"aas",		@"",							  
+@"adcb",		@"",							  
 @"adcl",		@"$2 = $1 + $2",
 @"addb",		@"$2 = $1 + $2",
 @"addl",		@"$2 = $1 + $2",
@@ -37,22 +123,34 @@
 @"andpd",		@"$2 = $1 & $2",
 @"andps",		@"$2 = $1 & $2",
 @"andw",		@"$2 = $1 & $2",
-
+@"arpl",		@"",
+							  
+@"bound",		@"",							  
+@"bswap",		@"",
+							  
 @"call",		@"stack.push(%eip), jump($1)",
 @"calll",		@"stack.push(%eip), jump($1)",
 @"cbtw",		@"convert byte to word",
+							  
+@"clc",		@"",							  
 @"cld",			@"clean the address flag",
-
+@"cltd",		@"",
+							  
 @"cmovael",		@"",
+@"cmovaw",		@"",							  
 @"cmoval",		@"",
 @"cmovbel",		@"",
 @"cmovbl",		@"",
 @"cmovel",		@"if (el) move $1 to $2",
+@"cmovew",		@"",
 @"cmovgel",		@"",
 @"cmovgl",		@"",
+@"cmovlew",		@"",							  
 @"cmovlel",		@"",
 @"cmovll",		@"",
 @"cmovnel",		@"",
+@"cmovnew",		@"",
+@"cmovnpl",		@"",							  
 @"cmovnsl",		@"",
 @"cmovsl",		@"",
 
@@ -60,6 +158,7 @@
 @"cmpw",		@"compare word",
 @"cmpl",		@"compare long",
 @"cmpss",		@"compare float",
+@"cmpsb",		@"",							  
 @"cmpsd",		@"compare double",
 
 @"cvtdq2pd",	@"",
@@ -70,9 +169,11 @@
 @"cvttpd2dq",	@"",
 @"cvttsd2si",	@"",
 @"cvttss2si",	@"",
-
+@"cvttps2dq",	@"",
+							  
 @"cwtl",		@"convert word to long",
 
+@"das",		@"",							  
 @"decb",		@"decrement by 1",
 @"decl",		@"decrement by 1",
 @"decw",		@"decrement by 1",
@@ -81,20 +182,38 @@
 @"divsd",		@"unsigned divide",
 @"divss",		@"unsigned divide",
 
+@"falc",		@"",							  
+@"fcomp",		@"",							  
+@"fildl",		@"",							  
+@"fildq",		@"",
+@"fistpq",		@"",							  
 @"fld1",		@"load constant",
 @"fldl",		@"load real",
 @"flds",		@"load real",
 @"fldz",		@"load constant",
+@"fmuls",		@"",				
+@"fmull",		@"",							  
+@"fldcw",		@"",							  
+@"fnstcw",		@"",							  
 @"fstp",		@"store real",
 @"fstpl",		@"",
 @"fstps",		@"",
 @"fsts",		@"",
-@"hlt",			@"halt",
+@"fstl",		@"",							  
+@"fxch",		@"",
+							  
+@"hlt",		@"halt",
 @"idivl",		@"signed divide",
+@"imulb",		@"",							  
+@"imulw",		@"",
 @"imull",		@"multiply",
+@"incb",		@"",
 @"incl",		@"",
 @"incw",		@"",
-
+@"insb",		@"",
+@"insl",		@"",
+@"invd",		@"",
+							  
 @"jmp",			@"jump",
 @"jmpl",		@"jump",
  
@@ -106,6 +225,7 @@
 @"jbl",			@"Jump if Condition is Met - short if below",
 @"jbe",			@"Jump if Condition is Met - short if below or equal",
 @"jbel",		@"Jump if Condition is Met - short if below or equal",
+@"jcxz",		@"",							  
 @"je",			@"Jump if Condition is Met - short if equal",
 @"jel",			@"Jump if Condition is Met - short if equal",
 @"jg",			@"Jump if Condition is Met - short if greater",
@@ -118,6 +238,8 @@
 @"jlel",		@"Jump if Condition is Met - short if less or equal",
 @"jne",			@"Jump if Condition is Met - short if not equal",
 @"jnel",		@"Jump if Condition is Met - ",
+@"jnp",		@"",					
+@"jo",		@"",							  
 @"jns",			@"Jump if Condition is Met - short if not sign",
 @"jnsl",		@"Jump if Condition is Met - ",
 @"jp",			@"Jump if Condition is Met - short if parity",
@@ -125,9 +247,17 @@
 @"js",			@"Jump if Condition is Met - short if sign",
 @"jsl",			@"Jump if Condition is Met - ",
 
+@"lds",		@"",							  
 @"leal",		@"Load Effective address",
 @"leave",		@"",
+@"ljmp",		@"",							  
 @"lock/incl",	@"",
+@"lock/sbbb",		@"",							  
+@"lodsl",		@"",
+@"loop",		@"",							  
+@"loopz",		@"",							  
+@"loopnz",		@"",
+							  
 @"maxsd",		@"",
 @"maxss",		@"",
 @"minsd",		@"",
@@ -143,34 +273,62 @@
 
 @"movsd",		@"Move Scalar Double-Precision Floating-Point Value",
 @"movss",		@"move scalar single precision float",
+@"movsl",		@"",							  
 @"movsbl",		@"move byte to long (sign extension)",
 @"movsbw",		@"move byte to word (sign extension)",
 @"movswl",		@"move word to long (sign extension)",
 @"movzbl",		@"move byte to long (zero other bytes)",
 @"movzwl",		@"move word to long (zero other bytes)",
-
+@"movups",		@"",
+							  
 @"mull",		@"unsigned multiply",
+@"mulb",		@"",
 @"mulss",		@"Multiply Scalar Single-Precision Floating-Point Values",
 @"mulsd",		@"multiply double",
 
+@"negb",		@"",							  
+@"negw",		@"",							  
 @"negl",		@"",
 @"nop",			@"no op",
+@"nopl",		@"",							  
 @"notl",		@"",
+							  
 @"orb",			@"",
 @"orl",			@"",
 @"orpd",		@"",
 @"orps",		@"",
 @"orw",			@"",
+@"outsb",		@"",
+@"outsl",		@"",
+@"outl",		@"",
+							  
+@"paddd",			@"",
 @"popl",		@"",
+@"popf",		@"",							  
+@"popal",		@"",							  
+@"por",		@"",
 @"psllq",		@"",
+@"pslld",		@"",
+@"pushal",		@"",							  
 @"pushl",		@"push()",
+@"pushf",		@"",							  
 @"pxor",		@"",
+							  
+@"rclb",		@"",							  
+@"repz/addb",		@"",							  
 @"repz/cmpsb",	@"",
+@"rep/stosl",	@"",
 @"ret",			@"",
+@"retl",			@"",
+@"rolb",		@"",				
+@"rolw",		@"",							  
 @"roll",		@"",
+							  
 @"sarb",		@"",
 @"sarl",		@"",
 @"sarw",		@"",
+@"sbbb",		@"",							  
+@"sbbw",		@"",
 @"sbbl",		@"",
 
 @"seta",		@"",
@@ -187,26 +345,36 @@
 
 @"shll",		@"",
 @"shrb",		@"",
+@"shrdl",		@"",
 @"shrl",		@"",
 @"shrw",		@"",
+@"sldt",		@"",							  
+@"sqrtss",		@"",							  
 @"sqrtsd",		@"",
-
+@"std",		@"",
 @"subb",		@"",
 @"subl",		@"",
 @"subpd",		@"",
 @"subsd",		@"",
 @"subss",		@"",
 @"subw",		@"",
+@"subps",		@"",
+							  
 @"testb",		@"",
 @"testl",		@"",
 @"testw",		@"",
 @"ucomisd",		@"",
 @"ucomiss",		@"",
+						
+@"xchg",		@"",							  
+@"xchgb",		@"",							  
+@"xchgl",		@"",							  
 @"xorb",		@"",
 @"xorl",		@"",
 @"xorpd",		@"",
 @"xorps",		@"",
 @"xorw",		@"",
+							
 nil] retain];
 	return knownInstructions;
 }
@@ -223,19 +391,20 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 	NSArray *knownInstructions = [SimpleFileParserAppDelegate knownInstructions];
 	BOOL isFound = [knownInstructions containsObject:instruction];
-	if(!isFound){
-		NSLog(@"oopps %i", [knownInstructions indexOfObjectIdenticalTo:instruction]);
-	}
+//	if(!isFound){
+//		NSLog(@"oopps %i", [knownInstructions indexOfObjectIdenticalTo:instruction]);
+//	}
 	return isFound;
 }
 
 // -- i need to parse the form of the instruction, mv has many
 - (void)processInstruction:(NSString *)instruction argument:(NSString *)arguments {
 	
-	-- calculate the format
-	-----------------------
-	opcode, argument-format, arguments
-	
+	// -- calculate the format
+	// -----------------------
+	// opcode, argument-format, arguments
+	if([arguments length])
+		[_unknownArguments addObject:arguments];
 	
 	NSMutableSet *allThisInstruction = [_allInstructions objectForKey:instruction];
 	if(allThisInstruction==nil){
@@ -263,8 +432,11 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		arguments = [betterComponents objectAtIndex:4];
 
 	if(instruction){
-		NSAssert([self isKnownInstruction:instruction], @"i do not know instruction %@", instruction );
-
+		BOOL isKnown = [self isKnownInstruction:instruction];
+		if(!isKnown){
+			[_unknownInstructions addObject:instruction];
+			return;
+		}
 		[self processInstruction:instruction argument:arguments];
 	}
 	// NSLog(@"%@", betterComponents);
@@ -272,6 +444,9 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
+	_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];
+	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
+	
 	_allInstructions = [[NSMutableDictionary alloc] initWithCapacity:100];
 	
 	// strip the app to desired architectire
@@ -283,7 +458,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	// otool -t -v -V /Applications/Foo.app/Contents/MacOS/Foo >> data.txt		-- decompiled with symbols
 	
 	NSError *outError;
-	NSString *pathToInputFile = @"/Applications/Sibelius 6-386.app/Contents/MacOS/testData.txt";
+	NSString *pathToInputFile = [@"~/Desktop/testData.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	// NSStringEncoding *enc = nil;
    // NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL usedEncoding:enc error:&outError];	
@@ -301,15 +476,25 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	[fileString enumerateLinesUsingBlock:enumerateBlock];
 
 	// -- read it a line at a time. -- try niave aproach
-    NSScanner *scanner = [NSScanner scannerWithString:fileString];
+//    NSScanner *scanner = [NSScanner scannerWithString:fileString];
+	int reverseSort = NO;
+
+	
+	NSArray *allUnknownArguments = [_unknownArguments allObjects];
+	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
+	NSLog(@"%@", allUnknownArguments);
+	
+	NSArray *allUnknownInstructions = [_unknownInstructions allObjects];
+	allUnknownInstructions = [allUnknownInstructions sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
+//	NSLog(@"%@", allUnknownInstructions);
+
 	
 	// sort using a selector
 	NSArray *allInstructSets = [_allInstructions allValues];
 	for( NSSet *eachSet in allInstructSets){
 		NSArray *allInstruct = [eachSet allObjects];
-		int reverseSort = NO;
 		allInstruct = [allInstruct sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
-		NSLog(@"woo %@", allInstruct );
+	//	NSLog(@"woo %@", allInstruct );
 
 	}
 	

@@ -11,6 +11,9 @@
 @interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *window;
 	
+	NSMutableSet *_unknownInstructions;
+	NSMutableSet *_unknownArguments;
+
 	NSMutableDictionary *_allInstructions;
 }
 
