@@ -27,7 +27,8 @@
 "(%edi,%ebx),%esi",
 "*0x00000080(%eax)",
 
-"*0x004fb883(%ebx,%eax,4)",
+"*0x004fb883(%ebx,%eax,4)",		  call		  *0x004fb883(%ebx,%eax,4)
+
 "*0x009d19be(%ebx)",
 "*0x00baa400(,%edx,4)",
 
