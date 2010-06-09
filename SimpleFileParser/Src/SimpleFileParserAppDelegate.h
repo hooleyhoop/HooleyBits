@@ -10,6 +10,8 @@
 
 @interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *window;
+	
+	NSMutableDictionary *_allInstructions;
 }
 
 @property (assign) IBOutlet NSWindow *window;

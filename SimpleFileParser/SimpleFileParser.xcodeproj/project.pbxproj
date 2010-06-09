@@ -11,6 +11,8 @@
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFD2811BF9FFE008030ED /* InputParseTests.m */; };
+		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
+		732CFE1011BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
 		732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleFileParser_Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		732CFD2811BF9FFE008030ED /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParseTests.m; path = Tests/InputParseTests.m; sourceTree = "<group>"; };
+		732CFE0D11BFA188008030ED /* InputParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputParse.h; path = Src/InputParse.h; sourceTree = "<group>"; };
+		732CFE0E11BFA188008030ED /* InputParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParse.m; path = Src/InputParse.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* SimpleFileParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleFileParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,8 +69,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
 				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
+				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
+				732CFE0D11BFA188008030ED /* InputParse.h */,
+				732CFE0E11BFA188008030ED /* InputParse.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -101,8 +107,8 @@
 		29B97314FDCFA39411CA2CEA /* SimpleFileParser */ = {
 			isa = PBXGroup;
 			children = (
-				732CFD1F11BF9F8A008030ED /* Tests */,
 				732CFCDB11BF9E72008030ED /* Config */,
+				732CFD1F11BF9F8A008030ED /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -265,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */,
+				732CFE1011BFA188008030ED /* InputParse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +281,7 @@
 			files = (
 				732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */,
 				732CFCDA11BF9E5E008030ED /* main.m in Sources */,
+				732CFE0F11BFA188008030ED /* InputParse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
