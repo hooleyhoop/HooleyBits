@@ -309,8 +309,9 @@
 @"por",		@"",
 @"psllq",		@"",
 @"pslld",		@"",
-@"pushal",		@"",							  
-@"pushl",		@"push()",
+@"pushal",		@"",
+push						  
+@"pushl",		@"stack.push()",
 @"pushf",		@"",							  
 @"pxor",		@"",
 							  

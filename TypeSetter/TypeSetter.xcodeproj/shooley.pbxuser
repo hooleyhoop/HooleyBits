@@ -167,7 +167,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					904,
+					984,
 					60,
 					20,
 					48,
@@ -184,11 +184,10 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 297771165;
-			PBXWorkspaceStateSaveDate = 297771165;
+			PBXPerProjectTemplateStateSaveDate = 297863613;
+			PBXWorkspaceStateSaveDate = 297863613;
 		};
 		perUserProjectItems = {
-			732CFD8811BFA098008030ED /* PBXTextBookmark */ = 732CFD8811BFA098008030ED /* PBXTextBookmark */;
 			732CFE0211BFA159008030ED /* PBXTextBookmark */ = 732CFE0211BFA159008030ED /* PBXTextBookmark */;
 			735967DA1174C0550045323A /* PBXTextBookmark */ = 735967DA1174C0550045323A /* PBXTextBookmark */;
 			735968231174CAAC0045323A /* PBXTextBookmark */ = 735968231174CAAC0045323A /* PBXTextBookmark */;
@@ -199,6 +198,7 @@
 			73599C4E11B41A0D000212B4 /* PBXTextBookmark */ = 73599C4E11B41A0D000212B4 /* PBXTextBookmark */;
 			73599C4F11B41A0D000212B4 /* PBXTextBookmark */ = 73599C4F11B41A0D000212B4 /* PBXTextBookmark */;
 			73599C6311B41ACE000212B4 /* PBXTextBookmark */ = 73599C6311B41ACE000212B4 /* PBXTextBookmark */;
+			736280AD11C10A8400900D10 /* PBXTextBookmark */ = 736280AD11C10A8400900D10 /* PBXTextBookmark */;
 			7369213C11B51A4B006A81BD /* PBXTextBookmark */ = 7369213C11B51A4B006A81BD /* PBXTextBookmark */;
 			7369213E11B51A4B006A81BD /* PBXTextBookmark */ = 7369213E11B51A4B006A81BD /* PBXTextBookmark */;
 			7369214B11B51AAD006A81BD /* PBXTextBookmark */ = 7369214B11B51AAD006A81BD /* PBXTextBookmark */;
@@ -253,20 +253,10 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		location = CoreFoundation;
-		modificationTime = 297771284.209878;
+		modificationTime = 297771284.2098781;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
 		symbolName = "+[NSObject initialize]";
-	};
-	732CFD8811BFA098008030ED /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73B587B711B3E06D00AAEC90 /* FontWrapper.m */;
-		name = "FontWrapper.m: 1194";
-		rLen = 0;
-		rLoc = 42632;
-		rType = 0;
-		vrLen = 1435;
-		vrLoc = 41311;
 	};
 	732CFE0211BFA159008030ED /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -657,7 +647,7 @@
 		ignoreCount = 0;
 		lineNumber = 47;
 		location = TypeSetterTests;
-		modificationTime = 297771284.17311;
+		modificationTime = 297771284.1731099;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -702,6 +692,16 @@
 			sepNavSelRange = "{254, 17}";
 			sepNavVisRange = "{0, 304}";
 		};
+	};
+	736280AD11C10A8400900D10 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73B587B711B3E06D00AAEC90 /* FontWrapper.m */;
+		name = "FontWrapper.m: 1194";
+		rLen = 0;
+		rLoc = 42632;
+		rType = 0;
+		vrLen = 1355;
+		vrLoc = 41391;
 	};
 	736920F611B51408006A81BD /* CTFont.h */ = {
 		isa = PBXFileReference;
@@ -866,7 +866,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 318;
-		modificationTime = 297771284.19347;
+		modificationTime = 297771284.1934701;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -1321,7 +1321,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 474;
-		modificationTime = 297771284.184071;
+		modificationTime = 297771284.1840709;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -1338,7 +1338,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 199;
-		modificationTime = 297771284.184762;
+		modificationTime = 297771284.1847621;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -1372,7 +1372,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 141;
-		modificationTime = 297771284.186045;
+		modificationTime = 297771284.1860451;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -1406,7 +1406,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 151;
-		modificationTime = 297771284.18746;
+		modificationTime = 297771284.1874601;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -1421,7 +1421,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1202, 16731}}";
 			sepNavSelRange = "{42632, 0}";
-			sepNavVisRange = "{41311, 1435}";
+			sepNavVisRange = "{41391, 1355}";
 			sepNavWindowFrame = "{{314, 4}, {1366, 874}}";
 		};
 	};
@@ -1578,7 +1578,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 255;
-		modificationTime = 297771284.199626;
+		modificationTime = 297771284.1996261;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
