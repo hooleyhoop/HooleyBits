@@ -52,5 +52,6 @@ struct BasicTokenArray {
 - (void)insertUppercaseChar:(char)val;
 - (void)insertLowercaseChar:(char)val;
 
+- (NSString *)outputString;
 
 @end

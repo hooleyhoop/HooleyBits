@@ -183,16 +183,47 @@ NSString* tokenTypeAsString( enum TokenType type ) {
 	return typeString;
 }
 
+- (NSString *)outputString {
+
+	NSString *blergh = @"";
+	for( uint i=0; i<=_tokenArray.tokenCount; i++) 
+	{
+		struct BasicToken thisToken = _tokenArray.tokens[i];
+		NSString* value = [NSString stringWithCharacters:thisToken.value length:thisToken.tokenLength];
+		NSString* typeName = nil;
+
+		switch( thisToken.type ){
+			case decimalNum:
+			case upperCaseChar:
+			case lowerCaseChar:
+				typeName = tokenTypeAsString( thisToken.type );
+				value = [NSString stringWithFormat:@"%@:%@", typeName, value];
+				break;
+				
+			case openBracket:
+			case closeBracket:
+			case comma:
+			case asterisk:
+			case dollar:
+			case percent:
+				break;
+			default:
+				[NSException raise:@"Dont know what this tosken type is" format:@"%i", thisToken.type];
+				break;
+		}
+		
+		if([blergh length]==0)
+			blergh = value;
+		else
+			blergh = [NSString stringWithFormat:@"%@ %@", blergh, value];
+	}
+	return blergh;	
+}
+
 - (NSString *)description {
 	
-	NSString *blergh = @""; //This makes it more difficult to compare in tests - [super description];
-	for(uint i=0; i<=_tokenArray.tokenCount; i++) {
-		struct BasicToken thisToken = _tokenArray.tokens[i];
-		NSString* typeName = tokenTypeAsString( thisToken.type );
-		NSString* value = [NSString stringWithCharacters:thisToken.value length:thisToken.tokenLength];
-		blergh = [NSString stringWithFormat:@"%@ %@:%@", blergh, typeName, value];
-	}
-	return blergh;
+	NSString *blergh = [super description];
+	return [NSString stringWithFormat:@"%@ - %@", blergh, [self outputString]];
 }
 
 
