@@ -7,6 +7,7 @@
 //
 
 #import "TokenArray.h"
+#import "BasicToken.h"
 
 #pragma mark -
 @interface TokenArray ()
@@ -16,10 +17,21 @@
 #pragma mark -
 @implementation TokenArray
 
++ (id)tokensWithString:(NSString *)arg {
+	return [[[self alloc] initWithString:arg] autorelease];
+}
+
 - (id)initWithString:(NSString *)arg {
 
+	_tokenArray = [[NSMutableArray alloc] initWithCapacity:16];
 	[self _tokenizeString:arg];
 	return self;
+}
+
+- (void)dealoc {
+
+	[_tokenArray release];
+	[super dealloc];
 }
 
 - (void)_tokenizeString:(NSString *)arg {
@@ -46,6 +58,13 @@
 			case '%':
 				[self insertPercent];
 				break;
+			case '$':
+				[self insertDollar];
+				break;
+			case ':':
+				[self insertColon];
+				break;				
+		
 			default:
 				if(val>=0x30 && val<=0x39)
 					[self insertDecimalChar:val];
@@ -62,156 +81,163 @@
 
 
 #pragma mark 1 char Tokens
-void _add1CharToken( struct BasicTokenArray *arrayPtr, enum TokenType type, char value ){
-	
-	// Close current token if needed (if current token is not empty)
-	uint currentTok = arrayPtr->tokenCount;
-	if(arrayPtr->tokens[currentTok].tokenLength)
-		arrayPtr->tokenCount++;
-	
-	// Add the bracket token
-	currentTok = arrayPtr->tokenCount;
-	arrayPtr->tokens[currentTok].type = type;
-	arrayPtr->tokens[currentTok].tokenLength = 1;
-	arrayPtr->tokens[currentTok].value[0] = value;
-}
-
 - (void)insertOpenBracketToken {
 
-	_add1CharToken( &_tokenArray, openBracket, '(' );
+	[_tokenArray addObject:[BasicToken tokenWithType:openBracket value:'(']];
 }
 
 - (void)insertCloseBracketToken {
 
-	_add1CharToken( &_tokenArray, closeBracket, ')' );
+	[_tokenArray addObject:[BasicToken tokenWithType:closeBracket value:')']];
 }
 
 - (void)insertCommaToken {
 
-	_add1CharToken( &_tokenArray, comma, ',' );
+	[_tokenArray addObject:[BasicToken tokenWithType:comma value:',']];
 }
 
 - (void)insertAsterisk {
 
-	_add1CharToken( &_tokenArray, asterisk, '*' );
+	[_tokenArray addObject:[BasicToken tokenWithType:asterisk value:'*']];
 }
 
 - (void)insertPercent {
 
-	_add1CharToken( &_tokenArray, percent, '%' );
+	[_tokenArray addObject:[BasicToken tokenWithType:percent value:'%']];
 }
 
+- (void)insertDollar {
+
+	[_tokenArray addObject:[BasicToken tokenWithType:dollar value:'$']];
+}
+
+- (void)insertColon {
 	
+	[_tokenArray addObject:[BasicToken tokenWithType:colon value:':']];
+}
+
 #pragma mark Long Tokens 
 
-void _newTokenIfTypeRequiresIt( struct BasicTokenArray *arrayPtr, enum TokenType type ) {
-	
-	uint currentTok = arrayPtr->tokenCount;
-	enum TokenType currentType = arrayPtr->tokens[currentTok].type;
+- (void)_addToToken:(NSMutableArray *)arrayPtr :(enum TokenType)type :(char)val {
 
-	if( currentType!=type ) {
-		// Close current token
-		arrayPtr->tokenCount++;
-		currentTok = arrayPtr->tokenCount;
-		arrayPtr->tokens[currentTok].type = type;
-	}
-}
-
-void addToToken( struct BasicTokenArray *arrayPtr, char val ) {
-
-	uint currentTok = arrayPtr->tokenCount;
-	uint currentTokPos = arrayPtr->tokens[currentTok].tokenLength;
-	arrayPtr->tokens[currentTok].value[currentTokPos] = val;
-	arrayPtr->tokens[currentTok].tokenLength++;
+	BasicToken *currentTok = nil;
+	NSUInteger tokCount = [_tokenArray count];
+	if(tokCount)
+		currentTok = [_tokenArray objectAtIndex:tokCount-1];
+	if( currentTok && currentTok->_type==type )
+		[currentTok append:val];
+	else
+		[_tokenArray addObject:[BasicToken tokenWithType:type value:val]];
 }
 
 - (void)insertDecimalChar:(char)val {
 	
-	_newTokenIfTypeRequiresIt( &_tokenArray, decimalNum );
-	addToToken(  &_tokenArray, val );
+	[self _addToToken:_tokenArray :decimalNum :val];
 }
 
 - (void)insertUppercaseChar:(char)val {
 
-	_newTokenIfTypeRequiresIt( &_tokenArray, upperCaseChar );
-	addToToken(  &_tokenArray, val );
+	[self _addToToken:_tokenArray :upperCaseChar :val];
 }
 
 - (void)insertLowercaseChar:(char)val {
 
-	_newTokenIfTypeRequiresIt( &_tokenArray, lowerCaseChar );
-	addToToken(  &_tokenArray, val );
+	[self _addToToken:_tokenArray :lowerCaseChar :val];
 }
 
 #pragma mark -
-NSString* tokenTypeAsString( enum TokenType type ) {
-	
-	NSString *typeString = nil;
-	switch(type){
-		case decimalNum:
-			typeString = @"decNm";
-			break;
-		case upperCaseChar:
-			typeString = @"uprCC";
-			break;
-		case lowerCaseChar:
-			typeString = @"lwrCC";
-			break;
-		case openBracket:
-			typeString = @"opBRK";
-			break;
-		case closeBracket:
-			typeString = @"clBRK";
-			break;
-		case comma:
-			typeString = @"comma";
-			break;
-		case asterisk:
-			typeString = @"astrx";
-			break;
-		case dollar:
-			typeString = @"dollr";
-			break;
-		case percent:
-			typeString = @"prcnt";
-			break;
-		default:
-			[NSException raise:@"Dont know what this tosken type is" format:@"%i", type];
-			break;
 
-	}
-	return typeString;
+- (void)_parseRegisterNames:(NSUInteger)startIndex {
+	
+	NSUInteger count = [_tokenArray count];
+	for( NSUInteger i=startIndex; i<count-1; i++ )
+	{
+		BasicToken *tok = [_tokenArray objectAtIndex:i];
+		
+		if( tok.type==percent ){
+			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
+			if(nextTok.type==lowerCaseChar){
+				// -- these two tokens are a register
+				BasicToken *registerToken = [BasicToken tokenWithType:registerVal value:nextTok.value length:nextTok.length];
+				[_tokenArray removeObjectAtIndex:i+1];
+				[_tokenArray replaceObjectAtIndex:i withObject:registerToken];
+				[self _parseRegisterNames:i+1];
+				return;
+			}
+		}
+	}	
 }
+
+- (void)_parseHexNumbers:(NSUInteger)startIndex {
+	
+	NSUInteger count = [_tokenArray count];
+	for( NSUInteger i=startIndex; i<count-1; i++ )
+	{
+		BasicToken *tok = [_tokenArray objectAtIndex:i];
+		
+		if( tok.type==decimalNum && tok.length==1 && tok.value[0]=='0' )
+		{
+			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
+			if( [nextTok isValidStartHexNumComponent] )
+			{
+				NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+
+				// -- first char must be x
+				// -- remove IT
+				char *thisVal;
+				char *thisValLength = nextTok.length;
+				if(thisValLength>1){
+					thisVal = nextTok.value+1;
+					thisValLength = thisValLength-1;
+					hexToken = [BasicToken tokenWithType:hexNum value:thisVal length:thisValLength];
+				}
+				BasicToken *hexToken = nil;
+
+				[indexesToRemove addIndex:i+1];
+					
+				for( NSUInteger j=i+2; j<count; j++ )
+				{
+					BasicToken *nextTok = [_tokenArray objectAtIndex:j];
+					if( [nextTok isValidHexNumComponent] )
+					{
+						
+						if(!hexToken)
+							hexToken = [BasicToken tokenWithType:hexNum value:nextTok.value length:nextTok.length];
+						else
+							[hexToken append:nextTok.value length:nextTok.length];
+					
+						[indexesToRemove addIndex:j];
+					} else {
+						break;
+					}
+
+				}
+				
+				[_tokenArray removeObjectsAtIndexes:indexesToRemove];
+				[_tokenArray replaceObjectAtIndex:i withObject:hexToken];
+
+				[self _parseHexNumbers:i];
+				return;
+			}
+		}
+	}	
+}
+
+// Search for consequtive tokens that should be compounded
+- (void)secondPass {
+
+	[self _parseRegisterNames:0];
+	[self _parseHexNumbers:0];
+}
+
+#pragma mark -
 
 - (NSString *)outputString {
 
 	NSString *blergh = @"";
-	for( uint i=0; i<=_tokenArray.tokenCount; i++) 
+	for( BasicToken* each in _tokenArray ) 
 	{
-		struct BasicToken thisToken = _tokenArray.tokens[i];
-		NSString* value = [NSString stringWithCharacters:thisToken.value length:thisToken.tokenLength];
-		NSString* typeName = nil;
-
-		switch( thisToken.type ){
-			case decimalNum:
-			case upperCaseChar:
-			case lowerCaseChar:
-				typeName = tokenTypeAsString( thisToken.type );
-				value = [NSString stringWithFormat:@"%@:%@", typeName, value];
-				break;
-				
-			case openBracket:
-			case closeBracket:
-			case comma:
-			case asterisk:
-			case dollar:
-			case percent:
-				break;
-			default:
-				[NSException raise:@"Dont know what this tosken type is" format:@"%i", thisToken.type];
-				break;
-		}
-		
+		NSString *value = [each outputString];
 		if([blergh length]==0)
 			blergh = value;
 		else
@@ -224,6 +250,14 @@ NSString* tokenTypeAsString( enum TokenType type ) {
 	
 	NSString *blergh = [super description];
 	return [NSString stringWithFormat:@"%@ - %@", blergh, [self outputString]];
+}
+
+- (NSUInteger)count {
+	return [_tokenArray count];
+}
+
+- (BasicToken *)tokenAtIndex:(NSUInteger)i {
+	return [_tokenArray objectAtIndex:i];
 }
 
 

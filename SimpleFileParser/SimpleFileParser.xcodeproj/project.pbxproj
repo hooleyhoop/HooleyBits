@@ -8,70 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		730B608411C2480A00CF7D9D /* TokenArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E13F11C15E3600463F04 /* TokenArrayTests.m */; };
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
-		732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFD2811BF9FFE008030ED /* InputParseTests.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
-		736280D911C10B2B00900D10 /* ParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736280D811C10B2B00900D10 /* ParseKit.framework */; };
-		736280DA11C10B2B00900D10 /* ParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736280D811C10B2B00900D10 /* ParseKit.framework */; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
-		7397E14411C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
+		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
+		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
+		73F1C54311C4FC4500C93934 /* BasicTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */; };
+		73F1C56211C504CB00C93934 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
+		73F1C58411C512A600C93934 /* TokenArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E13F11C15E3600463F04 /* TokenArrayTests.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		73354CB111C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = ParseKit;
-		};
-		73354CB311C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D389F1CE0F1965E600558235;
-			remoteInfo = JSParseKit;
-		};
-		73354CB511C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D3FDC5830FFC4BFC00F1F797;
-			remoteInfo = ParseKitMobile;
-		};
-		73354CB711C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D3C7D87A0A411FBF005DD154;
-			remoteInfo = Tests;
-		};
-		73354CB911C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D33494100E2963FD00406085;
-			remoteInfo = DemoApp;
-		};
-		73354CBB11C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D34185040E520D3F0081B0DC;
-			remoteInfo = DebugApp;
-		};
-		73354CBD11C0E87B009473ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D389F2030F196A7500558235;
-			remoteInfo = JSDemoApp;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		735B77F411C1069000721231 /* CopyFiles */ = {
@@ -112,11 +60,12 @@
 		732CFD2811BF9FFE008030ED /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParseTests.m; path = Tests/InputParseTests.m; sourceTree = "<group>"; };
 		732CFE0D11BFA188008030ED /* InputParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputParse.h; path = Src/InputParse.h; sourceTree = "<group>"; };
 		732CFE0E11BFA188008030ED /* InputParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParse.m; path = Src/InputParse.m; sourceTree = "<group>"; };
-		73354CA711C0E87B009473ED /* ParseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ParseKit.xcodeproj; path = ../../../Source/parsekit/ParseKit.xcodeproj; sourceTree = SOURCE_ROOT; };
-		736280D811C10B2B00900D10 /* ParseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseKit.framework; path = /Library/Frameworks/ParseKit.framework; sourceTree = "<absolute>"; };
 		7397E13F11C15E3600463F04 /* TokenArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArrayTests.m; path = Tests/TokenArrayTests.m; sourceTree = "<group>"; };
 		7397E14111C15E5700463F04 /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Src/TokenArray.h; sourceTree = "<group>"; };
 		7397E14211C15E5700463F04 /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Src/TokenArray.m; sourceTree = "<group>"; };
+		73F1C4E911C4DC4800C93934 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicToken.h; path = Src/BasicToken.h; sourceTree = "<group>"; };
+		73F1C4EA11C4DC4800C93934 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicToken.m; path = Src/BasicToken.m; sourceTree = "<group>"; };
+		73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicTokenTests.m; path = Tests/BasicTokenTests.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* SimpleFileParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleFileParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -125,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				736280D911C10B2B00900D10 /* ParseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +82,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				736280DA11C10B2B00900D10 /* ParseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +103,6 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				736280D811C10B2B00900D10 /* ParseKit.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -191,7 +137,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				73354CA711C0E87B009473ED /* ParseKit.xcodeproj */,
 			);
 			name = SimpleFileParser;
 			sourceTree = "<group>";
@@ -248,27 +193,16 @@
 			children = (
 				732CFD2811BF9FFE008030ED /* InputParseTests.m */,
 				7397E13F11C15E3600463F04 /* TokenArrayTests.m */,
+				73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */,
 			);
 			name = Tests;
-			sourceTree = "<group>";
-		};
-		73354CA811C0E87B009473ED /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				73354CB211C0E87B009473ED /* ParseKit.framework */,
-				73354CB411C0E87B009473ED /* JSParseKit.framework */,
-				73354CB611C0E87B009473ED /* libparsekit.a */,
-				73354CB811C0E87B009473ED /* Tests.octest */,
-				73354CBA11C0E87B009473ED /* DemoApp.app */,
-				73354CBC11C0E87B009473ED /* DebugApp.app */,
-				73354CBE11C0E87B009473ED /* JSDemoApp.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		7397E14611C15E6000463F04 /* Tokeniser First Pass */ = {
 			isa = PBXGroup;
 			children = (
+				73F1C4E911C4DC4800C93934 /* BasicToken.h */,
+				73F1C4EA11C4DC4800C93934 /* BasicToken.m */,
 				7397E14111C15E5700463F04 /* TokenArray.h */,
 				7397E14211C15E5700463F04 /* TokenArray.m */,
 			);
@@ -325,12 +259,6 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* SimpleFileParser */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 73354CA811C0E87B009473ED /* Products */;
-					ProjectRef = 73354CA711C0E87B009473ED /* ParseKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* SimpleFileParser */,
@@ -338,58 +266,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		73354CB211C0E87B009473ED /* ParseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ParseKit.framework;
-			remoteRef = 73354CB111C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CB411C0E87B009473ED /* JSParseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = JSParseKit.framework;
-			remoteRef = 73354CB311C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CB611C0E87B009473ED /* libparsekit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libparsekit.a;
-			remoteRef = 73354CB511C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CB811C0E87B009473ED /* Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.octest;
-			remoteRef = 73354CB711C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CBA11C0E87B009473ED /* DemoApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DemoApp.app;
-			remoteRef = 73354CB911C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CBC11C0E87B009473ED /* DebugApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DebugApp.app;
-			remoteRef = 73354CBB11C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73354CBE11C0E87B009473ED /* JSDemoApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = JSDemoApp.app;
-			remoteRef = 73354CBD11C0E87B009473ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		732CFCEB11BF9EA3008030ED /* Resources */ = {
@@ -431,9 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				732CFD2911BF9FFE008030ED /* InputParseTests.m in Sources */,
-				7397E14411C15E5700463F04 /* TokenArray.m in Sources */,
-				730B608411C2480A00CF7D9D /* TokenArrayTests.m in Sources */,
+				73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */,
+				73F1C54311C4FC4500C93934 /* BasicTokenTests.m in Sources */,
+				73F1C56211C504CB00C93934 /* TokenArray.m in Sources */,
+				73F1C58411C512A600C93934 /* TokenArrayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +322,7 @@
 				732CFCDA11BF9E5E008030ED /* main.m in Sources */,
 				732CFE0F11BFA188008030ED /* InputParse.m in Sources */,
 				7397E14311C15E5700463F04 /* TokenArray.m in Sources */,
+				73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

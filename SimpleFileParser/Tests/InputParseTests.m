@@ -6,7 +6,6 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-#import <ParseKit/ParseKit.h>
 #import "TokenArray.h"
 
 @interface InputParseTests : SenTestCase {

@@ -8,6 +8,9 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "TokenArray.h"
+#import "BasicToken.h"
+
+#import <wchar.h>
 
 @interface TokenArrayTests : SenTestCase {
 	
@@ -24,7 +27,6 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"*0x004fb883(%ebx,%eax,4)",
 @"* decNm:0 lwrCC:x decNm:004 lwrCC:fb decNm:883 ( % lwrCC:ebx , % lwrCC:eax , decNm:4 )",
 															
-
 @"(%bx,%si),%al",
 @"( % lwrCC:bx , % lwrCC:si ) , % lwrCC:al",
 
@@ -74,7 +76,7 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"% lwrCC:edx , decNm:0 lwrCC:xfffff decNm:630 ( % lwrCC:ebp )",
 
 @"$0x09249249,0x0c(%ebp)",
-@"$ decNm:0 lwrCC:x decNm:09249249 , decNm:0 lwrCC:x decNm:0 c( % lwrCC:ebp )",
+@"$ decNm:0 lwrCC:x decNm:09249249 , decNm:0 lwrCC:x decNm:0 lwrCC:c ( % lwrCC:ebp )",
 
 @"$0x4e,%eax",
 @"$ decNm:0 lwrCC:x decNm:4 lwrCC:e , % lwrCC:eax",
@@ -83,7 +85,7 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"$ decNm:0 lwrCC:xffffeca decNm:0 , % lwrCC:esi",
 
 @"$0xffffffff,0x00000244(%edx)",
-@"$ decNm:0 lwrCC:x decNm:ffffffff , decNm:0 lwrCC:x decNm:00000244 ( % lwrCC:edx )",
+@"$ decNm:0 lwrCC:xffffffff , decNm:0 lwrCC:x decNm:00000244 ( % lwrCC:edx )",
 
 @"0x000000bc(%edx)",
 @"decNm:0 lwrCC:x decNm:000000 lwrCC:bc ( % lwrCC:edx )",
@@ -92,7 +94,7 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"decNm:0 lwrCC:x decNm:00 lwrCC:b decNm:97 lwrCC:a decNm:3 lwrCC:f ( % lwrCC:ecx ) , % lwrCC:eax",
 
 @"0x00f35d04(%eax),%esi",
-@"0 lwrCC:x decNm:00 lwrCC:f decNm:35 lwrCC:d decNm:04 ( % lwrCC:eax ) , % lwrCC:esi",
+@"decNm:0 lwrCC:x decNm:00 lwrCC:f decNm:35 lwrCC:d decNm:04 ( % lwrCC:eax ) , % lwrCC:esi",
 
 @"0x0123e904,%eax",
 @"decNm:0 lwrCC:x decNm:0123 lwrCC:e decNm:904 , % lwrCC:eax",
@@ -100,8 +102,8 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"0x012417ec",
 @"decNm:0 lwrCC:x decNm:012417 lwrCC:ec",
 
-@"0x05(%ecx),%edx"
-@"decNm:0 lwrCC:x decNm:05 ( % lwrCC:ecx ) , % lwrCC:edx"
+@"0x05(%ecx),%edx",
+@"decNm:0 lwrCC:x decNm:05 ( % lwrCC:ecx ) , % lwrCC:edx",
 
 @"0x100b9a53a",
 @"decNm:0 lwrCC:x decNm:100 lwrCC:b decNm:9 lwrCC:a decNm:53 lwrCC:a",
@@ -119,7 +121,7 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"decNm:0 lwrCC:x decNm:60 ( % lwrCC:edx ) , % lwrCC:edx",
 
 @"0xfe2ce6e0(%edi,%eax),%edi",
-@"decNm:0 lwrCC:x lwrCC:fe decNm:2 lwrCC:ce decNm:6 lwrCC:e decNm:0 ( % lwrCC:edi , % lwrCC:eax ) , % lwrCC:edi",
+@"decNm:0 lwrCC:xfe decNm:2 lwrCC:ce decNm:6 lwrCC:e decNm:0 ( % lwrCC:edi , % lwrCC:eax ) , % lwrCC:edi",
 
 @"0xff,",
 @"decNm:0 lwrCC:xff ,",
@@ -134,7 +136,7 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"decNm:0 lwrCC:xff ( % lwrCC:esi ) , % lwrCC:edx",
 
 @"0xffffff68(%ebp,%ecx,8),%xmm0",
-@"decNm:0 lwrCC:xffffff decNm:68 ( % lwrCC:ebp , % lwrCC:ecx , decNm:8 ) , % xmm decNm:0",
+@"decNm:0 lwrCC:xffffff decNm:68 ( % lwrCC:ebp , % lwrCC:ecx , decNm:8 ) , % lwrCC:xmm decNm:0",
 
 @"0xffffff7c(%ebp),%ax",
 @"decNm:0 lwrCC:xffffff decNm:7 lwrCC:c ( % lwrCC:ebp ) , % lwrCC:ax",
@@ -152,10 +154,14 @@ NSArray *allTests = [NSArray arrayWithObjects:
 @"decNm:0 lwrCC:xfffffff decNm:0 ( , % lwrCC:eax , decNm:8 ) , % lwrCC:eax",
 
 @"0xffffff7c(%ebp,%ecx,4),%eax",
-@"decNm:0 lwrCC:xffffff decNm:7 lwrCC:c ( % lwrCC:ebp , % lwrCC:ecx , decNm:4) , % lwrCC:eax",
+@"decNm:0 lwrCC:xffffff decNm:7 lwrCC:c ( % lwrCC:ebp , % lwrCC:ecx , decNm:4 ) , % lwrCC:eax",
 
 @"0xffffff7c(%ebp,%eax,4)",
 @"decNm:0 lwrCC:xffffff decNm:7 lwrCC:c ( % lwrCC:ebp , % lwrCC:eax , decNm:4 )",
+					 
+@"%eax,%es:(%eax)",
+@"% lwrCC:eax , % lwrCC:es : ( % lwrCC:eax )",
+					 
 nil];
 	
 	for( uint i=0; i<[allTests count]; i=i+2) {
@@ -170,6 +176,55 @@ nil];
 			STFail( @"%@   !=   %@", output, thisVerifyString );
 		}
 	}
+	NSLog(@"what");
+}
+
+- (void)testParseHexNumber {
+	
+	// 1 hex number
+	TokenArray *tkns = [TokenArray tokensWithString:@"0xFF0A"];
+	[tkns secondPass];
+	
+	STAssertTrue( tkns.count==1, @"doh %i", tkns.count );
+	STAssertTrue( [tkns tokenAtIndex:0].type == hexNum, @"doh" );
+	STAssertTrue( strcmp( [tkns tokenAtIndex:0].value, "FF0A" )==0, @"doh" );
+	
+	// multiple hex numbers
+	TokenArray *tkns2 = [TokenArray tokensWithString:@",0xf,0x1a2a3a"];
+	[tkns2 secondPass];
+
+	STAssertTrue( tkns2.count==4, @"doh %i", tkns2.count );
+	
+	STAssertTrue( [tkns2 tokenAtIndex:0].type == comma, @"doh" );
+	STAssertTrue( [tkns2 tokenAtIndex:1].type == hexNum, @"doh" );
+	STAssertTrue( [tkns2 tokenAtIndex:2].type == comma, @"doh" );
+	STAssertTrue( [tkns2 tokenAtIndex:3].type == hexNum, @"doh" );
+
+	STAssertTrue( strcmp( [tkns tokenAtIndex:1].value, "f" )==0, @"doh" );
+	STAssertTrue( strcmp( [tkns2 tokenAtIndex:3].value, "1a2a3a" )==0, @"doh" );
+}
+
+- (void)testParseRegisters {
+	
+	// 1 register
+	TokenArray *tkns = [TokenArray tokensWithString:@"%eax"];
+	[tkns secondPass];
+	
+	STAssertTrue( tkns.count==1, @"doh %i", tkns.count );
+	STAssertTrue( [tkns tokenAtIndex:0].type == registerVal, @"doh" );
+	STAssertTrue( strcmp( [tkns tokenAtIndex:0].value, "eax" )==0, @"doh" );
+	
+	// multiple registers
+	TokenArray *tkns2 = [TokenArray tokensWithString:@"%eax,%eab"];
+	[tkns2 secondPass];
+
+	STAssertTrue( tkns2.count==3, @"doh %i", tkns2.count );
+
+	STAssertTrue( [tkns2 tokenAtIndex:0].type == registerVal, @"doh" );
+	STAssertTrue( strcmp( [tkns tokenAtIndex:0].value, "eax" )==0, @"doh" );
+	
+	STAssertTrue( [tkns2 tokenAtIndex:2].type == registerVal, @"doh" );
+	STAssertTrue( strcmp( [tkns2 tokenAtIndex:2].value, "eab" )==0, @"doh" );
 }
 
 

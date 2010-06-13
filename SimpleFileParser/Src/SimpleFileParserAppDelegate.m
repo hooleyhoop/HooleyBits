@@ -7,6 +7,7 @@
 //
 
 #import "SimpleFileParserAppDelegate.h"
+#import "TokenArray.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -310,7 +311,7 @@
 @"psllq",		@"",
 @"pslld",		@"",
 @"pushal",		@"",
-push						  
+@"push",		@"",						  
 @"pushl",		@"stack.push()",
 @"pushf",		@"",							  
 @"pxor",		@"",
@@ -439,6 +440,9 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 			return;
 		}
 		[self processInstruction:instruction argument:arguments];
+	}
+	if(arguments){
+		TokenArray *tokensFromThisString  = [[[TokenArray alloc] initWithString:arguments] autorelease];
 	}
 	// NSLog(@"%@", betterComponents);
 }
