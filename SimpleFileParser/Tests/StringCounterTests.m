@@ -39,6 +39,7 @@
 	[_sc add:@"dog"];
 	[_sc add:@"fish"];
 	
+	[_sc sort];
 	NSArray *sortedCounts = [_sc sortedCounts];
 	STAssertTrue( [sortedCounts count]==3, @"%i", [sortedCounts count] );
 	STAssertTrue( [[sortedCounts objectAtIndex:0] intValue]==3, @"%i", [[sortedCounts objectAtIndex:0] intValue] );

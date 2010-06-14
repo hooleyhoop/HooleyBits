@@ -383,14 +383,6 @@ nil] retain];
 	return knownInstructions;
 }
 
-NSInteger alphabeticSort(id string1, id string2, void *reverse)
-{
-    if ((NSInteger *)reverse == NO) {
-        return [string2 localizedCaseInsensitiveCompare:string1];
-    }
-    return [string1 localizedCaseInsensitiveCompare:string2];
-}
-
 - (BOOL)isKnownInstruction:(NSString *)instruction {
 
 	NSArray *knownInstructions = [SimpleFileParserAppDelegate knownInstructions];
@@ -428,47 +420,27 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		
 		NSString *opcodeFormat = [NSString stringWithFormat:@"%@ %@", instruction, [tokensFromThisString pattern]];
 		
-		NSNumber *occuranceCount = [_allOpCodeFormats objectForKey:opcodeFormat];
-		NSNumber *newCount = nil;
-		if(!occuranceCount)
-			newCount = [NSNumber numberWithInt:1];
-		else {
-			newCount = [NSNumber numberWithInt:[occuranceCount intValue]+1];
-		}
-		[_allOpCodeFormats setObject:newCount forKey:opcodeFormat];
-
+		// collect opcode format data
+		[_allOpCodeFormats add:opcodeFormat];
 		
 		// Collect argument formats
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tokensFromThisString];
 		uint argumentCount = [scanner count];
-		for(uint i=0; i<argumentCount; i++)
+		for( uint i=0; i<argumentCount; i++ )
 		{
 			NSNumber *newArgCount = nil;
 			NSString *argumentPattern = [[scanner argumentAtIndex:i] pattern];
-			NSNumber *argPatternOccuranceCount = [_allArgumentFormats objectForKey:argumentPattern];
-			if(!argPatternOccuranceCount)
-				newArgCount = [NSNumber numberWithInt:1];
-			else {
-				newArgCount = [NSNumber numberWithInt:[argPatternOccuranceCount intValue]+1];
-			}
-			[_allArgumentFormats setObject:newArgCount forKey:argumentPattern];
+			
+			// Collct argument-format data
+			[_allArgumentFormats add:argumentPattern];
 		}
-		
-		
 		
 	}
 }
 
-- (void)processLine:(NSString *)woohoo {
+- (void)processLine:(NSString *)aLine {
 
-	-- refactor this stuff out of here
-	NSArray *components = [woohoo componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	NSMutableArray *betterComponents = [NSMutableArray array];
-    [components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        if([obj isEqualToString:@""])
-			return;
-		[betterComponents addObject:obj];
-    }];
+	NSArray *components = worderize( aLine );
 	
 	NSString *instruction=nil, *arguments=nil;
 	
@@ -476,6 +448,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		instruction = [betterComponents objectAtIndex:3];
 	if([betterComponents count]>=5)
 		arguments = [betterComponents objectAtIndex:4];
+	
 	-- get the function call hint as well
 	
 	if(instruction){
@@ -515,7 +488,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	// NSStringEncoding *enc = nil;
    // NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL usedEncoding:enc error:&outError];	
-    NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];	
+	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];	
 	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 	
 	void (^enumerateBlock)(NSString *, BOOL *) = ^(NSString *line, BOOL *stop) {
@@ -529,9 +502,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	[fileString enumerateLinesUsingBlock:enumerateBlock];
 
 	// -- read it a line at a time. -- try niave aproach
-//    NSScanner *scanner = [NSScanner scannerWithString:fileString];
 	int reverseSort = NO;
-
 	
 	NSArray *allUnknownArguments = [_unknownArguments allObjects];
 	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
@@ -544,7 +515,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	
 	// sort using a selector
 	NSArray *allInstructSets = [_allInstructions allValues];
-	for( NSSet *eachSet in allInstructSets){
+	for( NSSet *eachSet in allInstructSets ){
 		NSArray *allInstruct = [eachSet allObjects];
 		allInstruct = [allInstruct sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 	//	NSLog(@"woo %@", allInstruct );
@@ -566,27 +537,10 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 	NSLog(@"Most frequent format is %@ - %i", mostFrequentFormat, maxOccurance );
 
-	NSArray *allPatternCounts = [_allOpCodeFormats allValues];
-		
-	NSComparisonResult (^orderSort)( NSNumber *ob1, NSNumber *ob2) = ^NSComparisonResult( NSNumber *ob1, NSNumber *ob2) { 		
-		  if( [ob1 intValue] > [ob2 intValue] ) 
-			  return NSOrderedAscending;
-		else if( [ob1 intValue] < [ob2 intValue] ) 
-			return NSOrderedDescending;
-		return NSOrderedSame; };
-	id sortedArray = [allPatternCounts sortedArrayUsingComparator:orderSort];	
+	NSArray *allPatternCounts = [_allOpCodeFormats sortedCounts];
+	NSArray *allPatternStrings = [_allOpCodeFormats sortedStrings];
 	
-	for( NSNumber *each in sortedArray ) {
-		NSArray *allKeysForThis = [_allOpCodeFormats allKeysForObject:each];
-		if( [allKeysForThis count]==1 )
-			NSLog(@"%i %@", [each intValue], [allKeysForThis objectAtIndex:0] );
-		else {
-			NSLog(@"%i", [each intValue] );
-			for(NSString *each in allKeysForThis)
-				NSLog(@"%@", each );
-		}
 
-	}
 	
 COUNT
 	

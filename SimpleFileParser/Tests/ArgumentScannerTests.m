@@ -77,7 +77,7 @@
 	TokenArray *tkns1 = [TokenArray tokensWithString:@"%eax,%es:(%eax)"];
 	[tkns1 secondPass];
 	ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
-	uint argumentCount = [scanner count];
+	NSUInteger argumentCount = [scanner count];
 	STAssertTrue( argumentCount==2, @"eek");
 	STAssertTrue( [[[scanner argumentAtIndex:0] output] isEqualToString:@"rgstr:eax"], @"%@", [[scanner argumentAtIndex:0] output] );
 	STAssertTrue( [[[scanner argumentAtIndex:1] output] isEqualToString:@"rgstr:es : ( rgstr:eax )"], @"%@", [[scanner argumentAtIndex:1] output]);
@@ -91,8 +91,8 @@
 		TokenArray *tkns = [TokenArray tokensWithString:each];
 		[tkns secondPass];
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns];
-		uint argumentCount = [scanner count];
-		for( uint i=0; i<argumentCount; i++) {
+		NSUInteger argumentCount = [scanner count];
+		for( NSUInteger i=0; i<argumentCount; i++) {
 			Argument *arg = [scanner argumentAtIndex:0];
 			NSLog(@"%@", arg);
 		}

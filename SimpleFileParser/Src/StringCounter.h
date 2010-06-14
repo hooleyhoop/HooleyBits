@@ -11,10 +11,16 @@
 
 @interface StringCounter : NSObject {
 
-	NSMutableDictionary *_allStrings;
+	NSMutableDictionary	*_allStrings;
+	NSMutableArray		*_sortedCounts, *_sortedStrings;
+	BOOL					_isSorted;
 }
 
+NSInteger alphabeticSort(id string1, id string2, void *reverse);
+NSArray *worderize( NSString *aLine );
+
 - (void)add:(NSString *)val;
+- (void)sort;
 - (NSArray *)sortedCounts;
 - (NSArray *)sortedStrings;
 
