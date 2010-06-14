@@ -27,6 +27,7 @@
 - (void)append:(char *)value length:(uint)l;
 
 - (NSString *)outputString;
+- (NSString *)patternString;
 
 - (enum TokenType)type;
 - (uint)length;

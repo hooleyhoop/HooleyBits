@@ -48,6 +48,7 @@ enum TokenType {
 - (void)secondPass;
 
 - (NSString *)outputString;
+- (NSString *)pattern;
 
 - (NSUInteger)count;
 - (BasicToken *)tokenAtIndex:(NSUInteger)i;

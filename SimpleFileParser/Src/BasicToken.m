@@ -131,6 +131,54 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 	return stringValue;
 }
 
+- (NSString *)patternString {
+
+	NSString *typePattern = nil;
+	
+	switch( _type ){
+		case decimalNum:
+			typePattern = @"66";
+			break;
+		case upperCaseChar:
+			typePattern = @"<error>";
+			break;
+		case lowerCaseChar:
+			typePattern = @"<error>";
+			break;
+		case registerVal:
+			typePattern = @"%r";
+			break;
+		case hexNum:
+			typePattern = @"0xff";
+			break;			
+		case openBracket:
+			typePattern = @"(";
+			break;
+		case closeBracket:
+			typePattern = @")";
+			break;
+		case comma:
+			typePattern = @",";
+			break;
+		case asterisk:
+			typePattern = @"*";
+			break;
+		case dollar:
+			typePattern = @"$";
+			break;
+		case percent:
+			typePattern = @"<error>";
+			break;
+		case colon:
+			typePattern = @":";
+			break;
+		default:
+			[NSException raise:@"Dont know what this tosken type is" format:@"%i", _type];
+			break;
+	}
+	return typePattern;
+}
+
 - (enum TokenType)type {
 	return _type;
 }
@@ -143,19 +191,47 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 	return _value;
 }
 
+BOOL _eachValueIs_abcdef( char *value, uint length ) {
+	
+	for(uint i=0; i<length; i++){
+		char val = value[i];
+		if( (val>=0x61 && val<=0x66)==NO ) {
+			return NO;
+		}
+
+	}
+	return YES;
+}
+
+BOOL _eachValueIs_ABCDEF( char *value, uint length ) {
+
+	for(uint i=0; i<length; i++){
+		char val = value[i];
+		if( (val>=0x41 && val<=0x46) == NO  ) {
+			return NO;
+		}
+		
+	}
+	return YES;
+}
+
 - (BOOL)isValidHexNumComponent {
 	
 	if(_type==decimalNum)
 		return YES;
 	else if(_type==lowerCaseChar)
-		return(eachValueIs_abcdef(_value,_tokenLength));
+		return( _eachValueIs_abcdef(_value,_tokenLength));
 	else if(_type==upperCaseChar)
-		return(eachValueIs_ABCDEF(_value,_tokenLength));
-	return NO
+		return( _eachValueIs_ABCDEF(_value,_tokenLength));
+	return NO;
 }
 
 - (BOOL)isValidStartHexNumComponent {
- x +	
+
+	if( _type==lowerCaseChar && _value[0]=='x' ) {
+		return( _eachValueIs_abcdef(_value+1,_tokenLength-1));
+	}
+	return NO;
 }
 
 @end

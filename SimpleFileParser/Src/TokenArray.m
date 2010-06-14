@@ -182,16 +182,17 @@
 			{
 				NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
 
+				BasicToken *hexToken = nil;
+
 				// -- first char must be x
 				// -- remove IT
 				char *thisVal;
-				char *thisValLength = nextTok.length;
+				uint thisValLength = nextTok.length;
 				if(thisValLength>1){
 					thisVal = nextTok.value+1;
 					thisValLength = thisValLength-1;
 					hexToken = [BasicToken tokenWithType:hexNum value:thisVal length:thisValLength];
 				}
-				BasicToken *hexToken = nil;
 
 				[indexesToRemove addIndex:i+1];
 					
@@ -200,7 +201,6 @@
 					BasicToken *nextTok = [_tokenArray objectAtIndex:j];
 					if( [nextTok isValidHexNumComponent] )
 					{
-						
 						if(!hexToken)
 							hexToken = [BasicToken tokenWithType:hexNum value:nextTok.value length:nextTok.length];
 						else
@@ -245,6 +245,22 @@
 	}
 	return blergh;	
 }
+
+- (NSString *)pattern {
+
+	NSString *blergh = @"";
+	for( BasicToken* each in _tokenArray ) 
+	{
+		NSString *value = [each patternString];
+		if([blergh length]==0)
+			blergh = value;
+		else
+			blergh = [NSString stringWithFormat:@"%@ %@", blergh, value];
+	}
+	return blergh;
+}
+
+
 
 - (NSString *)description {
 	

@@ -8,6 +8,8 @@
 
 #import "SimpleFileParserAppDelegate.h"
 #import "TokenArray.h"
+#import "ArgumentScanner.h"
+#import "StringCounter.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -408,16 +410,58 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	if([arguments length])
 		[_unknownArguments addObject:arguments];
 	
+	-- eh?
+		[_allInstructions add:instruction];
+	-- eh?
+	
 	NSMutableSet *allThisInstruction = [_allInstructions objectForKey:instruction];
 	if(allThisInstruction==nil){
 		allThisInstruction = [NSMutableSet setWithCapacity:100];
 		[_allInstructions setObject:allThisInstruction forKey:instruction];
 	}
 	[allThisInstruction addObject:[NSString stringWithFormat:@"%@ %@", instruction, arguments]];
+	
+	// Parse argument string
+	if(arguments){
+		TokenArray *tokensFromThisString  = [[[TokenArray alloc] initWithString:arguments] autorelease];
+		[tokensFromThisString secondPass];
+		
+		NSString *opcodeFormat = [NSString stringWithFormat:@"%@ %@", instruction, [tokensFromThisString pattern]];
+		
+		NSNumber *occuranceCount = [_allOpCodeFormats objectForKey:opcodeFormat];
+		NSNumber *newCount = nil;
+		if(!occuranceCount)
+			newCount = [NSNumber numberWithInt:1];
+		else {
+			newCount = [NSNumber numberWithInt:[occuranceCount intValue]+1];
+		}
+		[_allOpCodeFormats setObject:newCount forKey:opcodeFormat];
+
+		
+		// Collect argument formats
+		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tokensFromThisString];
+		uint argumentCount = [scanner count];
+		for(uint i=0; i<argumentCount; i++)
+		{
+			NSNumber *newArgCount = nil;
+			NSString *argumentPattern = [[scanner argumentAtIndex:i] pattern];
+			NSNumber *argPatternOccuranceCount = [_allArgumentFormats objectForKey:argumentPattern];
+			if(!argPatternOccuranceCount)
+				newArgCount = [NSNumber numberWithInt:1];
+			else {
+				newArgCount = [NSNumber numberWithInt:[argPatternOccuranceCount intValue]+1];
+			}
+			[_allArgumentFormats setObject:newArgCount forKey:argumentPattern];
+		}
+		
+		
+		
+	}
 }
 
 - (void)processLine:(NSString *)woohoo {
 
+	-- refactor this stuff out of here
 	NSArray *components = [woohoo componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	NSMutableArray *betterComponents = [NSMutableArray array];
     [components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
@@ -432,7 +476,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		instruction = [betterComponents objectAtIndex:3];
 	if([betterComponents count]>=5)
 		arguments = [betterComponents objectAtIndex:4];
-
+	-- get the function call hint as well
+	
 	if(instruction){
 		BOOL isKnown = [self isKnownInstruction:instruction];
 		if(!isKnown){
@@ -447,12 +492,15 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	// NSLog(@"%@", betterComponents);
 }
 
+// DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
 	_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];
 	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
 	
-	_allInstructions = [[NSMutableDictionary alloc] initWithCapacity:100];
+	_allInstructions = [[[StringCounter alloc] init] autorelease];
+	_allOpCodeFormats = [[[StringCounter alloc] init] autorelease];
+	_allArgumentFormats = [[[StringCounter alloc] init] autorelease];
 	
 	// strip the app to desired architectire
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
@@ -487,7 +535,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	
 	NSArray *allUnknownArguments = [_unknownArguments allObjects];
 	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
-	NSLog(@"%@", allUnknownArguments);
+	// NSLog(@"%@", allUnknownArguments);
 	
 	NSArray *allUnknownInstructions = [_unknownInstructions allObjects];
 	allUnknownInstructions = [allUnknownInstructions sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
@@ -500,15 +548,66 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		NSArray *allInstruct = [eachSet allObjects];
 		allInstruct = [allInstruct sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 	//	NSLog(@"woo %@", allInstruct );
+	}
+	
+	NSString *mostFrequentFormat;
+	uint occurance=0, maxOccurance = 0;
+
+	NSArray *allKeys = [_allOpCodeFormats allKeys];
+	for( NSString *each in allKeys ){
+		occurance = [[_allOpCodeFormats objectForKey:each] intValue];
+		if(occurance>maxOccurance){
+			maxOccurance = occurance;
+			mostFrequentFormat = each;
+		}
+	}
+	
+	// Best explanation of Registers http://www.delorie.com/djgpp/doc/ug/asm/about-386.html
+
+	NSLog(@"Most frequent format is %@ - %i", mostFrequentFormat, maxOccurance );
+
+	NSArray *allPatternCounts = [_allOpCodeFormats allValues];
+		
+	NSComparisonResult (^orderSort)( NSNumber *ob1, NSNumber *ob2) = ^NSComparisonResult( NSNumber *ob1, NSNumber *ob2) { 		
+		  if( [ob1 intValue] > [ob2 intValue] ) 
+			  return NSOrderedAscending;
+		else if( [ob1 intValue] < [ob2 intValue] ) 
+			return NSOrderedDescending;
+		return NSOrderedSame; };
+	id sortedArray = [allPatternCounts sortedArrayUsingComparator:orderSort];	
+	
+	for( NSNumber *each in sortedArray ) {
+		NSArray *allKeysForThis = [_allOpCodeFormats allKeysForObject:each];
+		if( [allKeysForThis count]==1 )
+			NSLog(@"%i %@", [each intValue], [allKeysForThis objectAtIndex:0] );
+		else {
+			NSLog(@"%i", [each intValue] );
+			for(NSString *each in allKeysForThis)
+				NSLog(@"%@", each );
+		}
 
 	}
 	
+COUNT
+	
+VERIFY
+	
 
 	
 	
+//	Most frequent format is: movl 0xff ( %r ) , %r - 67263   -----  movl 0x10(%ebp),%ebx -- ebx = *(ebp+0x10) --    base = *(StackFrame_BasePointer+0x10)
+
 	// -- sort by operator
 	
 	// -- output
 }
+
+
+// read the arguments
+// substitute movl for op2 = op1
+// process the arguments into the instruction string
+
+
+
 
 @end
