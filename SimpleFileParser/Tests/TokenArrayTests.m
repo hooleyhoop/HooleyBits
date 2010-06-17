@@ -231,6 +231,12 @@
 	
 	STAssertTrue( [tkns2 tokenAtIndex:2].type == registerVal, @"doh" );
 	STAssertTrue( strcmp( [tkns2 tokenAtIndex:2].value, "eab" )==0, @"doh" );
+	
+	TokenArray *tkns3 = [TokenArray tokensWithString:@"%xmm0"];
+	[tkns3 secondPass];
+	STAssertTrue( tkns3.count==1, @"doh %i", tkns3.count );
+	STAssertTrue( [tkns3 tokenAtIndex:0].type == registerVal, @"doh" );
+	STAssertTrue( strcmp( [tkns3 tokenAtIndex:0].value, "xmm0" )==0, @"doh" );
 }
 
 - (void)testSecondPass {

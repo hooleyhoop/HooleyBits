@@ -7,6 +7,7 @@
 //
 
 #import "TokenArray.h"
+#import "SHDebugger.h"
 
 @interface InputParseTests : SenTestCase {
 	
@@ -20,7 +21,8 @@
 
 - (void)testParseArguments {
 	
-	
+	[SHDebugger goforit];
+	sleep(20000);
 	STFail(@"Yay");
 }
 

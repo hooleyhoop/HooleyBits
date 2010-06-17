@@ -17,5 +17,6 @@
 - (void)addToken:(BasicToken *)tok;
 
 - (NSString *)output;
+- (NSString *)pattern;
 
 @end

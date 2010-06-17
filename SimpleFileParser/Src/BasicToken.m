@@ -71,6 +71,7 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 
 - (id)initWithType:(enum TokenType)arg1 value:(char)arg2 {
 	
+	self = [super init];
 	_type = arg1;
 	_tokenLength = 1;
 	_value[0] = arg2;
@@ -79,6 +80,7 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 
 - (id)initWithType:(enum TokenType)arg1 value:(char *)arg2 length:(NSUInteger)l {
 	
+	self = [super init];
 	_type = arg1;
 	_tokenLength = (uint)l;
 	strncpy( _value, arg2, l );

@@ -20,6 +20,8 @@
 	
 	// @"%eax,%es:(%eax)",
 
+	self = [super init];
+
 	allArguments = [[NSMutableArray arrayWithCapacity:2] retain];
 
 	NSUInteger tokCount = [tks count];

@@ -26,196 +26,167 @@
 	static NSArray *knownInstructions;
 	if(knownInstructions == nil)
 		knownInstructions = [[NSArray arrayWithObjects:
-							 // aad,
-//							  aam,
-//							  addpd,
-//							  cli,
-//							  cmc,
-//							  cmpsl,
-//							  daa,
-//							  enter,
-//							  fadd,
-//							  faddl,
-//							  faddp,
-//							  fadds,
-//							  fchs,
-//							  fcompl,
-//							  fcoms,
-//							  fdiv,
-//							  fdivp,
-//							  fdivr,
-//							  fdivrp,
-//							  fiaddl,
-//							  fiadds,
-//							  ficompl,
-//							  ficomps,
-//							  ficoms,
-//							  filds,
-//							  fld,
-//							  fldt,
-//							  fmul,
-//							  fmulp,
-//							  fstpt,
-//							  fsub,
-//							  fsubp,
-//							  fsubr,
-//							  fsubrl,
-//							  fsubrp,
-//							  fucomi,
-//							  fucomip,
-//							  inb,
-//							  inl,
-//							  int,
-//							  into,
-//							  iret,
-//							  jno,
-//							  lahf,
-//							  lcall,
-//							  les,
-//							  ljmpl,
-//							  "lock/addb",
-//							  "lock/cmpxchgl",
-//							  "lock/pushl",
-//							  "lock/sbbl",
-//							  "lock/xaddl",
-//							  lodsb,
-//							  lret,
-//							  mov,
-//							  movhpd,
-//							  movsb,
-//							  outb,
-//							  punpckldq,
-//							  pushw,
-//							  rcrl,
-//							  "repnz/addb",
-//							  "repz/addl",
-//							  "repz/orb",
-//							  "repz/pushl",
-//							  rorb,
-//							  rorl,
-//							  sahf,
-//							  scasb,
-//							  scasl,
-//							  setp,
-//							  shlb,
-//							  shldl,
-//							  stc,
-//							  sti,
-//							  stosb,
-//							  stosl,
-//							  "wait/addb",
-//							  "wait/addl",
-//							  "wait/sbbb",
-//							  xlat							  
-							  
-@".byte",		@"",							  
-@"aaa",		@"",	
-@"aas",		@"",							  
-@"adcb",		@"",							  
-@"adcl",		@"$2 = $1 + $2",
-@"addb",		@"$2 = $1 + $2",
-@"addl",		@"$2 = $1 + $2",
-@"addsd",		@"$2 = $1 + $2",
-@"addss",		@"$2 = $1 + $2",
-@"addw",		@"$2 = $1 + $2",
 
-@"andb",		@"$2 = $1 & $2",
-@"andl",		@"$2 = $1 & $2",
-@"andnpd",		@"$2 = $1 & $2",
-@"andnps",		@"$2 = $1 & $2",
-@"andpd",		@"$2 = $1 & $2",
-@"andps",		@"$2 = $1 & $2",
-@"andw",		@"$2 = $1 & $2",
-@"arpl",		@"",
+@".byte",		@"",	
 							  
-@"bound",		@"",							  
-@"bswap",		@"",
+@"aaa",			@"ASCII Adjust After Addition",			al = ASCII Adjust After Addition(al)
+@"aad",			@"ASCII Adjust AX Before Division",		
+@"aam",			@"",
+@"aas",			@"ASCII Adjust AL After Subtraction",							  
+@"adcb",		@"Add with Carry",							  
+@"adcl",		@"Add with Carry",
+@"addb",		@"Add",
+@"addw",		@"Add",							
+@"addl",		@"Add",
+@"addpd",		@"Add Packed Double-Precision Floating-Point Values",
+@"addsd",		@"Add Scalar Double-Precision Floating-Point Values",
+@"addss",		@"Add Scalar Single-Precision Floating-Point Values",
+
+@"andb",		@"Logical AND",
+@"andw",		@"Logical AND",							  
+@"andl",		@"Logical AND",
+@"andnpd",		@"Bitwise Logical AND NOT of Packed Double-Precision Floating-Point Values",
+@"andnps",		@"Bitwise Logical AND NOT of Packed Single-Precision Floating-Point Values",
+@"andpd",		@"Bitwise Logical AND of Packed Double-Precision Floating-Point Values",
+@"andps",		@"Bitwise Logical AND of Packed Single-Precision Floating-Point Values",
+					
+@"arpl",		@"Adjust RPL Field of Segment Selector",
+							  
+@"bound",		@"Check Array Index Against Bounds",
+@"boundl",		@"Check Array Index Against Bounds",
+@"bswap",		@"Byte Swap",
 							  
 @"call",		@"stack.push(%eip), jump($1)",
 @"calll",		@"stack.push(%eip), jump($1)",
 @"cbtw",		@"convert byte to word",
 							  
-@"clc",		@"",							  
-@"cld",			@"clean the address flag",
+@"clc",			@"Clear Carry Flag",							  
+@"cld",			@"Clear Direction Flag",
+@"cli",			@"Clear Interrupt Flag",
 @"cltd",		@"",
+@"cmc",			@"Complement Carry Flag",
 							  
-@"cmovael",		@"",
-@"cmovaw",		@"",							  
-@"cmoval",		@"",
-@"cmovbel",		@"",
-@"cmovbl",		@"",
-@"cmovel",		@"if (el) move $1 to $2",
-@"cmovew",		@"",
-@"cmovgel",		@"",
-@"cmovgl",		@"",
-@"cmovlew",		@"",							  
-@"cmovlel",		@"",
-@"cmovll",		@"",
-@"cmovnel",		@"",
-@"cmovnew",		@"",
-@"cmovnpl",		@"",							  
-@"cmovnsl",		@"",
-@"cmovsl",		@"",
+@"cmovaw",		@"Move if above (CF=0 and ZF=0)",								
+@"cmoval",		@"Move if above (CF=0 and ZF=0)",
+@"cmovael",		@"Move if above or equal (CF=0)",
+@"cmovbl",		@"Move if below (CF=1)",
+@"cmovbel",		@"Move if below or equal (CF=1 or ZF=1)",
+@"cmovew",		@"move if equal (ZF=1)",
+@"cmovel",		@"move if equal (ZF=1)",							
+@"cmovgel",		@"Move if greater or equal (SF=OF)",
+@"cmovgl",		@"Move if greater (ZF=0 and SF=OF)",
+@"cmovlew",		@"Move if less or equal (ZF=1 or SF<>OF)",							  
+@"cmovlel",		@"Move if less or equal (ZF=1 or SF<>OF)",
+@"cmovll",		@"Move if less (SF<>OF)",
+@"cmovnel",		@"Move if not equal (ZF=0)",
+@"cmovnew",		@"Move if not equal (ZF=0)",
+@"cmovnpl",		@"Move if not parity (PF=0)",							  
+@"cmovnsl",		@"Move if not sign (SF=0)",
+@"cmovsl",		@"Move if sign (SF=1)",
 
-@"cmpb",		@"compare byte",
-@"cmpw",		@"compare word",
-@"cmpl",		@"compare long",
+@"cmpb",		@"Compare Two Operands",
+@"cmpw",		@"Compare Two Operands",
+@"cmpl",		@"Compare Two Operands",
 @"cmpss",		@"compare float",
-@"cmpsb",		@"",							  
-@"cmpsd",		@"compare double",
+@"cmpsd",		@"compare double",						
+@"cmpsl",		@"Compare String",
+@"cmpsb",		@"Compare String",							  
 
-@"cvtdq2pd",	@"",
-@"cvtsd2ss",	@"",
-@"cvtsi2sd",	@"",
-@"cvtsi2ss",	@"",
-@"cvtss2sd",	@"",
-@"cvttpd2dq",	@"",
-@"cvttsd2si",	@"",
-@"cvttss2si",	@"",
-@"cvttps2dq",	@"",
+// The CMP instruction is typically used in conjunction with a conditional jump (Jcc), condition move (CMOVcc), or SETcc instruction. The condition codes used by the Jcc, CMOVcc, and SETcc instructions are based on the results of a CMP instruction. 
+
+@"cvtdq2pd",	@"Convert Packed Doubleword Integers to Packed Double-Precision Floating-Point Values",
+@"cvtsd2ss",	@"Convert Scalar Double-Precision Floating-Point Value to Scalar Single-Precision Floating-Point Value",
+@"cvtsi2sd",	@"Convert Doubleword Integer to Scalar Double- Precision Floating-Point Value",
+@"cvtsi2ss",	@"Convert Doubleword Integer to Scalar Single- Precision Floating-Point Value",
+@"cvtss2sd",	@"Convert Scalar Single-Precision Floating-Point Value to Scalar Double-Precision Floating-Point Value",
+@"cvttpd2dq",	@"Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Doubleword Integers",
+@"cvttsd2si",	@"Convert with Truncation Scalar Double-Precision Floating-Point Value to Signed Doubleword Integer",
+@"cvttss2si",	@"Convert with Truncation Scalar Single-Precision Floating-Point Value to Doubleword Integer",
+@"cvttps2dq",	@"Convert with Truncation Packed Single-Precision Floating-Point Values to Packed Doubleword Integers",
 							  
 @"cwtl",		@"convert word to long",
 
-@"das",		@"",							  
+@"daa",			@"Decimal Adjust AL after Addition",
+@"das",			@"Decimal Adjust AL after Subtraction",							  
 @"decb",		@"decrement by 1",
+@"decw",		@"decrement by 1",							  
 @"decl",		@"decrement by 1",
-@"decw",		@"decrement by 1",
 
 @"divl",		@"unsigned divide",
 @"divsd",		@"unsigned divide",
 @"divss",		@"unsigned divide",
 
-@"falc",		@"",							  
-@"fcomp",		@"",							  
-@"fildl",		@"",							  
-@"fildq",		@"",
-@"fistpq",		@"",							  
+@"enter",		@"Make Stack Frame for Procedure Parameters",
+							  
+@"fadd",		@"Add",
+@"faddl",		@"Add",
+@"faddp",		@"Add",
+@"fadds",		@"",
+@"fiaddl",		@"Add",
+@"fiadds",		@"Add",							  
+@"falc",		@"",				
+@"fchs",		@"Change Sign",
+@"fcomp",		@"Compare Floating Point Values",
+@"fcompl",		@"Compare Floating Point Values",
+@"fcoms",		@"Compare Floating Point Values",
+@"fdiv",		@"Divide",
+@"fdivp",		@"Divide",
+@"fdivr",		@"Reverse Divide",
+@"fdivrp",		@"Reverse Divide",
+@"ficompl",		@"Compare Integer",
+@"ficomps",		@"Compare Integer",
+@"ficoms",		@"Compare Integer",
+@"fildl",		@"Load Integer",			
+@"filds",		@"Load Integer",
+@"fildq",		@"Load Integer",
+@"fistpq",		@"Store Integer",							  
 @"fld1",		@"load constant",
 @"fldl",		@"load real",
+@"fld",			@"Load Floating Point Value",
+@"fldcwl",		@"Load x87 FPU Control Word",
+@"fldt",		@"",
 @"flds",		@"load real",
 @"fldz",		@"load constant",
-@"fmuls",		@"",				
-@"fmull",		@"",							  
-@"fldcw",		@"",							  
-@"fnstcw",		@"",							  
-@"fstp",		@"store real",
+@"fmuls",		@"Multiply",
+@"fmul",		@"Multiply",
+@"fmulp",		@"Multiply",
+@"fmull",		@"",
+@"fnstcwl",		@"Store x87 FPU Control Word",
+@"fldcw",		@"Load x87 FPU Control Word",							  
+@"fnstcw",		@"Store x87 FPU Control Word",							  
+@"fstp",		@"Store Floating Point Value",
+@"fstpt",		@"",
+@"fsub",		@"Subtract",
+@"fsubp",		@"Subtract",
+@"fsubr",		@"Reverse Subtract",
+@"fsubrl",		@"",
+@"fsubrp",		@"Reverse Subtract",
 @"fstpl",		@"",
 @"fstps",		@"",
-@"fsts",		@"",
-@"fstl",		@"",							  
-@"fxch",		@"",
+@"fsts",		@"Store x87 FPU Status Word",
+@"fstl",		@"",		
+@"fucomi",		@"Compare Floating Point Values and Set EFLAGS",
+@"fucomip",		@"Compare Floating Point Values and Set EFLAGS",
+@"fxch",		@"Exchange Register Contents",
+
 							  
-@"hlt",		@"halt",
+@"hlt",			@"halt",
+							  
 @"idivl",		@"signed divide",
 @"imulb",		@"",							  
 @"imulw",		@"",
 @"imull",		@"multiply",
+@"inb",			@"",
+@"inl",			@"",
+@"int",			@"",
+@"into",		@"Call to Interrupt Procedure",
+@"iret",		@"Interrupt Return",
 @"incb",		@"",
 @"incl",		@"",
 @"incw",		@"",
-@"insb",		@"",
+@"insb",		@"Input from Port to String",
 @"insl",		@"",
-@"invd",		@"",
+@"invd",		@"Invalidate Internal Caches",
 							  
 @"jmp",			@"jump",
 @"jmpl",		@"jump",
@@ -241,8 +212,10 @@
 @"jlel",		@"Jump if Condition is Met - short if less or equal",
 @"jne",			@"Jump if Condition is Met - short if not equal",
 @"jnel",		@"Jump if Condition is Met - ",
-@"jnp",		@"",					
-@"jo",		@"",							  
+@"jno",			@"",
+@"jnp",			@"",				
+@"jnpl",		@"",
+@"jo",			@"",							  
 @"jns",			@"Jump if Condition is Met - short if not sign",
 @"jnsl",		@"Jump if Condition is Met - ",
 @"jp",			@"Jump if Condition is Met - short if parity",
@@ -250,21 +223,33 @@
 @"js",			@"Jump if Condition is Met - short if sign",
 @"jsl",			@"Jump if Condition is Met - ",
 
-@"lds",		@"",							  
+@"lahf",		@"Load Status Flags into AH Register",
+@"lcall",		@"",
+@"lds",			@"Load Far Pointer",							  
 @"leal",		@"Load Effective address",
-@"leave",		@"",
-@"ljmp",		@"",							  
+@"leave",		@"High Level Procedure Exit",
+@"les",			@"Load Far Pointer",
+@"ljmp",		@"",
+@"ljmpl",		@"",
 @"lock/incl",	@"",
-@"lock/sbbb",		@"",							  
+@"lock/sbbb",		@"",
+@"lock/addb",		@"",
+@"lock/cmpxchgl",		@"",
+@"lock/pushl",		@"",
+@"lock/sbbl",		@"",
+@"lock/xaddl",		@"",
+							  
+@"lodsb",		@"Load String",  
 @"lodsl",		@"",
-@"loop",		@"",							  
+@"loop",		@"Loop According to ECX Counter",							  
 @"loopz",		@"",							  
 @"loopnz",		@"",
+@"lret",		@"",
 							  
-@"maxsd",		@"",
-@"maxss",		@"",
-@"minsd",		@"",
-@"minss",		@"",
+@"maxsd",		@"Return Maximum Scalar Double-Precision Floating-Point Value",
+@"maxss",		@"Return Maximum Scalar Single-Precision Floating-Point Value",
+@"minsd",		@"Return Minimum Scalar Double-Precision Floating-Point Value",
+@"minss",		@"Return Minimum Scalar Single-Precision Floating-Point Value",
 
 @"movapd",		@"move aligned packed double precision float",
 @"movaps",		@"move aligned packed single precision float",
@@ -273,21 +258,31 @@
 @"movw",		@"move word (16)",
 @"movl",		@"move long (32)",
 @"movd",		@"move double (64)",
-
-@"movsd",		@"Move Scalar Double-Precision Floating-Point Value",
-@"movss",		@"move scalar single precision float",
+							  
+@"movhpd",		@"Move High Packed Double-Precision Floating-Point Value",
+							  
+@"movsb",		@"Move Data from String to String",
+@"movsw",		@"Move Data from String to String",
 @"movsl",		@"",							  
+@"movsd",		@"Move Data from String to String",
+							  
+@"movss",		@"move scalar single precision float",
 @"movsbl",		@"move byte to long (sign extension)",
 @"movsbw",		@"move byte to word (sign extension)",
 @"movswl",		@"move word to long (sign extension)",
+							  
 @"movzbl",		@"move byte to long (zero other bytes)",
 @"movzwl",		@"move word to long (zero other bytes)",
-@"movups",		@"",
-							  
-@"mull",		@"unsigned multiply",
+
+@"movups",		@"Move Unaligned Packed Single-Precision Floating- Point Values",
+					
 @"mulb",		@"",
+@"mulw",		@"",							  
+@"mull",		@"unsigned multiply",
+@"muld",		@"unsigned multiply",
+							  
 @"mulss",		@"Multiply Scalar Single-Precision Floating-Point Values",
-@"mulsd",		@"multiply double",
+@"mulsd",		@"Multiply Scalar Double-Precision Floating-Point Values",
 
 @"negb",		@"",							  
 @"negw",		@"",							  
@@ -298,86 +293,143 @@
 							  
 @"orb",			@"",
 @"orl",			@"",
-@"orpd",		@"",
-@"orps",		@"",
+@"orpd",		@"Bitwise Logical OR of Double-Precision Floating-Point Values",
+@"orps",		@"Bitwise Logical OR of Single-Precision Floating-Point Values",
 @"orw",			@"",
-@"outsb",		@"",
+@"outb",		@"",
+@"outsb",		@"Output String to Port",
 @"outsl",		@"",
 @"outl",		@"",
 							  
-@"paddd",			@"",
+@"paddd",		@"Add Packed Integers",
 @"popl",		@"",
-@"popf",		@"",							  
+@"popfl",		@"",
+@"popf",		@"Pop Stack into EFLAGS Register",							  
 @"popal",		@"",							  
-@"por",		@"",
-@"psllq",		@"",
-@"pslld",		@"",
+@"por",			@"",
+@"psllq",		@"Shift Packed Data Left Logical",
+@"pslld",		@"Shift Packed Data Left Logical",
+@"punpckldq",	@"Unpack Low Data",
 @"pushal",		@"",
-@"push",		@"",						  
+@"push",		@"Push Word or Doubleword Onto the Stack",						  
 @"pushl",		@"stack.push()",
-@"pushf",		@"",							  
-@"pxor",		@"",
+@"pushfl",			@"",
+@"pushw",			@"",
+@"pushf",		@"Push EFLAGS Register onto the Stack",							  
+@"pxor",		@"Logical Exclusive OR",
 							  
-@"rclb",		@"",							  
-@"repz/addb",		@"",							  
-@"repz/cmpsb",	@"",
-@"rep/stosl",	@"",
-@"ret",			@"",
-@"retl",			@"",
+@"rclb",		@"",		
+@"rcrl",		@"",
+
+@"rep/stosl",		@"Repeat while( ECX(--)>0 ) stosl",
+
+@"repz/addb",		@"Repeat while( ECX(--)>0 && ZF!=0 ) addb",							  
+@"repz/cmpsb",		@"Repeat while( ECX(--)>0 && ZF!=0 ) cmpsb",
+@"repz/addl",		@"Repeat while( ECX(--)>0 && ZF!=0 ) addl",
+@"repz/orb",		@"Repeat while( ECX(--)>0 && ZF!=0 ) orb",
+@"repz/pushl",		@"Repeat while( ECX(--)>0 && ZF!=0 ) pushl",	
+							  
+@"repnz/addb",		@"Repeat while( ECX(--)>0 && ZF!=1 ) addb",
+
+
+							  
+@"ret",			@"Return from Procedure",
+@"retl",		@"",
 @"rolb",		@"",				
 @"rolw",		@"",							  
 @"roll",		@"",
-							  
+@"rorb",		@"",
+@"rorl",		@"",	  
+						
+@"sahf",		@"Store AH into Flags",
 @"sarb",		@"",
 @"sarl",		@"",
 @"sarw",		@"",
 @"sbbb",		@"",							  
 @"sbbw",		@"",
 @"sbbl",		@"",
-
-@"seta",		@"",
-@"setae",		@"",
-@"setb",		@"",
-@"setbe",		@"",
-@"sete",		@"",
-@"setg",		@"",
-@"setge",		@"",
-@"setl",		@"",
-@"setle",		@"",
-@"setne",		@"",
-@"setnp",		@"",
-
+@"scasb",		@"Scan String",
+@"scasl",		@"",
+							  
+flags
+CF = carryFlag
+PF = parityFlag
+AF = adjustFlag
+ZF = zeroFlag
+SF = signFlag
+TF = trapFlag
+IF = interruptEnableFlag
+DF = directionFlag
+OF = overflowFlag
+							  
+							  
+@"seta",		@"Set byte if above (CF=0 and ZF=0)",				(CF==0 && ZF==0) ? $1=1 : $1=0
+@"setae",		@"Set byte if above or equal (CF=0)",				(CF==0) ? $1=1 : $1=0
+@"setb",		@"Set byte if below (CF=1)",						(CF==1) ? $1=1 : $1=0
+@"setbe",		@"Set byte if below or equal (CF=1 or ZF=1)",		(CF==1 || ZF==1) ? $1=1 : $1=0
+@"sete",		@"Set byte if equal (ZF=1)",
+@"setg",		@"Set byte if greater (ZF=0 and SF=OF)",
+@"setge",		@"Set byte if greater or equal (SF=OF)",
+@"setl",		@"Set byte if less (SF<>OF)",
+@"setle",		@"Set byte if less or equal (ZF=1 or SF<>OF)",
+@"setne",		@"Set byte if not equal (ZF=0)",
+@"setnp",		@"Set byte if not parity (PF=0)",
+@"setp",		@"Set byte if parity (PF=1)",
+							  
 @"shll",		@"",
+@"shlb",		@"", 
+@"shldl",		@"",
 @"shrb",		@"",
 @"shrdl",		@"",
 @"shrl",		@"",
 @"shrw",		@"",
-@"sldt",		@"",							  
-@"sqrtss",		@"",							  
-@"sqrtsd",		@"",
-@"std",		@"",
-@"subb",		@"",
-@"subl",		@"",
-@"subpd",		@"",
-@"subsd",		@"",
-@"subss",		@"",
-@"subw",		@"",
-@"subps",		@"",
+@"sldt",		@"Store Local Descriptor Table Register",					
+@"sldtl",		@"",
+@"sqrtss",		@"Compute Square Root of Scalar Single-Precision Floating-Point Value",							  
+@"sqrtsd",		@"Compute Square Root of Scalar Double-Precision Floating-Point Value",
 							  
-@"testb",		@"",
-@"testl",		@"",
-@"testw",		@"",
-@"ucomisd",		@"",
-@"ucomiss",		@"",
+@"std",			@"Set Direction Flag",
+@"stc",			@"Set Carry Flag",
+@"sti",			@"Set Interrupt Flag",
+							  
+@"stos",		@"Store String",							  
+@"stosb",		@"Store String",
+@"stosw",		@"Store String",
+@"stosl",		@"Store String",
+@"stosd",		@"Store String",
+							  
+@"subb",		@"Subtract",
+@"subw",		@"Subtract",
+@"subl",		@"Subtract",
+@"subss",		@"Subtract Scalar Single-Precision Floating-Point Values",
+@"subsd",		@"Subtract Scalar Double-Precision Floating-Point Values",
+@"subps",		@"Subtract Packed Single-Precision Floating-Point Values",
+@"subpd",		@"Subtract Packed Double-Precision Floating-Point Values",
+
+@"testb",		@"Logical Compare",
+@"testw",		@"Logical Compare",
+@"testl",		@"Logical Compare",
+							  
+@"ucomisd",		@"Unordered Compare Scalar Double-Precision Floating- Point Values and Set EFLAGS",
+@"ucomiss",		@"Unordered Compare Scalar Single-Precision Floating- Point Values and Set EFLAGS",
 						
-@"xchg",		@"",							  
-@"xchgb",		@"",							  
-@"xchgl",		@"",							  
-@"xorb",		@"",
-@"xorl",		@"",
-@"xorpd",		@"",
-@"xorps",		@"",
-@"xorw",		@"",
+@"wait/addb",		@"",
+@"wait/addl",		@"",
+@"wait/sbbb",		@"",
+							  
+@"xchg",		@"Exchange Register/Memory with Register",							  
+@"xchgb",		@"Exchange Register/Memory with Register",							  
+@"xchgl",		@"Exchange Register/Memory with Register",
+							  
+@"xlat",		@"Table Look-up Translation",
+							  
+@"xorb",		@"Logical Exclusive OR",
+@"xorw",		@"Logical Exclusive OR",
+@"xorl",		@"Logical Exclusive OR",
+@"xord",		@"Logical Exclusive OR",
+							  
+@"xorps",		@"Bitwise Logical XOR for Single-Precision Floating-Point Values",
+@"xorpd",		@"Bitwise Logical XOR for Double-Precision Floating-Point Values",
 							
 nil] retain];
 	return knownInstructions;
@@ -393,35 +445,26 @@ nil] retain];
 	return isFound;
 }
 
-// -- i need to parse the form of the instruction, mv has many
+
 - (void)processInstruction:(NSString *)instruction argument:(NSString *)arguments {
 	
-	// -- calculate the format
-	// -----------------------
-	// opcode, argument-format, arguments
-	if([arguments length])
-		[_unknownArguments addObject:arguments];
+	// record unique instructions
+//	[_allInstructions add:instruction];
 	
-	-- eh?
-		[_allInstructions add:instruction];
-	-- eh?
-	
-	NSMutableSet *allThisInstruction = [_allInstructions objectForKey:instruction];
-	if(allThisInstruction==nil){
-		allThisInstruction = [NSMutableSet setWithCapacity:100];
-		[_allInstructions setObject:allThisInstruction forKey:instruction];
-	}
-	[allThisInstruction addObject:[NSString stringWithFormat:@"%@ %@", instruction, arguments]];
+	// record unique arguments
+//	if([arguments length])
+//		[_unknownArguments addObject:arguments];
 	
 	// Parse argument string
-	if(arguments){
+	if(arguments)
+	{
 		TokenArray *tokensFromThisString  = [[[TokenArray alloc] initWithString:arguments] autorelease];
 		[tokensFromThisString secondPass];
 		
 		NSString *opcodeFormat = [NSString stringWithFormat:@"%@ %@", instruction, [tokensFromThisString pattern]];
 		
 		// collect opcode format data
-		[_allOpCodeFormats add:opcodeFormat];
+//		[_allOpCodeFormats add:opcodeFormat];
 		
 		// Collect argument formats
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tokensFromThisString];
@@ -429,7 +472,7 @@ nil] retain];
 		for( uint i=0; i<argumentCount; i++ )
 		{
 			NSNumber *newArgCount = nil;
-			NSString *argumentPattern = [[scanner argumentAtIndex:i] pattern];
+			NSString *argumentPattern = [(Argument *)[scanner argumentAtIndex:i] pattern];
 			
 			// Collct argument-format data
 			[_allArgumentFormats add:argumentPattern];
@@ -440,29 +483,30 @@ nil] retain];
 
 - (void)processLine:(NSString *)aLine {
 
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSString *instruction=nil, *arguments=nil, *functionHint=nil;
+
 	NSArray *components = worderize( aLine );
 	
-	NSString *instruction=nil, *arguments=nil;
-	
-	if([betterComponents count]>=4)
-		instruction = [betterComponents objectAtIndex:3];
-	if([betterComponents count]>=5)
-		arguments = [betterComponents objectAtIndex:4];
-	
-	-- get the function call hint as well
+	if([components count]>=4)
+		instruction = [components objectAtIndex:3];
+	if([components count]>=5)
+		arguments = [components objectAtIndex:4];
+	if([components count]>=6)
+		functionHint = [components objectAtIndex:5];
+	// -- get the function call hint as well
 	
 	if(instruction){
 		BOOL isKnown = [self isKnownInstruction:instruction];
 		if(!isKnown){
 			[_unknownInstructions addObject:instruction];
+			[pool release];
 			return;
 		}
 		[self processInstruction:instruction argument:arguments];
 	}
-	if(arguments){
-		TokenArray *tokensFromThisString  = [[[TokenArray alloc] initWithString:arguments] autorelease];
-	}
-	// NSLog(@"%@", betterComponents);
+	[pool release];
 }
 
 // DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
@@ -484,7 +528,7 @@ nil] retain];
 	// otool -t -v -V /Applications/Foo.app/Contents/MacOS/Foo >> data.txt		-- decompiled with symbols
 	
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	// NSStringEncoding *enc = nil;
    // NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL usedEncoding:enc error:&outError];	
@@ -504,50 +548,52 @@ nil] retain];
 	// -- read it a line at a time. -- try niave aproach
 	int reverseSort = NO;
 	
-	NSArray *allUnknownArguments = [_unknownArguments allObjects];
-	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
-	// NSLog(@"%@", allUnknownArguments);
+//	NSArray *allUnknownArguments = [_unknownArguments allObjects];
+//	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
+//	NSLog(@"%@", allUnknownArguments);
 	
 	NSArray *allUnknownInstructions = [_unknownInstructions allObjects];
 	allUnknownInstructions = [allUnknownInstructions sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
-//	NSLog(@"%@", allUnknownInstructions);
+	if([allUnknownInstructions count])
+		NSLog(@"WARNING! UNKNOWN %@", allUnknownInstructions);
 
 	
 	// sort using a selector
-	NSArray *allInstructSets = [_allInstructions allValues];
-	for( NSSet *eachSet in allInstructSets ){
-		NSArray *allInstruct = [eachSet allObjects];
-		allInstruct = [allInstruct sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
+//	NSArray *allInstructSets = [_allInstructions allValues];
+//	for( NSSet *eachSet in allInstructSets ){
+//		NSArray *allInstruct = [eachSet allObjects];
+//		allInstruct = [allInstruct sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 	//	NSLog(@"woo %@", allInstruct );
+//	}
+	
+	[_allArgumentFormats sort];
+	NSArray *allPatternCounts = [_allArgumentFormats sortedCounts];
+	NSArray *allPatternStrings = [_allArgumentFormats sortedStrings];
+
+//	NSAssert([allPatternCounts count]==[allPatternStrings count], @"nah %i, %i", [allPatternCounts count],[allPatternStrings count] );
+	
+	for( NSUInteger i=0; i<[allPatternStrings count]; i++ ) {
+		NSLog(@"%@", [allPatternStrings objectAtIndex:i] );
 	}
 	
-	NSString *mostFrequentFormat;
-	uint occurance=0, maxOccurance = 0;
+//	NSString *mostFrequentFormat;
+//	uint occurance=0, maxOccurance = 0;
 
-	NSArray *allKeys = [_allOpCodeFormats allKeys];
-	for( NSString *each in allKeys ){
-		occurance = [[_allOpCodeFormats objectForKey:each] intValue];
-		if(occurance>maxOccurance){
-			maxOccurance = occurance;
-			mostFrequentFormat = each;
-		}
-	}
+//	NSArray *allKeys = [_allArgumentFormats allKeys];
+//	for( NSString *each in allKeys ){
+//		occurance = [[_allArgumentFormats objectForKey:each] intValue];
+//		if(occurance>maxOccurance){
+//			maxOccurance = occurance;
+//			mostFrequentFormat = each;
+//		}
+//	}
 	
 	// Best explanation of Registers http://www.delorie.com/djgpp/doc/ug/asm/about-386.html
 
-	NSLog(@"Most frequent format is %@ - %i", mostFrequentFormat, maxOccurance );
+//	NSLog(@"Most frequent format is %@ - %i", mostFrequentFormat, maxOccurance );
 
-	NSArray *allPatternCounts = [_allOpCodeFormats sortedCounts];
-	NSArray *allPatternStrings = [_allOpCodeFormats sortedStrings];
-	
 
-	
-COUNT
-	
-VERIFY
-	
-
-	
+		
 	
 //	Most frequent format is: movl 0xff ( %r ) , %r - 67263   -----  movl 0x10(%ebp),%ebx -- ebx = *(ebp+0x10) --    base = *(StackFrame_BasePointer+0x10)
 

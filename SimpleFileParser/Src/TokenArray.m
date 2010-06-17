@@ -23,12 +23,13 @@
 
 - (id)initWithString:(NSString *)arg {
 
+	self = [super init];
 	_tokenArray = [[NSMutableArray alloc] initWithCapacity:16];
 	[self _tokenizeString:arg];
 	return self;
 }
 
-- (void)dealoc {
+- (void)dealloc {
 
 	[_tokenArray release];
 	[super dealloc];
@@ -150,18 +151,31 @@
 - (void)_parseRegisterNames:(NSUInteger)startIndex {
 	
 	NSUInteger count = [_tokenArray count];
-	for( NSUInteger i=startIndex; i<count-1; i++ )
+	for( NSUInteger i=startIndex; i<(count-1); i++ )
 	{
 		BasicToken *tok = [_tokenArray objectAtIndex:i];
 		
 		if( tok.type==percent ){
 			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
 			if(nextTok.type==lowerCaseChar){
+				
 				// -- these two tokens are a register
 				BasicToken *registerToken = [BasicToken tokenWithType:registerVal value:nextTok.value length:nextTok.length];
 				[_tokenArray removeObjectAtIndex:i+1];
 				[_tokenArray replaceObjectAtIndex:i withObject:registerToken];
-				[self _parseRegisterNames:i+1];
+				
+				uint nextPlaceToStart = i+1;
+			
+				//-- is the next token a small decimal number? - rememeber count has changed
+				if( i+1 < [_tokenArray count] ){
+					BasicToken *nextNextTok = [_tokenArray objectAtIndex:i+1];
+					if(nextNextTok.type==decimalNum){
+						[_tokenArray removeObjectAtIndex:i+1];
+						[registerToken append:nextNextTok.value length:nextNextTok.length];
+					}
+				}
+				
+				[self _parseRegisterNames:nextPlaceToStart];
 				return;
 			}
 		}
