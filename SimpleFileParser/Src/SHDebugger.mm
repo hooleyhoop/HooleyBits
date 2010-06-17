@@ -23,9 +23,33 @@
 
 + (void)goforit {
 
+	NSFileHandle *
 	lldb::SBDebugger::Initialize();
 	lldb::SBHostOS::ThreadCreated ("[main]");
 	lldb::SBDebugger::SetAsync(false);
+	
+	
+	
+	
+	
+	NSPipe *stdErrPipe = [[NSPipe alloc] init];
+	NSFileHandle *fileHandleForReading = [stdErrPipe fileHandleForReading];
+	dup2([fileHandleForReading fileDescriptor], STDERR_FILENO)
+	
+		
+		// loop to capture and log stdErr...
+		
+		NSData *data = [fileHandleForReading availableData];
+		
+		// log and process the data...
+		
+		// optionally:
+		if (echoStdErrToStdOut) {
+			// copy to buffer, etc, then echo...
+			fprintf(stdout, (const char *)&buf);		
+	
+	
+	
 	
     ::setbuf (stdin, NULL);
     ::setbuf (stdout, NULL);
