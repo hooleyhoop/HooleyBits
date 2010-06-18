@@ -21,7 +21,7 @@
 
 - (void)testParseArguments {
 	
-	[SHDebugger goforit];
+	[[[SHDebugger alloc] init] goforit];
 	sleep(20000);
 	STFail(@"Yay");
 }

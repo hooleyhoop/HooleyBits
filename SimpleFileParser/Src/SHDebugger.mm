@@ -12,100 +12,159 @@
 
 @implementation SHDebugger
 
-+ (BOOL)handleIOEvent:(lldb::SBEvent)event {
+- (BOOL)handleIOEvent:(lldb::SBEvent)event {
 	
     const uint32_t event_type = event.GetType();
 	const char *command_string = lldb::SBEvent::GetCStringFromEvent(event);
 	if (command_string == NULL)
 		command_string == "";
+	
+	// -- get current line 
+    lldb::SBTarget target = lldb::SBDebugger::GetCurrentTarget();
+    lldb::SBProcess process = target.GetProcess();
+		
+	lldb::StateType state = process.GetState();
+	if( state==lldb::eStateStopped ) {
+		
+		char hmmm[255];
+		process.GetSTDOUT (hmmm, 255);
+
+		lldb::SBThread thread1 = process.GetThreadAtIndex(0);
+		lldb::SBDebugger::HandleCommand ("step");    
+	}
+	
 	return NO;
 }
 
-+ (void)goforit {
+int	stdoutwrite(void *inFD, const char *buffer, int size) {
 
-	NSFileHandle *
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]	;
+	NSString *tmp = [NSString stringWithCString:buffer length:size]	;	// choose the best encoding for your app
+	NSLog(@"%@", tmp);
+	// do what you need with the tmp string here
+	// like appending it to a NSTextView
+	// you may like to scan for a char(12) == CLEARSCREEN
+	// and others "special" characters...
+	
+	[pool release];
+	return size;
+}
+
+- (void)goforit {
+
+	::setbuf (stdin, NULL);
+	::setbuf (stdout, NULL);
+	
+	lldb::SBDebugger::SetErrorFileHandle( stderr, false );
+	lldb::SBDebugger::SetOutputFileHandle( stdout, false );
+	lldb::SBDebugger::SetInputFileHandle( stdin, true );
+
+	lldb::SBCommunication master_out_comm("driver.editline");
+
 	lldb::SBDebugger::Initialize();
 	lldb::SBHostOS::ThreadCreated ("[main]");
 	lldb::SBDebugger::SetAsync(false);
-	
-	
-	
-	
-	
-	NSPipe *stdErrPipe = [[NSPipe alloc] init];
-	NSFileHandle *fileHandleForReading = [stdErrPipe fileHandleForReading];
-	dup2([fileHandleForReading fileDescriptor], STDERR_FILENO)
-	
-		
-		// loop to capture and log stdErr...
-		
-		NSData *data = [fileHandleForReading availableData];
-		
-		// log and process the data...
-		
-		// optionally:
-		if (echoStdErrToStdOut) {
-			// copy to buffer, etc, then echo...
-			fprintf(stdout, (const char *)&buf);		
-	
-	
-	
-	
-    ::setbuf (stdin, NULL);
-    ::setbuf (stdout, NULL);
-	
-	lldb::SBDebugger::SetErrorFileHandle (stderr, false);
-	lldb::SBDebugger::SetOutputFileHandle (stdout, false);
-	lldb::SBDebugger::SetInputFileHandle (stdin, true);
-	
+
 	lldb::SBCommandInterpreter sb_interpreter = lldb::SBDebugger::GetCommandInterpreter();
 	lldb::SBTarget target = lldb::SBDebugger::CreateTargetWithFileAndArch("/Applications/6-386.app", "i386");
-	lldb::SBProcess proc = target.CreateProcess ();
-    lldb::SBBreakpoint bp1 = target.BreakpointCreateByName ("start", NULL);
+ 	bool flag1 = target.IsValid();
+	NSAssert( flag1, @"oops - target failed");
 	
-	lldb::SBDebugger::HandleCommand ("breakpoint set --name=start");    
-	lldb::SBDebugger::HandleCommand ("process launch"); 
+//	lldb::SBProcess process = target.CreateProcess();
+// 	bool flag2 = process.IsValid();
+//	NSAssert( flag2, @"oops - process failed");
+	
+	lldb::SBBreakpoint bp1 = target.BreakpointCreateByName( "start", NULL );	
+	lldb::SBDebugger::HandleCommand ("process launch");
+	
+    lldb::SBTarget currentTarget = lldb::SBDebugger::GetCurrentTarget();
+	NSAssert( currentTarget==target, @"oops - what going on?");
 
-	while (true) {
-		sleep(1);
-	}
+	lldb::SBProcess currentProcess = currentTarget.GetProcess();
+	bool flag2 = currentProcess.IsValid();
+	NSAssert( flag2, @"oops - process failed");
 	
-//	proc.Launch( char const *argv[], char const *envp[],  const char *stdin_path, const char *stdout_path, const char *stderr_path );	
-//	
-//	lldb::SBError err = proc.Continue();
+    uint32_t threadCount = currentProcess.GetNumThreads();
 	
+	//	lldb::StateType state = currentProcess.GetState();
+//	while(state < lldb::eStateStopped) {
+//		state = currentProcess.GetState();
+//	}
 
-	
-	lldb::SBCommunication master_out_comm("driver.editline");
-
-	
-
-//	lldb::SBDebugger::HandleCommand ("file --arch=i386 '/Applications/6-386.app'");
-//	lldb::SBDebugger::HandleCommand ("breakpoint set --name=start");    
-//	lldb::SBDebugger::HandleCommand ("process launch"); 
-	
-//	CommandObjectBreakpointSet::Execute
-
-
-	
-    lldb::SBListener listener(lldb::SBDebugger::GetListener());
-    if (listener.IsValid())
-    {
-		lldb::SBEvent event;
-		bool done = false;
-		while (!done)
+    lldb::SBThread currentThread = currentProcess.GetThreadAtIndex(0);
+	while ( currentThread.IsValid() ) {
+		//currentThread.StepInto( lldb::eOnlyDuringStepping );
+		currentThread.StepInstruction(true);
+	//	currentThread.StepOver();
+	//	currentThread.Backtrace (1);
+		
+		uint32_t frameCount = currentThread.GetNumFrames();		
+		lldb::SBFrame sf = currentThread.GetFrameAtIndex(0);
+		
+		lldb::SBModule module = sf.GetModule ();
+		if(module.IsValid())
 		{
-			listener.WaitForEvent (UINT32_MAX, event);
-			if (event.IsValid())
+			lldb::SBFileSpec fs = module.GetFileSpec();
+			const char * fn = fs.GetFileName();
+			if( strcmp("Sibelius 6", fn )==0 )
 			{
-				if (event.GetBroadcaster().IsValid())
-				{
-					uint32_t event_type = event.GetType();
-					done = [self handleIOEvent:event];
-				}
+				NSLog(@"woo");
+			} else {
+				NSLog(@"Boooooo");
 			}
+
+			lldb::SBLineEntry who = sf.GetLineEntry ();
+			lldb::SBAddress address = who.GetStartAddress();
+			lldb::addr_t hexVal = address.GetFileAddress ();
+			
+	//		const char *woo = sf.Disassemble ();
+
+			NSLog(@"Step %x", hexVal);
 		}
 	}
+	
+	
+//	lldb::SBThread mainThread = currentProcess.GetThreadAtIndex(0);
+//	bool flag3 = mainThread.IsValid();
+//
+//	lldb::addr_t startAddress = 0x00002ac0;
+//    mainThread.RunToAddress( startAddress );
+
+//	lldb::StopReason sr = mainThread.GetStopReason();
+
+//	lldb::SBDebugger::HandleCommand ("file --arch=i386 '/Applications/6-386.app'");
+//	lldb::SBDebugger::HandleCommand ("breakpoint set --name=start");
+//	char hmmm[255];
+//	currentProcess.GetSTDOUT (hmmm, 255);	
+
+	lldb::SBListener listener(lldb::SBDebugger::GetListener());
+//    if (listener.IsValid())
+//    {
+//		lldb::SBEvent event;
+//		bool done = false;
+//		
+//		int	(*realStdOut)(void *, const char *, int) = stdout->_write;
+//
+//		while (!done)
+//		{
+//			// Hijack stdout
+//			stdout->_write = stdoutwrite;
+//
+//			listener.WaitForEvent (UINT32_MAX, event);
+//			
+//			stdout->_write = realStdOut;
+//
+//			if (event.IsValid())
+//			{
+//
+//				if (event.GetBroadcaster().IsValid())
+//				{
+//					uint32_t event_type = event.GetType();
+//					done = [self handleIOEvent:event];
+//				}
+//			}
+//		}
+//	}
 }
 
 
