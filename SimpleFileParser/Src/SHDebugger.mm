@@ -55,15 +55,16 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 	::setbuf (stdin, NULL);
 	::setbuf (stdout, NULL);
 	
+	lldb::SBDebugger::SetAsync(false);
+
 	lldb::SBDebugger::SetErrorFileHandle( stderr, false );
 	lldb::SBDebugger::SetOutputFileHandle( stdout, false );
 	lldb::SBDebugger::SetInputFileHandle( stdin, true );
 
 	lldb::SBCommunication master_out_comm("driver.editline");
 
-	lldb::SBDebugger::Initialize();
+	// lldb::SBDebugger::Initialize();
 	lldb::SBHostOS::ThreadCreated ("[main]");
-	lldb::SBDebugger::SetAsync(false);
 
 	lldb::SBCommandInterpreter sb_interpreter = lldb::SBDebugger::GetCommandInterpreter();
 	lldb::SBTarget target = lldb::SBDebugger::CreateTargetWithFileAndArch("/Applications/6-386.app", "i386");
@@ -86,20 +87,50 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 	
     uint32_t threadCount = currentProcess.GetNumThreads();
 	
+	// Need Python!
+	// getFrameAtIndex(0).getFunction().getName()
+	
 	//	lldb::StateType state = currentProcess.GetState();
 //	while(state < lldb::eStateStopped) {
 //		state = currentProcess.GetState();
 //	}
 
     lldb::SBThread currentThread = currentProcess.GetThreadAtIndex(0);
-	while ( currentThread.IsValid() ) {
+
+	NSAssert( currentProcess.SetCurrentThread( currentThread ), @"doh! no current thread");
+
+	while ( true ) {
+
+		if( currentThread.IsValid()==false)
+			currentThread = currentProcess.GetThreadAtIndex(0);
+		NSAssert( currentThread.IsValid(), @"why does current thread become invald?" );
+		
 		//currentThread.StepInto( lldb::eOnlyDuringStepping );
-		currentThread.StepInstruction(true);
+	//	currentThread.StepInstruction(false);
+		try {
+			lldb::SBDebugger::HandleCommand ("thread step-inst --avoid_no_debug=false --run_mode=thisThread");
+		} catch (NSException *exception) {
+			NSLog(@"woops");
+		}
+		threadCount = currentProcess.GetNumThreads();
 	//	currentThread.StepOver();
 	//	currentThread.Backtrace (1);
+
+//		uint32_t frameCount = currentThread.GetNumFrames();		
 		
-		uint32_t frameCount = currentThread.GetNumFrames();		
+		
 		lldb::SBFrame sf = currentThread.GetFrameAtIndex(0);
+		lldb::SBAddress addRess1 = sf.GetPCAddress();
+		
+		NSString *disassembleInstruction = [NSString stringWithFormat:@"disassemble --start-address=%x  --end-address=%x --context=1", addRess1.GetFileAddress(), addRess1.GetFileAddress() ];
+		lldb::SBDebugger::HandleCommand([disassembleInstruction cString]);
+		
+		lldb::SBFunction currentFunction = sf.GetFunction();
+		if(currentFunction.IsValid())
+		{
+			const char * fnName = currentFunction.GetName();
+			NSLog(@"FUNCTION! %s", fnName);
+		}
 		
 		lldb::SBModule module = sf.GetModule ();
 		if(module.IsValid())
@@ -108,18 +139,18 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 			const char * fn = fs.GetFileName();
 			if( strcmp("Sibelius 6", fn )==0 )
 			{
-				NSLog(@"woo");
+				NSLog(@"Sibelius %x", addRess1.GetFileAddress() );
 			} else {
-				NSLog(@"Boooooo");
+				NSLog(@"%s %x", fn, addRess1.GetFileAddress() );
 			}
 
-			lldb::SBLineEntry who = sf.GetLineEntry ();
-			lldb::SBAddress address = who.GetStartAddress();
-			lldb::addr_t hexVal = address.GetFileAddress ();
-			
-	//		const char *woo = sf.Disassemble ();
-
-			NSLog(@"Step %x", hexVal);
+//			lldb::SBLineEntry who = sf.GetLineEntry ();
+//			lldb::SBAddress address = who.GetStartAddress();
+//			lldb::addr_t hexVal = address.GetFileAddress ();
+//			
+//	//		const char *woo = sf.Disassemble ();
+//
+//			NSLog(@"Step %x", hexVal);
 		}
 	}
 	
