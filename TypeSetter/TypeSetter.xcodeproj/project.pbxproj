@@ -121,8 +121,41 @@
 		7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphRenderer.h; path = Src/GlyphRenderer.h; sourceTree = "<group>"; };
 		7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRenderer.m; path = Src/GlyphRenderer.m; sourceTree = "<group>"; };
 		7331A9BD1145746300EFCB8F /* Picture 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Picture 4.png"; path = "images/Picture 4.png"; sourceTree = "<group>"; };
+		73387BAD11D235D20017D971 /* cmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmap.c; sourceTree = "<group>"; };
+		73387BAE11D235D30017D971 /* cvt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cvt.c; sourceTree = "<group>"; };
+		73387BAF11D235D30017D971 /* disasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = disasm.c; sourceTree = "<group>"; };
+		73387BB011D235D30017D971 /* fixed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fixed.c; sourceTree = "<group>"; };
+		73387BB111D235D30017D971 /* font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = font.c; sourceTree = "<group>"; };
+		73387BB211D235D30017D971 /* fpgm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fpgm.c; sourceTree = "<group>"; };
+		73387BB311D235D30017D971 /* gasp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gasp.c; sourceTree = "<group>"; };
+		73387BB411D235D30017D971 /* gcache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gcache.c; sourceTree = "<group>"; };
+		73387BB511D235D30017D971 /* glyf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glyf.c; sourceTree = "<group>"; };
+		73387BB611D235D30017D971 /* gstate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gstate.c; sourceTree = "<group>"; };
+		73387BB711D235D30017D971 /* hdmx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hdmx.c; sourceTree = "<group>"; };
+		73387BB811D235D30017D971 /* head.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = head.c; sourceTree = "<group>"; };
+		73387BB911D235D30017D971 /* hhea.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hhea.c; sourceTree = "<group>"; };
+		73387BBA11D235D30017D971 /* hmtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmtx.c; sourceTree = "<group>"; };
+		73387BBB11D235D30017D971 /* interp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interp.c; sourceTree = "<group>"; };
+		73387BBC11D235D30017D971 /* kern.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kern.c; sourceTree = "<group>"; };
+		73387BBD11D235D30017D971 /* loca.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loca.c; sourceTree = "<group>"; };
+		73387BBE11D235D30017D971 /* ltsh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltsh.c; sourceTree = "<group>"; };
+		73387BBF11D235D30017D971 /* maxp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = maxp.c; sourceTree = "<group>"; };
+		73387BC011D235D30017D971 /* name.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = name.c; sourceTree = "<group>"; };
+		73387BC111D235D30017D971 /* os2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = os2.c; sourceTree = "<group>"; };
+		73387BC211D235D30017D971 /* pclt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pclt.c; sourceTree = "<group>"; };
+		73387BC311D235D30017D971 /* post.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = post.c; sourceTree = "<group>"; };
+		73387BC411D235D30017D971 /* prep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prep.c; sourceTree = "<group>"; };
+		73387BC511D235D30017D971 /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stack.c; sourceTree = "<group>"; };
+		73387BC611D235D30017D971 /* tabledir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tabledir.c; sourceTree = "<group>"; };
+		73387BC711D235D30017D971 /* ttc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ttc.c; sourceTree = "<group>"; };
+		73387BC811D235D30017D971 /* ttfread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ttfread.c; sourceTree = "<group>"; };
+		73387BC911D235D30017D971 /* ttfutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ttfutil.c; sourceTree = "<group>"; };
+		73387BCA11D235D30017D971 /* vdmx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vdmx.c; sourceTree = "<group>"; };
+		73387BCB11D235D30017D971 /* vhea.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vhea.c; sourceTree = "<group>"; };
+		73387BCC11D235D30017D971 /* vmtx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vmtx.c; sourceTree = "<group>"; };
 		7344137C0F67CACD00D6CF73 /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = Src/DebugView.h; sourceTree = "<group>"; };
 		7344137D0F67CACD00D6CF73 /* DebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugView.m; path = Src/DebugView.m; sourceTree = "<group>"; };
+		734B48D711D243E000E7CF07 /* FREESANSdump.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FREESANSdump.txt; path = Resources/FREESANSdump.txt; sourceTree = "<group>"; };
 		735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeSetterTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		735F802011466F10000AC142 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Base.xcconfig"; path = "../../Blake/Config/Project-Base.xcconfig"; sourceTree = SOURCE_ROOT; };
 		735F802111466F10000AC142 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Coverage.xcconfig"; path = "../../Blake/Config/Project-Coverage.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -235,6 +268,7 @@
 		29B97314FDCFA39411CA2CEA /* TypeSetter */ = {
 			isa = PBXGroup;
 			children = (
+				73387BAC11D235D20017D971 /* libttf */,
 				735F807A114672C0000AC142 /* Tests */,
 				735F801F11466F10000AC142 /* Configs */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -258,6 +292,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				734B48D711D243E000E7CF07 /* FREESANSdump.txt */,
 				7369211A11B5163C006A81BD /* FREESANS.ttf */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				73B018591174B77E00E43F88 /* TypeSetWindow.xib */,
@@ -278,6 +313,46 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
+		};
+		73387BAC11D235D20017D971 /* libttf */ = {
+			isa = PBXGroup;
+			children = (
+				73387BAD11D235D20017D971 /* cmap.c */,
+				73387BAE11D235D30017D971 /* cvt.c */,
+				73387BAF11D235D30017D971 /* disasm.c */,
+				73387BB011D235D30017D971 /* fixed.c */,
+				73387BB111D235D30017D971 /* font.c */,
+				73387BB211D235D30017D971 /* fpgm.c */,
+				73387BB311D235D30017D971 /* gasp.c */,
+				73387BB411D235D30017D971 /* gcache.c */,
+				73387BB511D235D30017D971 /* glyf.c */,
+				73387BB611D235D30017D971 /* gstate.c */,
+				73387BB711D235D30017D971 /* hdmx.c */,
+				73387BB811D235D30017D971 /* head.c */,
+				73387BB911D235D30017D971 /* hhea.c */,
+				73387BBA11D235D30017D971 /* hmtx.c */,
+				73387BBB11D235D30017D971 /* interp.c */,
+				73387BBC11D235D30017D971 /* kern.c */,
+				73387BBD11D235D30017D971 /* loca.c */,
+				73387BBE11D235D30017D971 /* ltsh.c */,
+				73387BBF11D235D30017D971 /* maxp.c */,
+				73387BC011D235D30017D971 /* name.c */,
+				73387BC111D235D30017D971 /* os2.c */,
+				73387BC211D235D30017D971 /* pclt.c */,
+				73387BC311D235D30017D971 /* post.c */,
+				73387BC411D235D30017D971 /* prep.c */,
+				73387BC511D235D30017D971 /* stack.c */,
+				73387BC611D235D30017D971 /* tabledir.c */,
+				73387BC711D235D30017D971 /* ttc.c */,
+				73387BC811D235D30017D971 /* ttfread.c */,
+				73387BC911D235D30017D971 /* ttfutil.c */,
+				73387BCA11D235D30017D971 /* vdmx.c */,
+				73387BCB11D235D30017D971 /* vhea.c */,
+				73387BCC11D235D30017D971 /* vmtx.c */,
+			);
+			name = libttf;
+			path = ../../../Source/TEXLive/TexLive/Build/source/texk/ttfdump/libttf;
+			sourceTree = SOURCE_ROOT;
 		};
 		735F801F11466F10000AC142 /* Configs */ = {
 			isa = PBXGroup;

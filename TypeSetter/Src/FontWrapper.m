@@ -265,17 +265,17 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	//	post	PostScript information
 
 
-	// head - we need to know what kind of font we are dealing with
+	// VERIFIED! head - we need to know what kind of font we are dealing with
 	[self _processHEADTable];
 
-	// hhea
-	[self _processHHEATable];
+	// VERIFIED! hhea
+	[self _processHHEATable];	// horizontal header: Summary information about horizontal metrics
 
-	// maxp
-	[self _processMAXPTable];
+	// VERIFIED! maxp (partially done)
+	[self _processMAXPTable];	// maximum profile: memory requirements, including nmber of glyphs
 
 	// OS/2
-	[self _processOS2];
+	[self _processOS2];			// OS/2: line spacing, style & weight .Mac uses  ‘head’ and ‘hhea’ instead. Also what range of characters in font?
 	 
 	
 	/* Some Tables are more for look up, ie we dont really want to process them when we init the font 
@@ -283,10 +283,12 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	 */
 	
 	  
-	// hmtx - glyph metrics
+	// VERIFIED! hmtx - glyph metrics
 	[self _processHMTXTable];
 
 	// cmap
+	
+	subtable 4 is verified, do the rest
 	[self _processCMAPTable];
 	
 	// name
@@ -294,7 +296,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// post
 	
 	/* Optional Tables */
-	[self _processLTSH];
+	[self _processLTSH];		//	'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting
 	[self _processGLYFTable];
 	[self _processLOCATable];
 }
@@ -494,7 +496,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 #pragma mark hhea Table 
-
+// horizontal header: Summary information about horizontal metrics
 - (void)_processHHEATable {
 	
 	CFDataRef hheaTable = CTFontCopyTable( _iFont, kCTFontTableHhea, kCTFontTableOptionExcludeSynthetic );
@@ -580,7 +582,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	loc += sizeof metricDataFormat;
 	metricDataFormat = OSSwapBigToHostInt16(metricDataFormat);
 	
-	_numOfLongHorMetrics; // Number of hMetric entries in 'hmtx' table
+	// Number of hMetric entries in 'hmtx' table
 	CFDataGetBytes( hheaTable, CFRangeMake(loc,sizeof _numOfLongHorMetrics), (UInt8 *)&_numOfLongHorMetrics );
 	_numOfLongHorMetrics = OSSwapBigToHostInt16(_numOfLongHorMetrics);
 	
@@ -668,6 +670,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	loc += sizeof yStrikeoutPosition;
 	yStrikeoutPosition = OSSwapBigToHostInt16(yStrikeoutPosition);
 
+	// sFamilyClass: 8 subclass = 2
+	// Needs more parsing 
 	int16_t	sFamilyClass;
 	CFDataGetBytes( os2Table, CFRangeMake(loc,sizeof sFamilyClass), (UInt8 *)&sFamilyClass );
 	loc += sizeof sFamilyClass;
@@ -786,14 +790,15 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	
 	for( UInt16 i=0; i<_numOfLongHorMetrics; i++ )
 	{
-		UInt16 arrayLoc1 = loc + i * 32;
+		uint32 longHorMetric_i;
+
+		UInt16 arrayLoc1 = loc + i * sizeof longHorMetric_i;
 		
 		// logHor is really a struct with 2 16bit values in
-		uint32 longHorMetric_i;
 		CFDataGetBytes( hmtxTable, CFRangeMake( arrayLoc1, sizeof longHorMetric_i), (UInt8 *)&longHorMetric_i );
 		
 		// TODO: who knows if we should swap the bytes then extract the subvalues or extract the subvalues THEN swap the bytes?
-		//longHorMetric_i = OSSwapBigToHostInt32(longHorMetric_i);
+		// longHorMetric_i = OSSwapBigToHostInt32(longHorMetric_i);
 		
 		// how to extract? No idea which way round these should go
 		int16_t leastSignificant16Bits = (int16_t)longHorMetric_i;
@@ -802,7 +807,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		uint16 advanceWidth = OSSwapBigToHostInt16(leastSignificant16Bits);
 		int16_t leftSideBearing = OSSwapBigToHostInt16(mostSignificant16Bits1);
 		
-		NSLog(@"%i %i", advanceWidth, leftSideBearing );
+		NSLog(@"%i. advWid: %i, LSdBear: %i", i, advanceWidth, leftSideBearing );
 	}
 	
 	// Then.. then.. we have an array of leftsidebearings (advanceWidth is the same as in the LAST longHorMetric_i)
@@ -937,8 +942,6 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 - (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
 
-	NSLog(@"Format 4");
-
 	uint loc = subTableOffset;
 
 	// header
@@ -951,6 +954,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof length), (UInt8 *)&length );
 	loc += sizeof length;
 	length = OSSwapBigToHostInt16(length);
+
+	// uint end = (UInt8 *)(&cmapTable)+subTableOffset+length;
 
 	UInt16 language; // Zero if language independant
 	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof language), (UInt8 *)&language );
@@ -979,9 +984,13 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	// 4 parallel arrays
 	UInt16 num_ranges = segCountX2/2;
+	uint eachElementSpacing = num_ranges*sizeof(UInt16);
+	UInt16 reservedSpace = sizeof(UInt16);
+	
 	for( UInt16 i=0; i<num_ranges; i++ )
 	{		
-		UInt16 arrayLoc = loc + i * 2;
+		// 1st element of each parallel array
+		uint arrayLoc = loc + i * sizeof(UInt16);
 
 		// search for the first endCode that is greater than or equal to the character code to be mapped
 		//  If the corresponding startCode is less than or equal to the character code, then use the corresponding idDelta and idRangeOffset to map the character code to the glyph index
@@ -991,33 +1000,69 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		// glyphIndexAddress = idRangeOffset[i] + 2 * (c - startCode[i]) + (Ptr) &idRangeOffset[i]
 		// If the idRangeOffset is 0, the idDelta value is added directly to the character code to get the corresponding glyph index:
 		// glyphIndex = idDelta[i] + c
+
+		uint endCodeLoc = arrayLoc + 0 * eachElementSpacing;
 		UInt16 endCode_i;
-		CFDataGetBytes( cmapTable, CFRangeMake(arrayLoc, sizeof endCode_i), (UInt8 *)&endCode_i );
+		CFDataGetBytes( cmapTable, CFRangeMake( endCodeLoc, sizeof endCode_i), (UInt8 *)&endCode_i );
 		endCode_i = OSSwapBigToHostInt16(endCode_i);
+
+		// after the first elements in the array there is a single space
+		// endCodeLoc[0], endCodeLoc[1], endCodeLoc[2], reserved, startCode[0], startCode[1], startCode[2], delta[0], delta[1], etc
 		
-		arrayLoc += 2 + num_ranges * 2;	
+		uint startCodeLoc = arrayLoc + 1*eachElementSpacing + reservedSpace;
 		UInt16 startCode_i;
-		CFDataGetBytes( cmapTable, CFRangeMake(arrayLoc, sizeof startCode_i), (UInt8 *)&startCode_i );
+		CFDataGetBytes( cmapTable, CFRangeMake( startCodeLoc, sizeof startCode_i), (UInt8 *)&startCode_i );
 		startCode_i = OSSwapBigToHostInt16(startCode_i);
-		
-		arrayLoc += num_ranges * 2;
-		UInt16 idDelta_i;
-		CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof idDelta_i), (UInt8 *)&idDelta_i );
+
+		// so we have char 0xstartCode_i to char 0xendCode_i
+
+		uint deltaLoc = arrayLoc + 2*eachElementSpacing + reservedSpace;
+		SInt16 idDelta_i;
+		CFDataGetBytes( cmapTable, CFRangeMake( deltaLoc, sizeof idDelta_i), (UInt8 *)&idDelta_i );
 		idDelta_i = OSSwapBigToHostInt16(idDelta_i);
-		
-		arrayLoc += num_ranges * 2;
+
+		uint rangeOffsetLoc = arrayLoc + 3*eachElementSpacing + reservedSpace;
 		UInt16 idRangeOffset_i;
-		CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof idRangeOffset_i), (UInt8 *)&idRangeOffset_i );
+		CFDataGetBytes( cmapTable, CFRangeMake( rangeOffsetLoc, sizeof idRangeOffset_i), (UInt8 *)&idRangeOffset_i );
 		idRangeOffset_i = OSSwapBigToHostInt16(idRangeOffset_i);
 
-		// NSLog(@"End %i, start %i", endCode_i, startCode_i);
-		NSAssert( arrayLoc<=CFDataGetLength(cmapTable), @"well this was obviously wrong dick sweart %i, %i", loc, length );
+		if( idRangeOffset_i==0 ) {
+			for( NSUInteger j=startCode_i; j<=endCode_i; j++ ) {
+				UInt16 glyphIndex = idDelta_i+j;
+				NSLog( @"char %x -> Index %i", j, glyphIndex );
+			}
+		} else {
+			for( NSUInteger j=startCode_i; j<=endCode_i; j++ ) 
+			{
+				uint glyphIndexAddress = idRangeOffset_i + (j-startCode_i)*2 + rangeOffsetLoc;
+				// NSLog( @"address %i", glyphIndexAddress );
+				
+				UInt16 glyphIndex;
+				CFDataGetBytes( cmapTable, CFRangeMake( glyphIndexAddress, sizeof glyphIndex), (UInt8 *)&glyphIndex );
+				glyphIndex = OSSwapBigToHostInt16(glyphIndex);
+				NSLog( @"%i: char %x -> Index %i", i, j, glyphIndex );
+			}			
+		}
+		
+		NSAssert( rangeOffsetLoc <= (subTableOffset+length), @"well this was obviously wrong dick sweart %i, %i", loc, length );
 	}
+
+	// Okidoki - soooo, there follows a variable length array which the commented out code below iterates over,
+	// we dont use it like this tho, the values in the array are accessed above when idRangeOffset_i!=0
+	//	uint endPoint = subTableOffset + length;
+	//	loc += 4*sizeof(UInt16)*num_ranges + reservedSpace;
+	//	UInt16 wordsLeft = (endPoint-loc)/2;
+	//	
+	//	// variable length array if glyph indexes
+	//	for( NSUInteger i=0; i<wordsLeft; i++ )
+	//	{
+	//		UInt16 glyphIndexArray_variable;
+	//		uint array_i_Loc = loc+sizeof(UInt16)*i;
+	//		CFDataGetBytes( cmapTable, CFRangeMake( array_i_Loc, sizeof glyphIndexArray_variable), (UInt8 *)&glyphIndexArray_variable );
+	//		NSLog( @"Just for reference %i", array_i_Loc );
+	//		glyphIndexArray_variable = OSSwapBigToHostInt16(glyphIndexArray_variable);
+	//	}
 	
-	// variable length array if glyph indexes
-	UInt16 glyphIndexArray_variable;
-	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof glyphIndexArray_variable), (UInt8 *)&glyphIndexArray_variable );
-	glyphIndexArray_variable = OSSwapBigToHostInt16(glyphIndexArray_variable);
 }
 
 - (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
@@ -1066,7 +1111,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// NSLog(@"Example glyph index from table 6 is %i", gyphindex ); // check to see if this glyph id is a special one
 }
 
-#pragma mark Maxp Table 
+#pragma mark Maxp Table
+// maximum profile: memory requirements, including nmber of glyphs
 - (void)_processMAXPTable {
 
 	CFDataRef maxpTable = CTFontCopyTable( _iFont, kCTFontTableMaxp, kCTFontTableOptionExcludeSynthetic );
@@ -1082,11 +1128,27 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFDataGetBytes( maxpTable, CFRangeMake(loc, sizeof numberOfGlyphs), (UInt8 *)&numberOfGlyphs );
 	numberOfGlyphs = OSSwapBigToHostInt16(numberOfGlyphs);
 	NSAssert( numberOfGlyphs==_numberOfGlyphs, @"Glyph count mismatch %i - %i", _numberOfGlyphs, numberOfGlyphs );
+
+	// TODO
+	//	maxPoints:		124
+	//	maxContours:		9
+	//	maxCompositePoints:	0
+	//	maxCompositeContours:	0
+	//	maxZones:		1
+	//	maxTwilightPoints:	0
+	//	maxStorage:		0
+	//	maxFunctionDefs:	10
+	//	maxInstructionDefs:	0
+	//	maxStackElements:	512
+	//	maxSizeOfInstructions:	525
+	//	maxComponentElements:	0
+	//	maxComponentDepth:	0      
 	
 	CFRelease( maxpTable );
 }
 
-#pragma mark LTSH Table 
+#pragma mark LTSH Table
+//	'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting.
 - (void)_processLTSH {
 	
 	CFDataRef LTSHTable = CTFontCopyTable( _iFont, kCTFontTableLTSH, kCTFontTableOptionExcludeSynthetic );
@@ -1195,6 +1257,9 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	
 	CFRelease(glyfTable);
 }
+
+
+// ttf dump code here http://www.koders.com/info.aspx?c=ProjectInfo&pid=M3C16ME9UYQXHS38P5ZT8ARPFH
 
 #pragma mark loca Table
 // for a given glyph index, get the offset in the glyf table

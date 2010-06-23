@@ -16,12 +16,21 @@
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
+		73387AEE11D222C50017D971 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD811D222A10017D971 /* api.c */; };
+		73387AEF11D222C50017D971 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD911D222A10017D971 /* dumper.c */; };
+		73387AF011D222C60017D971 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADA11D222A10017D971 /* emitter.c */; };
+		73387AF111D222C60017D971 /* loader.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADB11D222A10017D971 /* loader.c */; };
+		73387AF211D222C60017D971 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADD11D222A10017D971 /* parser.c */; };
+		73387AF311D222C70017D971 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADE11D222A10017D971 /* reader.c */; };
+		73387AF411D222C70017D971 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADF11D222A10017D971 /* scanner.c */; };
+		73387AF511D222C70017D971 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AE011D222A10017D971 /* writer.c */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73875FC611C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
+		73BE90A911D0BDC5003C87B2 /* LLDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BE90A811D0BDC3003C87B2 /* LLDB.framework */; };
 		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C56211C504CB00C93934 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
@@ -29,6 +38,37 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73BE90A511D0BDC3003C87B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 26F5C26A10F3D9A4009D5894;
+			remoteInfo = "lldb-tool";
+		};
+		73BE90A711D0BDC3003C87B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 26680207115FD0ED008E1FE4;
+			remoteInfo = LLDB;
+		};
+		73BE90AA11D0BDCF003C87B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 26680206115FD0ED008E1FE4;
+			remoteInfo = LLDB;
+		};
+		73BE90AC11D0BDD5003C87B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 26680206115FD0ED008E1FE4;
+			remoteInfo = LLDB;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		735B77F411C1069000721231 /* CopyFiles */ = {
@@ -71,6 +111,17 @@
 		732CFD2811BF9FFE008030ED /* InputParseTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InputParseTests.mm; path = Tests/InputParseTests.mm; sourceTree = "<group>"; };
 		732CFE0D11BFA188008030ED /* InputParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputParse.h; path = Src/InputParse.h; sourceTree = "<group>"; };
 		732CFE0E11BFA188008030ED /* InputParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParse.m; path = Src/InputParse.m; sourceTree = "<group>"; };
+		73387AD811D222A10017D971 /* api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = api.c; path = "../../../Source/libyaml-stable/src/api.c"; sourceTree = SOURCE_ROOT; };
+		73387AD911D222A10017D971 /* dumper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dumper.c; path = "../../../Source/libyaml-stable/src/dumper.c"; sourceTree = SOURCE_ROOT; };
+		73387ADA11D222A10017D971 /* emitter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = emitter.c; path = "../../../Source/libyaml-stable/src/emitter.c"; sourceTree = SOURCE_ROOT; };
+		73387ADB11D222A10017D971 /* loader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = loader.c; path = "../../../Source/libyaml-stable/src/loader.c"; sourceTree = SOURCE_ROOT; };
+		73387ADD11D222A10017D971 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = "../../../Source/libyaml-stable/src/parser.c"; sourceTree = SOURCE_ROOT; };
+		73387ADE11D222A10017D971 /* reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = reader.c; path = "../../../Source/libyaml-stable/src/reader.c"; sourceTree = SOURCE_ROOT; };
+		73387ADF11D222A10017D971 /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = scanner.c; path = "../../../Source/libyaml-stable/src/scanner.c"; sourceTree = SOURCE_ROOT; };
+		73387AE011D222A10017D971 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = writer.c; path = "../../../Source/libyaml-stable/src/writer.c"; sourceTree = SOURCE_ROOT; };
+		73387AE111D222A10017D971 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yaml_private.h; path = "../../../Source/libyaml-stable/src/yaml_private.h"; sourceTree = SOURCE_ROOT; };
+		73387AE911D222AA0017D971 /* yaml.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = yaml.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73387AEA11D222AA0017D971 /* yaml-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yaml-Info.plist"; sourceTree = "<group>"; };
 		73875DB111C66BE200F714D9 /* ArgumentScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArgumentScanner.h; path = Src/ArgumentScanner.h; sourceTree = "<group>"; };
 		73875DB211C66BE200F714D9 /* ArgumentScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScanner.m; path = Src/ArgumentScanner.m; sourceTree = "<group>"; };
 		73875DB811C66BFA00F714D9 /* ArgumentScannerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScannerTests.m; path = Tests/ArgumentScannerTests.m; sourceTree = "<group>"; };
@@ -86,6 +137,7 @@
 		73B2F4F511C7C41500F0C9E6 /* Instruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instruction.h; path = Src/Instruction.h; sourceTree = "<group>"; };
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
+		73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lldb.xcodeproj; path = ../../../Source/lldb/lldb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		73F1C4E911C4DC4800C93934 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicToken.h; path = Src/BasicToken.h; sourceTree = "<group>"; };
 		73F1C4EA11C4DC4800C93934 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicToken.m; path = Src/BasicToken.m; sourceTree = "<group>"; };
 		73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicTokenTests.m; path = Tests/BasicTokenTests.m; sourceTree = "<group>"; };
@@ -99,6 +151,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				731D46E811CA1B43002964DC /* LLDB.framework in Frameworks */,
+				73BE90A911D0BDC5003C87B2 /* LLDB.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73387AE711D222AA0017D971 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +214,7 @@
 			children = (
 				8D1107320486CEB800E47090 /* SimpleFileParser.app */,
 				732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */,
+				73387AE911D222AA0017D971 /* yaml.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,6 +222,7 @@
 		29B97314FDCFA39411CA2CEA /* SimpleFileParser */ = {
 			isa = PBXGroup;
 			children = (
+				73387AD311D222920017D971 /* Yaml */,
 				732CFCDB11BF9E72008030ED /* Config */,
 				732CFD1F11BF9F8A008030ED /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -168,6 +230,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */,
+				73387AEA11D222AA0017D971 /* yaml-Info.plist */,
 			);
 			name = SimpleFileParser;
 			sourceTree = "<group>";
@@ -233,6 +297,22 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
+		73387AD311D222920017D971 /* Yaml */ = {
+			isa = PBXGroup;
+			children = (
+				73387AE111D222A10017D971 /* yaml_private.h */,
+				73387AD811D222A10017D971 /* api.c */,
+				73387AD911D222A10017D971 /* dumper.c */,
+				73387ADA11D222A10017D971 /* emitter.c */,
+				73387ADB11D222A10017D971 /* loader.c */,
+				73387ADD11D222A10017D971 /* parser.c */,
+				73387ADE11D222A10017D971 /* reader.c */,
+				73387ADF11D222A10017D971 /* scanner.c */,
+				73387AE011D222A10017D971 /* writer.c */,
+			);
+			name = Yaml;
+			sourceTree = "<group>";
+		};
 		73875DAE11C66BB700F714D9 /* Arguments */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +354,26 @@
 			name = Instructions;
 			sourceTree = "<group>";
 		};
+		73BE90A111D0BDC3003C87B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73BE90A611D0BDC3003C87B2 /* lldb */,
+				73BE90A811D0BDC3003C87B2 /* LLDB.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		73387AE411D222AA0017D971 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		732CFCEF11BF9EA3008030ED /* SimpleFileParser_Tests */ = {
@@ -290,11 +389,30 @@
 			buildRules = (
 			);
 			dependencies = (
+				73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser_Tests;
 			productName = SimpleFileParser_Tests;
 			productReference = 732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		73387AE811D222AA0017D971 /* yaml */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73387AED11D222AA0017D971 /* Build configuration list for PBXNativeTarget "yaml" */;
+			buildPhases = (
+				73387AE411D222AA0017D971 /* Headers */,
+				73387AE511D222AA0017D971 /* Resources */,
+				73387AE611D222AA0017D971 /* Sources */,
+				73387AE711D222AA0017D971 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = yaml;
+			productName = yaml;
+			productReference = 73387AE911D222AA0017D971 /* yaml.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		8D1107260486CEB800E47090 /* SimpleFileParser */ = {
 			isa = PBXNativeTarget;
@@ -307,6 +425,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				73BE90AD11D0BDD5003C87B2 /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser;
 			productInstallPath = "$(HOME)/Applications";
@@ -324,16 +443,47 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* SimpleFileParser */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 73BE90A111D0BDC3003C87B2 /* Products */;
+					ProjectRef = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* SimpleFileParser */,
 				732CFCEF11BF9EA3008030ED /* SimpleFileParser_Tests */,
+				73387AE811D222AA0017D971 /* yaml */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		73BE90A611D0BDC3003C87B2 /* lldb */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lldb;
+			remoteRef = 73BE90A511D0BDC3003C87B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73BE90A811D0BDC3003C87B2 /* LLDB.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LLDB.framework;
+			remoteRef = 73BE90A711D0BDC3003C87B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		732CFCEB11BF9EA3008030ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73387AE511D222AA0017D971 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -378,6 +528,21 @@
 				731D45B711CA1A49002964DC /* BasicTokenTests.m in Sources */,
 				731D489B11CA20C6002964DC /* SHDebugger.mm in Sources */,
 				731D489E11CA20CE002964DC /* InputParseTests.mm in Sources */,
+				73387AEE11D222C50017D971 /* api.c in Sources */,
+				73387AEF11D222C50017D971 /* dumper.c in Sources */,
+				73387AF011D222C60017D971 /* emitter.c in Sources */,
+				73387AF111D222C60017D971 /* loader.c in Sources */,
+				73387AF211D222C60017D971 /* parser.c in Sources */,
+				73387AF311D222C70017D971 /* reader.c in Sources */,
+				73387AF411D222C70017D971 /* scanner.c in Sources */,
+				73387AF511D222C70017D971 /* writer.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73387AE611D222AA0017D971 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +564,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LLDB;
+			targetProxy = 73BE90AA11D0BDCF003C87B2 /* PBXContainerItemProxy */;
+		};
+		73BE90AD11D0BDD5003C87B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LLDB;
+			targetProxy = 73BE90AC11D0BDD5003C87B2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -445,6 +623,62 @@
 					"\"$(SRCROOT)/../../../Source/lldb/build/Debug\"",
 				);
 				PRODUCT_NAME = SimpleFileParser_Tests;
+			};
+			name = Release;
+		};
+		73387AEB11D222AA0017D971 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE311BF9E72008030ED /* Target-Framework.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "yaml-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = yaml;
+			};
+			name = Debug;
+		};
+		73387AEC11D222AA0017D971 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE311BF9E72008030ED /* Target-Framework.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "yaml-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = yaml;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -510,6 +744,15 @@
 			buildConfigurations = (
 				732CFCF211BF9EA3008030ED /* Debug */,
 				732CFCF311BF9EA3008030ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73387AED11D222AA0017D971 /* Build configuration list for PBXNativeTarget "yaml" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73387AEB11D222AA0017D971 /* Debug */,
+				73387AEC11D222AA0017D971 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

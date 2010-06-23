@@ -8,9 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SHDebugger.h"
+#import <LLDB/LLDB.h>
 
 
 @interface SHDebugger : NSObject {
+
+	lldb::SBDebugger m_debugger;
 
 }
 
