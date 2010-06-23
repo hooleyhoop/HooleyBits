@@ -288,7 +288,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	// cmap
 	
-	subtable 4 is verified, do the rest
+	// subtable 4 is verified, do the rest
 	[self _processCMAPTable];
 	
 	// name
@@ -906,7 +906,6 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 - (void)_cmapSubTable_format0:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
 
-	NSLog(@"Format 0");
 	uint loc = subTableOffset;
 	
 	UInt16 format;
@@ -931,11 +930,11 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		UInt16 arrayLoc = loc + i * sizeof glyphIndex_i;
 		CFDataGetBytes( cmapTable, CFRangeMake(arrayLoc, sizeof glyphIndex_i), (UInt8 *)&glyphIndex_i );
 		UInt16 glyphIndex_i16 = glyphIndex_i;
-		glyphIndex_i16 = OSSwapBigToHostInt16(glyphIndex_i16);
+		// Doesn't need byte swapping!
 		
 		if(glyphIndex_i16!=0){
 			
-			NSLog(@"%i: %i > glyphIndex %i", glyphCount++, i, glyphIndex_i16 );
+			NSLog(@"Char %i: %i > glyphIndex %i", glyphCount++, i, glyphIndex_i16 );
 		}
 	}
 }
@@ -1066,8 +1065,6 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 - (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
-
-	NSLog(@"Format 6");
 	
 	uint loc = subTableOffset;
 	
