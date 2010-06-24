@@ -25,6 +25,12 @@
 		73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A621174ACC4000B0D56 /* AppDelegate.m */; };
 		73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A671174ACE2000B0D56 /* WindowController.m */; };
 		73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */; };
+		73E0CC2711D3671000D4940D /* PhraseProbability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0CC0911D366D800D4940D /* PhraseProbability.framework */; };
+		73E0CC3D11D367A100D4940D /* PhraseProabilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CC3C11D367A100D4940D /* PhraseProabilityTests.m */; };
+		73E0CC6E11D3685C00D4940D /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F80C811467360000AC142 /* SHTestUtilities.framework */; };
+		73E0CCB711D36AC500D4940D /* PhraseAnalyser.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E0CCB511D36AC500D4940D /* PhraseAnalyser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73E0CCB811D36AC500D4940D /* PhraseAnalyser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CCB611D36AC500D4940D /* PhraseAnalyser.m */; };
+		73E0CCC811D36B2600D4940D /* PhraseProbability.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E0CCC711D36B2600D4940D /* PhraseProbability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -107,6 +113,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 73B051B81168EEF70054CE44;
 			remoteInfo = GUIFiddler;
+		};
+		73E0CC2411D366F800D4940D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73E0CC0811D366D800D4940D /* PhraseProbability */;
+			remoteInfo = PhraseProbability;
+		};
+		73E0CC6C11D3685900D4940D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteInfo = SHTestUtilities;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -191,6 +211,12 @@
 		73BD7A671174ACE2000B0D56 /* WindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WindowController.m; path = Src/WindowController.m; sourceTree = "<group>"; };
 		73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UFIStringAdditions.m; sourceTree = "<group>"; };
 		73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFIStringAdditions.h; sourceTree = "<group>"; };
+		73E0CC0911D366D800D4940D /* PhraseProbability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhraseProbability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73E0CC1511D366EE00D4940D /* PhraseProbabilityTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhraseProbabilityTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73E0CC3C11D367A100D4940D /* PhraseProabilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhraseProabilityTests.m; path = Tests/PhraseProabilityTests.m; sourceTree = "<group>"; };
+		73E0CCB511D36AC500D4940D /* PhraseAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhraseAnalyser.h; path = Src/PhraseAnalyser.h; sourceTree = "<group>"; };
+		73E0CCB611D36AC500D4940D /* PhraseAnalyser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhraseAnalyser.m; path = Src/PhraseAnalyser.m; sourceTree = "<group>"; };
+		73E0CCC711D36B2600D4940D /* PhraseProbability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhraseProbability.h; path = Src/PhraseProbability.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* TypeSetter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeSetter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -200,6 +226,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				735F80CE1146736F000AC142 /* SHTestUtilities.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73E0CC0711D366D800D4940D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73E0CC1211D366EE00D4940D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73E0CC2711D3671000D4940D /* PhraseProbability.framework in Frameworks */,
+				73E0CC6E11D3685C00D4940D /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,19 +262,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				73BD7A611174ACC3000B0D56 /* AppDelegate.h */,
-				73BD7A621174ACC4000B0D56 /* AppDelegate.m */,
-				73BD7A661174ACE2000B0D56 /* WindowController.h */,
-				73BD7A671174ACE2000B0D56 /* WindowController.m */,
-				7344137C0F67CACD00D6CF73 /* DebugView.h */,
-				7344137D0F67CACD00D6CF73 /* DebugView.m */,
-				73B587B611B3E06D00AAEC90 /* FontWrapper.h */,
-				73B587B711B3E06D00AAEC90 /* FontWrapper.m */,
-				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
-				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
-				73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */,
-				73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */,
-				735F814011468055000AC142 /* Crude Image */,
+				73E0CC3611D3675900D4940D /* PhraseProbability */,
+				73E0CC3511D3675000D4940D /* Typesetter */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -261,6 +292,8 @@
 			children = (
 				8D1107320486CEB800E47090 /* TypeSetter.app */,
 				735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */,
+				73E0CC0911D366D800D4940D /* PhraseProbability.framework */,
+				73E0CC1511D366EE00D4940D /* PhraseProbabilityTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -376,7 +409,8 @@
 		735F807A114672C0000AC142 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				735F8099114672FE000AC142 /* GlyphRendererTests.m */,
+				73E0CC3811D3677800D4940D /* PhraseProbability */,
+				73E0CC3711D3677200D4940D /* Typesetter */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -411,7 +445,65 @@
 			name = "Crude Image";
 			sourceTree = "<group>";
 		};
+		73E0CC3511D3675000D4940D /* Typesetter */ = {
+			isa = PBXGroup;
+			children = (
+				73BD7A611174ACC3000B0D56 /* AppDelegate.h */,
+				73BD7A621174ACC4000B0D56 /* AppDelegate.m */,
+				73BD7A661174ACE2000B0D56 /* WindowController.h */,
+				73BD7A671174ACE2000B0D56 /* WindowController.m */,
+				7344137C0F67CACD00D6CF73 /* DebugView.h */,
+				7344137D0F67CACD00D6CF73 /* DebugView.m */,
+				73B587B611B3E06D00AAEC90 /* FontWrapper.h */,
+				73B587B711B3E06D00AAEC90 /* FontWrapper.m */,
+				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
+				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
+				73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */,
+				73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */,
+				735F814011468055000AC142 /* Crude Image */,
+			);
+			name = Typesetter;
+			sourceTree = "<group>";
+		};
+		73E0CC3611D3675900D4940D /* PhraseProbability */ = {
+			isa = PBXGroup;
+			children = (
+				73E0CCC711D36B2600D4940D /* PhraseProbability.h */,
+				73E0CCB511D36AC500D4940D /* PhraseAnalyser.h */,
+				73E0CCB611D36AC500D4940D /* PhraseAnalyser.m */,
+			);
+			name = PhraseProbability;
+			sourceTree = "<group>";
+		};
+		73E0CC3711D3677200D4940D /* Typesetter */ = {
+			isa = PBXGroup;
+			children = (
+				735F8099114672FE000AC142 /* GlyphRendererTests.m */,
+			);
+			name = Typesetter;
+			sourceTree = "<group>";
+		};
+		73E0CC3811D3677800D4940D /* PhraseProbability */ = {
+			isa = PBXGroup;
+			children = (
+				73E0CC3C11D367A100D4940D /* PhraseProabilityTests.m */,
+			);
+			name = PhraseProbability;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		73E0CC0411D366D800D4940D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73E0CCB711D36AC500D4940D /* PhraseAnalyser.h in Headers */,
+				73E0CCC811D36B2600D4940D /* PhraseProbability.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		735F7FFD11466EF1000AC142 /* TypeSetterTests */ = {
@@ -431,6 +523,44 @@
 			name = TypeSetterTests;
 			productName = TypeSetterTests;
 			productReference = 735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		73E0CC0811D366D800D4940D /* PhraseProbability */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73E0CC0D11D366D900D4940D /* Build configuration list for PBXNativeTarget "PhraseProbability" */;
+			buildPhases = (
+				73E0CC0411D366D800D4940D /* Headers */,
+				73E0CC0511D366D800D4940D /* Resources */,
+				73E0CC0611D366D800D4940D /* Sources */,
+				73E0CC0711D366D800D4940D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PhraseProbability;
+			productName = PhraseProbability;
+			productReference = 73E0CC0911D366D800D4940D /* PhraseProbability.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		73E0CC1411D366EE00D4940D /* PhraseProbabilityTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73E0CC2311D366EF00D4940D /* Build configuration list for PBXNativeTarget "PhraseProbabilityTests" */;
+			buildPhases = (
+				73E0CC1011D366EE00D4940D /* Resources */,
+				73E0CC1111D366EE00D4940D /* Sources */,
+				73E0CC1211D366EE00D4940D /* Frameworks */,
+				73E0CC1311D366EE00D4940D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73E0CC2511D366F800D4940D /* PBXTargetDependency */,
+				73E0CC6D11D3685900D4940D /* PBXTargetDependency */,
+			);
+			name = PhraseProbabilityTests;
+			productName = PhraseProbabilityTests;
+			productReference = 73E0CC1511D366EE00D4940D /* PhraseProbabilityTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8D1107260486CEB800E47090 /* TypeSetter */ = {
@@ -471,6 +601,8 @@
 			targets = (
 				8D1107260486CEB800E47090 /* TypeSetter */,
 				735F7FFD11466EF1000AC142 /* TypeSetterTests */,
+				73E0CC0811D366D800D4940D /* PhraseProbability */,
+				73E0CC1411D366EE00D4940D /* PhraseProbabilityTests */,
 			);
 		};
 /* End PBXProject section */
@@ -556,6 +688,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73E0CC0511D366D800D4940D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73E0CC1011D366EE00D4940D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -584,6 +730,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/../../Blake/runTests.sh\"";
 		};
+		73E0CC1311D366EE00D4940D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../../Blake/runTests.sh\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -592,6 +751,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				735F809A114672FE000AC142 /* GlyphRendererTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73E0CC0611D366D800D4940D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73E0CCB811D36AC500D4940D /* PhraseAnalyser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73E0CC1111D366EE00D4940D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73E0CC3D11D367A100D4940D /* PhraseProabilityTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +794,16 @@
 			isa = PBXTargetDependency;
 			name = SHTestUtilities;
 			targetProxy = 735F80CF11467383000AC142 /* PBXContainerItemProxy */;
+		};
+		73E0CC2511D366F800D4940D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73E0CC0811D366D800D4940D /* PhraseProbability */;
+			targetProxy = 73E0CC2411D366F800D4940D /* PBXContainerItemProxy */;
+		};
+		73E0CC6D11D3685900D4940D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHTestUtilities;
+			targetProxy = 73E0CC6C11D3685900D4940D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -673,6 +858,88 @@
 			};
 			name = Release;
 		};
+		73E0CC0B11D366D900D4940D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802711466F10000AC142 /* Target-Framework.xcconfig */;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				PRODUCT_NAME = PhraseProbability;
+			};
+			name = Debug;
+		};
+		73E0CC0C11D366D900D4940D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802711466F10000AC142 /* Target-Framework.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "PhraseProbability-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PhraseProbability;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		73E0CC2111D366EF00D4940D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Developer/Library/Frameworks,
+					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../Blake/build/Debug\"";
+				PRODUCT_NAME = PhraseProbabilityTests;
+			};
+			name = Debug;
+		};
+		73E0CC2211D366EF00D4940D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735F802B11466F10000AC142 /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "PhraseProbabilityTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = PhraseProbabilityTests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 735F802511466F10000AC142 /* Target-Executable.xcconfig */;
@@ -711,6 +978,24 @@
 			buildConfigurations = (
 				735F800011466EF4000AC142 /* Debug */,
 				735F800111466EF4000AC142 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73E0CC0D11D366D900D4940D /* Build configuration list for PBXNativeTarget "PhraseProbability" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E0CC0B11D366D900D4940D /* Debug */,
+				73E0CC0C11D366D900D4940D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73E0CC2311D366EF00D4940D /* Build configuration list for PBXNativeTarget "PhraseProbabilityTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73E0CC2111D366EF00D4940D /* Debug */,
+				73E0CC2211D366EF00D4940D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

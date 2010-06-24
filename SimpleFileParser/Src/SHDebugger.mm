@@ -19,7 +19,7 @@
 		command_string == "";
 	
 	// -- get current line 
-    lldb::SBTarget target = m_debugger.GetCurrentTarget();
+    lldb::SBTarget target = m_debugger->GetCurrentTarget();
     lldb::SBProcess process = target.GetProcess();
 		
 	lldb::StateType state = process.GetState();
@@ -29,7 +29,7 @@
 		process.GetSTDOUT (hmmm, 255);
 
 		lldb::SBThread thread1 = process.GetThreadAtIndex(0);
-		m_debugger.HandleCommand ("step");    
+		m_debugger->HandleCommand ("step");    
 	}
 	
 	return NO;
@@ -52,26 +52,26 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 
 - (void)goforit {
 
-	using namespace lldb;
-
-	SBDebugger::Initialize();
-    SBHostOS::ThreadCreated ("[main]");
+	// std::String blah; // who new that in c++ this gives you an initialized c++ object
+	
+	lldb::SBDebugger::Initialize();
+	lldb::SBHostOS::ThreadCreated ("[main]");
 
 	::setbuf (stdin, NULL);
 	::setbuf (stdout, NULL);
 
-    m_debugger (SBDebugger::Create());
+    *m_debugger = (lldb::SBDebugger::Create());
 
-	m_debugger.SetAsync(false);
+	m_debugger->SetAsync(false);
 
-	m_debugger.SetErrorFileHandle( stderr, false );
-	m_debugger.SetOutputFileHandle( stdout, false );
-	m_debugger.SetInputFileHandle( stdin, true );
+	m_debugger->SetErrorFileHandle( stderr, false );
+	m_debugger->SetOutputFileHandle( stdout, false );
+	m_debugger->SetInputFileHandle( stdin, true );
 
 	lldb::SBCommunication master_out_comm("driver.editline");
 
-	lldb::SBCommandInterpreter sb_interpreter = m_debugger.GetCommandInterpreter();
-	lldb::SBTarget target = m_debugger.CreateTargetWithFileAndArch("/Applications/6-386.app", "i386");
+	lldb::SBCommandInterpreter sb_interpreter = m_debugger->GetCommandInterpreter();
+	lldb::SBTarget target = m_debugger->CreateTargetWithFileAndArch("/Applications/6-386.app", "i386");
  	bool flag1 = target.IsValid();
 	NSAssert( flag1, @"oops - target failed");
 	
@@ -80,9 +80,9 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 //	NSAssert( flag2, @"oops - process failed");
 	
 	lldb::SBBreakpoint bp1 = target.BreakpointCreateByName( "start", NULL );	
-	m_debugger.HandleCommand ("process launch");
+	m_debugger->HandleCommand ("process launch");
 	
-    lldb::SBTarget currentTarget = m_debugger.GetCurrentTarget();
+    lldb::SBTarget currentTarget = m_debugger->GetCurrentTarget();
 	NSAssert( currentTarget==target, @"oops - what going on?");
 
 	lldb::SBProcess currentProcess = currentTarget.GetProcess();
@@ -112,7 +112,7 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 		//currentThread.StepInto( lldb::eOnlyDuringStepping );
 	//	currentThread.StepInstruction(false);
 		try {
-			m_debugger.HandleCommand ("thread step-inst --avoid_no_debug=false --run_mode=thisThread");
+			m_debugger->HandleCommand ("thread step-inst --avoid_no_debug=false --run_mode=thisThread");
 		} catch (NSException *exception) {
 			NSLog(@"woops");
 		}
@@ -128,7 +128,7 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 		lldb::SBAddress addRess1 = sf.GetPCAddress();
 		
 		NSString *disassembleInstruction = [NSString stringWithFormat:@"disassemble --start-address=%x  --end-address=%x --context=1", addRess1.GetFileAddress(), addRess1.GetFileAddress() ];
-		m_debugger.HandleCommand([disassembleInstruction cString]);
+		m_debugger->HandleCommand([disassembleInstruction cString]);
 		
 		lldb::SBFunction currentFunction = sf.GetFunction();
 		if(currentFunction.IsValid())
@@ -173,7 +173,7 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 //	char hmmm[255];
 //	currentProcess.GetSTDOUT (hmmm, 255);	
 
-	lldb::SBListener listener( m_debugger.GetListener() );
+	lldb::SBListener listener( m_debugger->GetListener() );
 //    if (listener.IsValid())
 //    {
 //		lldb::SBEvent event;

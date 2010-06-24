@@ -16,14 +16,6 @@
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
-		73387AEE11D222C50017D971 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD811D222A10017D971 /* api.c */; };
-		73387AEF11D222C50017D971 /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD911D222A10017D971 /* dumper.c */; };
-		73387AF011D222C60017D971 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADA11D222A10017D971 /* emitter.c */; };
-		73387AF111D222C60017D971 /* loader.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADB11D222A10017D971 /* loader.c */; };
-		73387AF211D222C60017D971 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADD11D222A10017D971 /* parser.c */; };
-		73387AF311D222C70017D971 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADE11D222A10017D971 /* reader.c */; };
-		73387AF411D222C70017D971 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADF11D222A10017D971 /* scanner.c */; };
-		73387AF511D222C70017D971 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AE011D222A10017D971 /* writer.c */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
@@ -528,14 +520,6 @@
 				731D45B711CA1A49002964DC /* BasicTokenTests.m in Sources */,
 				731D489B11CA20C6002964DC /* SHDebugger.mm in Sources */,
 				731D489E11CA20CE002964DC /* InputParseTests.mm in Sources */,
-				73387AEE11D222C50017D971 /* api.c in Sources */,
-				73387AEF11D222C50017D971 /* dumper.c in Sources */,
-				73387AF011D222C60017D971 /* emitter.c in Sources */,
-				73387AF111D222C60017D971 /* loader.c in Sources */,
-				73387AF211D222C60017D971 /* parser.c in Sources */,
-				73387AF311D222C70017D971 /* reader.c in Sources */,
-				73387AF411D222C70017D971 /* scanner.c in Sources */,
-				73387AF511D222C70017D971 /* writer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

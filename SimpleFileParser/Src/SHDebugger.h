@@ -13,7 +13,7 @@
 
 @interface SHDebugger : NSObject {
 
-	lldb::SBDebugger m_debugger;
+	lldb::SBDebugger* m_debugger;
 
 }
 
