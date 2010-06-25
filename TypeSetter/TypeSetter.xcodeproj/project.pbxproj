@@ -11,6 +11,8 @@
 		7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */; };
 		7331A9BE1145746300EFCB8F /* Picture 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7331A9BD1145746300EFCB8F /* Picture 4.png */; };
 		7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7344137D0F67CACD00D6CF73 /* DebugView.m */; };
+		7351988111D4B399003EBF66 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351988011D4B399003EBF66 /* UFIStringAdditions.m */; };
+		7351989411D4B3C0003EBF66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351989311D4B3C0003EBF66 /* main.m */; };
 		735F809A114672FE000AC142 /* GlyphRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F8099114672FE000AC142 /* GlyphRendererTests.m */; };
 		735F80CE1146736F000AC142 /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F80C811467360000AC142 /* SHTestUtilities.framework */; };
 		735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 735F81441146806B000AC142 /* CrudeImageWrapper.m */; };
@@ -24,7 +26,6 @@
 		73B587B811B3E06D00AAEC90 /* FontWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B587B711B3E06D00AAEC90 /* FontWrapper.m */; };
 		73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A621174ACC4000B0D56 /* AppDelegate.m */; };
 		73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD7A671174ACE2000B0D56 /* WindowController.m */; };
-		73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */; };
 		73E0CC2711D3671000D4940D /* PhraseProbability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0CC0911D366D800D4940D /* PhraseProbability.framework */; };
 		73E0CC3D11D367A100D4940D /* PhraseProabilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CC3C11D367A100D4940D /* PhraseProabilityTests.m */; };
 		73E0CC6E11D3685C00D4940D /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F80C811467360000AC142 /* SHTestUtilities.framework */; };
@@ -32,7 +33,6 @@
 		73E0CCB811D36AC500D4940D /* PhraseAnalyser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E0CCB611D36AC500D4940D /* PhraseAnalyser.m */; };
 		73E0CCC811D36B2600D4940D /* PhraseProbability.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E0CCC711D36B2600D4940D /* PhraseProbability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,14 +118,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 73E0CC0811D366D800D4940D /* PhraseProbability */;
+			remoteGlobalIDString = 73E0CC0811D366D800D4940D;
 			remoteInfo = PhraseProbability;
 		};
 		73E0CC6C11D3685900D4940D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
 /* End PBXContainerItemProxy section */
@@ -135,7 +135,6 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphRenderer.h; path = Src/GlyphRenderer.h; sourceTree = "<group>"; };
@@ -176,6 +175,9 @@
 		7344137C0F67CACD00D6CF73 /* DebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugView.h; path = Src/DebugView.h; sourceTree = "<group>"; };
 		7344137D0F67CACD00D6CF73 /* DebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugView.m; path = Src/DebugView.m; sourceTree = "<group>"; };
 		734B48D711D243E000E7CF07 /* FREESANSdump.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FREESANSdump.txt; path = Resources/FREESANSdump.txt; sourceTree = "<group>"; };
+		7351987F11D4B399003EBF66 /* UFIStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFIStringAdditions.h; sourceTree = "<group>"; };
+		7351988011D4B399003EBF66 /* UFIStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UFIStringAdditions.m; sourceTree = "<group>"; };
+		7351989311D4B3C0003EBF66 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
 		735F7FFE11466EF1000AC142 /* TypeSetterTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TypeSetterTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		735F802011466F10000AC142 /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Base.xcconfig"; path = "../../Blake/Config/Project-Base.xcconfig"; sourceTree = SOURCE_ROOT; };
 		735F802111466F10000AC142 /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Project-Coverage.xcconfig"; path = "../../Blake/Config/Project-Coverage.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -209,8 +211,6 @@
 		73BD7A621174ACC4000B0D56 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Src/AppDelegate.m; sourceTree = "<group>"; };
 		73BD7A661174ACE2000B0D56 /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WindowController.h; path = Src/WindowController.h; sourceTree = "<group>"; };
 		73BD7A671174ACE2000B0D56 /* WindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WindowController.m; path = Src/WindowController.m; sourceTree = "<group>"; };
-		73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UFIStringAdditions.m; sourceTree = "<group>"; };
-		73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UFIStringAdditions.h; sourceTree = "<group>"; };
 		73E0CC0911D366D800D4940D /* PhraseProbability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PhraseProbability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E0CC1511D366EE00D4940D /* PhraseProbabilityTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhraseProbabilityTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E0CC3C11D367A100D4940D /* PhraseProabilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhraseProabilityTests.m; path = Tests/PhraseProabilityTests.m; sourceTree = "<group>"; };
@@ -317,7 +317,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				29B97316FDCFA39411CA2CEA /* main.m */,
+				7351989311D4B3C0003EBF66 /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -458,8 +458,8 @@
 				73B587B711B3E06D00AAEC90 /* FontWrapper.m */,
 				7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */,
 				7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */,
-				73D678A9114A9A11002EBD84 /* UFIStringAdditions.h */,
-				73D678A8114A9A11002EBD84 /* UFIStringAdditions.m */,
+				7351987F11D4B399003EBF66 /* UFIStringAdditions.h */,
+				7351988011D4B399003EBF66 /* UFIStringAdditions.m */,
 				735F814011468055000AC142 /* Crude Image */,
 			);
 			name = Typesetter;
@@ -774,16 +774,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				7344137E0F67CACD00D6CF73 /* DebugView.m in Sources */,
 				7331A9BA114573CB00EFCB8F /* GlyphRenderer.m in Sources */,
 				735F81451146806B000AC142 /* CrudeImageWrapper.m in Sources */,
 				735F814A1146807C000AC142 /* PlaceHolderImage.m in Sources */,
 				735F814F1146808F000AC142 /* ImageWindow.m in Sources */,
-				73D678AA114A9A11002EBD84 /* UFIStringAdditions.m in Sources */,
 				73BD7A631174ACC4000B0D56 /* AppDelegate.m in Sources */,
 				73BD7A681174ACE2000B0D56 /* WindowController.m in Sources */,
 				73B587B811B3E06D00AAEC90 /* FontWrapper.m in Sources */,
+				7351988111D4B399003EBF66 /* UFIStringAdditions.m in Sources */,
+				7351989411D4B3C0003EBF66 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

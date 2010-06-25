@@ -16,13 +16,18 @@
 	- (void)_processHHEATable;
 	- (void)_processHMTXTable;
 	- (void)_processMAXPTable;
-	- (void)_processOS2;
+	- (void)_processOS2Table;
+	- (void)_processNameTable;
+	- (void)_processPostTable;
 
 	- (void)_processCMAPTable;
+	// ok, so im only doing subtable type i come across - sue me
 	- (void)_cmapSubTable_format0:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
-	
+	- (void)_cmapSubTable_format12:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
+	- (void)_cmapSubTable_format14:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
+
 	- (void)_processGLYFTable;
 	- (void)_processLOCATable;
 	- (void)_processLTSH;
@@ -240,6 +245,28 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	[super dealloc];
 }
 
+- (BOOL)knowHowToProcessFontTableNamed:(NSString *)fontTableName {
+	
+	NSArray *allKnownTables = [NSArray arrayWithObjects:
+							   						   
+							   /* Required */
+							   @"head",		// Verified for opentype
+							   @"hhea",		// Verified for opentype
+							   @"hmtx",		// Verified for opentype
+							   @"maxp",		// Verified for opentype
+							   @"name",		// Naming table
+							   @"OS/2",		// OS/2 and Windows specific metrics
+							   //	post	PostScript information
+							   
+							   @"cmap",		// ok, done some subtables but not all
+							   
+							   /* Optional */
+							   
+							   
+							   nil];
+	return NO;
+}
+
 - (void)_processFontTables {
 	
 	// lets see what we have got
@@ -248,9 +275,12 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	{
 		CTFontTableTag tableTag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex((CFArrayRef)availableFontTables, i);
 		NSString *fourCC = NSFileTypeForHFSTypeCode(tableTag);
-		//	CFDataRef fontTable = CTFontCopyTable( _iFont, tableTag, kCTFontTableOptionExcludeSynthetic );
+		
+		// CFDataRef fontTable = CTFontCopyTable( _iFont, tableTag, kCTFontTableOptionExcludeSynthetic );
+		// NSAssert( [self knowHowToProcessFontTableNamed:fourCC], @"Unknown Font table %@",  fourCC );
+
 		NSLog(@"%@", fourCC);
-		//	CFRelease( fontTable );
+		//CFRelease( fontTable );
 	}
 	CFRelease(availableFontTables);
 	
@@ -274,10 +304,12 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// VERIFIED! maxp (partially done)
 	[self _processMAXPTable];	// maximum profile: memory requirements, including nmber of glyphs
 
-	// OS/2
-	[self _processOS2];			// OS/2: line spacing, style & weight .Mac uses  ‘head’ and ‘hhea’ instead. Also what range of characters in font?
+	// VERIFIED! OS/2
+	[self _processOS2Table];			// OS/2: line spacing, style & weight .Mac uses  ‘head’ and ‘hhea’ instead. Also what range of characters in font?
 	 
-	
+	[self _processNameTable];
+	[self _processPostTable];
+
 	/* Some Tables are more for look up, ie we dont really want to process them when we init the font 
 	 At the moment i am just testing parsing the data 
 	 */
@@ -288,7 +320,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	// cmap
 	
-	// subtable 4 is verified, do the rest
+	// subtable 0, 4 is verified, do the rest
 	[self _processCMAPTable];
 	
 	// name
@@ -296,9 +328,13 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// post
 	
 	/* Optional Tables */
+	// VERIFIED
 	[self _processLTSH];		//	'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting
-	[self _processGLYFTable];
+	
+	// get locations to glyp outines before parsing GLYF table
 	[self _processLOCATable];
+	//	[self _processGLYFTable];
+	
 }
 
 // fourcc()
@@ -590,7 +626,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 #pragma mark OS/2 Table 
-- (void)_processOS2 {
+- (void)_processOS2Table {
 	
 	CFDataRef os2Table = CTFontCopyTable( _iFont, kCTFontTableOS2, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
@@ -782,11 +818,154 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFRelease(os2Table);
 }
 
-#pragma mark hmtx Table 
-- (void)_processHMTXTable {
+#pragma mark name Table
+/* This enables us to get all the strings out of the font 
+ * font names, copyright notices, family names etc
+ * it is not really useful to me */
+- (void)_processNameTable {
+
+	CFDataRef nameTable = CTFontCopyTable( _iFont, kCTFontTableName, kCTFontTableOptionExcludeSynthetic );
+	uint loc = 0;
 	
+	UInt16 format	// Format selector. Set to 0.
+	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof format), (UInt8 *)&format );
+	loc += sizeof format;
+	format = OSSwapBigToHostInt16(format);
+	
+	UInt16 count	// The number of nameRecords in this name table.
+	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof count), (UInt8 *)&count );
+	loc += sizeof count;
+	count = OSSwapBigToHostInt16(count);
+	
+	UInt16 stringOffset	// Offset in bytes to the beginning of the name character strings.
+	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof stringOffset), (UInt8 *)&stringOffset );
+	loc += sizeof stringOffset;
+	stringOffset = OSSwapBigToHostInt16(stringOffset);
+	
+	for( UInt16 i=0; i<count; i++ ) {
+	
+		UInt16 platformID;	// Platform identifier code.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof platformID), (UInt8 *)&platformID );
+		loc += sizeof platformID;
+		platformID = OSSwapBigToHostInt16(platformID);
+
+		UInt16 platformSpecificID;	// Platform-specific encoding identifier.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof platformSpecificID), (UInt8 *)&platformSpecificID );
+		loc += sizeof platformSpecificID;
+		platformSpecificID = OSSwapBigToHostInt16(platformSpecificID);
+
+		UInt16 languageID;	// Language identifier.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof languageID), (UInt8 *)&languageID );
+		loc += sizeof languageID;
+		languageID = OSSwapBigToHostInt16(languageID);
+
+		UInt16 nameID;	// Name identifiers.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof nameID), (UInt8 *)&nameID );
+		loc += sizeof nameID;
+		nameID = OSSwapBigToHostInt16(nameID);
+
+		UInt16 length;	// Name string length in bytes.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof length), (UInt8 *)&length );
+		loc += sizeof length;
+		length = OSSwapBigToHostInt16(length);
+
+		UInt16 offset;	// Name string offset in bytes from stringOffset.
+		CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof offset), (UInt8 *)&offset );
+		loc += sizeof offset;
+		offset = OSSwapBigToHostInt16(offset);
+
+	}
+// TODO	
+//	variable	name	character strings The character strings of the names. Note that these are not necessarily ASCII!
+	
+	CFRelease(nameTable);
+}
+
+- (void)_processPostTable {
+	
+	CFDataRef postTable = CTFontCopyTable( _iFont, kCTFontTablePost, kCTFontTableOptionExcludeSynthetic );
+	
+	Fixed format	// Format of this table
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof format), (UInt8 *)&format );
+	loc += sizeof format;
+	format = OSSwapBigToHostInt32(format);
+	
+	Fixed italicAngle	// Italic angle in degrees
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof italicAngle), (UInt8 *)&italicAngle );
+	loc += sizeof italicAngle;
+	italicAngle = OSSwapBigToHostInt32(italicAngle);
+	
+	SInt16 underlinePosition	// Underline position
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof underlinePosition), (UInt8 *)&underlinePosition );
+	loc += sizeof underlinePosition;
+	underlinePosition = OSSwapBigToHostInt16(underlinePosition);
+	
+	SInt16 underlineThickness	// Underline thickness
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof underlineThickness), (UInt8 *)&underlineThickness );
+	loc += sizeof underlineThickness;
+	underlineThickness = OSSwapBigToHostInt16(underlineThickness);
+	
+	uint32 isFixedPitch	// Font is monospaced; set to 1 if the font is monospaced and 0 otherwise (N.B., to maintain compatibility with older versions of the TrueType spec, accept any non-zero value as meaning that the font is monospaced)
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof isFixedPitch), (UInt8 *)&isFixedPitch );
+	loc += sizeof isFixedPitch;
+	isFixedPitch = OSSwapBigToHostInt32(isFixedPitch);
+	
+	uint32 minMemType42	// Minimum memory usage when a TrueType font is downloaded as a Type 42 font
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof minMemType42), (UInt8 *)&minMemType42 );
+	loc += sizeof minMemType42;
+	minMemType42 = OSSwapBigToHostInt32(minMemType42);
+	
+	uint32 maxMemType42	// Maximum memory usage when a TrueType font is downloaded as a Type 42 font
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof maxMemType42), (UInt8 *)&maxMemType42 );
+	loc += sizeof maxMemType42;
+	maxMemType42 = OSSwapBigToHostInt32(maxMemType42);
+	
+	uint32 minMemType1	// Minimum memory usage when a TrueType font is downloaded as a Type 1 font
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof minMemType1), (UInt8 *)&minMemType1 );
+	loc += sizeof minMemType1;
+	minMemType1 = OSSwapBigToHostInt32(minMemType1);
+	
+	uint32 maxMemType1	// Maximum memory usage when a TrueType font is downloaded as a Type 1 font
+	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof maxMemType1), (UInt8 *)&maxMemType1 );
+	loc += sizeof maxMemType1;
+	maxMemType1 = OSSwapBigToHostInt32(maxMemType1);
+	
+	if( int format ==1 ){
+		// 258 glyphs with fixed names - so no subtable needed
+	}
+	else if( int format ==2 ){
+	
+		uint16	numberOfGlyphs	number of glyphs
+		uint16	glyphNameIndex[numberOfGlyphs]	Ordinal number of this glyph in 'post' string tables. This is not an offset.
+		Pascal string	names[numberNewGlyphs]	glyph names with length bytes [variable] (a Pascal string)
+		
+	}
+	else if( int format ==2.5 ){
+	
+	}
+	else if( int format ==3 ){
+		
+	}
+	else if( int format ==4 ){
+		
+	}
+	else 
+		[NSEcxception raise: woooooooo
+	
+	
+	CFRelease(postTable);
+}
+
+#pragma mark hmtx Table
+// VERIFIED
+// hmtx	Horizontal metrics
+- (void)_processHMTXTable {
+
 	CFDataRef hmtxTable = CTFontCopyTable( _iFont, kCTFontTableHmtx, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
+	
+	uint16 advanceWidth;
+	int16_t leftSideBearing;
 	
 	for( UInt16 i=0; i<_numOfLongHorMetrics; i++ )
 	{
@@ -804,24 +983,23 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		int16_t leastSignificant16Bits = (int16_t)longHorMetric_i;
 		int16_t mostSignificant16Bits1 = (int16_t)(longHorMetric_i >> 16);
 
-		uint16 advanceWidth = OSSwapBigToHostInt16(leastSignificant16Bits);
-		int16_t leftSideBearing = OSSwapBigToHostInt16(mostSignificant16Bits1);
+		advanceWidth = OSSwapBigToHostInt16(leastSignificant16Bits);
+		leftSideBearing = OSSwapBigToHostInt16(mostSignificant16Bits1);
 		
 		NSLog(@"%i. advWid: %i, LSdBear: %i", i, advanceWidth, leftSideBearing );
 	}
 	
 	// Then.. then.. we have an array of leftsidebearings (advanceWidth is the same as in the LAST longHorMetric_i)
 	uint numberOfBitsToFollow = _numberOfGlyphs - _numOfLongHorMetrics;
+	UInt16 followingArrayLoc = loc + _numOfLongHorMetrics * sizeof(uint32);
 	for( UInt16 j=0; j<numberOfBitsToFollow; j++ )
 	{
-		[NSException raise:@"will this ever happen?" format:@"ddd"];
-
-		UInt16 arrayLoc2 = loc + (_numOfLongHorMetrics*32) + j * sizeof(int16_t);
+		UInt16 arrayLoc2 = followingArrayLoc + j * sizeof(int16_t);
 		
-		int16_t leftSideBearing_i;
-		CFDataGetBytes( hmtxTable, CFRangeMake( arrayLoc2, sizeof leftSideBearing_i), (UInt8 *)&leftSideBearing_i );
-		leftSideBearing_i = OSSwapBigToHostInt16(leftSideBearing_i);
-		NSLog(@"Left Side Bearing %i:%i", j, leftSideBearing_i);
+		CFDataGetBytes( hmtxTable, CFRangeMake( arrayLoc2, sizeof leftSideBearing), (UInt8 *)&leftSideBearing );
+		leftSideBearing = OSSwapBigToHostInt16(leftSideBearing);
+		uint index = _numOfLongHorMetrics + j;
+		NSLog(@"%i. advWid: %i, LSdBear: %i", index, advanceWidth, leftSideBearing );
 	}
 	
 	CFRelease(hmtxTable);
@@ -889,13 +1067,16 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		} else if( subTableFormat1==6 ){
 			[self _cmapSubTable_format6:cmapTable offset:subTableOffset];
 		} else {
+			int type2 = FixedToInt(subTableFormat2);
 			// These are the tables for dealing with surrogates
-			if( subTableFormat2==8 ){
+			if( type2==8 ){
 				[NSException raise:@"Format 8" format:@"eh?"];
-			} else if( subTableFormat2==10 ){
+			} else if( type2==10 ){
 				[NSException raise:@"Format 10" format:@"eh?"];
-			} else if( subTableFormat2==12 ){
-				[NSException raise:@"Format 12" format:@"eh?"];
+			} else if( type2==12 ){
+				[self _cmapSubTable_format12:cmapTable offset:subTableOffset];
+			} else if( type2==14 ){
+				[self _cmapSubTable_format14:cmapTable offset:subTableOffset];
 			} else {
 				[NSException raise:@"CMap subtable format not found" format:@"eh?"];
 			}
@@ -1066,6 +1247,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 - (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
 	
+	[NSException raise:@"why did i di this?" format:@""];
+	
 	uint loc = subTableOffset;
 	
 	// header
@@ -1108,6 +1291,59 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// NSLog(@"Example glyph index from table 6 is %i", gyphindex ); // check to see if this glyph id is a special one
 }
 
+// Table for surrogates?
+- (void)_cmapSubTable_format12:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
+	
+	uint loc = subTableOffset;
+
+	Fixed format;
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof format), (UInt8 *)&format );
+	loc += sizeof format;
+	format = OSSwapBigToHostInt32(format);
+		
+	UInt32 length;
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof length), (UInt8 *)&length );
+	loc += sizeof length;
+	length = OSSwapBigToHostInt32(length);
+	
+	UInt32 language; // Zero if language independant
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof language), (UInt8 *)&language );
+	loc += sizeof language;
+	language = OSSwapBigToHostInt32(language);
+	
+	UInt32 nGroups;
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof nGroups), (UInt8 *)&nGroups );
+	loc += sizeof nGroups;
+	nGroups = OSSwapBigToHostInt32(nGroups);
+	
+	for( UInt32 i=0; i<nGroups; i++ ){
+		
+		UInt32 startCharCode;
+		CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof startCharCode), (UInt8 *)&startCharCode );
+		loc += sizeof startCharCode;
+		startCharCode = OSSwapBigToHostInt32(startCharCode);
+
+		UInt32 endCharCode;
+		CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof endCharCode), (UInt8 *)&endCharCode );
+		loc += sizeof endCharCode;
+		endCharCode = OSSwapBigToHostInt32(endCharCode);
+
+		UInt32 startGlyphID;
+		CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof startGlyphID), (UInt8 *)&startGlyphID );
+		loc += sizeof startGlyphID;
+		startGlyphID = OSSwapBigToHostInt32(startGlyphID);
+		
+		for( UInt32 j=startCharCode, k=0; j<=endCharCode; j++, k++ ) {
+			UInt32 glyphIndex = startGlyphID+k;
+			NSLog( @"%i: char code %x -> Index %i", i, j, glyphIndex );
+		}
+	}
+}
+
+- (void)_cmapSubTable_format14:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
+
+}
+
 #pragma mark Maxp Table
 // maximum profile: memory requirements, including nmber of glyphs
 - (void)_processMAXPTable {
@@ -1145,7 +1381,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 #pragma mark LTSH Table
-//	'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting.
+// VERIFIED
+// 'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting.
 - (void)_processLTSH {
 	
 	CFDataRef LTSHTable = CTFontCopyTable( _iFont, kCTFontTableLTSH, kCTFontTableOptionExcludeSynthetic );
@@ -1168,8 +1405,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		UInt16 arrayLoc = loc + i * sizeof yPels_i;
 		CFDataGetBytes( LTSHTable, CFRangeMake(arrayLoc, sizeof yPels_i), (UInt8 *)&yPels_i );
 		UInt16 yPels_i16 = yPels_i;
-		yPels_i16 = OSSwapBigToHostInt16(yPels_i16);	// duh! i dont know ho to swap the endianness of a byte..	
-		// NSLog(@"Glyph %i - linear threshold %i", i, yPels_i16);
+		//yPels_i16 = OSSwapBigToHostInt16(yPels_i16);	// duh! i dont know ho to swap the endianness of a byte..	
+		NSLog(@"Glyph %i - linear threshold %i", i, yPels_i16);
 		NSAssert( arrayLoc<CFDataGetLength(LTSHTable), @"Overshot the LTSHTable length?");
 	}
 	
@@ -1180,7 +1417,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 #pragma mark * Optional tables *
 
 #pragma mark glyf Table
-
+// GLYF
 - (void)_processGLYFTable {
 	
 	NSLog( @"** glyph table **");
@@ -1260,6 +1497,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 #pragma mark loca Table
 // for a given glyph index, get the offset in the glyf table
+// LOCA
 - (void)_processLOCATable {
 	
 	CFDataRef locaTable = CTFontCopyTable( _iFont, kCTFontTableLoca, kCTFontTableOptionExcludeSynthetic );
@@ -1269,11 +1507,11 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 	int nonNullGlyphCount=0;
 
-	// SHORT OFFSETS
+	// SHORT OFFSETS - VERIFIED!
 	if(_indexToLocFormat==0){
 			
 		// jusr loooping thru all of them to test it
-		for( uint i=0; i<_numberOfGlyphs; i++ ){
+		for( uint i=0; i<_numberOfGlyphs; i++ ) {
 		
 			UInt16 offset, nextOffset, length;		// NB! Different type
 			
@@ -1288,20 +1526,19 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 			offset = offset*2;
 			nextOffset = nextOffset*2;
-			
-			if(i==(_numberOfGlyphs-1))
-				NSLog(@"woah, last offset? %i : glyf table length %i", nextOffset, _glyfTableLength);
-			NSAssert(nextOffset<=_glyfTableLength, @"Opps - this doesnt appear to be doing what i thought");
+
 			length = nextOffset - offset;			
 			if(offset>0){
 				nonNullGlyphCount=nonNullGlyphCount+1;
-				NSLog(@"%i Glyph index:%i Offset:%i Length:%i", nonNullGlyphCount, i, offset, length );
+				NSLog(@"%i Glyph index:%i Offset:%x Length:%i", nonNullGlyphCount, i, offset, length );
 			}
 		}
 		
 	// LONG OFFSETS
 	} else if(_indexToLocFormat==1) {
 
+		[NSException raise:@"NOT verified" format:@""];
+		
 		// jusr loooping thru all of them to test it
 		for( uint i=0; i<_numberOfGlyphs; i++ ){
 			

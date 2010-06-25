@@ -60,7 +60,7 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 	::setbuf (stdin, NULL);
 	::setbuf (stdout, NULL);
 
-    *m_debugger = (lldb::SBDebugger::Create());
+    m_debugger = &(lldb::SBDebugger::Create());
 
 	m_debugger->SetAsync(false);
 

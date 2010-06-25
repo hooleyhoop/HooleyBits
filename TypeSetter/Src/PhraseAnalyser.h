@@ -10,15 +10,16 @@
 
 @interface PhraseAnalyser : NSObject {
 
-	NSString	*_string;
+	NSArray		*_strings;
+	
 	NSArray		*_words;
 }
 
 + (id)analyserWithString:(NSString *)srcString;
 - (NSUInteger)phraseCount;
 
-- (NSUInteger)wordCount;
-- (NSArray *)words;
+//- (NSUInteger)wordCount;
+//- (NSArray *)words;
 
 - (NSArray *)phrases;
 

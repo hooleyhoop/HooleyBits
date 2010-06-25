@@ -80,4 +80,17 @@
 	STAssertTrue( [[phrases objectAtIndex:14] isEqualToString:@"oops."], @"grrr %@", [phrases objectAtIndex:14] );
 }
 
+- (void)testBreakIntoLines {
+	// + (NSArray *)breakIntoLines:(NSString *)input
+	
+	PhraseAnalyser *pa3 = [PhraseAnalyser analyserWithString:@"the simple \n case"];
+	NSArray *lines = [pa3 breakIntoLines];
+	STAssertTrue([lines count]==2, @"ffu");
+	
+	STAssertTrue( [[lines objectAtIndex:0] isEqualToString:@"the simple"], @"grrr %@", [lines objectAtIndex:0] );
+	STAssertTrue( [[lines objectAtIndex:1] isEqualToString:@"case"], @"grrr %@", [lines objectAtIndex:1] );
+
+}
+	
+	
 @end

@@ -29,11 +29,16 @@ NSArray *worderize( NSString *aLine ) {
 	return [[[self alloc] initWithString:srcString] autorelease];
 }
 
++ (NSArray *)breakIntoLines:(NSString *)input {
+	return nil;
+}
+
 - (id)initWithString:(NSString *)srcString {
 
 	self = [super init];
 	if(self){
-		_string = [srcString copy];
+		
+		_strings = [[[self class] breakIntoLines:srcString] retain];
 		_words = [worderize(_string) retain];
 	}
 	return self;
@@ -41,7 +46,7 @@ NSArray *worderize( NSString *aLine ) {
 
 - (void)dealloc {
 
-	[_string release];
+	[_strings release];
 	[_words release];
 	[super dealloc];
 }
@@ -74,12 +79,28 @@ NSArray *worderize( NSString *aLine ) {
 	return result;
 }
 
-- (NSArray *)words {
-	return _words;
-}
+- (NSArray *)animals;
+- (NSUInteger)countOfAnimals;
+- (id)objectInAnimalsAtIndex:(NSUInteger)i; 
+- (id)AnimalsAtIndexes:(NSIndexSet *)ix;
+- (void)insertObject:(id)val inAnimalsAtIndex:(NSUInteger)i;
+- (void)insertAnimals:atIndexes:(NSIndexSet *)ix;
+- (void)removeObjectFromAnimalsAtIndex:(NSUInteger)i;
+- (void)removeAnimalsAtIndexes:(NSIndexSet *)ix;
+- (void)replaceObjectInAnimalsAtIndex:(NSUInteger)i withObject:(id)val;
+- (void)replaceAnimalsAtIndexes:(NSIndexSet *)ix withAnimals:(NSArray *)vals;
 
-- (NSUInteger)wordCount {
-  	return [_words count];
-}
+[doc addObserver:_controller forKeyPath:@"animals" options:0 context:nil];
+
+
+
+
+//- (NSArray *)words {
+//	return _words;
+//}
+//
+//- (NSUInteger)wordCount {
+//  	return [_words count];
+//}
 
 @end

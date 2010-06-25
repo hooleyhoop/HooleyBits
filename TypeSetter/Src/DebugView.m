@@ -54,9 +54,16 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 - (void)drawRect:(NSRect)rect {
 
 	CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext]  graphicsPort];
-	
-	FontWrapper *hooFont1 = [[[FontWrapper alloc] initWithName:@"Freesans" size:72.0f] autorelease];
+
+	// opentype
+	FontWrapper *hooFont3 = [[[FontWrapper alloc] initWithName:@"KozMinPro-ExtraLight" size:72.0f] autorelease];
+
+	// truetype
 	FontWrapper *hooFont2 = [[[FontWrapper alloc] initWithName:@"Georgia" size:72.0f] autorelease];
+
+	// truetype
+	FontWrapper *hooFont1 = [[[FontWrapper alloc] initWithName:@"Freesans" size:72.0f] autorelease];
+
 
 	GlyphRenderer *gr = [[GlyphRenderer alloc] init];
 
