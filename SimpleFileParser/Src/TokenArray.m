@@ -164,7 +164,7 @@
 				[_tokenArray removeObjectAtIndex:i+1];
 				[_tokenArray replaceObjectAtIndex:i withObject:registerToken];
 				
-				uint nextPlaceToStart = i+1;
+				NSUInteger nextPlaceToStart = i+1;
 			
 				//-- is the next token a small decimal number? - rememeber count has changed
 				if( i+1 < [_tokenArray count] ){

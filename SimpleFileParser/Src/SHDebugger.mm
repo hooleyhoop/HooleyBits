@@ -60,7 +60,9 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 	::setbuf (stdin, NULL);
 	::setbuf (stdout, NULL);
 
-    m_debugger = &(lldb::SBDebugger::Create());
+	lldb::SBDebugger m_debugger2 (lldb::SBDebugger::Create());
+
+	m_debugger = &m_debugger2;
 
 	m_debugger->SetAsync(false);
 
@@ -75,14 +77,27 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
  	bool flag1 = target.IsValid();
 	NSAssert( flag1, @"oops - target failed");
 	
+	lldb::SBListener listener( m_debugger->GetListener() );
+
+	lldb::SBEvent event;
+	
 //	lldb::SBProcess process = target.CreateProcess();
 // 	bool flag2 = process.IsValid();
 //	NSAssert( flag2, @"oops - process failed");
 	
-	lldb::SBBreakpoint bp1 = target.BreakpointCreateByName( "start", NULL );	
-	m_debugger->HandleCommand ("process launch");
+	lldb::SBBreakpoint bp1 = target.BreakpointCreateByName( "start", NULL );
 	
-    lldb::SBTarget currentTarget = m_debugger->GetCurrentTarget();
+	lldb::SBCommandReturnObject result;
+	m_debugger->GetCommandInterpreter().HandleCommand ("process launch", result, false);
+	result.PutOutput(stdout);
+	
+//	listener.WaitForEvent (UINT32_MAX, event);
+	m_debugger->HandleCommand("process status");
+
+//	listener.WaitForEvent (UINT32_MAX, event);
+	m_debugger->HandleCommand("process status");
+	
+	lldb::SBTarget currentTarget = m_debugger->GetCurrentTarget();
 	NSAssert( currentTarget==target, @"oops - what going on?");
 
 	lldb::SBProcess currentProcess = currentTarget.GetProcess();
@@ -99,36 +114,80 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 //		state = currentProcess.GetState();
 //	}
 
-    lldb::SBThread currentThread = currentProcess.GetThreadAtIndex(0);
+	lldb::SBThread currentThread = currentProcess.GetThreadAtIndex(0);
 
-	NSAssert( currentProcess.SetCurrentThread( currentThread ), @"doh! no current thread");
+//	NSAssert( currentProcess.SetCurrentThread( currentThread ), @"doh! no current thread");
+	
+	/* GUESSING WE ARE STOPPED */
 
+	// lets try deleting a bp
+	m_debugger->HandleCommand( [[NSString stringWithFormat:@"breakpoint delete %i", bp1.GetID()] cString] );
+	
+	// try breaking at he crash point 	- crashes on 2b2c
+	lldb::addr_t crashAddress = 0x2b2c;
+//	for( NSUInteger i=0; i<40000;i++){
+//		lldb::SBBreakpoint bp2 = target.BreakpointCreateByAddress( crashAddress+i );
+//	}
+	
+	
 	while ( true ) {
 
-		if( currentThread.IsValid()==false)
+		lldb::SBThread threadCheck = currentProcess.GetCurrentThread();
+		if( threadCheck.IsValid()==false ) {
 			currentThread = currentProcess.GetThreadAtIndex(0);
+			NSAssert( currentProcess.SetCurrentThread( currentThread ), @"doh! no current thread");
+		}
+		NSAssert( currentThread.IsValid(), @"why does current thread become invald?" );
+		
+		// Start running the process
+		m_debugger->GetCommandInterpreter().HandleCommand ("continue", result, false);
+		result.PutOutput(stdout);
+		
+		// Loop until we stop
+		while ( currentProcess.GetState() != lldb::eStateStopped ) {
+			listener.WaitForEvent (UINT32_MAX, event);
+			m_debugger->HandleCommand("process status");
+		}
+//		m_debugger->HandleCommand("process status");
+
+
+		threadCheck = currentProcess.GetCurrentThread();
+		if( threadCheck.IsValid()==false ) {
+			currentThread = currentProcess.GetThreadAtIndex(0);
+			NSAssert( currentProcess.SetCurrentThread( currentThread ), @"doh! no current thread");
+		}
 		NSAssert( currentThread.IsValid(), @"why does current thread become invald?" );
 		
 		//currentThread.StepInto( lldb::eOnlyDuringStepping );
 	//	currentThread.StepInstruction(false);
-		try {
-			m_debugger->HandleCommand ("thread step-inst --avoid_no_debug=false --run_mode=thisThread");
-		} catch (NSException *exception) {
-			NSLog(@"woops");
-		}
+//		try {
+//			m_debugger->GetCommandInterpreter().HandleCommand ("thread step-inst --avoid_no_debug=false --run_mode=thisThread", result, false);
+//			result.PutOutput(stdout);
+//			sleep(0.33f);
+//			
+//			// Loop until we stop
+//			while ( currentProcess.GetState() != lldb::eStateStopped ) {
+//				listener.WaitForEvent (UINT32_MAX, event);
+////				m_debugger->HandleCommand("process status");
+//			}
+////			m_debugger->HandleCommand("process status");
+//			
+//			
+//		} catch (NSException *exception) {
+//			NSLog(@"woops");
+//		}
+				
 		threadCount = currentProcess.GetNumThreads();
 	//	currentThread.StepOver();
 	//	currentThread.Backtrace (1);
 
 //		uint32_t frameCount = currentThread.GetNumFrames();		
-		
-		// crashes on 2b2c
-		
+				
 		lldb::SBFrame sf = currentThread.GetFrameAtIndex(0);
 		lldb::SBAddress addRess1 = sf.GetPCAddress();
 		
-		NSString *disassembleInstruction = [NSString stringWithFormat:@"disassemble --start-address=%x  --end-address=%x --context=1", addRess1.GetFileAddress(), addRess1.GetFileAddress() ];
-		m_debugger->HandleCommand([disassembleInstruction cString]);
+//		NSString *disassembleInstruction = [NSString stringWithFormat:@"disassemble --start-address=%x  --end-address=%x --context=1", addRess1.GetFileAddress(), addRess1.GetFileAddress() ];
+//		m_debugger->HandleCommand([disassembleInstruction cString]);
 		
 		lldb::SBFunction currentFunction = sf.GetFunction();
 		if(currentFunction.IsValid())
@@ -149,6 +208,10 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 				NSLog(@"%s %x", fn, addRess1.GetFileAddress() );
 			}
 
+			
+			-- is the current line a crasher?
+			
+			
 //			lldb::SBLineEntry who = sf.GetLineEntry ();
 //			lldb::SBAddress address = who.GetStartAddress();
 //			lldb::addr_t hexVal = address.GetFileAddress ();
@@ -173,7 +236,6 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 //	char hmmm[255];
 //	currentProcess.GetSTDOUT (hmmm, 255);	
 
-	lldb::SBListener listener( m_debugger->GetListener() );
 //    if (listener.IsValid())
 //    {
 //		lldb::SBEvent event;

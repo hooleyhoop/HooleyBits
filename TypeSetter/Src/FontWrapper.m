@@ -23,6 +23,7 @@
 	- (void)_processCMAPTable;
 	// ok, so im only doing subtable type i come across - sue me
 	- (void)_cmapSubTable_format0:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
+	- (void)_cmapSubTable_format2:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format6:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
 	- (void)_cmapSubTable_format12:(CFDataRef)cmapTable offset:(UInt32)subTableOffset;
@@ -256,8 +257,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 							   @"maxp",		// Verified for opentype
 							   @"name",		// Naming table
 							   @"OS/2",		// OS/2 and Windows specific metrics
-							   //	post	PostScript information
-							   
+							   @"post"			// PostScript information
 							   @"cmap",		// ok, done some subtables but not all
 							   
 							   /* Optional */
@@ -323,9 +323,6 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	// subtable 0, 4 is verified, do the rest
 	[self _processCMAPTable];
 	
-	// name
-	
-	// post
 	
 	/* Optional Tables */
 	// VERIFIED
@@ -827,17 +824,17 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFDataRef nameTable = CTFontCopyTable( _iFont, kCTFontTableName, kCTFontTableOptionExcludeSynthetic );
 	uint loc = 0;
 	
-	UInt16 format	// Format selector. Set to 0.
+	UInt16 format;	// Format selector. Set to 0.
 	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof format), (UInt8 *)&format );
 	loc += sizeof format;
 	format = OSSwapBigToHostInt16(format);
 	
-	UInt16 count	// The number of nameRecords in this name table.
+	UInt16 count;	// The number of nameRecords in this name table.
 	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof count), (UInt8 *)&count );
 	loc += sizeof count;
 	count = OSSwapBigToHostInt16(count);
 	
-	UInt16 stringOffset	// Offset in bytes to the beginning of the name character strings.
+	UInt16 stringOffset;	// Offset in bytes to the beginning of the name character strings.
 	CFDataGetBytes( nameTable, CFRangeMake( loc, sizeof stringOffset), (UInt8 *)&stringOffset );
 	loc += sizeof stringOffset;
 	stringOffset = OSSwapBigToHostInt16(stringOffset);
@@ -874,6 +871,11 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		loc += sizeof offset;
 		offset = OSSwapBigToHostInt16(offset);
 
+		char *string = malloc(length);
+		CFDataGetBytes( nameTable, CFRangeMake(offset+stringOffset, length), (UInt8 *)string );
+		NSLog(@"%s",string);
+		free(string);
+
 	}
 // TODO	
 //	variable	name	character strings The character strings of the names. Note that these are not necessarily ASCII!
@@ -881,76 +883,79 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CFRelease(nameTable);
 }
 
+#pragma mark Post
 - (void)_processPostTable {
 	
 	CFDataRef postTable = CTFontCopyTable( _iFont, kCTFontTablePost, kCTFontTableOptionExcludeSynthetic );
-	
-	Fixed format	// Format of this table
+	uint loc = 0;
+
+	Fixed format;	// Format of this table
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof format), (UInt8 *)&format );
 	loc += sizeof format;
 	format = OSSwapBigToHostInt32(format);
 	
-	Fixed italicAngle	// Italic angle in degrees
+	Fixed italicAngle	; // Italic angle in degrees
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof italicAngle), (UInt8 *)&italicAngle );
 	loc += sizeof italicAngle;
 	italicAngle = OSSwapBigToHostInt32(italicAngle);
 	
-	SInt16 underlinePosition	// Underline position
+	SInt16 underlinePosition;	// Underline position
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof underlinePosition), (UInt8 *)&underlinePosition );
 	loc += sizeof underlinePosition;
 	underlinePosition = OSSwapBigToHostInt16(underlinePosition);
 	
-	SInt16 underlineThickness	// Underline thickness
+	SInt16 underlineThickness;	// Underline thickness
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof underlineThickness), (UInt8 *)&underlineThickness );
 	loc += sizeof underlineThickness;
 	underlineThickness = OSSwapBigToHostInt16(underlineThickness);
 	
-	uint32 isFixedPitch	// Font is monospaced; set to 1 if the font is monospaced and 0 otherwise (N.B., to maintain compatibility with older versions of the TrueType spec, accept any non-zero value as meaning that the font is monospaced)
+	uint32 isFixedPitch;	// Font is monospaced; set to 1 if the font is monospaced and 0 otherwise (N.B., to maintain compatibility with older versions of the TrueType spec, accept any non-zero value as meaning that the font is monospaced)
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof isFixedPitch), (UInt8 *)&isFixedPitch );
 	loc += sizeof isFixedPitch;
 	isFixedPitch = OSSwapBigToHostInt32(isFixedPitch);
 	
-	uint32 minMemType42	// Minimum memory usage when a TrueType font is downloaded as a Type 42 font
+	uint32 minMemType42;	// Minimum memory usage when a TrueType font is downloaded as a Type 42 font
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof minMemType42), (UInt8 *)&minMemType42 );
 	loc += sizeof minMemType42;
 	minMemType42 = OSSwapBigToHostInt32(minMemType42);
 	
-	uint32 maxMemType42	// Maximum memory usage when a TrueType font is downloaded as a Type 42 font
+	uint32 maxMemType42;	// Maximum memory usage when a TrueType font is downloaded as a Type 42 font
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof maxMemType42), (UInt8 *)&maxMemType42 );
 	loc += sizeof maxMemType42;
 	maxMemType42 = OSSwapBigToHostInt32(maxMemType42);
 	
-	uint32 minMemType1	// Minimum memory usage when a TrueType font is downloaded as a Type 1 font
+	uint32 minMemType1;	// Minimum memory usage when a TrueType font is downloaded as a Type 1 font
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof minMemType1), (UInt8 *)&minMemType1 );
 	loc += sizeof minMemType1;
 	minMemType1 = OSSwapBigToHostInt32(minMemType1);
 	
-	uint32 maxMemType1	// Maximum memory usage when a TrueType font is downloaded as a Type 1 font
+	uint32 maxMemType1;	// Maximum memory usage when a TrueType font is downloaded as a Type 1 font
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof maxMemType1), (UInt8 *)&maxMemType1 );
 	loc += sizeof maxMemType1;
 	maxMemType1 = OSSwapBigToHostInt32(maxMemType1);
 	
-	if( int format ==1 ){
+	if( format == IntToFixed(1) ){
 		// 258 glyphs with fixed names - so no subtable needed
+		[NSException raise:@"type 1 postscript format - this necer happens" format:@""];
 	}
-	else if( int format ==2 ){
+	else if( format == FloatToFixed(2) ){
 	
-		uint16	numberOfGlyphs	number of glyphs
-		uint16	glyphNameIndex[numberOfGlyphs]	Ordinal number of this glyph in 'post' string tables. This is not an offset.
-		Pascal string	names[numberNewGlyphs]	glyph names with length bytes [variable] (a Pascal string)
-		
+	//	uint16	numberOfGlyphs	number of glyphs
+	//	uint16	glyphNameIndex[numberOfGlyphs]	Ordinal number of this glyph in 'post' string tables. This is not an offset.
+	//	Pascal string	names[numberNewGlyphs]	glyph names with length bytes [variable] (a Pascal string)
+		[NSException raise:@"type 2 postscript format - this necer happens" format:@""];
 	}
-	else if( int format ==2.5 ){
-	
+	else if( format == FloatToFixed(2.5) ){
+		[NSException raise:@"type 2.5 postscript format - this necer happens" format:@""];
 	}
-	else if( int format ==3 ){
-		
+	else if( format == FloatToFixed(3) ){
+		/* This means no postscript character names - doesn't have a subtable */
 	}
-	else if( int format ==4 ){
-		
+	else if( format == FloatToFixed(4) ){
+		[NSException raise:@"type 4 postscript format - this necer happens" format:@""];
 	}
 	else 
-		[NSEcxception raise: woooooooo
+		[NSException raise:@"Unknwn postscript format" format:@""];
 	
 	
 	CFRelease(postTable);
@@ -1061,7 +1066,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 		if( subTableFormat1==0 ){
 			[self _cmapSubTable_format0:cmapTable offset:subTableOffset];
 		} else if( subTableFormat1==2 ){
-			[NSException raise:@"Format 2" format:@"eh?"];
+			// Japanese, Chinese, or Korean characters.
+			[self _cmapSubTable_format2:cmapTable offset:subTableOffset];
 		} else if( subTableFormat1==4 ){
 			[self _cmapSubTable_format4:cmapTable offset:subTableOffset];
 		} else if( subTableFormat1==6 ){
@@ -1118,6 +1124,36 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 			NSLog(@"Char %i: %i > glyphIndex %i", glyphCount++, i, glyphIndex_i16 );
 		}
 	}
+}
+
+// Japanese, Chinese, or Korean characters.
+- (void)_cmapSubTable_format2:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
+
+	uint loc = subTableOffset;
+	
+	UInt16	format;	// Set to 2
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof format), (UInt8 *)&format );
+	loc += sizeof format;
+	format = OSSwapBigToHostInt16(format);
+	
+	UInt16	length;	// Total table length in bytes
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof length), (UInt8 *)&length );
+	loc += sizeof length;
+	length = OSSwapBigToHostInt16(length);
+	
+	UInt16	language;	// Language code for this encoding subtable, or zero if language-independent
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof language), (UInt8 *)&language );
+	loc += sizeof language;
+	language = OSSwapBigToHostInt16(language);
+	
+	UInt16	subHeaderKeys[256];	// Array that maps high bytes to subHeaders: value is index * 8
+	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof subHeaderKeys), (UInt8 *)&subHeaderKeys );
+	loc += sizeof subHeaderKeys;
+	
+	UInt16 * 4	subHeaders[variable]; //	Variable length array of subHeader structures
+	UInt16	glyphIndexArray[variable];	// Variable length array containing subarrays
+	
+
 }
 
 - (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
