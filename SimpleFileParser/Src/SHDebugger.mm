@@ -208,8 +208,8 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 				NSLog(@"%s %x", fn, addRess1.GetFileAddress() );
 			}
 
-			
-			-- is the current line a crasher?
+// TODO: -- is the current line a crasher?
+//			
 			
 			
 //			lldb::SBLineEntry who = sf.GetLineEntry ();

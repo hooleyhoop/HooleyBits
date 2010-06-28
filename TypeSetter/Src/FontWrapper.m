@@ -1127,6 +1127,13 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 // Japanese, Chinese, or Korean characters.
+struct subheader {
+    UInt16 firstCode;
+    UInt16 entryCount;
+    SInt16 idDelta;
+    UInt16 idRangeOffset;
+};
+
 - (void)_cmapSubTable_format2:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
 
 	uint loc = subTableOffset;
@@ -1146,14 +1153,54 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	loc += sizeof language;
 	language = OSSwapBigToHostInt16(language);
 	
-	UInt16	subHeaderKeys[256];	// Array that maps high bytes to subHeaders: value is index * 8
+	UInt16 subHeaderKeys[256];	// Array that maps high bytes to subHeaders: value is index * 8
 	CFDataGetBytes( cmapTable, CFRangeMake(loc, sizeof subHeaderKeys), (UInt8 *)&subHeaderKeys );
 	loc += sizeof subHeaderKeys;
 	
-	UInt16 * 4	subHeaders[variable]; //	Variable length array of subHeader structures
-	UInt16	glyphIndexArray[variable];	// Variable length array containing subarrays
-	
+	uint subHeaders_addr = loc;
 
+	for( NSUInteger firstByte = 0; firstByte<256; firstByte++ ) {
+	
+		struct subheader aSubHeader;
+		UInt16 subHeadersIndex = OSSwapBigToHostInt16 (subHeaderKeys[firstByte]);
+		UInt16 subHeadersIndex2 = subHeadersIndex / 8;
+		
+		uint subheaderOffset = subHeaders_addr + subHeadersIndex2*sizeof aSubHeader;
+		CFDataGetBytes( cmapTable, CFRangeMake( subheaderOffset, sizeof aSubHeader), (UInt8 *)&aSubHeader );
+		
+		//	UInt16	glyphIndexArray[variable];	// Variable length array containing subarrays
+
+		UInt16 firstCode = OSSwapBigToHostInt16(aSubHeader.firstCode);
+		UInt16 entryCount = OSSwapBigToHostInt16(aSubHeader.entryCount);
+		SInt16 idDelta = OSSwapBigToHostInt16(aSubHeader.idDelta);
+		
+		// offset into glyphIndexArray from here
+		UInt16 idRangeOffset = OSSwapBigToHostInt16(aSubHeader.idRangeOffset);
+		
+
+		static BOOL isDone = NO;
+		if( (subHeadersIndex2==0 && isDone==NO) || subHeadersIndex2>0 ){
+			
+			// only do this once if index is zero
+			if(subHeadersIndex2==0)
+				isDone=YES;
+		
+			UInt16 startOfRangeInGlyphIndexArray = subheaderOffset+(sizeof idDelta)*3+idRangeOffset; // (sizeof idDelta)*3 = position of idRangeOffset
+			
+			for( NSUInteger j=0; j<entryCount; j++) {
+				
+				UInt16 p;
+				UInt16 offset = startOfRangeInGlyphIndexArray+(j*sizeof p);
+				CFDataGetBytes( cmapTable, CFRangeMake( offset, sizeof p), (UInt8 *)&p );
+				p = OSSwapBigToHostInt16(p);
+				if(p!=0)
+					p = p+idDelta;
+				
+				NSLog(@"HiByte %0x - char[%0x], index %i", firstByte, firstCode+j, p);
+			}
+		}
+	}
+	NSLog(@"fini?");
 }
 
 - (void)_cmapSubTable_format4:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
@@ -1377,7 +1424,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 }
 
 - (void)_cmapSubTable_format14:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
-
+	[NSException raise:@"still to do" format:@""];
 }
 
 #pragma mark Maxp Table

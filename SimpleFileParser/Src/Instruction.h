@@ -6,8 +6,6 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-
 
 @interface Instruction : NSObject {
 
