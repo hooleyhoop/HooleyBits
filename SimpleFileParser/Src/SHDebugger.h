@@ -16,4 +16,6 @@
 
 }
 
+- (void)goforit;
+
 @end

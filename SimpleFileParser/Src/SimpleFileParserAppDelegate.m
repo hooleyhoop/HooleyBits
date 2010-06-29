@@ -509,6 +509,18 @@ nil] retain];
 	[pool release];
 }
 
+- (void)eatLine:(NSString *)line {
+	
+	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+	NSString *strippedline = [line stringByTrimmingCharactersInSet:wsp];
+		
+	if ([strippedline length]) {	
+		if ([strippedline characterAtIndex:0]=='+') {
+			[self processLine:strippedline];
+		}
+	}
+}
+
 // DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
@@ -530,20 +542,15 @@ nil] retain];
 	NSError *outError;
 	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
-	// NSStringEncoding *enc = nil;
-   // NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL usedEncoding:enc error:&outError];	
-	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];	
-	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+
+	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	
-	void (^enumerateBlock)(NSString *, BOOL *) = ^(NSString *line, BOOL *stop) {
-		NSString *strippedline = [line stringByTrimmingCharactersInSet:wsp];
-		if ([strippedline length]) {	
-			if ([strippedline characterAtIndex:0]=='+') {
-				[self processLine:strippedline];
-			}
-		}
-	};
-	[fileString enumerateLinesUsingBlock:enumerateBlock];
+	// parse the file
+	_inputParser = [[InputParse parserWithString:fileString] retain];
+	[_inputParser setConsumer:self];
+	[_inputParser doIt];
+	 
+
 
 	// -- read it a line at a time. -- try niave aproach
 	int reverseSort = NO;

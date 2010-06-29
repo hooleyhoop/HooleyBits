@@ -8,11 +8,13 @@
 
 // Playing with this http://developer.apple.com/mac/library/documentation/DeveloperTools/Reference/Assembler/060-i386_Addressing_Modes_and_Assembler_Instructions/i386_intructions.html#//apple_ref/doc/uid/TP30000825-TPXREF101
 
-@class StringCounter;
+@class StringCounter, InputParse;
 
-@interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate> {
+@interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate, iConsumeLines> {
 
-    NSWindow *window;
+    NSWindow	*window;
+	
+	InputParse	*_inputParser;
 	
 	NSMutableSet *_unknownInstructions;
 	NSMutableSet *_unknownArguments;

@@ -16,6 +16,8 @@
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73875FC611C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
+		73928AA311D9F224000429DC /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
+		73928C6611DA204A000429DC /* DebuggerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8A11D9EE22000429DC /* DebuggerTests.mm */; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73BE90A911D0BDC5003C87B2 /* LLDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BE90A811D0BDC3003C87B2 /* LLDB.framework */; };
@@ -26,7 +28,6 @@
 		73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1E5411D8BF1000347BBD /* LineStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1E5311D8BF1000347BBD /* LineStore.m */; };
 		73CF1E5511D8BF1000347BBD /* LineStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1E5311D8BF1000347BBD /* LineStore.m */; };
-		73CF1EE611D8C31D00347BBD /* YAMLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1EE511D8C31D00347BBD /* YAMLTests.m */; };
 		73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
 		73CF1F1411D8C57E00347BBD /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73387AE911D222AA0017D971 /* yaml.framework */; };
 		73CF1F1F11D8C5A900347BBD /* yaml.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF1F1E11D8C5A900347BBD /* yaml.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -127,7 +128,6 @@
 		732CFCE711BF9E72008030ED /* Target-QCPlugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-QCPlugin.xcconfig"; sourceTree = "<group>"; };
 		732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
 		732CFCF011BF9EA3008030ED /* SimpleFileParser_Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleFileParser_Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		732CFD2811BF9FFE008030ED /* InputParseTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InputParseTests.mm; path = Tests/InputParseTests.mm; sourceTree = "<group>"; };
 		732CFE0D11BFA188008030ED /* InputParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputParse.h; path = Src/InputParse.h; sourceTree = "<group>"; };
 		732CFE0E11BFA188008030ED /* InputParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParse.m; path = Src/InputParse.m; sourceTree = "<group>"; };
 		73387AD811D222A10017D971 /* api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = api.c; path = "../../../Source/libyaml-stable/src/api.c"; sourceTree = SOURCE_ROOT; };
@@ -149,6 +149,9 @@
 		73875FC311C6950100F714D9 /* StringCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringCounter.h; path = Src/StringCounter.h; sourceTree = "<group>"; };
 		73875FC411C6950100F714D9 /* StringCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringCounter.m; path = Src/StringCounter.m; sourceTree = "<group>"; };
 		73875FCC11C6951F00F714D9 /* StringCounterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringCounterTests.m; path = Tests/StringCounterTests.m; sourceTree = "<group>"; };
+		73928A8A11D9EE22000429DC /* DebuggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebuggerTests.mm; sourceTree = "<group>"; };
+		73928A8D11D9EE7D000429DC /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputParseTests.m; sourceTree = "<group>"; };
+		73928A9C11D9F1C8000429DC /* iConsumeLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iConsumeLines.h; path = Src/iConsumeLines.h; sourceTree = "<group>"; };
 		7397E13F11C15E3600463F04 /* TokenArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArrayTests.m; path = Tests/TokenArrayTests.m; sourceTree = "<group>"; };
 		7397E14111C15E5700463F04 /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Src/TokenArray.h; sourceTree = "<group>"; };
 		7397E14211C15E5700463F04 /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Src/TokenArray.m; sourceTree = "<group>"; };
@@ -210,6 +213,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73928A9C11D9F1C8000429DC /* iConsumeLines.h */,
 				731D459D11CA19DC002964DC /* SHDebugger.h */,
 				731D459E11CA19DC002964DC /* SHDebugger.mm */,
 				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
@@ -322,7 +326,8 @@
 		732CFD1F11BF9F8A008030ED /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				732CFD2811BF9FFE008030ED /* InputParseTests.mm */,
+				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
+				73928A8D11D9EE7D000429DC /* InputParseTests.m */,
 				73CF1EE511D8C31D00347BBD /* YAMLTests.m */,
 				73CF1EA611D8C07F00347BBD /* LineStoreTests.m */,
 				73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */,
@@ -585,7 +590,8 @@
 				73CF1CD211D8A78100347BBD /* SHDebugger.mm in Sources */,
 				73CF1CF211D8AB0000347BBD /* Line.m in Sources */,
 				73CF1E5511D8BF1000347BBD /* LineStore.m in Sources */,
-				73CF1EE611D8C31D00347BBD /* YAMLTests.m in Sources */,
+				73928AA311D9F224000429DC /* InputParse.m in Sources */,
+				73928C6611DA204A000429DC /* DebuggerTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

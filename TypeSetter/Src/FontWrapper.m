@@ -1423,8 +1423,115 @@ struct subheader {
 	}
 }
 
+/* Experimental */
+void getByte( CFDataRef *tablePtr, uint *locPtr, UInt8 *valPtr ) {
+
+	CFDataGetBytes( *tablePtr, CFRangeMake(*locPtr, sizeof *valPtr), (UInt8 *)valPtr );
+	*locPtr = *locPtr + sizeof *valPtr;
+}
+
+void getUInt16( CFDataRef *tablePtr, uint *locPtr, UInt16 *valPtr ) {
+	
+	CFDataGetBytes( *tablePtr, CFRangeMake(*locPtr, sizeof *valPtr), (UInt8 *)valPtr );
+	*locPtr = *locPtr + sizeof *valPtr;
+	*valPtr = OSSwapBigToHostInt16(*valPtr);
+}
+
+// combine 3 bytes - i dont know how else to do it!
+void getUInt24( CFDataRef *tablePtr, uint *locPtr, UInt32 *valPtr ) {
+	
+	UInt8 byte1, byte2, byte3;
+	getByte( tablePtr, locPtr, &byte1 );
+	getByte( tablePtr, locPtr, &byte2 );
+	getByte( tablePtr, locPtr, &byte3 );
+	
+	*valPtr = byte1;
+	*valPtr = (*valPtr << 8) | byte2;
+	*valPtr = (*valPtr << 8) | byte3;
+}
+
+void getUInt32( CFDataRef *tablePtr, uint *locPtr, UInt32 *valPtr ) {
+	
+	CFDataGetBytes( *tablePtr, CFRangeMake(*locPtr, sizeof *valPtr), (UInt8 *)valPtr );
+	*locPtr = *locPtr + sizeof *valPtr;
+	*valPtr = OSSwapBigToHostInt32(*valPtr);
+}
+
+// http://blogs.adobe.com/typblography/UVS_in_OT.htm
 - (void)_cmapSubTable_format14:(CFDataRef)cmapTable offset:(UInt32)subTableOffset {
+	
+	uint loc = subTableOffset;
+
+	UInt16 format;						// Subtable format. Set to 14
+	getUInt16( &cmapTable, &loc, &format );
+
+	UInt32 length;						// Byte length of this subtable (including this header)
+	getUInt32( &cmapTable, &loc, &length );
+
+	UInt32 numVarSelectorRecords;		// Number of Variation Selector Records	
+	getUInt32( &cmapTable, &loc, &numVarSelectorRecords );
+
+	// Variation Selector Records
+	for( NSUInteger i=0; i<numVarSelectorRecords; i++ ) {
+		
+		// varSelectors are in ascending order and no 2 the same
+		// UINT24 varSelector				// varSelector	Variation selector
+		UInt32 varSelector;
+		getUInt24( &cmapTable, &loc, &varSelector );
+
+		UInt32 defaultUVSOffset;			// Offset to Default UVS Table. May be 0.
+		getUInt32( &cmapTable, &loc, &defaultUVSOffset );
+		
+		UInt32 nonDefaultUVSOffset;			// Offset to Non-Default UVS Table. May be 0.
+		getUInt32( &cmapTable, &loc, &nonDefaultUVSOffset );
+		
+		if(defaultUVSOffset) {
+
+			uint offset = subTableOffset+defaultUVSOffset;
+
+			UInt32 numUnicodeValueRanges;	// Number of ranges that follow
+			getUInt32( &cmapTable, &offset, &numUnicodeValueRanges );
+
+			for (NSUInteger j=0; j<numUnicodeValueRanges; j++) {
+
+				UInt32 startUnicodeValue;	// First value in this range
+				getUInt24( &cmapTable, &loc, &startUnicodeValue );
+				
+				UInt8 additionalCount;		// Number of additional values in this range
+				getByte( &cmapTable, &loc, &additionalCount );
+					
+				for( NSUInteger k=0; k<(1+additionalCount); k++) {
+					UInt32 baseUnicodeValue = startUnicodeValue + k;
+					NSLog( @"<U+%0x, U+%0x> = glyphID == you have to look up base character for this" , baseUnicodeValue, varSelector );
+				}
+			}
+			
+		} else if(nonDefaultUVSOffset) {
+			
+			uint offset = subTableOffset+nonDefaultUVSOffset;
+			
+			UInt32 numUVSMappings;			// Number of UVS Mappings that follow
+			getUInt32( &cmapTable, &offset, &numUVSMappings );
+
+			for (NSUInteger j=0; j<numUVSMappings; j++) {
+				
+				UInt32 baseUnicodeValue;
+				getUInt24( &cmapTable, &loc, &baseUnicodeValue );
+
+				UInt16 glyphID;
+				getUInt16( &cmapTable, &loc, &glyphID );
+				
+				NSLog( @"<U+%0x, U+%0x> = glyphID %i" , baseUnicodeValue, varSelector, glyphID );
+			}
+			
+		} else {
+			[NSException raise:@"defaultUVSOffset or nonDefaultUVSOffset" format:@""];
+		}
+	}
+	
+	
 	[NSException raise:@"still to do" format:@""];
+	
 }
 
 #pragma mark Maxp Table
