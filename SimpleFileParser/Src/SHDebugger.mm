@@ -16,7 +16,7 @@
     const uint32_t event_type = event.GetType();
 	const char *command_string = lldb::SBEvent::GetCStringFromEvent(event);
 	if (command_string == NULL)
-		command_string == "";
+		command_string = "";
 	
 	// -- get current line 
     lldb::SBTarget target = m_debugger->GetCurrentTarget();

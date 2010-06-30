@@ -899,6 +899,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	loc += sizeof italicAngle;
 	italicAngle = OSSwapBigToHostInt32(italicAngle);
 	
+	NSAssert(italicAngle==0, @"i hate false italics");
+	
 	SInt16 underlinePosition;	// Underline position
 	CFDataGetBytes( postTable, CFRangeMake( loc, sizeof underlinePosition), (UInt8 *)&underlinePosition );
 	loc += sizeof underlinePosition;

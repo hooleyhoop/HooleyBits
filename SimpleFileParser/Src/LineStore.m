@@ -26,7 +26,7 @@
 }
 
 - (NSUInteger)insertionIndexFor:(Line *)arg {
-	
+	return 0;
 }
 
 - (void)pushLine:(Line *)arg {

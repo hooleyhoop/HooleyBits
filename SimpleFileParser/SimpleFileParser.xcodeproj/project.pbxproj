@@ -17,7 +17,12 @@
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73875FC611C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73928AA311D9F224000429DC /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
-		73928C6611DA204A000429DC /* DebuggerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8A11D9EE22000429DC /* DebuggerTests.mm */; };
+		73928EA311DB3B56000429DC /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8D11D9EE7D000429DC /* InputParseTests.m */; };
+		73928FBB11DB5509000429DC /* DissasemblerGroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FBA11DB5509000429DC /* DissasemblerGroker.m */; };
+		73928FBC11DB5509000429DC /* DissasemblerGroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FBA11DB5509000429DC /* DissasemblerGroker.m */; };
+		73928FC511DB554F000429DC /* DissasemblerGrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */; };
+		7392920611DBAC78000429DC /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7392914911DBA902000429DC /* OCMock.framework */; };
+		7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739291B211DBA9AC000429DC /* SHTestUtilities.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73BE90A911D0BDC5003C87B2 /* LLDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BE90A811D0BDC3003C87B2 /* LLDB.framework */; };
@@ -52,6 +57,83 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7392918611DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D /* SHShared.framework */;
+			remoteInfo = SHShared;
+		};
+		7392918811DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F /* SHSharedTests.octest */;
+			remoteInfo = SHSharedTests;
+		};
+		7392918A11DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887 /* libSHShared_static.a */;
+			remoteInfo = SHShared_static;
+		};
+		7392918C11DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887 /* libSHShared_iphone.a */;
+			remoteInfo = SHShared_iphone;
+		};
+		7392918E11DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteInfo = SHSharedUI;
+		};
+		7392919011DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteInfo = SHSharedUITests;
+		};
+		7392919211DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteInfo = SHTestUtilities;
+		};
+		7392919411DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteInfo = TestUtilitiesTests;
+		};
+		7392919611DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73B051B81168EEF70054CE44 /* GUIFiddler */;
+			remoteInfo = GUIFiddler;
+		};
+		7392919811DBA965000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732E93681189AFEA00DD3435 /* PerformanceTests.octest */;
+			remoteInfo = PerformanceTests;
+		};
+		739291AA11DBA996000429DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteInfo = SHTestUtilities;
+		};
 		73BE90A511D0BDC3003C87B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
@@ -152,6 +234,13 @@
 		73928A8A11D9EE22000429DC /* DebuggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebuggerTests.mm; sourceTree = "<group>"; };
 		73928A8D11D9EE7D000429DC /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputParseTests.m; sourceTree = "<group>"; };
 		73928A9C11D9F1C8000429DC /* iConsumeLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iConsumeLines.h; path = Src/iConsumeLines.h; sourceTree = "<group>"; };
+		73928FB911DB5509000429DC /* DissasemblerGroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DissasemblerGroker.h; path = Src/DissasemblerGroker.h; sourceTree = "<group>"; };
+		73928FBA11DB5509000429DC /* DissasemblerGroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DissasemblerGroker.m; path = Src/DissasemblerGroker.m; sourceTree = "<group>"; };
+		73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DissasemblerGrokerTests.m; path = Tests/DissasemblerGrokerTests.m; sourceTree = "<group>"; };
+		7392912611DBA8BE000429DC /* iMakeCodeBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iMakeCodeBlocks.h; path = Src/iMakeCodeBlocks.h; sourceTree = "<group>"; };
+		7392914911DBA902000429DC /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = /Library/Frameworks/OCMock.framework; sourceTree = "<absolute>"; };
+		7392917811DBA965000429DC /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		739291B211DBA9AC000429DC /* SHTestUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SHTestUtilities.framework; path = ../../Blake/build/Debug/SHTestUtilities.framework; sourceTree = SOURCE_ROOT; };
 		7397E13F11C15E3600463F04 /* TokenArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArrayTests.m; path = Tests/TokenArrayTests.m; sourceTree = "<group>"; };
 		7397E14111C15E5700463F04 /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Src/TokenArray.h; sourceTree = "<group>"; };
 		7397E14211C15E5700463F04 /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Src/TokenArray.m; sourceTree = "<group>"; };
@@ -187,6 +276,8 @@
 				73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */,
 				73CF1F1411D8C57E00347BBD /* yaml.framework in Frameworks */,
 				73CF1F5911D8C7AD00347BBD /* yaml.framework in Frameworks */,
+				7392920611DBAC78000429DC /* OCMock.framework in Frameworks */,
+				7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,8 +309,7 @@
 				731D459E11CA19DC002964DC /* SHDebugger.mm */,
 				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
 				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
-				732CFE0D11BFA188008030ED /* InputParse.h */,
-				732CFE0E11BFA188008030ED /* InputParse.m */,
+				73928FA911DB54DF000429DC /* Parsing */,
 				73CF1CED11D8AAEA00347BBD /* Lines */,
 				73B2F4FC11C7C42100F0C9E6 /* Instructions */,
 				73875DAE11C66BB700F714D9 /* Arguments */,
@@ -231,6 +321,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				739291B211DBA9AC000429DC /* SHTestUtilities.framework */,
+				7392914911DBA902000429DC /* OCMock.framework */,
 				73CF1F5811D8C7AD00347BBD /* yaml.framework */,
 				73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */,
 				73FB3E8011C8F57300EBE0DB /* LLDB.framework */,
@@ -270,6 +362,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				7392917811DBA965000429DC /* SHShared.xcodeproj */,
 				73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */,
 			);
 			name = SimpleFileParser;
@@ -327,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
+				73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */,
 				73928A8D11D9EE7D000429DC /* InputParseTests.m */,
 				73CF1EE511D8C31D00347BBD /* YAMLTests.m */,
 				73CF1EA611D8C07F00347BBD /* LineStoreTests.m */,
@@ -378,6 +472,43 @@
 				73875FC411C6950100F714D9 /* StringCounter.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		73928FA911DB54DF000429DC /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				739291D611DBAB13000429DC /* Protocols */,
+				732CFE0D11BFA188008030ED /* InputParse.h */,
+				732CFE0E11BFA188008030ED /* InputParse.m */,
+				73928FB911DB5509000429DC /* DissasemblerGroker.h */,
+				73928FBA11DB5509000429DC /* DissasemblerGroker.m */,
+			);
+			name = Parsing;
+			sourceTree = "<group>";
+		};
+		7392917911DBA965000429DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7392918711DBA965000429DC /* SHShared.framework */,
+				7392918911DBA965000429DC /* SHSharedTests.octest */,
+				7392918B11DBA965000429DC /* libSHShared_static.a */,
+				7392918D11DBA965000429DC /* libSHShared_iphone.a */,
+				7392918F11DBA965000429DC /* SHSharedUI.framework */,
+				7392919111DBA965000429DC /* SHSharedUITests.octest */,
+				7392919311DBA965000429DC /* SHTestUtilities.framework */,
+				7392919511DBA965000429DC /* TestUtilitiesTests.octest */,
+				7392919711DBA965000429DC /* GUIFiddler */,
+				7392919911DBA965000429DC /* PerformanceTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		739291D611DBAB13000429DC /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7392912611DBA8BE000429DC /* iMakeCodeBlocks.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		7397E14611C15E6000463F04 /* Tokeniser First Pass */ = {
@@ -451,6 +582,7 @@
 			dependencies = (
 				73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */,
 				73CF1F2911D8C5BA00347BBD /* PBXTargetDependency */,
+				739291AB11DBA996000429DC /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser_Tests;
 			productName = SimpleFileParser_Tests;
@@ -509,6 +641,10 @@
 					ProductGroup = 73BE90A111D0BDC3003C87B2 /* Products */;
 					ProjectRef = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
 				},
+				{
+					ProductGroup = 7392917911DBA965000429DC /* Products */;
+					ProjectRef = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -520,6 +656,76 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		7392918711DBA965000429DC /* SHShared.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHShared.framework;
+			remoteRef = 7392918611DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392918911DBA965000429DC /* SHSharedTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedTests.octest;
+			remoteRef = 7392918811DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392918B11DBA965000429DC /* libSHShared_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_static.a;
+			remoteRef = 7392918A11DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392918D11DBA965000429DC /* libSHShared_iphone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_iphone.a;
+			remoteRef = 7392918C11DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392918F11DBA965000429DC /* SHSharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHSharedUI.framework;
+			remoteRef = 7392918E11DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392919111DBA965000429DC /* SHSharedUITests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedUITests.octest;
+			remoteRef = 7392919011DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392919311DBA965000429DC /* SHTestUtilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHTestUtilities.framework;
+			remoteRef = 7392919211DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392919511DBA965000429DC /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 7392919411DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392919711DBA965000429DC /* GUIFiddler */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = GUIFiddler;
+			remoteRef = 7392919611DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7392919911DBA965000429DC /* PerformanceTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PerformanceTests.octest;
+			remoteRef = 7392919811DBA965000429DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		73BE90A611D0BDC3003C87B2 /* lldb */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -591,7 +797,9 @@
 				73CF1CF211D8AB0000347BBD /* Line.m in Sources */,
 				73CF1E5511D8BF1000347BBD /* LineStore.m in Sources */,
 				73928AA311D9F224000429DC /* InputParse.m in Sources */,
-				73928C6611DA204A000429DC /* DebuggerTests.mm in Sources */,
+				73928EA311DB3B56000429DC /* InputParseTests.m in Sources */,
+				73928FBC11DB5509000429DC /* DissasemblerGroker.m in Sources */,
+				73928FC511DB554F000429DC /* DissasemblerGrokerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,12 +834,18 @@
 				731D459F11CA19DC002964DC /* SHDebugger.mm in Sources */,
 				73CF1CF311D8AB0000347BBD /* Line.m in Sources */,
 				73CF1E5411D8BF1000347BBD /* LineStore.m in Sources */,
+				73928FBB11DB5509000429DC /* DissasemblerGroker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		739291AB11DBA996000429DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHTestUtilities;
+			targetProxy = 739291AA11DBA996000429DC /* PBXContainerItemProxy */;
+		};
 		73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LLDB;
@@ -680,6 +894,8 @@
 					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
 					"$(CONFIGURATION_BUILD_DIR)\n",
 					"\"$(SRCROOT)/build/Debug\"",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+					/Library/Frameworks/,
 				);
 				GCC_VERSION = "";
 				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source/lldb/build/Debug\" $(CONFIGURATION_BUILD_DIR)";
@@ -697,6 +913,7 @@
 					"\"$(SRCROOT)/../../../Source/lldb/build/Debug\"",
 					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/build/Debug\"",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
 				);
 				PRODUCT_NAME = SimpleFileParser_Tests;
 			};

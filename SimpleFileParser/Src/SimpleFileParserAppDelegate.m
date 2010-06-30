@@ -511,14 +511,12 @@ nil] retain];
 
 - (void)eatLine:(NSString *)line {
 	
-	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-	NSString *strippedline = [line stringByTrimmingCharactersInSet:wsp];
-		
-	if ([strippedline length]) {	
-		if ([strippedline characterAtIndex:0]=='+') {
-			[self processLine:strippedline];
-		}
-	}
+	DissasemblerGroker *groker = [DissasemblerGroker groker];
+process
+	
+	was
+	[self processLine:strippedline];
+
 }
 
 // DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
