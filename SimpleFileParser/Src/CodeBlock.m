@@ -39,10 +39,10 @@
 	[_lineStore addObject:arg];
 }
 
-- (void)insertLine:(CodeLine *)arg {
-	
-	NSUInteger ind = [self insertionIndexFor:arg];
-}
+//- (void)insertLine:(CodeLine *)arg {
+//	
+//	NSUInteger ind = [self insertionIndexFor:arg];
+//}
 
 - (NSComparisonResult)compareStartAddress:(CodeBlock *)aBlock {
 	

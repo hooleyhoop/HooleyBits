@@ -41,7 +41,6 @@
 	
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
-	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
 	NSComparisonResult a = [line1 compareAddressToAddress:20];

@@ -17,4 +17,5 @@
 - (CodeBlock *)codeBlockForAddress:(NSUInteger)address;
 - (NSUInteger)blockCount;
 - (CodeBlock *)blockAtIndex:(NSUInteger)ind;
+
 @end

@@ -511,11 +511,12 @@ nil] retain];
 
 - (void)eatLine:(NSString *)line {
 	
-	DissasemblerGroker *groker = [DissasemblerGroker groker];
-process
+	CodeBlockFactory *_codeBlockfactory = [[CodeBlockFactory alloc] init];
+	DissasemblerGroker *_groker = [[DissasemblerGroker alloc] init];
 	
-	was
-	[self processLine:strippedline];
+	[_groker setDelegate:_codeBlockfactory];
+	[_groker process:line];
+	
 
 }
 
