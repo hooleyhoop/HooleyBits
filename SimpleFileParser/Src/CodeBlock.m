@@ -59,11 +59,21 @@
 	return [[self firstLine] address];
 }
 
+- (NSUInteger)endAddress {
+	
+	return [[self lastLine] address];
+}
+
 - (CodeLine *)firstLine {
 
 	NSAssert( [_lineStore count]>0, @"codeBlock is empty!");
 	return [_lineStore objectAtIndex:0];
 }
 
+- (CodeLine *)lastLine {
+	
+	NSAssert( [_lineStore count]>0, @"codeBlock is empty!");
+	return [_lineStore lastObject];
+}
 
 @end

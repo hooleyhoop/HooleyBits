@@ -42,6 +42,9 @@
 	NSUInteger high  = [_codeBlockStore count];
 	NSUInteger index = low;
 	
+	if( address< [[_codeBlockStore objectAtIndex:0] startAddress] )
+		return nil;
+	
 	while( index < high )
 	{
 		const NSUInteger mid = (index + high)/2;
@@ -55,6 +58,16 @@
 			high = mid;
 		}
 	}
+	
+	if( index>0 ) {
+		CodeBlock *prevOb = [_codeBlockStore objectAtIndex:index-1];
+		if( address>=[prevOb startAddress] && address<=[prevOb endAddress] )
+			return prevOb;
+	}
+	
+	if( index >= [_codeBlockStore count] )
+		return nil;
+	
 	return [_codeBlockStore objectAtIndex: index];
 }
 

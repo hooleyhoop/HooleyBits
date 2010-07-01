@@ -90,8 +90,33 @@
 	STAssertEqualObjects( resultBlock2, aBlock2, nil );
 	STAssertEqualObjects( resultBlock3, aBlock3, nil );
 	STAssertEqualObjects( resultBlock4, aBlock4, nil );
-
 }
 
+- (void)testComplicatedCodeBlockFroAddress {
+	
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+
+	CodeBlock *aBlock1 = [CodeBlock block];
+	[aBlock1 pushLine:line1];
+	[aBlock1 pushLine:line2];
+	
+	[_cbs addCodeBlock:aBlock1];
+
+	CodeBlock *resultBlock1 = [_cbs codeBlockForAddress:1];
+	STAssertNil( resultBlock1, nil );
+	
+	CodeBlock *resultBlock2 = [_cbs codeBlockForAddress:10];
+	STAssertEqualObjects( resultBlock2, aBlock1, nil );
+	
+	CodeBlock *resultBlock3 = [_cbs codeBlockForAddress:11];
+	STAssertEqualObjects( resultBlock3, aBlock1, nil );
+	
+	CodeBlock *resultBlock4 = [_cbs codeBlockForAddress:20];
+	STAssertEqualObjects( resultBlock4, aBlock1, nil );
+	
+	CodeBlock *resultBlock5 = [_cbs codeBlockForAddress:21];
+	STAssertNil( resultBlock5, nil );
+}
 
 @end

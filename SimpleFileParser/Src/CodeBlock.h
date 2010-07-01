@@ -24,7 +24,9 @@
 - (NSComparisonResult)compareStartToAddress:(NSUInteger)addr;
 
 - (NSUInteger)startAddress;
+- (NSUInteger)endAddress;
 
 - (CodeLine *)firstLine;
+- (CodeLine *)lastLine;
 
 @end
