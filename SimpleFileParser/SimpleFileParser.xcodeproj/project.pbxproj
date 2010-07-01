@@ -17,27 +17,34 @@
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73875FC611C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		73928AA311D9F224000429DC /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
-		73928EA311DB3B56000429DC /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8D11D9EE7D000429DC /* InputParseTests.m */; };
 		73928FBB11DB5509000429DC /* DissasemblerGroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FBA11DB5509000429DC /* DissasemblerGroker.m */; };
 		73928FBC11DB5509000429DC /* DissasemblerGroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FBA11DB5509000429DC /* DissasemblerGroker.m */; };
-		73928FC511DB554F000429DC /* DissasemblerGrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */; };
 		7392920611DBAC78000429DC /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7392914911DBA902000429DC /* OCMock.framework */; };
-		7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739291B211DBA9AC000429DC /* SHTestUtilities.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739291B211DBA9AC000429DC /* SHTestUtilities.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
+		73A0F5ED11DC9763008DD4E2 /* CodeBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5EC11DC9763008DD4E2 /* CodeBlockStore.m */; };
+		73A0F5EE11DC9763008DD4E2 /* CodeBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5EC11DC9763008DD4E2 /* CodeBlockStore.m */; };
+		73A0F5F311DC977E008DD4E2 /* CodeBlockFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5F211DC977E008DD4E2 /* CodeBlockFactory.m */; };
+		73A0F5F411DC977E008DD4E2 /* CodeBlockFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5F211DC977E008DD4E2 /* CodeBlockFactory.m */; };
+		73A0F61B11DC9B37008DD4E2 /* CodeBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F61A11DC9B37008DD4E2 /* CodeBlock.m */; };
+		73A0F61C11DC9B37008DD4E2 /* CodeBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F61A11DC9B37008DD4E2 /* CodeBlock.m */; };
+		73A0F7ED11DCA424008DD4E2 /* SHTestUtilities.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7392919311DBA965000429DC /* SHTestUtilities.framework */; };
+		73A0F7F211DCA43D008DD4E2 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7392918711DBA965000429DC /* SHShared.framework */; };
+		73A0F7F311DCA440008DD4E2 /* SHShared.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7392918711DBA965000429DC /* SHShared.framework */; };
+		73A0F8BC11DCA922008DD4E2 /* CodeBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */; };
+		73A0F92111DCAB34008DD4E2 /* CodeLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */; };
+		73A0F92411DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
+		73A0F92511DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
+		73A0F93511DCABD4008DD4E2 /* CodeBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73BE90A911D0BDC5003C87B2 /* LLDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BE90A811D0BDC3003C87B2 /* LLDB.framework */; };
 		73CF1CD211D8A78100347BBD /* SHDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 731D459E11CA19DC002964DC /* SHDebugger.mm */; };
-		73CF1CF211D8AB0000347BBD /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1CF111D8AB0000347BBD /* Line.m */; };
-		73CF1CF311D8AB0000347BBD /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1CF111D8AB0000347BBD /* Line.m */; };
 		73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
-		73CF1E5411D8BF1000347BBD /* LineStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1E5311D8BF1000347BBD /* LineStore.m */; };
-		73CF1E5511D8BF1000347BBD /* LineStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1E5311D8BF1000347BBD /* LineStore.m */; };
 		73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
 		73CF1F1411D8C57E00347BBD /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73387AE911D222AA0017D971 /* yaml.framework */; };
 		73CF1F1F11D8C5A900347BBD /* yaml.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF1F1E11D8C5A900347BBD /* yaml.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73CF1F5911D8C7AD00347BBD /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1F5811D8C7AD00347BBD /* yaml.framework */; };
-		73CF207E11D8C87400347BBD /* yaml.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73387AE911D222AA0017D971 /* yaml.framework */; };
 		73CF209E11D8C9A300347BBD /* yaml_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 73387AE111D222A10017D971 /* yaml_private.h */; };
 		73CF209F11D8C9A400347BBD /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD811D222A10017D971 /* api.c */; };
 		73CF20A011D8C9A400347BBD /* dumper.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AD911D222A10017D971 /* dumper.c */; };
@@ -61,78 +68,85 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D /* SHShared.framework */;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
 			remoteInfo = SHShared;
 		};
 		7392918811DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 732360B80C5E75BD0039CC7F /* SHSharedTests.octest */;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F;
 			remoteInfo = SHSharedTests;
 		};
 		7392918A11DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73AC00F70F4037DF00FA9887 /* libSHShared_static.a */;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887;
 			remoteInfo = SHShared_static;
 		};
 		7392918C11DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73AC016B0F4039D100FA9887 /* libSHShared_iphone.a */;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
 		};
 		7392918E11DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2;
 			remoteInfo = SHSharedUI;
 		};
 		7392919011DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2;
 			remoteInfo = SHSharedUITests;
 		};
 		7392919211DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
 		};
 		7392919411DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9;
 			remoteInfo = TestUtilitiesTests;
 		};
 		7392919611DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 73B051B81168EEF70054CE44 /* GUIFiddler */;
+			remoteGlobalIDString = 73B051B81168EEF70054CE44;
 			remoteInfo = GUIFiddler;
 		};
 		7392919811DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 732E93681189AFEA00DD3435 /* PerformanceTests.octest */;
+			remoteGlobalIDString = 732E93681189AFEA00DD3435;
 			remoteInfo = PerformanceTests;
 		};
 		739291AA11DBA996000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
+		};
+		73A0F7F011DCA439008DD4E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
+			remoteInfo = SHShared;
 		};
 		73BE90A511D0BDC3003C87B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -176,9 +190,10 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 16;
 			files = (
-				73CF207E11D8C87400347BBD /* yaml.framework in CopyFiles */,
+				73A0F7F311DCA440008DD4E2 /* SHShared.framework in CopyFiles */,
+				73A0F7ED11DCA424008DD4E2 /* SHTestUtilities.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,17 +259,24 @@
 		7397E13F11C15E3600463F04 /* TokenArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArrayTests.m; path = Tests/TokenArrayTests.m; sourceTree = "<group>"; };
 		7397E14111C15E5700463F04 /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Src/TokenArray.h; sourceTree = "<group>"; };
 		7397E14211C15E5700463F04 /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Src/TokenArray.m; sourceTree = "<group>"; };
+		73A0F5EB11DC9763008DD4E2 /* CodeBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeBlockStore.h; path = Src/CodeBlockStore.h; sourceTree = "<group>"; };
+		73A0F5EC11DC9763008DD4E2 /* CodeBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlockStore.m; path = Src/CodeBlockStore.m; sourceTree = "<group>"; };
+		73A0F5F111DC977E008DD4E2 /* CodeBlockFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeBlockFactory.h; path = Src/CodeBlockFactory.h; sourceTree = "<group>"; };
+		73A0F5F211DC977E008DD4E2 /* CodeBlockFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlockFactory.m; path = Src/CodeBlockFactory.m; sourceTree = "<group>"; };
+		73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlockFactoryTests.m; path = Tests/CodeBlockFactoryTests.m; sourceTree = "<group>"; };
+		73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlockStoreTests.m; path = Tests/CodeBlockStoreTests.m; sourceTree = "<group>"; };
+		73A0F61911DC9B37008DD4E2 /* CodeBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeBlock.h; path = Src/CodeBlock.h; sourceTree = "<group>"; };
+		73A0F61A11DC9B37008DD4E2 /* CodeBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlock.m; path = Src/CodeBlock.m; sourceTree = "<group>"; };
+		73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlockTests.m; path = Tests/CodeBlockTests.m; sourceTree = "<group>"; };
+		73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeLineTests.m; path = Tests/CodeLineTests.m; sourceTree = "<group>"; };
+		73A0F92211DCAB61008DD4E2 /* CodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeLine.h; path = Src/CodeLine.h; sourceTree = "<group>"; };
+		73A0F92311DCAB61008DD4E2 /* CodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeLine.m; path = Src/CodeLine.m; sourceTree = "<group>"; };
 		73B2F4F511C7C41500F0C9E6 /* Instruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instruction.h; path = Src/Instruction.h; sourceTree = "<group>"; };
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
 		73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lldb.xcodeproj; path = ../../../Source/lldb/lldb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VeryLargePtrTableTests.m; path = Tests/VeryLargePtrTableTests.m; sourceTree = "<group>"; };
-		73CF1CF011D8AB0000347BBD /* Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Line.h; path = Src/Line.h; sourceTree = "<group>"; };
-		73CF1CF111D8AB0000347BBD /* Line.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Line.m; path = Src/Line.m; sourceTree = "<group>"; };
 		73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CHDataStructures.framework; path = ../../../Source/CHDataStructures/build/Debug/CHDataStructures.framework; sourceTree = SOURCE_ROOT; };
-		73CF1E5211D8BF1000347BBD /* LineStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineStore.h; path = Src/LineStore.h; sourceTree = "<group>"; };
-		73CF1E5311D8BF1000347BBD /* LineStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineStore.m; path = Src/LineStore.m; sourceTree = "<group>"; };
-		73CF1EA611D8C07F00347BBD /* LineStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineStoreTests.m; path = Tests/LineStoreTests.m; sourceTree = "<group>"; };
 		73CF1EE511D8C31D00347BBD /* YAMLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YAMLTests.m; path = Tests/YAMLTests.m; sourceTree = "<group>"; };
 		73CF1EEF11D8C3A700347BBD /* opcode.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = opcode.yaml; path = Resources/opcode.yaml; sourceTree = "<group>"; };
 		73CF1F1E11D8C5A900347BBD /* yaml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yaml.h; path = "../../../Source/libyaml-stable/include/yaml.h"; sourceTree = SOURCE_ROOT; };
@@ -278,6 +300,7 @@
 				73CF1F5911D8C7AD00347BBD /* yaml.framework in Frameworks */,
 				7392920611DBAC78000429DC /* OCMock.framework in Frameworks */,
 				7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */,
+				73A0F7F211DCA43D008DD4E2 /* SHShared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +333,7 @@
 				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
 				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
 				73928FA911DB54DF000429DC /* Parsing */,
+				73A0F5F611DC978B008DD4E2 /* CodeBlock */,
 				73CF1CED11D8AAEA00347BBD /* Lines */,
 				73B2F4FC11C7C42100F0C9E6 /* Instructions */,
 				73875DAE11C66BB700F714D9 /* Arguments */,
@@ -420,10 +444,13 @@
 			isa = PBXGroup;
 			children = (
 				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
+				73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */,
 				73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */,
 				73928A8D11D9EE7D000429DC /* InputParseTests.m */,
 				73CF1EE511D8C31D00347BBD /* YAMLTests.m */,
-				73CF1EA611D8C07F00347BBD /* LineStoreTests.m */,
+				73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */,
+				73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */,
+				73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */,
 				73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */,
 				73875FCC11C6951F00F714D9 /* StringCounterTests.m */,
 				73875DD211C66ED500F714D9 /* ArgumentTests.m */,
@@ -522,6 +549,17 @@
 			name = "Tokeniser First Pass";
 			sourceTree = "<group>";
 		};
+		73A0F5F611DC978B008DD4E2 /* CodeBlock */ = {
+			isa = PBXGroup;
+			children = (
+				73A0F5F111DC977E008DD4E2 /* CodeBlockFactory.h */,
+				73A0F5F211DC977E008DD4E2 /* CodeBlockFactory.m */,
+				73A0F5EB11DC9763008DD4E2 /* CodeBlockStore.h */,
+				73A0F5EC11DC9763008DD4E2 /* CodeBlockStore.m */,
+			);
+			name = CodeBlock;
+			sourceTree = "<group>";
+		};
 		73B2F4FC11C7C42100F0C9E6 /* Instructions */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,10 +581,10 @@
 		73CF1CED11D8AAEA00347BBD /* Lines */ = {
 			isa = PBXGroup;
 			children = (
-				73CF1E5211D8BF1000347BBD /* LineStore.h */,
-				73CF1E5311D8BF1000347BBD /* LineStore.m */,
-				73CF1CF011D8AB0000347BBD /* Line.h */,
-				73CF1CF111D8AB0000347BBD /* Line.m */,
+				73A0F61911DC9B37008DD4E2 /* CodeBlock.h */,
+				73A0F61A11DC9B37008DD4E2 /* CodeBlock.m */,
+				73A0F92211DCAB61008DD4E2 /* CodeLine.h */,
+				73A0F92311DCAB61008DD4E2 /* CodeLine.m */,
 			);
 			name = Lines;
 			sourceTree = "<group>";
@@ -583,6 +621,7 @@
 				73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */,
 				73CF1F2911D8C5BA00347BBD /* PBXTargetDependency */,
 				739291AB11DBA996000429DC /* PBXTargetDependency */,
+				73A0F7F111DCA439008DD4E2 /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser_Tests;
 			productName = SimpleFileParser_Tests;
@@ -794,12 +833,15 @@
 				73F1C56211C504CB00C93934 /* TokenArray.m in Sources */,
 				73875FC511C6950100F714D9 /* StringCounter.m in Sources */,
 				73CF1CD211D8A78100347BBD /* SHDebugger.mm in Sources */,
-				73CF1CF211D8AB0000347BBD /* Line.m in Sources */,
-				73CF1E5511D8BF1000347BBD /* LineStore.m in Sources */,
 				73928AA311D9F224000429DC /* InputParse.m in Sources */,
-				73928EA311DB3B56000429DC /* InputParseTests.m in Sources */,
 				73928FBC11DB5509000429DC /* DissasemblerGroker.m in Sources */,
-				73928FC511DB554F000429DC /* DissasemblerGrokerTests.m in Sources */,
+				73A0F5ED11DC9763008DD4E2 /* CodeBlockStore.m in Sources */,
+				73A0F5F411DC977E008DD4E2 /* CodeBlockFactory.m in Sources */,
+				73A0F61B11DC9B37008DD4E2 /* CodeBlock.m in Sources */,
+				73A0F8BC11DCA922008DD4E2 /* CodeBlockTests.m in Sources */,
+				73A0F92111DCAB34008DD4E2 /* CodeLineTests.m in Sources */,
+				73A0F92411DCAB61008DD4E2 /* CodeLine.m in Sources */,
+				73A0F93511DCABD4008DD4E2 /* CodeBlockStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,9 +874,11 @@
 				73875FC611C6950100F714D9 /* StringCounter.m in Sources */,
 				73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */,
 				731D459F11CA19DC002964DC /* SHDebugger.mm in Sources */,
-				73CF1CF311D8AB0000347BBD /* Line.m in Sources */,
-				73CF1E5411D8BF1000347BBD /* LineStore.m in Sources */,
 				73928FBB11DB5509000429DC /* DissasemblerGroker.m in Sources */,
+				73A0F5EE11DC9763008DD4E2 /* CodeBlockStore.m in Sources */,
+				73A0F5F311DC977E008DD4E2 /* CodeBlockFactory.m in Sources */,
+				73A0F61C11DC9B37008DD4E2 /* CodeBlock.m in Sources */,
+				73A0F92511DCAB61008DD4E2 /* CodeLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +889,11 @@
 			isa = PBXTargetDependency;
 			name = SHTestUtilities;
 			targetProxy = 739291AA11DBA996000429DC /* PBXContainerItemProxy */;
+		};
+		73A0F7F111DCA439008DD4E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHShared;
+			targetProxy = 73A0F7F011DCA439008DD4E2 /* PBXContainerItemProxy */;
 		};
 		73BE90AB11D0BDCF003C87B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

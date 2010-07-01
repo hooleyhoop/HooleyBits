@@ -17,6 +17,14 @@
 
 @implementation DissasemblerGrokerTests
 
+- (void)setUp {
+	
+}
+
+- (void)tearDown {
+	
+}
+
 - (void)testLineRecognition {
 	
 	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];

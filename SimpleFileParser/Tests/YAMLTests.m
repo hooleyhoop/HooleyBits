@@ -21,6 +21,14 @@
 
 extern int yaml_parser_initialize(yaml_parser_t *parser);
 
+- (void)setUp {
+	
+}
+
+- (void)tearDown {
+	
+}
+
 - (void)testParseYAML {
 
 	NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"opcode" ofType:@"yaml"];

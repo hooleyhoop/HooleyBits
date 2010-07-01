@@ -19,6 +19,14 @@
 
 @implementation DebuggerTests
 
+- (void)setUp {
+	
+}
+
+- (void)tearDown {
+	
+}
+
 - (void)testRunLLDB {
 	
 	[[[SHDebugger alloc] init] goforit];
