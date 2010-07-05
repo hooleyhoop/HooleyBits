@@ -1016,7 +1016,10 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 
 /*	Ok, 1: I dont understand why so many cmap subtables.
 	But i do think that understand how to use a table to go from unicode to glyphIndex (i just dont understand which table you would look in really).
-	So, i see now that many unicode values could map to the same glyphIndex, so the cmap tables dont really tell us how many glyphs we have or what their ID's are */
+	So, i see now that many unicode values could map to the same glyphIndex, so the cmap tables dont really tell us how many glyphs we have or what their ID's are
+	* A core-text glyph is this ID
+ */
+
 - (void)_processCMAPTable {
 	
 	CFDataRef cmapTable = CTFontCopyTable( _iFont, kCTFontTableCmap, kCTFontTableOptionExcludeSynthetic );
