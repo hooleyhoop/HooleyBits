@@ -10,6 +10,8 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		731B61AB11DD45F800AF9238 /* DissasemblerGrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */; };
 		731B61AC11DD45F900AF9238 /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8D11D9EE7D000429DC /* InputParseTests.m */; };
+		731B61AF11DD461800AF9238 /* CodeBlockFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */; };
+		731D459F11CA19DC002964DC /* SHDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 731D459E11CA19DC002964DC /* SHDebugger.mm */; };
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
@@ -231,8 +233,8 @@
 		73875FC311C6950100F714D9 /* StringCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringCounter.h; path = Src/StringCounter.h; sourceTree = "<group>"; };
 		73875FC411C6950100F714D9 /* StringCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringCounter.m; path = Src/StringCounter.m; sourceTree = "<group>"; };
 		73875FCC11C6951F00F714D9 /* StringCounterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringCounterTests.m; path = Tests/StringCounterTests.m; sourceTree = "<group>"; };
-		73928A8A11D9EE22000429DC /* DebuggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebuggerTests.mm; sourceTree = "<group>"; };
-		73928A8D11D9EE7D000429DC /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputParseTests.m; sourceTree = "<group>"; };
+		73928A8A11D9EE22000429DC /* DebuggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebuggerTests.mm; path = Src/DebuggerTests.mm; sourceTree = "<group>"; };
+		73928A8D11D9EE7D000429DC /* InputParseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputParseTests.m; path = Src/InputParseTests.m; sourceTree = "<group>"; };
 		73928A9C11D9F1C8000429DC /* iConsumeLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iConsumeLines.h; path = Src/iConsumeLines.h; sourceTree = "<group>"; };
 		73928FB911DB5509000429DC /* DissasemblerGroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DissasemblerGroker.h; path = Src/DissasemblerGroker.h; sourceTree = "<group>"; };
 		73928FBA11DB5509000429DC /* DissasemblerGroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DissasemblerGroker.m; path = Src/DissasemblerGroker.m; sourceTree = "<group>"; };
@@ -824,7 +826,7 @@
 				73A0F93511DCABD4008DD4E2 /* CodeBlockStoreTests.m in Sources */,
 				731B61AB11DD45F800AF9238 /* DissasemblerGrokerTests.m in Sources */,
 				731B61AC11DD45F900AF9238 /* InputParseTests.m in Sources */,
-				734B5AC211E1E4F100D655FE /* CodeBlockFactoryTests.m in Sources */,
+				731B61AF11DD461800AF9238 /* CodeBlockFactoryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
