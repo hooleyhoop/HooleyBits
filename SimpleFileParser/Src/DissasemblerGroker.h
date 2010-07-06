@@ -26,7 +26,7 @@ enum groker_state {
 
 + (id)groker;
 
-- (void)process:(NSString *)aLine;
+- (void)eatLine:(NSString *)aLine;
 - (enum groker_state)state;
 - (BOOL)stateChanged;
 - (NSObject <iMakeCodeBlocks> *)target;

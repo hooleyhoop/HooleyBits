@@ -119,4 +119,49 @@
 	STAssertNil( resultBlock5, nil );
 }
 
+- (void)testBlockAtIndex {
+	// - (CodeBlock *)blockAtIndex:(NSUInteger)ind
+
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+
+	CodeBlock *aBlock1 = [CodeBlock block];
+	[aBlock1 pushLine:line1];
+
+	CodeBlock *aBlock2 = [CodeBlock block];
+	[aBlock2 pushLine:line2];
+	
+	[_cbs addCodeBlock:aBlock1];
+	[_cbs addCodeBlock:aBlock2];
+
+	CodeBlock *block1 = [_cbs blockAtIndex:0];
+	STAssertTrue( block1==aBlock1, nil);
+
+	CodeBlock *block2 = [_cbs blockAtIndex:1];
+	STAssertTrue( block2==aBlock2, nil);
+}
+
+- (void)testAllBlocks {
+// - (NSArray *)allBlocks
+
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+	
+	CodeBlock *aBlock1 = [CodeBlock block];
+	[aBlock1 pushLine:line1];
+	
+	CodeBlock *aBlock2 = [CodeBlock block];
+	[aBlock2 pushLine:line2];
+	
+	[_cbs addCodeBlock:aBlock1];
+	[_cbs addCodeBlock:aBlock2];
+	
+	NSArray *blocks = [_cbs allBlocks];
+	STAssertTrue([blocks count]==2, nil);
+	
+	STAssertTrue([blocks objectAtIndex:0]==aBlock1, nil);
+	STAssertTrue([blocks objectAtIndex:1]==aBlock2, nil);
+}
+
+
 @end

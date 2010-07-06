@@ -18,7 +18,6 @@
 - (NSUInteger)insertionIndexFor:(CodeLine *)arg;
 
 - (void)pushLine:(CodeLine *)arg;
-//- (void)insertLine:(CodeLine *)arg;
 
 - (NSComparisonResult)compareStartAddress:(CodeBlock *)aBlock;
 - (NSComparisonResult)compareStartToAddress:(NSUInteger)addr;
@@ -28,5 +27,10 @@
 
 - (CodeLine *)firstLine;
 - (CodeLine *)lastLine;
+
+- (NSString *)name;
+- (NSUInteger)lineCount;
+
+- (CodeLine *)lineAtIndex:(NSUInteger)ind;
 
 @end

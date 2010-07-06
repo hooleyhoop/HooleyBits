@@ -10,6 +10,10 @@
 #import "TokenArray.h"
 #import "ArgumentScanner.h"
 #import "StringCounter.h"
+#import "CodeBlockFactory.h"
+#import "CodeBlockStore.h"
+#import "DissasemblerGroker.h"
+#import "InputParse.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -29,7 +33,7 @@
 
 @".byte",		@"",	
 							  
-@"aaa",			@"ASCII Adjust After Addition",			al = ASCII Adjust After Addition(al)
+@"aaa",			@"ASCII Adjust After Addition",			// al = ASCII Adjust After Addition(al)
 @"aad",			@"ASCII Adjust AX Before Division",		
 @"aam",			@"",
 @"aas",			@"ASCII Adjust AL After Subtraction",							  
@@ -351,22 +355,22 @@
 @"scasb",		@"Scan String",
 @"scasl",		@"",
 							  
-flags
-CF = carryFlag
-PF = parityFlag
-AF = adjustFlag
-ZF = zeroFlag
-SF = signFlag
-TF = trapFlag
-IF = interruptEnableFlag
-DF = directionFlag
-OF = overflowFlag
+//	flags
+//	CF = carryFlag
+//	PF = parityFlag
+//	AF = adjustFlag
+//	ZF = zeroFlag
+//	SF = signFlag
+//	TF = trapFlag
+//	IF = interruptEnableFlag
+//	DF = directionFlag
+//	OF = overflowFlag
 							  
 							  
-@"seta",		@"Set byte if above (CF=0 and ZF=0)",				(CF==0 && ZF==0) ? $1=1 : $1=0
-@"setae",		@"Set byte if above or equal (CF=0)",				(CF==0) ? $1=1 : $1=0
-@"setb",		@"Set byte if below (CF=1)",						(CF==1) ? $1=1 : $1=0
-@"setbe",		@"Set byte if below or equal (CF=1 or ZF=1)",		(CF==1 || ZF==1) ? $1=1 : $1=0
+@"seta",		@"Set byte if above (CF=0 and ZF=0)",				// (CF==0 && ZF==0) ? $1=1 : $1=0
+@"setae",		@"Set byte if above or equal (CF=0)",				// (CF==0) ? $1=1 : $1=0
+@"setb",		@"Set byte if below (CF=1)",						// (CF==1) ? $1=1 : $1=0
+@"setbe",		@"Set byte if below or equal (CF=1 or ZF=1)",		// (CF==1 || ZF==1) ? $1=1 : $1=0
 @"sete",		@"Set byte if equal (ZF=1)",
 @"setg",		@"Set byte if greater (ZF=0 and SF=OF)",
 @"setge",		@"Set byte if greater or equal (SF=OF)",
@@ -509,19 +513,16 @@ nil] retain];
 	[pool release];
 }
 
-- (void)eatLine:(NSString *)line {
-	
-	CodeBlockFactory *_codeBlockfactory = [[CodeBlockFactory alloc] init];
-	DissasemblerGroker *_groker = [[DissasemblerGroker alloc] init];
-	
-	[_groker setDelegate:_codeBlockfactory];
-	[_groker process:line];
-	
-
-}
 
 // DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+	_codeBlockStore = [[CodeBlockStore alloc] init];
+	_codeBlockfactory = [[CodeBlockFactory alloc] init];
+	[_codeBlockfactory setStore:_codeBlockStore];
+	_groker = [[DissasemblerGroker alloc] init];
+
+	[_groker setDelegate:_codeBlockfactory];
 
 	_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];
 	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
@@ -546,7 +547,7 @@ nil] retain];
 	
 	// parse the file
 	_inputParser = [[InputParse parserWithString:fileString] retain];
-	[_inputParser setConsumer:self];
+	[_inputParser setConsumer:_groker];
 	[_inputParser doIt];
 	 
 

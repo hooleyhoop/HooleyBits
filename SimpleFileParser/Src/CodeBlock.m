@@ -36,6 +36,8 @@
 }
 
 - (void)pushLine:(CodeLine *)arg {
+	
+	NSParameterAssert(arg);
 	[_lineStore addObject:arg];
 }
 
@@ -74,6 +76,18 @@
 	
 	NSAssert( [_lineStore count]>0, @"codeBlock is empty!");
 	return [_lineStore lastObject];
+}
+
+- (NSString *)name {
+	return nil;
+}
+
+- (NSUInteger)lineCount {
+	return 0;
+}
+
+- (CodeLine *)lineAtIndex:(NSUInteger)ind {
+	return nil;
 }
 
 @end

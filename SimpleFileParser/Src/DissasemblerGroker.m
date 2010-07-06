@@ -38,7 +38,7 @@
 	[super dealloc];
 }
 
-- (void)process:(NSString *)aLine {
+- (void)eatLine:(NSString *)aLine {
 
 	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 	NSString *strippedline = [aLine stringByTrimmingCharactersInSet:wsp];
