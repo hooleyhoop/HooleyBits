@@ -34,7 +34,7 @@
 	if(funcName)
 		NSLog(@"Name-- %@", funcName);
 	
-	CodeBlock *newBlock = [CodeBlock block];
+	CodeBlock *newBlock = [CodeBlock blockWithName:nil];
 	[self setCurrentBlock:newBlock];
 }
 

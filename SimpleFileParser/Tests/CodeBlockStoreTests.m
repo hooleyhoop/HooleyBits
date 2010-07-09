@@ -33,16 +33,16 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:25];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 
-	CodeBlock *aBlock1 = [CodeBlock block];
+	CodeBlock *aBlock1 = [CodeBlock blockWithName:nil];
 	[aBlock1 pushLine:line1];
 
-	CodeBlock *aBlock2 = [CodeBlock block];
+	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
-	CodeBlock *aBlock3 = [CodeBlock block];
+	CodeBlock *aBlock3 = [CodeBlock blockWithName:nil];
 	[aBlock3 pushLine:line3];
 	
-	CodeBlock *aBlock4 = [CodeBlock block];
+	CodeBlock *aBlock4 = [CodeBlock blockWithName:nil];
 	[aBlock4 pushLine:line4];
 	
 	[_cbs addCodeBlock:aBlock4];
@@ -64,16 +64,16 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:25];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *aBlock1 = [CodeBlock block];
+	CodeBlock *aBlock1 = [CodeBlock blockWithName:nil];
 	[aBlock1 pushLine:line1];
 	
-	CodeBlock *aBlock2 = [CodeBlock block];
+	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
-	CodeBlock *aBlock3 = [CodeBlock block];
+	CodeBlock *aBlock3 = [CodeBlock blockWithName:nil];
 	[aBlock3 pushLine:line3];
 	
-	CodeBlock *aBlock4 = [CodeBlock block];
+	CodeBlock *aBlock4 = [CodeBlock blockWithName:nil];
 	[aBlock4 pushLine:line4];
 
 	[_cbs addCodeBlock:aBlock1];
@@ -97,7 +97,7 @@
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
 
-	CodeBlock *aBlock1 = [CodeBlock block];
+	CodeBlock *aBlock1 = [CodeBlock blockWithName:nil];
 	[aBlock1 pushLine:line1];
 	[aBlock1 pushLine:line2];
 	
@@ -125,10 +125,10 @@
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
 
-	CodeBlock *aBlock1 = [CodeBlock block];
+	CodeBlock *aBlock1 = [CodeBlock blockWithName:nil];
 	[aBlock1 pushLine:line1];
 
-	CodeBlock *aBlock2 = [CodeBlock block];
+	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
 	[_cbs addCodeBlock:aBlock1];
@@ -147,10 +147,10 @@
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
 	
-	CodeBlock *aBlock1 = [CodeBlock block];
+	CodeBlock *aBlock1 = [CodeBlock blockWithName:nil];
 	[aBlock1 pushLine:line1];
 	
-	CodeBlock *aBlock2 = [CodeBlock block];
+	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
 	[_cbs addCodeBlock:aBlock1];

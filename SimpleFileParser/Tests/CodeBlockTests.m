@@ -35,7 +35,7 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
@@ -46,7 +46,32 @@
 
 - (void)testCompareStartToAddress {
 	// - (NSComparisonResult)compareStartToAddress:(NSUInteger)addr
-	STFail(@"do this now");
+
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+	CodeLine *line3 = [CodeLine lineWithAddress:20];
+	CodeLine *line4 = [CodeLine lineWithAddress:30];
+	
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
+	[block1 pushLine:line1];
+	
+	CodeBlock *block2 = [CodeBlock blockWithName:nil];
+	[block2 pushLine:line2];
+	
+	CodeBlock *block3 = [CodeBlock blockWithName:nil];
+	[block3 pushLine:line3];
+	
+	CodeBlock *block4 = [CodeBlock blockWithName:nil];
+	[block4 pushLine:line4];
+	
+	NSComparisonResult a = [block1 compareStartToAddress:20];
+	STAssertTrue( a==NSOrderedAscending, nil );
+	
+	NSComparisonResult b = [block2 compareStartToAddress:20];
+	STAssertTrue( b==NSOrderedSame, nil );
+	
+	NSComparisonResult c = [block4 compareStartToAddress:20];
+	STAssertTrue( c==NSOrderedDescending, nil );	
 }
 
 - (void)testStartAddress {
@@ -57,14 +82,14 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
 	[block1 pushLine:line3];
 	[block1 pushLine:line4];
 	
-	STAssertTrue( [block1 endAddress]==10, nil );
+	STAssertTrue( [block1 endAddress]==30, nil );
 }
 
 - (void)testEndAddress {
@@ -75,7 +100,7 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
@@ -93,7 +118,7 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
@@ -111,7 +136,7 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
@@ -124,7 +149,7 @@
 - (void)testName {
 	// - (NSString *)name
 
-	CodeBlock *block1 = [CodeBlock blockWithName:@"nil"];
+	CodeBlock *block1 = [CodeBlock blockWithName:@"Steve"];
 	STAssertTrue( [block1 name]==@"Steve", nil);
 }
 
@@ -136,7 +161,7 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 
 	[block1 pushLine:line1];
 	[block1 pushLine:line2];
@@ -157,16 +182,16 @@
 	CodeLine *line3 = [CodeLine lineWithAddress:20];
 	CodeLine *line4 = [CodeLine lineWithAddress:30];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	[block1 pushLine:line1];
 	 
-	CodeBlock *block2 = [CodeBlock block];
+	CodeBlock *block2 = [CodeBlock blockWithName:nil];
 	[block2 pushLine:line2];
 
-	CodeBlock *block3 = [CodeBlock block];
+	CodeBlock *block3 = [CodeBlock blockWithName:nil];
 	[block3 pushLine:line3];
 
-	CodeBlock *block4 = [CodeBlock block];
+	CodeBlock *block4 = [CodeBlock blockWithName:nil];
 	[block4 pushLine:line4];
 
 	NSComparisonResult a = [block1 compareStartAddress:block2];
@@ -187,7 +212,7 @@
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
 	
-	CodeBlock *block1 = [CodeBlock block];
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
 	[block1 pushLine:line1];
 
 	STAssertTrue([block1 lineCount]==1, nil);

@@ -55,6 +55,7 @@
 	[[_mockStore expect] addCodeBlock:OCMOCK_ANY];
 	[_fac addCodeLine:@"bbb"];
 	[[[_mockStore expect] andReturnUIntValue:2] blockCount];
+	STAssertTrue([_fac countOfCodeBlocks]==2, nil);
 	[_mockStore verify];
 }
 
@@ -77,5 +78,12 @@
 	STAssertTrue( (id)mockObject==(id)allBlocks, @"fuck" );
 	[_mockStore verify];
 }
+
+@"start:"
+@"-(BOOL)[FilterComboBox textView:shouldChangeTextInRange:replacementString:]"
+@"-(void)[IdeasOrganiserBitmapButton setEnabled:]"
+@"+(void)[IdeasOrganiserBitmapButton fake:]"
+
+
 
 @end
