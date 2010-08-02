@@ -4,6 +4,12 @@
 		activeBuildConfigurationName = Debug;
 		activeExecutable = 736921D211B52A01006A81BD /* MachoLoader */;
 		activeTarget = 8D1107260486CEB800E47090 /* MachoLoader */;
+		breakpoints = (
+			73C59DEB12074EF4003C2F5D /* MachoLoader.m:308 */,
+			73C59DED12074EF9003C2F5D /* MachoLoader.m:357 */,
+			73C59DEF12074F02003C2F5D /* MachoLoader.m:371 */,
+			73C59DF112074F08003C2F5D /* MachoLoader.m:825 */,
+		);
 		codeSenseManager = 736921DB11B52A20006A81BD /* Code sense */;
 		executables = (
 			736921D211B52A01006A81BD /* MachoLoader */,
@@ -15,7 +21,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					22,
 					300,
-					920,
+					656,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXExecutablesDataSource_ActiveFlagID,
@@ -28,7 +34,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1032,
+					768,
 					20,
 					48,
 					43,
@@ -67,18 +73,36 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 298284788;
-			PBXWorkspaceStateSaveDate = 298284788;
+			PBXPerProjectTemplateStateSaveDate = 302471418;
+			PBXWorkspaceStateSaveDate = 302471418;
 		};
 		perUserProjectItems = {
-			7387609F11C776FD00F714D9 /* PBXTextBookmark */ = 7387609F11C776FD00F714D9 /* PBXTextBookmark */;
-			738760A011C776FD00F714D9 /* PBXTextBookmark */ = 738760A011C776FD00F714D9 /* PBXTextBookmark */;
+			7340BFAB12058BA900437881 /* PBXTextBookmark */ = 7340BFAB12058BA900437881 /* PBXTextBookmark */;
 			73B8FF1311B573C100A903A2 /* PBXTextBookmark */ = 73B8FF1311B573C100A903A2 /* PBXTextBookmark */;
-			73B8FF1411B573C100A903A2 /* PBXTextBookmark */ = 73B8FF1411B573C100A903A2 /* PBXTextBookmark */;
+			73C59DF312074F1D003C2F5D /* PBXTextBookmark */ = 73C59DF312074F1D003C2F5D /* PBXTextBookmark */;
+			73C59E031207572D003C2F5D /* PBXTextBookmark */ = 73C59E031207572D003C2F5D /* PBXTextBookmark */;
+			73C59E0F120759CA003C2F5D /* PBXTextBookmark */ = 73C59E0F120759CA003C2F5D /* PBXTextBookmark */;
 		};
 		sourceControlManager = 736921DA11B52A20006A81BD /* Source Control */;
 		userBuildSettings = {
 		};
+	};
+	730219630F864C5000906D18 /* AppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1379, 325}}";
+			sepNavSelRange = "{620, 0}";
+			sepNavVisRange = "{0, 628}";
+		};
+	};
+	7340BFAB12058BA900437881 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 730219630F864C5000906D18 /* AppDelegate.m */;
+		name = "AppDelegate.m: 22";
+		rLen = 0;
+		rLoc = 620;
+		rType = 0;
+		vrLen = 628;
+		vrLoc = 0;
 	};
 	736921D211B52A01006A81BD /* MachoLoader */ = {
 		isa = PBXExecutable;
@@ -87,7 +111,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 1;
-		breakpointsEnabled = 0;
+		breakpointsEnabled = 1;
 		configStateDict = {
 		};
 		customDataFormattersEnabled = 1;
@@ -99,14 +123,38 @@
 		dylibVariantSuffix = "";
 		enableDebugStr = 1;
 		environmentEntries = (
+			{
+				active = YES;
+				name = DYLD_BIND_AT_LAUNCH;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = DYLD_PRINT_APIS;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = DYLD_PRINT_SEGMENTS;
+				value = 1;
+			},
+			{
+				active = YES;
+				name = DYLD_PRINT_BINDINGS;
+				value = 1;
+			},
 		);
 		executableSystemSymbolLevel = 0;
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = MachoLoader;
+		savedGlobals = {
+		};
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	736921DA11B52A20006A81BD /* Source Control */ = {
 		isa = PBXSourceControlManager;
@@ -122,26 +170,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	7387609F11C776FD00F714D9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
-		name = "MachoLoader.m: 731";
-		rLen = 0;
-		rLoc = 31718;
-		rType = 0;
-		vrLen = 1127;
-		vrLoc = 31621;
-	};
-	738760A011C776FD00F714D9 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
-		name = "MachoLoader.m: 731";
-		rLen = 0;
-		rLoc = 31718;
-		rType = 0;
-		vrLen = 1127;
-		vrLoc = 31621;
-	};
 	73B8FF1311B573C100A903A2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73EDD9280F863E5800E09434 /* FileMapView.h */;
@@ -152,21 +180,120 @@
 		vrLen = 231;
 		vrLoc = 0;
 	};
-	73B8FF1411B573C100A903A2 /* PBXTextBookmark */ = {
+	73C59DEB12074EF4003C2F5D /* MachoLoader.m:308 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		functionName = "-parseLoadCommands";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 308;
+		location = MachoLoader;
+		modificationTime = 302469110.91061;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C59DED12074EF9003C2F5D /* MachoLoader.m:357 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		functionName = "-parseLoadCommands";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 357;
+		location = MachoLoader;
+		modificationTime = 302469234.759061;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73C59DEF12074F02003C2F5D /* MachoLoader.m:371 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		functionName = "-parseLoadCommands";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 371;
+		location = MachoLoader;
+		modificationTime = 302469256.264435;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73C59DF112074F08003C2F5D /* MachoLoader.m:825 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		functionName = "-doIt:";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 825;
+		location = MachoLoader;
+		modificationTime = 302468894.249922;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	73C59DF312074F1D003C2F5D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73EDD9290F863E5800E09434 /* FileMapView.m */;
 		name = "FileMapView.m: 1";
 		rLen = 0;
 		rLoc = 0;
 		rType = 0;
-		vrLen = 233;
+		vrLen = 328;
 		vrLoc = 0;
+	};
+	73C59E031207572D003C2F5D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		name = "MachoLoader.m: 825";
+		rLen = 0;
+		rLoc = 35877;
+		rType = 0;
+		vrLen = 996;
+		vrLoc = 35302;
+	};
+	73C59E0F120759CA003C2F5D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		name = "MachoLoader.m: 825";
+		rLen = 0;
+		rLoc = 35877;
+		rType = 0;
+		vrLen = 924;
+		vrLoc = 35376;
+	};
+	73EDD9230F863E4700E09434 /* MachoLoader.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1148, 390}}";
+			sepNavSelRange = "{182, 0}";
+			sepNavVisRange = "{0, 266}";
+		};
 	};
 	73EDD9240F863E4700E09434 /* MachoLoader.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1468, 10803}}";
-			sepNavSelRange = "{31718, 0}";
-			sepNavVisRange = "{31621, 1127}";
+			sepNavIntBoundsRect = "{{0, 0}, {1260, 11232}}";
+			sepNavSelRange = "{36611, 0}";
+			sepNavVisRange = "{35982, 697}";
 			sepNavWindowFrame = "{{1695, 220}, {1495, 825}}";
 		};
 	};
@@ -179,9 +306,9 @@
 	};
 	73EDD9290F863E5800E09434 /* FileMapView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {891, 1092}}";
+			sepNavIntBoundsRect = "{{0, 0}, {946, 1066}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 233}";
+			sepNavVisRange = "{0, 328}";
 		};
 	};
 	8D1107260486CEB800E47090 /* MachoLoader */ = {

@@ -15,6 +15,8 @@
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
+		7340BF4012057B4A00437881 /* DyldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7340BF3F12057B4A00437881 /* DyldTests.m */; };
+		7340BF49120585B900437881 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7340BF48120585B900437881 /* MachoLoader.m */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
@@ -231,6 +233,10 @@
 		73387AE011D222A10017D971 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = writer.c; path = "../../../Source/libyaml-stable/src/writer.c"; sourceTree = SOURCE_ROOT; };
 		73387AE111D222A10017D971 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yaml_private.h; path = "../../../Source/libyaml-stable/src/yaml_private.h"; sourceTree = SOURCE_ROOT; };
 		73387AE911D222AA0017D971 /* yaml.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = yaml.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7340BF3F12057B4A00437881 /* DyldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DyldTests.m; path = Tests/DyldTests.m; sourceTree = "<group>"; };
+		7340BF46120584F000437881 /* loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loader.h; path = "System/Library/Frameworks/Kernel.framework/Versions/A/Headers/mach-o/loader.h"; sourceTree = SDKROOT; };
+		7340BF47120585B900437881 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = ../MachoLoader/Classes/MachoLoader.h; sourceTree = SOURCE_ROOT; };
+		7340BF48120585B900437881 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = ../MachoLoader/Classes/MachoLoader.m; sourceTree = SOURCE_ROOT; };
 		73875DB111C66BE200F714D9 /* ArgumentScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArgumentScanner.h; path = Src/ArgumentScanner.h; sourceTree = "<group>"; };
 		73875DB211C66BE200F714D9 /* ArgumentScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScanner.m; path = Src/ArgumentScanner.m; sourceTree = "<group>"; };
 		73875DB811C66BFA00F714D9 /* ArgumentScannerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScannerTests.m; path = Tests/ArgumentScannerTests.m; sourceTree = "<group>"; };
@@ -371,6 +377,9 @@
 		29B97314FDCFA39411CA2CEA /* SimpleFileParser */ = {
 			isa = PBXGroup;
 			children = (
+				7340BF46120584F000437881 /* loader.h */,
+				7340BF47120585B900437881 /* MachoLoader.h */,
+				7340BF48120585B900437881 /* MachoLoader.m */,
 				73387AD311D222920017D971 /* Yaml */,
 				732CFCDB11BF9E72008030ED /* Config */,
 				732CFD1F11BF9F8A008030ED /* Tests */,
@@ -436,6 +445,7 @@
 		732CFD1F11BF9F8A008030ED /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7340BF3F12057B4A00437881 /* DyldTests.m */,
 				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
 				73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */,
 				73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */,
@@ -836,6 +846,8 @@
 				731B61AB11DD45F800AF9238 /* DissasemblerGrokerTests.m in Sources */,
 				731B61AC11DD45F900AF9238 /* InputParseTests.m in Sources */,
 				731B61AF11DD461800AF9238 /* CodeBlockFactoryTests.m in Sources */,
+				7340BF4012057B4A00437881 /* DyldTests.m in Sources */,
+				7340BF49120585B900437881 /* MachoLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

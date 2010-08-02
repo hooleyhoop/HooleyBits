@@ -518,7 +518,7 @@ nil] retain];
 	[_groker process:line];
 	
 
-}
+} use mach loader to get the address of the _cstring section. replace the relevant addresss with the corresponding string literals
 
 // DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

@@ -836,4 +836,66 @@ void readHeaderFlags( uint32_t flags ) {
 	}
 }
 
+
+-- see cctools-782 otool ofile_print.c
+void
+print_cstring_section(
+					  char *sect,
+					  uint32_t sect_size,
+					  uint32_t sect_addr,
+					  enum bool print_addresses)
+{
+    uint32_t i;
+	
+	for(i = 0; i < sect_size ; i++){
+	    if(print_addresses == TRUE)
+			printf("%08x  ", (unsigned int)(sect_addr + i));
+		
+	    for( ; i < sect_size && sect[i] != '\0'; i++)
+			print_cstring_char(sect[i]);
+	    if(i < sect_size && sect[i] == '\0')
+			printf("\n");
+	}
+}
+
+static
+void
+print_cstring_char(
+				   char c)
+{
+	if(isprint(c)){
+	    if(c == '\\')	/* backslash */
+			printf("\\\\");
+	    else		/* all other printable characters */
+			printf("%c", c);
+	}
+	else{
+	    switch(c){
+			case '\n':		/* newline */
+				printf("\\n");
+				break;
+			case '\t':		/* tab */
+				printf("\\t");
+				break;
+			case '\v':		/* vertical tab */
+				printf("\\v");
+				break;
+			case '\b':		/* backspace */
+				printf("\\b");
+				break;
+			case '\r':		/* carriage return */
+				printf("\\r");
+				break;
+			case '\f':		/* formfeed */
+				printf("\\f");
+				break;
+			case '\a':		/* audiable alert */
+				printf("\\a");
+				break;
+			default:
+				printf("\\%03o", (unsigned int)c);
+	    }
+	}
+}
+
 @end
