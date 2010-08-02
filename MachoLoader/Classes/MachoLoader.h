@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-check out this
-http://d.hatena.ne.jp/mteramoto/20070121/p2
+// TODO: does what i need
+// check out this
+// http://d.hatena.ne.jp/mteramoto/20070121/p2
 
 
 @interface MachoLoader : NSObject {

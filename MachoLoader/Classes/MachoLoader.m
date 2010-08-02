@@ -837,7 +837,7 @@ void readHeaderFlags( uint32_t flags ) {
 }
 
 
--- see cctools-782 otool ofile_print.c
+// -- see cctools-782 otool ofile_print.c
 void
 print_cstring_section(
 					  char *sect,
