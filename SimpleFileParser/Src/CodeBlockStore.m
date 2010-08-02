@@ -99,4 +99,8 @@
 	return [_codeBlockStore objectAtIndex:ind];
 }
 
+- (NSArray *)allBlocks {
+	return _codeBlockStore;
+}
+
 @end

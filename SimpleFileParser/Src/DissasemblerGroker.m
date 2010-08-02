@@ -38,13 +38,17 @@
 	[super dealloc];
 }
 
-- (void)process:(NSString *)aLine {
+- (void)eatLine:(NSString *)aLine {
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 	NSString *strippedline = [aLine stringByTrimmingCharactersInSet:wsp];
 	
 	[self categorizeLine: strippedline];
 	[self addLineToTarget: strippedline];
+	
+	[pool release];
 }
 
 - (void)addLineToTarget:(NSString *)aLine {
@@ -59,7 +63,38 @@
 		}
 	}
 
+	[self _tokeniseLine];
 	[_target addCodeLine:aLine];	
+}
+
+-- here
+- (void)_tokeniseLine:(NSString *)aLine {
+		
+	NSString *instruction=nil, *arguments=nil, *functionHint=nil;
+	
+	NSArray *components = worderize( aLine );
+	
+	// not optional
+	lineOffset = [components objectAtIndex:0];
+	address = [components objectAtIndex:1];
+	code = [components objectAtIndex:2];
+	instruction = [components objectAtIndex:3];
+	
+	// optional
+	if([components count]>=5)
+		arguments = [components objectAtIndex:4];
+	if([components count]>=6)
+		functionHint = [components objectAtIndex:5];
+	
+	if(instruction){
+		BOOL isKnown = [self isKnownInstruction:instruction];
+		if(!isKnown){
+			[_unknownInstructions addObject:instruction];
+			[pool release];
+			return;
+		}
+		[self processInstruction:instruction argument:arguments];
+	}
 }
 
 - (void)categorizeLine:(NSString *)aLine {
@@ -84,8 +119,6 @@
 			_lastString = [aLine retain];
 		}
 	}
-
-	
 }
 
 - (enum groker_state)state {

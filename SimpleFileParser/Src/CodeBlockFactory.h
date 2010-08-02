@@ -7,9 +7,17 @@
 //
 #import "iMakeCodeBlocks.h"
 
+@class CodeBlockStore, CodeBlock;
+
 @interface CodeBlockFactory : NSObject <iMakeCodeBlocks> {
 
+	CodeBlockStore	*_blockStore;
+	CodeBlock		*_currenBlock;
 }
 
+- (NSUInteger)countOfCodeBlocks;
+
+- (NSArray *)allCodeBlocks;
+- (void)setStore:(CodeBlockStore *)str;
 
 @end

@@ -53,5 +53,41 @@
 	STAssertTrue( c==NSOrderedDescending, nil );
 }
 
+-- here
+- (void)processInstruction:(NSString *)instruction argument:(NSString *)arguments {
+	
+	// record unique instructions
+	//	[_allInstructions add:instruction];
+	
+	// record unique arguments
+	//	if([arguments length])
+	//		[_unknownArguments addObject:arguments];
+	
+	// Parse argument string
+	if(arguments)
+	{
+		TokenArray *tokensFromThisString  = [[[TokenArray alloc] initWithString:arguments] autorelease];
+		[tokensFromThisString secondPass];
+		
+		NSString *opcodeFormat = [NSString stringWithFormat:@"%@ %@", instruction, [tokensFromThisString pattern]];
+		
+		// collect opcode format data
+		//		[_allOpCodeFormats add:opcodeFormat];
+		
+		// Collect argument formats
+		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tokensFromThisString];
+		uint argumentCount = [scanner count];
+		for( uint i=0; i<argumentCount; i++ )
+		{
+			NSNumber *newArgCount = nil;
+			NSString *argumentPattern = [(Argument *)[scanner argumentAtIndex:i] pattern];
+			
+			// Collct argument-format data
+			[_allArgumentFormats add:argumentPattern];
+		}
+		
+	}
+}
+
 
 @end

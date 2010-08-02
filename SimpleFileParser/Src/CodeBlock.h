@@ -10,15 +10,15 @@
 
 @interface CodeBlock : NSObject {
 
-	NSMutableArray *_lineStore;
+	NSString		*_name;
+	NSMutableArray	*_lineStore;
 }
 
-+ (id)block;
++ (id)blockWithName:(NSString *)name;
 
-- (NSUInteger)insertionIndexFor:(CodeLine *)arg;
+- (NSUInteger)insertionIndexFor:(CodeLine *)insertObject;
 
-- (void)pushLine:(CodeLine *)arg;
-//- (void)insertLine:(CodeLine *)arg;
+- (void)pushLine:(CodeLine *)insertObject;
 
 - (NSComparisonResult)compareStartAddress:(CodeBlock *)aBlock;
 - (NSComparisonResult)compareStartToAddress:(NSUInteger)addr;
@@ -28,5 +28,10 @@
 
 - (CodeLine *)firstLine;
 - (CodeLine *)lastLine;
+
+- (NSString *)name;
+- (NSUInteger)lineCount;
+
+- (CodeLine *)lineAtIndex:(NSUInteger)ind;
 
 @end

@@ -9,7 +9,7 @@
 #import "Argument.h"
 #import "BasicToken.h"
 
-2010-06-15 13:20:06.055 SimpleFileParser[29037:a0f] ( %r , 66 )
+// 2010-06-15 13:20:06.055 SimpleFileParser[29037:a0f] ( %r , 66 )
 
 /* All argument formats 
  

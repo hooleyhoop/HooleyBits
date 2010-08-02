@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		731B61AB11DD45F800AF9238 /* DissasemblerGrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */; };
-		731B61AC11DD45F900AF9238 /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8D11D9EE7D000429DC /* InputParseTests.m */; };
-		731B61AF11DD461800AF9238 /* CodeBlockFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */; };
-		731D459F11CA19DC002964DC /* SHDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 731D459E11CA19DC002964DC /* SHDebugger.mm */; };
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
@@ -37,10 +33,8 @@
 		73A0F7F211DCA43D008DD4E2 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7392918711DBA965000429DC /* SHShared.framework */; };
 		73A0F7F311DCA440008DD4E2 /* SHShared.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7392918711DBA965000429DC /* SHShared.framework */; };
 		73A0F8BC11DCA922008DD4E2 /* CodeBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */; };
-		73A0F92111DCAB34008DD4E2 /* CodeLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */; };
 		73A0F92411DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
 		73A0F92511DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
-		73A0F93511DCABD4008DD4E2 /* CodeBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
@@ -58,10 +52,14 @@
 		73CF20A511D8C9A600347BBD /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387ADF11D222A10017D971 /* scanner.c */; };
 		73CF20A611D8C9A700347BBD /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73387AE011D222A10017D971 /* writer.c */; };
 		73CF20B911D8CA8700347BBD /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF20B811D8CA8700347BBD /* config.h */; };
+		73ED9F6C11E47DEE0085FB1C /* CodeBlockFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */; };
+		73ED9F7C11E47E480085FB1C /* DissasemblerGrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */; };
+		73ED9F7F11E47E520085FB1C /* InputParseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73928A8D11D9EE7D000429DC /* InputParseTests.m */; };
+		73ED9F8211E47E590085FB1C /* CodeLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */; };
+		73ED9F8511E47E610085FB1C /* CodeBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */; };
 		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C56211C504CB00C93934 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
-		73FB3E8111C8F57300EBE0DB /* LLDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73FB3E8011C8F57300EBE0DB /* LLDB.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -163,13 +161,6 @@
 			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 26680207115FD0ED008E1FE4;
-			remoteInfo = LLDB;
-		};
-		73BE90AC11D0BDD5003C87B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 26680206115FD0ED008E1FE4;
 			remoteInfo = LLDB;
 		};
 		73CF1F2811D8C5BA00347BBD /* PBXContainerItemProxy */ = {
@@ -315,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				73FB3E8111C8F57300EBE0DB /* LLDB.framework in Frameworks */,
 				73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,15 +435,14 @@
 		732CFD1F11BF9F8A008030ED /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7340BF3F12057B4A00437881 /* DyldTests.m */,
-				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
+				73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */,
 				73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */,
 				73928FC411DB554F000429DC /* DissasemblerGrokerTests.m */,
 				73928A8D11D9EE7D000429DC /* InputParseTests.m */,
-				73CF1EE511D8C31D00347BBD /* YAMLTests.m */,
 				73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */,
-				73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */,
 				73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */,
+				73928A8A11D9EE22000429DC /* DebuggerTests.mm */,
+				73CF1EE511D8C31D00347BBD /* YAMLTests.m */,
 				73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */,
 				73875FCC11C6951F00F714D9 /* StringCounterTests.m */,
 				73875DD211C66ED500F714D9 /* ArgumentTests.m */,
@@ -659,7 +648,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73BE90AD11D0BDD5003C87B2 /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser;
 			productInstallPath = "$(HOME)/Applications";
@@ -840,14 +828,12 @@
 				73A0F5F411DC977E008DD4E2 /* CodeBlockFactory.m in Sources */,
 				73A0F61B11DC9B37008DD4E2 /* CodeBlock.m in Sources */,
 				73A0F8BC11DCA922008DD4E2 /* CodeBlockTests.m in Sources */,
-				73A0F92111DCAB34008DD4E2 /* CodeLineTests.m in Sources */,
 				73A0F92411DCAB61008DD4E2 /* CodeLine.m in Sources */,
-				73A0F93511DCABD4008DD4E2 /* CodeBlockStoreTests.m in Sources */,
-				731B61AB11DD45F800AF9238 /* DissasemblerGrokerTests.m in Sources */,
-				731B61AC11DD45F900AF9238 /* InputParseTests.m in Sources */,
-				731B61AF11DD461800AF9238 /* CodeBlockFactoryTests.m in Sources */,
-				7340BF4012057B4A00437881 /* DyldTests.m in Sources */,
-				7340BF49120585B900437881 /* MachoLoader.m in Sources */,
+				73ED9F6C11E47DEE0085FB1C /* CodeBlockFactoryTests.m in Sources */,
+				73ED9F7C11E47E480085FB1C /* DissasemblerGrokerTests.m in Sources */,
+				73ED9F7F11E47E520085FB1C /* InputParseTests.m in Sources */,
+				73ED9F8211E47E590085FB1C /* CodeLineTests.m in Sources */,
+				73ED9F8511E47E610085FB1C /* CodeBlockStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -879,7 +865,6 @@
 				73875DCE11C66EC200F714D9 /* Argument.m in Sources */,
 				73875FC611C6950100F714D9 /* StringCounter.m in Sources */,
 				73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */,
-				731D459F11CA19DC002964DC /* SHDebugger.mm in Sources */,
 				73928FBB11DB5509000429DC /* DissasemblerGroker.m in Sources */,
 				73A0F5EE11DC9763008DD4E2 /* CodeBlockStore.m in Sources */,
 				73A0F5F311DC977E008DD4E2 /* CodeBlockFactory.m in Sources */,
@@ -900,11 +885,6 @@
 			isa = PBXTargetDependency;
 			name = SHShared;
 			targetProxy = 73A0F7F011DCA439008DD4E2 /* PBXContainerItemProxy */;
-		};
-		73BE90AD11D0BDD5003C87B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LLDB;
-			targetProxy = 73BE90AC11D0BDD5003C87B2 /* PBXContainerItemProxy */;
 		};
 		73CF1F2911D8C5BA00347BBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

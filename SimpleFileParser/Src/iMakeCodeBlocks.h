@@ -10,6 +10,8 @@
 @protocol iMakeCodeBlocks
 
 - (void)newCodeBlockWithName:(NSString *)funcName;
+
+-- this will change
 - (void)addCodeLine:(NSString *)codeLine;
 
 @end
