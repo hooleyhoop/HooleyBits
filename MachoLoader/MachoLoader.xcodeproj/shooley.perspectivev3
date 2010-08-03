@@ -254,6 +254,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -301,7 +303,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>13</integer>
+									<integer>12</integer>
 									<integer>7</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -336,14 +338,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>73D517B5110B2FE3005537A5</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MachoLoader.m</string>
+								<string>MachoLoader.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -351,18 +351,18 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>73D517B6110B2FE3005537A5</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MachoLoader.m</string>
+										<string>MachoLoader.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>73B679391207689100E53B64</string>
+										<string>7375E8041207780100378AF9</string>
 										<key>history</key>
 										<array>
 											<string>73B8FF1311B573C100A903A2</string>
 											<string>7340BFAB12058BA900437881</string>
 											<string>73C59DF312074F1D003C2F5D</string>
-											<string>73B679371207689100E53B64</string>
-											<string>73B679381207689100E53B64</string>
+											<string>7375E7FE120777F900378AF9</string>
+											<string>7375E7FF120777F900378AF9</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -376,18 +376,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1007, 439}}</string>
+								<string>{{0, 0}, {1007, 431}}</string>
 								<key>RubberWindowFrame</key>
 								<string>84 67 1209 770 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>439pt</string>
+							<string>431pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>285pt</string>
+							<string>293pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -401,7 +401,9 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1007, 437}}</string>
+										<string>{{10, 27}, {1007, 266}}</string>
+										<key>RubberWindowFrame</key>
+										<string>84 67 1209 770 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -456,8 +458,6 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1007, 258}}</string>
-										<key>RubberWindowFrame</key>
-										<string>84 67 1209 770 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -485,11 +485,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>73B6793A1207689100E53B64</string>
+				<string>7375E801120777F900378AF9</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>73B6793B1207689100E53B64</string>
+				<string>7375E802120777F900378AF9</string>
 				<string>73D517B5110B2FE3005537A5</string>
-				<string>73B6793C1207689100E53B64</string>
+				<string>7375E803120777F900378AF9</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -663,7 +663,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>302475409.73206902</real>
+	<real>302479361.90859801</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>

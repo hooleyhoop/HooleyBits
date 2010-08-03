@@ -11,8 +11,6 @@
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732CFE0F11BFA188008030ED /* InputParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFE0E11BFA188008030ED /* InputParse.m */; };
-		7340BF4012057B4A00437881 /* DyldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7340BF3F12057B4A00437881 /* DyldTests.m */; };
-		7340BF49120585B900437881 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7340BF48120585B900437881 /* MachoLoader.m */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
@@ -224,7 +222,6 @@
 		73387AE011D222A10017D971 /* writer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = writer.c; path = "../../../Source/libyaml-stable/src/writer.c"; sourceTree = SOURCE_ROOT; };
 		73387AE111D222A10017D971 /* yaml_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yaml_private.h; path = "../../../Source/libyaml-stable/src/yaml_private.h"; sourceTree = SOURCE_ROOT; };
 		73387AE911D222AA0017D971 /* yaml.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = yaml.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7340BF3F12057B4A00437881 /* DyldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DyldTests.m; path = Tests/DyldTests.m; sourceTree = "<group>"; };
 		7340BF46120584F000437881 /* loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loader.h; path = "System/Library/Frameworks/Kernel.framework/Versions/A/Headers/mach-o/loader.h"; sourceTree = SDKROOT; };
 		7340BF47120585B900437881 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = ../MachoLoader/Classes/MachoLoader.h; sourceTree = SOURCE_ROOT; };
 		7340BF48120585B900437881 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = ../MachoLoader/Classes/MachoLoader.m; sourceTree = SOURCE_ROOT; };
