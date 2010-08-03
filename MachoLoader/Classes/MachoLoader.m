@@ -455,6 +455,33 @@ void readHeaderFlags( uint32_t flags ) {
 			const struct dysymtab_command* dsymtab = (struct dysymtab_command*)cmd;
 			NSLog(@"LC_DYSYMTAB");
 			
+			The dynamic symbol table in Mach-O is surprisingly simple. Each entry in the table is just a 32bit index into the symbol table. The dynamic symbol table is just a list of indexes and nothing else.
+				
+				
+				Take a look at the definition for a Mach-O section:
+					
+					struct section_64 { /* for 64-bit architectures */
+						char    sectname[16]; /* name of this section */
+						char    segname[16];  /* segment this section goes in */
+						uint64_t  addr;   /* memory address of this section */
+						uint64_t  size;   /* size in bytes of this section */
+						uint32_t  offset;   /* file offset of this section */
+						uint32_t  align;    /* section alignment (power of 2) */
+						uint32_t  reloff;   /* file offset of relocation entries */
+						uint32_t  nreloc;   /* number of relocation entries */
+						uint32_t  flags;    /* flags (section type and attributes)*/
+						uint32_t  reserved1;  /* reserved (for offset or index) */
+						uint32_t  reserved2;  /* reserved (for count or sizeof) */
+						uint32_t  reserved3;  /* reserved */
+					};
+			It turns out that the fields reserved1 and reserved2 are useful too.
+			
+			If a section_64 structure is describing a symbol_stub or __la_symbol_ptr sections (read the previous post to learn about these sections), then the reserved1 field hold the index into the dynamic symbol table for the sections entries in the table.
+				
+				symbol_stub sections also make use of the reserved2 field; the size of a single stub entry is stored in reserved2 otherwise, the field is set to 0.
+			
+			
+			
 			/*
 			 * The symbols indicated by symoff and nsyms of the LC_SYMTAB load command
 			 * are grouped into the following three groups:
