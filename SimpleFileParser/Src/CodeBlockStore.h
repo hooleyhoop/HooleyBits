@@ -13,6 +13,8 @@
 	NSMutableArray *_codeBlockStore;
 }
 
++ (id)store;
+
 - (void)addCodeBlock:(CodeBlock *)aBlock;
 - (CodeBlock *)codeBlockForAddress:(NSUInteger)address;
 - (NSUInteger)blockCount;

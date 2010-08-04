@@ -11,6 +11,17 @@
 
 @implementation LinesInStringIterator
 
+@synthesize consumer = _consumer;
+
+
++ (void)feedLines:(NSString *)fileString to:(NSObject<iConsumeLines> *)consumer {
+	
+	LinesInStringIterator *lineIterator = [LinesInStringIterator iteratorWithString:fileString];
+	[lineIterator setConsumer:consumer];
+	[lineIterator doIt];
+}
+
+
 + (id)iteratorWithString:(NSString *)val {
 	return [[[self alloc] initWithString:val] autorelease];
 }
@@ -28,6 +39,8 @@
 - (void)dealloc {
 	
 	[_fileString release];
+	[_consumer release];
+
 	[super dealloc];
 }
 
@@ -37,10 +50,6 @@
 		[_consumer eatLine:line];
 	};
 	[_fileString enumerateLinesUsingBlock:enumerateBlock];
-}
-
-- (void)setConsumer:(NSObject<iConsumeLines> *)arg {
-	_consumer = [arg retain];
 }
 
 @end

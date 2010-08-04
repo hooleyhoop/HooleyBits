@@ -7,13 +7,11 @@
 //
 
 #import "SimpleFileParserAppDelegate.h"
-
-#import "TokenArray.h"
-#import "ArgumentScanner.h"
+#import "AppDisassembly.h"
 
 @implementation SimpleFileParserAppDelegate
 
-@synthesize window;
+@synthesize window = _window;
 
 // registers
 // %eip = next instruction address

@@ -7,11 +7,7 @@
 //
 
 #import "AppDisassembly.h"
-
-#import "CodeBlockFactory.h"
-#import "CodeBlockStore.h"
-#import "DissasemblerGroker.h"
-#import "LinesInStringIterator.h"
+#import "OtoolDisassemblyParser.h"
 
 @implementation AppDisassembly
 
@@ -22,27 +18,18 @@
 }
 
 - (id)initWithOtoolOutput:(NSString *)fileString {
-	
+
 	self = [super init];
 	if(self){
-		
-		_codeBlockStore = [[CodeBlockStore alloc] init];
-		_codeBlockfactory = [[CodeBlockFactory alloc] init];
-		[_codeBlockfactory setStore:_codeBlockStore];
-		_groker = [[DissasemblerGroker alloc] init];
-		
-		[_groker setDelegate:_codeBlockfactory];
-		
-		
-		// feed lines to DissasemblerGroker
-		LinesInStringIterator *lineIterator = [LinesInStringIterator iteratorWithString:fileString];
-		[lineIterator setConsumer:_groker];
-		[lineIterator doIt];
+
+		_internalRepresentation = [[OtoolDisassemblyParser constructInternalRepresentation:fileString] retain];
 	}
 	return self;
 }
 
 - (void)dealloc {
+
+	[_internalRepresentation release];
 
 	[super dealloc];
 }

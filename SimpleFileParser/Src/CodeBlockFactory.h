@@ -15,9 +15,12 @@
 	CodeBlock		*_currenBlock;
 }
 
++ (id)factoryWithStore:(CodeBlockStore *)str;
+
+- (id)initWithStore:(CodeBlockStore *)str;
+
 - (NSUInteger)countOfCodeBlocks;
 
 - (NSArray *)allCodeBlocks;
-- (void)setStore:(CodeBlockStore *)str;
 
 @end

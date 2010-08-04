@@ -11,8 +11,8 @@
 
 @interface CodeBlockFactoryTests : SenTestCase {
 	
-	CodeBlockFactory *_fac;
-	OCMockObject	*_mockStore;
+	CodeBlockFactory	*_fac;
+	OCMockObject		*_mockStore;
 }
 
 @end
@@ -23,8 +23,7 @@
 - (void)setUp {
 	
 	_mockStore = MOCK(CodeBlockStore);
-	_fac = [[CodeBlockFactory alloc] init];
-	[_fac setStore:(id)_mockStore];
+	_fac = [[CodeBlockFactory alloc] initWithStore:(id)_mockStore];
 }
 
 - (void)tearDown {

@@ -12,13 +12,13 @@
 
 @interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate> {
 
-    NSWindow	*window;
+    NSWindow			*_window;
 
-	NSMutableSet *_unknownArguments;
+	NSMutableSet		*_unknownArguments;
 
-	StringCounter *_allInstructions;
-	StringCounter *_allOpCodeFormats;
-	StringCounter *_allArgumentFormats;
+	StringCounter		*_allInstructions;
+	StringCounter		*_allOpCodeFormats;
+	StringCounter		*_allArgumentFormats;
 
 }
 

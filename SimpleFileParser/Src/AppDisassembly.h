@@ -6,14 +6,9 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-@class CodeBlockFactory, DissasemblerGroker, CodeBlockStore;
-
 @interface AppDisassembly : NSObject {
 
-	CodeBlockFactory	*_codeBlockfactory;
-	DissasemblerGroker	*_groker;
-	CodeBlockStore		*_codeBlockStore;
-	
+	id _internalRepresentation;
 }
 
 + (id)createFromOtoolOutput:(NSString *)fileString;

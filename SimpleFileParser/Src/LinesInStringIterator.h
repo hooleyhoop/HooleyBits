@@ -13,11 +13,14 @@
 	NSString					*_fileString;
 }
 
+@property (retain) NSObject <iConsumeLines>	*consumer;
+
++ (void)feedLines:(NSString *)fileString to:(NSObject<iConsumeLines> *)consumer;
+
 + (id)iteratorWithString:(NSString *)val;
 
 - (id)initWithString:(NSString *)val;
 
 - (void)doIt;
-- (void)setConsumer:(NSObject <iConsumeLines>*)arg;
 
 @end

@@ -19,6 +19,20 @@
 
 @implementation CodeBlockFactory
 
++ (id)factoryWithStore:(CodeBlockStore *)str {
+
+	return [[[self alloc] initWithStore:str] autorelease];
+}
+
+- (id)initWithStore:(CodeBlockStore *)str {
+
+	self = [super init];
+	if(self){
+		_blockStore = [str retain];
+	}
+	return self;
+}
+
 - (void)dealloc {
 
 	[_blockStore release];
@@ -56,10 +70,6 @@
 
 - (NSArray *)allCodeBlocks {
 	return [_blockStore allBlocks];
-}
-
-- (void)setStore:(CodeBlockStore *)str {
-	_blockStore = [str retain];
 }
 
 - (void)setCurrentBlock:(CodeBlock *)blk {

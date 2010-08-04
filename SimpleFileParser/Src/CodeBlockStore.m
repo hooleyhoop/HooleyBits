@@ -15,6 +15,10 @@
 
 @implementation CodeBlockStore
 
++ (id)store {
+	return [[[self alloc] init] autorelease];
+}
+
 - (id)init {
 	
 	self = [super init];
