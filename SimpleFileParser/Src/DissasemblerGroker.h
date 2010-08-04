@@ -22,6 +22,9 @@ enum groker_state {
 	NSObject <iMakeCodeBlocks>	*_target;
 	NSObject <iMakeCodeBlocks>	*_delegate;
 	NSString					*_lastString;
+	
+	NSMutableSet *_unknownInstructions;
+	
 }
 
 + (id)groker;

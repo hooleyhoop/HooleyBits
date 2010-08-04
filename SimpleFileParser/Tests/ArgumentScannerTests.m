@@ -20,6 +20,12 @@
 
 @implementation ArgumentScannerTests
 
+The i386 architecture uses four kinds of instruction operands:
+Register %eax
+Immediate $fixed at build time
+Direct Memory -complicated
+Indirect Memory -complicated
+
 + (NSArray *)testData {
 	NSArray *allTests = [NSArray arrayWithObjects:
 	 @"*0x004fb883(%ebx,%eax,4)",						 

@@ -6,14 +6,18 @@
 //  Copyright 2009 BestBefore Ltd. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+// TODO: does what i need
+// check out this
+// http://d.hatena.ne.jp/mteramoto/20070121/p2
+
+// eg, dump cstrings otool -s __TEXT __cstring -v test    
 
 
 @interface MachoLoader : NSObject {
 
-	NSMutableArray *_loadCommands;
-	const void *codeAddr;
-	size_t codeSize;
+	NSMutableArray	*_loadCommands;
+	const void		*codeAddr;
+	size_t			codeSize;
 	
 	NSMutableDictionary *addresses_;    // Addresses and symbols (STRONG)
 	

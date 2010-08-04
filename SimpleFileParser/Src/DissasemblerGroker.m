@@ -8,12 +8,16 @@
 
 #import "DissasemblerGroker.h"
 #import "iMakeCodeBlocks.h"
+#import "StringCounter.h"
 
 @interface DissasemblerGroker ()
+
 - (void)setState:(enum groker_state)state;
 
 - (void)addLineToTarget:(NSString *)aLine;
 - (void)categorizeLine:(NSString *)aLine;
+
+- (void)_tokeniseLine:(NSString *)aLine;
 
 @end
 	
@@ -28,6 +32,7 @@
 	self = [super init];
 	if(self){
 		_state = NO_FUNCTION;
+		_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];		
 	}
 	return self;
 }
@@ -35,6 +40,8 @@
 - (void)dealloc {
 	
 	[_lastString release];
+	[_unknownInstructions release];
+
 	[super dealloc];
 }
 
@@ -63,11 +70,24 @@
 		}
 	}
 
-	[self _tokeniseLine];
+	[self _tokeniseLine:aLine];
 	[_target addCodeLine:aLine];	
 }
 
--- here
+// TODO: Replace knownInstructions with yaml stuff
+- (BOOL)isKnownInstruction:(NSString *)instruction {
+	
+//Replace With yaml	NSArray *knownInstructions = [DissasemblerGroker knownInstructions];
+//Replace with yaml	BOOL isFound = [knownInstructions containsObject:instruction];
+	
+	
+	//	if(!isFound){
+	//		NSLog(@"oopps %i", [knownInstructions indexOfObjectIdenticalTo:instruction]);
+	//	}
+	return YES;
+}
+
+// TODO: -- here
 - (void)_tokeniseLine:(NSString *)aLine {
 		
 	NSString *instruction=nil, *arguments=nil, *functionHint=nil;
@@ -75,9 +95,9 @@
 	NSArray *components = worderize( aLine );
 	
 	// not optional
-	lineOffset = [components objectAtIndex:0];
-	address = [components objectAtIndex:1];
-	code = [components objectAtIndex:2];
+	id lineOffset = [components objectAtIndex:0];
+	id address = [components objectAtIndex:1];
+	id code = [components objectAtIndex:2];
 	instruction = [components objectAtIndex:3];
 	
 	// optional
@@ -90,10 +110,9 @@
 		BOOL isKnown = [self isKnownInstruction:instruction];
 		if(!isKnown){
 			[_unknownInstructions addObject:instruction];
-			[pool release];
 			return;
 		}
-		[self processInstruction:instruction argument:arguments];
+// eh ? What is this shit?		[self processInstruction:instruction argument:arguments];
 	}
 }
 

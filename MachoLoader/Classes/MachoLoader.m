@@ -302,6 +302,7 @@ void readHeaderFlags( uint32_t flags ) {
 			NSLog(@"LC_UUID");
 			
 		} else if(cmd->cmd==LC_SEGMENT){
+
 			// Defines a segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
 			struct segment_command *seg = (struct segment_command *)cmd;				
 			char *segname= seg->segname;
@@ -354,8 +355,8 @@ void readHeaderFlags( uint32_t flags ) {
 					char *segmentName_2 = newSec_ptr->segname;
 					char *sectionName = newSec_ptr->sectname;
 
-					NSLog(@"segment2 name %@", [NSString stringWithCString:segmentName_2 length:16]);
-					NSLog(@"section2 name %@", [NSString stringWithCString:sectionName length:16]);
+					NSLog(@"segment2 name %s", segmentName_2 );
+					NSLog(@"section2 name %s", sectionName );
 					
 					char *sect_pointer = ((char *)codeAddr) + newSec_ptr->offset; // ((char *) (codeAddr)) + bestFatArch->offset
 					
@@ -376,6 +377,615 @@ void readHeaderFlags( uint32_t flags ) {
 						NSLog(@"Copied section.. %@", sectionData); // [sectionData hexString]
 						memcpy(newSectAddr, sect_pointer, newSectSize);
 
+					}
+					
+
+					// TEXT Segment sections
+					if ( strcmp(sectionName, "__text")==0 ) {
+						// print_text_section( char *sect, uint32_t sect_size, uint32_t sect_addr ) {
+			
+					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+					} else if ( strcmp(sectionName, "__cstring")==0 ) {
+						print_cstring_section( sect_pointer, newSectSize, sect_addr );
+						
+						//00005d0c  MH_NOUNDEFS
+						//00005d18  MH_INCRLINK
+						//00005d24  MH_DYLDLINK
+						//00005d30  MH_BINDATLOAD
+						//00005d3e  MH_PREBOUND
+						//00005d4a  MH_SPLIT_SEGS
+						//00005d58  MH_TWOLEVEL
+						//00005d64  MH_FORCE_FLAT
+						//00005d72  MH_SUBSECTIONS_VIA_SYMBOLS
+						//00005d8d  
+						//00005d8e  
+						//00005d8f  
+						//00005d90  Function %@ - Line %i - Address %i - Section %i
+						//00005dc0  Copied section.. %@
+						//00005dd4  :
+						//00005dd6  LC_UUID
+						//00005dde  segment name %@
+						//00005dee  LC_SEGMENT:%@ %i
+						//00005dff  __PAGEZERO
+						//00005e0a  Processing __PAGEZERO
+						//00005e20  __TEXT
+						//00005e27  Processing page __TEXT
+						//00005e3e  __DATA
+						//00005e45  Processing __DATA
+						//00005e57  __IMPORT
+						//00005e60  Processing __IMPORT
+						//00005e74  __LINKEDIT
+						//00005e7f  Processing __LINKEDIT
+						//00005e95  __OBJC
+						//00005e9c  Processing\t__OBJC
+						//00005eae  
+						//00005eaf  chimpo
+						//00005eb6  i=%i, numberOfSections=%i
+						//00005ed0  segment2 name %s
+						//00005ee1  section2 name %s
+						//00005ef2  section:%@ %i
+						//00005f00  __text
+						//00005f07  __cstring
+						//00005f11  __const
+						//00005f19  __symbol_stub
+						//00005f27  __stub_helper
+						//00005f35  __unwind_info
+						//00005f43  __dyld
+						//00005f4a  __nl_symbol_ptr
+						//00005f5a  __la_symbol_ptr
+						//00005f6a  __cfstring
+						//00005f75  __data
+						//00005f7c  __bss
+						//00005f82  __message_refs
+						//00005f91  __cls_refs
+						//00005f9c  __class
+						//00005fa4  __meta_class
+						//00005fb1  __inst_meth
+						//00005fbd  __instance_vars
+						//00005fcd  __module_info
+						//00005fdb  __symbols
+						//00005fe5  __cls_meth
+						//00005ff0  __cat_cls_meth
+						//00005fff  __cat_inst_meth
+						//0000600f  __category
+						//0000601a  __image_info
+						//00006027  %s - %s
+						//0000602f  
+						//00006030  Unkown section in this segment
+						//0000604f  
+						//00006050  why not stop for a while and see what we copied?
+						//00006081  LC_SEGMENT_64
+						//0000608f  
+						//00006090  LC_SYMTAB - number of table entries %i
+						//000060b7  LC_DYSYMTAB
+						//000060c3  -- Index to local symbols %i
+						//000060e0  -- Number of local symbols %i
+						//000060fe  Local Symbol > %@ - %@
+						//00006115  
+						//00006116  
+						//00006117  
+						//00006118  -- Index of externally defined symbols %i
+						//00006142  
+						//00006143  
+						//00006144  -- Number of externally defined symbols %i
+						//0000616f  External Symbol > %@ - %@
+						//00006189  
+						//0000618a  
+						//0000618b  
+						//0000618c  -- Index of externally undefined symbols %i
+						//000061b8  -- Number of externally undefined symbols %i
+						//000061e5  
+						//000061e6  
+						//000061e7  
+						//000061e8  External Undefined Symbol > %@ - %@
+						//0000620c  -- Number of entries in table of contents %i
+						//00006239  
+						//0000623a  
+						//0000623b  
+						//0000623c  -- Number of module table entries %i
+						//00006261  
+						//00006262  
+						//00006263  
+						//00006264  -- Number of referenced symbol table entries %i
+						//00006294  DO THIS!
+						//0000629d  
+						//0000629e  
+						//0000629f  
+						//000062a0  -- Number of indirect symbol table entries %i
+						//000062ce  DO THIS! IndirectSymbol %i
+						//000062e9  
+						//000062ea  
+						//000062eb  
+						//000062ec  -- Number of external relocation entries %i
+						//00006318  Relocate symbol %i
+						//0000632b  
+						//0000632c  -- Number of of local relocation entries %i
+						//00006358  LC_THREAD
+						//00006362  LC_LOAD_DYLIB - %s
+						//00006375  LC_ID_DYLIB
+						//00006381  LC_PREBOUND_DYLIB
+						//00006393  LC_LOAD_DYLINKER %s
+						//000063a7  LC_ID_DYLINKER
+						//000063b6  LC_ROUTINES
+						//000063c2  LC_ROUTINES_64
+						//000063d1  LC_TWOLEVEL_HINTS
+						//000063e3  LC_SUB_FRAMEWORK
+						//000063f4  LC_SUB_UMBRELLA
+						//00006404  LC_SUB_LIBRARY
+						//00006413  LC_SUB_CLIENT
+						//00006421  
+						//00006422  
+						//00006423  
+						//00006424  unknown required load command 0x%08X
+						//00006449  -[MachoLoader doIt:]
+						//0000645e  total file size %i
+						//00006471  
+						//00006472  
+						//00006473  
+						//00006474  codeSize >= sizeof(*fatHeader)
+						//00006493  
+						//00006494  /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/Classes/MachoLoader.m
+						//000064ea  fatHeader->magic == FAT_MAGIC
+						//00006508  fatHeader->nfat_arch > 0
+						//00006521  
+						//00006522  
+						//00006523  
+						//00006524  codeSize >= (sizeof(*fatHeader) + (sizeof(*fatArchArray) * fatHeader->nfat_arch))
+						//00006576  ourArch != NULL
+						//00006586  
+						//00006587  
+						//00006588  There is no appropriate architecture within the fat file.\n
+						//000065c3  
+						//000065c4  (1 << bestFatArch->align) <= getpagesize()
+						//000065ef  bestFatArch->size <= codeSize
+						//0000660d  
+						//0000660e  
+						//0000660f  
+						//00006610  bestFatArch->offset <= codeSize
+						//00006630  (bestFatArch->size + bestFatArch->offset) <= codeSize
+						//00006666  Header %i
+						//00006670  PPC
+						//00006674  INTEL
+						//0000667a  UNKNOWN ARCHITECTURE
+						//0000668f  
+						//00006690  Inside the guts of an executable
+						//000066b1  sizeofcmds_bytes: %u
+						//000066c6  Load Commands %i
+						//000066d7  \\\\
+						//000066da  \\n
+						//000066dd  \\t
+						//000066e0  \\v
+						//000066e3  \\b
+						//000066e6  \\r
+						//000066e9  \\f
+						//000066ec  \\a
+						//000066ef  \\%03o
+						//000066f5  %08x  
+						//000066fc  _loadCommands
+						//0000670a  @"NSMutableArray"
+						//0000671c  codeAddr
+						//00006725  ^v
+						//00006728  codeSize
+						//00006731  I
+						//00006733  addresses_
+						//0000673e  @"NSMutableDictionary"
+						//00006755  symtable_ptr
+						//00006762  ^{nlist=(?="n_name"*"n_strx"i)CCsI}
+						//00006786  strtable
+						//0000678f  *
+						//00006791  doIt:
+						//00006797  v12@0:4@8
+						//000067a1  parseLoadCommands
+						//000067b3  v8@0:4
+						//000067ba  processSymbolItem:stringTable:
+						//000067d9  c16@0:4^{nlist_64=(?=I)CCSQ}8*12
+						//000067fa  addFunction:line:address:section:
+						//0000681c  v28@0:4@8i12Q16i24
+						//0000682f  initWithPath:
+						//0000683d  @12@0:4@8
+						//00006847  MachoLoader
+						//00006853  NSObject
+						//0000685c  addObject:
+						//00006867  numberWithUnsignedInteger:
+						//00006882  setTotalBoundsWithSize:label:
+						//000068a0  bytes
+						//000068a6  dataWithContentsOfFile:
+						//000068be  countByEnumeratingWithState:objects:count:
+						//000068e9  raise:format:
+						//000068f7  addRegionAtOffset:withSize:label:
+						//00006919  stringWithFormat:
+						//0000692b  sharedMapView
+						//00006939  stringWithCString:length:
+						//00006953  unsignedIntValue
+						//00006964  substringToIndex:
+						//00006976  rangeOfString:options:
+						//0000698d  length
+						//00006994  unsignedLongValue
+						//000069a6  numberWithUnsignedLongLong:
+						//000069c2  pathExtension
+						//000069d0  stringWithUTF8String:
+						//000069e6  objectForKey:
+						//000069f4  numberWithUnsignedLong:
+						//00006a0c  dataWithBytes:length:
+						//00006a22  alloc
+						//00006a28  retain
+						//00006a2f  array
+						//00006a35  init
+						//00006a3a  
+						//00006a3b  NSMutableArray
+						//00006a4a  NSMutableDictionary
+						//00006a5e  NSData
+						//00006a65  NSNumber
+						//00006a6e  NSString
+						//00006a77  FileMapView
+						//00006a83  NSException
+						//00006a8f  _beziers
+						//00006a98  _ypos
+						//00006a9e  f
+						//00006aa0  _totalSize
+						//00006aab  @8@0:4
+						//00006ab2  isFlipped
+						//00006abc  c8@0:4
+						//00006ac3  v20@0:4I8I12@16
+						//00006ad3  v16@0:4I8@12
+						//00006ae0  drawRect:
+						//00006aea  v24@0:4{_NSRect={_NSPoint=ff}{_NSSize=ff}}8
+						//00006b16  initWithFrame:
+						//00006b25  @24@0:4{_NSRect={_NSPoint=ff}{_NSSize=ff}}8
+						//00006b51  NSView
+						//00006b58  frame
+						//00006b5e  bezierPathWithRect:
+						//00006b72  addSubview:
+						//00006b7e  setFont:
+						//00006b87  labelFontOfSize:
+						//00006b98  setSelectable:
+						//00006ba7  setDrawsBackground:
+						//00006bbb  setBordered:
+						//00006bc8  setBezeled:
+						//00006bd4  setBackgroundColor:
+						//00006be8  clearColor
+						//00006bf3  setStringValue:
+						//00006c03  autorelease
+						//00006c0f  count
+						//00006c15  fill
+						//00006c1a  set
+						//00006c1e  colorWithDeviceRed:green:blue:alpha:
+						//00006c43  NSColor
+						//00006c4b  NSTextField
+						//00006c57  NSFont
+						//00006c5e  NSBezierPath
+						//00006c6b  applicationDidFinishLaunching:
+						//00006c8a  AppDelegate
+						//00006c96  executablePath
+						//00006ca5  mainBundle
+						//00006cb0  NSBundle
+						//00006cb9  0%@
+						//00006cbd  %02x
+						//00006cc2  dataWithHexString:
+						//00006cd5  hexString
+						//00006cdf  initWithHexString:
+						//00006cf2  BNZHex
+						//00006cf9  release
+						//00006d01  stringWithString:
+						//00006d13  appendFormat:
+						//00006d21  initWithData:
+						//00006d2f  dataWithData:
+						//00006d3d  mutableBytes
+						//00006d4a  dataWithLength:
+						//00006d5a  cStringUsingEncoding:
+						//00006d70  NSMutableData
+						//00006d7e  NSMutableString
+						
+					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
+					} else if ( strcmp(sectionName, "__const")==0 ) {
+
+						// 00006d90	00 00 f0 41 cd cc 4c 3f 33 33 33 3f 00 00 00 00 
+						// 00006da0	00 00 80 3f 00 00 20 41 00 00 48 43 00 00 04 42 
+						// 00006db0	00 00 10 41 00 00 a0 40 00 00 00 00 00 00 00 00 
+						// 00006dc0	00 00 00 00 00 00 e0 41 00 00 00 00 00 00 00 00
+					
+					// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
+					} else if ( strcmp(sectionName, "__symbol_stub")==0 ) {
+
+						//00006dd0	jmp	*0x0000703c
+						//00006dd6	jmp	*0x00007040
+						//00006ddc	jmp	*0x00007044
+						//00006de2	jmp	*0x00007048
+						//00006de8	jmp	*0x0000704c
+						//00006dee	jmp	*0x00007050
+						//00006df4	jmp	*0x00007054
+						//00006dfa	jmp	*0x00007058
+						//00006e00	jmp	*0x0000705c
+						//00006e06	jmp	*0x00007060
+						//00006e0c	jmp	*0x00007064
+						//00006e12	jmp	*0x00007068
+						//00006e18	jmp	*0x0000706c
+						//00006e1e	jmp	*0x00007070
+						//00006e24	jmp	*0x00007074
+						//00006e2a	jmp	*0x00007078
+						//00006e30	jmp	*0x0000707c
+						//00006e36	jmp	*0x00007080
+						//00006e3c	jmp	*0x00007084
+						//00006e42	jmp	*0x00007088
+						
+					// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+					} else if ( strcmp(sectionName, "__stub_helper")==0 ) {
+
+						//00006e48	cmpl	$0x00,0x0000701c
+						//00006e4f	jne	0x00006e5e
+						//00006e51	movl	%eax,0x04(%esp)
+						//00006e55	popl	%eax
+						//00006e56	xchgl	(%esp),%eax
+						//00006e59	jmpl	0x100002ac8
+						//00006e5e	addl	$0x04,%esp
+						//00006e61	pushl	$0x00007020
+						//00006e66	jmp	*0x0000701c
+						//00006e6c	pushl	$0x000000a3
+						//00006e71	pushl	$0x0000705c
+						//00006e76	jmpl	0x100006e48
+						//00006e7b	nop
+						//00006e7c	pushl	$0x00000097
+						//00006e81	pushl	$0x00007058
+						//00006e86	jmpl	0x100006e48
+						//00006e8b	nop
+						//00006e8c	pushl	$0x0000007f
+						//00006e91	pushl	$0x00007054
+						//00006e96	jmpl	0x100006e48
+						//00006e9b	nop
+						//00006e9c	pushl	$0x000000ba
+						//00006ea1	pushl	$0x00007060
+						//00006ea6	jmpl	0x100006e48
+						//00006eab	nop
+						//00006eac	pushl	$0x000000cd
+						//00006eb1	pushl	$0x00007064
+						//00006eb6	jmpl	0x100006e48
+						//00006ebb	nop
+						//00006ebc	pushl	$0x000000db
+						//00006ec1	pushl	$0x00007068
+						//00006ec6	jmpl	0x100006e48
+						//00006ecb	nop
+						//00006ecc	pushl	$0x000000e9
+						//00006ed1	pushl	$0x0000706c
+						//00006ed6	jmpl	0x100006e48
+						//00006edb	nop
+						//00006edc	pushl	$0x00000109
+						//00006ee1	pushl	$0x00007070
+						//00006ee6	jmpl	0x100006e48
+						//00006eeb	nop
+						//00006eec	pushl	$0x0000011d
+						//00006ef1	pushl	$0x00007074
+						//00006ef6	jmpl	0x100006e48
+						//00006efb	nop
+						//00006efc	pushl	$0x00000136
+						//00006f01	pushl	$0x00007078
+						//00006f06	jmpl	0x100006e48
+						//00006f0b	nop
+						//00006f0c	pushl	$0x00000150
+						//00006f11	pushl	$0x0000707c
+						//00006f16	jmpl	0x100006e48
+						//00006f1b	nop
+						//00006f1c	pushl	$0x0000015e
+						//00006f21	pushl	$0x00007080
+						//00006f26	jmpl	0x100006e48
+						//00006f2b	nop
+						//00006f2c	pushl	$0x0000016e
+						//00006f31	pushl	$0x00007084
+						//00006f36	jmpl	0x100006e48
+						//00006f3b	nop
+						//00006f3c	pushl	$0x0000017d
+						//00006f41	pushl	$0x00007088
+						//00006f46	jmpl	0x100006e48
+						//00006f4b	nop
+						//00006f4c	pushl	$0x0000006d
+						//00006f51	pushl	$0x00007050
+						//00006f56	jmpl	0x100006e48
+						//00006f5b	nop
+						//00006f5c	pushl	$0x00000059
+						//00006f61	pushl	$0x0000704c
+						//00006f66	jmpl	0x100006e48
+						//00006f6b	nop
+						//00006f6c	pushl	$0x0000003f
+						//00006f71	pushl	$0x00007048
+						//00006f76	jmpl	0x100006e48
+						//00006f7b	nop
+						//00006f7c	pushl	$0x00000026
+						//00006f81	pushl	$0x00007044
+						//00006f86	jmpl	0x100006e48
+						//00006f8b	nop
+						//00006f8c	pushl	$0x00000019
+						//00006f91	pushl	$0x00007040
+						//00006f96	jmpl	0x100006e48
+						//00006f9b	nop
+						//00006f9c	pushl	$0x00000000
+						//00006fa1	pushl	$0x0000703c
+						//00006fa6	jmpl	0x100006e48
+						//00006fab	nop
+						
+					} else if ( strcmp(sectionName, "__unwind_info")==0 ) {
+
+						//00006fb0	01 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 
+						//00006fc0	00 00 00 00 1c 00 00 00 02 00 00 00 00 00 00 00 
+						//00006fd0	34 00 00 00 34 00 00 00 f9 5f 00 00 00 00 00 00 
+						//00006fe0	34 00 00 00 03 00 00 00 0c 00 01 00 10 00 01 00 
+						//00006ff0	00 00 00 00 00 00 00 00 
+						
+					// DATA Segment sections
+					// otool -s __DATA __dyld -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+					} else if ( strcmp(sectionName, "__dyld")==0 ) {
+						// 00007000	00 10 e0 8f 08 10 e0 8f 00 10 00 00 48 75 00 00 
+						// 00007010	44 75 00 00 40 75 00 00 3c 75 00 00 
+
+					// otool -s __DATA __nl_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__nl_symbol_ptr")==0 ) {
+						// 0000701c	00 00 00 00 00 00 00 00 49 64 00 00 00 00 00 00 
+						// 0000702c	00 00 00 00 00 00 00 00 50 75 00 00 00 00 00 00 
+						
+					// otool -s __DATA __la_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__la_symbol_ptr")==0 ) {
+						
+					// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__cfstring")==0 ) {
+						print_cstring_section( sect_pointer, newSectSize, sect_addr );
+						
+					// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__data")==0 ) {
+						
+					// otool -s __DATA __bss -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__bss")==0 ) {
+					
+					// OBJC Segment sections
+					// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__message_refs")==0 ) {
+						//00008000  __TEXT:__cstring:addObject:
+						//00008004  __TEXT:__cstring:numberWithUnsignedInteger:
+						//00008008  __TEXT:__cstring:setTotalBoundsWithSize:label:
+						//0000800c  __TEXT:__cstring:bytes
+						//00008010  __TEXT:__cstring:dataWithContentsOfFile:
+						//00008014  __TEXT:__cstring:countByEnumeratingWithState:objects:count:
+						//00008018  __TEXT:__cstring:processSymbolItem:stringTable:
+						//0000801c  __TEXT:__cstring:raise:format:
+						//00008020  __TEXT:__cstring:addRegionAtOffset:withSize:label:
+						//00008024  __TEXT:__cstring:stringWithFormat:
+						//00008028  __TEXT:__cstring:sharedMapView
+						//0000802c  __TEXT:__cstring:stringWithCString:length:
+						//00008030  __TEXT:__cstring:unsignedIntValue
+						//00008034  __TEXT:__cstring:addFunction:line:address:section:
+						//00008038  __TEXT:__cstring:substringToIndex:
+						//0000803c  __TEXT:__cstring:rangeOfString:options:
+						//00008040  __TEXT:__cstring:length
+						//00008044  __TEXT:__cstring:unsignedLongValue
+						//00008048  __TEXT:__cstring:numberWithUnsignedLongLong:
+						//0000804c  __TEXT:__cstring:pathExtension
+						//00008050  __TEXT:__cstring:stringWithUTF8String:
+						//00008054  __TEXT:__cstring:objectForKey:
+						//00008058  __TEXT:__cstring:numberWithUnsignedLong:
+						//0000805c  __TEXT:__cstring:dataWithBytes:length:
+						//00008060  __TEXT:__cstring:parseLoadCommands
+						//00008064  __TEXT:__cstring:alloc
+						//00008068  __TEXT:__cstring:doIt:
+						//0000806c  __TEXT:__cstring:retain
+						//00008070  __TEXT:__cstring:array
+						//00008074  __TEXT:__cstring:init
+						//00008078  __TEXT:__cstring:frame
+						//0000807c  __TEXT:__cstring:bezierPathWithRect:
+						//00008080  __TEXT:__cstring:addSubview:
+						//00008084  __TEXT:__cstring:setFont:
+						//00008088  __TEXT:__cstring:labelFontOfSize:
+						//0000808c  __TEXT:__cstring:setSelectable:
+						//00008090  __TEXT:__cstring:setDrawsBackground:
+						//00008094  __TEXT:__cstring:setBordered:
+						//00008098  __TEXT:__cstring:setBezeled:
+						//0000809c  __TEXT:__cstring:setBackgroundColor:
+						//000080a0  __TEXT:__cstring:clearColor
+						//000080a4  __TEXT:__cstring:setStringValue:
+						//000080a8  __TEXT:__cstring:autorelease
+						//000080ac  __TEXT:__cstring:count
+						//000080b0  __TEXT:__cstring:fill
+						//000080b4  __TEXT:__cstring:set
+						//000080b8  __TEXT:__cstring:colorWithDeviceRed:green:blue:alpha:
+						//000080bc  __TEXT:__cstring:initWithFrame:
+						//000080c0  __TEXT:__cstring:initWithPath:
+						//000080c4  __TEXT:__cstring:executablePath
+						//000080c8  __TEXT:__cstring:mainBundle
+						//000080cc  __TEXT:__cstring:release
+						//000080d0  __TEXT:__cstring:stringWithString:
+						//000080d4  __TEXT:__cstring:appendFormat:
+						//000080d8  __TEXT:__cstring:initWithData:
+						//000080dc  __TEXT:__cstring:dataWithHexString:
+						//000080e0  __TEXT:__cstring:dataWithData:
+						//000080e4  __TEXT:__cstring:mutableBytes
+						//000080e8  __TEXT:__cstring:dataWithLength:
+						//000080ec  __TEXT:__cstring:cStringUsingEncoding:
+						
+					// otool -s __OBJC __cls_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__cls_refs")==0 ) {
+						//000080f0  __TEXT:__cstring:NSMutableArray
+						//000080f4  __TEXT:__cstring:NSMutableDictionary
+						//000080f8  __TEXT:__cstring:NSData
+						//000080fc  __TEXT:__cstring:NSNumber
+						//00008100  __TEXT:__cstring:NSString
+						//00008104  __TEXT:__cstring:FileMapView
+						//00008108  __TEXT:__cstring:NSException
+						//0000810c  __TEXT:__cstring:NSColor
+						//00008110  __TEXT:__cstring:NSTextField
+						//00008114  __TEXT:__cstring:NSFont
+						//00008118  __TEXT:__cstring:NSBezierPath
+						//0000811c  __TEXT:__cstring:NSBundle
+						//00008120  __TEXT:__cstring:MachoLoader
+						//00008124  __TEXT:__cstring:NSMutableData
+						//00008128  __TEXT:__cstring:NSMutableString
+
+					// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					} else if ( strcmp(sectionName, "__class")==0 ) {
+						//0000812c	bc 81 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
+						//0000813c	01 00 00 00 1c 00 00 00 e8 82 00 00 4c 82 00 00 
+						//0000814c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+						//0000815c	ec 81 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
+						//0000816c	01 00 00 00 5c 00 00 00 34 83 00 00 90 82 00 00 
+						//0000817c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+						//0000818c	1c 82 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
+						//0000819c	01 00 00 00 04 00 00 00 00 00 00 00 d4 82 00 00 
+						//000081ac	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+
+					// otool -s __OBJC __meta_class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
+					} else if ( strcmp(sectionName, "__meta_class")==0 ) {
+						//000081bc	53 68 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
+						//000081cc	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
+						//000081dc	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+						//000081ec	53 68 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
+						//000081fc	02 00 00 00 30 00 00 00 00 00 00 00 dc 83 00 00 
+						//0000820c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+						//0000821c	53 68 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
+						//0000822c	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
+						//0000823c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+					// otool -s __OBJC __inst_meth -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
+					} else if ( strcmp(sectionName, "__inst_meth")==0 ) {
+						//0000824c	00 00 00 00 05 00 00 00 91 67 00 00 97 67 00 00 
+						//0000825c	e1 45 00 00 a1 67 00 00 b3 67 00 00 f3 30 00 00 
+						//0000826c	ba 67 00 00 d9 67 00 00 ae 2d 00 00 fa 67 00 00 
+						//0000827c	1c 68 00 00 02 2d 00 00 2f 68 00 00 3d 68 00 00 
+						//0000828c	0c 2b 00 00 00 00 00 00 05 00 00 00 b2 6a 00 00 
+						//0000829c	bc 6a 00 00 68 58 00 00 f7 68 00 00 c3 6a 00 00 
+						//000082ac	17 53 00 00 82 68 00 00 d3 6a 00 00 c3 52 00 00 
+						//000082bc	e0 6a 00 00 ea 6a 00 00 27 51 00 00 16 6b 00 00 
+						//000082cc	25 6b 00 00 66 50 00 00 00 00 00 00 01 00 00 00 
+						//000082dc	6b 6c 00 00 97 67 00 00 7b 58 00 00
+
+					// otool -s __OBJC __instance_vars -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																		
+					} else if ( strcmp(sectionName, "__instance_vars")==0 ) {
+						//000082e8	06 00 00 00 fc 66 00 00 0a 67 00 00 04 00 00 00 
+						//000082f8	1c 67 00 00 25 67 00 00 08 00 00 00 28 67 00 00 
+						//00008308	31 67 00 00 0c 00 00 00 33 67 00 00 3e 67 00 00 
+						//00008318	10 00 00 00 55 67 00 00 62 67 00 00 14 00 00 00 
+						//00008328	86 67 00 00 8f 67 00 00 18 00 00 00 03 00 00 00 
+						//00008338	8f 6a 00 00 0a 67 00 00 50 00 00 00 98 6a 00 00 
+						//00008348	9e 6a 00 00 54 00 00 00 a0 6a 00 00 31 67 00 00 
+						//00008358	58 00 00 00 
+
+					// otool -s __OBJC __module_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
+					} else if ( strcmp(sectionName, "__module_info")==0 ) {
+
+					// otool -s __OBJC __symbols -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
+					} else if ( strcmp(sectionName, "__symbols")==0 ) {
+
+					// otool -s __OBJC __cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																													
+					} else if ( strcmp(sectionName, "__cls_meth")==0 ) {
+
+					// otool -s __OBJC __cat_cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																			
+					} else if ( strcmp(sectionName, "__cat_cls_meth")==0 ) {
+
+					// otool -s __OBJC __cat_inst_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+					} else if ( strcmp(sectionName, "__cat_inst_meth")==0 ) {
+
+					// otool -s __OBJC __category -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+					} else if ( strcmp(sectionName, "__category")==0 ) {
+
+					// otool -s __OBJC __image_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+					} else if ( strcmp(sectionName, "__image_info")==0 ) {
+						
+					} else {
+						[NSException raise:@"Unkown section in this segment" format:@"%s - %s", segmentName_2, sectionName];
 					}
 					NSLog(@"why not stop for a while and see what we copied?");
 				}
@@ -454,32 +1064,32 @@ void readHeaderFlags( uint32_t flags ) {
 			// This load command describes the dynamic symbol table. This is how the dynamic linker knows to plug the stubs (indirect).
 			const struct dysymtab_command* dsymtab = (struct dysymtab_command*)cmd;
 			NSLog(@"LC_DYSYMTAB");
-			
-			The dynamic symbol table in Mach-O is surprisingly simple. Each entry in the table is just a 32bit index into the symbol table. The dynamic symbol table is just a list of indexes and nothing else.
-				
-				
-				Take a look at the definition for a Mach-O section:
-					
-					struct section_64 { /* for 64-bit architectures */
-						char    sectname[16]; /* name of this section */
-						char    segname[16];  /* segment this section goes in */
-						uint64_t  addr;   /* memory address of this section */
-						uint64_t  size;   /* size in bytes of this section */
-						uint32_t  offset;   /* file offset of this section */
-						uint32_t  align;    /* section alignment (power of 2) */
-						uint32_t  reloff;   /* file offset of relocation entries */
-						uint32_t  nreloc;   /* number of relocation entries */
-						uint32_t  flags;    /* flags (section type and attributes)*/
-						uint32_t  reserved1;  /* reserved (for offset or index) */
-						uint32_t  reserved2;  /* reserved (for count or sizeof) */
-						uint32_t  reserved3;  /* reserved */
-					};
-			It turns out that the fields reserved1 and reserved2 are useful too.
-			
-			If a section_64 structure is describing a symbol_stub or __la_symbol_ptr sections (read the previous post to learn about these sections), then the reserved1 field hold the index into the dynamic symbol table for the sections entries in the table.
-				
-				symbol_stub sections also make use of the reserved2 field; the size of a single stub entry is stored in reserved2 otherwise, the field is set to 0.
-			
+//
+//	The dynamic symbol table in Mach-O is surprisingly simple. Each entry in the table is just a 32bit index into the symbol table. The dynamic symbol table is just a list of indexes and nothing else.
+//
+//
+//	Take a look at the definition for a Mach-O section:
+//
+//	struct section_64 { /* for 64-bit architectures */
+//	char    sectname[16]; /* name of this section */
+//	char    segname[16];  /* segment this section goes in */
+//	uint64_t  addr;   /* memory address of this section */
+//	uint64_t  size;   /* size in bytes of this section */
+//	uint32_t  offset;   /* file offset of this section */
+//	uint32_t  align;    /* section alignment (power of 2) */
+//	uint32_t  reloff;   /* file offset of relocation entries */
+//	uint32_t  nreloc;   /* number of relocation entries */
+//	uint32_t  flags;    /* flags (section type and attributes)*/
+//	uint32_t  reserved1;  /* reserved (for offset or index) */
+//	uint32_t  reserved2;  /* reserved (for count or sizeof) */
+//	uint32_t  reserved3;  /* reserved */
+//	};
+//	It turns out that the fields reserved1 and reserved2 are useful too.
+//
+//	If a section_64 structure is describing a symbol_stub or __la_symbol_ptr sections (read the previous post to learn about these sections), then the reserved1 field hold the index into the dynamic symbol table for the sections entries in the table.
+//
+//	symbol_stub sections also make use of the reserved2 field; the size of a single stub entry is stored in reserved2 otherwise, the field is set to 0.
+
 			
 			
 			/*
@@ -528,6 +1138,8 @@ void readHeaderFlags( uint32_t flags ) {
 			//uint32_t nundefsym;	/* number of undefined symbols */
 			NSLog(@"-- Index of externally undefined symbols %i", dsymtab->iundefsym);
 			NSLog(@"-- Number of externally undefined symbols %i", dsymtab->nundefsym);
+			
+			// TODO: use the indirect symbol table to match this index (i) to an address in the dissasembly 
 			for( int i=dsymtab->iundefsym; i<(dsymtab->iundefsym+dsymtab->nundefsym); i++)
 			{
 				struct nlist symbol = symtable_ptr[i];
@@ -616,7 +1228,10 @@ void readHeaderFlags( uint32_t flags ) {
 				const uint32_t* indirectTable = (uint32_t*)(codeAddr + dsymtab->indirectsymoff);
 				for( int i=0; i<dsymtab->nindirectsyms; i++){
 					uint32_t indirectSymbol = indirectTable[i];
-					NSLog(@"DO THIS! IndirectSymbol %i", indirectSymbol);
+					trying to generate the symbol table!
+					ABSOLUTE 1073741824
+					LOCAL -2147483648
+					NSLog(@"DO THIS! IndirectSymbol %i", address, indirectSymbol);
 				}
 			}
 			
@@ -774,7 +1389,7 @@ void readHeaderFlags( uint32_t flags ) {
 		assert( codeSize >= sizeof(*fatHeader) );
 		fatHeader->magic     = OSSwapBigToHostInt32(fatHeader->magic);
 		fatHeader->nfat_arch = OSSwapBigToHostInt32(fatHeader->nfat_arch);
-		
+
 		assert(fatHeader->magic == FAT_MAGIC);
 		assert(fatHeader->nfat_arch > 0);
 		assert( codeSize >= (sizeof(*fatHeader) + (sizeof(*fatArchArray) * fatHeader->nfat_arch)) );
@@ -862,5 +1477,118 @@ void readHeaderFlags( uint32_t flags ) {
 		}
 	}
 }
+
+
+static void print_cstring_char( char c ) {
+	
+	if(isprint(c)){
+	    if(c == '\\')	/* backslash */
+			printf("\\\\");
+	    else		/* all other printable characters */
+			printf("%c", c);
+	}
+	else{
+	    switch(c){
+			case '\n':		/* newline */
+				printf("\\n");
+				break;
+			case '\t':		/* tab */
+				printf("\\t");
+				break;
+			case '\v':		/* vertical tab */
+				printf("\\v");
+				break;
+			case '\b':		/* backspace */
+				printf("\\b");
+				break;
+			case '\r':		/* carriage return */
+				printf("\\r");
+				break;
+			case '\f':		/* formfeed */
+				printf("\\f");
+				break;
+			case '\a':		/* audiable alert */
+				printf("\\a");
+				break;
+			default:
+				printf("\\%03o", (unsigned int)c);
+	    }
+	}
+}
+
+
+// -- see cctools-782 otool ofile_print.c
+void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr ) {
+
+    uint32_t i;
+	
+	for(i = 0; i < sect_size ; i++){
+
+		printf("%08x  ", (unsigned int)(sect_addr + i));
+		
+	    for( ; i < sect_size && sect[i] != '\0'; i++)
+			print_cstring_char(sect[i]);
+	    if(i < sect_size && sect[i] == '\0')
+			printf("\n");
+	}
+}
+
+
+// Indirect symbol table
+//0x00006dd0   171 
+//0x00006dd6   172 
+//0x00006ddc   173 
+//0x00006de2   174 
+//0x00006de8   177 
+//0x00006dee   178 
+//0x00006df4   179 
+//0x00006dfa   182 
+//0x00006e00   183 
+//0x00006e06   184 
+//0x00006e0c   186 
+//0x00006e12   187 
+//0x00006e18   188 
+//0x00006e1e   189 
+//0x00006e24   190 
+//0x00006e2a   191 
+//0x00006e30   192 
+//0x00006e36   193 
+//0x00006e3c   194 
+//0x00006e42   195
+//
+//Indirect symbols for (__DATA,__nl_symbol_ptr) 8 entries
+//address    index
+//0x0000701c ABSOLUTE
+//0x00007020 ABSOLUTE
+//0x00007024 LOCAL
+//0x00007028   181 
+//0x0000702c   185 
+//0x00007030   175 
+//0x00007034 LOCAL
+//0x00007038   180
+//
+//Indirect symbols for (__DATA,__la_symbol_ptr) 20 entries
+//address    index
+//0x0000703c   171 
+//0x00007040   172 
+//0x00007044   173 
+//0x00007048   174 
+//0x0000704c   177 
+//0x00007050   178 
+//0x00007054   179 
+//0x00007058   182 
+//0x0000705c   183 
+//0x00007060   184 
+//0x00007064   186 
+//0x00007068   187 
+//0x0000706c   188 
+//0x00007070   189 
+//0x00007074   190 
+//0x00007078   191 
+//0x0000707c   192 
+//0x00007080   193 
+//0x00007084   194 
+//0x00007088   195 
+
 
 @end

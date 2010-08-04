@@ -6,14 +6,11 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-
-
 @interface StringCounter : NSObject {
 
 	NSMutableDictionary	*_allStrings;
 	NSMutableArray		*_sortedCounts, *_sortedStrings;
-	BOOL					_isSorted;
+	BOOL				_isSorted;
 }
 
 NSInteger alphabeticSort(id string1, id string2, void *reverse);

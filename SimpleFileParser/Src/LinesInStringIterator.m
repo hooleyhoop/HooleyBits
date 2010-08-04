@@ -1,17 +1,17 @@
 //
-//  InputParse.m
+//  LinesInStringIterator.m
 //  SimpleFileParser
 //
 //  Created by Steven Hooley on 09/06/2010.
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-#import "InputParse.h"
+#import "LinesInStringIterator.h"
 
 
-@implementation InputParse
+@implementation LinesInStringIterator
 
-+ (id)parserWithString:(NSString *)val {
++ (id)iteratorWithString:(NSString *)val {
 	return [[[self alloc] initWithString:val] autorelease];
 }
 
@@ -39,7 +39,7 @@
 	[_fileString enumerateLinesUsingBlock:enumerateBlock];
 }
 
-- (void)setConsumer:(NSObject <iConsumeLines>*)arg {
+- (void)setConsumer:(NSObject<iConsumeLines> *)arg {
 	_consumer = [arg retain];
 }
 

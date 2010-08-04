@@ -53,7 +53,7 @@
 	STAssertTrue( c==NSOrderedDescending, nil );
 }
 
--- here
+// TODO: -- here
 - (void)processInstruction:(NSString *)instruction argument:(NSString *)arguments {
 	
 	// record unique instructions

@@ -18,7 +18,7 @@
 @synthesize window;
 @synthesize viewController;
 
-
+use mach-0 loader to get the address of the _cstring section.  replace addressess in the disassembly with the relevant string literals
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
 	logInfo(@"Running..");

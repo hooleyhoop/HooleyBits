@@ -1,15 +1,15 @@
 //
-//  InputParseTests.m
+//  LinesInStringIteratorTests.m
 //  SimpleFileParser
 //
 //  Created by Steven Hooley on 09/06/2010.
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-#import "InputParse.h"
+#import "LinesInStringIterator.h"
 #import "iConsumeLines.h"
 
-@interface InputParseTests : SenTestCase <iConsumeLines> {
+@interface LinesInStringIteratorTests : SenTestCase <iConsumeLines> {
 	
 	NSMutableArray *_consumedLines;
 }
@@ -17,7 +17,7 @@
 @end
 
 
-@implementation InputParseTests
+@implementation LinesInStringIteratorTests
 
 - (void)setUp {
 	_consumedLines = [[NSMutableArray array] retain];
@@ -33,7 +33,7 @@
 
 - (void)testParseLines {
 	
-	InputParse *parser = [InputParse parserWithString:@"You are \n\n a son of a gun \n \n and i hope this works"];
+	LinesInStringIterator *lineIterator = [LinesInStringIterator iteratorWithString:@"You are \n\n a son of a gun \n \n and i hope this works"];
 	
 	NSArray *expectedResults = [NSArray arrayWithObjects:
 								@"You are ",
@@ -43,8 +43,8 @@
 								@" and i hope this works",
 								nil];
 	
-	[parser setConsumer:self];
-	[parser doIt];
+	[lineIterator setConsumer:self];
+	[lineIterator doIt];
 
 	for (NSUInteger i=0; i<[expectedResults count]; i++)
 	{

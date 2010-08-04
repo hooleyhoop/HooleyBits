@@ -11,7 +11,7 @@
 
 - (void)newCodeBlockWithName:(NSString *)funcName;
 
--- this will change
+//-- this will change
 - (void)addCodeLine:(NSString *)codeLine;
 
 @end

@@ -7,13 +7,9 @@
 //
 
 #import "SimpleFileParserAppDelegate.h"
+
 #import "TokenArray.h"
 #import "ArgumentScanner.h"
-#import "StringCounter.h"
-#import "CodeBlockFactory.h"
-#import "CodeBlockStore.h"
-#import "DissasemblerGroker.h"
-#import "InputParse.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -25,7 +21,7 @@
 // http://programminggroundup.blogspot.com/2007/01/appendix-b-common-x86-instructions.html
 // http://siyobik.info/index.php?module=x86
 
-+ (NSArray *)knownInstructions {
++ (NSArray *)_disabled_knownInstructions {
 	
 	static NSArray *knownInstructions;
 	if(knownInstructions == nil)
@@ -439,52 +435,42 @@ nil] retain];
 	return knownInstructions;
 }
 
-- (BOOL)isKnownInstruction:(NSString *)instruction {
+/* Useful Dyld enviro variables */
+// DYLD_PRINT_BINDINGS 
+// DYLD_NO_PIE
+// DYLD_PRINT_SEGMENTS
+// DYLD_PRINT_LIBRARIES
 
-	NSArray *knownInstructions = [SimpleFileParserAppDelegate knownInstructions];
-	BOOL isFound = [knownInstructions containsObject:instruction];
-//	if(!isFound){
-//		NSLog(@"oopps %i", [knownInstructions indexOfObjectIdenticalTo:instruction]);
-//	}
-	return isFound;
-}
-
-
-// DYLD_PRINT_BINDINGS DYLD_NO_PIE DYLD_PRINT_SEGMENTS DYLD_PRINT_LIBRARIES
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-	_codeBlockStore = [[CodeBlockStore alloc] init];
-	_codeBlockfactory = [[CodeBlockFactory alloc] init];
-	[_codeBlockfactory setStore:_codeBlockStore];
-	_groker = [[DissasemblerGroker alloc] init];
-
-	[_groker setDelegate:_codeBlockfactory];
-
-	_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];
-	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
-	
-	_allInstructions = [[[StringCounter alloc] init] autorelease];
-	_allOpCodeFormats = [[[StringCounter alloc] init] autorelease];
-	_allArgumentFormats = [[[StringCounter alloc] init] autorelease];
-	
 	// strip the app to desired architectire
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
+
+	NSError *outError;
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
+	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
+	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
+	
+	AppDisassembly *dissasembled =  [AppDisassembly createFromOtoolOutput:fileString];
+
+
+
+//err! where has it gone?	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
+	
+//err! where has it gone?	_allInstructions = [[[StringCounter alloc] init] autorelease];
+//err! where has it gone?	_allOpCodeFormats = [[[StringCounter alloc] init] autorelease];
+//err! where has it gone?	_allArgumentFormats = [[[StringCounter alloc] init] autorelease];
+	
+
 	
 	// otool
 	// otool -t /Applications/Foo.app/Contents/MacOS/Foo >> data.txt			-- just data
 	// otool -t -v -V /Applications/Foo.app/Contents/MacOS/Foo >> data.txt		-- decompiled
 	// otool -t -v -V /Applications/Foo.app/Contents/MacOS/Foo >> data.txt		-- decompiled with symbols
 	
-	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
-	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 
-	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	
-	// parse the file
-	_inputParser = [[InputParse parserWithString:fileString] retain];
-	[_inputParser setConsumer:_groker];
-	[_inputParser doIt];
+
 	 
 
 
@@ -495,10 +481,10 @@ nil] retain];
 //	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 //	NSLog(@"%@", allUnknownArguments);
 	
-	NSArray *allUnknownInstructions = [_unknownInstructions allObjects];
-	allUnknownInstructions = [allUnknownInstructions sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
-	if([allUnknownInstructions count])
-		NSLog(@"WARNING! UNKNOWN %@", allUnknownInstructions);
+//err! where has it gone?	NSArray *allUnknownInstructions = [_unknownInstructions allObjects];
+//err! where has it gone?	allUnknownInstructions = [allUnknownInstructions sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
+//err! where has it gone?	if([allUnknownInstructions count])
+//err! where has it gone?		NSLog(@"WARNING! UNKNOWN %@", allUnknownInstructions);
 
 	
 	// sort using a selector
@@ -509,15 +495,15 @@ nil] retain];
 	//	NSLog(@"woo %@", allInstruct );
 //	}
 	
-	[_allArgumentFormats sort];
-	NSArray *allPatternCounts = [_allArgumentFormats sortedCounts];
-	NSArray *allPatternStrings = [_allArgumentFormats sortedStrings];
+//err! where has it gone?	[_allArgumentFormats sort];
+//err! where has it gone?	NSArray *allPatternCounts = [_allArgumentFormats sortedCounts];
+//err! where has it gone?	NSArray *allPatternStrings = [_allArgumentFormats sortedStrings];
 
 //	NSAssert([allPatternCounts count]==[allPatternStrings count], @"nah %i, %i", [allPatternCounts count],[allPatternStrings count] );
 	
-	for( NSUInteger i=0; i<[allPatternStrings count]; i++ ) {
-		NSLog(@"%@", [allPatternStrings objectAtIndex:i] );
-	}
+//err! where has it gone?	for( NSUInteger i=0; i<[allPatternStrings count]; i++ ) {
+//err! where has it gone?		NSLog(@"%@", [allPatternStrings objectAtIndex:i] );
+//err! where has it gone?	}
 	
 //	NSString *mostFrequentFormat;
 //	uint occurance=0, maxOccurance = 0;

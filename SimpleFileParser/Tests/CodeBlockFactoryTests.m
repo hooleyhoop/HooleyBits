@@ -79,10 +79,10 @@
 	[_mockStore verify];
 }
 
-@"start:"
-@"-(BOOL)[FilterComboBox textView:shouldChangeTextInRange:replacementString:]"
-@"-(void)[IdeasOrganiserBitmapButton setEnabled:]"
-@"+(void)[IdeasOrganiserBitmapButton fake:]"
+//@"start:"
+//@"-(BOOL)[FilterComboBox textView:shouldChangeTextInRange:replacementString:]"
+//@"-(void)[IdeasOrganiserBitmapButton setEnabled:]"
+//@"+(void)[IdeasOrganiserBitmapButton fake:]"
 
 
 
