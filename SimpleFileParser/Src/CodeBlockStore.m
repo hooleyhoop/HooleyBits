@@ -107,4 +107,23 @@
 	return _codeBlockStore;
 }
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len {
+	
+	CodeBlock *currentBlock;
+
+	NSUInteger total = [self blockCount];
+    NSUInteger batchCount=0;
+    while( state->state<total && batchCount<len )
+    {
+        stackbuf[batchCount] = [_codeBlockStore objectAtIndex:state->state];
+        state->state++;
+        batchCount++;
+    }
+	
+    state->itemsPtr = stackbuf;
+    state->mutationsPtr = (unsigned long *)self;
+	
+    return batchCount;
+}
+
 @end

@@ -449,8 +449,10 @@ nil] retain];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	
-	AppDisassembly *dissasembled =  [AppDisassembly createFromOtoolOutput:fileString];
-
+	_dissasembled =  [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+	
+	// This is asyncronous. Need to rethink some stuff
+	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];
 
 
 //err! where has it gone?	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
@@ -473,7 +475,7 @@ nil] retain];
 
 
 	// -- read it a line at a time. -- try niave aproach
-	int reverseSort = NO;
+//	int reverseSort = NO;
 	
 //	NSArray *allUnknownArguments = [_unknownArguments allObjects];
 //	allUnknownArguments = [allUnknownArguments sortedArrayUsingFunction:alphabeticSort context:&reverseSort];

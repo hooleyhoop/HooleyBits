@@ -19,4 +19,6 @@
 
 - (NSUInteger)address;
 
+- (NSString *)prettyString;
+
 @end

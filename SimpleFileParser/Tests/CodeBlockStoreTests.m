@@ -163,5 +163,30 @@
 	STAssertTrue([blocks objectAtIndex:1]==aBlock2, nil);
 }
 
+- (void)testForEach {
+	// - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
+
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
+	CodeBlock *block2 = [CodeBlock blockWithName:nil];
+	CodeBlock *block3 = [CodeBlock blockWithName:nil];
+
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+	CodeLine *line3 = [CodeLine lineWithAddress:30];	
+	
+	[block1 pushLine:line1];
+	[block2 pushLine:line2];
+	[block3 pushLine:line3];
+	
+	[_cbs addCodeBlock:block1];
+	[_cbs addCodeBlock:block2];
+	[_cbs addCodeBlock:block3];
+	
+	NSUInteger i = 0;
+	for( id each in _cbs ) {
+		STAssertTrue( each==[_cbs blockAtIndex:i], nil );
+		i++;
+	}
+}
 
 @end

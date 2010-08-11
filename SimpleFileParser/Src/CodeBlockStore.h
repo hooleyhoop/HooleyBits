@@ -21,4 +21,6 @@
 - (CodeBlock *)blockAtIndex:(NSUInteger)ind;
 - (NSArray *)allBlocks;
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len;
+
 @end

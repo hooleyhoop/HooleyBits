@@ -48,4 +48,8 @@
 	return _address;
 }
 
+- (NSString *)prettyString {
+	return @"still some work todo then";
+}
+
 @end

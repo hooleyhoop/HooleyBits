@@ -13,6 +13,7 @@
 
 	CodeBlockStore	*_blockStore;
 	CodeBlock		*_currenBlock;
+	NSUInteger		_anonFunctionCount;
 }
 
 + (id)factoryWithStore:(CodeBlockStore *)str;

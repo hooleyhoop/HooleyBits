@@ -6,9 +6,11 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
+#import "iParseSrc.h"
+
 @class CodeBlockStore, CodeBlockFactory;
 
-@interface OtoolDisassemblyParser : NSObject {
+@interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
 	CodeBlockStore		*_codeBlockStore;
 	CodeBlockFactory	*_codeBlockfactory;
@@ -18,7 +20,7 @@
 
 @property (retain) CodeBlockStore *codeBlockStore;
 
-+ (id)constructInternalRepresentation:(NSString *)fileString;
++ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString;
 + (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString;
 
 - (id)initWithSrcString:(NSString *)fileString;

@@ -23,7 +23,7 @@
 
 @synthesize codeBlockStore = _codeBlockStore;
 
-+ (id)constructInternalRepresentation:(NSString *)fileString {
++ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString {
 
 	OtoolDisassemblyParser *parser = [self OtoolDisassemblyParserWithSrcString:fileString];
 	return parser.codeBlockStore;
@@ -66,7 +66,7 @@
 			[_codeBlockfactory newCodeBlockWithName:lineText];
 			break;
 		case BLOCK_LINE:
-			[self _tokeniseLine:lineText];
+//			[self _tokeniseLine:lineText];
 			[_codeBlockfactory addCodeLine:lineText];
 			break;
 			
@@ -78,22 +78,28 @@
 
 // TODO: -- here
 - (void)_tokeniseLine:(NSString *)aLine {
-	
-	NSString *instruction=nil, *arguments=nil, *functionHint=nil;
-	
+		
 	NSArray *components = worderize( aLine );
-	
+
 	// not optional
-	id lineOffset = [components objectAtIndex:0];
-	id address = [components objectAtIndex:1];
-	id code = [components objectAtIndex:2];
-	instruction = [components objectAtIndex:3];
-	
+	NSString *lineOffset = [components objectAtIndex:0];
+	NSString *address = [components objectAtIndex:1];
+	NSString *code = [components objectAtIndex:2];
+	NSString *instruction = [components objectAtIndex:3];
+
+	NSString *arguments=nil, *functionHint=nil;
+
 	// optional
 	if([components count]>=5)
 		arguments = [components objectAtIndex:4];
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];
+
+//TODO: like this!	
+//	TokenArray *tkns1 = [TokenArray tokensWithString:@"%eax,%es:(%eax)"];
+//	[tkns1 secondPass];
+//	ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+	
 	
 	if(instruction){
 		BOOL isKnown = [self isKnownInstruction:instruction];

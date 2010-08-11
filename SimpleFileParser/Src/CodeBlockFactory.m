@@ -28,6 +28,7 @@
 
 	self = [super init];
 	if(self){
+		_anonFunctionCount = 0;
 		_blockStore = [str retain];
 	}
 	return self;
@@ -47,8 +48,11 @@
 
 	if(funcName)
 		NSLog(@"Name-- %@", funcName);
-	
-	CodeBlock *newBlock = [CodeBlock blockWithName:nil];
+	else {
+		funcName = [NSString stringWithFormat:@"%lu", _anonFunctionCount++];
+	}
+
+	CodeBlock *newBlock = [CodeBlock blockWithName:funcName];
 	[self setCurrentBlock:newBlock];
 }
 

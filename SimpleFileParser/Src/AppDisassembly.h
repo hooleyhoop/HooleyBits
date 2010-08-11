@@ -5,14 +5,22 @@
 //  Created by Steven Hooley on 04/08/2010.
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
+#import "iAmOutputFormatterCallback.h"
 
-@interface AppDisassembly : NSObject {
+@class CodeBlockStore, OutputFormatter;
 
-	id _internalRepresentation;
+@interface AppDisassembly : NSObject <iAmOutputFormatterCallback> {
+
+	CodeBlockStore		*_internalRepresentation;
+	
+	// wish this wasn't here - wrong level
+	OutputFormatter		*_of;
 }
 
 + (id)createFromOtoolOutput:(NSString *)fileString;
 
 - (id)initWithOtoolOutput:(NSString *)fileString;
+
+- (void)outputToFile:(NSString *)fileName;
 
 @end

@@ -221,5 +221,24 @@
 	STAssertTrue([block1 lineCount]==2, nil);
 }
 
+- (void)testForEach {
+	// - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
+
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
+
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+	CodeLine *line3 = [CodeLine lineWithAddress:30];	
+
+	[block1 pushLine:line1];
+	[block1 pushLine:line2];
+	[block1 pushLine:line3];
+
+	NSUInteger i = 0;
+	for( id each in block1 ) {
+		STAssertTrue( each==[block1 lineAtIndex:i], nil );
+		i++;
+	}
+}
 
 @end

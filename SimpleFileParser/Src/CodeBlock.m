@@ -105,4 +105,29 @@
 	return [_lineStore objectAtIndex:ind];
 }
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len {
+
+	CodeLine *currentLine;
+	
+	NSUInteger total = [self lineCount];
+    NSUInteger batchCount=0;
+    while( state->state<total && batchCount<len )
+    {
+        stackbuf[batchCount] = [_lineStore objectAtIndex:state->state];
+        state->state++;
+        batchCount++;
+    }
+	
+    state->itemsPtr = stackbuf;
+    state->mutationsPtr = (unsigned long *)self;
+	
+    return batchCount;
+}
+
+- (NSString *)prettyBlockTitle {
+
+	NSAssert(_name!=nil, @"each block needs a name or a way to calculate a name");
+	return _name;
+}
+
 @end

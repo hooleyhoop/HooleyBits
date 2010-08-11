@@ -8,6 +8,7 @@
 
 #import "AppDisassembly.h"
 #import "OtoolDisassemblyParser.h"
+#import "OutputFormatter.h"
 
 @implementation AppDisassembly
 
@@ -29,9 +30,23 @@
 
 - (void)dealloc {
 
+	NSAssert( _of==nil, @"Are we still outputting?");
+
 	[_internalRepresentation release];
 
 	[super dealloc];
+}
+
+- (void)outputToFile:(NSString *)fn {
+
+	_of = [[OutputFormatter alloc] initWithCodeBlockStore:_internalRepresentation fileName:fn owner:self];
+	[_of print];
+}
+
+- (void)_outputFormatterDidFinish {
+
+	[_of release];
+	_of = nil;
 }
 
 @end

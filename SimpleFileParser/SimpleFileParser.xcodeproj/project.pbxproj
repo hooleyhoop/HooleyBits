@@ -13,7 +13,7 @@
 		73100010120994A100AE9F6B /* OtoolDisassemblyParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310000F120994A100AE9F6B /* OtoolDisassemblyParserTests.m */; };
 		731000E21209C46C00AE9F6B /* SourceLineCategorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000E11209C46C00AE9F6B /* SourceLineCategorizer.m */; };
 		731000E31209C46C00AE9F6B /* SourceLineCategorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000E11209C46C00AE9F6B /* SourceLineCategorizer.m */; };
-		731000EB1209C4BD00AE9F6B /* SourceLineCategorizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000EA1209C4BD00AE9F6B /* SourceLineCategorizerTests.m */; };
+		731002491209D3E200AE9F6B /* SourceLineCategorizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000EA1209C4BD00AE9F6B /* SourceLineCategorizerTests.m */; };
 		7310FE02120979A100AE9F6B /* CodeBlockFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FA11DC97AC008DD4E2 /* CodeBlockFactoryTests.m */; };
 		7310FE1412097A2700AE9F6B /* CodeBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F61D11DC9B55008DD4E2 /* CodeBlockTests.m */; };
 		7310FE1E12097A3700AE9F6B /* CodeBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */; };
@@ -28,6 +28,8 @@
 		7310FF14120988E000AE9F6B /* LinesInStringIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF13120988E000AE9F6B /* LinesInStringIterator.m */; };
 		7310FF15120988E000AE9F6B /* LinesInStringIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF13120988E000AE9F6B /* LinesInStringIterator.m */; };
 		7310FF171209895C00AE9F6B /* LinesInStringIteratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF161209895C00AE9F6B /* LinesInStringIteratorTests.m */; };
+		732CB0401211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
+		732CB0411211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
@@ -68,6 +70,13 @@
 		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C56211C504CB00C93934 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
+		73F5E72912129EC200869E96 /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E72812129EC200869E96 /* FileWriter.m */; };
+		73F5E72A12129EC200869E96 /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E72812129EC200869E96 /* FileWriter.m */; };
+		73F5E72F12129EDA00869E96 /* FileWriterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E72E12129EDA00869E96 /* FileWriterTests.m */; };
+		73F5E7B91212A34200869E96 /* OutputFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E7B81212A34200869E96 /* OutputFormatterTests.m */; };
+		73F5E8931212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */; };
+		73F5E8941212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */; };
+		73F5E8991212B1FE00869E96 /* CodeBlocksEnumeratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F5E8981212B1FE00869E96 /* CodeBlocksEnumeratorTests.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -216,6 +225,8 @@
 		7310FF161209895C00AE9F6B /* LinesInStringIteratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinesInStringIteratorTests.m; path = Tests/LinesInStringIteratorTests.m; sourceTree = "<group>"; };
 		731D459D11CA19DC002964DC /* SHDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHDebugger.h; path = Src/SHDebugger.h; sourceTree = "<group>"; };
 		731D459E11CA19DC002964DC /* SHDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SHDebugger.mm; path = Src/SHDebugger.mm; sourceTree = "<group>"; };
+		732CB03E1211501F0019B5BC /* OutputFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutputFormatter.h; path = Src/OutputFormatter.h; sourceTree = "<group>"; };
+		732CB03F1211501F0019B5BC /* OutputFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutputFormatter.m; path = Src/OutputFormatter.m; sourceTree = "<group>"; };
 		732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleFileParserAppDelegate.m; path = Src/SimpleFileParserAppDelegate.m; sourceTree = "<group>"; };
 		732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleFileParserAppDelegate.h; path = Src/SimpleFileParserAppDelegate.h; sourceTree = "<group>"; };
 		732CFCD911BF9E5E008030ED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
@@ -290,6 +301,14 @@
 		73F1C4E911C4DC4800C93934 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicToken.h; path = Src/BasicToken.h; sourceTree = "<group>"; };
 		73F1C4EA11C4DC4800C93934 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicToken.m; path = Src/BasicToken.m; sourceTree = "<group>"; };
 		73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicTokenTests.m; path = Tests/BasicTokenTests.m; sourceTree = "<group>"; };
+		73F5E71812129C3C00869E96 /* iAmOutputFormatterCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iAmOutputFormatterCallback.h; path = Src/iAmOutputFormatterCallback.h; sourceTree = "<group>"; };
+		73F5E72712129EC200869E96 /* FileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileWriter.h; path = Src/FileWriter.h; sourceTree = "<group>"; };
+		73F5E72812129EC200869E96 /* FileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileWriter.m; path = Src/FileWriter.m; sourceTree = "<group>"; };
+		73F5E72E12129EDA00869E96 /* FileWriterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileWriterTests.m; path = Tests/FileWriterTests.m; sourceTree = "<group>"; };
+		73F5E7B81212A34200869E96 /* OutputFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutputFormatterTests.m; path = Tests/OutputFormatterTests.m; sourceTree = "<group>"; };
+		73F5E8911212B1E600869E96 /* CodeBlocksEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeBlocksEnumerator.h; path = Src/CodeBlocksEnumerator.h; sourceTree = "<group>"; };
+		73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlocksEnumerator.m; path = Src/CodeBlocksEnumerator.m; sourceTree = "<group>"; };
+		73F5E8981212B1FE00869E96 /* CodeBlocksEnumeratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeBlocksEnumeratorTests.m; path = Tests/CodeBlocksEnumeratorTests.m; sourceTree = "<group>"; };
 		73FB3E8011C8F57300EBE0DB /* LLDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LLDB.framework; path = ../../../Source/lldb/build/Debug/LLDB.framework; sourceTree = SOURCE_ROOT; };
 		8D1107320486CEB800E47090 /* SimpleFileParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleFileParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -333,7 +352,7 @@
 				732CFCD711BF9E52008030ED /* SimpleFileParserAppDelegate.h */,
 				732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */,
 				7310FE5812097D0200AE9F6B /* Model */,
-				73928A9C11D9F1C8000429DC /* iConsumeLines.h */,
+				73F5E71A12129C4600869E96 /* Protocols */,
 				731D459D11CA19DC002964DC /* SHDebugger.h */,
 				731D459E11CA19DC002964DC /* SHDebugger.mm */,
 				73928FA911DB54DF000429DC /* Parsing */,
@@ -442,6 +461,8 @@
 				7310FE73120980DB00AE9F6B /* AppDisassembly.m */,
 				731000081209948B00AE9F6B /* OtoolDisassemblyParser.h */,
 				731000091209948B00AE9F6B /* OtoolDisassemblyParser.m */,
+				732CB03E1211501F0019B5BC /* OutputFormatter.h */,
+				732CB03F1211501F0019B5BC /* OutputFormatter.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -458,6 +479,10 @@
 		7310FE5912097D0C00AE9F6B /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				73F5E72712129EC200869E96 /* FileWriter.h */,
+				73F5E72812129EC200869E96 /* FileWriter.m */,
+				73F5E8911212B1E600869E96 /* CodeBlocksEnumerator.h */,
+				73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -476,6 +501,8 @@
 			isa = PBXGroup;
 			children = (
 				7310FE79120980F100AE9F6B /* AppDisassemblyTests.m */,
+				7310000F120994A100AE9F6B /* OtoolDisassemblyParserTests.m */,
+				73F5E7B81212A34200869E96 /* OutputFormatterTests.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -484,7 +511,8 @@
 			isa = PBXGroup;
 			children = (
 				731000EA1209C4BD00AE9F6B /* SourceLineCategorizerTests.m */,
-				7310000F120994A100AE9F6B /* OtoolDisassemblyParserTests.m */,
+				73F5E72E12129EDA00869E96 /* FileWriterTests.m */,
+				73F5E8981212B1FE00869E96 /* CodeBlocksEnumeratorTests.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -664,6 +692,15 @@
 				73A0F92311DCAB61008DD4E2 /* CodeLine.m */,
 			);
 			name = Lines;
+			sourceTree = "<group>";
+		};
+		73F5E71A12129C4600869E96 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				73928A9C11D9F1C8000429DC /* iConsumeLines.h */,
+				73F5E71812129C3C00869E96 /* iAmOutputFormatterCallback.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -926,7 +963,13 @@
 				7310000A1209948B00AE9F6B /* OtoolDisassemblyParser.m in Sources */,
 				73100010120994A100AE9F6B /* OtoolDisassemblyParserTests.m in Sources */,
 				731000E21209C46C00AE9F6B /* SourceLineCategorizer.m in Sources */,
-				731000EB1209C4BD00AE9F6B /* SourceLineCategorizerTests.m in Sources */,
+				731002491209D3E200AE9F6B /* SourceLineCategorizerTests.m in Sources */,
+				732CB0401211501F0019B5BC /* OutputFormatter.m in Sources */,
+				73F5E72912129EC200869E96 /* FileWriter.m in Sources */,
+				73F5E72F12129EDA00869E96 /* FileWriterTests.m in Sources */,
+				73F5E7B91212A34200869E96 /* OutputFormatterTests.m in Sources */,
+				73F5E8931212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */,
+				73F5E8991212B1FE00869E96 /* CodeBlocksEnumeratorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -965,6 +1008,9 @@
 				7310FF15120988E000AE9F6B /* LinesInStringIterator.m in Sources */,
 				7310000B1209948B00AE9F6B /* OtoolDisassemblyParser.m in Sources */,
 				731000E31209C46C00AE9F6B /* SourceLineCategorizer.m in Sources */,
+				732CB0411211501F0019B5BC /* OutputFormatter.m in Sources */,
+				73F5E72A12129EC200869E96 /* FileWriter.m in Sources */,
+				73F5E8941212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1008,6 +1054,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		73100330120AB53000AE9F6B /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCDD11BF9E72008030ED /* Project-Coverage.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				SDKROOT = macosx10.6;
+			};
+			name = Coverage;
+		};
+		73100331120AB53000AE9F6B /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE211BF9E72008030ED /* Target-Executable.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Source/parsekit/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source/lldb/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
+				);
+				PRODUCT_NAME = SimpleFileParser;
+			};
+			name = Coverage;
+		};
+		73100332120AB53000AE9F6B /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Source/parsekit/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source/lldb/build/Debug\"",
+					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
+					"$(CONFIGURATION_BUILD_DIR)\n",
+					"\"$(SRCROOT)/build/Debug\"",
+					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+					/Library/Frameworks/,
+				);
+				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
+				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source/lldb/build/Debug\" $(CONFIGURATION_BUILD_DIR)";
+				PRODUCT_NAME = SimpleFileParser_Tests;
+			};
+			name = Coverage;
+		};
+		73100333120AB53000AE9F6B /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 732CFCE311BF9E72008030ED /* Target-Framework.xcconfig */;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				INSTALL_PATH = "@executable_path/../frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = yaml;
+			};
+			name = Coverage;
+		};
 		732CFCF211BF9EA3008030ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 732CFCE811BF9E72008030ED /* Target-TestBundle.xcconfig */;
@@ -1123,14 +1231,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 732CFCDE11BF9E72008030ED /* Project-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -1139,10 +1239,6 @@
 			baseConfigurationReference = 732CFCDF11BF9E72008030ED /* Project-Release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
 			name = Release;
@@ -1154,6 +1250,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				732CFCF211BF9EA3008030ED /* Debug */,
+				73100332120AB53000AE9F6B /* Coverage */,
 				732CFCF311BF9EA3008030ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1163,6 +1260,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73387AEB11D222AA0017D971 /* Debug */,
+				73100333120AB53000AE9F6B /* Coverage */,
 				73387AEC11D222AA0017D971 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1172,6 +1270,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
+				73100331120AB53000AE9F6B /* Coverage */,
 				C01FCF4C08A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1181,6 +1280,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
+				73100330120AB53000AE9F6B /* Coverage */,
 				C01FCF5008A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

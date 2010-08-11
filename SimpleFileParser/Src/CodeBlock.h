@@ -34,4 +34,8 @@
 
 - (CodeLine *)lineAtIndex:(NSUInteger)ind;
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len;
+
+- (NSString *)prettyBlockTitle;
+
 @end

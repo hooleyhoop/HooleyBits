@@ -7,7 +7,7 @@
 //
 
 #import "SourceLineCategorizer.h"
-#import "iMakeCodeBlocks.h"
+#import "iParseSrc.h"
 
 @interface SourceLineCategorizerTests : SenTestCase {
 	
@@ -29,10 +29,9 @@
 	
 	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 
-	OCMockObject *mockLineEater	= MOCKFORPROTOCOL(iMakeCodeBlocks);
+	OCMockObject *mockLineEater	= MOCKFORPROTOCOL(iParseSrc);
 
-	DissasemblerGroker *groker = [DissasemblerGroker groker];
-	[groker setDelegate:(id)mockLineEater];
+	SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:(id)mockLineEater];
 	
 	// first the header
 	[groker eatLine:@"/Applications/Sibelius 6-386.app/Contents/MacOS/Sibelius 6:"];
@@ -73,8 +72,8 @@
 	STAssertTrue( groker.target==nil, nil );
 	
 	NSString *codeLine1 = @"	+0	00002ac0  6a00					  pushl		  $0x00";
-	[[mockLineEater expect] newCodeBlockWithName:funcName1];
-	[[mockLineEater expect] addCodeLine:[codeLine1 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:funcName1 type:BLOCK_TITLE];
+	[[mockLineEater expect] processSrcLine:[codeLine1 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine1];
 	STAssertTrue( groker.state == NAMED_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == YES, nil );
@@ -82,7 +81,7 @@
 	[mockLineEater verify];
 	
 	NSString *codeLine2 = @"	+2	00002ac2  89e5					  movl		  %esp,%ebp";
-	[[mockLineEater expect] addCodeLine:[codeLine2 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:[codeLine2 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine2];
 	STAssertTrue( groker.state==NAMED_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == NO, nil );
@@ -90,7 +89,7 @@
 	[mockLineEater verify];
 
 	NSString *codeLine3 = @"	+4	00002ac4  83e4f0				  andl		  $0xf0,%esp";
-	[[mockLineEater expect] addCodeLine:[codeLine3 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:[codeLine3 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine3];
 	STAssertTrue( groker.state == NAMED_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == NO, nil );
@@ -104,8 +103,8 @@
 
 	// Start an anon function
 	NSString *codeLine4 = @"+0	00002aea  55					  pushl		  %ebp";
-	[[mockLineEater expect] newCodeBlockWithName:nil];
-	[[mockLineEater expect] addCodeLine:[codeLine4 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:nil type:BLOCK_TITLE];
+	[[mockLineEater expect] processSrcLine:[codeLine4 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine4];
 	STAssertTrue( groker.state == ANON_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == YES, nil );
@@ -113,7 +112,7 @@
 	[mockLineEater verify];
 
 	NSString *codeLine5 = @"+1	00002aeb  89e5					  movl		  %esp,%ebp";
-	[[mockLineEater expect] addCodeLine:[codeLine5 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:[codeLine5 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine5];
 	STAssertTrue( groker.state == ANON_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == NO, nil );
@@ -132,8 +131,8 @@
 	STAssertTrue( groker.target==nil, nil );
 
 	NSString *codeLine6 = @"+1	00002aeb  89e5					  movl		  %esp,%ebp";
-	[[mockLineEater expect] newCodeBlockWithName:funcName2];
-	[[mockLineEater expect] addCodeLine:[codeLine6 stringByTrimmingCharactersInSet:wsp]];
+	[[mockLineEater expect] processSrcLine:funcName2 type:BLOCK_TITLE];
+	[[mockLineEater expect] processSrcLine:[codeLine6 stringByTrimmingCharactersInSet:wsp] type:BLOCK_LINE];
 	[groker eatLine:codeLine6];
 	STAssertTrue( groker.state == NAMED_FUNCTION, nil );
 	STAssertTrue( groker.stateChanged == YES, nil );
