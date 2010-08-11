@@ -28,6 +28,8 @@
 		7310FF14120988E000AE9F6B /* LinesInStringIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF13120988E000AE9F6B /* LinesInStringIterator.m */; };
 		7310FF15120988E000AE9F6B /* LinesInStringIterator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF13120988E000AE9F6B /* LinesInStringIterator.m */; };
 		7310FF171209895C00AE9F6B /* LinesInStringIteratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7310FF161209895C00AE9F6B /* LinesInStringIteratorTests.m */; };
+		7317D7D61212FB1A00597E32 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7317D7D51212FB1A00597E32 /* GenericTimer.m */; };
+		7317D7D71212FB1A00597E32 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7317D7D51212FB1A00597E32 /* GenericTimer.m */; };
 		732CB0401211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
 		732CB0411211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
 		732CFCD811BF9E52008030ED /* SimpleFileParserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD611BF9E52008030ED /* SimpleFileParserAppDelegate.m */; };
@@ -223,6 +225,8 @@
 		7310FF12120988E000AE9F6B /* LinesInStringIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinesInStringIterator.h; path = Src/LinesInStringIterator.h; sourceTree = "<group>"; };
 		7310FF13120988E000AE9F6B /* LinesInStringIterator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinesInStringIterator.m; path = Src/LinesInStringIterator.m; sourceTree = "<group>"; };
 		7310FF161209895C00AE9F6B /* LinesInStringIteratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinesInStringIteratorTests.m; path = Tests/LinesInStringIteratorTests.m; sourceTree = "<group>"; };
+		7317D7D41212FB1A00597E32 /* GenericTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTimer.h; path = Src/GenericTimer.h; sourceTree = "<group>"; };
+		7317D7D51212FB1A00597E32 /* GenericTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTimer.m; path = Src/GenericTimer.m; sourceTree = "<group>"; };
 		731D459D11CA19DC002964DC /* SHDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHDebugger.h; path = Src/SHDebugger.h; sourceTree = "<group>"; };
 		731D459E11CA19DC002964DC /* SHDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SHDebugger.mm; path = Src/SHDebugger.mm; sourceTree = "<group>"; };
 		732CB03E1211501F0019B5BC /* OutputFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutputFormatter.h; path = Src/OutputFormatter.h; sourceTree = "<group>"; };
@@ -483,6 +487,8 @@
 				73F5E72812129EC200869E96 /* FileWriter.m */,
 				73F5E8911212B1E600869E96 /* CodeBlocksEnumerator.h */,
 				73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */,
+				7317D7D41212FB1A00597E32 /* GenericTimer.h */,
+				7317D7D51212FB1A00597E32 /* GenericTimer.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -970,6 +976,7 @@
 				73F5E7B91212A34200869E96 /* OutputFormatterTests.m in Sources */,
 				73F5E8931212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */,
 				73F5E8991212B1FE00869E96 /* CodeBlocksEnumeratorTests.m in Sources */,
+				7317D7D61212FB1A00597E32 /* GenericTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,6 +1018,7 @@
 				732CB0411211501F0019B5BC /* OutputFormatter.m in Sources */,
 				73F5E72A12129EC200869E96 /* FileWriter.m in Sources */,
 				73F5E8941212B1E600869E96 /* CodeBlocksEnumerator.m in Sources */,
+				7317D7D71212FB1A00597E32 /* GenericTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

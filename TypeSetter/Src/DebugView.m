@@ -87,7 +87,7 @@ CGImageRef _createPNGWithURL( CFURLRef URL ) {
 		// Initialize an attributed string.
 		CFStringRef string = CFSTR("We hold this truth to be self-evident, that  everyone is created equal.");
 		CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
-		CFAttributedStringReplaceString (attrString, CFRangeMake(0, 0), string);
+		CFAttributedStringReplaceString( attrString, CFRangeMake(0, 0), string );
 		
 		// Create a color and add it as an attribute to the string.
 		CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();

@@ -13,13 +13,15 @@
 	
 	id					_src;
 	SEL					_callback;
+	
+	id					_completeTarget;
 	SEL					_completeCallBack;
 }
 
 - (void)asyncCreateOutputFile:(NSString *)filePath;
 
 - (void)setLineSrc:(id)src selector:(SEL)callback;
-- (void)whenFinished:(SEL)callback;
+- (void)whenFinishedTarget:(id)target callback:(SEL)callback;
 
 - (void)closeOutputFile;
 

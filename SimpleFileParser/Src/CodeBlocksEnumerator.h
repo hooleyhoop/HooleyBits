@@ -6,9 +6,16 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
+@class CodeBlockStore;
 
 @interface CodeBlocksEnumerator : NSObject {
 
+	CodeBlockStore	*_internalRep;
+	NSUInteger		_currentBlockIndex;
+	NSInteger		_currentLineIndex;
 }
+
+- (id)initWithCodeBlockStore:(CodeBlockStore *)internalRep;
+- (NSString *)nextLine;
 
 @end

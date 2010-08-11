@@ -10,6 +10,8 @@
 #import "CodeBlock.h"
 #import "CodeLine.h"
 #import "FileWriter.h"
+#import "CodeBlocksEnumerator.h"
+#import "GenericTimer.h"
 
 @interface OutputFormatter ()
 
@@ -46,16 +48,24 @@
 
 - (void)print {
 
+	_outputTimer = [[GenericTimer alloc] init];
+	
 	_fileWriter = [[FileWriter alloc] init];
 	
 	[_fileWriter asyncCreateOutputFile:_filePath];
-	[_fileWriter setLineSrc:_codeBlockEnumerator selector:@selector(_nextLine)];
-	[_fileWriter whenFinished:@selector(_closeOutputFile)];
+	[_fileWriter setLineSrc:_codeBlockEnumerator selector:@selector(nextLine)];
+	[_fileWriter whenFinishedTarget:self callback:@selector(_didFinish)];
 }
 
-- (void)_closeOutputFile {
+- (void)_didFinish {
 	
+	[_fileWriter release];
+	_fileWriter = nil;
+	
+	[_outputTimer close]; //187 secs, 52
+
 	[_owner _outputFormatterDidFinish];
+	
 }
 
 @end

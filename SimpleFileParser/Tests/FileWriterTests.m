@@ -25,4 +25,11 @@
 // - (void)setLineSrc:(id)src selector:(SEL)callback;
 // - (void)whenFinished:(SEL)callback;
 
+- (void)testIncrememnt {
+// - (NSString *)increment:(NSString *)fileName
+
+	
+}
+
+
 @end

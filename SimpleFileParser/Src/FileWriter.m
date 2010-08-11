@@ -24,12 +24,44 @@
 	[super dealloc];
 }
 
+- (NSString *)increment:(NSString *)fileName {
+
+	NSString *path = [fileName stringByDeletingLastPathComponent];
+	NSString *name = [fileName lastPathComponent];
+	NSString *extension = [name pathExtension];
+	NSString *dotExtension = [NSString stringWithFormat:@".%@", extension];
+
+	if([name hasSuffix:dotExtension]) {
+		name = [name stringByDeletingPathExtension];
+	} else {
+		extension = @"";
+	}
+	
+	NSUInteger number = 0;
+	NSRange numberRange = [name rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+	if( numberRange.location!=NSNotFound ) {
+		NSString *nameWithOutNumber = [name substringToIndex:numberRange.location];
+		NSString *numberAsString = [name substringFromIndex:numberRange.location];
+		name = nameWithOutNumber;
+		number = [numberAsString intValue];
+	}
+
+	while( [[NSFileManager defaultManager] fileExistsAtPath:fileName] )
+	{
+		number++;
+		NSString *newName = [NSString stringWithFormat:@"%@%i.%@", name, number, extension];
+		fileName = [path stringByAppendingPathComponent:newName];
+	}
+	return fileName;
+}
 
 - (void)asyncCreateOutputFile:(NSString *)filePath {
 	
 	NSAssert( _oStream==nil, @"already outputting");
-	
-    // oStream is an instance variable
+
+	filePath = [self increment:filePath];
+	NSAssert( [[NSFileManager defaultManager] fileExistsAtPath:filePath]==NO, @"SHIT");
+
     _oStream = [[NSOutputStream alloc] initToFileAtPath:filePath append:YES];
     [_oStream setDelegate:self];
     [_oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -38,7 +70,7 @@
 
 - (void)end {
 	[self closeOutputFile];
-	[_src performSelector:_completeCallBack]
+	[_completeTarget performSelector:_completeCallBack];
 }
 
 - (void)closeOutputFile {
@@ -51,22 +83,27 @@
 
 - (void)_readLine {
 
-	NSString *nextLine = [_src performSelector:_callback];
-	if(nextLine==nil)
-		[self end];
+	NSString *nextLine;
+//	if(nextLine==nil)
+//		[self end];
 
-	NSUInteger lineLen = [nextLine length];
-	NSAssert( lineLen!=0, @"Output Error?" );
-	const uint8_t *lineBuffer = [nextLine UTF8String];
-	NSInteger result = [_oStream write:lineBuffer maxLength:lineLen];
-	NSAssert( result==lineLen, @"Output Error?");
+	while( nextLine=[_src performSelector:_callback] ) {
+				
+		nextLine = [nextLine stringByAppendingFormat:@"\n"];
+		NSUInteger lineLen = [nextLine length];
+		NSAssert( lineLen!=0, @"Output Error?" );
+		const uint8_t *lineBuffer = [nextLine UTF8String];
+		NSInteger result = [_oStream write:lineBuffer maxLength:lineLen];
+		NSAssert( result==lineLen, @"Output Error?");
+	}
+	[self end];
 }
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode {
 	
     switch(eventCode) {
         case NSStreamEventHasSpaceAvailable:
-			NSLog(@"NSStreamEventHasSpaceAvailable");
+	//		[self _readLine];
             break;
 		case NSStreamEventNone:
 			NSLog(@"NSStreamEventNone");
@@ -96,7 +133,9 @@
 	_callback = callback;
 }
 
-- (void)whenFinished:(SEL)callback {
+- (void)whenFinishedTarget:(id)target callback:(SEL)callback {
+
+	_completeTarget = target;
 	_completeCallBack = callback;
 }
 

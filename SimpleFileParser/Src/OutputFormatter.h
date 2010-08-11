@@ -7,7 +7,7 @@
 //
 #import "iAmOutputFormatterCallback.h"
 
-@class CodeBlocksEnumerator, FileWriter;
+@class CodeBlocksEnumerator, CodeBlockStore, FileWriter, GenericTimer;
 
 @interface OutputFormatter : NSObject {
 
@@ -16,6 +16,7 @@
 	CodeBlocksEnumerator					*_codeBlockEnumerator;
 	
 	FileWriter								*_fileWriter;
+	GenericTimer							*_outputTimer;
 }
 
 + (id)outputFormatterWithCodeBlockStore:(CodeBlockStore *)internalRep fileName:(NSString *)fn owner:(id)hmm;
