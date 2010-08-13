@@ -22,4 +22,6 @@
 
 - (Argument *)argumentAtIndex:(NSUInteger)index;
 
+- (NSString *)temp_toString;
+
 @end

@@ -89,10 +89,11 @@
 
 	while( nextLine=[_src performSelector:_callback] ) {
 				
+		NSLog(@"%@", nextLine);
 		nextLine = [nextLine stringByAppendingFormat:@"\n"];
 		NSUInteger lineLen = [nextLine length];
 		NSAssert( lineLen!=0, @"Output Error?" );
-		const uint8_t *lineBuffer = [nextLine UTF8String];
+		const char *lineBuffer = [nextLine UTF8String];
 		NSInteger result = [_oStream write:lineBuffer maxLength:lineLen];
 		NSAssert( result==lineLen, @"Output Error?");
 	}

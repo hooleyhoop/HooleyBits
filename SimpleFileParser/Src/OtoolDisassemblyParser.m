@@ -14,6 +14,8 @@
 #import "StringCounter.h"
 #import "CodeLine.h"
 #import "HexConversions.h"
+#import "TokenArray.h"
+#import "ArgumentScanner.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -96,22 +98,24 @@
 	NSString *instruction = [components objectAtIndex:3];
 
 	NSString *arguments=nil, *functionHint=nil;
+	NSString *tempArgString=nil;
 
 	// optional
-	if([components count]>=5)
+	if([components count]>=5) {
 		arguments = [components objectAtIndex:4];
+		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
+		[tkns1 secondPass];
+		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+		tempArgString = [scanner temp_toString];
+	}
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];
 
 	NSUInteger addressInt = hexStringToInt(address);
-	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instruction];
+	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instruction args:tempArgString];
 	return newLine;
 	
-//TODO: like this!	
-//	TokenArray *tkns1 = [TokenArray tokensWithString:@"%eax,%es:(%eax)"];
-//	[tkns1 secondPass];
-//	ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
-	
+
 	
 //hmm	if(instruction){
 //hmm		BOOL isKnown = [self isKnownInstruction:instruction];
