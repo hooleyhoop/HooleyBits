@@ -6,12 +6,13 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
+@class CodeLine;
 
 @protocol iMakeCodeBlocks
 
 - (void)newCodeBlockWithName:(NSString *)funcName;
 
 //-- this will change
-- (void)addCodeLine:(NSString *)codeLine;
+- (void)addCodeLine:(CodeLine *)codeLine;
 
 @end

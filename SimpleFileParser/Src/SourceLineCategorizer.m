@@ -77,7 +77,10 @@
 		[self setState:NO_FUNCTION];
 	} else {
 		
-		if ([aLine characterAtIndex:0]=='+') {
+		// is it a code line?
+		char char1 = [aLine characterAtIndex:0];
+		char char2 = [aLine characterAtIndex:1];
+		if( char1=='+' && char2>47 && char2<58 ) {
 			if( _state==NO_FUNCTION ) {
 				[self setState:ANON_FUNCTION];
 			} else if( _state==TEXT ) {

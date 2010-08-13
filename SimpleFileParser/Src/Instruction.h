@@ -9,6 +9,7 @@
 
 @interface Instruction : NSObject {
 
+	NSDictionary	*_values; // weak reference to global dictionary
 }
 
 @end

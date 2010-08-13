@@ -1,0 +1,57 @@
+call NSLog with 11 local (stack) int values
+Look how stack is prepared for call
+
+http://developer.apple.com/mac/library/documentation/DeveloperTools/Reference/Assembler/000-Introduction/introduction.html
+
+// how functions calls work 
+http://developer.apple.com/mac/library/documentation/DeveloperTools/Conceptual/LowLevelABI/130-IA-32_Function_Calling_Conventions/IA32.html#//apple_ref/doc/uid/TP40002492-SW4
+
+
+	+0	00002900  55					  pushl		  %ebp
+	+1	00002901  89e5					  movl		  %esp,%ebp
+	+3	00002903  53					  pushl		  %ebx
+	+4	00002904  83ec64				  subl		  $0x64,%esp
+	+7	00002907  e800000000			  calll		  0x0000290c
+   +12	0000290c  5b					  popl		  %ebx
+   +13	0000290d  c745f401000000		  movl		  $0x00000001,0xf4(%ebp)
+   +20	00002914  c745f002000000		  movl		  $0x00000002,0xf0(%ebp)
+   +27	0000291b  c745ec03000000		  movl		  $0x00000003,0xec(%ebp)
+   +34	00002922  c745e804000000		  movl		  $0x00000004,0xe8(%ebp)
+   +41	00002929  c745e405000000		  movl		  $0x00000005,0xe4(%ebp)
+   +48	00002930  c745e006000000		  movl		  $0x00000006,0xe0(%ebp)
+   +55	00002937  c745dc07000000		  movl		  $0x00000007,0xdc(%ebp)
+   +62	0000293e  c745d808000000		  movl		  $0x00000008,0xd8(%ebp)
+   +69	00002945  c745d409000000		  movl		  $0x00000009,0xd4(%ebp)
+   +76	0000294c  c745d00a000000		  movl		  $0x0000000a,0xd0(%ebp)
+   +83	00002953  8d931c070000			  leal		  0x0000071c(%ebx),%edx
+   +89	00002959  8b45d0				  movl		  0xd0(%ebp),%eax
+   +92	0000295c  89442428				  movl		  %eax,0x28(%esp)
+   +96	00002960  8b45d4				  movl		  0xd4(%ebp),%eax
+   +99	00002963  89442424				  movl		  %eax,0x24(%esp)
+  +103	00002967  8b45d8				  movl		  0xd8(%ebp),%eax
+  +106	0000296a  89442420				  movl		  %eax,0x20(%esp)
+  +110	0000296e  8b45dc				  movl		  0xdc(%ebp),%eax
+  +113	00002971  8944241c				  movl		  %eax,0x1c(%esp)
+  +117	00002975  8b45e0				  movl		  0xe0(%ebp),%eax
+  +120	00002978  89442418				  movl		  %eax,0x18(%esp)
+  +124	0000297c  8b45e4				  movl		  0xe4(%ebp),%eax
+  +127	0000297f  89442414				  movl		  %eax,0x14(%esp)
+  +131	00002983  8b45e8				  movl		  0xe8(%ebp),%eax
+  +134	00002986  89442410				  movl		  %eax,0x10(%esp)
+  +138	0000298a  8b45ec				  movl		  0xec(%ebp),%eax
+  +141	0000298d  8944240c				  movl		  %eax,0x0c(%esp)
+  +145	00002991  8b45f0				  movl		  0xf0(%ebp),%eax
+  +148	00002994  89442408				  movl		  %eax,0x08(%esp)
+  +152	00002998  8b45f4				  movl		  0xf4(%ebp),%eax
+  +155	0000299b  89442404				  movl		  %eax,0x04(%esp)
+  +159	0000299f  891424				  movl		  %edx,(%esp)
+  +162	000029a2  e8d1050000			  calll		  0x00002f78				    _NSLog
+  +167	000029a7  8b450c				  movl		  0x0c(%ebp),%eax
+  +170	000029aa  89442404				  movl		  %eax,0x04(%esp)
+  +174	000029ae  8b4508				  movl		  0x08(%ebp),%eax
+  +177	000029b1  890424				  movl		  %eax,(%esp)
+  +180	000029b4  e8b9050000			  calll		  0x00002f72				    _NSApplicationMain
+  +185	000029b9  83c464				  addl		  $0x64,%esp
+  +188	000029bc  5b					  popl		  %ebx
+  +189	000029bd  c9					  leave
+  +190	000029be  c3					  ret

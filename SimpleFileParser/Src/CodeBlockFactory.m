@@ -56,12 +56,10 @@
 	[self setCurrentBlock:newBlock];
 }
 
-- (void)addCodeLine:(NSString *)codeLine {
+- (void)addCodeLine:(CodeLine *)line {
 
 	NSAssert( _currenBlock, @"need a blockstore" );
 
-	// TODO: make the real fucking line prick
-	CodeLine *line = [CodeLine lineWithAddress:0];
 	[_currenBlock pushLine:line];
 	
 	if( [_currenBlock lineCount]==1 )

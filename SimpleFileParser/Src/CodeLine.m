@@ -15,11 +15,21 @@
 	return [[[self alloc] initWithAddress:addrr] autorelease];
 }
 
++ (id)lineWithAddress:(NSUInteger)addrr instruction:(NSString *)temp {
+	return [[[self alloc] initWithAddress:addrr instruction:temp] autorelease];
+}
+
 - (id)initWithAddress:(NSUInteger)addrr {
+
+	return [self initWithAddress:addrr instruction:nil];
+}
+
+- (id)initWithAddress:(NSUInteger)addrr instruction:(NSString *)temp {
 	
 	self = [super init];
 	if(self){
 		_address = addrr;
+		_tempInstruction = [temp retain];
 	}
 	return self;
 }
@@ -49,7 +59,7 @@
 }
 
 - (NSString *)prettyString {
-	return @"still some work todo then";
+	return _tempInstruction;
 }
 
 @end

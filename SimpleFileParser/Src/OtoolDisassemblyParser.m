@@ -12,10 +12,12 @@
 #import "SourceLineCategorizer.h"
 #import "LinesInStringIterator.h"
 #import "StringCounter.h"
+#import "CodeLine.h"
+#import "HexConversions.h"
 
 @interface OtoolDisassemblyParser ()
 
-- (void)_tokeniseLine:(NSString *)aLine;
+- (CodeLine *)_tokeniseLine:(NSString *)aLine;
 @end
 
 #pragma mark -
@@ -59,6 +61,13 @@
 	[super dealloc];
 }
 
+
+- (void)constructLine:(NSString *)lineText {
+	
+	CodeLine *line = [self _tokeniseLine:lineText];
+	[_codeBlockfactory addCodeLine:line];
+}
+
 - (void)processSrcLine:(NSString *)lineText type:(enum srcLineType)lineType {
 
 	switch (lineType) {
@@ -66,8 +75,7 @@
 			[_codeBlockfactory newCodeBlockWithName:lineText];
 			break;
 		case BLOCK_LINE:
-//			[self _tokeniseLine:lineText];
-			[_codeBlockfactory addCodeLine:lineText];
+			[self constructLine:lineText];
 			break;
 			
 		default:
@@ -76,8 +84,8 @@
 	}	
 }
 
-// TODO: -- here
-- (void)_tokeniseLine:(NSString *)aLine {
+
+- (CodeLine *)_tokeniseLine:(NSString *)aLine {
 		
 	NSArray *components = worderize( aLine );
 
@@ -95,20 +103,24 @@
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];
 
+	NSUInteger addressInt = hexStringToInt(address);
+	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instruction];
+	return newLine;
+	
 //TODO: like this!	
 //	TokenArray *tkns1 = [TokenArray tokensWithString:@"%eax,%es:(%eax)"];
 //	[tkns1 secondPass];
 //	ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 	
 	
-	if(instruction){
-		BOOL isKnown = [self isKnownInstruction:instruction];
-		if(!isKnown){
-			[_unknownInstructions addObject:instruction];
-			return;
-		}
+//hmm	if(instruction){
+//hmm		BOOL isKnown = [self isKnownInstruction:instruction];
+//hmm		if(!isKnown){
+//hmm			[_unknownInstructions addObject:instruction];
+//hmm			return;
+//hmm		}
 		// eh ? What is this shit?		[self processInstruction:instruction argument:arguments];
-	}
+//hmm	}
 }
 
 

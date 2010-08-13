@@ -17,10 +17,13 @@
 
 @implementation InstructionTests
 
-// try making an Instruction
+- (void)testBasicInstructionOps {
 
-// get string
-
+	NSString *testInstruction = @"movb";
+	NSString *replaceMent = [Hmm findReplacement:testInstruction];
+	
+	STAssertTrue( [replaceMent isEqualToString:@"move"], nil);
+}
 
 
 @end
