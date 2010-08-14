@@ -10,4 +10,8 @@
 
 }
 
++ (void)testParseYAML;
+
++ (NSDictionary *)infoForInstructionString:(NSString *)instruction;
+
 @end

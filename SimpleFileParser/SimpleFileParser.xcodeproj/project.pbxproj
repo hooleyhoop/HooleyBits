@@ -69,6 +69,7 @@
 		73CF20B911D8CA8700347BBD /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF20B811D8CA8700347BBD /* config.h */; };
 		73E41EE412140F1F0076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
 		73E41EE512140F200076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
+		73EC19DC1216AC9C001B406E /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
 		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C56211C504CB00C93934 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
@@ -818,7 +819,6 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SimpleFileParser" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -955,6 +955,7 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				7317DA951213F83B00597E32 /* trashy.txt in Resources */,
+				73EC19DC1216AC9C001B406E /* opcode.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

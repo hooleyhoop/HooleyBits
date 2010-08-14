@@ -16,6 +16,8 @@
 #import "HexConversions.h"
 #import "TokenArray.h"
 #import "ArgumentScanner.h"
+#import "InstructionLookup.h"
+#import "Instruction.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -97,6 +99,9 @@
 	NSString *code = [components objectAtIndex:2];
 	NSString *instruction = [components objectAtIndex:3];
 
+	NSDictionary *instrInfo = [InstructionLookup infoForInstructionString: instruction];
+	Instruction *instr = [Instruction instructionWithDict:instrInfo];
+	
 	NSString *arguments=nil, *functionHint=nil;
 	NSString *tempArgString=nil;
 
@@ -112,7 +117,7 @@
 		functionHint = [components objectAtIndex:5];
 
 	NSUInteger addressInt = hexStringToInt(address);
-	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instruction args:tempArgString];
+	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:tempArgString];
 	return newLine;
 	
 

@@ -11,4 +11,19 @@
 
 @implementation Instruction
 
++ (id)instructionWithDict:(NSDictionary *)instrInfo {
+	
+	return [[[self alloc] initWithDict:instrInfo] autorelease];
+}
+
+- (id)initWithDict:(NSDictionary *)instrInfo {
+	
+	self = [super init];
+	if(self){
+		_values = instrInfo;
+	}
+	return self;
+}
+
+
 @end

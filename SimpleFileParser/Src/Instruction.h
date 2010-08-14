@@ -12,4 +12,7 @@
 	NSDictionary	*_values; // weak reference to global dictionary
 }
 
++ (id)instructionWithDict:(NSDictionary *)instrInfo;
+- (id)initWithDict:(NSDictionary *)instrInfo;
+
 @end

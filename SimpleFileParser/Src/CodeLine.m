@@ -15,11 +15,11 @@
 	return [[[self alloc] initWithAddress:addrr] autorelease];
 }
 
-+ (id)lineWithAddress:(NSUInteger)addrr instruction:(NSString *)temp {
++ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp {
 	return [[[self alloc] initWithAddress:addrr instruction:temp] autorelease];
 }
 
-+ (id)lineWithAddress:(NSUInteger)addrr instruction:(NSString *)temp1 args:(NSString *)temp2 {
++ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSString *)temp2 {
 	return [[[self alloc] initWithAddress:addrr instruction:temp1 args:temp2] autorelease];
 }
 
@@ -27,16 +27,16 @@
 	return [self initWithAddress:addrr instruction:nil args:nil];
 }
 
-- (id)initWithAddress:(NSUInteger)addrr instruction:(NSString *)temp {
+- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp {
 	return [self initWithAddress:addrr instruction:temp args:nil];
 }
 
-- (id)initWithAddress:(NSUInteger)addrr instruction:(NSString *)temp1 args:(NSString *)temp2 {
+- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)opCodeInfo args:(NSString *)temp2 {
 
 	self = [super init];
 	if(self){
 		_address = addrr;
-		_tempInstruction = [temp1 retain];
+		_instruction = opCodeInfo;
 		_tempArgs = [temp2 retain];
 	}
 	return self;
@@ -44,7 +44,6 @@
 
 - (void)dealloc {
 		
-	[_tempInstruction release];
 	[_tempArgs release];
 	[super dealloc];
 }
@@ -74,7 +73,7 @@
 }
 
 - (NSString *)prettyString {
-	return [NSString stringWithFormat:@"%@ %@", _tempInstruction, _tempArgs];
+	return [NSString stringWithFormat:@"%@ %@", [_instruction name], _tempArgs];
 }
 
 @end

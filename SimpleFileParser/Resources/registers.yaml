@@ -1,11 +1,6 @@
 #Conditionals
 
 #non-conditionals
-
--
-    instruction: .byte
-    name:        unknown
-    description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
 -
     instruction: aaa
     name:        unknown
@@ -100,11 +95,11 @@
     description: Byte Swap
 -
     instruction: call
-    name:        call
+    name:        
     description: stack.push(%eip), jump($1)
 -
     instruction: calll
-    name:        call
+    name:        
     description: stack.push(%eip), jump($1)
 -
     instruction: cbtw
@@ -225,7 +220,11 @@
 -
     instruction: cmpsb
     name:        
-    description: Compare String // The CMP instruction is typically used in conjunction with a conditional jump (Jcc), condition move (CMOVcc), or SETcc instruction. The condition codes used by the Jcc, CMOVcc, and SETcc instructions are based on the results of a CMP instruction
+    description: Compare String
+-
+
+// The CMP instruction is typically used in conjunction with a conditional jump (Jcc), condition move (CMOVcc), or SETcc instruction. The condition codes used by the Jcc, CMOVcc, and SETcc instructions are based on the results of a CMP instruction. 
+
 -
     instruction: cvtdq2pd
     name: 
@@ -266,6 +265,7 @@
     instruction: cwtl
     name:        
     description: convert word to long
+
 -
     instruction: daa
     name:
@@ -286,6 +286,7 @@
     instruction: decl
     name:        
     description: decrement by 1
+
 -
     instruction: divl
     name:        
@@ -298,6 +299,7 @@
     instruction: divss
     name:        
     description: unsigned divide
+
 -
     instruction: enter
     name:        
@@ -807,6 +809,7 @@
     instruction: movaps
     name:        
     description: move aligned packed single precision float
+
 -
     instruction: movb
     name:        
@@ -867,6 +870,7 @@
     instruction: movzwl
     name:        
     description: move word to long (zero other bytes)
+
 -
     instruction: movups
     name:        
@@ -896,6 +900,7 @@
     instruction: mulsd
     name:        
     description: Multiply Scalar Double-Precision Floating-Point Values
+
 -
     instruction: negb
     name:        
@@ -1031,31 +1036,35 @@
 -
     instruction: rep/stosl
     name:        
-    description: "Repeat while( ECX(--)>0 ) stosl"
+    description: Repeat while( ECX(--)>0 ) stosl
 -
     instruction: repz/addb
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) addb"
+    description: Repeat while( ECX(--)>0 && ZF!=0 ) addb
 -
     instruction: repz/cmpsb
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) cmpsb"
+    description: Repeat while( ECX(--)>0 && ZF!=0 ) cmpsb
 -
     instruction: repz/addl
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) addl"
+    description: Repeat while( ECX(--)>0 && ZF!=0 ) addl
 -
     instruction: repz/orb
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) orb"
+    description: Repeat while( ECX(--)>0 && ZF!=0 ) orb
 -
     instruction: repz/pushl
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) pushl"
+    description: Repeat while( ECX(--)>0 && ZF!=0 ) pushl
+
 -
     instruction: repnz/addb
     name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=1 ) addb"
+    description: Repeat while( ECX(--)>0 && ZF!=1 ) addb
+
+
+
 -
     instruction: ret
     name:
@@ -1084,6 +1093,7 @@
     instruction: rorl
     name:        
     description: 
+
 -
     instruction: sahf
     name:        
@@ -1123,19 +1133,19 @@
 -
     instruction: seta
     name:        
-    description: "Set byte if above (CF=0 and ZF=0)// (CF==0 && ZF==0) ? $1=1 : $1=0"
+    description: Set byte if above (CF=0 and ZF=0)// (CF==0 && ZF==0) ? $1=1 : $1=0
 -
     instruction: setae
     name:        
-    description: "Set byte if above or equal (CF=0)// (CF==0) ? $1=1 : $1=0"
+    description: Set byte if above or equal (CF=0)// (CF==0) ? $1=1 : $1=0
 -
     instruction: setb
     name:        
-    description: "Set byte if below (CF=1)// (CF==1) ? $1=1 : $1=0"
+    description: Set byte if below (CF=1)// (CF==1) ? $1=1 : $1=0
 -
     instruction: setbe
     name:        
-    description: "Set byte if below or equal (CF=1 or ZF=1)// (CF==1 || ZF==1) ? $1=1 : $1=0"
+    description: Set byte if below or equal (CF=1 or ZF=1)// (CF==1 || ZF==1) ? $1=1 : $1=0
 -
     instruction: sete
     name:        
@@ -1213,6 +1223,7 @@
     instruction: sqrtsd
     name:        
     description: Compute Square Root of Scalar Double-Precision Floating-Point Value
+
 -
     instruction: std
     name:
@@ -1225,6 +1236,7 @@
     instruction: sti
     name:
     description: Set Interrupt Flag
+
 -
     instruction: stos
     name:        
@@ -1245,6 +1257,7 @@
     instruction: stosd
     name:        
     description: Store String
+
 -
     instruction: subb
     name:        
@@ -1273,6 +1286,7 @@
     instruction: subpd
     name:        
     description: Subtract Packed Double-Precision Floating-Point Values
+
 -
     instruction: testb
     name:        
@@ -1285,6 +1299,7 @@
     instruction: testl
     name:        
     description: Logical Compare
+
 -
     instruction: ucomisd
     name:        
@@ -1293,6 +1308,7 @@
     instruction: ucomiss
     name:        
     description: Unordered Compare Scalar Single-Precision Floating- Point Values and Set EFLAGS
+
 -
     instruction: wait/addb
     name:        
@@ -1305,22 +1321,25 @@
     instruction: wait/sbbb
     name:        
     description: 
+
 -
     instruction: xchg
     name:        
-    description: "Exchange Register/Memory with Register"
+    description: Exchange Register/Memory with Register
 -
     instruction: xchgb
     name:        
-    description: "Exchange Register/Memory with Register"
+    description: Exchange Register/Memory with Register
 -
     instruction: xchgl
     name:        
-    description: "Exchange Register/Memory with Register"
+    description: Exchange Register/Memory with Register
+
 -
     instruction: xlat
     name:        
     description: Table Look-up Translation
+
 -
     instruction: xorb
     name:        
@@ -1337,6 +1356,7 @@
     instruction: xord
     name:        
     description: Logical Exclusive OR
+
 -
     instruction: xorps
     name:        
@@ -1345,3 +1365,19 @@
     instruction: xorpd
     name:        
     description: Bitwise Logical XOR for Double-Precision Floating-Point Values
+
+
+
+
+
+
+//	flags
+//	CF = carryFlag
+//	PF = parityFlag
+//	AF = adjustFlag
+//	ZF = zeroFlag
+//	SF = signFlag
+//	TF = trapFlag
+//	IF = interruptEnableFlag
+//	DF = directionFlag
+//	OF = overflowFlag

@@ -8,6 +8,7 @@
 
 #import "SimpleFileParserAppDelegate.h"
 #import "AppDisassembly.h"
+#import "InstructionLookup.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -41,6 +42,8 @@ nil] retain];
 	// strip the app to desired architectire
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
 
+	[InstructionLookup testParseYAML];
+	
 	NSError *outError;
 	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
