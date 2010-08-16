@@ -18,6 +18,7 @@
 //	NSString *pathToApp = @"/Applications/Adobe After Effects CS3/Adobe After Effects CS3.app/Contents/MacOS/After Effects";
 
 	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
+	NSString *section = [ml sectionForMemAddress:0];
 
 }
 

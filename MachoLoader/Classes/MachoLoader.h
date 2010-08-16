@@ -15,16 +15,18 @@
 
 @interface MachoLoader : NSObject {
 
-	NSMutableArray	*_loadCommands;
-	const void		*codeAddr;
-	size_t			codeSize;
+	NSMutableArray		*_loadCommands;
+	const void			*_codeAddr;
+	size_t				_codeSize;
 	
 	NSMutableDictionary *addresses_;    // Addresses and symbols (STRONG)
 	
-	struct nlist *symtable_ptr;
-	char *strtable;
+	struct nlist		*symtable_ptr;
+	char				*strtable;
 }
 
 - (id)initWithPath:(NSString *)aPath;
+
+- (NSString *)sectionForMemAddress:(NSUInteger)addr;
 
 @end
