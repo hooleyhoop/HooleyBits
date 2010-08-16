@@ -36,6 +36,9 @@
 #import <mach-o/arch.h>
 #import <mach-o/loader.h>
 
+#import "MemoryMap.h"
+#import "Segment.h"
+
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
 @interface MachoLoader (PrivateMethods) 
@@ -107,13 +110,20 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 	self = [super init];
 	if(self){
 		_loadCommands = [[NSMutableArray array] retain];
-		[self doIt:aPath];
-		
 		addresses_ = [[NSMutableDictionary alloc] init];
-
+		_memoryMap = [[MemoryMap alloc] init];
+		
+		[self doIt:aPath];
 		[self parseLoadCommands];
 	}
 	return self;
+}
+
+- (void)dealloc {
+		
+	[_memoryMap release];
+	[addresses_ release];
+	[super dealloc];
 }
 
 - (NSString *)sectionForMemAddress:(NSUInteger)addr {
@@ -127,7 +137,8 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 // record positions of file sections
 - (void)addSegment:(NSString *)title memAddress:(NSUInteger)offset length:(uint32_t)size {
 	
-	NSLog(@"Found %@ start:%u length:%u", title, offset, size );
+	Segment *newSeg = [Segment name:title start:offset length:size];
+	[_memoryMap insertSegment:newSeg];
 }
 
 - (void)addSection:(NSString *)title start:(NSUInteger)offset length:(uint32_t)size {
@@ -387,7 +398,9 @@ void readHeaderFlags( uint32_t flags ) {
 
 			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
 			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
-
+			
+			[self addSegment:segmentName memAddress:seg->vmaddr length:seg->vmsize];
+				
 			// __PAGEZERO	--  where you end up when dereferencing a 0 pointer.
 			// __TEXT		-- The text segment is where our code lives.
 			// __DATA		-- The data segment holds our “Hello world!” string.

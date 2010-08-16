@@ -12,6 +12,7 @@
 
 // eg, dump cstrings otool -s __TEXT __cstring -v test    
 
+@class MemoryMap;
 
 @interface MachoLoader : NSObject {
 
@@ -23,6 +24,9 @@
 	
 	struct nlist		*symtable_ptr;
 	char				*strtable;
+	
+	
+	MemoryMap			*_memoryMap;
 }
 
 - (id)initWithPath:(NSString *)aPath;

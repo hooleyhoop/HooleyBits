@@ -14,6 +14,10 @@
 		731FAA871219704800D3EE3D /* SimpleApp_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA861219704800D3EE3D /* SimpleApp_main.m */; };
 		731FAA9F1219717000D3EE3D /* MemoryMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA9E1219717000D3EE3D /* MemoryMapTests.m */; };
 		731FAACD1219724100D3EE3D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731FAACC1219724100D3EE3D /* SenTestingKit.framework */; };
+		7332007412197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
+		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
+		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
+		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -50,6 +54,10 @@
 		731FAA861219704800D3EE3D /* SimpleApp_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleApp_main.m; path = Classes/SimpleApp_main.m; sourceTree = "<group>"; };
 		731FAA9E1219717000D3EE3D /* MemoryMapTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMapTests.m; path = Tests/MemoryMapTests.m; sourceTree = "<group>"; };
 		731FAACC1219724100D3EE3D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		7332007212197B1E00D80990 /* MemoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryMap.h; path = Classes/MemoryMap.h; sourceTree = "<group>"; };
+		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
+		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
+		7332007912197B2C00D80990 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = Classes/Segment.m; sourceTree = "<group>"; };
 		73EDD9230F863E4700E09434 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = Classes/MachoLoader.h; sourceTree = "<group>"; };
 		73EDD9240F863E4700E09434 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = Classes/MachoLoader.m; sourceTree = "<group>"; };
 		73FF6B240FD6AB8B00A8136A /* Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hex.m; path = Classes/Hex.m; sourceTree = "<group>"; };
@@ -197,6 +205,10 @@
 		730219690F864C6900906D18 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				7332007812197B2C00D80990 /* Segment.h */,
+				7332007912197B2C00D80990 /* Segment.m */,
+				7332007212197B1E00D80990 /* MemoryMap.h */,
+				7332007312197B1E00D80990 /* MemoryMap.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -377,6 +389,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				731FAA9F1219717000D3EE3D /* MemoryMapTests.m in Sources */,
+				7332007412197B1E00D80990 /* MemoryMap.m in Sources */,
+				7332007A12197B2C00D80990 /* Segment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +403,8 @@
 				73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */,
 				731FAA831219702700D3EE3D /* FileMapView.m in Sources */,
 				731FAA851219703B00D3EE3D /* main.m in Sources */,
+				7332007512197B1E00D80990 /* MemoryMap.m in Sources */,
+				7332007B12197B2C00D80990 /* Segment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +520,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = MachoLoader;
 			};
 			name = Debug;
