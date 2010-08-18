@@ -25,5 +25,11 @@
 	return self;
 }
 
+- (NSString *)name {
+	return [_values objectForKey:@"name"];
+}
 
+- (NSString *)instruction {
+	return [_values objectForKey:@"instruction"];
+}
 @end

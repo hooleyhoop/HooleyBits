@@ -7,9 +7,12 @@
 //
 
 #import "CodeLine.h"
-
+#import "Instruction.h"
+#import "Argument.h"
 
 @implementation CodeLine
+
+@synthesize arguments=_arguments;
 
 + (id)lineWithAddress:(NSUInteger)addrr {
 	return [[[self alloc] initWithAddress:addrr] autorelease];
@@ -19,7 +22,7 @@
 	return [[[self alloc] initWithAddress:addrr instruction:temp] autorelease];
 }
 
-+ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSString *)temp2 {
++ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSArray *)temp2 {
 	return [[[self alloc] initWithAddress:addrr instruction:temp1 args:temp2] autorelease];
 }
 
@@ -31,20 +34,21 @@
 	return [self initWithAddress:addrr instruction:temp args:nil];
 }
 
-- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)opCodeInfo args:(NSString *)temp2 {
+- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)opCodeInfo args:(NSArray *)temp2 {
 
 	self = [super init];
 	if(self){
 		_address = addrr;
-		_instruction = opCodeInfo;
-		_tempArgs = [temp2 retain];
+		_instruction = [opCodeInfo retain];
+		_arguments = [temp2 retain];
 	}
 	return self;
 }
 
 - (void)dealloc {
 		
-	[_tempArgs release];
+	[_instruction release];
+	[_arguments release];
 	[super dealloc];
 }
 
@@ -72,8 +76,19 @@
 	return _address;
 }
 
-- (NSString *)prettyString {
-	return [NSString stringWithFormat:@"%@ %@", [_instruction name], _tempArgs];
+- (NSString *)temp_argString {
+	
+	NSString *resultString = @"";
+	for( Argument *each in _arguments ){
+		resultString = [resultString stringByAppendingFormat:@" %@", [each output]];
+	}
+	return resultString;
 }
+
+- (NSString *)prettyString {
+	return [NSString stringWithFormat:@"%@ %@", [_instruction instruction], [self temp_argString]];
+}
+
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "Argument.h"
 #import "BasicToken.h"
+#import "HexConversions.h"
 
 // 2010-06-15 13:20:06.055 SimpleFileParser[29037:a0f] ( %r , 66 )
 
@@ -103,6 +104,27 @@
 			blergh = [NSString stringWithFormat:@"%@ %@", blergh, value];
 	}
 	return blergh;
+}
+
+- (BOOL)containsHexNum {
+	
+	for( BasicToken* each in _allTokens ) 
+	{
+		if(each.type==hexNum)
+			return YES;
+	}
+	return NO;
+}
+
+- (NSUInteger)hexAsInt {
+
+	for( BasicToken* each in _allTokens ) 
+	{
+		if(each.type==hexNum)
+			return hexStringToInt( [NSString stringWithCString:each.value encoding:NSUTF8StringEncoding] );
+	}
+	[NSException raise:@"this shouldnt happen" format:@""];
+	return 0;
 }
 
 @end

@@ -35,6 +35,7 @@
 		73875FC611C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
 		7387AD6112153BA9008A43B5 /* HexConversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7387AD6012153BA9008A43B5 /* HexConversions.m */; };
 		7387AD6212153BA9008A43B5 /* HexConversions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7387AD6012153BA9008A43B5 /* HexConversions.m */; };
+		738FD546121BF4E70069B868 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 738FD545121BF4E70069B868 /* FScript.framework */; };
 		7392920611DBAC78000429DC /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7392914911DBA902000429DC /* OCMock.framework */; };
 		7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739291B211DBA9AC000429DC /* SHTestUtilities.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7397E14311C15E5700463F04 /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397E14211C15E5700463F04 /* TokenArray.m */; };
@@ -49,6 +50,13 @@
 		73A0F7F311DCA440008DD4E2 /* SHShared.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7392918711DBA965000429DC /* SHShared.framework */; };
 		73A0F92411DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
 		73A0F92511DCAB61008DD4E2 /* CodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F92311DCAB61008DD4E2 /* CodeLine.m */; };
+		73A1EF571219913F004CAC63 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7340BF48120585B900437881 /* MachoLoader.m */; };
+		73A1EF7312199161004CAC63 /* FileMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF7212199161004CAC63 /* FileMapView.m */; };
+		73A1EF7412199161004CAC63 /* FileMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF7212199161004CAC63 /* FileMapView.m */; };
+		73A1EF791219916B004CAC63 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF761219916B004CAC63 /* Segment.m */; };
+		73A1EF7A1219916B004CAC63 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF781219916B004CAC63 /* MemoryMap.m */; };
+		73A1EF7B1219916B004CAC63 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF761219916B004CAC63 /* Segment.m */; };
+		73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF781219916B004CAC63 /* MemoryMap.m */; };
 		73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1F5811D8C7AD00347BBD /* yaml.framework */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
@@ -283,6 +291,7 @@
 		73875FCC11C6951F00F714D9 /* StringCounterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringCounterTests.m; path = Tests/StringCounterTests.m; sourceTree = "<group>"; };
 		7387AD5F12153BA9008A43B5 /* HexConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexConversions.h; path = Src/HexConversions.h; sourceTree = "<group>"; };
 		7387AD6012153BA9008A43B5 /* HexConversions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexConversions.m; path = Src/HexConversions.m; sourceTree = "<group>"; };
+		738FD545121BF4E70069B868 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = /Library/Frameworks/FScript.framework; sourceTree = "<absolute>"; };
 		73928A8A11D9EE22000429DC /* DebuggerTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebuggerTests.mm; path = Src/DebuggerTests.mm; sourceTree = "<group>"; };
 		73928A9C11D9F1C8000429DC /* iConsumeLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iConsumeLines.h; path = Src/iConsumeLines.h; sourceTree = "<group>"; };
 		7392912611DBA8BE000429DC /* iMakeCodeBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iMakeCodeBlocks.h; path = Src/iMakeCodeBlocks.h; sourceTree = "<group>"; };
@@ -304,6 +313,12 @@
 		73A0F92011DCAB34008DD4E2 /* CodeLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeLineTests.m; path = Tests/CodeLineTests.m; sourceTree = "<group>"; };
 		73A0F92211DCAB61008DD4E2 /* CodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeLine.h; path = Src/CodeLine.h; sourceTree = "<group>"; };
 		73A0F92311DCAB61008DD4E2 /* CodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeLine.m; path = Src/CodeLine.m; sourceTree = "<group>"; };
+		73A1EF7112199161004CAC63 /* FileMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileMapView.h; path = ../MachoLoader/Classes/FileMapView.h; sourceTree = SOURCE_ROOT; };
+		73A1EF7212199161004CAC63 /* FileMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileMapView.m; path = ../MachoLoader/Classes/FileMapView.m; sourceTree = SOURCE_ROOT; };
+		73A1EF751219916B004CAC63 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = ../MachoLoader/Classes/Segment.h; sourceTree = SOURCE_ROOT; };
+		73A1EF761219916B004CAC63 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = ../MachoLoader/Classes/Segment.m; sourceTree = SOURCE_ROOT; };
+		73A1EF771219916B004CAC63 /* MemoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryMap.h; path = ../MachoLoader/Classes/MemoryMap.h; sourceTree = SOURCE_ROOT; };
+		73A1EF781219916B004CAC63 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = ../MachoLoader/Classes/MemoryMap.m; sourceTree = SOURCE_ROOT; };
 		73B2F4F511C7C41500F0C9E6 /* Instruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instruction.h; path = Src/Instruction.h; sourceTree = "<group>"; };
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
@@ -361,6 +376,7 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */,
 				73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */,
+				738FD546121BF4E70069B868 /* FScript.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +406,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				738FD545121BF4E70069B868 /* FScript.framework */,
 				739291B211DBA9AC000429DC /* SHTestUtilities.framework */,
 				7392914911DBA902000429DC /* OCMock.framework */,
 				73CF1F5811D8C7AD00347BBD /* yaml.framework */,
@@ -424,8 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				7340BF46120584F000437881 /* loader.h */,
-				7340BF47120585B900437881 /* MachoLoader.h */,
-				7340BF48120585B900437881 /* MachoLoader.m */,
+				73A1EF5B1219914F004CAC63 /* MachoLoader */,
 				73387AD311D222920017D971 /* Yaml */,
 				732CFCDB11BF9E72008030ED /* Config */,
 				732CFD1F11BF9F8A008030ED /* Tests */,
@@ -695,6 +711,21 @@
 				73A0F5EC11DC9763008DD4E2 /* CodeBlockStore.m */,
 			);
 			name = CodeBlock;
+			sourceTree = "<group>";
+		};
+		73A1EF5B1219914F004CAC63 /* MachoLoader */ = {
+			isa = PBXGroup;
+			children = (
+				7340BF47120585B900437881 /* MachoLoader.h */,
+				7340BF48120585B900437881 /* MachoLoader.m */,
+				73A1EF7112199161004CAC63 /* FileMapView.h */,
+				73A1EF7212199161004CAC63 /* FileMapView.m */,
+				73A1EF751219916B004CAC63 /* Segment.h */,
+				73A1EF761219916B004CAC63 /* Segment.m */,
+				73A1EF771219916B004CAC63 /* MemoryMap.h */,
+				73A1EF781219916B004CAC63 /* MemoryMap.m */,
+			);
+			name = MachoLoader;
 			sourceTree = "<group>";
 		};
 		73B2F4FC11C7C42100F0C9E6 /* Instructions */ = {
@@ -1002,6 +1033,9 @@
 				73E41EE412140F1F0076BD88 /* InstructionHash.m in Sources */,
 				732DCA52121427B8000016EE /* HexTests.m in Sources */,
 				7387AD6112153BA9008A43B5 /* HexConversions.m in Sources */,
+				73A1EF7312199161004CAC63 /* FileMapView.m in Sources */,
+				73A1EF791219916B004CAC63 /* Segment.m in Sources */,
+				73A1EF7A1219916B004CAC63 /* MemoryMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,6 +1082,10 @@
 				73E41EE512140F200076BD88 /* InstructionHash.m in Sources */,
 				732DCA4D12142791000016EE /* Hex.m in Sources */,
 				7387AD6212153BA9008A43B5 /* HexConversions.m in Sources */,
+				73A1EF571219913F004CAC63 /* MachoLoader.m in Sources */,
+				73A1EF7412199161004CAC63 /* FileMapView.m in Sources */,
+				73A1EF7B1219916B004CAC63 /* Segment.m in Sources */,
+				73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

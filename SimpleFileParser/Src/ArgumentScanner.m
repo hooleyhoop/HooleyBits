@@ -12,6 +12,8 @@
 
 @implementation ArgumentScanner
 
+@synthesize allArguments;
+
 + (id)scannerWithTokens:(TokenArray *)tks {
 	return [[[self alloc] initWithTokens:tks] autorelease];
 }
@@ -64,15 +66,6 @@
 
 - (Argument *)argumentAtIndex:(NSUInteger)index {
 	return [allArguments objectAtIndex:index];
-}
-
-- (NSString *)temp_toString {
-	
-	NSString *resultString = @"";
-	for( Argument *each in allArguments ){
-		resultString = [resultString stringByAppendingFormat:@" %@", [each pattern]];
-	}
-	return resultString;
 }
 
 @end

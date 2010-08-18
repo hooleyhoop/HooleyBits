@@ -19,4 +19,6 @@
 - (NSString *)output;
 - (NSString *)pattern;
 
+- (BOOL)containsHexNum;
+
 @end

@@ -76,7 +76,7 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 	_state++;
 
 	NSString *hmm = [NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding];
-	NSLog(@"YAML_SCALAR_EVENT %@", hmm );
+//	NSLog(@"YAML_SCALAR_EVENT %@", hmm );
 }
 
 
@@ -128,17 +128,17 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 		
 		switch ( event.type ) {
 			case YAML_STREAM_START_EVENT:
-				NSLog(@"start stream");
+//				NSLog(@"start stream");
 				break;
 			case YAML_STREAM_END_EVENT:
 				done = YES;
-				NSLog(@"end stream");
+//				NSLog(@"end stream");
 				break;
 			case YAML_DOCUMENT_START_EVENT:
-				NSLog(@"document start");
+//				NSLog(@"document start");
 				break;
 			case YAML_DOCUMENT_END_EVENT:
-				NSLog(@"document end");
+//				NSLog(@"document end");
 				break;
 			case YAML_MAPPING_START_EVENT:
 				[self newMapping:event];
@@ -150,15 +150,15 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 				[self addScalar:event];
 				break;
 			case YAML_SEQUENCE_START_EVENT:
-				NSLog(@"YAML_SEQUENCE_START_EVENT");
+//				NSLog(@"YAML_SEQUENCE_START_EVENT");
 				break;
 			case YAML_SEQUENCE_END_EVENT:
-				NSLog(@"YAML_SEQUENCE_END_EVENT");
+//				NSLog(@"YAML_SEQUENCE_END_EVENT");
 				break;
 			case YAML_ALIAS_EVENT:
-				NSLog(@"YAML_ALIAS_EVENT");
+//				NSLog(@"YAML_ALIAS_EVENT");
 				hmm = [NSString stringWithCString:(char *)event.data.alias.anchor encoding:NSASCIIStringEncoding];
-				NSLog(@"YAML_SCALAR_EVENT %@", hmm );
+//				NSLog(@"YAML_SCALAR_EVENT %@", hmm );
 				break;
 			default:
 				[NSException raise:@"YAML ERROR" format:@""];

@@ -8,7 +8,7 @@
 
 // Playing with this http://developer.apple.com/mac/library/documentation/DeveloperTools/Reference/Assembler/060-i386_Addressing_Modes_and_Assembler_Instructions/i386_intructions.html#//apple_ref/doc/uid/TP30000825-TPXREF101
 
-@class StringCounter, AppDisassembly;
+@class StringCounter, AppDisassembly, MachoLoader;
 
 @interface SimpleFileParserAppDelegate : NSObject <NSApplicationDelegate> {
 
@@ -21,8 +21,10 @@
 	StringCounter		*_allArgumentFormats;
 
 	AppDisassembly		*_dissasembled;
+	MachoLoader			*_ml; 
 }
 
 @property (assign) IBOutlet NSWindow *window;
+@property (readonly) MachoLoader *machLoader;
 
 @end

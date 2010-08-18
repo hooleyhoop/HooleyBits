@@ -126,12 +126,10 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 	[super dealloc];
 }
 
-- (NSString *)sectionForMemAddress:(NSUInteger)addr {
+- (NSString *)segmentForAddress:(NSUInteger)memAddr {
 	
-	if(addr>_codeSize)
-		return @"none";
-	
-	return nil;
+	Segment *seg = [_memoryMap segmentForAddress:memAddr];
+	return [seg name];
 }
 
 // record positions of file sections
@@ -378,100 +376,93 @@ void readHeaderFlags( uint32_t flags ) {
 // http://serenity.uncc.edu/web/ADC/2005/Developer_DVD_Series/April/ADC%20Reference%20Library/documentation/DeveloperTools/Conceptual/MachORuntime/FileStructure/chapter_4_section_1.html#//apple_ref/doc/uid/20001298/BAJBDBBC
 - (void)parseLoadCommands {
 	
-	for( NSNumber *segmentAddress_Number in _loadCommands)
+	for( NSNumber *segmentAddress_Number in _loadCommands )
 	{		
-		const struct load_command* cmd = (struct load_command *)[segmentAddress_Number unsignedIntValue];
+		const struct load_command *cmd = (struct load_command *)[segmentAddress_Number unsignedIntegerValue];
 
-		if(cmd->cmd==LC_UUID){
+		if( cmd->cmd==LC_UUID ){
 			// Specifies the 128-bit UUID for an image or its corresponding dSYM file.
 			struct uuid_command *seg = (struct uuid_command *)cmd;
 			NSLog(@"LC_UUID");
 			
-		} else if(cmd->cmd==LC_SEGMENT){
+		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ){
 
+			char *segname;
+			NSUInteger vmaddr, vmsize, nsects;
+			
 			// Defines a segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
-			struct segment_command *seg = (struct segment_command *)cmd;				
-			char *segname= seg->segname;
-
+			if( cmd->cmd==LC_SEGMENT ) {
+				const struct segment_command *seg = (struct segment_command *)cmd;
+				segname = (char *)seg->segname;
+				vmaddr = seg->vmaddr;
+				vmsize = seg->vmsize;
+				nsects = seg->nsects;
+				
+			} else if( cmd->cmd==LC_SEGMENT_64 ) {
+				const struct segment_command_64 *seg = (struct segment_command_64 *)cmd;
+				segname = (char *)seg->segname;
+				vmaddr = seg->vmaddr;
+				vmsize = seg->vmsize;
+				nsects = seg->nsects;
+			}
+	
 			NSString *segmentName = [NSString stringWithCString:segname encoding:NSUTF8StringEncoding];
 			NSLog(@"segment name %@", segmentName);
 
-			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
-			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
+//			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
+//			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
 			
-			[self addSegment:segmentName memAddress:seg->vmaddr length:seg->vmsize];
+			[self addSegment:segmentName memAddress:vmaddr length:vmsize];
 				
 			// __PAGEZERO	--  where you end up when dereferencing a 0 pointer.
 			// __TEXT		-- The text segment is where our code lives.
 			// __DATA		-- The data segment holds our “Hello world!” string.
 			// __IMPORT		-- The IMPORT segment holds our jump table, the stubs for printf and exit.
 			// __LINKEDIT	-- The LINKEDIT segment holds the symbol table.
-			if ( strcmp(segname, "__PAGEZERO")==0 ) {
-				NSLog(@"Processing __PAGEZERO"); // vmsize 4096
 
-			} else if ( strcmp(segname, "__TEXT")==0 ) {
-				NSLog(@"Processing page __TEXT");
-				// 4 sections x86
-			} else if ( strcmp(segname, "__DATA")==0 ) {
-				NSLog(@"Processing __DATA");
-				// 4 sections x86
-			} else if ( strcmp(segname, "__IMPORT")==0 ) {
-				NSLog(@"Processing __IMPORT");
-				// 2 sections x86
-			} else if ( strcmp(segname, "__LINKEDIT")==0 ) {
-				NSLog(@"Processing __LINKEDIT");
-			
-			} else if ( strcmp(segname, "__OBJC")==0 ) {
-				NSLog(@"Processing	__OBJC");
-				// 13 sections x86
-			} else {
-				[NSException raise:@"chimpo" format:@""];
-			}
 			// each segment is divided into sections.  eg __PAGEZERO segment takes up no space on disk but has space in memory
-			uint32_t numberOfSections1 = seg->nsects; // works on ppc
 			
 			// If there are sections - The sections follow the segment
-            struct section *sects = (struct section *)(seg+1);	// hey look - this is a good way to advance past segment
-			
-			// struct section *endOfSections_addr = &startOfSections_addr[numberOfSections1];
+	//		struct section_64 // TODO: 64
+		
+            struct section *sects = (struct section *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
 			struct section *newSec_ptr = sects;
 			
-			for( int i=0; i<numberOfSections1; i++ )
+			for( NSUInteger i=0; i<nsects; i++ )
 			{
-				uint32_t memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
+				NSUInteger memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection){
-					NSLog(@"i=%i, numberOfSections=%i", i, numberOfSections1);
+					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
 					char *containingSegmentName = newSec_ptr->segname;
 					char *thisSectionName = newSec_ptr->sectname;
 
 					NSLog(@"segment2 name %s", containingSegmentName );
 					NSLog(@"section2 name %s", thisSectionName );
-					
+
 					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
-					
+
 					struct relocation_info *sect_relocs = (struct relocation_info *)(_codeAddr + newSec_ptr->reloff);
 					uint32_t sect_nrelocs = newSec_ptr->nreloc;
 					uint32_t sect_addr = newSec_ptr->addr;
 					uint32_t sect_flags = newSec_ptr->flags;
-					
+
 					uint32_t newSectSize = newSec_ptr->size;
 					void *newSectAddr = NULL;
 
 					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
-					
+
 					NSString *secName = [NSString stringWithCString:thisSectionName encoding:NSUTF8StringEncoding];
 
 					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
 					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 					[self addSection:label start:sectionOffset length:newSectSize];
 
-					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
-					if (err==0) {
-						NSData *sectionData = [NSData dataWithBytes:sect_pointer length:newSectSize];
-						NSLog(@"Copied section.. %@", sectionData); // [sectionData hexString]
-						memcpy(newSectAddr, sect_pointer, newSectSize);
-
-					}
+//					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
+//					if (err==0) {
+//						NSData *sectionData = [NSData dataWithBytes:sect_pointer length:newSectSize];
+//						NSLog(@"Copied section.. %@", sectionData); // [sectionData hexString]
+//						memcpy(newSectAddr, sect_pointer, newSectSize);
+//					}
 					
 
 					// TEXT Segment sections
@@ -780,28 +771,27 @@ void readHeaderFlags( uint32_t flags ) {
 					
 					// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
 					} else if ( strcmp(thisSectionName, "__symbol_stub")==0 ) {
-
+						
+						// This Follows the form (ie our val1 needs disassembling)
 						//00006dd0	jmp	*0x0000703c
 						//00006dd6	jmp	*0x00007040
-						//00006ddc	jmp	*0x00007044
-						//00006de2	jmp	*0x00007048
-						//00006de8	jmp	*0x0000704c
-						//00006dee	jmp	*0x00007050
-						//00006df4	jmp	*0x00007054
-						//00006dfa	jmp	*0x00007058
-						//00006e00	jmp	*0x0000705c
-						//00006e06	jmp	*0x00007060
-						//00006e0c	jmp	*0x00007064
-						//00006e12	jmp	*0x00007068
-						//00006e18	jmp	*0x0000706c
-						//00006e1e	jmp	*0x00007070
-						//00006e24	jmp	*0x00007074
-						//00006e2a	jmp	*0x00007078
-						//00006e30	jmp	*0x0000707c
-						//00006e36	jmp	*0x00007080
-						//00006e3c	jmp	*0x00007084
-						//00006e42	jmp	*0x00007088
+
+						// This needs to be UInt8 so we can advance by a specific number of bytes?
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
 						
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+		
+							UInt16 val1 = *((UInt16 *)locPtr);
+							locPtr = locPtr + sizeof val1;
+							
+							UInt32 val2 = *((UInt32 *)locPtr);
+							locPtr = locPtr + sizeof val2;
+
+							NSLog(@"%x %x %x", memPtr, val1, val2 );
+							memPtr = memPtr + sizeof val1 + sizeof val2;
+						}
+
 					// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__stub_helper")==0 ) {
 
@@ -895,8 +885,25 @@ void readHeaderFlags( uint32_t flags ) {
 						//00006fa6	jmpl	0x100006e48
 						//00006fab	nop
 						
+						// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__literal4")==0 ) {
+						NSLog(@"eh");
+						// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
+					} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
+						NSLog(@"eh");
+						// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__StaticInit")==0 ) {
+						NSLog(@"eh");
+				
+						// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__eh_frame")==0 ) {
+						// dubug info? Todo with exceptions
+			
+						// otool -s __TEXT __const_coal /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
+						
 					} else if ( strcmp(thisSectionName, "__unwind_info")==0 ) {
-
+						NSLog(@"eh");
 						//00006fb0	01 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 
 						//00006fc0	00 00 00 00 1c 00 00 00 02 00 00 00 00 00 00 00 
 						//00006fd0	34 00 00 00 34 00 00 00 f9 5f 00 00 00 00 00 00 
@@ -920,13 +927,28 @@ void readHeaderFlags( uint32_t flags ) {
 					// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__cfstring")==0 ) {
 						print_cstring_section( sect_pointer, newSectSize, sect_addr );
-						
+				
 					// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__data")==0 ) {
-						
+
 					// otool -s __DATA __bss -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__bss")==0 ) {
+
+					// otool -s __DATA __datacoal_nt /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__datacoal_nt")==0 ) {
+
+					// otool -s __DATA __mod_init_func /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__mod_init_func")==0 ) {
 					
+					// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
+					
+					// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
+						
+					// otool -s __DATA __common /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+					} else if ( strcmp(thisSectionName, "__common")==0 ) {
+
 					// OBJC Segment sections
 					// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__message_refs")==0 ) {
@@ -1077,6 +1099,12 @@ void readHeaderFlags( uint32_t flags ) {
 
 					// otool -s __OBJC __image_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
 					} else if ( strcmp(thisSectionName, "__image_info")==0 ) {
+
+					// otool -s __IMPORT __pointers /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+					} else if ( strcmp(thisSectionName, "__pointers")==0 ) {
+
+					// otool -s __IMPORT __jump_table /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+					} else if ( strcmp(thisSectionName, "__jump_table")==0 ) {	
 						
 					} else {
 						[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
@@ -1086,12 +1114,8 @@ void readHeaderFlags( uint32_t flags ) {
 				newSec_ptr = newSec_ptr+1;
 			}
 			
-		} else if(cmd->cmd==LC_SEGMENT_64){
-			// Defines a 64-bit segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
-			struct segment_command_64 *seg = (struct segment_command_64 *)cmd;				
-			NSLog(@"LC_SEGMENT_64");
 			
-		} else if(cmd->cmd==LC_SYMTAB){
+		} else if( cmd->cmd==LC_SYMTAB ) {
 			
 			// This segment describes our symbol table, including where the symbols and the strings naming them are located. I believe it’s mostly for the benefit of the debugger.
 				
@@ -1153,7 +1177,7 @@ void readHeaderFlags( uint32_t flags ) {
 			}
 			NSLog(@"LC_SYMTAB - number of table entries %i", symtab->nsyms );
 			
-		} else if(cmd->cmd==LC_DYSYMTAB){
+		} else if(cmd->cmd==LC_DYSYMTAB) {
 
 			// This load command describes the dynamic symbol table. This is how the dynamic linker knows to plug the stubs (indirect).
 			const struct dysymtab_command* dsymtab = (struct dysymtab_command*)cmd;
@@ -1380,14 +1404,14 @@ void readHeaderFlags( uint32_t flags ) {
 				NSLog(@"Relocate symbol %i", addressOfSymbol);
 			}
 		
-		} else if(cmd->cmd==LC_THREAD || cmd->cmd==LC_UNIXTHREAD){
+		} else if(cmd->cmd==LC_THREAD || cmd->cmd==LC_UNIXTHREAD) {
 			
 			// This load command specifies the contents of the registers at startup. I haven’t seen anything other than EIP populated, though. The program will not run unless this load command is present!
 			// For an executable file, the LC_UNIXTHREAD command defines the initial thread state of the main thread of the process. LC_THREAD is similar to LC_UNIXTHREAD but does not cause the kernel to allocate a stack.
 			const struct thread_command* threadtab = (struct thread_command*)cmd;
 			NSLog(@"LC_THREAD");
 			
-		} else if(cmd->cmd==LC_LOAD_DYLIB){
+		} else if(cmd->cmd==LC_LOAD_DYLIB) {
 			// Defines the name of a dynamic shared library that this file links against.
 			const struct dylib_command* seg = (struct dylib_command*)cmd;
 			struct dylib dylib = seg->dylib;
@@ -1418,15 +1442,13 @@ void readHeaderFlags( uint32_t flags ) {
 			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
 			NSLog(@"LC_ID_DYLINKER");
 			
-		} else if(cmd->cmd==LC_ROUTINES){
+		} else if( cmd->cmd==LC_ROUTINES || cmd->cmd==LC_ROUTINES_64 ) {
 			// Contains the address of the shared library initialization routine (specified by the linker’s -init option).
-			const struct routines_command* seg = (struct routines_command*)cmd;
-			NSLog(@"LC_ROUTINES");
-			
-		} else if(cmd->cmd==LC_ROUTINES_64){
-			// Contains the address of the shared library 64-bit initialization routine (specified by the linker’s -init option).
-			const struct routines_command_64* seg = (struct routines_command_64*)cmd;
-			NSLog(@"LC_ROUTINES_64");
+			if( cmd->cmd==LC_ROUTINES ) {
+				const struct routines_command* seg = (struct routines_command*)cmd;
+			} else {
+				const struct routines_command_64* seg = (struct routines_command_64*)cmd;
+			}
 			
 		} else if(cmd->cmd==LC_TWOLEVEL_HINTS){
 			// Contains the two-level namespace lookup hint table.
@@ -1454,6 +1476,9 @@ void readHeaderFlags( uint32_t flags ) {
 			const struct sub_client_command* seg = (struct sub_client_command *)cmd;
 			NSLog(@"LC_SUB_CLIENT");
 			
+		} else if(cmd->cmd==LC_DYLD_INFO_ONLY) {
+			NSLog(@"LC_DYLD_INFO_ONLY"); // The new compressed stuff?
+			
 		} else {
 			if ( (cmd->cmd & LC_REQ_DYLD) != 0 ){
 				NSLog(@"unknown required load command 0x%08X", cmd->cmd);
@@ -1466,6 +1491,8 @@ void readHeaderFlags( uint32_t flags ) {
 	}
 }
 
+// http://developer.apple.com/documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html
+
 - (void)doIt:(NSString *)aPath {
 
 	// path to this app
@@ -1474,10 +1501,10 @@ void readHeaderFlags( uint32_t flags ) {
 	_codeSize = [allFile length];
 
 	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
-
+	
 	/* Is the executable a FAT? */
 	// FAT is always Big Endian - Extract relevant architecture and convert to native
-	if( OSSwapBigToHostInt32(((const struct fat_header *) _codeAddr)->magic)==FAT_MAGIC ) {
+	if( OSSwapBigToHostInt32(((struct fat_header *)_codeAddr)->magic)==FAT_MAGIC ) {
 		
 		struct fat_arch *fatArchArray;
 		struct fat_header *fatHeader = (struct fat_header *)_codeAddr;
@@ -1532,50 +1559,60 @@ void readHeaderFlags( uint32_t flags ) {
 			_codeSize = newCodeSize;
 		}
 	}
-	struct mach_header *machHeader = (struct mach_header *)_codeAddr;
-	NSInteger mach_headerOffset = (NSInteger)((NSInteger *)machHeader)-(NSInteger)((NSInteger *)_codeAddr);
-	NSUInteger mach_headerSize = sizeof(*machHeader);
-
-	[[FileMapView sharedMapView] addRegionAtOffset:mach_headerOffset withSize:mach_headerSize label:[NSString stringWithFormat:@"Header %i", mach_headerSize]];
-	[self addSection:@"Header" start:mach_headerOffset length:machHeader->sizeofcmds];
+	
+	// just the bits common between 32bit and 64bit! Dont even think of doing sizeof
+	const struct mach_header *universalMachHeader = (struct mach_header *)_codeAddr;
+	
+//hmm	NSInteger mach_headerOffset = (NSInteger)((NSInteger *)machHeader)-(NSInteger)((NSInteger *)_codeAddr);
+//hmm	NSUInteger mach_headerSize = sizeof(*machHeader);
+//hmm	[[FileMapView sharedMapView] addRegionAtOffset:mach_headerOffset withSize:mach_headerSize label:[NSString stringWithFormat:@"Header %i", mach_headerSize]];
+//hmm	[self addSection:@"Header" start:mach_headerOffset length:machHeader->sizeofcmds];
 	 
 	/* Is the architecture correct for this machine? */
-	if( machHeader->magic==MH_MAGIC ) // 32bit
+	struct load_command *startOfLoadCommandsPtr = 0;
+
+	if( universalMachHeader->magic==MH_MAGIC ) // 32bit
 	{
-		if(machHeader->cputype==CPU_TYPE_POWERPC)
-			NSLog(@"PPC");
-		else if(machHeader->cputype==CPU_TYPE_I386)
-			NSLog(@"INTEL");
-		else
-			NSLog(@"UNKNOWN ARCHITECTURE");
-		
-		// cpusubtype = CPU_SUBTYPE_POWERPC_ALL || CPU_SUBTYPE_I386_ALL
-		// filetype = MH_OBJECT || MH_EXECUTE || MH_BUNDLE || MH_DYLIB || MH_PRELOAD || MH_CORE || MH_DYLINKER || MH_DSYM
-		if(machHeader->filetype==MH_EXECUTE){
-			NSLog(@"Inside the guts of an executable");
-		}
-		uint32_t ncmds = machHeader->ncmds;
-		uint32_t sizeofcmds_bytes = machHeader->sizeofcmds;
-		NSLog(@"sizeofcmds_bytes: %u", sizeofcmds_bytes);
-		uint32_t flags = machHeader->flags; // MH_FORCE_FLAT etc
-		readHeaderFlags(flags);
-		
-		/* Move on past the header */
-		const struct load_command *const cmds1 = (struct load_command *)(machHeader+1);	// hey look - this is a good way to advance past header
-	
-		NSInteger loadCommandsOffset = (NSInteger)((NSInteger *)cmds1)-(NSInteger)((NSInteger *)_codeAddr);
-		[[FileMapView sharedMapView] addRegionAtOffset:loadCommandsOffset withSize:sizeofcmds_bytes label:[NSString stringWithFormat:@"Load Commands %i", sizeofcmds_bytes]];		
-		
-		const struct load_command* cmd = cmds1;
-		// http://developer.apple.com/documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html
-		for(int i=0; i<ncmds; i++)
-		{
-			[_loadCommands addObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)cmd]];
-			cmd = (const struct load_command*)((uint32_t)cmd+(uint32_t)cmd->cmdsize);
-		}
+		const struct mach_header *machHeader = (struct mach_header *)_codeAddr;
+		startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
+
+	} else if( universalMachHeader->magic==MH_MAGIC_64 ) { // 64bit
+
+		const struct mach_header_64 *machHeader = (struct mach_header_64 *)_codeAddr;
+		startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
+
+
 	} else {
-		[NSException raise:@"64bit is not supported" format:@""];
+		[NSException raise:@"Unknown Format" format:@""];
 	}
+		
+	if( universalMachHeader->cputype==CPU_TYPE_POWERPC )
+		NSLog(@"PPC");
+	else if( universalMachHeader->cputype==CPU_TYPE_I386 )
+		NSLog(@"INTEL - 32bit");
+	else if( universalMachHeader->cputype==CPU_TYPE_X86_64 )
+		NSLog(@"INTEL - 64bit");
+	else
+		NSLog(@"UNKNOWN ARCHITECTURE");
+		
+	// cpusubtype = CPU_SUBTYPE_POWERPC_ALL || CPU_SUBTYPE_I386_ALL
+	// filetype = MH_OBJECT || MH_EXECUTE || MH_BUNDLE || MH_DYLIB || MH_PRELOAD || MH_CORE || MH_DYLINKER || MH_DSYM
+	if( universalMachHeader->filetype==MH_EXECUTE ){
+		NSLog(@"Inside the guts of an executable");
+	}
+
+	readHeaderFlags( universalMachHeader->flags ); // MH_FORCE_FLAT etc
+		
+//		NSInteger loadCommandsOffset = (NSInteger)((NSInteger *)cmds1)-(NSInteger)((NSInteger *)_codeAddr);
+//		[[FileMapView sharedMapView] addRegionAtOffset:loadCommandsOffset withSize:sizeofcmds_bytes label:[NSString stringWithFormat:@"Load Commands %i", sizeofcmds_bytes]];		
+		
+	const struct load_command *cmd = startOfLoadCommandsPtr;
+
+	for( NSUInteger i=0; i<universalMachHeader->ncmds; i++ ) {
+		[_loadCommands addObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)cmd]];
+		cmd = (struct load_command *)((uintptr_t)cmd+(uint32_t)cmd->cmdsize);
+	}
+	
 }
 
 

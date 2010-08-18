@@ -15,4 +15,7 @@
 + (id)instructionWithDict:(NSDictionary *)instrInfo;
 - (id)initWithDict:(NSDictionary *)instrInfo;
 
+- (NSString *)name;
+- (NSString *)instruction;
+
 @end

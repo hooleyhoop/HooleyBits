@@ -103,7 +103,7 @@
 	Instruction *instr = [Instruction instructionWithDict:instrInfo];
 	
 	NSString *arguments=nil, *functionHint=nil;
-	NSString *tempArgString=nil;
+	NSArray *allArgs = nil;
 
 	// optional
 	if([components count]>=5) {
@@ -111,13 +111,13 @@
 		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
 		[tkns1 secondPass];
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
-		tempArgString = [scanner temp_toString];
+		allArgs = scanner.allArguments;
 	}
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];
 
 	NSUInteger addressInt = hexStringToInt(address);
-	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:tempArgString];
+	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
 	return newLine;
 	
 

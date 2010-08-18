@@ -10,6 +10,7 @@
 #import "CodeBlockStore.h"
 #import "CodeBlock.h"
 #import "CodeLine.h"
+#import "Argument.h"
 
 @implementation CodeBlocksEnumerator
 
@@ -55,8 +56,33 @@
 
 			CodeLine *line = [block lineAtIndex:_currentLineIndex];
 			NSAssert(line, @"should have a block at that index");
-			lineString = [line prettyString];
+			
+			/* very primitive filtering */
+			BOOL passesFilter = NO;
+			NSArray *args = line.arguments;
+			if (args && [args count]) {
+				// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
+				for( Argument *each in args ) {
+					if([each containsHexNum]){
+						NSUInteger decValue = [each hexAsInt];
+						if(decValue>4096)
+						{
+							id ob1 = [NSApplication sharedApplication];
+							id ob2 = [ob1 delegate];
+							id ob3 = [ob2 machLoader];
+							NSString *segment = [ob3 segmentForAddress:decValue];
+							NSLog(segment);
+						}
+						passesFilter = YES;
+					}
+				}
+			}
 			_currentLineIndex++;
+			/* end very primitive filtering */
+			if(passesFilter)
+				lineString = [line prettyString];
+			else
+				lineString = [self nextLine];
 		}
 
 	}

@@ -14,6 +14,8 @@
 	
 }
 
+@property (readonly) NSMutableArray *allArguments;
+
 + (id)scannerWithTokens:(TokenArray *)tks;
 
 - (id)initWithTokens:(TokenArray *)tks;
@@ -21,7 +23,5 @@
 - (NSUInteger)count;
 
 - (Argument *)argumentAtIndex:(NSUInteger)index;
-
-- (NSString *)temp_toString;
 
 @end

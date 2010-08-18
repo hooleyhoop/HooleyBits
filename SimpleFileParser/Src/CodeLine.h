@@ -11,17 +11,18 @@
 
 	NSUInteger		_address;
 	Instruction		*_instruction;
-	
-	NSString		*_tempArgs;
+	NSArray			*_arguments;
 }
+
+@property (readonly) NSArray *arguments;
 
 + (id)lineWithAddress:(NSUInteger)addrr;
 + (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp;
-+ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSString *)temp2;
++ (id)lineWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSArray *)temp2;
 
 - (id)initWithAddress:(NSUInteger)addrr;
 - (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp;
-- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSString *)temp2;
+- (id)initWithAddress:(NSUInteger)addrr instruction:(Instruction *)temp1 args:(NSArray *)temp2;
 
 - (NSComparisonResult)compareAddress:(CodeLine *)arg;
 - (NSComparisonResult)compareAddressToAddress:(NSUInteger)addr;

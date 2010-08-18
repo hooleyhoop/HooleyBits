@@ -9,10 +9,12 @@
 #import "SimpleFileParserAppDelegate.h"
 #import "AppDisassembly.h"
 #import "InstructionLookup.h"
+#import "MachoLoader.h"
 
 @implementation SimpleFileParserAppDelegate
 
 @synthesize window = _window;
+@synthesize machLoader = _ml;
 
 // registers
 // %eip = next instruction address
@@ -42,14 +44,19 @@ nil] retain];
 	// strip the app to desired architectire
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
 
+	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
+
 	[InstructionLookup testParseYAML];
 	
+	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
+	
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_tiny.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	
-	_dissasembled =  [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
 	
 	// This is asyncronous. Need to rethink some stuff
 	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];

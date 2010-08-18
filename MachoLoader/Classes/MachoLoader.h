@@ -31,6 +31,6 @@
 
 - (id)initWithPath:(NSString *)aPath;
 
-- (NSString *)sectionForMemAddress:(NSUInteger)addr;
+- (NSString *)segmentForAddress:(NSUInteger)memAddr;
 
 @end

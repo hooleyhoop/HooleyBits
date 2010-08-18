@@ -75,8 +75,9 @@
 
 - (void)closeOutputFile {
 	
-	[_oStream close];
+	[_oStream setDelegate:nil];
 	[_oStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[_oStream close];
 	[_oStream release];
 	_oStream = nil;
 }
@@ -89,7 +90,7 @@
 
 	while( nextLine=[_src performSelector:_callback] ) {
 				
-		NSLog(@"%@", nextLine);
+		// NSLog(@"%@", nextLine);
 		nextLine = [nextLine stringByAppendingFormat:@"\n"];
 		NSUInteger lineLen = [nextLine length];
 		NSAssert( lineLen!=0, @"Output Error?" );
