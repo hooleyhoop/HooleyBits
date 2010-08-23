@@ -38,6 +38,7 @@
 
 #import "MemoryMap.h"
 #import "Segment.h"
+#import "Section.h"
 
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
@@ -104,17 +105,258 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 	}
 }
 
+/*
+ * Print the indirect symbol table.
+ */
+void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds, uint32_t sizeofcmds, cpu_type_t cputype,
+							//					   enum byte_sex load_commands_byte_sex,
+							uint32_t *indirect_symbols,
+							uint32_t nindirect_symbols,
+							struct nlist *symbols,
+							struct nlist_64 *symbols64,
+							uint32_t nsymbols,
+							char *strings,
+							uint32_t strings_size //,
+							//					   enum bool verbose
+							)
+{
+	//    enum byte_sex host_byte_sex;
+	//    enum bool swapped;
+    uint32_t i, j, k, left, size, nsects, n, count, stride, section_type;
+    uint64_t bigsize, big_load_end;
+    char *p;
+    struct load_command *lc, l;
+    struct segment_command sg;
+    struct section s;
+    struct segment_command_64 sg64;
+    struct section_64 s64;
+    struct section_indirect_info {
+		char segname[16];
+		char sectname[16];
+		uint64_t size;
+		uint64_t addr;
+		uint32_t reserved1;
+		uint32_t reserved2;
+		uint32_t flags;
+    } *sect_ind;
+    uint32_t n_strx;
+	
+	sect_ind = NULL;
+	//	host_byte_sex = get_host_byte_sex();
+	//	swapped = host_byte_sex != load_commands_byte_sex;
+	
+	/*
+	 * Create an array of section structures in the host byte sex so it
+	 * can be processed and indexed into directly.
+	 */
+	k = 0;
+	nsects = 0;
+	lc = load_commands;
+	big_load_end = 0;
+	for( i=0; i<ncmds; i++ )
+	{
+	    memcpy((char *)&l, (char *)lc, sizeof(struct load_command));
+		//	    if(swapped)
+		//			swap_load_command(&l, host_byte_sex);
+	    if(l.cmdsize % sizeof(int32_t) != 0)
+			printf("load command %u size not a multiple of sizeof(int32_t)\n", i);
+	    big_load_end += l.cmdsize;
+	    if(big_load_end > sizeofcmds)
+			printf("load command %u extends past end of load commands\n", i);
+	    left = sizeofcmds - ((char *)lc - (char *)load_commands);
+		
+	    switch(l.cmd){
+			case LC_SEGMENT:
+				memset((char *)&sg, '\0', sizeof(struct segment_command));
+				size = left < sizeof(struct segment_command) ?
+				left : sizeof(struct segment_command);
+				left -= size;
+				memcpy((char *)&sg, (char *)lc, size);
+				//				if(swapped)
+				//					swap_segment_command(&sg, host_byte_sex);
+				bigsize = sg.nsects;
+				bigsize *= sizeof(struct section);
+				bigsize += size;
+				if(bigsize > sg.cmdsize){
+					printf("number of sections in load command %u extends past end of load commands\n", i);
+					sg.nsects = (sg.cmdsize-size) / sizeof(struct section);
+				}
+				nsects += sg.nsects;
+				//				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
+				memset((char *)(sect_ind + (nsects - sg.nsects)), '\0', sizeof(struct section_indirect_info) * sg.nsects);
+				p = (char *)lc + sizeof(struct segment_command);
+				for(j = 0 ; j < sg.nsects ; j++)
+				{
+					left = sizeofcmds - (p - (char *)load_commands);
+					size = left < sizeof(struct section) ?
+					left : sizeof(struct section);
+					memcpy((char *)&s, p, size);
+					//					if(swapped)
+					//						swap_section(&s, 1, host_byte_sex);
+					
+					if(p + sizeof(struct section) >
+					   (char *)load_commands + sizeofcmds)
+						break;
+					p += size;
+					memcpy(sect_ind[k].segname, s.segname, 16);
+					memcpy(sect_ind[k].sectname, s.sectname, 16);
+					sect_ind[k].size = s.size;
+					sect_ind[k].addr = s.addr;
+					sect_ind[k].reserved1 = s.reserved1;
+					sect_ind[k].reserved2 = s.reserved2;
+					sect_ind[k].flags = s.flags;
+					k++;
+				}
+				break;
+			case LC_SEGMENT_64:
+				memset((char *)&sg64, '\0', sizeof(struct segment_command_64));
+				size = left < sizeof(struct segment_command_64) ? left : sizeof(struct segment_command_64);
+				memcpy((char *)&sg64, (char *)lc, size);
+				//				if(swapped)
+				//					swap_segment_command_64(&sg64, host_byte_sex);
+				bigsize = sg64.nsects;
+				bigsize *= sizeof(struct section_64);
+				bigsize += size;
+				if(bigsize > sg64.cmdsize){
+					printf("number of sections in load command %u extends past end of load commands\n", i);
+					sg64.nsects = (sg64.cmdsize-size) / sizeof(struct section_64);
+				}
+				nsects += sg64.nsects;
+				//				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
+				memset((char *)(sect_ind + (nsects - sg64.nsects)), '\0', sizeof(struct section_indirect_info) * sg64.nsects);
+				p = (char *)lc + sizeof(struct segment_command_64);
+				for( j=0 ; j<sg64.nsects; j++ )
+				{
+					left = sizeofcmds - (p - (char *)load_commands);
+					size = left < sizeof(struct section_64) ? left : sizeof(struct section_64);
+					memcpy((char *)&s64, p, size);
+					//					if(swapped)
+					//						swap_section_64(&s64, 1, host_byte_sex);
+					
+					if(p + sizeof(struct section) >
+					   (char *)load_commands + sizeofcmds)
+						break;
+					p += size;
+					memcpy(sect_ind[k].segname, s64.segname, 16);
+					memcpy(sect_ind[k].sectname, s64.sectname, 16);
+					sect_ind[k].size = s64.size;
+					sect_ind[k].addr = s64.addr;
+					sect_ind[k].reserved1 = s64.reserved1;
+					sect_ind[k].reserved2 = s64.reserved2;
+					sect_ind[k].flags = s64.flags;
+					k++;
+				}
+				break;
+	    }
+	    if(l.cmdsize == 0){
+			printf("load command %u size zero (can't advance to other load commands)\n", i);
+			break;
+	    }
+	    lc = (struct load_command *)((char *)lc + l.cmdsize);
+	    if((char *)lc > (char *)load_commands + sizeofcmds)
+			break;
+	}
+	if((char *)load_commands + sizeofcmds != (char *)lc)
+	    printf("Inconsistent sizeofcmds\n");
+	
+	for( i=0; i<nsects; i++ )
+	{
+	    section_type = sect_ind[i].flags & SECTION_TYPE;
+	    if(section_type == S_SYMBOL_STUBS)
+		{
+			stride = sect_ind[i].reserved2;
+			if(stride == 0){
+				printf("Can't print indirect symbols for (%.16s,%.16s) (size of stubs in reserved2 field is zero)\n", sect_ind[i].segname, sect_ind[i].sectname);
+				continue;
+			}
+	    }
+	    else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS)
+		{
+			if(cputype & CPU_ARCH_ABI64)
+				stride = 8;
+			else
+				stride = 4;
+	    }
+	    else
+			continue;
+		
+	    count = sect_ind[i].size / stride;
+	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
+		
+	    n = sect_ind[i].reserved1;
+	    if(n > nindirect_symbols)
+			printf(" (entries start past the end of the indirect symbol table) (reserved1 field greater than the table size)");
+	    else if(n + count > nindirect_symbols)
+			printf(" (entries extends past the end of the indirect symbol table)");
+	    if(cputype & CPU_ARCH_ABI64)
+			printf("\naddress            index");
+	    else
+			printf("\naddress    index");
+		//	    if(verbose)
+		printf(" name\n");
+		//	    else
+		//			printf("\n");
+		
+	    for( j=0; j<count && n+j<nindirect_symbols; j++)
+		{
+			if(cputype & CPU_ARCH_ABI64)
+				printf("0x%016llx ", sect_ind[i].addr + j * stride);
+			else
+				printf("0x%08x ",(uint32_t)(sect_ind[i].addr + j * stride));
+			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_LOCAL){
+				printf("LOCAL\n");
+				continue;
+			}
+			if(indirect_symbols[j + n] == (INDIRECT_SYMBOL_LOCAL | INDIRECT_SYMBOL_ABS)){
+				printf("LOCAL ABSOLUTE\n");
+				continue;
+			}
+			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_ABS){
+				/* 
+				 * Used for unused slots in the i386 __jump_table 
+				 * and for image-loader-cache slot for new lazy
+				 * symbol binding in Mac OS X 10.6 and later
+				 */ 
+				printf("ABSOLUTE\n");
+				continue;
+			}
+			printf("%5u ", indirect_symbols[j + n]);
+			//			if(verbose){
+			if(indirect_symbols[j + n] >= nsymbols || (symbols == NULL && symbols64 == NULL) || strings == NULL)
+				printf("?\n");
+			else {
+				if(symbols != NULL)
+					n_strx = symbols[indirect_symbols[j+n]].n_un.n_strx;
+				else
+					n_strx = symbols64[indirect_symbols[j+n]].
+					n_un.n_strx;
+				
+				if(n_strx >= strings_size)
+					printf("?\n");
+				else
+					printf("%s\n", strings + n_strx);
+			}
+			//			}
+			//			else
+			//				printf("\n");
+	    }
+	    n += count;
+	}
+}
+
 
 - (id)initWithPath:(NSString *)aPath {
 
 	self = [super init];
 	if(self){
-		_loadCommands = [[NSMutableArray array] retain];
+		_loadCommandsArray = [[NSMutableArray array] retain];
 		addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
 		
 		[self doIt:aPath];
 		[self parseLoadCommands];
+		print_indirect_symbols( _startOfLoadCommandsPtr, _ncmds, _sizeofcmds, _cputype, _indirectSymbolTable, _nindirect_symbols, _symtable_ptr, _UNUSED_symbols64, _nsymbols, _strtable, _strings_size );
+
 	}
 	return self;
 }
@@ -126,10 +368,48 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 	[super dealloc];
 }
 
-- (NSString *)segmentForAddress:(NSUInteger)memAddr {
+- (NSString *)memoryBlockForAddress:(NSUInteger)memAddr {
 	
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
-	return [seg name];
+	Section *sec = [_memoryMap sectionForAddress:memAddr];
+
+	if( [[seg name] isEqualToString:@"__IMPORT"] )
+	{
+		if( [[sec name] isEqualToString:@"__jump_table"] ) {
+			NSLog(@"__jump_table %x", memAddr);
+		}
+	}
+
+	
+	return [NSString stringWithFormat:@"%@ %@", [seg name], [sec name]];
+}
+
+- (NSString *)interestingStringForAddress:(NSUInteger)memAddr {
+
+	Segment *seg = [_memoryMap segmentForAddress:memAddr];
+	Section *sec = [_memoryMap sectionForAddress:memAddr];
+	
+	if( [[seg name] isEqualToString:@"__TEXT"] ) {
+		// Read Only
+		if( [[sec name] isEqualToString:@"__text"] ) {
+			return NO;
+		} else {
+			[NSException raise:@"Unknown request" format:@""];
+		}
+	} else if( [[seg name] isEqualToString:@"__Data"] ) {
+		// Read and write - we have a problemo!
+		if( [[sec name] isEqualToString:@"__data"] ) {
+			return NO;
+		}
+	} else if( [[seg name] isEqualToString:@"__IMPORT"] ) {
+		if( [[sec name] isEqualToString:@"__jump_table"] ) {
+
+		}
+	} else {
+		[NSException raise:@"Unknown request" format:@""];
+	}
+
+	return [NSString stringWithFormat:@"%@ %@", [seg name], [sec name]];
 }
 
 // record positions of file sections
@@ -139,9 +419,10 @@ void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr )
 	[_memoryMap insertSegment:newSeg];
 }
 
-- (void)addSection:(NSString *)title start:(NSUInteger)offset length:(uint32_t)size {
+- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(NSUInteger)offset length:(uint32_t)size {
 
-	NSLog(@"Found %@ start:%u length:%u", title, offset, size );
+	Section *newSec = [Section name:title segment:segTitle start:offset length:size];
+	[_memoryMap insertSection:newSec];
 }
 
 void readHeaderFlags( uint32_t flags ) {
@@ -178,7 +459,7 @@ void readHeaderFlags( uint32_t flags ) {
 
 - (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section {
 	
-	NSLog(@"Function %@ - Line %i - Address %i - Section %i", name, line, address, section);
+	NSLog(@"Function %@ - Line %i - Address %x - Section %i", name, line, address, section);
 	
 	//-- try in the file
 	char *func_pointer = ((char *)_codeAddr) + address;
@@ -376,7 +657,7 @@ void readHeaderFlags( uint32_t flags ) {
 // http://serenity.uncc.edu/web/ADC/2005/Developer_DVD_Series/April/ADC%20Reference%20Library/documentation/DeveloperTools/Conceptual/MachORuntime/FileStructure/chapter_4_section_1.html#//apple_ref/doc/uid/20001298/BAJBDBBC
 - (void)parseLoadCommands {
 	
-	for( NSNumber *segmentAddress_Number in _loadCommands )
+	for( NSNumber *segmentAddress_Number in _loadCommandsArray )
 	{		
 		const struct load_command *cmd = (struct load_command *)[segmentAddress_Number unsignedIntegerValue];
 
@@ -455,8 +736,10 @@ void readHeaderFlags( uint32_t flags ) {
 
 					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
 					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
-					[self addSection:label start:sectionOffset length:newSectSize];
 
+					
+					[self addSection:secName seg:segmentName start:sect_addr length:newSectSize];
+					
 //					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
 //					if (err==0) {
 //						NSData *sectionData = [NSData dataWithBytes:sect_pointer length:newSectSize];
@@ -472,295 +755,7 @@ void readHeaderFlags( uint32_t flags ) {
 					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
 						print_cstring_section( sect_pointer, newSectSize, sect_addr );
-						
-						//00005d0c  MH_NOUNDEFS
-						//00005d18  MH_INCRLINK
-						//00005d24  MH_DYLDLINK
-						//00005d30  MH_BINDATLOAD
-						//00005d3e  MH_PREBOUND
-						//00005d4a  MH_SPLIT_SEGS
-						//00005d58  MH_TWOLEVEL
-						//00005d64  MH_FORCE_FLAT
-						//00005d72  MH_SUBSECTIONS_VIA_SYMBOLS
-						//00005d8d  
-						//00005d8e  
-						//00005d8f  
-						//00005d90  Function %@ - Line %i - Address %i - Section %i
-						//00005dc0  Copied section.. %@
-						//00005dd4  :
-						//00005dd6  LC_UUID
-						//00005dde  segment name %@
-						//00005dee  LC_SEGMENT:%@ %i
-						//00005dff  __PAGEZERO
-						//00005e0a  Processing __PAGEZERO
-						//00005e20  __TEXT
-						//00005e27  Processing page __TEXT
-						//00005e3e  __DATA
-						//00005e45  Processing __DATA
-						//00005e57  __IMPORT
-						//00005e60  Processing __IMPORT
-						//00005e74  __LINKEDIT
-						//00005e7f  Processing __LINKEDIT
-						//00005e95  __OBJC
-						//00005e9c  Processing\t__OBJC
-						//00005eae  
-						//00005eaf  chimpo
-						//00005eb6  i=%i, numberOfSections=%i
-						//00005ed0  segment2 name %s
-						//00005ee1  section2 name %s
-						//00005ef2  section:%@ %i
-						//00005f00  __text
-						//00005f07  __cstring
-						//00005f11  __const
-						//00005f19  __symbol_stub
-						//00005f27  __stub_helper
-						//00005f35  __unwind_info
-						//00005f43  __dyld
-						//00005f4a  __nl_symbol_ptr
-						//00005f5a  __la_symbol_ptr
-						//00005f6a  __cfstring
-						//00005f75  __data
-						//00005f7c  __bss
-						//00005f82  __message_refs
-						//00005f91  __cls_refs
-						//00005f9c  __class
-						//00005fa4  __meta_class
-						//00005fb1  __inst_meth
-						//00005fbd  __instance_vars
-						//00005fcd  __module_info
-						//00005fdb  __symbols
-						//00005fe5  __cls_meth
-						//00005ff0  __cat_cls_meth
-						//00005fff  __cat_inst_meth
-						//0000600f  __category
-						//0000601a  __image_info
-						//00006027  %s - %s
-						//0000602f  
-						//00006030  Unkown section in this segment
-						//0000604f  
-						//00006050  why not stop for a while and see what we copied?
-						//00006081  LC_SEGMENT_64
-						//0000608f  
-						//00006090  LC_SYMTAB - number of table entries %i
-						//000060b7  LC_DYSYMTAB
-						//000060c3  -- Index to local symbols %i
-						//000060e0  -- Number of local symbols %i
-						//000060fe  Local Symbol > %@ - %@
-						//00006115  
-						//00006116  
-						//00006117  
-						//00006118  -- Index of externally defined symbols %i
-						//00006142  
-						//00006143  
-						//00006144  -- Number of externally defined symbols %i
-						//0000616f  External Symbol > %@ - %@
-						//00006189  
-						//0000618a  
-						//0000618b  
-						//0000618c  -- Index of externally undefined symbols %i
-						//000061b8  -- Number of externally undefined symbols %i
-						//000061e5  
-						//000061e6  
-						//000061e7  
-						//000061e8  External Undefined Symbol > %@ - %@
-						//0000620c  -- Number of entries in table of contents %i
-						//00006239  
-						//0000623a  
-						//0000623b  
-						//0000623c  -- Number of module table entries %i
-						//00006261  
-						//00006262  
-						//00006263  
-						//00006264  -- Number of referenced symbol table entries %i
-						//00006294  DO THIS!
-						//0000629d  
-						//0000629e  
-						//0000629f  
-						//000062a0  -- Number of indirect symbol table entries %i
-						//000062ce  DO THIS! IndirectSymbol %i
-						//000062e9  
-						//000062ea  
-						//000062eb  
-						//000062ec  -- Number of external relocation entries %i
-						//00006318  Relocate symbol %i
-						//0000632b  
-						//0000632c  -- Number of of local relocation entries %i
-						//00006358  LC_THREAD
-						//00006362  LC_LOAD_DYLIB - %s
-						//00006375  LC_ID_DYLIB
-						//00006381  LC_PREBOUND_DYLIB
-						//00006393  LC_LOAD_DYLINKER %s
-						//000063a7  LC_ID_DYLINKER
-						//000063b6  LC_ROUTINES
-						//000063c2  LC_ROUTINES_64
-						//000063d1  LC_TWOLEVEL_HINTS
-						//000063e3  LC_SUB_FRAMEWORK
-						//000063f4  LC_SUB_UMBRELLA
-						//00006404  LC_SUB_LIBRARY
-						//00006413  LC_SUB_CLIENT
-						//00006421  
-						//00006422  
-						//00006423  
-						//00006424  unknown required load command 0x%08X
-						//00006449  -[MachoLoader doIt:]
-						//0000645e  total file size %i
-						//00006471  
-						//00006472  
-						//00006473  
-						//00006474  _codeSize >= sizeof(*fatHeader)
-						//00006493  
-						//00006494  /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/Classes/MachoLoader.m
-						//000064ea  fatHeader->magic == FAT_MAGIC
-						//00006508  fatHeader->nfat_arch > 0
-						//00006521  
-						//00006522  
-						//00006523  
-						//00006524  _codeSize >= (sizeof(*fatHeader) + (sizeof(*fatArchArray) * fatHeader->nfat_arch))
-						//00006576  ourArch != NULL
-						//00006586  
-						//00006587  
-						//00006588  There is no appropriate architecture within the fat file.\n
-						//000065c3  
-						//000065c4  (1 << bestFatArch->align) <= getpagesize()
-						//000065ef  bestFatArch->size <= _codeSize
-						//0000660d  
-						//0000660e  
-						//0000660f  
-						//00006610  bestFatArch->offset <= codeSize
-						//00006630  (bestFatArch->size + bestFatArch->offset) <= codeSize
-						//00006666  Header %i
-						//00006670  PPC
-						//00006674  INTEL
-						//0000667a  UNKNOWN ARCHITECTURE
-						//0000668f  
-						//00006690  Inside the guts of an executable
-						//000066b1  sizeofcmds_bytes: %u
-						//000066c6  Load Commands %i
-						//000066d7  \\\\
-						//000066da  \\n
-						//000066dd  \\t
-						//000066e0  \\v
-						//000066e3  \\b
-						//000066e6  \\r
-						//000066e9  \\f
-						//000066ec  \\a
-						//000066ef  \\%03o
-						//000066f5  %08x  
-						//000066fc  _loadCommands
-						//0000670a  @"NSMutableArray"
-						//0000671c  _codeAddr
-						//00006725  ^v
-						//00006728  codeSize
-						//00006731  I
-						//00006733  addresses_
-						//0000673e  @"NSMutableDictionary"
-						//00006755  symtable_ptr
-						//00006762  ^{nlist=(?="n_name"*"n_strx"i)CCsI}
-						//00006786  strtable
-						//0000678f  *
-						//00006791  doIt:
-						//00006797  v12@0:4@8
-						//000067a1  parseLoadCommands
-						//000067b3  v8@0:4
-						//000067ba  processSymbolItem:stringTable:
-						//000067d9  c16@0:4^{nlist_64=(?=I)CCSQ}8*12
-						//000067fa  addFunction:line:address:section:
-						//0000681c  v28@0:4@8i12Q16i24
-						//0000682f  initWithPath:
-						//0000683d  @12@0:4@8
-						//00006847  MachoLoader
-						//00006853  NSObject
-						//0000685c  addObject:
-						//00006867  numberWithUnsignedInteger:
-						//00006882  setTotalBoundsWithSize:label:
-						//000068a0  bytes
-						//000068a6  dataWithContentsOfFile:
-						//000068be  countByEnumeratingWithState:objects:count:
-						//000068e9  raise:format:
-						//000068f7  addRegionAtOffset:withSize:label:
-						//00006919  stringWithFormat:
-						//0000692b  sharedMapView
-						//00006939  stringWithCString:length:
-						//00006953  unsignedIntValue
-						//00006964  substringToIndex:
-						//00006976  rangeOfString:options:
-						//0000698d  length
-						//00006994  unsignedLongValue
-						//000069a6  numberWithUnsignedLongLong:
-						//000069c2  pathExtension
-						//000069d0  stringWithUTF8String:
-						//000069e6  objectForKey:
-						//000069f4  numberWithUnsignedLong:
-						//00006a0c  dataWithBytes:length:
-						//00006a22  alloc
-						//00006a28  retain
-						//00006a2f  array
-						//00006a35  init
-						//00006a3a  
-						//00006a3b  NSMutableArray
-						//00006a4a  NSMutableDictionary
-						//00006a5e  NSData
-						//00006a65  NSNumber
-						//00006a6e  NSString
-						//00006a77  FileMapView
-						//00006a83  NSException
-						//00006a8f  _beziers
-						//00006a98  _ypos
-						//00006a9e  f
-						//00006aa0  _totalSize
-						//00006aab  @8@0:4
-						//00006ab2  isFlipped
-						//00006abc  c8@0:4
-						//00006ac3  v20@0:4I8I12@16
-						//00006ad3  v16@0:4I8@12
-						//00006ae0  drawRect:
-						//00006aea  v24@0:4{_NSRect={_NSPoint=ff}{_NSSize=ff}}8
-						//00006b16  initWithFrame:
-						//00006b25  @24@0:4{_NSRect={_NSPoint=ff}{_NSSize=ff}}8
-						//00006b51  NSView
-						//00006b58  frame
-						//00006b5e  bezierPathWithRect:
-						//00006b72  addSubview:
-						//00006b7e  setFont:
-						//00006b87  labelFontOfSize:
-						//00006b98  setSelectable:
-						//00006ba7  setDrawsBackground:
-						//00006bbb  setBordered:
-						//00006bc8  setBezeled:
-						//00006bd4  setBackgroundColor:
-						//00006be8  clearColor
-						//00006bf3  setStringValue:
-						//00006c03  autorelease
-						//00006c0f  count
-						//00006c15  fill
-						//00006c1a  set
-						//00006c1e  colorWithDeviceRed:green:blue:alpha:
-						//00006c43  NSColor
-						//00006c4b  NSTextField
-						//00006c57  NSFont
-						//00006c5e  NSBezierPath
-						//00006c6b  applicationDidFinishLaunching:
-						//00006c8a  AppDelegate
-						//00006c96  executablePath
-						//00006ca5  mainBundle
-						//00006cb0  NSBundle
-						//00006cb9  0%@
-						//00006cbd  %02x
-						//00006cc2  dataWithHexString:
-						//00006cd5  hexString
-						//00006cdf  initWithHexString:
-						//00006cf2  BNZHex
-						//00006cf9  release
-						//00006d01  stringWithString:
-						//00006d13  appendFormat:
-						//00006d21  initWithData:
-						//00006d2f  dataWithData:
-						//00006d3d  mutableBytes
-						//00006d4a  dataWithLength:
-						//00006d5a  cStringUsingEncoding:
-						//00006d70  NSMutableData
-						//00006d7e  NSMutableString
-						
+
 					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
 					} else if ( strcmp(thisSectionName, "__const")==0 ) {
 
@@ -949,6 +944,9 @@ void readHeaderFlags( uint32_t flags ) {
 					// otool -s __DATA __common /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
 					} else if ( strcmp(thisSectionName, "__common")==0 ) {
 
+					// otool -s __DATA __program_vars /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+					} else if ( strcmp(thisSectionName, "__program_vars")==0 ) {
+
 					// OBJC Segment sections
 					// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__message_refs")==0 ) {
@@ -1031,6 +1029,9 @@ void readHeaderFlags( uint32_t flags ) {
 						//00008124  __TEXT:__cstring:NSMutableData
 						//00008128  __TEXT:__cstring:NSMutableString
 
+					// otool -s __OBJC __property -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader											
+					} else if ( strcmp(thisSectionName, "__property")==0 ) {
+
 					// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__class")==0 ) {
 						//0000812c	bc 81 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
@@ -1100,12 +1101,18 @@ void readHeaderFlags( uint32_t flags ) {
 					// otool -s __OBJC __image_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
 					} else if ( strcmp(thisSectionName, "__image_info")==0 ) {
 
+					// otool -s __OBJC __class_ext -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+					} else if ( strcmp(thisSectionName, "__class_ext")==0 ) {
+						
 					// otool -s __IMPORT __pointers /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
 					} else if ( strcmp(thisSectionName, "__pointers")==0 ) {
 
-					// otool -s __IMPORT __jump_table /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+					// otool -s __IMPORT __jump_table -v -V /Applications/6-386.app/Contents/MacOS/Sibelius\ 6						
 					} else if ( strcmp(thisSectionName, "__jump_table")==0 ) {	
+						// The jump table is somehow re-written at run time by the dyld
 						
+						// It seems that these are in the other sections as well.
+
 					} else {
 						[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
 					}
@@ -1121,21 +1128,18 @@ void readHeaderFlags( uint32_t flags ) {
 				
 			// Specifies the symbol table for this file. This information is used by both static and dynamic linkers when linking the file, and also by debuggers 
 			// to map symbols to the original source code files from which the symbols were generated.
-			const struct symtab_command* symtab = (struct symtab_command*)cmd;
+			const struct symtab_command *symtab = (struct symtab_command*)cmd;
 			uint32_t symoff	= symtab->symoff;	// An integer containing the byte offset from the start of the file to the location of the symbol table entries. The symbol table is an array of nlist data structures.
-			uint32_t nsyms	= symtab->nsyms;	// An integer indicating the number of entries in the symbol table.
-
+			_nsymbols		= symtab->nsyms;	// An integer indicating the number of entries in the symbol table.
 			uint32_t stroff	= symtab->stroff;	// An integer containing the byte offset from the start of the image to the location of the string table.
-			uint32_t strsize = symtab->strsize;	// An integer indicating the size (in bytes) of the string table.
-			symtable_ptr = (struct nlist *)(symoff + _codeAddr);
-			strtable = (char *)(stroff + _codeAddr);
+			_strings_size	= symtab->strsize;	// An integer indicating the size (in bytes) of the string table.
 
-//todo			[[FileMapView sharedMapView] addRegionAtOffset:symoff withSize:strsize label:[NSString stringWithFormat:@"LC_SYMTAB:symbols %i", strsize]];	
-//todo			[[FileMapView sharedMapView] addRegionAtOffset:stroff withSize:strsize label:[NSString stringWithFormat:@"LC_SYMTAB:strings %i", strsize]];	
-			
-			for( NSInteger i=0; i<nsyms; i++)
+			_symtable_ptr = (struct nlist *)(symoff + _codeAddr);
+			_strtable = (char *)(stroff + _codeAddr);
+
+			for( NSInteger i=0; i<_nsymbols; i++ )
 			{
-				struct nlist symbol = symtable_ptr[i];
+				struct nlist symbol = _symtable_ptr[i];
 				uint32_t n_value = symbol.n_value;	/* value of this symbol (or stab offset) */
 				if(n_value){
 					
@@ -1151,7 +1155,7 @@ void readHeaderFlags( uint32_t flags ) {
 					nlist64.n_desc = n_desc; //SwapShortIfNeeded
 					nlist64.n_value = (uint64_t)(n_value); //SwapLongIfNeeded
 
-					if ([self processSymbolItem:&nlist64 stringTable:strtable])					
+					if ([self processSymbolItem:&nlist64 stringTable:_strtable])					
 					{
 					}
 					
@@ -1175,7 +1179,7 @@ void readHeaderFlags( uint32_t flags ) {
 			//					}
 			//symtable++;
 			}
-			NSLog(@"LC_SYMTAB - number of table entries %i", symtab->nsyms );
+			NSLog(@"LC_SYMTAB - number of table entries %i", _nsymbols );
 			
 		} else if(cmd->cmd==LC_DYSYMTAB) {
 
@@ -1229,10 +1233,11 @@ void readHeaderFlags( uint32_t flags ) {
 			// uint32_t nlocalsym;	/* number of local symbols */
 			NSLog( @"-- Index to local symbols %i", dsymtab->ilocalsym );
 			NSLog( @"-- Number of local symbols %i", dsymtab->nlocalsym );
+			
 			for( int i=dsymtab->ilocalsym; i<(dsymtab->ilocalsym+dsymtab->nlocalsym); i++)
 			{
-				struct nlist symbol = symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&strtable[symbol.n_un.n_strx]];
+				struct nlist symbol = _symtable_ptr[i];
+				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
 				NSLog(@"Local Symbol > %@ - %@", src, address);
@@ -1245,11 +1250,11 @@ void readHeaderFlags( uint32_t flags ) {
 			NSLog(@"-- Number of externally defined symbols %i", dsymtab->nextdefsym);
 			for( int i=dsymtab->iextdefsym; i<(dsymtab->iextdefsym+dsymtab->nextdefsym); i++)
 			{
-				struct nlist symbol = symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&strtable[symbol.n_un.n_strx]];
+				struct nlist symbol = _symtable_ptr[i];
+				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
-				NSLog(@"External Symbol > %@ - %@", src, address);
+				NSLog(@"External Symbol > %@ - %x", src, symbol.n_value);
 			}
 			
 			// uint32_t iundefsym;	/* index to undefined symbols */
@@ -1260,8 +1265,8 @@ void readHeaderFlags( uint32_t flags ) {
 			// TODO: use the indirect symbol table to match this index (i) to an address in the dissasembly 
 			for( int i=dsymtab->iundefsym; i<(dsymtab->iundefsym+dsymtab->nundefsym); i++)
 			{
-				struct nlist symbol = symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&strtable[symbol.n_un.n_strx]];
+				struct nlist symbol = _symtable_ptr[i];
+				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
 				NSLog(@"External Undefined Symbol > %@ - %@", src, address);
@@ -1336,21 +1341,27 @@ void readHeaderFlags( uint32_t flags ) {
 			 * the symbol table to the symbol that the pointer or stub is referring to.
 			 * The indirect symbol table is ordered to match the entries in the section.
 			 */
-			// uint32_t indirectsymoff; /* file offset to the indirect symbol table */
-			//uint32_t nindirectsyms;  /* number of indirect symbol table entries */
-			
-			// The indirect symbol table tells the dynamic linker that elements 2 and 3 of the symbol table need to be looked up and their stubs plugged.
-			NSLog(@"-- Number of indirect symbol table entries %i", dsymtab->nindirectsyms);
-			// 19 x86
-			if(dsymtab->nindirectsyms>0){
-				const uint32_t* indirectTable = (uint32_t*)(_codeAddr + dsymtab->indirectsymoff);
-				for( int i=0; i<dsymtab->nindirectsyms; i++){
-					uint32_t indirectSymbol = indirectTable[i];
-					//TODO: trying to generate the symbol table!
-					// ABSOLUTE 1073741824
-					// LOCAL -2147483648
-					int address = 0;
-					NSLog(@"DO THIS! IndirectSymbol %i, %i", address, indirectSymbol);
+
+			// The indirect symbol table tells the dynamic linker that elements 2 and 3 of the symbol table need to be looked up and their stubs plugged
+			_nindirect_symbols = dsymtab->nindirectsyms;
+			NSLog( @"-- Number of indirect symbol table entries %i", _nindirect_symbols );
+
+			if( _nindirect_symbols>0 )
+			{
+				_indirectSymbolTable = (uint32_t *)(_codeAddr + dsymtab->indirectsymoff);
+				for( NSUInteger i=0; i<_nindirect_symbols; i++ ){
+					uint32_t indirectSymbol = _indirectSymbolTable[i];
+					
+					//TODO: where does this address come from?
+					uint32_t address = 0;
+
+					if( indirectSymbol==INDIRECT_SYMBOL_LOCAL )
+						NSLog(@"IndirectSymbol %i, INDEX:Local", address );
+					else if( indirectSymbol==INDIRECT_SYMBOL_ABS ) {
+						NSLog(@"IndirectSymbol %i, INDEX:Absolute", address );
+					} else {
+						NSLog(@"IndirectSymbol %x, INDEX:%i", &(_indirectSymbolTable[i]), indirectSymbol);
+					}
 				}
 			}
 			
@@ -1478,6 +1489,21 @@ void readHeaderFlags( uint32_t flags ) {
 			
 		} else if(cmd->cmd==LC_DYLD_INFO_ONLY) {
 			NSLog(@"LC_DYLD_INFO_ONLY"); // The new compressed stuff?
+	
+		} else if(cmd->cmd==LC_RPATH){ /* runpath additions */
+			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_CODE_SIGNATURE){
+//			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_SEGMENT_SPLIT_INFO){
+//			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_REEXPORT_DYLIB){
+//			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_LAZY_LOAD_DYLIB){
+//			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_ENCRYPTION_INFO){
+//			NSLog(@"which one?");
+//		} else if(cmd->cmd==LC_DYLD_INFO){
+//			NSLog(@"which one?");
 			
 		} else {
 			if ( (cmd->cmd & LC_REQ_DYLD) != 0 ){
@@ -1569,28 +1595,27 @@ void readHeaderFlags( uint32_t flags ) {
 //hmm	[self addSection:@"Header" start:mach_headerOffset length:machHeader->sizeofcmds];
 	 
 	/* Is the architecture correct for this machine? */
-	struct load_command *startOfLoadCommandsPtr = 0;
-
 	if( universalMachHeader->magic==MH_MAGIC ) // 32bit
 	{
 		const struct mach_header *machHeader = (struct mach_header *)_codeAddr;
-		startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
+		_startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
+		_sizeofcmds = machHeader->sizeofcmds;
 
 	} else if( universalMachHeader->magic==MH_MAGIC_64 ) { // 64bit
 
 		const struct mach_header_64 *machHeader = (struct mach_header_64 *)_codeAddr;
-		startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
-
+		_startOfLoadCommandsPtr = (struct load_command *)(machHeader+1); /* Move on past the header */
+		_sizeofcmds = machHeader->sizeofcmds;
 
 	} else {
 		[NSException raise:@"Unknown Format" format:@""];
 	}
-		
-	if( universalMachHeader->cputype==CPU_TYPE_POWERPC )
+	_cputype = universalMachHeader->cputype;
+	if( _cputype==CPU_TYPE_POWERPC )
 		NSLog(@"PPC");
-	else if( universalMachHeader->cputype==CPU_TYPE_I386 )
+	else if( _cputype==CPU_TYPE_I386 )
 		NSLog(@"INTEL - 32bit");
-	else if( universalMachHeader->cputype==CPU_TYPE_X86_64 )
+	else if( _cputype==CPU_TYPE_X86_64 )
 		NSLog(@"INTEL - 64bit");
 	else
 		NSLog(@"UNKNOWN ARCHITECTURE");
@@ -1606,10 +1631,10 @@ void readHeaderFlags( uint32_t flags ) {
 //		NSInteger loadCommandsOffset = (NSInteger)((NSInteger *)cmds1)-(NSInteger)((NSInteger *)_codeAddr);
 //		[[FileMapView sharedMapView] addRegionAtOffset:loadCommandsOffset withSize:sizeofcmds_bytes label:[NSString stringWithFormat:@"Load Commands %i", sizeofcmds_bytes]];		
 		
-	const struct load_command *cmd = startOfLoadCommandsPtr;
-
-	for( NSUInteger i=0; i<universalMachHeader->ncmds; i++ ) {
-		[_loadCommands addObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)cmd]];
+	const struct load_command *cmd = _startOfLoadCommandsPtr;
+	_ncmds = universalMachHeader->ncmds;
+	for( NSUInteger i=0; i<_ncmds; i++ ) {
+		[_loadCommandsArray addObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)cmd]];
 		cmd = (struct load_command *)((uintptr_t)cmd+(uint32_t)cmd->cmdsize);
 	}
 	

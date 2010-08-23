@@ -62,20 +62,20 @@
 			NSArray *args = line.arguments;
 			if (args && [args count]) {
 				// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
-				for( Argument *each in args ) {
-					if([each containsHexNum]){
-						NSUInteger decValue = [each hexAsInt];
-						if(decValue>4096)
-						{
-							id ob1 = [NSApplication sharedApplication];
-							id ob2 = [ob1 delegate];
-							id ob3 = [ob2 machLoader];
-							NSString *segment = [ob3 segmentForAddress:decValue];
-							NSLog(segment);
-						}
-						passesFilter = YES;
-					}
-				}
+//				for( Argument *each in args ) {
+//					if([each containsHexNum]){
+//						NSUInteger decValue = [each hexAsInt];
+//						if(decValue>4096)
+//						{
+//							id ob1 = [NSApplication sharedApplication];
+//							id ob2 = [ob1 delegate];
+//							id ob3 = [ob2 machLoader];
+//							NSString *segment = [ob3 memoryBlockForAddress:decValue];
+//							NSLog(segment);
+//						}
+//						passesFilter = YES;
+//					}
+//				}
 			}
 			_currentLineIndex++;
 			/* end very primitive filtering */

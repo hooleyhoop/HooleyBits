@@ -18,6 +18,8 @@
 #import "ArgumentScanner.h"
 #import "InstructionLookup.h"
 #import "Instruction.h"
+#import "StringCounter.h"
+#import "BasicToken.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -47,10 +49,18 @@
 		_codeBlockStore = [[CodeBlockStore store] retain];
 		_codeBlockfactory = [[CodeBlockFactory factoryWithStore:_codeBlockStore] retain];
 
-		_unknownInstructions = [[NSMutableSet setWithCapacity:100] retain];
+		_stringCounter = [[StringCounter alloc] init];
 
 		SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:self];
 		[LinesInStringIterator feedLines:fileString to:groker];
+		
+		[_stringCounter sort];
+		NSArray *allPatternCounts = [_stringCounter sortedCounts];
+		NSArray *allPatternStrings = [_stringCounter sortedStrings];
+				
+		for( NSUInteger i=0; i<[allPatternStrings count]; i++ ) {
+			NSLog(@"%@", [allPatternStrings objectAtIndex:i] );
+		}
 	}
 	return self;
 }
@@ -60,7 +70,7 @@
 	[_codeBlockStore release];
 	[_codeBlockfactory release];
 	
-	[_unknownInstructions release];
+	[_stringCounter release];
 
 	[super dealloc];
 }
@@ -112,6 +122,54 @@
 		[tkns1 secondPass];
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 		allArgs = scanner.allArguments;
+		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
+		if (allArgs && [allArgs count]) {
+			// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
+			for( Argument *eachArg in allArgs ) {
+				for( BasicToken *eachToken in eachArg )
+				{
+					//	__TEXT __text
+					//	(null) (null)
+					//	__IMPORT __jump_table
+					//	__IMPORT __pointers
+					//	__DATA __data
+					//	__DATA __const
+					//	__TEXT __eh_frame
+					//	__TEXT (null)
+					//	__DATA __bss
+					//	__TEXT __StaticInit
+					//	__TEXT __const
+					//	__TEXT __literal4
+					//	__DATA __common
+					//	__OBJC __message_refs
+					//	__TEXT __literal8
+					//	__TEXT __cstring
+					//	__DATA __cfstring
+					//	__OBJC __cls_refs
+					//	__OBJC __class
+					//	__DATA __gcc_except_tab__DATA
+					//	__DATA __dyld
+					//	__PAGEZERO (null)
+					
+					if( eachToken.type==hexNum ) {
+					NSUInteger decValue = [eachToken hexAsInt];
+					if(decValue>4096)
+					{
+						id ob1 = [NSApplication sharedApplication];
+						id ob2 = [ob1 delegate];
+						id ob3 = [ob2 machLoader];
+						NSString *segment = [ob3 memoryBlockForAddress:decValue];
+						[_stringCounter add:segment];
+					//						//NSLog(segment);
+					}
+					}
+				}
+			}
+		}		
+		
+		
+		
+		
 	}
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];
@@ -119,32 +177,9 @@
 	NSUInteger addressInt = hexStringToInt(address);
 	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
 	return newLine;
-	
-
-	
-//hmm	if(instruction){
-//hmm		BOOL isKnown = [self isKnownInstruction:instruction];
-//hmm		if(!isKnown){
-//hmm			[_unknownInstructions addObject:instruction];
-//hmm			return;
-//hmm		}
-		// eh ? What is this shit?		[self processInstruction:instruction argument:arguments];
-//hmm	}
 }
 
 
-// TODO: Replace knownInstructions with yaml stuff
-- (BOOL)isKnownInstruction:(NSString *)instruction {
-	
-	//Replace With yaml	NSArray *knownInstructions = [DissasemblerGroker knownInstructions];
-	//Replace with yaml	BOOL isFound = [knownInstructions containsObject:instruction];
-	
-	
-	//	if(!isFound){
-	//		NSLog(@"oopps %i", [knownInstructions indexOfObjectIdenticalTo:instruction]);
-	//	}
-	return YES;
-}
 
 @end
 

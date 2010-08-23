@@ -6,24 +6,20 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
+@class Section, MemoryBlockStore;
 
-@interface Segment : NSObject {
+#import "SHMemoryBlock.h"
 
-	NSUInteger		_startAddr;
-	NSUInteger		_length;
-	NSString		*_name;
+@interface Segment : SHMemoryBlock {
+
+	MemoryBlockStore	*_sectionStore;
 }
-
-@property (readonly) NSString *name;
 
 + (id)name:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
 
 - (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
 
-- (NSComparisonResult)compareStartAddress:(Segment *)seg;
-- (NSComparisonResult)compareStartAddressToAddress:(NSUInteger)otherAddress;
-
-- (NSUInteger)startAddress;
-- (NSUInteger)lastAddress;
+- (void)insertSection:(Section *)sec;
+- (Section *)sectionForAddress:(NSUInteger)memAddr;
 
 @end

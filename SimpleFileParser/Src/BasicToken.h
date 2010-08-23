@@ -35,5 +35,6 @@
 
 - (BOOL)isValidHexNumComponent;
 - (BOOL)isValidStartHexNumComponent;
+- (NSUInteger)hexAsInt;
 
 @end

@@ -18,6 +18,12 @@
 		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
+		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
+		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
+		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
+		73E7623E121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
+		73E76253121C304C00A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
+		73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -58,6 +64,12 @@
 		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
 		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
 		7332007912197B2C00D80990 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = Classes/Segment.m; sourceTree = "<group>"; };
+		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
+		73E761E8121C28C900A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Classes/Section.m; sourceTree = "<group>"; };
+		73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = Classes/SHMemoryBlock.h; sourceTree = "<group>"; };
+		73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMemoryBlock.m; path = Classes/SHMemoryBlock.m; sourceTree = "<group>"; };
+		73E76251121C304C00A4190C /* MemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlockStore.h; path = Classes/MemoryBlockStore.h; sourceTree = "<group>"; };
+		73E76252121C304C00A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = Classes/MemoryBlockStore.m; sourceTree = "<group>"; };
 		73EDD9230F863E4700E09434 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = Classes/MachoLoader.h; sourceTree = "<group>"; };
 		73EDD9240F863E4700E09434 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = Classes/MachoLoader.m; sourceTree = "<group>"; };
 		73FF6B240FD6AB8B00A8136A /* Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hex.m; path = Classes/Hex.m; sourceTree = "<group>"; };
@@ -205,8 +217,14 @@
 		730219690F864C6900906D18 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */,
+				73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */,
+				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
+				73E76252121C304C00A4190C /* MemoryBlockStore.m */,
 				7332007812197B2C00D80990 /* Segment.h */,
 				7332007912197B2C00D80990 /* Segment.m */,
+				73E761E7121C28C900A4190C /* Section.h */,
+				73E761E8121C28C900A4190C /* Section.m */,
 				7332007212197B1E00D80990 /* MemoryMap.h */,
 				7332007312197B1E00D80990 /* MemoryMap.m */,
 			);
@@ -391,6 +409,9 @@
 				731FAA9F1219717000D3EE3D /* MemoryMapTests.m in Sources */,
 				7332007412197B1E00D80990 /* MemoryMap.m in Sources */,
 				7332007A12197B2C00D80990 /* Segment.m in Sources */,
+				73E761EA121C28C900A4190C /* Section.m in Sources */,
+				73E7623E121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
+				73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +426,9 @@
 				731FAA851219703B00D3EE3D /* main.m in Sources */,
 				7332007512197B1E00D80990 /* MemoryMap.m in Sources */,
 				7332007B12197B2C00D80990 /* Segment.m in Sources */,
+				73E761E9121C28C900A4190C /* Section.m in Sources */,
+				73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
+				73E76253121C304C00A4190C /* MemoryBlockStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

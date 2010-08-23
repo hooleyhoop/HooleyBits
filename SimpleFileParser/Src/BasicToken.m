@@ -7,6 +7,7 @@
 //
 
 #import "BasicToken.h"
+#import "HexConversions.h"
 
 
 @implementation BasicToken
@@ -234,6 +235,15 @@ BOOL _eachValueIs_ABCDEF( char *value, uint length ) {
 		return( _eachValueIs_abcdef(_value+1,_tokenLength-1));
 	}
 	return NO;
+}
+
+- (NSUInteger)hexAsInt {
+
+	if( _type==hexNum )
+		return hexStringToInt( [NSString stringWithCString:_value encoding:NSUTF8StringEncoding] );
+
+	[NSException raise:@"this shouldnt happen" format:@""];
+	return 0;
 }
 
 @end

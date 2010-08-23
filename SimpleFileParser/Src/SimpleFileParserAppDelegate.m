@@ -52,11 +52,12 @@ nil] retain];
 	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_tiny.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	
 	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+	[_dissasembled goOnDoYourWorst:_ml];
 	
 	// This is asyncronous. Need to rethink some stuff
 	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];
@@ -64,7 +65,6 @@ nil] retain];
 
 //err! where has it gone?	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
 	
-//err! where has it gone?	_allInstructions = [[[StringCounter alloc] init] autorelease];
 //err! where has it gone?	_allOpCodeFormats = [[[StringCounter alloc] init] autorelease];
 //err! where has it gone?	_allArgumentFormats = [[[StringCounter alloc] init] autorelease];
 	

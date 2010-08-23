@@ -7,11 +7,10 @@
 //
 
 #import "Segment.h"
-
+#import "Section.h"
+#import "MemoryBlockStore.h"
 
 @implementation Segment
-
-@synthesize name=_name;
 
 + (id)name:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len {
 	
@@ -20,41 +19,26 @@
 
 - (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len {
 
-	self = [super init];
+	self = [super initWithName:name start:memAddr length:len];
 	if(self){
-		_startAddr = memAddr;
-		_length = len;
-		_name = [name retain];
+		_sectionStore = [[MemoryBlockStore alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc {
-	[_name release];
+
 	[super dealloc];
 }
 
-- (NSComparisonResult)compareStartAddress:(Segment *)seg {
+- (void)insertSection:(Section *)sec {
 
-	NSUInteger otherAddress = seg->_startAddr;
-	return [self compareStartAddressToAddress:otherAddress];
+	[_sectionStore insertMemoryBlock:sec];
 }
 
-- (NSComparisonResult)compareStartAddressToAddress:(NSUInteger)otherAddress {
-
-	if( otherAddress>_startAddr )
-		return (NSComparisonResult)NSOrderedAscending;
-	else if( otherAddress<_startAddr ) 
-		return (NSComparisonResult)NSOrderedDescending;
-	return (NSComparisonResult)NSOrderedSame;
-}
-
-- (NSUInteger)startAddress {
-	return _startAddr;
-}
-
-- (NSUInteger)lastAddress {
-	return _startAddr+_length-1;
+- (Section *)sectionForAddress:(NSUInteger)memAddr {
+	
+	return (Section *)[_sectionStore blockForAddress:memAddr];
 }
 
 @end

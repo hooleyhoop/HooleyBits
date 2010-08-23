@@ -9,6 +9,7 @@
 #import "AppDisassembly.h"
 #import "OtoolDisassemblyParser.h"
 #import "OutputFormatter.h"
+#import "MachoLoader.h"
 
 @implementation AppDisassembly
 
@@ -35,6 +36,19 @@
 	[_internalRepresentation release];
 
 	[super dealloc];
+}
+
+- (void)goOnDoYourWorst:(MachoLoader *)lookup {
+	
+	// replace register names with useful names
+
+	// replace instruction names with useful names
+	
+	// improve instruction formatting - replace add reg1, reg2 with reg1 = reg1 + reg2
+	
+	// replace call Text text with unknown function call - need to work out arguments
+	
+	// replace any jmp Text text with label - create labels at jump points
 }
 
 - (void)outputToFile:(NSString *)fn {

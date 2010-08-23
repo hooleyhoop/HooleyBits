@@ -7,7 +7,7 @@
 //
 #import "iAmOutputFormatterCallback.h"
 
-@class CodeBlockStore, OutputFormatter;
+@class CodeBlockStore, OutputFormatter, MachoLoader;
 
 @interface AppDisassembly : NSObject <iAmOutputFormatterCallback> {
 
@@ -20,6 +20,8 @@
 + (id)createFromOtoolOutput:(NSString *)fileString;
 
 - (id)initWithOtoolOutput:(NSString *)fileString;
+
+- (void)goOnDoYourWorst:(MachoLoader *)lookup;
 
 - (void)outputToFile:(NSString *)fileName;
 

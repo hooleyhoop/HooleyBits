@@ -8,6 +8,8 @@
 
 #import "MemoryMap.h"
 #import "Segment.h"
+#import "Section.h"
+#import "MemoryBlockStore.h"
 
 @implementation MemoryMap
 
@@ -15,7 +17,7 @@
 
 	self = [super init];
 	if(self){
-		_segmentStore = [[NSMutableArray alloc] init];
+		_segmentStore = [[MemoryBlockStore alloc] init];
 	}
 	return self;
 }
@@ -26,67 +28,30 @@
 	[super dealloc];
 }
 
-- (NSUInteger)findInsertionPt:(Segment *)seg {
-	
-	NSUInteger low = 0;
-	NSUInteger high  = [_segmentStore count];
-	NSUInteger index = low;
-	
-	while( index < high ) {
-		const NSUInteger mid = (index + high)/2;
-		Segment *test = [_segmentStore objectAtIndex: mid];
-		NSInteger result = [test compareStartAddress:seg];
-		if ( result < 0) {
-			index = mid + 1;
-		} else {
-			high = mid;
-		}
-	}
-	return index;
-}
-
 - (void)insertSegment:(Segment *)seg {
 
-	NSUInteger ind = [self findInsertionPt:seg];
+	[_segmentStore insertMemoryBlock:seg];
+}
+
+- (void)insertSection:(Section *)sec {
 	
-	// sanity check
-	if( ind<[_segmentStore count] ){
-		Segment *existingObjectAtThatIndex = [_segmentStore objectAtIndex:ind];
-		if( [seg lastAddress]<[existingObjectAtThatIndex startAddress]==NO )
-			[NSException raise:@"Addresses have colided" format:@""];
-	}
+	Segment *containerSeg = [self segmentForAddress:sec.startAddr];
+	if( [sec.segmentName isEqualToString:containerSeg.name]==NO )
+		[NSException raise:@"Fucked up so,mewhere" format:@""];
 	
-	[_segmentStore insertObject:seg atIndex:ind];
+	[containerSeg insertSection:sec];
+}
+
+- (Section *)sectionForAddress:(NSUInteger)memAddr {
+
+	Segment *containerSeg = [self segmentForAddress:memAddr];
+	Section *sec = [containerSeg sectionForAddress:memAddr];
+	return sec;
 }
 
 - (Segment *)segmentForAddress:(NSUInteger)memAddr {
 
-	NSUInteger low = 0;
-	NSUInteger high  = [_segmentStore count];
-	NSInteger index = low;
-	BOOL hit = NO;
-
-	while( index < high ) {
-		const NSUInteger mid = (index + high)/2;
-		Segment *test = [_segmentStore objectAtIndex: mid];
-		NSInteger result = [test compareStartAddressToAddress:memAddr];
-		if ( result < 0) {
-			index = mid + 1;
-		} else if( result==0 ) {
-			high = mid;
-			hit = YES;
-		} else {
-			high = mid;
-		}
-	}
-	if(!hit)
-		index = index-1;
-	if(index==-1)
-		return nil;
-	Segment *test = [_segmentStore objectAtIndex: index];
-	if( memAddr>=[test startAddress] && memAddr<=[test lastAddress] )
-		return test;
-	return nil;
+	return (Segment *)[_segmentStore blockForAddress:memAddr];
 }
 
 @end

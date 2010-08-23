@@ -30,7 +30,7 @@
 	0xff ( , %r , 66 )		// indirect
 	0xff ( , %r )			// indirect
 
-	// Indirect with different segmanr register
+	// Indirect with different segmant register
 	%r : ( %r )
 	%r : 0xff ( %r )
  
@@ -106,25 +106,9 @@
 	return blergh;
 }
 
-- (BOOL)containsHexNum {
-	
-	for( BasicToken* each in _allTokens ) 
-	{
-		if(each.type==hexNum)
-			return YES;
-	}
-	return NO;
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len {
+	return [_allTokens countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
-- (NSUInteger)hexAsInt {
-
-	for( BasicToken* each in _allTokens ) 
-	{
-		if(each.type==hexNum)
-			return hexStringToInt( [NSString stringWithCString:each.value encoding:NSUTF8StringEncoding] );
-	}
-	[NSException raise:@"this shouldnt happen" format:@""];
-	return 0;
-}
 
 @end

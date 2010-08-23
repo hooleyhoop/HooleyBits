@@ -16,21 +16,34 @@
 
 @interface MachoLoader : NSObject {
 
-	NSMutableArray		*_loadCommands;
+	struct load_command *_startOfLoadCommandsPtr;
+	NSUInteger			_sizeofcmds;
+	NSUInteger			_ncmds;
+	NSMutableArray		*_loadCommandsArray;
 	const void			*_codeAddr;
 	size_t				_codeSize;
+	cpu_type_t			_cputype;
 	
 	NSMutableDictionary *addresses_;    // Addresses and symbols (STRONG)
 	
-	struct nlist		*symtable_ptr;
-	char				*strtable;
+	// Symbol table
+	struct nlist		*_symtable_ptr;
+	struct nlist_64		*_UNUSED_symbols64;
+	NSUInteger			_nsymbols;
+	NSUInteger			_strings_size;
 	
+	char				*_strtable;
+	
+	// Indirect Symbol Table
+	NSUInteger			_nindirect_symbols;
+	const uint32_t*		_indirectSymbolTable;
 	
 	MemoryMap			*_memoryMap;
 }
 
 - (id)initWithPath:(NSString *)aPath;
 
-- (NSString *)segmentForAddress:(NSUInteger)memAddr;
+- (NSString *)memoryBlockForAddress:(NSUInteger)memAddr;
+- (NSString *)interestingStringForAddress:(NSUInteger)memAddr;
 
 @end
