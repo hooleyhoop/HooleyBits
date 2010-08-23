@@ -51,6 +51,35 @@
 
 @implementation MachoLoader
 
+void system_fatal( const char *format,  ...) {
+    va_list ap;
+	va_start(ap, format);
+	fprintf(stderr, "%s: ", "Hoo");
+	vfprintf(stderr, format, ap);
+	fprintf(stderr, " (%s)\n", strerror(errno));
+	va_end(ap);
+	exit(1);
+}
+
+void * allocate( size_t size ) {
+    void *p;
+	
+	if(size == 0)
+	    return(NULL);
+	if((p = malloc(size)) == NULL)
+	    system_fatal("virtual memory exhausted (malloc failed)");
+	return(p);
+}
+
+void * reallocate( void *p, size_t size ) {
+	if(p == NULL)
+	    return(allocate(size));
+	if((p = realloc(p, size)) == NULL)
+	    system_fatal("virtual memory exhausted (realloc failed)");
+	return(p);
+}
+
+
 static void print_cstring_char( char c ) {
 	
 	if(isprint(c)){
@@ -182,7 +211,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 					sg.nsects = (sg.cmdsize-size) / sizeof(struct section);
 				}
 				nsects += sg.nsects;
-				//				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
+				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
 				memset((char *)(sect_ind + (nsects - sg.nsects)), '\0', sizeof(struct section_indirect_info) * sg.nsects);
 				p = (char *)lc + sizeof(struct segment_command);
 				for(j = 0 ; j < sg.nsects ; j++)
@@ -222,7 +251,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 					sg64.nsects = (sg64.cmdsize-size) / sizeof(struct section_64);
 				}
 				nsects += sg64.nsects;
-				//				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
+				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
 				memset((char *)(sect_ind + (nsects - sg64.nsects)), '\0', sizeof(struct section_indirect_info) * sg64.nsects);
 				p = (char *)lc + sizeof(struct segment_command_64);
 				for( j=0 ; j<sg64.nsects; j++ )
@@ -270,7 +299,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 				continue;
 			}
 	    }
-	    else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS)
+		else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS)
 		{
 			if(cputype & CPU_ARCH_ABI64)
 				stride = 8;
@@ -712,7 +741,8 @@ void readHeaderFlags( uint32_t flags ) {
 			for( NSUInteger i=0; i<nsects; i++ )
 			{
 				NSUInteger memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
-				if(memoryAddressOfSection){
+				if(memoryAddressOfSection)
+				{
 					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
 					char *containingSegmentName = newSec_ptr->segname;
 					char *thisSectionName = newSec_ptr->sectname;
@@ -726,7 +756,22 @@ void readHeaderFlags( uint32_t flags ) {
 					uint32_t sect_nrelocs = newSec_ptr->nreloc;
 					uint32_t sect_addr = newSec_ptr->addr;
 					uint32_t sect_flags = newSec_ptr->flags;
-
+					
+					uint32_t section_type = sect_flags & SECTION_TYPE;
+					NSUInteger stride=0;
+					if(section_type == S_SYMBOL_STUBS){
+						stride = newSec_ptr->reserved2;
+					} else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS) {
+						if(_cputype & CPU_ARCH_ABI64)
+							stride = 8;
+						else
+							stride = 4;
+					}
+					if(stride!=0){
+						NSUInteger count = newSec_ptr->size / stride;
+						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
+					}
+					
 					uint32_t newSectSize = newSec_ptr->size;
 					void *newSectAddr = NULL;
 
@@ -1491,7 +1536,7 @@ void readHeaderFlags( uint32_t flags ) {
 			NSLog(@"LC_DYLD_INFO_ONLY"); // The new compressed stuff?
 	
 		} else if(cmd->cmd==LC_RPATH){ /* runpath additions */
-			NSLog(@"which one?");
+//			NSLog(@"which one?");
 //		} else if(cmd->cmd==LC_CODE_SIGNATURE){
 //			NSLog(@"which one?");
 //		} else if(cmd->cmd==LC_SEGMENT_SPLIT_INFO){
