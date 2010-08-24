@@ -77,9 +77,20 @@
 		73CF20B911D8CA8700347BBD /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF20B811D8CA8700347BBD /* config.h */; };
 		73E41EE412140F1F0076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
 		73E41EE512140F200076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
-		73E76321121C350300A4190C /* MemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7631E121C350300A4190C /* MemoryBlock.m */; };
 		73E76322121C350300A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76320121C350300A4190C /* MemoryBlockStore.m */; };
 		73E763E8121C370F00A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E763E7121C370F00A4190C /* Section.m */; };
+		73EA4A551223B9CE00AF902F /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
+		73EA4A581223B9D300AF902F /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
+		73EA4A591223B9D400AF902F /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
+		73EA4A5D1223B9DF00AF902F /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76320121C350300A4190C /* MemoryBlockStore.m */; };
+		73EA4ABE1223CAD500AF902F /* HexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4ABD1223CAD500AF902F /* HexToken.m */; };
+		73EA4ABF1223CAD500AF902F /* HexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4ABD1223CAD500AF902F /* HexToken.m */; };
+		73EA4AC41223CB2400AF902F /* HexTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4AC31223CB2400AF902F /* HexTokenTests.m */; };
+		73EA4ACD1223CB6C00AF902F /* HexValueHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4ACC1223CB6C00AF902F /* HexValueHash.m */; };
+		73EA4ACE1223CB6C00AF902F /* HexValueHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4ACC1223CB6C00AF902F /* HexValueHash.m */; };
+		73EA4AD31223CB7D00AF902F /* HexValueHashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4AD21223CB7D00AF902F /* HexValueHashTests.m */; };
+		73EA4AE81223CBBF00AF902F /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4AE71223CBBF00AF902F /* SHMemoryBlock.m */; };
+		73EA4AE91223CBBF00AF902F /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EA4AE71223CBBF00AF902F /* SHMemoryBlock.m */; };
 		73EC19DC1216AC9C001B406E /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
 		73F1C4EB11C4DC4800C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
 		73F1C52211C4EC0C00C93934 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1C4EA11C4DC4800C93934 /* BasicToken.m */; };
@@ -336,12 +347,18 @@
 		73E41EE212140F1F0076BD88 /* InstructionHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstructionHash.h; path = Src/InstructionHash.h; sourceTree = "<group>"; };
 		73E41EE312140F1F0076BD88 /* InstructionHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionHash.m; path = Src/InstructionHash.m; sourceTree = "<group>"; };
 		73E41EEB12140F670076BD88 /* InstructionHashTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionHashTests.m; path = Tests/InstructionHashTests.m; sourceTree = "<group>"; };
-		73E7631D121C350300A4190C /* MemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlock.h; path = ../MachoLoader/Classes/MemoryBlock.h; sourceTree = SOURCE_ROOT; };
-		73E7631E121C350300A4190C /* MemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlock.m; path = ../MachoLoader/Classes/MemoryBlock.m; sourceTree = SOURCE_ROOT; };
 		73E7631F121C350300A4190C /* MemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlockStore.h; path = ../MachoLoader/Classes/MemoryBlockStore.h; sourceTree = SOURCE_ROOT; };
 		73E76320121C350300A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = ../MachoLoader/Classes/MemoryBlockStore.m; sourceTree = SOURCE_ROOT; };
 		73E763E6121C370F00A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = ../MachoLoader/Classes/Section.h; sourceTree = SOURCE_ROOT; };
 		73E763E7121C370F00A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = ../MachoLoader/Classes/Section.m; sourceTree = SOURCE_ROOT; };
+		73EA4ABC1223CAD500AF902F /* HexToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexToken.h; path = Src/HexToken.h; sourceTree = "<group>"; };
+		73EA4ABD1223CAD500AF902F /* HexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexToken.m; path = Src/HexToken.m; sourceTree = "<group>"; };
+		73EA4AC31223CB2400AF902F /* HexTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexTokenTests.m; path = Tests/HexTokenTests.m; sourceTree = "<group>"; };
+		73EA4ACB1223CB6C00AF902F /* HexValueHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexValueHash.h; path = Src/HexValueHash.h; sourceTree = "<group>"; };
+		73EA4ACC1223CB6C00AF902F /* HexValueHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexValueHash.m; path = Src/HexValueHash.m; sourceTree = "<group>"; };
+		73EA4AD21223CB7D00AF902F /* HexValueHashTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexValueHashTests.m; path = Tests/HexValueHashTests.m; sourceTree = "<group>"; };
+		73EA4AE61223CBBF00AF902F /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = ../MachoLoader/Classes/SHMemoryBlock.h; sourceTree = SOURCE_ROOT; };
+		73EA4AE71223CBBF00AF902F /* SHMemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMemoryBlock.m; path = ../MachoLoader/Classes/SHMemoryBlock.m; sourceTree = SOURCE_ROOT; };
 		73F1C4E911C4DC4800C93934 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicToken.h; path = Src/BasicToken.h; sourceTree = "<group>"; };
 		73F1C4EA11C4DC4800C93934 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicToken.m; path = Src/BasicToken.m; sourceTree = "<group>"; };
 		73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicTokenTests.m; path = Tests/BasicTokenTests.m; sourceTree = "<group>"; };
@@ -511,6 +528,8 @@
 				731000091209948B00AE9F6B /* OtoolDisassemblyParser.m */,
 				732CB03E1211501F0019B5BC /* OutputFormatter.h */,
 				732CB03F1211501F0019B5BC /* OutputFormatter.m */,
+				73EA4ACB1223CB6C00AF902F /* HexValueHash.h */,
+				73EA4ACC1223CB6C00AF902F /* HexValueHash.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -616,6 +635,8 @@
 				73875DD211C66ED500F714D9 /* ArgumentTests.m */,
 				7397E13F11C15E3600463F04 /* TokenArrayTests.m */,
 				73F1C4EF11C4DC6300C93934 /* BasicTokenTests.m */,
+				73EA4AD21223CB7D00AF902F /* HexValueHashTests.m */,
+				73EA4AC31223CB2400AF902F /* HexTokenTests.m */,
 				7310FDFE1209797300AE9F6B /* Disabled Tests */,
 			);
 			name = Tests;
@@ -707,6 +728,8 @@
 				73F1C4EA11C4DC4800C93934 /* BasicToken.m */,
 				7397E14111C15E5700463F04 /* TokenArray.h */,
 				7397E14211C15E5700463F04 /* TokenArray.m */,
+				73EA4ABC1223CAD500AF902F /* HexToken.h */,
+				73EA4ABD1223CAD500AF902F /* HexToken.m */,
 			);
 			name = "Tokeniser First Pass";
 			sourceTree = "<group>";
@@ -725,8 +748,8 @@
 		73A1EF5B1219914F004CAC63 /* MachoLoader */ = {
 			isa = PBXGroup;
 			children = (
-				73E7631D121C350300A4190C /* MemoryBlock.h */,
-				73E7631E121C350300A4190C /* MemoryBlock.m */,
+				73EA4AE61223CBBF00AF902F /* SHMemoryBlock.h */,
+				73EA4AE71223CBBF00AF902F /* SHMemoryBlock.m */,
 				73E7631F121C350300A4190C /* MemoryBlockStore.h */,
 				73E76320121C350300A4190C /* MemoryBlockStore.m */,
 				7340BF47120585B900437881 /* MachoLoader.h */,
@@ -1051,6 +1074,15 @@
 				73A1EF7312199161004CAC63 /* FileMapView.m in Sources */,
 				73A1EF791219916B004CAC63 /* Segment.m in Sources */,
 				73A1EF7A1219916B004CAC63 /* MemoryMap.m in Sources */,
+				73EA4A551223B9CE00AF902F /* Instruction.m in Sources */,
+				73EA4A581223B9D300AF902F /* ArgumentScanner.m in Sources */,
+				73EA4A591223B9D400AF902F /* Argument.m in Sources */,
+				73EA4A5D1223B9DF00AF902F /* MemoryBlockStore.m in Sources */,
+				73EA4ABF1223CAD500AF902F /* HexToken.m in Sources */,
+				73EA4AC41223CB2400AF902F /* HexTokenTests.m in Sources */,
+				73EA4ACD1223CB6C00AF902F /* HexValueHash.m in Sources */,
+				73EA4AD31223CB7D00AF902F /* HexValueHashTests.m in Sources */,
+				73EA4AE81223CBBF00AF902F /* SHMemoryBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,9 +1133,11 @@
 				73A1EF7412199161004CAC63 /* FileMapView.m in Sources */,
 				73A1EF7B1219916B004CAC63 /* Segment.m in Sources */,
 				73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */,
-				73E76321121C350300A4190C /* MemoryBlock.m in Sources */,
 				73E76322121C350300A4190C /* MemoryBlockStore.m in Sources */,
 				73E763E8121C370F00A4190C /* Section.m in Sources */,
+				73EA4ABE1223CAD500AF902F /* HexToken.m in Sources */,
+				73EA4ACE1223CB6C00AF902F /* HexValueHash.m in Sources */,
+				73EA4AE91223CBBF00AF902F /* SHMemoryBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

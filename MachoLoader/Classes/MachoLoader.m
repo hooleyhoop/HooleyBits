@@ -313,10 +313,10 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
 		
 	    n = sect_ind[i].reserved1;
-	    if(n > nindirect_symbols)
-			printf(" (entries start past the end of the indirect symbol table) (reserved1 field greater than the table size)");
-	    else if(n + count > nindirect_symbols)
-			printf(" (entries extends past the end of the indirect symbol table)");
+//	    if(n > nindirect_symbols)
+//			printf(" (entries start past the end of the indirect symbol table) (reserved1 field greater than the table size)");
+//	    else if(n + count > nindirect_symbols)
+//			printf(" (entries extends past the end of the indirect symbol table)");
 	    if(cputype & CPU_ARCH_ABI64)
 			printf("\naddress            index");
 	    else
@@ -332,6 +332,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 				printf("0x%016llx ", sect_ind[i].addr + j * stride);
 			else
 				printf("0x%08x ",(uint32_t)(sect_ind[i].addr + j * stride));
+			
 			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_LOCAL){
 				printf("LOCAL\n");
 				continue;
@@ -377,7 +378,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 - (id)initWithPath:(NSString *)aPath {
 
 	self = [super init];
-	if(self){
+	if(self) {
 		_loadCommandsArray = [[NSMutableArray array] retain];
 		addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
@@ -769,7 +770,13 @@ void readHeaderFlags( uint32_t flags ) {
 					}
 					if(stride!=0){
 						NSUInteger count = newSec_ptr->size / stride;
+						NSUInteger n = newSec_ptr->reserved1;
+
 						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
+						for( NSUInteger j=0; j<count && n+j<_nindirect_symbols; j++ )
+						{
+							NSLog(@"MuthaFucker");
+						}
 					}
 					
 					uint32_t newSectSize = newSec_ptr->size;

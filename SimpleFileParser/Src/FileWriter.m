@@ -96,7 +96,7 @@
 		NSAssert( lineLen!=0, @"Output Error?" );
 		const char *lineBuffer = [nextLine UTF8String];
 		NSInteger result = [_oStream write:(uint8_t const *)lineBuffer maxLength:lineLen];
-		NSAssert( result==lineLen, @"Output Error?");
+		NSAssert( result==(NSInteger)lineLen, @"Output Error?");
 	}
 	[self end];
 }

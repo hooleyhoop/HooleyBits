@@ -66,7 +66,7 @@
 	NSInteger index = low;
 	BOOL hit = NO;
 	
-	while( index < high ) {
+	while( index < (NSInteger)high ) {
 		const NSUInteger mid = (index + high)/2;
 		SHMemoryBlock *test = [_memoryBlockStore objectAtIndex: mid];
 		NSInteger result = [test compareStartAddressToAddress:memAddr];

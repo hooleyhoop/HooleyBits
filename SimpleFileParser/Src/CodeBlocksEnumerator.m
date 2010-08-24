@@ -48,7 +48,7 @@
 		_currentLineIndex++;
 	} else {
 
-		if(_currentLineIndex >= [block lineCount]) {
+		if(_currentLineIndex >= (NSInteger)[block lineCount]) {
 			_currentBlockIndex++;
 			_currentLineIndex = -2;
 			lineString = [self nextLine];

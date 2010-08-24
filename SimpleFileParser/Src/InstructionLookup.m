@@ -82,7 +82,6 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 
 + (void)testParseYAML {
 	
-	// _opcodeLookup = [[NSMutableDictionary dictionaryWithCapacity:100] retain];
 	CFDictionaryKeyCallBacks nonRetainingDictionaryKeyCallbacks = kCFTypeDictionaryKeyCallBacks;
 	nonRetainingDictionaryKeyCallbacks.retain = myPoolRetain;
 	nonRetainingDictionaryKeyCallbacks.release = myPoolRelease;

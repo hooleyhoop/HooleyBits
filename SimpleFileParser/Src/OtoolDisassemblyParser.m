@@ -16,10 +16,12 @@
 #import "HexConversions.h"
 #import "TokenArray.h"
 #import "ArgumentScanner.h"
-#import "InstructionLookup.h"
+#import "InstructionHash.h"
 #import "Instruction.h"
 #import "StringCounter.h"
 #import "BasicToken.h"
+#import "HexToken.h"
+#import "HexValueHash.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -104,13 +106,13 @@
 	NSArray *components = worderize( aLine );
 
 	// not optional
-	NSString *lineOffset = [components objectAtIndex:0];
+	// NSString *lineOffset = [components objectAtIndex:0];
 	NSString *address = [components objectAtIndex:1];
-	NSString *code = [components objectAtIndex:2];
-	NSString *instruction = [components objectAtIndex:3];
+	// NSString *code = [components objectAtIndex:2];
+	NSString *opcode = [components objectAtIndex:3];
 
-	NSDictionary *instrInfo = [InstructionLookup infoForInstructionString: instruction];
-	Instruction *instr = [Instruction instructionWithDict:instrInfo];
+	// Instructions are cached - ie you should always get the same Instruction back for the same opcode
+	Instruction *instr = [InstructionHash instructionForOpcode:opcode];
 	
 	NSString *arguments=nil, *functionHint=nil;
 	NSArray *allArgs = nil;
@@ -151,17 +153,21 @@
 					//	__DATA __dyld
 					//	__PAGEZERO (null)
 					
-					if( eachToken.type==hexNum ) {
-					NSUInteger decValue = [eachToken hexAsInt];
-					if(decValue>4096)
+					if( eachToken.type==hexNum )
 					{
-						id ob1 = [NSApplication sharedApplication];
-						id ob2 = [ob1 delegate];
-						id ob3 = [ob2 machLoader];
-						NSString *segment = [ob3 memoryBlockForAddress:decValue];
-						[_stringCounter add:segment];
-					//						//NSLog(segment);
-					}
+						// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
+						HexToken *aHexToken = [HexValueHash valueForHexString:eachToken.value];
+						
+						NSUInteger decValue = [eachToken hexAsInt];
+						if(decValue>4096)
+						{
+							id ob1 = [NSApplication sharedApplication];
+							id ob2 = [ob1 delegate];
+							id ob3 = [ob2 machLoader];
+							NSString *segment = [ob3 memoryBlockForAddress:decValue];
+							[_stringCounter add:segment];
+							//NSLog(segment);
+						}
 					}
 				}
 			}
