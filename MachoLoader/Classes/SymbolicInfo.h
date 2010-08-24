@@ -10,6 +10,11 @@
 
 @interface SymbolicInfo : NSObject {
 
+	NSString *_segmentName;
+	NSString *_sectionName;
 }
+
+@property (retain) NSString *segmentName;
+@property (retain) NSString *sectionName;
 
 @end

@@ -404,27 +404,43 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];
 	
-	if( [[seg name] isEqualToString:@"__TEXT"] ) {
-		// Read Only
-		if( [[sec name] isEqualToString:@"__text"] ) {
-			return NO;
-		} else {
-			[NSException raise:@"Unknown request" format:@""];
-		}
-	} else if( [[seg name] isEqualToString:@"__Data"] ) {
-		// Read and write - we have a problemo!
-		if( [[sec name] isEqualToString:@"__data"] ) {
-			return NO;
-		}
-	} else if( [[seg name] isEqualToString:@"__IMPORT"] ) {
-		if( [[sec name] isEqualToString:@"__jump_table"] ) {
+//	if( [[seg name] isEqualToString:@"__TEXT"] ) {
+//		// Read Only
+//		if( [[sec name] isEqualToString:@"__text"] ) {
+//			// return NO;
+//		} else if( [[sec name] isEqualToString:@"__cstring"] ) {
+//			// return NO;
+//		} else {
+//			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
+//		}
+//	} else if( [[seg name] isEqualToString:@"__DATA"] ) {
+//		// Read and write - we have a problemo!
+//		if( [[sec name] isEqualToString:@"__data"] ) {
+//			// return NO;
+//		}
+//	} else if( [[seg name] isEqualToString:@"__IMPORT"] ) {
+//		if( [[sec name] isEqualToString:@"__jump_table"] ) {
+//
+//		}
+//	} else {
+//		[NSException raise:@"Unknown request" format:@"%@ %@", [seg name], [sec name]];
+//	}
+
+	SymbolicInfo *si = nil;
+	
+	if( seg ) {
+		si = [[SymbolicInfo alloc] init];
+		si.segmentName = [seg name];
+		if(sec) {
+			si.sectionName = [sec name];
+		
+			
+			// TODO: Use breakpad code to demangle c++ names
+			// - (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section {
 
 		}
-	} else {
-		[NSException raise:@"Unknown request" format:@""];
 	}
-
-	return [NSString stringWithFormat:@"%@ %@", [seg name], [sec name]];
+	return si;
 }
 
 // record positions of file sections

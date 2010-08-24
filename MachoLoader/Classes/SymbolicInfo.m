@@ -11,4 +11,7 @@
 
 @implementation SymbolicInfo
 
+@synthesize segmentName=_segmentName;
+@synthesize sectionName=_sectionName;
+
 @end

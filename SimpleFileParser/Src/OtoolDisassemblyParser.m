@@ -23,6 +23,7 @@
 #import "HexToken.h"
 #import "HexValueHash.h"
 #import "HexLookup.h"
+#import "Argument.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -119,18 +120,30 @@
 	NSArray *allArgs = nil;
 
 	// optional
-	if([components count]>=5) {
+	if([components count]>=5)
+	{
 		arguments = [components objectAtIndex:4];
 		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
 		[tkns1 secondPass];
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
-		allArgs = scanner.allArguments;
+		
+		allArgs = [scanner.allArguments copy];
 		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
-		if (allArgs && [allArgs count]) {
+		if (allArgs && [allArgs count])
+		{
 			// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
-			for( Argument *eachArg in allArgs ) {
-				for( BasicToken *eachToken in eachArg )
+			for( Argument *eachArg in allArgs )
+			{
+				NSMutableArray *allToks = [eachArg.allTokens copy];
+				for( BasicToken *eachToken in allToks )
 				{
+					if( eachToken.type==hexNum )
+					{
+						// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
+						HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
+						[eachArg replaceToken:eachToken with:aHexToken];
+					}
+					
 					//	__TEXT __text
 					//	(null) (null)
 					//	__IMPORT __jump_table
@@ -154,18 +167,14 @@
 					//	__DATA __dyld
 					//	__PAGEZERO (null)
 					
-					if( eachToken.type==hexNum )
-					{
-						// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
-						HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
-					}
 				}
+				[allToks release];
+				allToks = nil;
 			}
 		}		
-		
-		
-		
-		
+		[allArgs release];
+		allArgs = nil;
+		allArgs = scanner.allArguments;
 	}
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];

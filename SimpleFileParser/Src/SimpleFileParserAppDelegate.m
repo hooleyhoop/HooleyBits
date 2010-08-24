@@ -55,7 +55,7 @@ nil] retain];
 	[HexLookup prepareWith:_ml];
 
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_tiny.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 	

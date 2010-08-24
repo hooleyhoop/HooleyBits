@@ -8,9 +8,14 @@
 
 #import "HexToken.h"
 #import "HexConversions.h"
-
+#import "SymbolicInfo.h"
 
 @implementation HexToken
+
+@synthesize originalValue=_originalValue;
+@synthesize stringVal=_stringVal;
+@synthesize intVal=_intVal;
+@synthesize symbolicInfo=_symbolicInfo;
 
 + (HexToken *)hexTokenWithCString:(const char *)hexStr {
 	return [[[self alloc] initWithCString:hexStr] autorelease];
@@ -30,17 +35,21 @@
 }
 
 - (void)dealloc {
+
 	free(_originalValue);
 	[_stringVal release];
 	[super dealloc];
 }
 
-- (const char *)originalValue {
-	return _originalValue;
-}
-
-- (NSUInteger)intVal {
-	return _intVal;
+- (NSString *)outputString {
+	
+	NSString *out = nil;
+	if(_symbolicInfo) {
+		out = [NSString stringWithFormat:@"%@:%@", _symbolicInfo.segmentName, _symbolicInfo.sectionName];
+	} else {
+		out = _stringVal;
+	}
+	return out;
 }
 
 @end

@@ -65,9 +65,10 @@
 		}
 		// cache the value
 		CFDictionaryAddValue( _filledOutHexTokens, result->_originalValue, result );
-	} else {
-		NSLog(@"Found duplicated Hex balue %@",result->_stringVal );
-	}
+	} 
+//	else {
+//		NSLog(@"Found duplicated Hex balue %@",result->_stringVal );
+//	}
 	NSAssert(result, @"garamouch3");
 	return result;
 }

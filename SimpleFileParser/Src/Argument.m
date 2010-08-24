@@ -60,6 +60,8 @@
 
 @implementation Argument
 
+@synthesize allTokens=_allTokens;
+
 + (id)emptyArgument {
 	return [[[self alloc] init] autorelease];
 }
@@ -77,6 +79,12 @@
 
 - (void)addToken:(BasicToken *)tok {
 	[_allTokens addObject:tok];
+}
+
+- (void)replaceToken:(BasicToken *)oldTok with:(BasicToken *)newTok {
+	
+	NSUInteger tokInd = [_allTokens indexOfObject:oldTok];
+	[_allTokens replaceObjectAtIndex:tokInd withObject:newTok];
 }
 
 - (NSString *)output {

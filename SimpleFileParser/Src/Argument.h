@@ -9,12 +9,16 @@
 @class BasicToken;
 
 @interface Argument : NSObject {
+
 	NSMutableArray *_allTokens;
 }
+
+@property (readonly) NSMutableArray *allTokens;
 
 + (id)emptyArgument;
 
 - (void)addToken:(BasicToken *)tok;
+- (void)replaceToken:(BasicToken *)oldTok with:(BasicToken *)newTok;
 
 - (NSString *)output;
 - (NSString *)pattern;

@@ -33,6 +33,8 @@
 		73794D7D1223E460001B8AF6 /* HexLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D7B1223E460001B8AF6 /* HexLookup.m */; };
 		73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D9C1223E64F001B8AF6 /* CFDictCallbacks.m */; };
 		73794D9E1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D9C1223E64F001B8AF6 /* CFDictCallbacks.m */; };
+		73794FAD12240AFA001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794FAC12240AFA001B8AF6 /* SymbolicInfo.m */; };
+		73794FAE12240AFA001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794FAC12240AFA001B8AF6 /* SymbolicInfo.m */; };
 		73875DB411C66BE200F714D9 /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DB211C66BE200F714D9 /* ArgumentScanner.m */; };
 		73875DCE11C66EC200F714D9 /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875DCC11C66EC200F714D9 /* Argument.m */; };
 		73875FC511C6950100F714D9 /* StringCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 73875FC411C6950100F714D9 /* StringCounter.m */; };
@@ -302,6 +304,8 @@
 		73794D7B1223E460001B8AF6 /* HexLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexLookup.m; path = Src/HexLookup.m; sourceTree = "<group>"; };
 		73794D9B1223E64F001B8AF6 /* CFDictCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFDictCallbacks.h; path = Src/CFDictCallbacks.h; sourceTree = "<group>"; };
 		73794D9C1223E64F001B8AF6 /* CFDictCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFDictCallbacks.m; path = Src/CFDictCallbacks.m; sourceTree = "<group>"; };
+		73794FAB12240AFA001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = ../MachoLoader/Classes/SymbolicInfo.h; sourceTree = SOURCE_ROOT; };
+		73794FAC12240AFA001B8AF6 /* SymbolicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolicInfo.m; path = ../MachoLoader/Classes/SymbolicInfo.m; sourceTree = SOURCE_ROOT; };
 		73875DB111C66BE200F714D9 /* ArgumentScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArgumentScanner.h; path = Src/ArgumentScanner.h; sourceTree = "<group>"; };
 		73875DB211C66BE200F714D9 /* ArgumentScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScanner.m; path = Src/ArgumentScanner.m; sourceTree = "<group>"; };
 		73875DB811C66BFA00F714D9 /* ArgumentScannerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgumentScannerTests.m; path = Tests/ArgumentScannerTests.m; sourceTree = "<group>"; };
@@ -774,6 +778,8 @@
 				73E763E7121C370F00A4190C /* Section.m */,
 				73A1EF771219916B004CAC63 /* MemoryMap.h */,
 				73A1EF781219916B004CAC63 /* MemoryMap.m */,
+				73794FAB12240AFA001B8AF6 /* SymbolicInfo.h */,
+				73794FAC12240AFA001B8AF6 /* SymbolicInfo.m */,
 			);
 			name = MachoLoader;
 			sourceTree = "<group>";
@@ -1097,6 +1103,7 @@
 				73EA4AE81223CBBF00AF902F /* SHMemoryBlock.m in Sources */,
 				73794D7C1223E460001B8AF6 /* HexLookup.m in Sources */,
 				73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
+				73794FAD12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1154,6 +1161,7 @@
 				73EA4AE91223CBBF00AF902F /* SHMemoryBlock.m in Sources */,
 				73794D7D1223E460001B8AF6 /* HexLookup.m in Sources */,
 				73794D9E1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
+				73794FAE12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
