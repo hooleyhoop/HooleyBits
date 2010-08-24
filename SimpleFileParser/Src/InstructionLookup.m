@@ -7,6 +7,7 @@
 //
 
 #import "InstructionLookup.h"
+#import "CFDictCallbacks.h"
 #import <yaml/yaml.h>
 
 
@@ -16,13 +17,6 @@ static CFMutableDictionaryRef _opcodeLookup;
 static NSMutableDictionary *_opcodeDict;
 static NSUInteger _state;
 static NSString *_key, *_value;
-
-// we neither retain or release items in the dictionary
-const void *myPoolRetain( CFAllocatorRef allocator, const void *ptr ) {
-    return ptr;
-}
-void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
-}
 
 + (void)newMapping:(yaml_event_t)e {
 	
@@ -81,15 +75,10 @@ void myPoolRelease( CFAllocatorRef allocator, const void *ptr ) {
 
 
 + (void)testParseYAML {
-	
-	CFDictionaryKeyCallBacks nonRetainingDictionaryKeyCallbacks = kCFTypeDictionaryKeyCallBacks;
-	nonRetainingDictionaryKeyCallbacks.retain = myPoolRetain;
-	nonRetainingDictionaryKeyCallbacks.release = myPoolRelease;
-	
-	CFDictionaryValueCallBacks nonRetainingDictionaryValueCallbacks = kCFTypeDictionaryValueCallBacks;
-	nonRetainingDictionaryValueCallbacks.retain = myPoolRetain;
-	nonRetainingDictionaryValueCallbacks.release = myPoolRelease;
-	_opcodeLookup = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &nonRetainingDictionaryKeyCallbacks, &nonRetainingDictionaryValueCallbacks );
+
+	CFDictionaryKeyCallBacks dkc = [CFDictCallbacks nonRetainingDictionaryKeyCallbacks];
+	CFDictionaryValueCallBacks dvc = [CFDictCallbacks nonRetainingDictionaryValueCallbacks];
+	_opcodeLookup = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &dkc, &dvc );
 
 	NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"opcode" ofType:@"yaml"];
 	NSAssert( filePath, @"Error loading opcode file" );

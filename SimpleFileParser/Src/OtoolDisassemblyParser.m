@@ -22,6 +22,7 @@
 #import "BasicToken.h"
 #import "HexToken.h"
 #import "HexValueHash.h"
+#import "HexLookup.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -156,18 +157,7 @@
 					if( eachToken.type==hexNum )
 					{
 						// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
-						HexToken *aHexToken = [HexValueHash valueForHexString:eachToken.value];
-						
-						NSUInteger decValue = [eachToken hexAsInt];
-						if(decValue>4096)
-						{
-							id ob1 = [NSApplication sharedApplication];
-							id ob2 = [ob1 delegate];
-							id ob3 = [ob2 machLoader];
-							NSString *segment = [ob3 memoryBlockForAddress:decValue];
-							[_stringCounter add:segment];
-							//NSLog(segment);
-						}
+						HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
 					}
 				}
 			}

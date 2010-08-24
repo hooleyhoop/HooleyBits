@@ -12,7 +12,7 @@
 
 // eg, dump cstrings otool -s __TEXT __cstring -v test    
 
-@class MemoryMap;
+@class MemoryMap, SymbolicInfo;
 
 @interface MachoLoader : NSObject {
 
@@ -43,7 +43,6 @@
 
 - (id)initWithPath:(NSString *)aPath;
 
-- (NSString *)memoryBlockForAddress:(NSUInteger)memAddr;
-- (NSString *)interestingStringForAddress:(NSUInteger)memAddr;
+- (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr;
 
 @end

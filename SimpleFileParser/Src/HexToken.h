@@ -8,8 +8,16 @@
 
 @interface HexToken : NSObject {
 
+	@public
+		char		*_originalValue;
+		NSString	*_stringVal;
+		NSUInteger	_intVal;
 }
 
 + (HexToken *)hexTokenWithCString:(const char *)hexStr;
+
+- (const char *)originalValue;
+
+- (NSUInteger)intVal;
 
 @end

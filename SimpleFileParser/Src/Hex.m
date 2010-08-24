@@ -61,8 +61,8 @@
 	return [self initWithData:[NSData dataWithHexString:hexString]];	
 }
 
-- (NSString *) hexString
-{
+- (NSString *)hexString {
+
 	int i;
 	const char * data = [self bytes];
 	NSMutableString *result;
@@ -78,6 +78,16 @@
 	immutableResult = [NSString stringWithString:result];
 	[result release];
 	return immutableResult;
+}
+
+NSUInteger hexCharHash(const char *str) {
+
+	NSUInteger hash = 5381;
+	int c;
+	
+	while(c=*str++)
+		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+	return hash;
 }
 
 @end

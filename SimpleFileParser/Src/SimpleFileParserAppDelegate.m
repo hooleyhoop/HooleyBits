@@ -10,6 +10,7 @@
 #import "AppDisassembly.h"
 #import "InstructionLookup.h"
 #import "MachoLoader.h"
+#import "HexLookup.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -47,10 +48,12 @@ nil] retain];
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
 
 	[InstructionLookup testParseYAML];
-	
+	 
 	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	
+	[HexLookup prepareWith:_ml];
+
 	NSError *outError;
 	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];

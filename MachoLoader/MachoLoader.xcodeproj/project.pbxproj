@@ -18,6 +18,8 @@
 		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
+		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
+		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -64,6 +66,8 @@
 		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
 		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
 		7332007912197B2C00D80990 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = Classes/Segment.m; sourceTree = "<group>"; };
+		73794F181223F903001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = Classes/SymbolicInfo.h; sourceTree = "<group>"; };
+		73794F191223F903001B8AF6 /* SymbolicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolicInfo.m; path = Classes/SymbolicInfo.m; sourceTree = "<group>"; };
 		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
 		73E761E8121C28C900A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Classes/Section.m; sourceTree = "<group>"; };
 		73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = Classes/SHMemoryBlock.h; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 				73E761E8121C28C900A4190C /* Section.m */,
 				7332007212197B1E00D80990 /* MemoryMap.h */,
 				7332007312197B1E00D80990 /* MemoryMap.m */,
+				73794F181223F903001B8AF6 /* SymbolicInfo.h */,
+				73794F191223F903001B8AF6 /* SymbolicInfo.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -412,6 +418,7 @@
 				73E761EA121C28C900A4190C /* Section.m in Sources */,
 				73E7623E121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
 				73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */,
+				73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +436,7 @@
 				73E761E9121C28C900A4190C /* Section.m in Sources */,
 				73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
 				73E76253121C304C00A4190C /* MemoryBlockStore.m in Sources */,
+				73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

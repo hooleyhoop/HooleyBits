@@ -8,6 +8,9 @@
 
 @class HexToken;
 
+/*
+ * Store one-off HexTokens that we can lookup with a cString
+*/
 @interface HexValueHash : NSObject {
 
 	CFMutableDictionaryRef _hexLookup;

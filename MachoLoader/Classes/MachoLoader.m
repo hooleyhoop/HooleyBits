@@ -11,6 +11,7 @@
 #import <CoreServices/CoreServices.h>
 #import "Hex.h"
 #import "FileMapView.h"
+#import "SymbolicInfo.h"
 
 // Standard C includes.
 #import <stdio.h>
@@ -398,23 +399,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 	[super dealloc];
 }
 
-- (NSString *)memoryBlockForAddress:(NSUInteger)memAddr {
-	
-	Segment *seg = [_memoryMap segmentForAddress:memAddr];
-	Section *sec = [_memoryMap sectionForAddress:memAddr];
-
-	if( [[seg name] isEqualToString:@"__IMPORT"] )
-	{
-		if( [[sec name] isEqualToString:@"__jump_table"] ) {
-			NSLog(@"__jump_table %x", memAddr);
-		}
-	}
-
-	
-	return [NSString stringWithFormat:@"%@ %@", [seg name], [sec name]];
-}
-
-- (NSString *)interestingStringForAddress:(NSUInteger)memAddr {
+- (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr {
 
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];

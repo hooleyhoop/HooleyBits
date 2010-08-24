@@ -68,4 +68,7 @@
  representation of the data object.
  */
 - (NSString *) hexString;
+
+NSUInteger hexCharHash(const char *str);
+
 @end

@@ -8,22 +8,9 @@
 
 #import "HexValueHash.h"
 #import "HexToken.h"
+#import "CFDictCallbacks.h"
 
 @implementation HexValueHash
-
-const void *myKeyRetainCallback( CFAllocatorRef allocator, const void *ptr ) {
-    return ptr;
-}
-Boolean myKeyIsEqualCallBack( const void *value1,const void *value2 ) {
-	return strcmp(value1, value2)==0;
-}
-CFHashCode myKeyHashCallBack( const void *value  ) {
-	
-	NSUInteger keyHash = *((NSUInteger *)value);
-	const char *compareHashPtr = "value";
-	NSUInteger compareHash = *((NSUInteger *)compareHashPtr);
-	return keyHash;
-}
 
 + (HexValueHash *)cachedHexValueHash {
 	
@@ -42,21 +29,14 @@ CFHashCode myKeyHashCallBack( const void *value  ) {
 	
 	self = [super init];
 	if(self){
-		CFDictionaryKeyCallBacks nonRetainingDictionaryKeyCallbacks = kCFTypeDictionaryKeyCallBacks;
-		nonRetainingDictionaryKeyCallbacks.retain = myKeyRetainCallback;
-		nonRetainingDictionaryKeyCallbacks.release = NULL;
-		nonRetainingDictionaryKeyCallbacks.copyDescription = NULL;
-		nonRetainingDictionaryKeyCallbacks.equal = myKeyIsEqualCallBack;
-		nonRetainingDictionaryKeyCallbacks.hash = NULL;
-		
-		CFDictionaryValueCallBacks nonRetainingDictionaryValueCallbacks = kCFTypeDictionaryValueCallBacks;
-		_hexLookup = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &nonRetainingDictionaryKeyCallbacks, &nonRetainingDictionaryValueCallbacks );
+		CFDictionaryKeyCallBacks cStringKeyCallbacks = [CFDictCallbacks cStringDictionaryKeyCallbacks];
+		_hexLookup = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &cStringKeyCallbacks, &kCFTypeDictionaryValueCallBacks );
 	}
 	return self;
 }
 
 - (void)dealloc {
-	
+
 	CFRelease(_hexLookup);
 	[super dealloc];
 }
@@ -66,7 +46,7 @@ CFHashCode myKeyHashCallBack( const void *value  ) {
 	HexToken *result = (HexToken *)CFDictionaryGetValue( _hexLookup, hexStr );
 	if( result==nil ) {
 		result = [HexToken hexTokenWithCString:hexStr];
-		CFDictionaryAddValue( _hexLookup, hexStr, result );
+		CFDictionaryAddValue( _hexLookup, result->_originalValue, result );
 	}
 	NSAssert(result, @"grudddnch");
 	return result;
