@@ -18,6 +18,12 @@
 		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
+		734B5FD412252D52002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B5FD312252D52002C0B0F /* libstdc++.dylib */; };
+		734B601C1225548C002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B5FD312252D52002C0B0F /* libstdc++.dylib */; };
+		734B6029122554D5002C0B0F /* IndirectSymbolTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */; };
+		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
+		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
+		734B677912269AD6002C0B0F /* DemangleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B677812269AD6002C0B0F /* DemangleTests.m */; };
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
@@ -29,7 +35,6 @@
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +71,12 @@
 		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
 		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
 		7332007912197B2C00D80990 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = Classes/Segment.m; sourceTree = "<group>"; };
+		734B5FB6122527B5002C0B0F /* libiberty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiberty.a; path = /opt/local/lib/libiberty.a; sourceTree = "<absolute>"; };
+		734B5FD312252D52002C0B0F /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
+		734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndirectSymbolTableTests.m; path = Tests/IndirectSymbolTableTests.m; sourceTree = "<group>"; };
+		734B66DA1226900A002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = Classes/IntKeyDictionary.h; sourceTree = "<group>"; };
+		734B66DB1226900A002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = Classes/IntKeyDictionary.m; sourceTree = "<group>"; };
+		734B677812269AD6002C0B0F /* DemangleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemangleTests.m; path = Tests/DemangleTests.m; sourceTree = "<group>"; };
 		73794F181223F903001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = Classes/SymbolicInfo.h; sourceTree = "<group>"; };
 		73794F191223F903001B8AF6 /* SymbolicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolicInfo.m; path = Classes/SymbolicInfo.m; sourceTree = "<group>"; };
 		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
@@ -94,6 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				731FAACD1219724100D3EE3D /* SenTestingKit.framework in Frameworks */,
+				734B601C1225548C002C0B0F /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				734B5FD412252D52002C0B0F /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +134,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				734B5FD312252D52002C0B0F /* libstdc++.dylib */,
+				734B5FB6122527B5002C0B0F /* libiberty.a */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				731FAACC1219724100D3EE3D /* SenTestingKit.framework */,
 			);
@@ -221,6 +235,8 @@
 		730219690F864C6900906D18 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				73794F181223F903001B8AF6 /* SymbolicInfo.h */,
+				73794F191223F903001B8AF6 /* SymbolicInfo.m */,
 				73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */,
 				73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */,
 				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
@@ -231,8 +247,6 @@
 				73E761E8121C28C900A4190C /* Section.m */,
 				7332007212197B1E00D80990 /* MemoryMap.h */,
 				7332007312197B1E00D80990 /* MemoryMap.m */,
-				73794F181223F903001B8AF6 /* SymbolicInfo.h */,
-				73794F191223F903001B8AF6 /* SymbolicInfo.m */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -240,6 +254,8 @@
 		7302196A0F864C6E00906D18 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				734B66DA1226900A002C0B0F /* IntKeyDictionary.h */,
+				734B66DB1226900A002C0B0F /* IntKeyDictionary.m */,
 				73FF6B250FD6AB8B00A8136A /* Hex.h */,
 				73FF6B240FD6AB8B00A8136A /* Hex.m */,
 			);
@@ -257,6 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				731FAA9E1219717000D3EE3D /* MemoryMapTests.m */,
+				734B677812269AD6002C0B0F /* DemangleTests.m */,
+				734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -419,6 +437,9 @@
 				73E7623E121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
 				73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */,
 				73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */,
+				734B6029122554D5002C0B0F /* IndirectSymbolTableTests.m in Sources */,
+				734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */,
+				734B677912269AD6002C0B0F /* DemangleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +458,7 @@
 				73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */,
 				73E76253121C304C00A4190C /* MemoryBlockStore.m in Sources */,
 				73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */,
+				734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +538,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6712196EE500D3EE3D /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib/x86_64,
+					/opt/local/lib,
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = MachoLoaderTests;
 			};
 			name = Debug;
@@ -535,6 +563,12 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "MachoLoaderTests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib/x86_64,
+					/opt/local/lib,
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
@@ -553,6 +587,12 @@
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib/x86_64,
+					/opt/local/lib,
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = MachoLoader;
 			};
 			name = Debug;
@@ -574,6 +614,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib/x86_64,
+					/opt/local/lib,
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = MachoLoader;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};

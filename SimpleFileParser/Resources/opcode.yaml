@@ -6,6 +6,7 @@
     instruction: .byte
     name:        unknown
     description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
+    format: "a1"
 -
     instruction: aaa
     name:        unknown
@@ -102,6 +103,7 @@
     instruction: call
     name:        call
     description: stack.push(%eip), jump($1)
+    format: "a1"
 -
     instruction: calll
     name:        call
@@ -809,19 +811,19 @@
     description: move aligned packed single precision float
 -
     instruction: movb
-    name:        
+    name:        move
     description: move byte (8)
 -
     instruction: movw
-    name:        
+    name:        move
     description: move word (16)
 -
     instruction: movl
-    name:        
+    name:        move
     description: move long (32)
 -
     instruction: movd
-    name:        
+    name:        move
     description: move double (64)
 -
     instruction: movhpd

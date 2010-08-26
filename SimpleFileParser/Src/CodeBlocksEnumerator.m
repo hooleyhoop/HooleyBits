@@ -58,9 +58,9 @@
 			NSAssert(line, @"should have a block at that index");
 			
 			/* very primitive filtering */
-			BOOL passesFilter = NO;
-			NSArray *args = line.arguments;
-			if (args && [args count]) {
+//			BOOL passesFilter = NO;
+//			NSArray *args = line.arguments;
+//			if (args && [args count]) {
 				// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
 //				for( Argument *each in args ) {
 //					if([each containsHexNum]){
@@ -76,13 +76,13 @@
 //						passesFilter = YES;
 //					}
 //				}
-			}
+//			}
 			_currentLineIndex++;
 			/* end very primitive filtering */
-			if(passesFilter)
+//			if(passesFilter)
 				lineString = [line prettyString];
-			else
-				lineString = [self nextLine];
+//			else
+//				lineString = [self nextLine];
 		}
 
 	}

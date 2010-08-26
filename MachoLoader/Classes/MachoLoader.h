@@ -13,6 +13,12 @@
 // eg, dump cstrings otool -s __TEXT __cstring -v test    
 
 @class MemoryMap, SymbolicInfo;
+@class IntKeyDictionary;
+
+// How to install libiberty
+//> port variants binutils
+//> sudo port install binutils +universal
+
 
 @interface MachoLoader : NSObject {
 
@@ -38,11 +44,22 @@
 	NSUInteger			_nindirect_symbols;
 	const uint32_t*		_indirectSymbolTable;
 	
+	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
+	
 	MemoryMap			*_memoryMap;
+	
+	BOOL				_MH_TWOLEVEL, _MH_FORCE_FLAT;
+	NSMutableArray		*_libraries;
 }
 
 - (id)initWithPath:(NSString *)aPath;
 
 - (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr;
+
+- (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table;
+
+- (NSString *)lookupLibrary:(NSUInteger)libraryIndex;
+- (void)addCstring:(NSString *)aCstring forAddress:(NSUInteger)cStringAddress;
+- (NSString *)CStringForAddress:(NSUInteger)addr;
 
 @end

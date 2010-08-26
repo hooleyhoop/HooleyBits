@@ -7,7 +7,7 @@
 //
 
 #import "Instruction.h"
-
+#import "Argument.h"
 
 @implementation Instruction
 
@@ -32,4 +32,16 @@
 - (NSString *)instruction {
 	return [_values objectForKey:@"instruction"];
 }
+
+- (NSString *)printWithArgs:(NSArray *)args {
+	
+	NSString *resultString = [self name];
+	if(resultString==nil || [resultString length]==0 )
+		resultString = [self instruction];
+	for( Argument *each in args ){
+		resultString = [resultString stringByAppendingFormat:@" %@", [each output]];
+	}
+	return resultString;
+}
+
 @end

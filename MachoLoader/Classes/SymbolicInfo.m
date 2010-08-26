@@ -13,5 +13,7 @@
 
 @synthesize segmentName=_segmentName;
 @synthesize sectionName=_sectionName;
-
+@synthesize address=_address;
+@synthesize stringValue=_stringValue;
+@synthesize libraryName=_libraryName;
 @end

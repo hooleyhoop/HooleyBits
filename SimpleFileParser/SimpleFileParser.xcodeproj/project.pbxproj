@@ -29,6 +29,10 @@
 		732CFCDA11BF9E5E008030ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CFCD911BF9E5E008030ED /* main.m */; };
 		732DCA4D12142791000016EE /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 732DCA4B12142791000016EE /* Hex.m */; };
 		732DCA52121427B8000016EE /* HexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732DCA51121427B8000016EE /* HexTests.m */; };
+		734B627D122569E1002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B627C122569E1002C0B0F /* libstdc++.dylib */; };
+		734B627E122569E1002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B627C122569E1002C0B0F /* libstdc++.dylib */; };
+		734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
+		734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
 		73794D7C1223E460001B8AF6 /* HexLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D7B1223E460001B8AF6 /* HexLookup.m */; };
 		73794D7D1223E460001B8AF6 /* HexLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D7B1223E460001B8AF6 /* HexLookup.m */; };
 		73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D9C1223E64F001B8AF6 /* CFDictCallbacks.m */; };
@@ -300,6 +304,9 @@
 		7340BF46120584F000437881 /* loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loader.h; path = "System/Library/Frameworks/Kernel.framework/Versions/A/Headers/mach-o/loader.h"; sourceTree = SDKROOT; };
 		7340BF47120585B900437881 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = ../MachoLoader/Classes/MachoLoader.h; sourceTree = SOURCE_ROOT; };
 		7340BF48120585B900437881 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = ../MachoLoader/Classes/MachoLoader.m; sourceTree = SOURCE_ROOT; };
+		734B627C122569E1002C0B0F /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
+		734B671C1226920E002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = ../MachoLoader/Classes/IntKeyDictionary.h; sourceTree = SOURCE_ROOT; };
+		734B671D1226920E002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = ../MachoLoader/Classes/IntKeyDictionary.m; sourceTree = SOURCE_ROOT; };
 		73794D7A1223E460001B8AF6 /* HexLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexLookup.h; path = Src/HexLookup.h; sourceTree = "<group>"; };
 		73794D7B1223E460001B8AF6 /* HexLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexLookup.m; path = Src/HexLookup.m; sourceTree = "<group>"; };
 		73794D9B1223E64F001B8AF6 /* CFDictCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFDictCallbacks.h; path = Src/CFDictCallbacks.h; sourceTree = "<group>"; };
@@ -397,6 +404,7 @@
 				7392920611DBAC78000429DC /* OCMock.framework in Frameworks */,
 				7392920B11DBAC8B000429DC /* SHTestUtilities.framework in Frameworks */,
 				73A0F7F211DCA43D008DD4E2 /* SHShared.framework in Frameworks */,
+				734B627D122569E1002C0B0F /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +423,7 @@
 				73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */,
 				73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */,
 				738FD546121BF4E70069B868 /* FScript.framework in Frameworks */,
+				734B627E122569E1002C0B0F /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +453,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				734B627C122569E1002C0B0F /* libstdc++.dylib */,
 				738FD545121BF4E70069B868 /* FScript.framework */,
 				739291B211DBA9AC000429DC /* SHTestUtilities.framework */,
 				7392914911DBA902000429DC /* OCMock.framework */,
@@ -780,6 +790,8 @@
 				73A1EF781219916B004CAC63 /* MemoryMap.m */,
 				73794FAB12240AFA001B8AF6 /* SymbolicInfo.h */,
 				73794FAC12240AFA001B8AF6 /* SymbolicInfo.m */,
+				734B671C1226920E002C0B0F /* IntKeyDictionary.h */,
+				734B671D1226920E002C0B0F /* IntKeyDictionary.m */,
 			);
 			name = MachoLoader;
 			sourceTree = "<group>";
@@ -1104,6 +1116,7 @@
 				73794D7C1223E460001B8AF6 /* HexLookup.m in Sources */,
 				73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
 				73794FAD12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
+				734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1162,6 +1175,7 @@
 				73794D7D1223E460001B8AF6 /* HexLookup.m in Sources */,
 				73794D9E1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
 				73794FAE12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
+				734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,6 +1244,10 @@
 					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/build/Debug\"",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = SimpleFileParser;
 			};
 			name = Coverage;
@@ -1250,6 +1268,10 @@
 				);
 				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source/lldb/build/Debug\" $(CONFIGURATION_BUILD_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = SimpleFileParser_Tests;
 			};
 			name = Coverage;
@@ -1289,6 +1311,10 @@
 				);
 				GCC_VERSION = "";
 				LD_RUNPATH_SEARCH_PATHS = "\"$(SRCROOT)/../../../Source/lldb/build/Debug\" $(CONFIGURATION_BUILD_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = SimpleFileParser_Tests;
 			};
 			name = Debug;
@@ -1304,6 +1330,10 @@
 					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/build/Debug\"",
 					"\"$(SRCROOT)/../../Blake/build/Debug\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
 				);
 				PRODUCT_NAME = SimpleFileParser_Tests;
 			};
@@ -1370,6 +1400,10 @@
 					"\"$(SRCROOT)/../../Blake/build/Debug\"",
 					/Library/Frameworks/,
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+				);
 				PRODUCT_NAME = SimpleFileParser;
 			};
 			name = Debug;
@@ -1384,6 +1418,10 @@
 					"\"$(SRCROOT)/../../../Source/lldb/build/Debug\"",
 					"\"$(SRCROOT)/../../../Source/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/build/Debug\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
 				);
 				PRODUCT_NAME = SimpleFileParser;
 			};

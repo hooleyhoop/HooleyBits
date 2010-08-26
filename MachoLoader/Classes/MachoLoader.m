@@ -12,6 +12,7 @@
 #import "Hex.h"
 #import "FileMapView.h"
 #import "SymbolicInfo.h"
+#import "IntKeyDictionary.h"
 
 // Standard C includes.
 #import <stdio.h>
@@ -36,7 +37,6 @@
 #import <mach/machine.h>
 #import <mach-o/arch.h>
 #import <mach-o/loader.h>
-
 #import "MemoryMap.h"
 #import "Segment.h"
 #import "Section.h"
@@ -118,37 +118,68 @@ static void print_cstring_char( char c ) {
 	}
 }
 
-
 // -- see cctools-782 otool ofile_print.c
-void print_cstring_section( char *sect, uint32_t sect_size, uint32_t sect_addr ) {
-	
-    uint32_t i;
-	
-	for(i = 0; i < sect_size ; i++){
+void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) {
 		
-		printf("%08x  ", (unsigned int)(sect_addr + i));
-		
-	    for( ; i < sect_size && sect[i] != '\0'; i++)
+	for( uint32_t i=0; i<sect_size; i++ )
+	{
+		NSUInteger cStringAddress = (NSUInteger)(sect_addr + i);
+		printf("%08x  ", cStringAddress );
+
+	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
 			print_cstring_char(sect[i]);
-	    if(i < sect_size && sect[i] == '\0')
+		}
+		
+		if(i<sect_size && sect[i]=='\0' )
 			printf("\n");
 	}
 }
 
+// -- see cctools-782 otool ofile_print.c
+- (void)save_cstring_section:(char *)sect :(uint32_t)sect_size :(uint32_t)sect_addr {
+	
+	char aCstring[256];
+	memset ( aCstring, 0, 256 );
+	uint32_t length = 0;
+
+	for( uint32_t i=0; i<sect_size; i++ )
+	{
+		NSUInteger cStringAddress = (NSUInteger)(sect_addr + i);
+		// printf("%08x  ", cStringAddress );
+
+		memset ( aCstring, 0, length );
+		length = 0;
+		
+	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
+//			print_cstring_char(sect[i]);
+			aCstring[length] = sect[i];
+			length++;
+		}
+		NSString *strVal = [NSString stringWithCString:aCstring encoding:NSUTF8StringEncoding];
+		if(strVal==nil)
+			strVal = @"";
+		[self addCstring:strVal forAddress:cStringAddress];
+		
+//	    if(i<sect_size && sect[i]=='\0' )
+//			printf("\n");
+	}
+}
+
+extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, size_t* __length, int* __status);
 /*
  * Print the indirect symbol table.
  */
-void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds, uint32_t sizeofcmds, cpu_type_t cputype,
+- (void)print_indirect_symbols:(struct load_command *)load_commands :(uint32_t)ncmds :(uint32_t)sizeofcmds :(cpu_type_t)cputype
 							//					   enum byte_sex load_commands_byte_sex,
-							uint32_t *indirect_symbols,
-							uint32_t nindirect_symbols,
-							struct nlist *symbols,
-							struct nlist_64 *symbols64,
-							uint32_t nsymbols,
-							char *strings,
-							uint32_t strings_size //,
+							:(uint32_t *)indirect_symbols
+							:(uint32_t)nindirect_symbols
+							:(struct nlist *)symbols
+							:(struct nlist_64 *)symbols64
+							:(uint32_t)nsymbols
+							:(char *)strings
+							:(uint32_t)strings_size //,
 							//					   enum bool verbose
-							)
+
 {
 	//    enum byte_sex host_byte_sex;
 	//    enum bool swapped;
@@ -169,7 +200,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 		uint32_t reserved2;
 		uint32_t flags;
     } *sect_ind;
-    uint32_t n_strx;
+    uint32_t n_stringIndex;
 	
 	sect_ind = NULL;
 	//	host_byte_sex = get_host_byte_sex();
@@ -195,7 +226,8 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 			printf("load command %u extends past end of load commands\n", i);
 	    left = sizeofcmds - ((char *)lc - (char *)load_commands);
 		
-	    switch(l.cmd){
+	    switch(l.cmd)
+		{
 			case LC_SEGMENT:
 				memset((char *)&sg, '\0', sizeof(struct segment_command));
 				size = left < sizeof(struct segment_command) ?
@@ -311,35 +343,48 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 			continue;
 		
 	    count = sect_ind[i].size / stride;
-	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
+//	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
 		
 	    n = sect_ind[i].reserved1;
 //	    if(n > nindirect_symbols)
 //			printf(" (entries start past the end of the indirect symbol table) (reserved1 field greater than the table size)");
 //	    else if(n + count > nindirect_symbols)
 //			printf(" (entries extends past the end of the indirect symbol table)");
-	    if(cputype & CPU_ARCH_ABI64)
-			printf("\naddress            index");
-	    else
-			printf("\naddress    index");
+//	    if(cputype & CPU_ARCH_ABI64)
+//			printf("\naddress            index");
+//	    else
+//			printf("\naddress    index");
 		//	    if(verbose)
-		printf(" name\n");
+//		printf(" name\n");
 		//	    else
 		//			printf("\n");
 		
-	    for( j=0; j<count && n+j<nindirect_symbols; j++)
+	    for( j=0; j<count && n+j<nindirect_symbols; j++ )
 		{
-			if(cputype & CPU_ARCH_ABI64)
-				printf("0x%016llx ", sect_ind[i].addr + j * stride);
-			else
-				printf("0x%08x ",(uint32_t)(sect_ind[i].addr + j * stride));
+			SymbolicInfo *symbolInfo = [[[SymbolicInfo alloc] init] autorelease];
+			symbolInfo.segmentName = [NSString stringWithCString:sect_ind[i].segname encoding:NSUTF8StringEncoding];
+			symbolInfo.sectionName = [NSString stringWithCString:sect_ind[i].sectname encoding:NSUTF8StringEncoding];
 			
-			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_LOCAL){
-				printf("LOCAL\n");
+			if(cputype & CPU_ARCH_ABI64) {
+				symbolInfo.address = sect_ind[i].addr + j * stride;
+				// printf("0x%016llx ", sect_ind[i].addr + j * stride);
+			} else {
+				symbolInfo.address = (uint32_t)(sect_ind[i].addr + j * stride);
+				// printf("0x%08x ",(uint32_t)(sect_ind[i].addr + j * stride));
+			}
+			
+			if( indirect_symbols[j + n]==INDIRECT_SYMBOL_LOCAL)
+			{
+				// Doesn't have an index into the string table
+				// printf("LOCAL\n");
+				symbolInfo.stringValue = @"LOCAL";
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 				continue;
 			}
 			if(indirect_symbols[j + n] == (INDIRECT_SYMBOL_LOCAL | INDIRECT_SYMBOL_ABS)){
-				printf("LOCAL ABSOLUTE\n");
+				// printf("LOCAL ABSOLUTE\n");
+				symbolInfo.stringValue = @"LOCAL ABSOLUTE";
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 				continue;
 			}
 			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_ABS){
@@ -348,25 +393,100 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 				 * and for image-loader-cache slot for new lazy
 				 * symbol binding in Mac OS X 10.6 and later
 				 */ 
-				printf("ABSOLUTE\n");
+				// printf("ABSOLUTE\n");
+				symbolInfo.stringValue = @"ABSOLUTE";
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 				continue;
 			}
-			printf("%5u ", indirect_symbols[j + n]);
+			NSUInteger symbolIndex = indirect_symbols[j+n];
+			
+//			printf("%5u ", indirect_symbols[j + n]);
 			//			if(verbose){
-			if(indirect_symbols[j + n] >= nsymbols || (symbols == NULL && symbols64 == NULL) || strings == NULL)
-				printf("?\n");
-			else {
-				if(symbols != NULL)
-					n_strx = symbols[indirect_symbols[j+n]].n_un.n_strx;
-				else
-					n_strx = symbols64[indirect_symbols[j+n]].
-					n_un.n_strx;
+//			if(indirect_symbols[j + n] >= nsymbols || (symbols == NULL && symbols64 == NULL) || strings == NULL)
+//				printf("?\n");
+//			else {
+				if( symbols!= NULL ) {
+					
+					struct nlist symb = symbols[indirect_symbols[j+n]];
+					
+					n_stringIndex = symb.n_un.n_strx;
+					uint32_t n_value = symb.n_value;				/* value of this symbol (or stab offset) */
+					uint8_t n_type = symb.n_type;					/* type flag, see below */
+					uint8_t n_sect = symb.n_sect;					/* section number or NO_SECT */
+					int16_t n_desc = symb.n_desc;					/* see <mach-o/stab.h> */
+						
+					struct nlist_64 nlist64;
+					nlist64.n_un.n_strx = n_stringIndex;
+					nlist64.n_type = n_type;
+					nlist64.n_sect = n_sect;
+					nlist64.n_desc = n_desc;
+					nlist64.n_value = (uint64_t)(n_value);
+
+					uint32_t libraryIndex = GET_LIBRARY_ORDINAL(nlist64.n_desc);
+					if( libraryIndex!=0 )
+					{
+						if( libraryIndex==EXECUTABLE_ORDINAL)
+							symbolInfo.libraryName = @"(from executable)";
+						else if( libraryIndex==DYNAMIC_LOOKUP_ORDINAL)
+							symbolInfo.libraryName = @"(dynamically looked up)";
+						else { 
+							NSString *libraryInstallName = [self lookupLibrary:libraryIndex];
+							symbolInfo.libraryName = libraryInstallName;
+						}
+					}
+
+					[self processSymbolItem:&nlist64 stringTable:strings];
+						
+				} else {
+					struct nlist_64 symb = symbols64[indirect_symbols[j+n]];
+					n_stringIndex = symb.n_un.n_strx;
+					
+					[self processSymbolItem:&symb stringTable:strings];
+					
+					// TODO: 64bit support
+				}
 				
-				if(n_strx >= strings_size)
-					printf("?\n");
-				else
-					printf("%s\n", strings + n_strx);
-			}
+//				if( n_stringIndex >= strings_size ) {
+//					printf("?\n");
+//				} else {
+			
+					// assert first char is _ the remove it
+					char *symbolString = strings+n_stringIndex;
+					size_t len = strlen(symbolString);
+					NSAssert(len>1, @"Function name seems wrong");
+					char firstChar = symbolString[0];
+					NSAssert(firstChar=='_', @"Function name seems wrong");
+					// remove first char
+					symbolString++;
+			
+					int demangledStat;
+					char demangledOutput[256];
+					size_t demangledLength;
+			
+					char *demangledName = __cxa_demangle( (const char *)symbolString, demangledOutput, &demangledLength, &demangledStat );
+					switch (demangledStat) {
+						case 0:
+							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
+							free(demangledName);
+							// TODO: we may want to record the fact that it is c++
+							break;
+						case -1:
+							[NSException raise:@"Memory Error" format:@""];
+							break;
+						case -2:
+							symbolInfo.stringValue = [NSString stringWithCString:symbolString encoding:NSUTF8StringEncoding];
+							break;
+						case -3:
+							[NSException raise:@"invalid argument" format:@""];
+							break;
+						default:
+							break;
+					}
+				
+					[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
+//				}
+	
+//			}
 			//			}
 			//			else
 			//				printf("\n");
@@ -384,9 +504,14 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 		addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
 		
+		_indirectSymbolLookup	= [[IntKeyDictionary alloc] init];
+		_cStringLookup			= [[IntKeyDictionary alloc] init];
+
+		_libraries = [[NSMutableArray alloc] init];
+
 		[self doIt:aPath];
 		[self parseLoadCommands];
-		print_indirect_symbols( _startOfLoadCommandsPtr, _ncmds, _sizeofcmds, _cputype, _indirectSymbolTable, _nindirect_symbols, _symtable_ptr, _UNUSED_symbols64, _nsymbols, _strtable, _strings_size );
+		[self print_indirect_symbols:_startOfLoadCommandsPtr :_ncmds :_sizeofcmds :_cputype :_indirectSymbolTable :_nindirect_symbols :_symtable_ptr :_UNUSED_symbols64 :_nsymbols :_strtable :_strings_size];
 
 	}
 	return self;
@@ -396,6 +521,9 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 		
 	[_memoryMap release];
 	[addresses_ release];
+	[_indirectSymbolLookup release];
+	[_cStringLookup release];
+	[_libraries release];
 	[super dealloc];
 }
 
@@ -403,41 +531,94 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];
+	SymbolicInfo *si=nil;
+	// NSLog(@"%@ %@", [seg name], [sec name]);
 	
-//	if( [[seg name] isEqualToString:@"__TEXT"] ) {
-//		// Read Only
-//		if( [[sec name] isEqualToString:@"__text"] ) {
-//			// return NO;
-//		} else if( [[sec name] isEqualToString:@"__cstring"] ) {
-//			// return NO;
-//		} else {
-//			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
-//		}
-//	} else if( [[seg name] isEqualToString:@"__DATA"] ) {
-//		// Read and write - we have a problemo!
-//		if( [[sec name] isEqualToString:@"__data"] ) {
-//			// return NO;
-//		}
-//	} else if( [[seg name] isEqualToString:@"__IMPORT"] ) {
-//		if( [[sec name] isEqualToString:@"__jump_table"] ) {
-//
-//		}
-//	} else {
-//		[NSException raise:@"Unknown request" format:@"%@ %@", [seg name], [sec name]];
-//	}
-
-	SymbolicInfo *si = nil;
-	
-	if( seg ) {
-		si = [[SymbolicInfo alloc] init];
-		si.segmentName = [seg name];
-		if(sec) {
-			si.sectionName = [sec name];
+	// think these are function pointers
+	if( [[seg name] isEqualToString:@"__IMPORT"] ) {
 		
-			
-			// TODO: Use breakpad code to demangle c++ names
-			// - (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section {
+		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:memAddr];
+		NSAssert( [[seg name] isEqualToString:[si segmentName]], nil ); 
+		NSAssert( [[sec name] isEqualToString:[si sectionName]], nil );
+		
+		NSLog( @"INDIRECT SYMBOL: %@ %@",  si.libraryName, si.stringValue );
+		return si;
+		
+		// (undefined) external _mach_init_routine (from libSystem)
+		// (undefined) external __cthread_init_routine (from libSystem)
+		// (undefined [lazy bound]) external ___keymgr_dwarf2_register_sections (from libSystem)
+	}
+	
+	// Read Only
+	else if( [[seg name] isEqualToString:@"__TEXT"] ) {
+		
+		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:memAddr];
+		NSAssert(si==nil, @"didnt know this could be an indirect symbol");
+		
+		if( [[sec name] isEqualToString:@"__eh_frame"] ) {
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			return si;
 
+		} else if( [[sec name] isEqualToString:@"__text"] ) {
+			
+		} else if( [[sec name] isEqualToString:@"__StaticInit"] ) {
+
+		} else if( [[sec name] isEqualToString:@"__const"] ) {
+			
+		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
+
+		} else if( [[sec name] isEqualToString:@"__cstring"] ) {
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			char *result = (char *)_codeAddr+memAddr;
+			si.stringValue = [self CStringForAddress:memAddr];
+			NSLog(@"hmm %@", si.stringValue);
+			return si;
+	
+		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
+			
+		} else if( sec==nil ) {
+	//		NSLog(@"This is wierd!");
+		} else {
+			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
+		}
+	
+	} 
+	
+	
+	return nil;
+	
+	if( [[seg name] isEqualToString:@"__DATA"] ) {
+		// Read and write - we have a problemo!
+		if( [[sec name] isEqualToString:@"__data"] ) {
+			// return NO;
+		}
+
+	} else if( [[seg name] isEqualToString:@"__DATA"] ) {
+
+	} else if( [[seg name] isEqualToString:@"__PAGEZERO"] ) {
+
+	} else {
+		[NSException raise:@"Unknown request" format:@"%@ %@", [seg name], [sec name]];
+	}
+
+	 
+//	if(si) {
+//		// lets see if the indirect symbol table is only for __jump_table & __pointers
+//		NSAssert( [[seg name] isEqualToString:@"__IMPORT"] && ([[sec name] isEqualToString:@"__pointers"] || [[sec name] isEqualToString:@"__jump_table"]), @"seems like indirect symbol table is more than IMPORT");
+//	}
+		
+	if( seg ) {
+		if(si==nil) {
+
+		}
+		if(sec) {
+			if( [si sectionName] ) {
+			} else {
+			}
 		}
 	}
 	return si;
@@ -456,7 +637,7 @@ void print_indirect_symbols( struct load_command *load_commands, uint32_t ncmds,
 	[_memoryMap insertSection:newSec];
 }
 
-void readHeaderFlags( uint32_t flags ) {
+- (void)readHeaderFlags:(uint32_t)flags {
 	
 	if( flags & MH_NOUNDEFS ){
 		// MH_NOUNDEFS—The object file contained no undefined references when it was built.
@@ -478,10 +659,12 @@ void readHeaderFlags( uint32_t flags ) {
 		NSLog(@"MH_SPLIT_SEGS");
 	} if( flags & MH_TWOLEVEL ){
 		// MH_TWOLEVEL—The image is using two-level namespace bindings.
-		NSLog(@"MH_TWOLEVEL");
+		_MH_TWOLEVEL = YES;
+
 	} if( flags & MH_FORCE_FLAT ){
 		// MH_FORCE_FLAT—The executable is forcing all images to use flat namespace bindings.
-		NSLog(@"MH_FORCE_FLAT");
+		_MH_FORCE_FLAT = YES;
+
 	} if( flags & MH_SUBSECTIONS_VIA_SYMBOLS ){
 		// MH_SUBSECTIONS_VIA_SYMBOLS—The sections of the object file can be divided into individual blocks. These blocks are dead-stripped if they are not used by other code. See “Dead-Code Stripping” in Xcode Build System for details.
 		NSLog(@"MH_SUBSECTIONS_VIA_SYMBOLS");
@@ -581,7 +764,7 @@ void readHeaderFlags( uint32_t flags ) {
 - (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table {
 	
 	uint32_t lastStartAddress_;
-	uint32_t n_strx = list->n_un.n_strx;
+	uint32_t n_stringIndex = list->n_un.n_strx;
 	BOOL result = NO;
 
 //	if(n_type & N_STAB){
@@ -597,9 +780,30 @@ void readHeaderFlags( uint32_t flags ) {
 //		NSLog(@"N_EXT");
 //	}
 	
+	// TODO - use this TWOLEVEL STUFF
+	if( (((list->n_type & N_TYPE)==N_UNDF && list->n_value == 0) || (list->n_type & N_TYPE) == N_PBUD)) // ((mh_flags & MH_TWOLEVEL)==MH_TWOLEVEL) && 
+	{
+		uint32_t library_ordinal = GET_LIBRARY_ORDINAL(list->n_desc);
+		if(library_ordinal != 0)
+		{
+			if( library_ordinal==EXECUTABLE_ORDINAL)
+				printf(" (from executable)");
+			else if( library_ordinal==DYNAMIC_LOOKUP_ORDINAL)
+				printf(" (dynamically looked up)");
+			else { 
+				
+//				NSLog(@"shit! this tells us the library? %i", library_ordinal);
+//				if(library_ordinal-1 >= process_flags->nlibs)
+//				printf(" (from bad library ordinal %u)", library_ordinal);
+//			else
+//				printf(" (from %s)", process_flags->lib_names[library_ordinal-1]);
+			}
+		}
+	}
+	
 	// We don't care about non-section specific information except function length
-	if (list->n_sect == 0 && list->n_type != N_FUN )
-		return NO;
+//	if( list->n_sect==0 && list->n_type != N_FUN )
+//		return NO;
 	
 	if (list->n_type == N_FUN) {
 		if (list->n_sect != 0) {
@@ -633,7 +837,7 @@ void readHeaderFlags( uint32_t flags ) {
 	// Doc: http://developer.apple.com/documentation/DeveloperTools/gdb/stabs/stabs_toc.html
 	// Header: /usr/include/mach-o/stab.h:
 	if (list->n_type == N_SO)  {
-		NSString *src = [NSString stringWithUTF8String:&table[n_strx]];
+		NSString *src = [NSString stringWithUTF8String:&table[n_stringIndex]];
 		NSString *ext = [src pathExtension];
 		NSNumber *address = [NSNumber numberWithUnsignedLongLong:list->n_value];
 		
@@ -656,7 +860,7 @@ void readHeaderFlags( uint32_t flags ) {
 //			result = YES;
 		}
 	} else if (list->n_type == N_FUN) {
-		NSString *fn = [NSString stringWithUTF8String:&table[n_strx]];
+		NSString *fn = [NSString stringWithUTF8String:&table[n_stringIndex]];
 		NSRange range = [fn rangeOfString:@":" options:NSBackwardsSearch];
 		
 		if (![fn length])
@@ -675,7 +879,7 @@ void readHeaderFlags( uint32_t flags ) {
 //		result = YES;
 	} else if (((list->n_type & N_TYPE) == N_SECT) && !(list->n_type & N_STAB)) {
 		// Regular symbols or ones that are external
-		NSString *fn = [NSString stringWithUTF8String:&table[n_strx]];
+		NSString *fn = [NSString stringWithUTF8String:&table[n_stringIndex]];
 		
 		[self addFunction:fn line:0 address:list->n_value section:list->n_sect ];
 		result = YES;
@@ -684,6 +888,28 @@ void readHeaderFlags( uint32_t flags ) {
 	return result;
 }
 
+- (void)addLibrary:(NSString *)libraryInstallName {
+	
+	NSLog( @"LC_LOAD_DYLIB - %@", libraryInstallName );
+	[_libraries addObject:libraryInstallName];
+}
+
+- (NSString *)lookupLibrary:(NSUInteger)libraryIndex {
+	
+	NSParameterAssert( libraryIndex>0 );
+	NSAssert( libraryIndex <= [_libraries count], @"library fuck up" );
+	return [_libraries objectAtIndex:libraryIndex-1];
+}
+
+- (void)addCstring:(NSString *)aCstring forAddress:(NSUInteger)cStringAddress {
+
+	[_cStringLookup addObject:aCstring forIntKey:cStringAddress];
+}
+
+- (NSString *)CStringForAddress:(NSUInteger)addr {
+
+	return (NSString *)[_cStringLookup objectForIntKey:addr];
+}
 
 // http://serenity.uncc.edu/web/ADC/2005/Developer_DVD_Series/April/ADC%20Reference%20Library/documentation/DeveloperTools/Conceptual/MachORuntime/FileStructure/chapter_4_section_1.html#//apple_ref/doc/uid/20001298/BAJBDBBC
 - (void)parseLoadCommands {
@@ -807,7 +1033,7 @@ void readHeaderFlags( uint32_t flags ) {
 			
 					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
-						print_cstring_section( sect_pointer, newSectSize, sect_addr );
+						[self save_cstring_section:sect_pointer :newSectSize :sect_addr];
 
 					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
 					} else if ( strcmp(thisSectionName, "__const")==0 ) {
@@ -974,6 +1200,8 @@ void readHeaderFlags( uint32_t flags ) {
 						
 					// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__cfstring")==0 ) {
+
+// TODO: PUTBACK! Shouldnt have bastardized the print_cstring_section()
 						print_cstring_section( sect_pointer, newSectSize, sect_addr );
 				
 					// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
@@ -1205,9 +1433,9 @@ void readHeaderFlags( uint32_t flags ) {
 					nlist64.n_un.n_strx = stringIndex;
 					nlist64.n_type = n_type;
 					nlist64.n_sect = n_sect;
-					nlist64.n_desc = n_desc; //SwapShortIfNeeded
-					nlist64.n_value = (uint64_t)(n_value); //SwapLongIfNeeded
-
+					nlist64.n_desc = n_desc;
+					nlist64.n_value = (uint64_t)(n_value);
+					
 					if ([self processSymbolItem:&nlist64 stringTable:_strtable])					
 					{
 					}
@@ -1408,13 +1636,13 @@ void readHeaderFlags( uint32_t flags ) {
 					//TODO: where does this address come from?
 					uint32_t address = 0;
 
-					if( indirectSymbol==INDIRECT_SYMBOL_LOCAL )
-						NSLog(@"IndirectSymbol %i, INDEX:Local", address );
-					else if( indirectSymbol==INDIRECT_SYMBOL_ABS ) {
-						NSLog(@"IndirectSymbol %i, INDEX:Absolute", address );
-					} else {
-						NSLog(@"IndirectSymbol %x, INDEX:%i", &(_indirectSymbolTable[i]), indirectSymbol);
-					}
+//					if( indirectSymbol==INDIRECT_SYMBOL_LOCAL )
+//						NSLog(@"IndirectSymbol %i, INDEX:Local", address );
+//					else if( indirectSymbol==INDIRECT_SYMBOL_ABS ) {
+//						NSLog(@"IndirectSymbol %i, INDEX:Absolute", address );
+//					} else {
+//						NSLog(@"IndirectSymbol %x, INDEX:%i", &(_indirectSymbolTable[i]), indirectSymbol);
+//					}
 				}
 			}
 			
@@ -1481,7 +1709,7 @@ void readHeaderFlags( uint32_t flags ) {
 			struct dylib dylib = seg->dylib;
 			char *install_name = (char*)cmd + dylib.name.offset;
 			// also got timestamp, version, compatibility version
-			NSLog(@"LC_LOAD_DYLIB - %s", install_name);
+			[self addLibrary: [NSString stringWithCString:install_name encoding:NSUTF8StringEncoding]];
 			
 		} else if(cmd->cmd==LC_ID_DYLIB){
 			// Specifies the install name of a dynamic shared library.
@@ -1679,7 +1907,7 @@ void readHeaderFlags( uint32_t flags ) {
 		NSLog(@"Inside the guts of an executable");
 	}
 
-	readHeaderFlags( universalMachHeader->flags ); // MH_FORCE_FLAT etc
+	[self readHeaderFlags:universalMachHeader->flags]; // MH_FORCE_FLAT etc
 		
 //		NSInteger loadCommandsOffset = (NSInteger)((NSInteger *)cmds1)-(NSInteger)((NSInteger *)_codeAddr);
 //		[[FileMapView sharedMapView] addRegionAtOffset:loadCommandsOffset withSize:sizeofcmds_bytes label:[NSString stringWithFormat:@"Load Commands %i", sizeofcmds_bytes]];		

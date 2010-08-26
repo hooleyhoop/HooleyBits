@@ -76,17 +76,10 @@
 	return _address;
 }
 
-- (NSString *)temp_argString {
-	
-	NSString *resultString = @"";
-	for( Argument *each in _arguments ){
-		resultString = [resultString stringByAppendingFormat:@" %@", [each output]];
-	}
-	return resultString;
-}
-
 - (NSString *)prettyString {
-	return [NSString stringWithFormat:@"%@ %@", [_instruction instruction], [self temp_argString]];
+	
+	NSString *workingOnIt = [_instruction printWithArgs:_arguments];
+	return workingOnIt;
 }
 
 

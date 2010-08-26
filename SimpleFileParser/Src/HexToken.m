@@ -45,7 +45,12 @@
 	
 	NSString *out = nil;
 	if(_symbolicInfo) {
-		out = [NSString stringWithFormat:@"%@:%@", _symbolicInfo.segmentName, _symbolicInfo.sectionName];
+		if (_symbolicInfo.stringValue) {
+			out = [NSString stringWithFormat:@"%@:%@:%@", _symbolicInfo.segmentName, _symbolicInfo.sectionName, _symbolicInfo.stringValue];
+		} else {
+			out = [NSString stringWithFormat:@"%@:%@", _symbolicInfo.segmentName, _symbolicInfo.sectionName];
+		}
+
 	} else {
 		out = _stringVal;
 	}

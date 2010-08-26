@@ -18,4 +18,6 @@
 - (NSString *)name;
 - (NSString *)instruction;
 
+- (NSString *)printWithArgs:(NSArray *)args;
+
 @end

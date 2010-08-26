@@ -48,31 +48,32 @@ nil] retain];
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
 
 	[InstructionLookup testParseYAML];
-	 
+
 	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
-	
+
 	[HexLookup prepareWith:_ml];
 
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_tiny.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
-	
+
 	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
-	[_dissasembled goOnDoYourWorst:_ml];
-	
+	[_dissasembled gleanInfo:_ml];
+	[_dissasembled reformat];
+
 	// This is asyncronous. Need to rethink some stuff
-	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];
+//	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];
 
 
 //err! where has it gone?	_unknownArguments = [[NSMutableSet setWithCapacity:100] retain];
-	
+
 //err! where has it gone?	_allOpCodeFormats = [[[StringCounter alloc] init] autorelease];
 //err! where has it gone?	_allArgumentFormats = [[[StringCounter alloc] init] autorelease];
-	
 
 	
+
 	// otool
 	// otool -t /Applications/Foo.app/Contents/MacOS/Foo >> data.txt			-- just data
 	// otool -t -v -V /Applications/Foo.app/Contents/MacOS/Foo >> data.txt		-- decompiled

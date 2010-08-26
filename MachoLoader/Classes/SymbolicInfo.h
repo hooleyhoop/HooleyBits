@@ -10,11 +10,16 @@
 
 @interface SymbolicInfo : NSObject {
 
-	NSString *_segmentName;
-	NSString *_sectionName;
+	NSString	*_segmentName;
+	NSString	*_sectionName;
+	NSUInteger	_address;
+	NSString	*_stringValue;
+	NSString	*_libraryName;
 }
 
-@property (retain) NSString *segmentName;
-@property (retain) NSString *sectionName;
-
+@property (retain) NSString		*segmentName;
+@property (retain) NSString		*sectionName;
+@property (assign) NSUInteger	address;
+@property (retain) NSString		*stringValue;
+@property (retain) NSString		*libraryName;
 @end

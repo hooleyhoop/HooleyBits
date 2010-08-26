@@ -21,7 +21,8 @@
 
 - (id)initWithOtoolOutput:(NSString *)fileString;
 
-- (void)goOnDoYourWorst:(MachoLoader *)lookup;
+- (void)gleanInfo:(MachoLoader *)lookup;
+- (void)reformat;
 
 - (void)outputToFile:(NSString *)fileName;
 

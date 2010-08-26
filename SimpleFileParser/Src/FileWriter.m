@@ -91,12 +91,18 @@
 	while( nextLine=[_src performSelector:_callback] ) {
 				
 		// NSLog(@"%@", nextLine);
+		static int lineCount = 0;
+	
 		nextLine = [nextLine stringByAppendingFormat:@"\n"];
 		NSUInteger lineLen = [nextLine length];
 		NSAssert( lineLen!=0, @"Output Error?" );
 		const char *lineBuffer = [nextLine UTF8String];
 		NSInteger result = [_oStream write:(uint8_t const *)lineBuffer maxLength:lineLen];
 		NSAssert( result==(NSInteger)lineLen, @"Output Error?");
+		
+		lineCount++;
+		if(lineCount%1000==0)
+			NSLog(@"Line %i", lineCount);
 	}
 	[self end];
 }

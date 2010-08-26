@@ -53,18 +53,8 @@
 		_codeBlockStore = [[CodeBlockStore store] retain];
 		_codeBlockfactory = [[CodeBlockFactory factoryWithStore:_codeBlockStore] retain];
 
-		_stringCounter = [[StringCounter alloc] init];
-
 		SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:self];
 		[LinesInStringIterator feedLines:fileString to:groker];
-		
-		[_stringCounter sort];
-		NSArray *allPatternCounts = [_stringCounter sortedCounts];
-		NSArray *allPatternStrings = [_stringCounter sortedStrings];
-				
-		for( NSUInteger i=0; i<[allPatternStrings count]; i++ ) {
-			NSLog(@"%@", [allPatternStrings objectAtIndex:i] );
-		}
 	}
 	return self;
 }
@@ -74,8 +64,6 @@
 	[_codeBlockStore release];
 	[_codeBlockfactory release];
 	
-	[_stringCounter release];
-
 	[super dealloc];
 }
 
@@ -129,52 +117,6 @@
 		
 		allArgs = [scanner.allArguments copy];
 		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
-		if (allArgs && [allArgs count])
-		{
-			// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
-			for( Argument *eachArg in allArgs )
-			{
-				NSMutableArray *allToks = [eachArg.allTokens copy];
-				for( BasicToken *eachToken in allToks )
-				{
-					if( eachToken.type==hexNum )
-					{
-						// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
-						HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
-						[eachArg replaceToken:eachToken with:aHexToken];
-					}
-					
-					//	__TEXT __text
-					//	(null) (null)
-					//	__IMPORT __jump_table
-					//	__IMPORT __pointers
-					//	__DATA __data
-					//	__DATA __const
-					//	__TEXT __eh_frame
-					//	__TEXT (null)
-					//	__DATA __bss
-					//	__TEXT __StaticInit
-					//	__TEXT __const
-					//	__TEXT __literal4
-					//	__DATA __common
-					//	__OBJC __message_refs
-					//	__TEXT __literal8
-					//	__TEXT __cstring
-					//	__DATA __cfstring
-					//	__OBJC __cls_refs
-					//	__OBJC __class
-					//	__DATA __gcc_except_tab__DATA
-					//	__DATA __dyld
-					//	__PAGEZERO (null)
-					
-				}
-				[allToks release];
-				allToks = nil;
-			}
-		}		
-		[allArgs release];
-		allArgs = nil;
-		allArgs = scanner.allArguments;
 	}
 	if([components count]>=6)
 		functionHint = [components objectAtIndex:5];

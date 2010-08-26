@@ -27,7 +27,7 @@ static NSString *_key, *_value;
 
 + (void)endMapping:(yaml_event_t)e {
 
-	NSAssert( _state==6, @"_state is fucked");
+	// NSAssert( _state==6, @"_state is fucked");
 	CFDictionaryAddValue( _opcodeLookup, [_opcodeDict objectForKey:@"instruction"], _opcodeDict );
 }
 
@@ -63,6 +63,13 @@ static NSString *_key, *_value;
 		case 5:
 			[_opcodeDict setObject:_value forKey:@"description"];
 			break;
+		case 6:
+			NSAssert( [_key isEqualToString:@"format"], @"der"  );
+			break;
+		case 7:
+			[_opcodeDict setObject:_value forKey:@"format"];
+			break;
+			
 		default:
 			[NSException raise:@"Unknown state" format:@"%i", _state];
 			break;
