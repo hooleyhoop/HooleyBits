@@ -16,4 +16,6 @@
 @synthesize address=_address;
 @synthesize stringValue=_stringValue;
 @synthesize libraryName=_libraryName;
+@synthesize intValue=_intValue;
+@synthesize floatValue=_floatValue;
 @end

@@ -10,10 +10,13 @@
 
 @interface MemoryBlockStore : NSObject {
 
+	@public
 	NSMutableArray *_memoryBlockStore;
 }
 
 - (void)insertMemoryBlock:(SHMemoryBlock *)memBlock;
 - (SHMemoryBlock *)blockForAddress:(NSUInteger)memAddr;
+
+- (NSUInteger)lastAddress;
 
 @end

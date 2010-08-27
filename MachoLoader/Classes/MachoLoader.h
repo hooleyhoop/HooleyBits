@@ -47,7 +47,8 @@
 	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
 	
 	MemoryMap			*_memoryMap;
-	
+	MemoryMap			*_uncodedMemoryMap;
+
 	BOOL				_MH_TWOLEVEL, _MH_FORCE_FLAT;
 	NSMutableArray		*_libraries;
 }

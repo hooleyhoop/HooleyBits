@@ -60,7 +60,7 @@
 }
 
 - (SHMemoryBlock *)blockForAddress:(NSUInteger)memAddr {
-	
+
 	NSUInteger low = 0;
 	NSUInteger high  = [_memoryBlockStore count];
 	NSInteger index = low;
@@ -87,6 +87,10 @@
 	if( memAddr>=[test startAddr] && memAddr<=[test lastAddress] )
 		return test;
 	return nil;
+}
+
+- (NSUInteger)lastAddress {
+	return [[_memoryBlockStore lastObject] lastAddress];
 }
 
 @end

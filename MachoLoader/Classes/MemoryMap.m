@@ -54,4 +54,7 @@
 	return (Segment *)[_segmentStore blockForAddress:memAddr];
 }
 
+- (NSUInteger)lastAddress {
+	return [_segmentStore lastAddress];
+}
 @end

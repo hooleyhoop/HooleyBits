@@ -10,6 +10,7 @@
 
 @interface MemoryMap : NSObject {
 
+	@public
 	MemoryBlockStore *_segmentStore;
 }
 
@@ -18,5 +19,7 @@
 
 - (void)insertSection:(Section *)sec;
 - (Section *)sectionForAddress:(NSUInteger)memAddr;
+
+- (NSUInteger)lastAddress;
 
 @end

@@ -15,6 +15,8 @@
 	NSUInteger	_address;
 	NSString	*_stringValue;
 	NSString	*_libraryName;
+	long long	_intValue;
+	double		_floatValue;
 }
 
 @property (retain) NSString		*segmentName;
@@ -22,4 +24,6 @@
 @property (assign) NSUInteger	address;
 @property (retain) NSString		*stringValue;
 @property (retain) NSString		*libraryName;
+@property (assign) long long	intValue;
+@property (assign) double		floatValue;
 @end

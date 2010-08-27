@@ -55,12 +55,12 @@ nil] retain];
 	[HexLookup prepareWith:_ml];
 
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 
 	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
-	[_dissasembled gleanInfo:_ml];
+ 	[_dissasembled gleanInfo:_ml];
 	[_dissasembled reformat];
 
 	// This is asyncronous. Need to rethink some stuff

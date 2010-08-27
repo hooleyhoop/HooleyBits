@@ -13,7 +13,7 @@
 #import "FileMapView.h"
 #import "SymbolicInfo.h"
 #import "IntKeyDictionary.h"
-
+#import "MemoryBlockStore.h"
 // Standard C includes.
 #import <stdio.h>
 #import <stdlib.h>
@@ -467,7 +467,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					switch (demangledStat) {
 						case 0:
 							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
-							free(demangledName);
+							//free(demangledName);
 							// TODO: we may want to record the fact that it is c++
 							break;
 						case -1:
@@ -503,6 +503,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_loadCommandsArray = [[NSMutableArray array] retain];
 		addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
+		_uncodedMemoryMap = [[MemoryMap alloc] init];
 		
 		_indirectSymbolLookup	= [[IntKeyDictionary alloc] init];
 		_cStringLookup			= [[IntKeyDictionary alloc] init];
@@ -520,6 +521,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 - (void)dealloc {
 		
 	[_memoryMap release];
+	[_uncodedMemoryMap release];
 	[addresses_ release];
 	[_indirectSymbolLookup release];
 	[_cStringLookup release];
@@ -532,6 +534,19 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];
 	SymbolicInfo *si=nil;
+	
+	if( seg==nil && sec==nil )
+	{
+	// TODO:
+	// is this address in the app? where is it jumping to?
+	// jne 0x100002b3d
+		NSAssert( memAddr>[_memoryMap lastAddress], @"value seems to be in a hole");
+		
+		// so what about all the other parts of the macho file? are they loaded into memory?
+		NSAssert( memAddr> _codeSize, @"value is within app");
+
+	}
+	
 	// NSLog(@"%@ %@", [seg name], [sec name]);
 	
 	// think these are function pointers
@@ -541,7 +556,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		NSAssert( [[seg name] isEqualToString:[si segmentName]], nil ); 
 		NSAssert( [[sec name] isEqualToString:[si sectionName]], nil );
 		
-		NSLog( @"INDIRECT SYMBOL: %@ %@",  si.libraryName, si.stringValue );
+	//	NSLog( @"INDIRECT SYMBOL: %@ %@",  si.libraryName, si.stringValue );
 		return si;
 		
 		// (undefined) external _mach_init_routine (from libSystem)
@@ -568,20 +583,56 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
+			// 4 byte literals
+			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+			NSUInteger newSectSize = sec.length;
+			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
+			float a4ByteLiteralFloat;
+			memcpy((char *)&a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
+			NSLog(@"%0x %f", a4ByteLiteral, a4ByteLiteralFloat);
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			si.floatValue = a4ByteLiteralFloat;
+			return si;
+//			00ba9d98  0xfffffff9 (non-signaling Not-a-Number)
 
+			return si;
+			
 		} else if( [[sec name] isEqualToString:@"__cstring"] ) {
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
-			char *result = (char *)_codeAddr+memAddr;
 			si.stringValue = [self CStringForAddress:memAddr];
 			NSLog(@"hmm %@", si.stringValue);
 			return si;
 	
 		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
-			
+			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+			NSUInteger newSectSize = sec.length;
+			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
+			double a4ByteLiteralDouble;
+			memcpy((char *)&a4ByteLiteralDouble, a4ByteLiteralAddress, sizeof(double));
+			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(uint64));
+			NSLog(@"%0x %f", a4ByteLiteral, a4ByteLiteralDouble);
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			si.floatValue = a4ByteLiteralDouble;
+			return si;
+			//  0xfffff8f7 0x3fefffff (non-signaling Not-a-Number)
+
 		} else if( sec==nil ) {
-	//		NSLog(@"This is wierd!");
+			
+			NSAssert( [self CStringForAddress:memAddr]==nil, @"Hmm" );
+
+			// why is this showing up as pushl $ __TEXT:(null) = 4096 so i thing that this could well be Null!, but maybe not!
+			// pushl $0x00001000 
+			NSLog(@"Text Null %0x", memAddr); // 1000, 17e4, 17e0, 2000, 1fff, 1818, 104d, 1fb1, 1f5e
 		} else {
 			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
 		}
@@ -631,9 +682,9 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_memoryMap insertSegment:newSeg];
 }
 
-- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(NSUInteger)offset length:(uint32_t)size {
+- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(NSUInteger)offset length:(uint32_t)size filePtr:(NSUInteger)filePtr {
 
-	Section *newSec = [Section name:title segment:segTitle start:offset length:size];
+	Section *newSec = [Section name:title segment:segTitle start:offset length:size fileAddr:filePtr];
 	[_memoryMap insertSection:newSec];
 }
 
@@ -911,6 +962,28 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	return (NSString *)[_cStringLookup objectForIntKey:addr];
 }
 
+//- (void)addUnDecodedBlock:(char *)sect_pointer size:(uint32_t)len withName:(NSString *)nm {
+//	
+//	Segment *newSeg = [Segment name:nm start:(NSUInteger)sect_pointer length:len];
+//	[_uncodedMemoryMap insertSegment:newSeg];
+//}
+
+//- (BOOL)scanUnDecodedBlocks:(NSUInteger)test {
+//	
+//	NSMutableArray *allSegs = _uncodedMemoryMap->_segmentStore->_memoryBlockStore;
+//	for(Segment *eachSeg in allSegs){
+//		UInt8 *sect_pointer = (UInt8 *)eachSeg.startAddr;
+//		UInt8 *locPtr = (UInt8 *)eachSeg.startAddr;
+//		NSUInteger newSectSize = eachSeg.length;
+//		while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+//			UInt16 val1 = *((UInt16 *)locPtr);
+//			locPtr = locPtr + (sizeof val1)/2;
+//			if(test==val1)
+//				NSLog(@"Have we really achieved what we think we have?");
+//		}
+//	}
+//}
+
 // http://serenity.uncc.edu/web/ADC/2005/Developer_DVD_Series/April/ADC%20Reference%20Library/documentation/DeveloperTools/Conceptual/MachORuntime/FileStructure/chapter_4_section_1.html#//apple_ref/doc/uid/20001298/BAJBDBBC
 - (void)parseLoadCommands {
 	
@@ -923,7 +996,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			struct uuid_command *seg = (struct uuid_command *)cmd;
 			NSLog(@"LC_UUID");
 			
-		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ){
+		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ) {
 
 			char *segname;
 			NSUInteger vmaddr, vmsize, nsects;
@@ -1007,7 +1080,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					}
 					
 					uint32_t newSectSize = newSec_ptr->size;
-					void *newSectAddr = NULL;
+//					void *newSectAddr = NULL;
 
 					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
 
@@ -1017,7 +1090,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
 					
-					[self addSection:secName seg:segmentName start:sect_addr length:newSectSize];
+					[self addSection:secName seg:segmentName start:sect_addr length:newSectSize filePtr:(NSUInteger)sect_pointer];
 					
 //					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
 //					if (err==0) {
@@ -1068,6 +1141,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 					// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__stub_helper")==0 ) {
+																	
+//						[self addUnDecodedBlock:sect_pointer size:newSectSize withName:@"__stub_helper"];
+//						NSUInteger test = 0x0000701c;
+//						BOOL wasFound = [self scanUnDecodedBlocks:test];
+//						NSAssert(wasFound, @"scan failed");
 
 						//00006e48	cmpl	$0x00,0x0000701c
 						//00006e4f	jne	0x00006e5e
@@ -1161,7 +1239,12 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						
 						// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 					} else if ( strcmp(thisSectionName, "__literal4")==0 ) {
-						NSLog(@"eh");
+						// 00ba9ce8  0x47800000 (6.5536000000000000e+04)
+						// 00ba9cec  0x42c80000 (1.0000000000000000e+02)
+						// 00ba9cf0  0x437f0000 (2.5500000000000000e+02)
+						// 00ba9cf4  0x410db22d (8.8559999465942383e+00)
+						// 00ba9cf8  0x4461d2b0 (9.0329199218750000e+02)						
+						
 						// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
 					} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
 						NSLog(@"eh");
@@ -1634,8 +1717,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					uint32_t indirectSymbol = _indirectSymbolTable[i];
 					
 					//TODO: where does this address come from?
-					uint32_t address = 0;
-
+//					uint32_t address = 0;
 //					if( indirectSymbol==INDIRECT_SYMBOL_LOCAL )
 //						NSLog(@"IndirectSymbol %i, INDEX:Local", address );
 //					else if( indirectSymbol==INDIRECT_SYMBOL_ABS ) {
@@ -1711,25 +1793,25 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			// also got timestamp, version, compatibility version
 			[self addLibrary: [NSString stringWithCString:install_name encoding:NSUTF8StringEncoding]];
 			
-		} else if(cmd->cmd==LC_ID_DYLIB){
+		} else if(cmd->cmd==LC_ID_DYLIB) {
 			// Specifies the install name of a dynamic shared library.
 			const struct dylib_command* seg = (struct dylib_command*)cmd;
 
 			NSLog(@"LC_ID_DYLIB");
-			
-		} else if(cmd->cmd==LC_PREBOUND_DYLIB){
+
+		} else if(cmd->cmd==LC_PREBOUND_DYLIB) {
 			// For a shared library that this executable is linked prebound against, specifies the modules in the shared library that are used.
 			const struct prebound_dylib_command* seg = (struct prebound_dylib_command*)cmd;
 			NSLog(@"LC_PREBOUND_DYLIB");
-			
-		} else if(cmd->cmd==LC_LOAD_DYLINKER){
+
+		} else if(cmd->cmd==LC_LOAD_DYLINKER) {
 			// Specifies the dynamic linker that the kernel executes to load this file.
 			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
 			const char* dylibName = (char*)cmd + linkertab->name.offset;
 
 			NSLog(@"LC_LOAD_DYLINKER %s", dylibName );
-			
-		} else if(cmd->cmd==LC_ID_DYLINKER){
+
+		} else if(cmd->cmd==LC_ID_DYLINKER) {
 			// Identifies this file as a dynamic linker.
 			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
 			NSLog(@"LC_ID_DYLINKER");
@@ -1921,62 +2003,6 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	
 }
 
-
-// Indirect symbol table
-//0x00006dd0   171 
-//0x00006dd6   172 
-//0x00006ddc   173 
-//0x00006de2   174 
-//0x00006de8   177 
-//0x00006dee   178 
-//0x00006df4   179 
-//0x00006dfa   182 
-//0x00006e00   183 
-//0x00006e06   184 
-//0x00006e0c   186 
-//0x00006e12   187 
-//0x00006e18   188 
-//0x00006e1e   189 
-//0x00006e24   190 
-//0x00006e2a   191 
-//0x00006e30   192 
-//0x00006e36   193 
-//0x00006e3c   194 
-//0x00006e42   195
-//
-//Indirect symbols for (__DATA,__nl_symbol_ptr) 8 entries
-//address    index
-//0x0000701c ABSOLUTE
-//0x00007020 ABSOLUTE
-//0x00007024 LOCAL
-//0x00007028   181 
-//0x0000702c   185 
-//0x00007030   175 
-//0x00007034 LOCAL
-//0x00007038   180
-//
-//Indirect symbols for (__DATA,__la_symbol_ptr) 20 entries
-//address    index
-//0x0000703c   171 
-//0x00007040   172 
-//0x00007044   173 
-//0x00007048   174 
-//0x0000704c   177 
-//0x00007050   178 
-//0x00007054   179 
-//0x00007058   182 
-//0x0000705c   183 
-//0x00007060   184 
-//0x00007064   186 
-//0x00007068   187 
-//0x0000706c   188 
-//0x00007070   189 
-//0x00007074   190 
-//0x00007078   191 
-//0x0000707c   192 
-//0x00007080   193 
-//0x00007084   194 
-//0x00007088   195 
 
 
 @end

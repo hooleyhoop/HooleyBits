@@ -13,6 +13,7 @@
 
 @synthesize name=_name;
 @synthesize startAddr=_startAddr;
+@synthesize length=_length;
 
 - (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len {
 	

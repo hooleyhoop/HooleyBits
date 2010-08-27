@@ -16,6 +16,7 @@
 
 @property (readonly) NSString	*name;
 @property (readonly) NSUInteger startAddr;
+@property (readonly) NSUInteger length;
 
 - (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
 
