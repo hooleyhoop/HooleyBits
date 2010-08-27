@@ -49,6 +49,10 @@
 // otx is open source? !
 // http://otx.osxninja.com/builds/trunk/source/ObjcSwap.c
 
+nm can understand this shit!
+nm -m  /Users/shooley/Desktop/trashy/build/Debug/trashy.app/Contents/MacOS/trashy
+just try treating them as strings?
+
 //	__TEXT __text
 //	(null) (null)
 //	• __IMPORT __jump_table
