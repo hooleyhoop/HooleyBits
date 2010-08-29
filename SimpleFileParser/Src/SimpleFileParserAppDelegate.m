@@ -8,6 +8,7 @@
 
 #import "SimpleFileParserAppDelegate.h"
 #import "AppDisassembly.h"
+#import "RegisterLookup.h"
 #import "InstructionLookup.h"
 #import "MachoLoader.h"
 #import "HexLookup.h"
@@ -47,21 +48,37 @@ nil] retain];
 
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
 
-	[InstructionLookup testParseYAML];
-
-	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
-
-	[HexLookup prepareWith:_ml];
-
-	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
-	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
-	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
-
-	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
- 	[_dissasembled gleanInfo:_ml];
-	[_dissasembled reformat];
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+		[InstructionLookup parseYAML];
+	}];
+	//you can add more blocks
+	[operation addExecutionBlock:^{
+		[RegisterLookup parseYAML];
+	}];
+	[queue addOperation:operation];
+	[queue waitUntilAllOperationsAreFinished];
+	NSLog(@"donw");
+	[queue release];
+	
+	
+	
+	// read a large file
+	// http://www.softwareprojects.com/resources//t-1636goto.html
+	
+//	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+//	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
+//
+//	[HexLookup prepareWith:_ml];
+//
+//	NSError *outError;
+//	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
+//	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
+//	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
+//
+//	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+// 	[_dissasembled gleanInfo:_ml];
+//	[_dissasembled reformat];
 
 	// This is asyncronous. Need to rethink some stuff
 //	[_dissasembled outputToFile:[@"~/Desktop/undisassembled.txt" stringByExpandingTildeInPath]];

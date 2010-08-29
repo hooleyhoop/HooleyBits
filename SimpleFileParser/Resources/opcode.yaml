@@ -1,1349 +1,1366 @@
-#Conditionals
+conditionals:
 
-#non-conditionals
+    monkey1:
+        steve1: hya
+        steve2: trap
 
--
-    instruction: .byte
-    name:        unknown
-    description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
-    format: "a1"
--
-    instruction: aaa
-    name:        unknown
-    description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
--
-    instruction: aad
-    name:        unknown
-    description: ASCII Adjust AX Before Division
--
-    instruction: aam
-    name:        unknown
-    description: unknown
--
-    instruction: aas
-    name:        unknown
-    description: ASCII Adjust AL After Subtraction
--
-    instruction: adcb
-    name:        add
-    description: Add with Carry
--
-    instruction: adcl
-    name:        add
-    description: Add with Carry
--
-    instruction: addb
-    name:        add
-    description: Add
--
-    instruction: addw
-    name:        add
-    description: Add
--
-    instruction: addl
-    name:        add
-    description: Add
--
-    instruction: addpd
-    name:        unknown
-    description: Add Packed Double-Precision Floating-Point Values
--
-    instruction: addsd
-    name:        unknown
-    description: Add Scalar Double-Precision Floating-Point Values
--
-    instruction: addss
-    name:        unknown
-    description: Add Scalar Single-Precision Floating-Point Values
--
-    instruction: andb
-    name:        unknown
-    description: Logical AND
--
-    instruction: andw
-    name:        unknown
-    description: Logical AND
--
-    instruction: andl
-    name:        unknown
-    description: Logical AND
--
-    instruction: andnpd
-    name:        
-    description: Bitwise Logical AND NOT of Packed Double-Precision Floating-Point Values
--
-    instruction: andnps
-    name:        
-    description: Bitwise Logical AND NOT of Packed Single-Precision Floating-Point Values
--
-    instruction: andpd
-    name:        
-    description: Bitwise Logical AND of Packed Double-Precision Floating-Point Values
--
-    instruction: andps
-    name:        
-    description: Bitwise Logical AND of Packed Single-Precision Floating-Point Values
--
-    instruction: arpl
-    name:        
-    description: Adjust RPL Field of Segment Selector
--
-    instruction: bound
-    name:        
-    description: Check Array Index Against Bounds
--
-    instruction: boundl
-    name:        
-    description: Check Array Index Against Bounds
--
-    instruction: bswap
-    name:        
-    description: Byte Swap
--
-    instruction: call
-    name:        call
-    description: stack.push(%eip), jump($1)
-    format: "a1"
--
-    instruction: calll
-    name:        call
-    description: stack.push(%eip), jump($1)
--
-    instruction: cbtw
-    name:        
-    description: convert byte to word
--
-    instruction: clc
-    name:        
-    description: Clear Carry Flag
--
-    instruction: cld
-    name:        
-    description: Clear Direction Flag
--
-    instruction: cli
-    name:        
-    description: Clear Interrupt Flag
--
-    instruction: cltd
-    name:        
-    description: 
--
-    instruction: cmc
-    name:        
-    description: Complement Carry Flag
--
-    instruction: cmovaw
-    name:        
-    description: Move if above (CF=0 and ZF=0)
--
-    instruction: cmoval
-    name:        
-    description: Move if above (CF=0 and ZF=0)
--
-    instruction: cmovael
-    name:        
-    description: Move if above or equal (CF=0)
--
-    instruction: cmovbl
-    name:        
-    description: Move if below (CF=1)
--
-    instruction: cmovbel
-    name:        
-    description: Move if below or equal (CF=1 or ZF=1)
--
-    instruction: cmovew
-    name:        
-    description: move if equal (ZF=1)
--
-    instruction: cmovel
-    name:        
-    description: move if equal (ZF=1)
--
-    instruction: cmovgel
-    name:        
-    description: Move if greater or equal (SF=OF)
--
-    instruction: cmovgl
-    name:        
-    description: Move if greater (ZF=0 and SF=OF)
--
-    instruction: cmovlew
-    name:        
-    description: Move if less or equal (ZF=1 or SF<>OF)
--
-    instruction: cmovlel
-    name:        
-    description: Move if less or equal (ZF=1 or SF<>OF)
--
-    instruction: cmovll
-    name:        
-    description: Move if less (SF<>OF)
--
-    instruction: cmovnel
-    name:        
-    description: Move if not equal (ZF=0)
--
-    instruction: cmovnew
-    name:        
-    description: Move if not equal (ZF=0)
--
-    instruction: cmovnpl
-    name:        
-    description: Move if not parity (PF=0)
--
-    instruction: cmovnsl
-    name:        
-    description: Move if not sign (SF=0)
--
-    instruction: cmovsl
-    name:        
-    description: Move if sign (SF=1)
--
-    instruction: cmpb
-    name:        
-    description: Compare Two Operands
--
-    instruction: cmpw
-    name:        
-    description: Compare Two Operands
--
-    instruction: cmpl
-    name:        
-    description: Compare Two Operands
--
-    instruction: cmpss
-    name:        
-    description: compare float
--
-    instruction: cmpsd
-    name:        
-    description: compare double
--
-    instruction: cmpsl
-    name:        
-    description: Compare String
--
-    instruction: cmpsb
-    name:        
-    description: Compare String // The CMP instruction is typically used in conjunction with a conditional jump (Jcc), condition move (CMOVcc), or SETcc instruction. The condition codes used by the Jcc, CMOVcc, and SETcc instructions are based on the results of a CMP instruction
--
-    instruction: cvtdq2pd
-    name: 
-    description: Convert Packed Doubleword Integers to Packed Double-Precision Floating-Point Values
--
-    instruction: cvtsd2ss
-    name:
-    description: Convert Scalar Double-Precision Floating-Point Value to Scalar Single-Precision Floating-Point Value
--
-    instruction: cvtsi2sd
-    name:
-    description: Convert Doubleword Integer to Scalar Double- Precision Floating-Point Value
--
-    instruction: cvtsi2ss
-    name:
-    description: Convert Doubleword Integer to Scalar Single- Precision Floating-Point Value
--
-    instruction: cvtss2sd
-    name:
-    description: Convert Scalar Single-Precision Floating-Point Value to Scalar Double-Precision Floating-Point Value
--
-    instruction: cvttpd2dq
-    name:
-    description: Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Doubleword Integers
--
-    instruction: cvttsd2si
-    name:
-    description: Convert with Truncation Scalar Double-Precision Floating-Point Value to Signed Doubleword Integer
--
-    instruction: cvttss2si
-    name:
-    description: Convert with Truncation Scalar Single-Precision Floating-Point Value to Doubleword Integer
--
-    instruction: cvttps2dq
-    name:
-    description: Convert with Truncation Packed Single-Precision Floating-Point Values to Packed Doubleword Integers
--
-    instruction: cwtl
-    name:        
-    description: convert word to long
--
-    instruction: daa
-    name:
-    description: Decimal Adjust AL after Addition
--
-    instruction: das
-    name:
-    description: Decimal Adjust AL after Subtraction
--
-    instruction: decb
-    name:        
-    description: decrement by 1
--
-    instruction: decw
-    name:        
-    description: decrement by 1
--
-    instruction: decl
-    name:        
-    description: decrement by 1
--
-    instruction: divl
-    name:        
-    description: unsigned divide
--
-    instruction: divsd
-    name:        
-    description: unsigned divide
--
-    instruction: divss
-    name:        
-    description: unsigned divide
--
-    instruction: enter
-    name:        
-    description: Make Stack Frame for Procedure Parameters
--
-    instruction: fadd
-    name:        
-    description: Add
--
-    instruction: faddl
-    name:        
-    description: Add
--
-    instruction: faddp
-    name:        
-    description: Add
--
-    instruction: fadds
-    name:        
-    description: 
--
-    instruction: fiaddl
-    name:        
-    description: Add
--
-    instruction: fiadds
-    name:        
-    description: Add
--
-    instruction: falc
-    name:        
-    description: 
--
-    instruction: fchs
-    name:        
-    description: Change Sign
--
-    instruction: fcomp
-    name:        
-    description: Compare Floating Point Values
--
-    instruction: fcompl
-    name:        
-    description: Compare Floating Point Values
--
-    instruction: fcoms
-    name:        
-    description: Compare Floating Point Values
--
-    instruction: fdiv
-    name:        
-    description: Divide
--
-    instruction: fdivp
-    name:        
-    description: Divide
--
-    instruction: fdivr
-    name:        
-    description: Reverse Divide
--
-    instruction: fdivrp
-    name:        
-    description: Reverse Divide
--
-    instruction: ficompl
-    name:        
-    description: Compare Integer
--
-    instruction: ficomps
-    name:        
-    description: Compare Integer
--
-    instruction: ficoms
-    name:        
-    description: Compare Integer
--
-    instruction: fildl
-    name:        
-    description: Load Integer
--
-    instruction: filds
-    name:        
-    description: Load Integer
--
-    instruction: fildq
-    name:        
-    description: Load Integer
--
-    instruction: fistpq
-    name:        
-    description: Store Integer
--
-    instruction: fld1
-    name:        
-    description: load constant
--
-    instruction: fldl
-    name:        
-    description: load real
--
-    instruction: fld
-    name:
-    description: Load Floating Point Value
--
-    instruction: fldcwl
-    name:        
-    description: Load x87 FPU Control Word
--
-    instruction: fldt
-    name:        
-    description: 
--
-    instruction: flds
-    name:        
-    description: load real
--
-    instruction: fldz
-    name:        
-    description: load constant
--
-    instruction: fmuls
-    name:        
-    description: Multiply
--
-    instruction: fmul
-    name:        
-    description: Multiply
--
-    instruction: fmulp
-    name:        
-    description: Multiply
--
-    instruction: fmull
-    name:        
-    description: 
--
-    instruction: fnstcwl
-    name:        
-    description: Store x87 FPU Control Word
--
-    instruction: fldcw
-    name:        
-    description: Load x87 FPU Control Word
--
-    instruction: fnstcw
-    name:        
-    description: Store x87 FPU Control Word
--
-    instruction: fstp
-    name:        
-    description: Store Floating Point Value
--
-    instruction: fstpt
-    name:        
-    description: 
--
-    instruction: fsub
-    name:        
-    description: Subtract
--
-    instruction: fsubp
-    name:        
-    description: Subtract
--
-    instruction: fsubr
-    name:        
-    description: Reverse Subtract
--
-    instruction: fsubrl
-    name:        
-    description: 
--
-    instruction: fsubrp
-    name:        
-    description: Reverse Subtract
--
-    instruction: fstpl
-    name:        
-    description: 
--
-    instruction: fstps
-    name:        
-    description: 
--
-    instruction: fsts
-    name:        
-    description: Store x87 FPU Status Word
--
-    instruction: fstl
-    name:        
-    description: 
--
-    instruction: fucomi
-    name:        
-    description: Compare Floating Point Values and Set EFLAGS
--
-    instruction: fucomip
-    name:        
-    description: Compare Floating Point Values and Set EFLAGS
--
-    instruction: fxch
-    name:        
-    description: Exchange Register Contents
--
-    instruction: hlt
-    name:
-    description: halt
--
-    instruction: idivl
-    name:        
-    description: signed divide
--
-    instruction: imulb
-    name:        
-    description: 
--
-    instruction: imulw
-    name:        
-    description: 
--
-    instruction: imull
-    name:        
-    description: multiply
--
-    instruction: inb
-    name:
-    description: 
--
-    instruction: inl
-    name:
-    description: 
--
-    instruction: int
-    name:
-    description: 
--
-    instruction: into
-    name:        
-    description: Call to Interrupt Procedure
--
-    instruction: iret
-    name:        
-    description: Interrupt Return
--
-    instruction: incb
-    name:        
-    description: 
--
-    instruction: incl
-    name:        
-    description: 
--
-    instruction: incw
-    name:        
-    description: 
--
-    instruction: insb
-    name:        
-    description: Input from Port to String
--
-    instruction: insl
-    name:        
-    description: 
--
-    instruction: invd
-    name:        
-    description: Invalidate Internal Caches
--
-    instruction: jmp
-    name:
-    description: jump
--
-    instruction: jmpl
-    name:        
-    description: jump
--
-    instruction: ja
-    name:
-    description: Jump if Condition is Met - short if above
--
-    instruction: jal
-    name:
-    description: Jump if Condition is Met - short if above
--
-    instruction: jae
-    name:
-    description: Jump if Condition is Met - short if above or equal
--
-    instruction: jael
-    name:        
-    description: Jump if Condition is Met - short if above or equal
--
-    instruction: jb
-    name:
-    description: Jump if Condition is Met - short if below
--
-    instruction: jbl
-    name:
-    description: Jump if Condition is Met - short if below
--
-    instruction: jbe
-    name:
-    description: Jump if Condition is Met - short if below or equal
--
-    instruction: jbel
-    name:        
-    description: Jump if Condition is Met - short if below or equal
--
-    instruction: jcxz
-    name:        
-    description: 
--
-    instruction: je
-    name:
-    description: Jump if Condition is Met - short if equal
--
-    instruction: jel
-    name:
-    description: Jump if Condition is Met - short if equal
--
-    instruction: jg
-    name:
-    description: Jump if Condition is Met - short if greater
--
-    instruction: jgl
-    name:
-    description: Jump if Condition is Met - short if greater
--
-    instruction: jge
-    name:
-    description: Jump if Condition is Met - short if greater or equal
--
-    instruction: jgel
-    name:        
-    description: Jump if Condition is Met - short if greater or equal
--
-    instruction: jl
-    name:
-    description: Jump if Condition is Met - short if less
--
-    instruction: jll
-    name:
-    description: Jump if Condition is Met - 
--
-    instruction: jle
-    name:
-    description: Jump if Condition is Met - short if less or equal
--
-    instruction: jlel
-    name:        
-    description: Jump if Condition is Met - short if less or equal
--
-    instruction: jne
-    name:
-    description: Jump if Condition is Met - short if not equal
--
-    instruction: jnel
-    name:        
-    description: Jump if Condition is Met - 
--
-    instruction: jno
-    name:
-    description: 
--
-    instruction: jnp
-    name:
-    description: 
--
-    instruction: jnpl
-    name:        
-    description: 
--
-    instruction: jo
-    name:
-    description: 
--
-    instruction: jns
-    name:
-    description: Jump if Condition is Met - short if not sign
--
-    instruction: jnsl
-    name:        
-    description: Jump if Condition is Met - 
--
-    instruction: jp
-    name:
-    description: Jump if Condition is Met - short if parity
--
-    instruction: jpl
-    name:
-    description: Jump if Condition is Met - 
--
-    instruction: js
-    name:
-    description: Jump if Condition is Met - short if sign
--
-    instruction: jsl
-    name:
-    description: Jump if Condition is Met - 
--
-    instruction: lahf
-    name:        
-    description: Load Status Flags into AH Register
--
-    instruction: lcall
-    name:        
-    description: 
--
-    instruction: lds
-    name:
-    description: Load Far Pointer
--
-    instruction: leal
-    name:        
-    description: Load Effective address
--
-    instruction: leave
-    name:        
-    description: High Level Procedure Exit
--
-    instruction: les
-    name:
-    description: Load Far Pointer
--
-    instruction: ljmp
-    name:        
-    description: 
--
-    instruction: ljmpl
-    name:        
-    description: 
--
-    instruction: lock/incl
-    name:        
-    description: 
--
-    instruction: lock/sbbb
-    name:        
-    description: 
--
-    instruction: lock/addb
-    name:        
-    description: 
--
-    instruction: lock/cmpxchgl
-    name:        
-    description: 
--
-    instruction: lock/pushl
-    name:        
-    description: 
--
-    instruction: lock/sbbl
-    name:        
-    description: 
--
-    instruction: lock/xaddl
-    name:        
-    description: 
--
-    instruction: lodsb
-    name:        
-    description: Load String  
--
-    instruction: lodsl
-    name:        
-    description: 
--
-    instruction: loop
-    name:        
-    description: Loop According to ECX Counter
--
-    instruction: loopz
-    name:        
-    description: 
--
-    instruction: loopnz
-    name:        
-    description: 
--
-    instruction: lret
-    name:        
-    description: 
--
-    instruction: maxsd
-    name:        
-    description: Return Maximum Scalar Double-Precision Floating-Point Value
--
-    instruction: maxss
-    name:        
-    description: Return Maximum Scalar Single-Precision Floating-Point Value
--
-    instruction: minsd
-    name:        
-    description: Return Minimum Scalar Double-Precision Floating-Point Value
--
-    instruction: minss
-    name:        
-    description: Return Minimum Scalar Single-Precision Floating-Point Value
+    monkey2:
+        steve1: sililoquay
+        steve2: gerbil
 
--
-    instruction: movapd
-    name:        
-    description: move aligned packed double precision float
--
-    instruction: movaps
-    name:        
-    description: move aligned packed single precision float
--
-    instruction: movb
-    name:        move
-    description: move byte (8)
--
-    instruction: movw
-    name:        move
-    description: move word (16)
--
-    instruction: movl
-    name:        move
-    description: move long (32)
--
-    instruction: movd
-    name:        move
-    description: move double (64)
--
-    instruction: movhpd
-    name:        
-    description: Move High Packed Double-Precision Floating-Point Value
--
-    instruction: movsb
-    name:        
-    description: Move Data from String to String
--
-    instruction: movsw
-    name:        
-    description: Move Data from String to String
--
-    instruction: movsl
-    name:        
-    description: 
--
-    instruction: movsd
-    name:        
-    description: Move Data from String to String
--
-    instruction: movss
-    name:        
-    description: move scalar single precision float
--
-    instruction: movsbl
-    name:        
-    description: move byte to long (sign extension)
--
-    instruction: movsbw
-    name:        
-    description: move byte to word (sign extension)
--
-    instruction: movswl
-    name:        
-    description: move word to long (sign extension)
--
-    instruction: movzbl
-    name:        
-    description: move byte to long (zero other bytes)
--
-    instruction: movzwl
-    name:        
-    description: move word to long (zero other bytes)
--
-    instruction: movups
-    name:        
-    description: Move Unaligned Packed Single-Precision Floating- Point Values
--
-    instruction: mulb
-    name:        
-    description: 
--
-    instruction: mulw
-    name:        
-    description: 
--
-    instruction: mull
-    name:        
-    description: unsigned multiply
--
-    instruction: muld
-    name:        
-    description: unsigned multiply
+branch_instructions:
 
--
-    instruction: mulss
-    name:        
-    description: Multiply Scalar Single-Precision Floating-Point Values
--
-    instruction: mulsd
-    name:        
-    description: Multiply Scalar Double-Precision Floating-Point Values
--
-    instruction: negb
-    name:        
-    description: 
--
-    instruction: negw
-    name:        
-    description: 
--
-    instruction: negl
-    name:        
-    description: 
--
-    instruction: nop
-    name:
-    description: no op
--
-    instruction: nopl
-    name:        
-    description: 
--
-    instruction: notl
-    name:        
-    description: 
--
-    instruction: orb
-    name:
-    description: 
--
-    instruction: orl
-    name:
-    description: 
--
-    instruction: orpd
-    name:        
-    description: Bitwise Logical OR of Double-Precision Floating-Point Values
--
-    instruction: orps
-    name:        
-    description: Bitwise Logical OR of Single-Precision Floating-Point Values
--
-    instruction: orw
-    name:
-    description: 
--
-    instruction: outb
-    name:        
-    description: 
--
-    instruction: outsb
-    name:        
-    description: Output String to Port
--
-    instruction: outsl
-    name:        
-    description: 
--
-    instruction: outl
-    name:        
-    description: 
--
-    instruction: paddd
-    name:        
-    description: Add Packed Integers
--
-    instruction: popl
-    name:        
-    description: 
--
-    instruction: popfl
-    name:        
-    description: 
--
-    instruction: popf
-    name:        
-    description: Pop Stack into EFLAGS Register
--
-    instruction: popal
-    name:        
-    description: 
--
-    instruction: por
-    name:
-    description: 
--
-    instruction: psllq
-    name:        
-    description: Shift Packed Data Left Logical
--
-    instruction: pslld
-    name:        
-    description: Shift Packed Data Left Logical
--
-    instruction: punpckldq
-    name:        
-    description: Unpack Low Data
--
-    instruction: pushal
-    name:        
-    description: 
--
-    instruction: push
-    name:        
-    description: Push Word or Doubleword Onto the Stack
--
-    instruction: pushl
-    name:        
-    description: stack.push()
--
-    instruction: pushfl
-    name:
-    description: 
--
-    instruction: pushw
-    name:
-    description: 
--
-    instruction: pushf
-    name:        
-    description: Push EFLAGS Register onto the Stack
--
-    instruction: pxor
-    name:        
-    description: Logical Exclusive OR
--
-    instruction: rclb
-    name:        
-    description: 
--
-    instruction: rcrl
-    name:        
-    description: 
--
-    instruction: rep/stosl
-    name:        
-    description: "Repeat while( ECX(--)>0 ) stosl"
--
-    instruction: repz/addb
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) addb"
--
-    instruction: repz/cmpsb
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) cmpsb"
--
-    instruction: repz/addl
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) addl"
--
-    instruction: repz/orb
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) orb"
--
-    instruction: repz/pushl
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=0 ) pushl"
--
-    instruction: repnz/addb
-    name:        
-    description: "Repeat while( ECX(--)>0 && ZF!=1 ) addb"
--
-    instruction: ret
-    name:
-    description: Return from Procedure
--
-    instruction: retl
-    name:        
-    description: 
--
-    instruction: rolb
-    name:        
-    description: 
--
-    instruction: rolw
-    name:        
-    description: 
--
-    instruction: roll
-    name:        
-    description: 
--
-    instruction: rorb
-    name:        
-    description: 
--
-    instruction: rorl
-    name:        
-    description: 
--
-    instruction: sahf
-    name:        
-    description: Store AH into Flags
--
-    instruction: sarb
-    name:        
-    description: 
--
-    instruction: sarl
-    name:        
-    description: 
--
-    instruction: sarw
-    name:        
-    description: 
--
-    instruction: sbbb
-    name:        
-    description: 
--
-    instruction: sbbw
-    name:        
-    description: 
--
-    instruction: sbbl
-    name:        
-    description: 
--
-    instruction: scasb
-    name:        
-    description: Scan String
--
-    instruction: scasl
-    name:        
-    description: 
--
-    instruction: seta
-    name:        
-    description: "Set byte if above (CF=0 and ZF=0)// (CF==0 && ZF==0) ? $1=1 : $1=0"
--
-    instruction: setae
-    name:        
-    description: "Set byte if above or equal (CF=0)// (CF==0) ? $1=1 : $1=0"
--
-    instruction: setb
-    name:        
-    description: "Set byte if below (CF=1)// (CF==1) ? $1=1 : $1=0"
--
-    instruction: setbe
-    name:        
-    description: "Set byte if below or equal (CF=1 or ZF=1)// (CF==1 || ZF==1) ? $1=1 : $1=0"
--
-    instruction: sete
-    name:        
-    description: Set byte if equal (ZF=1)
--
-    instruction: setg
-    name:        
-    description: Set byte if greater (ZF=0 and SF=OF)
--
-    instruction: setge
-    name:        
-    description: Set byte if greater or equal (SF=OF)
--
-    instruction: setl
-    name:        
-    description: Set byte if less (SF<>OF)
--
-    instruction: setle
-    name:        
-    description: Set byte if less or equal (ZF=1 or SF<>OF)
--
-    instruction: setne
-    name:        
-    description: Set byte if not equal (ZF=0)
--
-    instruction: setnp
-    name:        
-    description: Set byte if not parity (PF=0)
--
-    instruction: setp
-    name:        
-    description: Set byte if parity (PF=1)
+    monkey1:
+        steve1: ccc
+        steve2: ddd
 
--
-    instruction: shll
-    name:        
-    description: 
--
-    instruction: shlb
-    name:        
-    description:  
--
-    instruction: shldl
-    name:        
-    description: 
--
-    instruction: shrb
-    name:        
-    description: 
--
-    instruction: shrdl
-    name:        
-    description: 
--
-    instruction: shrl
-    name:        
-    description: 
--
-    instruction: shrw
-    name:        
-    description: 
--
-    instruction: sldt
-    name:        
-    description: Store Local Descriptor Table Register
--
-    instruction: sldtl
-    name:        
-    description: 
--
-    instruction: sqrtss
-    name:        
-    description: Compute Square Root of Scalar Single-Precision Floating-Point Value
--
-    instruction: sqrtsd
-    name:        
-    description: Compute Square Root of Scalar Double-Precision Floating-Point Value
--
-    instruction: std
-    name:
-    description: Set Direction Flag
--
-    instruction: stc
-    name:
-    description: Set Carry Flag
--
-    instruction: sti
-    name:
-    description: Set Interrupt Flag
--
-    instruction: stos
-    name:        
-    description: Store String
--
-    instruction: stosb
-    name:        
-    description: Store String
--
-    instruction: stosw
-    name:        
-    description: Store String
--
-    instruction: stosl
-    name:        
-    description: Store String
--
-    instruction: stosd
-    name:        
-    description: Store String
--
-    instruction: subb
-    name:        
-    description: Subtract
--
-    instruction: subw
-    name:        
-    description: Subtract
--
-    instruction: subl
-    name:        
-    description: Subtract
--
-    instruction: subss
-    name:        
-    description: Subtract Scalar Single-Precision Floating-Point Values
--
-    instruction: subsd
-    name:        
-    description: Subtract Scalar Double-Precision Floating-Point Values
--
-    instruction: subps
-    name:        
-    description: Subtract Packed Single-Precision Floating-Point Values
--
-    instruction: subpd
-    name:        
-    description: Subtract Packed Double-Precision Floating-Point Values
--
-    instruction: testb
-    name:        
-    description: Logical Compare
--
-    instruction: testw
-    name:        
-    description: Logical Compare
--
-    instruction: testl
-    name:        
-    description: Logical Compare
--
-    instruction: ucomisd
-    name:        
-    description: Unordered Compare Scalar Double-Precision Floating- Point Values and Set EFLAGS
--
-    instruction: ucomiss
-    name:        
-    description: Unordered Compare Scalar Single-Precision Floating- Point Values and Set EFLAGS
--
-    instruction: wait/addb
-    name:        
-    description: 
--
-    instruction: wait/addl
-    name:        
-    description: 
--
-    instruction: wait/sbbb
-    name:        
-    description: 
--
-    instruction: xchg
-    name:        
-    description: "Exchange Register/Memory with Register"
--
-    instruction: xchgb
-    name:        
-    description: "Exchange Register/Memory with Register"
--
-    instruction: xchgl
-    name:        
-    description: "Exchange Register/Memory with Register"
--
-    instruction: xlat
-    name:        
-    description: Table Look-up Translation
--
-    instruction: xorb
-    name:        
-    description: Logical Exclusive OR
--
-    instruction: xorw
-    name:        
-    description: Logical Exclusive OR
--
-    instruction: xorl
-    name:        
-    description: Logical Exclusive OR
--
-    instruction: xord
-    name:        
-    description: Logical Exclusive OR
--
-    instruction: xorps
-    name:        
-    description: Bitwise Logical XOR for Single-Precision Floating-Point Values
--
-    instruction: xorpd
-    name:        
-    description: Bitwise Logical XOR for Double-Precision Floating-Point Values
+    monkey2:
+        steve1: eee
+        steve2: fff
+
+normal_instructions:
+
+    .byte:
+        name:        unknown
+        description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
+        format: "a1"
+
+    aaa:
+        name:        unknown
+        description: ASCII Adjust After Addition // al = ASCII Adjust After Addition(al)
+
+    aad:
+        name:        unknown
+        description: ASCII Adjust AX Before Division
+
+    aam:
+        name:        unknown
+        description: unknown
+
+    aas:
+        name:        unknown
+        description: ASCII Adjust AL After Subtraction
+
+    adcb:
+        name:        add
+        description: Add with Carry
+
+    adcl:
+        name:        add
+        description: Add with Carry
+
+    addb:
+        name:        add
+        description: Add
+
+    addw:
+        name:        add
+        description: Add
+
+    addl:
+        name:        add
+        description: Add
+
+    addpd:
+        name:        unknown
+        description: Add Packed Double-Precision Floating-Point Values
+
+    addsd:
+        name:        unknown
+        description: Add Scalar Double-Precision Floating-Point Values
+
+    addss:
+        name:        unknown
+        description: Add Scalar Single-Precision Floating-Point Values
+
+    andb:
+        name:        unknown
+        description: Logical AND
+
+    andw:
+        name:        unknown
+        description: Logical AND
+
+    andl:
+        name:        unknown
+        description: Logical AND
+
+    andnpd:
+        name:        
+        description: Bitwise Logical AND NOT of Packed Double-Precision Floating-Point Values
+
+    andnps:
+        name:        
+        description: Bitwise Logical AND NOT of Packed Single-Precision Floating-Point Values
+
+    andpd:
+        name:        
+        description: Bitwise Logical AND of Packed Double-Precision Floating-Point Values
+
+    andps:
+        name:        
+        description: Bitwise Logical AND of Packed Single-Precision Floating-Point Values
+
+    arpl:
+        name:        
+        description: Adjust RPL Field of Segment Selector
+
+    bound:
+        name:        
+        description: Check Array Index Against Bounds
+
+    boundl:
+        name:        
+        description: Check Array Index Against Bounds
+
+    bswap:
+        name:        
+        description: Byte Swap
+
+    call:
+        name:        call
+        description: stack.push(%eip), jump($1)
+        format: "a1"
+
+    calll:
+        name:        call
+        description: stack.push(%eip), jump($1)
+
+    cbtw:
+        name:        
+        description: convert byte to word
+
+    clc:
+        name:        
+        description: Clear Carry Flag
+
+    cld:
+        name:        
+        description: Clear Direction Flag
+
+    cli:
+        name:        
+        description: Clear Interrupt Flag
+
+    cltd:
+        name:        
+        description: 
+
+    cmc:
+        name:        
+        description: Complement Carry Flag
+
+    cmovaw:
+        name:        
+        description: Move if above (CF=0 and ZF=0)
+
+    cmoval:
+        name:        
+        description: Move if above (CF=0 and ZF=0)
+
+    cmovael:
+        name:        
+        description: Move if above or equal (CF=0)
+
+    cmovbl:
+        name:        
+        description: Move if below (CF=1)
+
+    cmovbel:
+        name:        
+        description: Move if below or equal (CF=1 or ZF=1)
+
+    cmovew:
+        name:        
+        description: move if equal (ZF=1)
+
+    cmovel:
+        name:        
+        description: move if equal (ZF=1)
+
+    cmovgel:
+        name:        
+        description: Move if greater or equal (SF=OF)
+
+    cmovgl:
+        name:        
+        description: Move if greater (ZF=0 and SF=OF)
+
+    cmovlew:
+        name:        
+        description: Move if less or equal (ZF=1 or SF<>OF)
+
+    cmovlel:
+        name:        
+        description: Move if less or equal (ZF=1 or SF<>OF)
+
+    cmovll:
+        name:        
+        description: Move if less (SF<>OF)
+
+    cmovnel:
+        name:        
+        description: Move if not equal (ZF=0)
+
+    cmovnew:
+        name:        
+        description: Move if not equal (ZF=0)
+
+    cmovnpl:
+        name:        
+        description: Move if not parity (PF=0)
+
+    cmovnsl:
+        name:        
+        description: Move if not sign (SF=0)
+
+    cmovsl:
+        name:        
+        description: Move if sign (SF=1)
+
+    cmpb:
+        name:        
+        description: Compare Two Operands
+    -
+    cmpw:
+        name:        
+        description: Compare Two Operands
+    -
+    cmpl:
+        name:        
+        description: Compare Two Operands
+    -
+    cmpss:
+        name:        
+        description: compare float
+    -
+    cmpsd:
+        name:        
+        description: compare double
+    -
+    cmpsl:
+        name:        
+        description: Compare String
+    -
+    cmpsb:
+        name:        
+        description: Compare String // The CMP instruction is typically used in conjunction with a conditional jump (Jcc), condition move (CMOVcc), or SETcc instruction. The condition codes used by the Jcc, CMOVcc, and SETcc instructions are based on the results of a CMP instruction
+    -
+    cvtdq2pd:
+        name: 
+        description: Convert Packed Doubleword Integers to Packed Double-Precision Floating-Point Values
+    -
+    cvtsd2ss:
+        name:
+        description: Convert Scalar Double-Precision Floating-Point Value to Scalar Single-Precision Floating-Point Value
+    -
+    cvtsi2sd:
+        name:
+        description: Convert Doubleword Integer to Scalar Double- Precision Floating-Point Value
+    -
+    cvtsi2ss:
+        name:
+        description: Convert Doubleword Integer to Scalar Single- Precision Floating-Point Value
+    -
+    cvtss2sd:
+        name:
+        description: Convert Scalar Single-Precision Floating-Point Value to Scalar Double-Precision Floating-Point Value
+    -
+    cvttpd2dq:
+        name:
+        description: Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Doubleword Integers
+    -
+    cvttsd2si:
+        name:
+        description: Convert with Truncation Scalar Double-Precision Floating-Point Value to Signed Doubleword Integer
+    -
+    cvttss2si:
+        name:
+        description: Convert with Truncation Scalar Single-Precision Floating-Point Value to Doubleword Integer
+    -
+    cvttps2dq:
+        name:
+        description: Convert with Truncation Packed Single-Precision Floating-Point Values to Packed Doubleword Integers
+    -
+        instruction: cwtl:
+        name:        
+        description: convert word to long
+    -
+        instruction: daa:
+        name:
+        description: Decimal Adjust AL after Addition
+    -
+        instruction: das:
+        name:
+        description: Decimal Adjust AL after Subtraction
+    -
+        instruction: decb:
+        name:        
+        description: decrement by 1
+    -
+        instruction: decw:
+        name:        
+        description: decrement by 1
+    -
+        instruction: decl:
+        name:        
+        description: decrement by 1
+    -
+        instruction: divl:
+        name:        
+        description: unsigned divide
+    -
+        instruction: divsd:
+        name:        
+        description: unsigned divide
+    -
+        instruction: divss:
+        name:        
+        description: unsigned divide
+    -
+        instruction: enter:
+        name:        
+        description: Make Stack Frame for Procedure Parameters
+    -
+        instruction: fadd:
+        name:        
+        description: Add
+    -
+        instruction: faddl:
+        name:        
+        description: Add
+    -
+        instruction: faddp:
+        name:        
+        description: Add
+    -
+        instruction: fadds:
+        name:        
+        description: 
+    -
+        instruction: fiaddl:
+        name:        
+        description: Add
+    -
+        instruction: fiadds:
+        name:        
+        description: Add
+    -
+        instruction: falc:
+        name:        
+        description: 
+    -
+        instruction: fchs:
+        name:        
+        description: Change Sign
+    -
+        instruction: fcomp:
+        name:        
+        description: Compare Floating Point Values
+    -
+        instruction: fcompl:
+        name:        
+        description: Compare Floating Point Values
+    -
+        instruction: fcoms:
+        name:        
+        description: Compare Floating Point Values
+    -
+        instruction: fdiv:
+        name:        
+        description: Divide
+    -
+        instruction: fdivp:
+        name:        
+        description: Divide
+    -
+        instruction: fdivr:
+        name:        
+        description: Reverse Divide
+    -
+        instruction: fdivrp:
+        name:        
+        description: Reverse Divide
+    -
+        instruction: ficompl:
+        name:        
+        description: Compare Integer
+    -
+        instruction: ficomps:
+        name:        
+        description: Compare Integer
+    -
+        instruction: ficoms:
+        name:        
+        description: Compare Integer
+    -
+        instruction: fildl:
+        name:        
+        description: Load Integer
+    -
+        instruction: filds:
+        name:        
+        description: Load Integer
+    -
+        instruction: fildq:
+        name:        
+        description: Load Integer
+    -
+        instruction: fistpq:
+        name:        
+        description: Store Integer
+    -
+        instruction: fld1:
+        name:        
+        description: load constant
+    -
+        instruction: fldl:
+        name:        
+        description: load real
+    -
+        instruction: fld:
+        name:
+        description: Load Floating Point Value
+    -
+        instruction: fldcwl:
+        name:        
+        description: Load x87 FPU Control Word
+    -
+        instruction: fldt:
+        name:        
+        description: 
+    -
+        instruction: flds:
+        name:        
+        description: load real
+    -
+        instruction: fldz:
+        name:        
+        description: load constant
+    -
+        instruction: fmuls:
+        name:        
+        description: Multiply
+    -
+        instruction: fmul:
+        name:        
+        description: Multiply
+    -
+        instruction: fmulp:
+        name:        
+        description: Multiply
+    -
+        instruction: fmull:
+        name:        
+        description: 
+    -
+        instruction: fnstcwl:
+        name:        
+        description: Store x87 FPU Control Word
+    -
+        instruction: fldcw:
+        name:        
+        description: Load x87 FPU Control Word
+    -
+        instruction: fnstcw:
+        name:        
+        description: Store x87 FPU Control Word
+    -
+        instruction: fstp:
+        name:        
+        description: Store Floating Point Value
+    -
+        instruction: fstpt:
+        name:        
+        description: 
+    -
+        instruction: fsub:
+        name:        
+        description: Subtract
+    -
+        instruction: fsubp:
+        name:        
+        description: Subtract
+    -
+        instruction: fsubr:
+        name:        
+        description: Reverse Subtract
+    -
+        instruction: fsubrl:
+        name:        
+        description: 
+    -
+        instruction: fsubrp:
+        name:        
+        description: Reverse Subtract
+    -
+        instruction: fstpl:
+        name:        
+        description: 
+    -
+        instruction: fstps:
+        name:        
+        description: 
+    -
+        instruction: fsts:
+        name:        
+        description: Store x87 FPU Status Word
+    -
+        instruction: fstl:
+        name:        
+        description: 
+    -
+        instruction: fucomi:
+        name:        
+        description: Compare Floating Point Values and Set EFLAGS
+    -
+        instruction: fucomip:
+        name:        
+        description: Compare Floating Point Values and Set EFLAGS
+    -
+        instruction: fxch:
+        name:        
+        description: Exchange Register Contents
+    -
+        instruction: hlt:
+        name:
+        description: halt
+    -
+        instruction: idivl:
+        name:        
+        description: signed divide
+    -
+        instruction: imulb:
+        name:        
+        description: 
+    -
+        instruction: imulw:
+        name:        
+        description: 
+    -
+        instruction: imull:
+        name:        
+        description: multiply
+    -
+        instruction: inb:
+        name:
+        description: 
+    -
+        instruction: inl:
+        name:
+        description: 
+    -
+        instruction: int:
+        name:
+        description: 
+    -
+        instruction: into:
+        name:        
+        description: Call to Interrupt Procedure
+    -
+        instruction: iret:
+        name:        
+        description: Interrupt Return
+    -
+        instruction: incb:
+        name:        
+        description: 
+    -
+        instruction: incl:
+        name:        
+        description: 
+    -
+        instruction: incw:
+        name:        
+        description: 
+    -
+        instruction: insb:
+        name:        
+        description: Input from Port to String
+    -
+        instruction: insl:
+        name:        
+        description: 
+    -
+        instruction: invd:
+        name:        
+        description: Invalidate Internal Caches
+    -
+        instruction: jmp:
+        name:
+        description: jump
+    -
+        instruction: jmpl:
+        name:        
+        description: jump
+    -
+        instruction: ja:
+        name:
+        description: Jump if Condition is Met - short if above
+    -
+        instruction: jal:
+        name:
+        description: Jump if Condition is Met - short if above
+    -
+        instruction: jae:
+        name:
+        description: Jump if Condition is Met - short if above or equal
+    -
+        instruction: jael:
+        name:        
+        description: Jump if Condition is Met - short if above or equal
+    -
+        instruction: jb:
+        name:
+        description: Jump if Condition is Met - short if below
+    -
+        instruction: jbl:
+        name:
+        description: Jump if Condition is Met - short if below
+    -
+        instruction: jbe:
+        name:
+        description: Jump if Condition is Met - short if below or equal
+    -
+        instruction: jbel:
+        name:        
+        description: Jump if Condition is Met - short if below or equal
+    -
+        instruction: jcxz:
+        name:        
+        description: 
+    -
+        instruction: je:
+        name:
+        description: Jump if Condition is Met - short if equal
+    -
+        instruction: jel:
+        name:
+        description: Jump if Condition is Met - short if equal
+    -
+        instruction: jg:
+        name:
+        description: Jump if Condition is Met - short if greater
+    -
+        instruction: jgl:
+        name:
+        description: Jump if Condition is Met - short if greater
+    -
+        instruction: jge:
+        name:
+        description: Jump if Condition is Met - short if greater or equal
+    -
+        instruction: jgel:
+        name:        
+        description: Jump if Condition is Met - short if greater or equal
+    -
+        instruction: jl:
+        name:
+        description: Jump if Condition is Met - short if less
+    -
+        instruction: jll:
+        name:
+        description: Jump if Condition is Met - 
+    -
+        instruction: jle:
+        name:
+        description: Jump if Condition is Met - short if less or equal
+    -
+        instruction: jlel:
+        name:        
+        description: Jump if Condition is Met - short if less or equal
+    -
+        instruction: jne:
+        name:
+        description: Jump if Condition is Met - short if not equal
+    -
+        instruction: jnel:
+        name:        
+        description: Jump if Condition is Met - 
+    -
+        instruction: jno:
+        name:
+        description: 
+    -
+        instruction: jnp:
+        name:
+        description: 
+    -
+        instruction: jnpl:
+        name:        
+        description: 
+    -
+        instruction: jo:
+        name:
+        description: 
+    -
+        instruction: jns:
+        name:
+        description: Jump if Condition is Met - short if not sign
+    -
+        instruction: jnsl:
+        name:        
+        description: Jump if Condition is Met - 
+    -
+        instruction: jp:
+        name:
+        description: Jump if Condition is Met - short if parity
+    -
+        instruction: jpl:
+        name:
+        description: Jump if Condition is Met - 
+    -
+        instruction: js:
+        name:
+        description: Jump if Condition is Met - short if sign
+    -
+        instruction: jsl:
+        name:
+        description: Jump if Condition is Met - 
+    -
+        instruction: lahf:
+        name:        
+        description: Load Status Flags into AH Register
+    -
+        instruction: lcall:
+        name:        
+        description: 
+    -
+        instruction: lds:
+        name:
+        description: Load Far Pointer
+    -
+        instruction: leal:
+        name:        
+        description: Load Effective address
+    -
+        instruction: leave:
+        name:        
+        description: High Level Procedure Exit
+    -
+        instruction: les:
+        name:
+        description: Load Far Pointer
+    -
+        instruction: ljmp:
+        name:        
+        description: 
+    -
+        instruction: ljmpl:
+        name:        
+        description: 
+    -
+        instruction: lock/incl:
+        name:        
+        description: 
+    -
+        instruction: lock/sbbb:
+        name:        
+        description: 
+    -
+        instruction: lock/addb:
+        name:        
+        description: 
+    -
+        instruction: lock/cmpxchgl:
+        name:        
+        description: 
+    -
+        instruction: lock/pushl:
+        name:        
+        description: 
+    -
+        instruction: lock/sbbl:
+        name:        
+        description: 
+    -
+        instruction: lock/xaddl:
+        name:        
+        description: 
+    -
+        instruction: lodsb:
+        name:        
+        description: Load String  
+    -
+        instruction: lodsl:
+        name:        
+        description: 
+    -
+        instruction: loop:
+        name:        
+        description: Loop According to ECX Counter
+    -
+        instruction: loopz:
+        name:        
+        description: 
+    -
+        instruction: loopnz:
+        name:        
+        description: 
+    -
+        instruction: lret:
+        name:        
+        description: 
+    -
+        instruction: maxsd:
+        name:        
+        description: Return Maximum Scalar Double-Precision Floating-Point Value
+    -
+        instruction: maxss:
+        name:        
+        description: Return Maximum Scalar Single-Precision Floating-Point Value
+    -
+        instruction: minsd:
+        name:        
+        description: Return Minimum Scalar Double-Precision Floating-Point Value
+    -
+        instruction: minss:
+        name:        
+        description: Return Minimum Scalar Single-Precision Floating-Point Value
+    
+    -
+        instruction: movapd:
+        name:        
+        description: move aligned packed double precision float
+    -
+        instruction: movaps:
+        name:        
+        description: move aligned packed single precision float
+    -
+        instruction: movb:
+        name:        move
+        description: move byte (8)
+    -
+        instruction: movw:
+        name:        move
+        description: move word (16)
+    -
+        instruction: movl:
+        name:        move
+        description: move long (32)
+    -
+        instruction: movd:
+        name:        move
+        description: move double (64)
+    -
+        instruction: movhpd:
+        name:        
+        description: Move High Packed Double-Precision Floating-Point Value
+    -
+        instruction: movsb:
+        name:        
+        description: Move Data from String to String
+    -
+        instruction: movsw:
+        name:        
+        description: Move Data from String to String
+    -
+        instruction: movsl:
+        name:        
+        description: 
+    -
+        instruction: movsd:
+        name:        
+        description: Move Data from String to String
+    -
+        instruction: movss:
+        name:        
+        description: move scalar single precision float
+    -
+        instruction: movsbl:
+        name:        
+        description: move byte to long (sign extension)
+    -
+        instruction: movsbw:
+        name:        
+        description: move byte to word (sign extension)
+    -
+        instruction: movswl:
+        name:        
+        description: move word to long (sign extension)
+    -
+        instruction: movzbl:
+        name:        
+        description: move byte to long (zero other bytes)
+    -
+        instruction: movzwl:
+        name:        
+        description: move word to long (zero other bytes)
+    -
+        instruction: movups:
+        name:        
+        description: Move Unaligned Packed Single-Precision Floating- Point Values
+    -
+        instruction: mulb:
+        name:        
+        description: 
+    -
+        instruction: mulw:
+        name:        
+        description: 
+    -
+        instruction: mull:
+        name:        
+        description: unsigned multiply
+    -
+        instruction: muld:
+        name:        
+        description: unsigned multiply
+    
+    -
+        instruction: mulss:
+        name:        
+        description: Multiply Scalar Single-Precision Floating-Point Values
+    -
+        instruction: mulsd:
+        name:        
+        description: Multiply Scalar Double-Precision Floating-Point Values
+    -
+        instruction: negb:
+        name:        
+        description: 
+    -
+        instruction: negw:
+        name:        
+        description: 
+    -
+        instruction: negl:
+        name:        
+        description: 
+    -
+        instruction: nop:
+        name:
+        description: no op
+    -
+        instruction: nopl:
+        name:        
+        description: 
+    -
+        instruction: notl:
+        name:        
+        description: 
+    -
+        instruction: orb:
+        name:
+        description: 
+    -
+        instruction: orl:
+        name:
+        description: 
+    -
+        instruction: orpd:
+        name:        
+        description: Bitwise Logical OR of Double-Precision Floating-Point Values
+    -
+        instruction: orps:
+        name:        
+        description: Bitwise Logical OR of Single-Precision Floating-Point Values
+    -
+        instruction: orw:
+        name:
+        description: 
+    -
+        instruction: outb:
+        name:        
+        description: 
+    -
+        instruction: outsb:
+        name:        
+        description: Output String to Port
+    -
+        instruction: outsl:
+        name:        
+        description: 
+    -
+        instruction: outl:
+        name:        
+        description: 
+    -
+        instruction: paddd:
+        name:        
+        description: Add Packed Integers
+    -
+        instruction: popl:
+        name:        
+        description: 
+    -
+        instruction: popfl:
+        name:        
+        description: 
+    -
+        instruction: popf:
+        name:        
+        description: Pop Stack into EFLAGS Register
+    -
+        instruction: popal:
+        name:        
+        description: 
+    -
+        instruction: por:
+        name:
+        description: 
+    -
+        instruction: psllq:
+        name:        
+        description: Shift Packed Data Left Logical
+    -
+        instruction: pslld:
+        name:        
+        description: Shift Packed Data Left Logical
+    -
+        instruction: punpckldq:
+        name:        
+        description: Unpack Low Data
+    -
+        instruction: pushal:
+        name:        
+        description: 
+    -
+        instruction: push:
+        name:        
+        description: Push Word or Doubleword Onto the Stack
+    -
+        instruction: pushl:
+        name:        
+        description: stack.push()
+    -
+        instruction: pushfl:
+        name:
+        description: 
+    -
+        instruction: pushw:
+        name:
+        description: 
+    -
+        instruction: pushf:
+        name:        
+        description: Push EFLAGS Register onto the Stack
+    -
+        instruction: pxor:
+        name:        
+        description: Logical Exclusive OR
+    -
+        instruction: rclb:
+        name:        
+        description: 
+    -
+        instruction: rcrl:
+        name:        
+        description: 
+    -
+        instruction: rep/stosl:
+        name:        
+        description: "Repeat while( ECX(--)>0 ) stosl"
+    -
+        instruction: repz/addb:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=0 ) addb"
+    -
+        instruction: repz/cmpsb:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=0 ) cmpsb"
+    -
+        instruction: repz/addl:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=0 ) addl"
+    -
+        instruction: repz/orb:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=0 ) orb"
+    -
+        instruction: repz/pushl:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=0 ) pushl"
+    -
+        instruction: repnz/addb:
+        name:        
+        description: "Repeat while( ECX(--)>0 && ZF!=1 ) addb"
+    -
+        instruction: ret:
+        name:
+        description: Return from Procedure
+    -
+        instruction: retl:
+        name:        
+        description: 
+    -
+        instruction: rolb:
+        name:        
+        description: 
+    -
+        instruction: rolw:
+        name:        
+        description: 
+    -
+        instruction: roll:
+        name:        
+        description: 
+    -
+        instruction: rorb:
+        name:        
+        description: 
+    -
+        instruction: rorl:
+        name:        
+        description: 
+    -
+        instruction: sahf:
+        name:        
+        description: Store AH into Flags
+    -
+        instruction: sarb:
+        name:        
+        description: 
+    -
+        instruction: sarl:
+        name:        
+        description: 
+    -
+        instruction: sarw:
+        name:        
+        description: 
+    -
+        instruction: sbbb:
+        name:        
+        description: 
+    -
+        instruction: sbbw:
+        name:        
+        description: 
+    -
+        instruction: sbbl:
+        name:        
+        description: 
+    -
+        instruction: scasb:
+        name:        
+        description: Scan String
+    -
+        instruction: scasl:
+        name:        
+        description: 
+    -
+        instruction: seta:
+        name:        
+        description: "Set byte if above (CF=0 and ZF=0)// (CF==0 && ZF==0) ? $1=1 : $1=0"
+    -
+        instruction: setae:
+        name:        
+        description: "Set byte if above or equal (CF=0)// (CF==0) ? $1=1 : $1=0"
+    -
+        instruction: setb:
+        name:        
+        description: "Set byte if below (CF=1)// (CF==1) ? $1=1 : $1=0"
+    -
+        instruction: setbe:
+        name:        
+        description: "Set byte if below or equal (CF=1 or ZF=1)// (CF==1 || ZF==1) ? $1=1 : $1=0"
+    -
+        instruction: sete:
+        name:        
+        description: Set byte if equal (ZF=1)
+    -
+        instruction: setg:
+        name:        
+        description: Set byte if greater (ZF=0 and SF=OF)
+    -
+        instruction: setge:
+        name:        
+        description: Set byte if greater or equal (SF=OF)
+    -
+        instruction: setl:
+        name:        
+        description: Set byte if less (SF<>OF)
+    -
+        instruction: setle:
+        name:        
+        description: Set byte if less or equal (ZF=1 or SF<>OF)
+    -
+        instruction: setne:
+        name:        
+        description: Set byte if not equal (ZF=0)
+    -
+        instruction: setnp:
+        name:        
+        description: Set byte if not parity (PF=0)
+    -
+        instruction: setp:
+        name:        
+        description: Set byte if parity (PF=1)
+    
+    -
+        instruction: shll:
+        name:        
+        description: 
+    -
+        instruction: shlb:
+        name:        
+        description:  
+    -
+        instruction: shldl:
+        name:        
+        description: 
+    -
+        instruction: shrb:
+        name:        
+        description: 
+    -
+        instruction: shrdl:
+        name:        
+        description: 
+    -
+        instruction: shrl:
+        name:        
+        description: 
+    -
+        instruction: shrw:
+        name:        
+        description: 
+    -
+        instruction: sldt:
+        name:        
+        description: Store Local Descriptor Table Register
+    -
+        instruction: sldtl:
+        name:        
+        description: 
+    -
+        instruction: sqrtss:
+        name:        
+        description: Compute Square Root of Scalar Single-Precision Floating-Point Value
+    -
+        instruction: sqrtsd:
+        name:        
+        description: Compute Square Root of Scalar Double-Precision Floating-Point Value
+    -
+        instruction: std:
+        name:
+        description: Set Direction Flag
+    -
+        instruction: stc:
+        name:
+        description: Set Carry Flag
+    -
+        instruction: sti:
+        name:
+        description: Set Interrupt Flag
+    -
+        instruction: stos:
+        name:        
+        description: Store String
+    -
+        instruction: stosb:
+        name:        
+        description: Store String
+    -
+        instruction: stosw:
+        name:        
+        description: Store String
+    -
+        instruction: stosl:
+        name:        
+        description: Store String
+    -
+        instruction: stosd:
+        name:        
+        description: Store String
+    -
+        instruction: subb:
+        name:        
+        description: Subtract
+    -
+        instruction: subw:
+        name:        
+        description: Subtract
+    -
+        instruction: subl:
+        name:        
+        description: Subtract
+    -
+        instruction: subss:
+        name:        
+        description: Subtract Scalar Single-Precision Floating-Point Values
+    -
+        instruction: subsd:
+        name:        
+        description: Subtract Scalar Double-Precision Floating-Point Values
+    -
+        instruction: subps:
+        name:        
+        description: Subtract Packed Single-Precision Floating-Point Values
+    -
+        instruction: subpd:
+        name:        
+        description: Subtract Packed Double-Precision Floating-Point Values
+    -
+        instruction: testb:
+        name:        
+        description: Logical Compare
+    -
+        instruction: testw:
+        name:        
+        description: Logical Compare
+    -
+        instruction: testl:
+        name:        
+        description: Logical Compare
+    -
+        instruction: ucomisd:
+        name:        
+        description: Unordered Compare Scalar Double-Precision Floating- Point Values and Set EFLAGS
+    -
+        instruction: ucomiss:
+        name:        
+        description: Unordered Compare Scalar Single-Precision Floating- Point Values and Set EFLAGS
+    -
+        instruction: wait/addb:
+        name:        
+        description: 
+    -
+        instruction: wait/addl:
+        name:        
+        description: 
+    -
+        instruction: wait/sbbb:
+        name:        
+        description: 
+    -
+        instruction: xchg:
+        name:        
+        description: "Exchange Register/Memory with Register"
+    -
+        instruction: xchgb:
+        name:        
+        description: "Exchange Register/Memory with Register"
+    -
+        instruction: xchgl:
+        name:        
+        description: "Exchange Register/Memory with Register"
+    -
+        instruction: xlat:
+        name:        
+        description: Table Look-up Translation
+    -
+        instruction: xorb:
+        name:        
+        description: Logical Exclusive OR
+    -
+        instruction: xorw:
+        name:        
+        description: Logical Exclusive OR
+    -
+        instruction: xorl:
+        name:        
+        description: Logical Exclusive OR
+    -
+        instruction: xord:
+        name:        
+        description: Logical Exclusive OR
+    -
+        instruction: xorps:
+        name:        
+        description: Bitwise Logical XOR for Single-Precision Floating-Point Values
+    -
+        instruction: xorpd:
+        name:        
+        description: Bitwise Logical XOR for Double-Precision Floating-Point Values

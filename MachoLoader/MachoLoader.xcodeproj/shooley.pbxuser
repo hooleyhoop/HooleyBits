@@ -97,10 +97,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 304597246;
-			PBXWorkspaceStateSaveDate = 304597246;
+			PBXPerProjectTemplateStateSaveDate = 304674112;
+			PBXWorkspaceStateSaveDate = 304674112;
 		};
 		perUserProjectItems = {
+			7312E0BD1229AB6B005FEF2F /* XCBuildMessageTextBookmark */ = 7312E0BD1229AB6B005FEF2F /* XCBuildMessageTextBookmark */;
+			7312E0BE1229AB6B005FEF2F /* PBXTextBookmark */ = 7312E0BE1229AB6B005FEF2F /* PBXTextBookmark */;
 			731FA9F512196E5700D3EE3D /* PBXTextBookmark */ = 731FA9F512196E5700D3EE3D /* PBXTextBookmark */;
 			731FAAE1121972F600D3EE3D /* PBXTextBookmark */ = 731FAAE1121972F600D3EE3D /* PBXTextBookmark */;
 			731FAAF61219747600D3EE3D /* PBXTextBookmark */ = 731FAAF61219747600D3EE3D /* PBXTextBookmark */;
@@ -109,7 +111,6 @@
 			734B60B9122558C0002C0B0F /* PBXTextBookmark */ = 734B60B9122558C0002C0B0F /* PBXTextBookmark */;
 			734B60BB122558C0002C0B0F /* PBXTextBookmark */ = 734B60BB122558C0002C0B0F /* PBXTextBookmark */;
 			734B60BD122558C0002C0B0F /* PBXTextBookmark */ = 734B60BD122558C0002C0B0F /* PBXTextBookmark */;
-			734B614F122563F2002C0B0F /* PBXTextBookmark */ = 734B614F122563F2002C0B0F /* PBXTextBookmark */;
 			734B6185122566A9002C0B0F /* PBXTextBookmark */ = 734B6185122566A9002C0B0F /* PBXTextBookmark */;
 			734B6702122691EA002C0B0F /* PBXTextBookmark */ = 734B6702122691EA002C0B0F /* PBXTextBookmark */;
 			734B6703122691EA002C0B0F /* PBXTextBookmark */ = 734B6703122691EA002C0B0F /* PBXTextBookmark */;
@@ -120,7 +121,6 @@
 			738FD2E5121BDE250069B868 /* PBXTextBookmark */ = 738FD2E5121BDE250069B868 /* PBXTextBookmark */;
 			738FD2E6121BDE250069B868 /* PBXTextBookmark */ = 738FD2E6121BDE250069B868 /* PBXTextBookmark */;
 			738FD382121BE9810069B868 /* PBXTextBookmark */ = 738FD382121BE9810069B868 /* PBXTextBookmark */;
-			73A15ABD1208614C005BF9EF /* PBXTextBookmark */ = 73A15ABD1208614C005BF9EF /* PBXTextBookmark */;
 			73A1EF8A1219918C004CAC63 /* PBXTextBookmark */ = 73A1EF8A1219918C004CAC63 /* PBXTextBookmark */;
 			73A1EFA9121992D3004CAC63 /* PBXTextBookmark */ = 73A1EFA9121992D3004CAC63 /* PBXTextBookmark */;
 			73A1F2771219A8E9004CAC63 /* PBXTextBookmark */ = 73A1F2771219A8E9004CAC63 /* PBXTextBookmark */;
@@ -141,8 +141,6 @@
 			73EC93F61219391B004D4A0D /* PBXTextBookmark */ = 73EC93F61219391B004D4A0D /* PBXTextBookmark */;
 			73EC943F12193E15004D4A0D /* PBXTextBookmark */ = 73EC943F12193E15004D4A0D /* PBXTextBookmark */;
 			73F2BA8C1227C9210032EE95 /* PBXTextBookmark */ = 73F2BA8C1227C9210032EE95 /* PBXTextBookmark */;
-			73F2BA8D1227C9210032EE95 /* PBXTextBookmark */ = 73F2BA8D1227C9210032EE95 /* PBXTextBookmark */;
-			73F2BA8F1227CC050032EE95 /* PBXTextBookmark */ = 73F2BA8F1227CC050032EE95 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 736921DA11B52A20006A81BD /* Source Control */;
 		userBuildSettings = {
@@ -232,6 +230,25 @@
 		modificationTime = 304598020.173876;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
+	};
+	7312E0BD1229AB6B005FEF2F /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Use of undeclared identifier 'a4ByteLiteral'";
+		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 619;
+		rType = 1;
+	};
+	7312E0BE1229AB6B005FEF2F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
+		name = "MachoLoader.m: 620";
+		rLen = 0;
+		rLoc = 19415;
+		rType = 0;
+		vrLen = 1137;
+		vrLoc = 18846;
 	};
 	731FA9F512196E5700D3EE3D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -557,23 +574,6 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/stdlib.h;
 		sourceTree = "<absolute>";
 	};
-	734B614F122563F2002C0B0F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 734B6150122563F2002C0B0F /* cxxabi.h */;
-		name = "cxxabi.h: 191";
-		rLen = 14;
-		rLoc = 6299;
-		rType = 0;
-		vrLen = 1190;
-		vrLoc = 5623;
-	};
-	734B6150122563F2002C0B0F /* cxxabi.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = cxxabi.h;
-		path = "/Users/shooley/Desktop/Programming/Source/GCCReadOnly/libstdc++-v3/libsupc++/cxxabi.h";
-		sourceTree = "<absolute>";
-	};
 	734B617A12256690002C0B0F /* MachoLoader.m:524 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -880,23 +880,6 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/gcc/darwin/4.2/stdint.h;
 		sourceTree = "<absolute>";
 	};
-	73A15ABD1208614C005BF9EF /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73A15ABE1208614C005BF9EF /* ofile_print.c */;
-		name = "ofile_print.c: 3";
-		rLen = 1;
-		rLoc = 75;
-		rType = 0;
-		vrLen = 1614;
-		vrLoc = 0;
-	};
-	73A15ABE1208614C005BF9EF /* ofile_print.c */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.c;
-		name = ofile_print.c;
-		path = "/Volumes/Macintosh HD/Users/shooley/Desktop/HooleyKernal/cctools-667.3/otool/ofile_print.c";
-		sourceTree = "<absolute>";
-	};
 	73A1EF8A1219918C004CAC63 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 731FAA811219702700D3EE3D /* FileMapView.h */;
@@ -1008,7 +991,7 @@
 		ignoreCount = 0;
 		lineNumber = 81;
 		location = MachoLoaderTests;
-		modificationTime = 304598020.080764;
+		modificationTime = 304598020.0807639;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -1241,9 +1224,9 @@
 	};
 	73EDD9240F863E4700E09434 /* MachoLoader.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1454, 26507}}";
-			sepNavSelRange = "{36718, 0}";
-			sepNavVisRange = "{35490, 1892}";
+			sepNavIntBoundsRect = "{{0, 0}, {1379, 26221}}";
+			sepNavSelRange = "{36569, 0}";
+			sepNavVisRange = "{35793, 1271}";
 			sepNavWindowFrame = "{{1695, 220}, {1495, 825}}";
 		};
 	};
@@ -1256,23 +1239,6 @@
 		rType = 0;
 		vrLen = 680;
 		vrLoc = 0;
-	};
-	73F2BA8D1227C9210032EE95 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
-		rLen = 0;
-		rLoc = 1094;
-		rType = 1;
-	};
-	73F2BA8F1227CC050032EE95 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */;
-		name = "MachoLoader.m: 1095";
-		rLen = 0;
-		rLoc = 36718;
-		rType = 0;
-		vrLen = 1838;
-		vrLoc = 35784;
 	};
 	73FF6B240FD6AB8B00A8136A /* Hex.m */ = {
 		uiCtxt = {

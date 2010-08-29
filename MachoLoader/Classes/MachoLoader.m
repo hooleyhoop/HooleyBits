@@ -591,7 +591,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
 			float a4ByteLiteralFloat;
 			memcpy((char *)&a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
-			NSLog(@"%0x %f", a4ByteLiteral, a4ByteLiteralFloat);
+			NSLog(@"%f", a4ByteLiteralFloat);
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
@@ -617,8 +617,6 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
 			double a4ByteLiteralDouble;
 			memcpy((char *)&a4ByteLiteralDouble, a4ByteLiteralAddress, sizeof(double));
-			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(uint64));
-			NSLog(@"%0x %f", a4ByteLiteral, a4ByteLiteralDouble);
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];

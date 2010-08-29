@@ -33,6 +33,11 @@
 		734B627E122569E1002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B627C122569E1002C0B0F /* libstdc++.dylib */; };
 		734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
 		734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
+		73737123122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
+		73737124122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
+		73737129122A6F4300E05751 /* RegisterLookupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737128122A6F4300E05751 /* RegisterLookupTests.m */; };
+		73737159122A779F00E05751 /* YAMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737158122A779F00E05751 /* YAMLParser.m */; };
+		7373715A122A779F00E05751 /* YAMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737158122A779F00E05751 /* YAMLParser.m */; };
 		73794D7C1223E460001B8AF6 /* HexLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D7B1223E460001B8AF6 /* HexLookup.m */; };
 		73794D7D1223E460001B8AF6 /* HexLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D7B1223E460001B8AF6 /* HexLookup.m */; };
 		73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794D9C1223E64F001B8AF6 /* CFDictCallbacks.m */; };
@@ -69,6 +74,8 @@
 		73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF781219916B004CAC63 /* MemoryMap.m */; };
 		73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1F5811D8C7AD00347BBD /* yaml.framework */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
+		73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */; };
+		73C071CE122AF38B00B31EF5 /* YAMLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */; };
 		73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
@@ -307,6 +314,11 @@
 		734B627C122569E1002C0B0F /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
 		734B671C1226920E002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = ../MachoLoader/Classes/IntKeyDictionary.h; sourceTree = SOURCE_ROOT; };
 		734B671D1226920E002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = ../MachoLoader/Classes/IntKeyDictionary.m; sourceTree = SOURCE_ROOT; };
+		73737121122A6F2C00E05751 /* RegisterLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterLookup.h; path = Src/RegisterLookup.h; sourceTree = "<group>"; };
+		73737122122A6F2C00E05751 /* RegisterLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterLookup.m; path = Src/RegisterLookup.m; sourceTree = "<group>"; };
+		73737128122A6F4300E05751 /* RegisterLookupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterLookupTests.m; path = Tests/RegisterLookupTests.m; sourceTree = "<group>"; };
+		73737157122A779F00E05751 /* YAMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YAMLParser.h; sourceTree = "<group>"; };
+		73737158122A779F00E05751 /* YAMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YAMLParser.m; sourceTree = "<group>"; };
 		73794D7A1223E460001B8AF6 /* HexLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexLookup.h; path = Src/HexLookup.h; sourceTree = "<group>"; };
 		73794D7B1223E460001B8AF6 /* HexLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexLookup.m; path = Src/HexLookup.m; sourceTree = "<group>"; };
 		73794D9B1223E64F001B8AF6 /* CFDictCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFDictCallbacks.h; path = Src/CFDictCallbacks.h; sourceTree = "<group>"; };
@@ -356,6 +368,7 @@
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
 		73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lldb.xcodeproj; path = ../../../Source/lldb/lldb.xcodeproj; sourceTree = SOURCE_ROOT; };
+		73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YAMLParserTests.m; sourceTree = "<group>"; };
 		73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VeryLargePtrTableTests.m; path = Tests/VeryLargePtrTableTests.m; sourceTree = "<group>"; };
 		73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CHDataStructures.framework; path = ../../../Source/CHDataStructures/build/Debug/CHDataStructures.framework; sourceTree = SOURCE_ROOT; };
 		73CF1EE511D8C31D00347BBD /* YAMLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YAMLTests.m; path = Tests/YAMLTests.m; sourceTree = "<group>"; };
@@ -576,8 +589,12 @@
 				73F5E8921212B1E600869E96 /* CodeBlocksEnumerator.m */,
 				7317D7D41212FB1A00597E32 /* GenericTimer.h */,
 				7317D7D51212FB1A00597E32 /* GenericTimer.m */,
+				73737121122A6F2C00E05751 /* RegisterLookup.h */,
+				73737122122A6F2C00E05751 /* RegisterLookup.m */,
 				7317D9721213F0D700597E32 /* InstructionLookup.h */,
 				7317D9731213F0D700597E32 /* InstructionLookup.m */,
+				73737157122A779F00E05751 /* YAMLParser.h */,
+				73737158122A779F00E05751 /* YAMLParser.m */,
 				732DCA4A12142791000016EE /* Hex.h */,
 				732DCA4B12142791000016EE /* Hex.m */,
 				73794D9B1223E64F001B8AF6 /* CFDictCallbacks.h */,
@@ -614,6 +631,8 @@
 				73F5E72E12129EDA00869E96 /* FileWriterTests.m */,
 				73F5E8981212B1FE00869E96 /* CodeBlocksEnumeratorTests.m */,
 				732DCA51121427B8000016EE /* HexTests.m */,
+				73737128122A6F4300E05751 /* RegisterLookupTests.m */,
+				73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -1117,6 +1136,10 @@
 				73794D9D1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
 				73794FAD12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
 				734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */,
+				73737124122A6F2C00E05751 /* RegisterLookup.m in Sources */,
+				73737129122A6F4300E05751 /* RegisterLookupTests.m in Sources */,
+				73737159122A779F00E05751 /* YAMLParser.m in Sources */,
+				73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1176,6 +1199,9 @@
 				73794D9E1223E64F001B8AF6 /* CFDictCallbacks.m in Sources */,
 				73794FAE12240AFA001B8AF6 /* SymbolicInfo.m in Sources */,
 				734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */,
+				73737123122A6F2C00E05751 /* RegisterLookup.m in Sources */,
+				7373715A122A779F00E05751 /* YAMLParser.m in Sources */,
+				73C071CE122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
