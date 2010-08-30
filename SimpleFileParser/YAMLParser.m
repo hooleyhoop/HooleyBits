@@ -49,6 +49,7 @@
 		CFDictionaryValueCallBacks dvc = [CFDictCallbacks nonRetainingDictionaryValueCallbacks];
 		_rootDict = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &dkc, &dvc );
 		
+		_usedKeys = [[NSMutableSet alloc] init];
 		_dictStack = [[NSMutableArray alloc] init];
 		[self pushDict:_rootDict];
 		 
@@ -125,6 +126,7 @@
 	[_dictStack release];
 	[_key release];
 	[_value release];
+	[_usedKeys release];
 	[super dealloc];
 }
 
@@ -168,7 +170,12 @@
 		_value = [[NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding] retain];
 		
 		// we want to reuse keys
-		[_currentDict setObject:_value forKey:_key];
+		NSString *existingKey = [_usedKeys member:_key];
+		if(!existingKey){
+			[_usedKeys addObject:_key];
+			existingKey = _key;
+		}
+		[_currentDict setObject:_value forKey:existingKey];
 	}
 	
 	_state++;

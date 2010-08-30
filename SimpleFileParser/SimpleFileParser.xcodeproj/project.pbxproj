@@ -73,6 +73,8 @@
 		73A1EF7B1219916B004CAC63 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF761219916B004CAC63 /* Segment.m */; };
 		73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF781219916B004CAC63 /* MemoryMap.m */; };
 		73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1F5811D8C7AD00347BBD /* yaml.framework */; };
+		73AD45D1122C32D5009F6F04 /* registers.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73AD45D0122C32D5009F6F04 /* registers.yaml */; };
+		73AD45D2122C32D5009F6F04 /* registers.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73AD45D0122C32D5009F6F04 /* registers.yaml */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
 		73BDC955122BAE22006D74F6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 732DCA4B12142791000016EE /* Hex.m */; };
 		73BDCA69122BC221006D74F6 /* test2.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73BDCA68122BC221006D74F6 /* test2.yaml */; };
@@ -366,6 +368,7 @@
 		73A1EF761219916B004CAC63 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = ../MachoLoader/Classes/Segment.m; sourceTree = SOURCE_ROOT; };
 		73A1EF771219916B004CAC63 /* MemoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryMap.h; path = ../MachoLoader/Classes/MemoryMap.h; sourceTree = SOURCE_ROOT; };
 		73A1EF781219916B004CAC63 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = ../MachoLoader/Classes/MemoryMap.m; sourceTree = SOURCE_ROOT; };
+		73AD45D0122C32D5009F6F04 /* registers.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = registers.yaml; path = Resources/registers.yaml; sourceTree = "<group>"; };
 		73B2F4F511C7C41500F0C9E6 /* Instruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instruction.h; path = Src/Instruction.h; sourceTree = "<group>"; };
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
@@ -534,6 +537,7 @@
 			children = (
 				73BDCA68122BC221006D74F6 /* test2.yaml */,
 				73C07242122AF85000B31EF5 /* test1.yaml */,
+				73AD45D0122C32D5009F6F04 /* registers.yaml */,
 				73CF1EEF11D8C3A700347BBD /* opcode.yaml */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -1064,6 +1068,7 @@
 				7317DA941213F83B00597E32 /* trashy.txt in Resources */,
 				73C07243122AF85000B31EF5 /* test1.yaml in Resources */,
 				73BDCA69122BC221006D74F6 /* test2.yaml in Resources */,
+				73AD45D1122C32D5009F6F04 /* registers.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,6 +1087,7 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				7317DA951213F83B00597E32 /* trashy.txt in Resources */,
 				73EC19DC1216AC9C001B406E /* opcode.yaml in Resources */,
+				73AD45D2122C32D5009F6F04 /* registers.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

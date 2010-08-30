@@ -18,10 +18,18 @@
 	NSAssert( filePath, @"Error loading opcode file" );
 	
 	YAMLParser *ayp = [[YAMLParser alloc] initWithFilePath:filePath];
-	
+	CFMutableDictionaryRef root = [ayp rootDictionary];
 
-
+	*_conditionalsDict = (NSDictionary *)CFDictionaryGetValue( root, @"conditionals" );
+	*_branch_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"branch_instructions" );
+	*_normal_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"normal_instructions" );
+	[_conditionalsDict retain];
+	[_branch_instructionsDict retain];
+	[_normal_instructionsDict retain];
 }
+
+
+init?
 
 + (NSDictionary *)infoForInstructionString:(NSString *)instruction {
 

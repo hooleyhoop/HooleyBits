@@ -500,6 +500,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 	self = [super init];
 	if(self) {
+		_filePath = [aPath retain];
+
 		_loadCommandsArray = [[NSMutableArray array] retain];
 		addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
@@ -509,17 +511,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_cStringLookup			= [[IntKeyDictionary alloc] init];
 
 		_libraries = [[NSMutableArray alloc] init];
-
-		[self doIt:aPath];
-		[self parseLoadCommands];
-		[self print_indirect_symbols:_startOfLoadCommandsPtr :_ncmds :_sizeofcmds :_cputype :_indirectSymbolTable :_nindirect_symbols :_symtable_ptr :_UNUSED_symbols64 :_nsymbols :_strtable :_strings_size];
-
 	}
 	return self;
 }
 
 - (void)dealloc {
 		
+	[_filePath release];
 	[_memoryMap release];
 	[_uncodedMemoryMap release];
 	[addresses_ release];
@@ -527,6 +525,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_cStringLookup release];
 	[_libraries release];
 	[super dealloc];
+}
+
+- (void)readFile {
+
+	[self doIt:_filePath];
+	[self parseLoadCommands];
+	[self print_indirect_symbols:_startOfLoadCommandsPtr :_ncmds :_sizeofcmds :_cputype :_indirectSymbolTable :_nindirect_symbols :_symtable_ptr :_UNUSED_symbols64 :_nsymbols :_strtable :_strings_size];	
 }
 
 - (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr {
@@ -1085,7 +1090,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					NSString *secName = [NSString stringWithCString:thisSectionName encoding:NSUTF8StringEncoding];
 
 					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
-					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
+//					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
 					
 					[self addSection:secName seg:segmentName start:sect_addr length:newSectSize filePtr:(NSUInteger)sect_pointer];
@@ -1883,11 +1888,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 - (void)doIt:(NSString *)aPath {
 
 	// path to this app
-	NSData *allFile = [NSData dataWithContentsOfFile:aPath];
+	NSData *allFile = [NSData dataWithContentsOfMappedFile:aPath];
 	_codeAddr = [allFile bytes];
 	_codeSize = [allFile length];
 
-	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
+//	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
 	
 	/* Is the executable a FAT? */
 	// FAT is always Big Endian - Extract relevant architecture and convert to native

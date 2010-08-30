@@ -22,6 +22,8 @@
 
 @interface MachoLoader : NSObject {
 
+	NSString			*_filePath;
+
 	struct load_command *_startOfLoadCommandsPtr;
 	NSUInteger			_sizeofcmds;
 	NSUInteger			_ncmds;
@@ -54,6 +56,8 @@
 }
 
 - (id)initWithPath:(NSString *)aPath;
+
+- (void)readFile;
 
 - (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr;
 

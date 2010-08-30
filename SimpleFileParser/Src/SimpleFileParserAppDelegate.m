@@ -57,18 +57,19 @@ nil] retain];
 		[RegisterLookup parseYAML];
 	}];
 	[queue addOperation:operation];
+
+//	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+//	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
+//	[_ml readFile];
+	
 	[queue waitUntilAllOperationsAreFinished];
-	NSLog(@"donw");
 	[queue release];
 	
-	
+	NSLog(@"done");
 	
 	// read a large file
 	// http://www.softwareprojects.com/resources//t-1636goto.html
 	
-//	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-//	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
-//
 //	[HexLookup prepareWith:_ml];
 //
 //	NSError *outError;

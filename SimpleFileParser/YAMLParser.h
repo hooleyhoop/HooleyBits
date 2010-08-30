@@ -16,6 +16,7 @@
 	
 	NSMutableArray			*_dictStack;
 	NSMutableDictionary		*_currentDict;
+	NSMutableSet				*_usedKeys;
 }
 
 @property CFMutableDictionaryRef rootDictionary;

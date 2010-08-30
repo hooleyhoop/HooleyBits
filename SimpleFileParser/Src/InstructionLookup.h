@@ -8,6 +8,9 @@
 
 @interface InstructionLookup : NSObject {
 
+	NSDictionary *_conditionalsDict;
+	NSDictionary *_branch_instructionsDict;
+	NSDictionary *_normal_instructionsDict;
 }
 
 + (void)parseYAML;
