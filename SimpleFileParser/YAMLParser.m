@@ -10,7 +10,11 @@
 #import <yaml/yaml.h>
 #import "CFDictCallbacks.h"
 
+
 @interface YAMLParser ()
+
+- (void)pushDict:(NSDictionary *)dict;
+- (void)popDict;
 
 - (void)endMapping:(yaml_event_t)e;	
 - (void)newMapping:(yaml_event_t)e;
@@ -19,6 +23,8 @@
 @end
 
 @implementation YAMLParser
+
+@synthesize rootDictionary=_rootDict;
 
 - (id)initWithFilePath:(NSString *)val {
 	
@@ -43,6 +49,9 @@
 		CFDictionaryValueCallBacks dvc = [CFDictCallbacks nonRetainingDictionaryValueCallbacks];
 		_rootDict = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &dkc, &dvc );
 		
+		_dictStack = [[NSMutableArray alloc] init];
+		[self pushDict:_rootDict];
+		 
 		/* Read the event sequence. */
 		int done = 0;
 		while (!done) {
@@ -111,23 +120,36 @@
 
 
 - (void)dealloc {
+
 	CFRelease(_rootDict);
+	[_dictStack release];
+	[_key release];
+	[_value release];
 	[super dealloc];
 }
 
 	
 - (void)newMapping:(yaml_event_t)e {
 	
-	_state = 0;
 	NSLog(@"New Map");
-	// we never want to release this
-//	_opcodeDict = [[NSMutableDictionary dictionaryWithCapacity:3] retain];
+
+	_state = 0;
+	if (_key) {
+		NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithCapacity:3];
+		[_currentDict setObject:newDict forKey:_key];
+		
+		[self pushDict:newDict];
+		
+		[_key release];
+		_key = nil;
+	}
 }
 
 - (void)endMapping:(yaml_event_t)e {
 	
 	NSLog(@"End Map");
 
+	[self popDict];
 	// NSAssert( _state==6, @"_state is fucked");
 //	CFDictionaryAddValue( _opcodeLookup, [_opcodeDict objectForKey:@"instruction"], _opcodeDict );
 }
@@ -136,51 +158,33 @@
 - (void)addScalar:(yaml_event_t)e {
 	
 	BOOL oddOrEven = _state & 1;
-
 	NSLog(@"Scalar: %s %i", e.data.scalar.value, oddOrEven);
-//	// TODO: will leak the last value and key
-//	if(!oddOrEven) {
-//		[_key release];
-//		_key = [[NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding] retain];
-//	} else {
-//		[_value release];
-//		_value = [[NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding] retain];
-//	}
-//	
-//	switch(_state) {
-//		case 0:
-//			NSAssert( [_key isEqualToString:@"instruction"], @"der" );
-//			break;
-//		case 1:
-//			[_opcodeDict setObject:_value forKey:@"instruction"];
-//			break;
-//		case 2:
-//			NSAssert( [_key isEqualToString:@"name"], @"der" );
-//			break;
-//		case 3:
-//			[_opcodeDict setObject:_value forKey:@"name"];
-//			break;
-//		case 4:
-//			NSAssert( [_key isEqualToString:@"description"], @"der"  );
-//			break;
-//		case 5:
-//			[_opcodeDict setObject:_value forKey:@"description"];
-//			break;
-//		case 6:
-//			NSAssert( [_key isEqualToString:@"format"], @"der"  );
-//			break;
-//		case 7:
-//			[_opcodeDict setObject:_value forKey:@"format"];
-//			break;
-//			
-//		default:
-//			[NSException raise:@"Unknown state" format:@"%i", _state];
-//			break;
-//	}
+
+	if(!oddOrEven) {
+		[_key release];
+		_key = [[NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding] retain];
+	} else {
+		[_value release];
+		_value = [[NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding] retain];
+		
+		// we want to reuse keys
+		[_currentDict setObject:_value forKey:_key];
+	}
+	
 	_state++;
-//	
-//	NSString *hmm = [NSString stringWithCString:(char *)e.data.scalar.value encoding:NSASCIIStringEncoding];
-	//	NSLog(@"YAML_SCALAR_EVENT %@", hmm );
 }
 
+- (void)pushDict:(NSDictionary *)dict {
+
+	[_dictStack addObject:dict];
+	_currentDict = (NSMutableDictionary *)dict;
+}
+
+- (void)popDict {
+
+	if([_dictStack count]) {
+		[_dictStack removeLastObject];
+		_currentDict = [_dictStack lastObject];
+	}
+}
 @end

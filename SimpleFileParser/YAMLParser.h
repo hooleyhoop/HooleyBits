@@ -12,7 +12,13 @@
 
 	CFMutableDictionaryRef	_rootDict;
 	NSUInteger					_state;
+	NSString					*_key, *_value;
+	
+	NSMutableArray			*_dictStack;
+	NSMutableDictionary		*_currentDict;
 }
+
+@property CFMutableDictionaryRef rootDictionary;
 
 - (id)initWithFilePath:(NSString *)val;
 

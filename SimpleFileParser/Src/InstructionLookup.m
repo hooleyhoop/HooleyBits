@@ -12,11 +12,6 @@
 
 @implementation InstructionLookup
 
-static NSMutableDictionary *_opcodeDict;
-static NSString *_key, *_value;
-
-
-
 + (void)parseYAML {
 
 	NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"opcode" ofType:@"yaml"];

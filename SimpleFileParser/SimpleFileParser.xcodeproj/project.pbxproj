@@ -74,8 +74,10 @@
 		73A1EF7C1219916B004CAC63 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A1EF781219916B004CAC63 /* MemoryMap.m */; };
 		73A50E5D121419DE006BE47B /* yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1F5811D8C7AD00347BBD /* yaml.framework */; };
 		73B2F4F711C7C41500F0C9E6 /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
+		73BDC955122BAE22006D74F6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 732DCA4B12142791000016EE /* Hex.m */; };
+		73BDCA69122BC221006D74F6 /* test2.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73BDCA68122BC221006D74F6 /* test2.yaml */; };
 		73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */; };
-		73C071CE122AF38B00B31EF5 /* YAMLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */; };
+		73C07243122AF85000B31EF5 /* test1.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73C07242122AF85000B31EF5 /* test1.yaml */; };
 		73CF1D4011D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1D4111D8AEDF00347BBD /* CHDataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */; };
 		73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 73CF1EEF11D8C3A700347BBD /* opcode.yaml */; };
@@ -367,8 +369,10 @@
 		73B2F4F511C7C41500F0C9E6 /* Instruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instruction.h; path = Src/Instruction.h; sourceTree = "<group>"; };
 		73B2F4F611C7C41500F0C9E6 /* Instruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Instruction.m; path = Src/Instruction.m; sourceTree = "<group>"; };
 		73B2F50011C7C6EC00F0C9E6 /* InstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionTests.m; path = Tests/InstructionTests.m; sourceTree = "<group>"; };
+		73BDCA68122BC221006D74F6 /* test2.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test2.yaml; path = Resources/test2.yaml; sourceTree = "<group>"; };
 		73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lldb.xcodeproj; path = ../../../Source/lldb/lldb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		73C071CC122AF38B00B31EF5 /* YAMLParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YAMLParserTests.m; sourceTree = "<group>"; };
+		73C07242122AF85000B31EF5 /* test1.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test1.yaml; path = Resources/test1.yaml; sourceTree = "<group>"; };
 		73CF1CE811D8A9CB00347BBD /* VeryLargePtrTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VeryLargePtrTableTests.m; path = Tests/VeryLargePtrTableTests.m; sourceTree = "<group>"; };
 		73CF1D3F11D8AEDF00347BBD /* CHDataStructures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CHDataStructures.framework; path = ../../../Source/CHDataStructures/build/Debug/CHDataStructures.framework; sourceTree = SOURCE_ROOT; };
 		73CF1EE511D8C31D00347BBD /* YAMLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YAMLTests.m; path = Tests/YAMLTests.m; sourceTree = "<group>"; };
@@ -528,6 +532,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				73BDCA68122BC221006D74F6 /* test2.yaml */,
+				73C07242122AF85000B31EF5 /* test1.yaml */,
 				73CF1EEF11D8C3A700347BBD /* opcode.yaml */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -1056,6 +1062,8 @@
 			files = (
 				73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */,
 				7317DA941213F83B00597E32 /* trashy.txt in Resources */,
+				73C07243122AF85000B31EF5 /* test1.yaml in Resources */,
+				73BDCA69122BC221006D74F6 /* test2.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1148,7 @@
 				73737129122A6F4300E05751 /* RegisterLookupTests.m in Sources */,
 				73737159122A779F00E05751 /* YAMLParser.m in Sources */,
 				73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
+				73BDC955122BAE22006D74F6 /* Hex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,7 +1210,6 @@
 				734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */,
 				73737123122A6F2C00E05751 /* RegisterLookup.m in Sources */,
 				7373715A122A779F00E05751 /* YAMLParser.m in Sources */,
-				73C071CE122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
