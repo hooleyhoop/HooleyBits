@@ -50,6 +50,7 @@
 		[_consumer eatLine:line];
 	};
 	[_fileString enumerateLinesUsingBlock:enumerateBlock];
+	[_consumer noMoreLines];
 }
 
 @end

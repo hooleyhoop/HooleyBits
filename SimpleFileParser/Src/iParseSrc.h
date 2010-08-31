@@ -10,5 +10,6 @@
 @protocol iParseSrc
 
 - (void)processSrcLine:(NSString *)lineText type:(enum srcLineType)arg;
+- (void)noMoreLinesComing;
 
 @end

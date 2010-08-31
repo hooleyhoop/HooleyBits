@@ -10,5 +10,6 @@
 @protocol iConsumeLines
 
 - (void)eatLine:(NSString *)val;
+- (void)noMoreLines;
 
 @end

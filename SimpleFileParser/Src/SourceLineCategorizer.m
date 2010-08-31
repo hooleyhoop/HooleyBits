@@ -54,6 +54,10 @@
 	[pool release];
 }
 
+- (void)noMoreLines {
+	[_target noMoreLinesComing];
+}
+
 - (void)addLineToTarget:(NSString *)aLine {
 
 	if(_stateChanged) {

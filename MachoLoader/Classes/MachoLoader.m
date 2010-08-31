@@ -1888,7 +1888,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 - (void)doIt:(NSString *)aPath {
 
 	// path to this app
-	NSData *allFile = [NSData dataWithContentsOfMappedFile:aPath];
+	NSData *allFile = [NSData dataWithContentsOfFile:aPath];
+	if(!allFile)
+		[NSException raise:@"App Not Found" format:@"%@", aPath];
+
 	_codeAddr = [allFile bytes];
 	_codeSize = [allFile length];
 

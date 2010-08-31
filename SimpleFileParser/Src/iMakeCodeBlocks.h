@@ -10,6 +10,8 @@
 
 @protocol iMakeCodeBlocks
 
+- (void)newCodeBlockWithName:(NSString *)funcName lines:(NSArray *)lineArray;
+
 - (void)newCodeBlockWithName:(NSString *)funcName;
 
 //-- this will change

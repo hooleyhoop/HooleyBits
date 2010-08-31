@@ -19,9 +19,6 @@
 @synthesize window = _window;
 @synthesize machLoader = _ml;
 
-// registers
-// %eip = next instruction address
-
 // http://programminggroundup.blogspot.com/2007/01/appendix-b-common-x86-instructions.html
 // http://siyobik.info/index.php?module=x86
 
@@ -44,7 +41,12 @@ nil] retain];
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
+	// list architectures in app
+	// lipo -info /Applications/Foo.app
+	// file /Applications/Foo.app
+
 	// strip the app to desired architectire
+	// lipo remove ppc /Applications/Foo.app -output /Applications/Foo.app_thin
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
 
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];

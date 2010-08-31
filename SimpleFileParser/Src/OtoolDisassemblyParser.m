@@ -51,7 +51,7 @@
 	self = [super init];
 	if(self) {
 		
-//		_instructionHash = [instHash retain];
+		_instructionHash = [instHash retain];
 		
 		_codeBlockStore = [[CodeBlockStore store] retain];
 		_codeBlockfactory = [[CodeBlockFactory factoryWithStore:_codeBlockStore] retain];
@@ -71,23 +71,71 @@
 	[super dealloc];
 }
 
+- (void)noMoreLinesComing {
 
-- (void)constructLine:(NSString *)lineText {
+	[self constructBlock];
+}
+
+- (void)newTitle:(NSString *)lineText {
+	
+	if(_title){
+		[self constructBlock];
+	}
+	_title = [lineText retain];
+	_blockLines = [[NSMutableArray alloc] init];
+}
+
+- (void)newLine:(NSString *)lineText {
+
+	NSAssert(_blockLines, @"fuck off");
+	//[self constructLine:lineText];
+	[_blockLines addObject:lineText];
+}
+
+typedef void(^BasicBlock)(void); 
+
+- (void)constructBlock {
+
+	NSArray *tempArray = [_blockLines copy];
+	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
+	BasicBlock block = ^{
+		
+		NSMutableArray *lines = [[NSMutableArray alloc] initWithCapacity:[tempArray count]];
+		for( NSString *eachStr in tempArray ) {
+			// TODO: wy is this an instance method?
+			CodeLine *line = [self _tokeniseLine:eachStr];
+			if(line)
+				[lines addObject:line];
+		}
+		// TODO: how to do this?
+		[_codeBlockfactory newCodeBlockWithName:_title lines:lines];
+		[lines release];
+		[tempArray release];
+	}; 
+
+	dispatch_async( q_default, block );
+	
+	[_title release];
+	_title = nil;
+	[_blockLines release];
+	_blockLines = nil;
+}
+
+//- (void)constructLine:(NSString *)lineText {
 	
 //	CodeLine *line = [self _tokeniseLine:lineText];
 //	[_codeBlockfactory addCodeLine:line];
-}
+//}
 
 - (void)processSrcLine:(NSString *)lineText type:(enum srcLineType)lineType {
 
 	switch (lineType) {
 		case BLOCK_TITLE:
-			[_codeBlockfactory newCodeBlockWithName:lineText];
+			[self newTitle:lineText];
 			break;
 		case BLOCK_LINE:
-			[self constructLine:lineText];
+			[self newLine:lineText];
 			break;
-			
 		default:
 			[NSException raise:@"Unknown Src Line type" format:@"%i", lineType];
 			break;
@@ -97,38 +145,37 @@
 // -- exactly how much should we do here?
 - (CodeLine *)_tokeniseLine:(NSString *)aLine {
 		
-//putback	NSArray *components = worderize( aLine );
+	NSArray *components = worderize( aLine );
 
 	// not optional
 	// NSString *lineOffset = [components objectAtIndex:0];
-//putback	NSString *address = [components objectAtIndex:1];
+	NSString *address = [components objectAtIndex:1];
 	// NSString *code = [components objectAtIndex:2];
-//putback	NSString *opcode = [components objectAtIndex:3];
+	NSString *opcode = [components objectAtIndex:3];
 
 	// Instructions are cached - ie you should always get the same Instruction back for the same opcode
-//putback	Instruction *instr = [_instructionHash instructionForOpcode:opcode];
+	Instruction *instr = [_instructionHash instructionForOpcode:opcode];
 	
-//putback	NSString *arguments=nil, *functionHint=nil;
-//putback	NSArray *allArgs = nil;
+	NSString *arguments=nil, *functionHint=nil;
+	NSArray *allArgs = nil;
 
 	// optional
-//putback	if([components count]>=5)
-//putback	{
-//putback		arguments = [components objectAtIndex:4];
-//putback		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
-//putback		[tkns1 secondPass];
-//putback		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+	if([components count]>=5)
+	{
+		arguments = [components objectAtIndex:4];
+		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
+		[tkns1 secondPass];
+		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 		
-//putback		allArgs = [scanner.allArguments copy];
-//putback		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
-//putback	}
-//putback	if([components count]>=6)
-//putback		functionHint = [components objectAtIndex:5];
+		allArgs = [scanner.allArguments copy];
+		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
+	}
+	if([components count]>=6)
+		functionHint = [components objectAtIndex:5];
 
-//putback	NSUInteger addressInt = hexStringToInt(address);
-//putback	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
-//putback	return newLine;
-	return nil;
+	NSUInteger addressInt = hexStringToInt(address);
+	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
+	return newLine;
 }
 
 

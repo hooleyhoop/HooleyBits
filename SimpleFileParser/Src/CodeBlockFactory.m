@@ -42,6 +42,10 @@
 	[super dealloc];
 }
 
+- (void)newCodeBlockWithName:(NSString *)funcName lines:(NSArray *)lineArray {
+	NSLog(@"async woo woo woo woo woo");
+}
+
 - (void)newCodeBlockWithName:(NSString *)funcName {
 
 	NSAssert( _blockStore, @"need a blockstore" );

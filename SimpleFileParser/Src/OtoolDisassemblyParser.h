@@ -12,8 +12,11 @@
 
 @interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
+	NSString				*_title;
+	NSMutableArray		*_blockLines;
+	
 	CodeBlockStore		*_codeBlockStore;
-	CodeBlockFactory	*_codeBlockfactory;
+	CodeBlockFactory		*_codeBlockfactory;
 	
 	InstructionHash		*_instructionHash;
 }
