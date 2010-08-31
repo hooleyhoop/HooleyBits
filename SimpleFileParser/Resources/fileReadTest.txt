@@ -1,0 +1,271 @@
+/Applications/Sibelius 6-386.app/Contents/MacOS/Sibelius 6:
+
+md5: bbc028591fda410a7b0665e9c332a576
+
+(__TEXT,__text) section
+
+start:
+	+0	00002ac0  6a00					  pushl		  $0x00
+	+2	00002ac2  89e5					  movl		  %esp,%ebp
+	+4	00002ac4  83e4f0				  andl		  $0xf0,%esp
+	+7	00002ac7  83ec10				  subl		  $0x10,%esp
+   +10	00002aca  8b5d04				  movl		  0x04(%ebp),%ebx
+   +13	00002acd  895c2400				  movl		  %ebx,0x00(%esp)
+   +17	00002ad1  8d4d08				  leal		  0x08(%ebp),%ecx
+   +20	00002ad4  894c2404				  movl		  %ecx,0x04(%esp)
+   +24	00002ad8  83c301				  addl		  $0x01,%ebx
+   +27	00002adb  c1e302				  shll		  $0x02,%ebx
+   +30	00002ade  01cb					  addl		  %ecx,%ebx
+   +32	00002ae0  895c2408				  movl		  %ebx,0x08(%esp)
+   +36	00002ae4  e801000000			  calll		  0x00002aea
+   +41	00002ae9  f4					  hlt
+
+	+0	00002aea  55					  pushl		  %ebp
+	+1	00002aeb  89e5					  movl		  %esp,%ebp
+	+3	00002aed  57					  pushl		  %edi
+	+4	00002aee  56					  pushl		  %esi
+	+5	00002aef  53					  pushl		  %ebx
+	+6	00002af0  83ec2c				  subl		  $0x2c,%esp
+	+9	00002af3  8b7d0c				  movl		  0x0c(%ebp),%edi
+   +12	00002af6  8b5d10				  movl		  0x10(%ebp),%ebx
+   +15	00002af9  8b4508				  movl		  0x08(%ebp),%eax
+   +18	00002afc  a30c30f200			  movl		  %eax,0x00f2300c
+   +23	00002b01  893d0830f200			  movl		  %edi,0x00f23008
+   +29	00002b07  891d0430f200			  movl		  %ebx,0x00f23004
+   +35	00002b0d  8b0f					  movl		  (%edi),%ecx
+   +37	00002b0f  85c9					  testl		  %ecx,%ecx
+   +39	00002b11  7507					  jne		  0x00002b1a
+   +41	00002b13  b900eeb900			  movl		  $0x00b9ee00,%ecx
+   +46	00002b18  eb19					  jmp		  0x00002b33
+   +48	00002b1a  89ca					  movl		  %ecx,%edx
+   +50	00002b1c  eb0e					  jmp		  0x00002b2c
+   +52	00002b1e  3c2f					  cmpb		  $0x2f,%al					    '/'
+   +54	00002b20  7405					  je		  0x00002b27
+   +56	00002b22  83c201				  addl		  $0x01,%edx
+   +59	00002b25  eb05					  jmp		  0x00002b2c
+   +61	00002b27  83c201				  addl		  $0x01,%edx
+   +64	00002b2a  89d1					  movl		  %edx,%ecx
+   +66	00002b2c  0fb602				  movzbl	  (%edx),%eax
+   +69	00002b2f  84c0					  testb		  %al,%al
+   +71	00002b31  75eb					  jne		  0x100002b1e
+   +73	00002b33  890d0030f200			  movl		  %ecx,0x00f23000
+   +79	00002b39  89d8					  movl		  %ebx,%eax
+   +81	00002b3b  eb03					  jmp		  0x00002b40
+   +83	00002b3d  83c004				  addl		  $0x04,%eax
+   +86	00002b40  8b10					  movl		  (%eax),%edx
+   +88	00002b42  85d2					  testl		  %edx,%edx
+   +90	00002b44  75f7					  jne		  0x100002b3d
+   +92	00002b46  8d7004				  leal		  0x04(%eax),%esi
+   +95	00002b49  a100d02301			  movl		  0x0123d000,%eax
+  +100	00002b4e  8b00					  movl		  (%eax),%eax
+  +102	00002b50  85c0					  testl		  %eax,%eax
+  +104	00002b52  7402					  je		  0x00002b56
+  +106	00002b54  ffd0					  call		  *%eax
+  +108	00002b56  a108d02301			  movl		  0x0123d008,%eax
+  +113	00002b5b  8b00					  movl		  (%eax),%eax
+  +115	00002b5d  85c0					  testl		  %eax,%eax
+  +117	00002b5f  7402					  je		  0x00002b63
+  +119	00002b61  ffd0					  call		  *%eax
+  +121	00002b63  e87dee2301			  calll		  0x012419e5				    ___keymgr_dwarf2_register_sections
+  +126	00002b68  8d45e0				  leal		  0xe0(%ebp),%eax
+  +129	00002b6b  89442404				  movl		  %eax,0x04(%esp)
+  +133	00002b6f  c7042404eeb900		  movl		  $0x00b9ee04,(%esp)		    __dyld_make_delayed_module_initializer_calls
+  +140	00002b76  e85d000000			  calll		  0x00002bd8
+  +145	00002b7b  ff55e0				  call		  *0xe0(%ebp)
+  +148	00002b7e  8d45e4				  leal		  0xe4(%ebp),%eax
+  +151	00002b81  89442404				  movl		  %eax,0x04(%esp)
+  +155	00002b85  c7042434eeb900		  movl		  $0x00b9ee34,(%esp)		    __dyld_mod_term_funcs
+  +162	00002b8c  e847000000			  calll		  0x00002bd8
+  +167	00002b91  8b45e4				  movl		  0xe4(%ebp),%eax
+  +170	00002b94  85c0					  testl		  %eax,%eax
+  +172	00002b96  7408					  je		  0x00002ba0
+  +174	00002b98  890424				  movl		  %eax,(%esp)
+  +177	00002b9b  e862060000			  calll		  0x00003202
+  +182	00002ba0  a104d02301			  movl		  0x0123d004,%eax
+  +187	00002ba5  c70000000000			  movl		  $0x00000000,(%eax)
+  +193	00002bab  8974240c				  movl		  %esi,0x0c(%esp)
+  +197	00002baf  895c2408				  movl		  %ebx,0x08(%esp)
+  +201	00002bb3  897c2404				  movl		  %edi,0x04(%esp)
+  +205	00002bb7  8b4508				  movl		  0x08(%ebp),%eax
+  +208	00002bba  890424				  movl		  %eax,(%esp)
+  +211	00002bbd  e888ce5f00			  calll		  0x005ffa4a
+  +216	00002bc2  890424				  movl		  %eax,(%esp)
+  +219	00002bc5  e8e8ee2301			  calll		  0x01241ab2				    _exit
+  +224	00002bca  90					  nop
+  +225	00002bcb  90					  nop
+  +226	00002bcc  6800100000			  pushl		  $0x00001000
+  +231	00002bd1  ff25ec3e0201			  jmp		  *0x01023eec
+  +237	00002bd7  90					  nop
+  +238	00002bd8  ff25f03e0201			  jmp		  *0x01023ef0
+
+	+0	00002bde  55					  pushl		  %ebp
+	+1	00002bdf  89e5					  movl		  %esp,%ebp
+	+3	00002be1  83ec08				  subl		  $0x08,%esp
+	+6	00002be4  8b4508				  movl		  0x08(%ebp),%eax
+	+9	00002be7  c70001000000			  movl		  $0x00000001,(%eax)
+   +15	00002bed  c9					  leave
+   +16	00002bee  c3					  lastLine? of section 1? and first line of section 2
+
+	+0	00002bef  55					  pushl		  %ebp
+	+1	00002bf0  89e5					  movl		  %esp,%ebp
+	+3	00002bf2  53					  pushl		  %ebx
+	+4	00002bf3  83ec24				  subl		  $0x24,%esp
+	+7	00002bf6  e800000000			  calll		  0x00002bfb
+   +12	00002bfb  5b					  popl		  %ebx
+   +13	00002bfc  8b4508				  movl		  0x08(%ebp),%eax
+   +16	00002bff  8945f4				  movl		  %eax,0xf4(%ebp)
+   +19	00002c02  8b45f4				  movl		  0xf4(%ebp),%eax
+   +22	00002c05  8b5004				  movl		  0x04(%eax),%edx
+   +25	00002c08  8b4508				  movl		  0x08(%ebp),%eax
+   +28	00002c0b  89442408				  movl		  %eax,0x08(%esp)
+   +32	00002c0f  8b4508				  movl		  0x08(%ebp),%eax
+   +35	00002c12  89442404				  movl		  %eax,0x04(%esp)
+   +39	00002c16  8d83e3ffffff			  leal		  0xffffffe3(%ebx),%eax
+   +45	00002c1c  890424				  movl		  %eax,(%esp)
+   +48	00002c1f  ffd2					  call		  *%edx
+   +50	00002c21  85c0					  testl		  %eax,%eax
+   +52	00002c23  7409					  je		  0x00002c2e
+   +54	00002c25  8b45f4				  movl		  0xf4(%ebp),%eax
+   +57	00002c28  c700ffffffff			  movl		  $0xffffffff,(%eax)
+   +63	00002c2e  83c424				  addl		  $0x24,%esp
+   +66	00002c31  5b					  popl		  %ebx
+   +67	00002c32  c9					  leave
+   +68	00002c33  c3					  ret
+
+	+0	00002c34  55					  pushl		  %ebp
+	+1	00002c35  89e5					  movl		  %esp,%ebp
+	+3	00002c37  53					  pushl		  %ebx
+	+4	00002c38  83ec34				  subl		  $0x34,%esp
+	+7	00002c3b  e800000000			  calll		  0x00002c40
+   +12	00002c40  5b					  popl		  %ebx
+   +13	00002c41  c745f000000000		  movl		  $0x00000000,0xf0(%ebp)
+   +20	00002c48  8b4508				  movl		  0x08(%ebp),%eax
+   +23	00002c4b  8945f4				  movl		  %eax,0xf4(%ebp)
+   +26	00002c4e  8d45f0				  leal		  0xf0(%ebp),%eax
+   +29	00002c51  89442408				  movl		  %eax,0x08(%esp)
+   +33	00002c55  8d45f0				  leal		  0xf0(%ebp),%eax
+   +36	00002c58  89442404				  movl		  %eax,0x04(%esp)
+   +40	00002c5c  8d83afffffff			  leal		  0xffffffaf(%ebx),%eax
+   +46	00002c62  890424				  movl		  %eax,(%esp)
+   +49	00002c65  8b4508				  movl		  0x08(%ebp),%eax
+   +52	00002c68  ffd0					  call		  *%eax
+   +54	00002c6a  85c0					  testl		  %eax,%eax
+   +56	00002c6c  7409					  je		  0x00002c77
+   +58	00002c6e  c745e4ffffffff		  movl		  $0xffffffff,0xe4(%ebp)
+   +65	00002c75  eb2a					  jmp		  0x00002ca1
+   +67	00002c77  8d45f0				  leal		  0xf0(%ebp),%eax
+   +70	00002c7a  890424				  movl		  %eax,(%esp)
+   +73	00002c7d  8b450c				  movl		  0x0c(%ebp),%eax
+   +76	00002c80  ffd0					  call		  *%eax
+   +78	00002c82  8b45f0				  movl		  0xf0(%ebp),%eax
+   +81	00002c85  85c0					  testl		  %eax,%eax
+   +83	00002c87  7512					  jne		  0x00002c9b
+   +85	00002c89  8d45f0				  leal		  0xf0(%ebp),%eax
+   +88	00002c8c  890424				  movl		  %eax,(%esp)
+   +91	00002c8f  8b450c				  movl		  0x0c(%ebp),%eax
+   +94	00002c92  ffd0					  call		  *%eax
+   +96	00002c94  c745f000000000		  movl		  $0x00000000,0xf0(%ebp)
+  +103	00002c9b  8b45f0				  movl		  0xf0(%ebp),%eax
+  +106	00002c9e  8945e4				  movl		  %eax,0xe4(%ebp)
+  +109	00002ca1  8b45e4				  movl		  0xe4(%ebp),%eax
+  +112	00002ca4  83c434				  addl		  $0x34,%esp
+  +115	00002ca7  5b					  popl		  %ebx
+  +116	00002ca8  c9					  leave
+  +117	00002ca9  c3					  ret
+
+	+0	00002caa  55					  pushl		  %ebp
+	+1	00002cab  89e5					  movl		  %esp,%ebp
+	+3	00002cad  53					  pushl		  %ebx
+	+4	00002cae  83ec34				  subl		  $0x34,%esp
+	+7	00002cb1  e800000000			  calll		  0x00002cb6
+   +12	00002cb6  5b					  popl		  %ebx
+   +13	00002cb7  8d45e8				  leal		  0xe8(%ebp),%eax
+   +16	00002cba  89442404				  movl		  %eax,0x04(%esp)
+   +20	00002cbe  c704240e000000		  movl		  $0x0000000e,(%esp)
+   +27	00002cc5  e83eed2301			  calll		  0x01241a08				    __keymgr_get_and_lock_processwide_ptr_2
+   +32	00002cca  85c0					  testl		  %eax,%eax
+   +34	00002ccc  740c					  je		  0x00002cda
+   +36	00002cce  c745e400000000		  movl		  $0x00000000,0xe4(%ebp)
+   +43	00002cd5  e935010000			  jmpl		  0x00002e0f
+   +48	00002cda  8b45e8				  movl		  0xe8(%ebp),%eax
+   +51	00002cdd  8945ec				  movl		  %eax,0xec(%ebp)
+   +54	00002ce0  837dec00				  cmpl		  $0x00,0xec(%ebp)
+   +58	00002ce4  7529					  jne		  0x00002d0f
+   +60	00002ce6  c744240401000000		  movl		  $0x00000001,0x04(%esp)
+   +68	00002cee  c7042414000000		  movl		  $0x00000014,(%esp)
+   +75	00002cf5  e872ed2301			  calll		  0x01241a6c				    _calloc
+   +80	00002cfa  8945ec				  movl		  %eax,0xec(%ebp)
+   +83	00002cfd  837dec00				  cmpl		  $0x00,0xec(%ebp)
+   +87	00002d01  750c					  jne		  0x00002d0f
+   +89	00002d03  c745e400000000		  movl		  $0x00000000,0xe4(%ebp)
+   +96	00002d0a  e900010000			  jmpl		  0x00002e0f
+  +101	00002d0f  8b45ec				  movl		  0xec(%ebp),%eax
+  +104	00002d12  0fb64003				  movzbl	  0x03(%eax),%eax
+  +108	00002d16  84c0					  testb		  %al,%al
+  +110	00002d18  0f85cf000000			  jnel		  0x00002ded
+  +116	00002d1e  c744240410000000		  movl		  $0x00000010,0x04(%esp)
+  +124	00002d26  8d8394c1b900			  leal		  0x00b9c194(%ebx),%eax
+  +130	00002d2c  890424				  movl		  %eax,(%esp)
+  +133	00002d2f  e874ed2301			  calll		  0x01241aa8				    _dlopen
+  +138	00002d34  8945f0				  movl		  %eax,0xf0(%ebp)
+  +141	00002d37  837df000				  cmpl		  $0x00,0xf0(%ebp)
+  +145	00002d3b  0f84b4000000			  jel		  0x00002df5
+  +151	00002d41  8d83afc1b900			  leal		  0x00b9c1af(%ebx),%eax
+  +157	00002d47  89442404				  movl		  %eax,0x04(%esp)
+  +161	00002d4b  8b45f0				  movl		  0xf0(%ebp),%eax
+  +164	00002d4e  890424				  movl		  %eax,(%esp)
+  +167	00002d51  e857ed2301			  calll		  0x01241aad				    _dlsym
+  +172	00002d56  89c2					  movl		  %eax,%edx
+  +174	00002d58  8b45ec				  movl		  0xec(%ebp),%eax
+  +177	00002d5b  895008				  movl		  %edx,0x08(%eax)
+  +180	00002d5e  8d83bcc1b900			  leal		  0x00b9c1bc(%ebx),%eax
+  +186	00002d64  89442404				  movl		  %eax,0x04(%esp)
+  +190	00002d68  8b45f0				  movl		  0xf0(%ebp),%eax
+  +193	00002d6b  890424				  movl		  %eax,(%esp)
+  +196	00002d6e  e83aed2301			  calll		  0x01241aad				    _dlsym
+  +201	00002d73  89c2					  movl		  %eax,%edx
+  +203	00002d75  8b45ec				  movl		  0xec(%ebp),%eax
+  +206	00002d78  89500c				  movl		  %edx,0x0c(%eax)
+  +209	00002d7b  8b45ec				  movl		  0xec(%ebp),%eax
+  +212	00002d7e  8b4008				  movl		  0x08(%eax),%eax
+  +215	00002d81  85c0					  testl		  %eax,%eax
+  +217	00002d83  7470					  je		  0x00002df5
+  +219	00002d85  8b45ec				  movl		  0xec(%ebp),%eax
+  +222	00002d88  8b400c				  movl		  0x0c(%eax),%eax
+  +225	00002d8b  85c0					  testl		  %eax,%eax
+  +227	00002d8d  7466					  je		  0x00002df5
+  +229	00002d8f  8b45ec				  movl		  0xec(%ebp),%eax
+  +232	00002d92  8b500c				  movl		  0x0c(%eax),%edx
+  +235	00002d95  8b45ec				  movl		  0xec(%ebp),%eax
+  +238	00002d98  8b4008				  movl		  0x08(%eax),%eax
+  +241	00002d9b  89542404				  movl		  %edx,0x04(%esp)
+  +245	00002d9f  890424				  movl		  %eax,(%esp)
+  +248	00002da2  e88dfeffff			  calll		  0x100002c34
+  +253	00002da7  8945f4				  movl		  %eax,0xf4(%ebp)
+  +256	00002daa  837df4ff				  cmpl		  $0xff,0xf4(%ebp)
+  +260	00002dae  7445					  je		  0x00002df5
+  +262	00002db0  837df400				  cmpl		  $0x00,0xf4(%ebp)
+  +266	00002db4  7509					  jne		  0x00002dbf
+  +268	00002db6  8b45ec				  movl		  0xec(%ebp),%eax
+  +271	00002db9  c6400302				  movb		  $0x02,0x03(%eax)
+  +275	00002dbd  eb2e					  jmp		  0x00002ded
+  +277	00002dbf  8d83cbc1b900			  leal		  0x00b9c1cb(%ebx),%eax
+  +283	00002dc5  89442404				  movl		  %eax,0x04(%esp)
+  +287	00002dc9  8b45f0				  movl		  0xf0(%ebp),%eax
+  +290	00002dcc  890424				  movl		  %eax,(%esp)
+  +293	00002dcf  e8d9ec2301			  calll		  0x01241aad				    _dlsym
+  +298	00002dd4  89c2					  movl		  %eax,%edx
+  +300	00002dd6  8b45ec				  movl		  0xec(%ebp),%eax
+  +303	00002dd9  895010				  movl		  %edx,0x10(%eax)
+  +306	00002ddc  8b45ec				  movl		  0xec(%ebp),%eax
+  +309	00002ddf  8b4010				  movl		  0x10(%eax),%eax
+  +312	00002de2  85c0					  testl		  %eax,%eax
+  +314	00002de4  740f					  je		  0x00002df5
+  +316	00002de6  8b45ec				  movl		  0xec(%ebp),%eax
+  +319	00002de9  c6400310				  movb		  $0x10,0x03(%eax)
+  +323	00002ded  8b45ec				  movl		  0xec(%ebp),%eax
+  +326	00002df0  8945e4				  movl		  %eax,0xe4(%ebp)
+  +329	00002df3  eb1a					  jmp		  0x00002e0f
+  +331	00002df5  8b45ec				  movl		  0xec(%ebp),%eax
+  +334	00002df8  89442404				  movl		  %eax,0x04(%esp)
+  +338	00002dfc  c704240e000000		  movl		  $0x0000000e,(%esp)

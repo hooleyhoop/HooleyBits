@@ -435,13 +435,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						}
 					}
 
-					[self processSymbolItem:&nlist64 stringTable:strings];
+//					[self processSymbolItem:&nlist64 stringTable:strings];
 						
 				} else {
 					struct nlist_64 symb = symbols64[indirect_symbols[j+n]];
 					n_stringIndex = symb.n_un.n_strx;
 					
-					[self processSymbolItem:&symb stringTable:strings];
+//					[self processSymbolItem:&symb stringTable:strings];
 					
 					// TODO: 64bit support
 				}
@@ -596,7 +596,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
 			float a4ByteLiteralFloat;
 			memcpy((char *)&a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
-			NSLog(@"%f", a4ByteLiteralFloat);
+//			NSLog(@"%f", a4ByteLiteralFloat);
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
@@ -611,7 +611,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
 			si.stringValue = [self CStringForAddress:memAddr];
-			NSLog(@"hmm %@", si.stringValue);
+//			NSLog(@"hmm %@", si.stringValue);
 			return si;
 	
 		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
@@ -635,7 +635,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 			// why is this showing up as pushl $ __TEXT:(null) = 4096 so i thing that this could well be Null!, but maybe not!
 			// pushl $0x00001000 
-			NSLog(@"Text Null %0x", memAddr); // 1000, 17e4, 17e0, 2000, 1fff, 1818, 104d, 1fb1, 1f5e
+//			NSLog(@"Text Null %0x", memAddr); // 1000, 17e4, 17e0, 2000, 1fff, 1818, 104d, 1fb1, 1f5e
 		} else {
 			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
 		}
@@ -695,22 +695,22 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	
 	if( flags & MH_NOUNDEFS ){
 		// MH_NOUNDEFS—The object file contained no undefined references when it was built.
-		NSLog(@"MH_NOUNDEFS");
+//		NSLog(@"MH_NOUNDEFS");
 	} if( flags & MH_INCRLINK ){
 		// MH_INCRLINK—The object file is the output of an incremental link against a base file and cannot be linked again.
-		NSLog(@"MH_INCRLINK");
+//		NSLog(@"MH_INCRLINK");
 	} if( flags & MH_DYLDLINK ){
 		// MH_DYLDLINK—The file is input for the dynamic linker and cannot be statically linked again.
-		NSLog(@"MH_DYLDLINK");
+//		NSLog(@"MH_DYLDLINK");
 	} if( flags & MH_BINDATLOAD ){
 		// MH_BINDATLOAD—The dynamic linker should bind the undefined references when the file is loaded.
-		NSLog(@"MH_BINDATLOAD");
+//		NSLog(@"MH_BINDATLOAD");
 	} if( flags & MH_PREBOUND ){
 		// MH_PREBOUND—The file’s undefined references are prebound.
-		NSLog(@"MH_PREBOUND");
+//		NSLog(@"MH_PREBOUND");
 	} if( flags & MH_SPLIT_SEGS ){
 		// MH_SPLIT_SEGS—The file has its read-only and read-write segments split.
-		NSLog(@"MH_SPLIT_SEGS");
+//		NSLog(@"MH_SPLIT_SEGS");
 	} if( flags & MH_TWOLEVEL ){
 		// MH_TWOLEVEL—The image is using two-level namespace bindings.
 		_MH_TWOLEVEL = YES;
@@ -721,18 +721,18 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 	} if( flags & MH_SUBSECTIONS_VIA_SYMBOLS ){
 		// MH_SUBSECTIONS_VIA_SYMBOLS—The sections of the object file can be divided into individual blocks. These blocks are dead-stripped if they are not used by other code. See “Dead-Code Stripping” in Xcode Build System for details.
-		NSLog(@"MH_SUBSECTIONS_VIA_SYMBOLS");
+//		NSLog(@"MH_SUBSECTIONS_VIA_SYMBOLS");
 	}
 }
 
 - (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section {
 	
-	NSLog(@"Function %@ - Line %i - Address %x - Section %i", name, line, address, section);
+//	NSLog(@"Function %@ - Line %i - Address %x - Section %i", name, line, address, section);
 	
 	//-- try in the file
 	char *func_pointer = ((char *)_codeAddr) + address;
 	NSData *sectionData = [NSData dataWithBytes:func_pointer length:16];
-	NSLog(@"Copied section.. %@", sectionData); // [sectionData hexString]		
+//	NSLog(@"Copied section.. %@", sectionData); // [sectionData hexString]		
 
 	
 	
@@ -944,7 +944,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 - (void)addLibrary:(NSString *)libraryInstallName {
 	
-	NSLog( @"LC_LOAD_DYLIB - %@", libraryInstallName );
+//	NSLog( @"LC_LOAD_DYLIB - %@", libraryInstallName );
 	[_libraries addObject:libraryInstallName];
 }
 
@@ -997,7 +997,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		if( cmd->cmd==LC_UUID ){
 			// Specifies the 128-bit UUID for an image or its corresponding dSYM file.
 			struct uuid_command *seg = (struct uuid_command *)cmd;
-			NSLog(@"LC_UUID");
+//			NSLog(@"LC_UUID");
 			
 		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ) {
 
@@ -1021,7 +1021,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			}
 	
 			NSString *segmentName = [NSString stringWithCString:segname encoding:NSUTF8StringEncoding];
-			NSLog(@"segment name %@", segmentName);
+//			NSLog(@"segment name %@", segmentName);
 
 //			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
 //			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
@@ -1047,12 +1047,12 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				NSUInteger memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection)
 				{
-					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
+//					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
 					char *containingSegmentName = newSec_ptr->segname;
 					char *thisSectionName = newSec_ptr->sectname;
 
-					NSLog(@"segment2 name %s", containingSegmentName );
-					NSLog(@"section2 name %s", thisSectionName );
+//					NSLog(@"segment2 name %s", containingSegmentName );
+//					NSLog(@"section2 name %s", thisSectionName );
 
 					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
 
@@ -1075,10 +1075,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						NSUInteger count = newSec_ptr->size / stride;
 						NSUInteger n = newSec_ptr->reserved1;
 
-						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
+//						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
 						for( NSUInteger j=0; j<count && n+j<_nindirect_symbols; j++ )
 						{
-							NSLog(@"MuthaFucker");
+//							NSLog(@"MuthaFucker");
 						}
 					}
 					
@@ -1138,7 +1138,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 							UInt32 val2 = *((UInt32 *)locPtr);
 							locPtr = locPtr + sizeof val2;
 
-							NSLog(@"%x %x %x", memPtr, val1, val2 );
+//							NSLog(@"%x %x %x", memPtr, val1, val2 );
 							memPtr = memPtr + sizeof val1 + sizeof val2;
 						}
 
@@ -1250,10 +1250,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						
 						// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
 					} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
-						NSLog(@"eh");
+//						NSLog(@"eh");
 						// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 					} else if ( strcmp(thisSectionName, "__StaticInit")==0 ) {
-						NSLog(@"eh");
+//						NSLog(@"eh");
 				
 						// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 					} else if ( strcmp(thisSectionName, "__eh_frame")==0 ) {
@@ -1263,7 +1263,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
 						
 					} else if ( strcmp(thisSectionName, "__unwind_info")==0 ) {
-						NSLog(@"eh");
+//						NSLog(@"eh");
 						//00006fb0	01 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 
 						//00006fc0	00 00 00 00 1c 00 00 00 02 00 00 00 00 00 00 00 
 						//00006fd0	34 00 00 00 34 00 00 00 f9 5f 00 00 00 00 00 00 
@@ -1483,7 +1483,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					} else {
 						[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
 					}
-					NSLog(@"why not stop for a while and see what we copied?");
+//					NSLog(@"why not stop for a while and see what we copied?");
 				}
 				newSec_ptr = newSec_ptr+1;
 			}
@@ -1522,9 +1522,9 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					nlist64.n_desc = n_desc;
 					nlist64.n_value = (uint64_t)(n_value);
 					
-					if ([self processSymbolItem:&nlist64 stringTable:_strtable])					
-					{
-					}
+//					if ([self processSymbolItem:&nlist64 stringTable:_strtable])					
+//					{
+//					}
 					
 				}
 				http://mhda.asiaa.sinica.edu.tw/mhda/apps/nemo-3.2.3-i386-intel9/src/kernel/loadobj/loadobjNEXT.c
@@ -1546,13 +1546,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			//					}
 			//symtable++;
 			}
-			NSLog(@"LC_SYMTAB - number of table entries %i", _nsymbols );
+//			NSLog(@"LC_SYMTAB - number of table entries %i", _nsymbols );
 			
 		} else if(cmd->cmd==LC_DYSYMTAB) {
 
 			// This load command describes the dynamic symbol table. This is how the dynamic linker knows to plug the stubs (indirect).
 			const struct dysymtab_command* dsymtab = (struct dysymtab_command*)cmd;
-			NSLog(@"LC_DYSYMTAB");
+//			NSLog(@"LC_DYSYMTAB");
 //
 //	The dynamic symbol table in Mach-O is surprisingly simple. Each entry in the table is just a 32bit index into the symbol table. The dynamic symbol table is just a list of indexes and nothing else.
 //
@@ -1598,8 +1598,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t ilocalsym;	/* index to local symbols */
 			// uint32_t nlocalsym;	/* number of local symbols */
-			NSLog( @"-- Index to local symbols %i", dsymtab->ilocalsym );
-			NSLog( @"-- Number of local symbols %i", dsymtab->nlocalsym );
+//			NSLog( @"-- Index to local symbols %i", dsymtab->ilocalsym );
+//			NSLog( @"-- Number of local symbols %i", dsymtab->nlocalsym );
 			
 			for( int i=dsymtab->ilocalsym; i<(dsymtab->ilocalsym+dsymtab->nlocalsym); i++)
 			{
@@ -1607,27 +1607,27 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
-				NSLog(@"Local Symbol > %@ - %@", src, address);
+//				NSLog(@"Local Symbol > %@ - %@", src, address);
 			}
 // This is exactly what i want! http://www.google.com/codesearch/p?hl=en#G0qjcaxpHTc/sedarwin8/darwin/cctools/otool/ofile_print.c&q=ilocalsym%20nlocalsym			
 			
 			// uint32_t iextdefsym;/* index to externally defined symbols */
 			// uint32_t nextdefsym;/* number of externally defined symbols */
-			NSLog(@"-- Index of externally defined symbols %i", dsymtab->iextdefsym);
-			NSLog(@"-- Number of externally defined symbols %i", dsymtab->nextdefsym);
+//			NSLog(@"-- Index of externally defined symbols %i", dsymtab->iextdefsym);
+//			NSLog(@"-- Number of externally defined symbols %i", dsymtab->nextdefsym);
 			for( int i=dsymtab->iextdefsym; i<(dsymtab->iextdefsym+dsymtab->nextdefsym); i++)
 			{
 				struct nlist symbol = _symtable_ptr[i];
 				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
-				NSLog(@"External Symbol > %@ - %x", src, symbol.n_value);
+//				NSLog(@"External Symbol > %@ - %x", src, symbol.n_value);
 			}
 			
 			// uint32_t iundefsym;	/* index to undefined symbols */
 			//uint32_t nundefsym;	/* number of undefined symbols */
-			NSLog(@"-- Index of externally undefined symbols %i", dsymtab->iundefsym);
-			NSLog(@"-- Number of externally undefined symbols %i", dsymtab->nundefsym);
+//			NSLog(@"-- Index of externally undefined symbols %i", dsymtab->iundefsym);
+//			NSLog(@"-- Number of externally undefined symbols %i", dsymtab->nundefsym);
 			
 			// TODO: use the indirect symbol table to match this index (i) to an address in the dissasembly 
 			for( int i=dsymtab->iundefsym; i<(dsymtab->iundefsym+dsymtab->nundefsym); i++)
@@ -1636,7 +1636,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
 				NSString *ext = [src pathExtension];
 				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
-				NSLog(@"External Undefined Symbol > %@ - %@", src, address);
+//				NSLog(@"External Undefined Symbol > %@ - %@", src, address);
 			}
 			
 			/*
@@ -1649,7 +1649,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t tocoff;	/* file offset to table of contents */
 			// uint32_t ntoc;	/* number of entries in table of contents */
-			NSLog(@"-- Number of entries in table of contents %i", dsymtab->ntoc);
+//			NSLog(@"-- Number of entries in table of contents %i", dsymtab->ntoc);
 			
 			// should this be offset from file? guess so
 			struct dylib_table_of_contents *tocs_ptr = (struct dylib_table_of_contents *)(_codeAddr + dsymtab->tocoff);
@@ -1670,7 +1670,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t modtaboff;	/* file offset to module table */
 			//uint32_t nmodtab;	/* number of module table entries */
-			NSLog(@"-- Number of module table entries %i", dsymtab->nmodtab);
+//			NSLog(@"-- Number of module table entries %i", dsymtab->nmodtab);
 			if(dsymtab->nmodtab>0){
 				struct dylib_reference *libRefer1 = (struct dylib_reference *)(_codeAddr + dsymtab->modtaboff);
 				for( int i=0; i<dsymtab->nmodtab; i++){
@@ -1690,11 +1690,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t extrefsymoff;	/* offset to referenced symbol table */
 			//uint32_t nextrefsyms;	/* number of referenced symbol table entries */
-			NSLog(@"-- Number of referenced symbol table entries %i", dsymtab->nextrefsyms);
+//			NSLog(@"-- Number of referenced symbol table entries %i", dsymtab->nextrefsyms);
 			if(dsymtab->nextrefsyms>0){
 				struct dylib_reference *libRefer2 = (struct dylib_reference *)(_codeAddr + dsymtab->extrefsymoff);
 				for( int i=0; i<dsymtab->nextrefsyms; i++){
-					NSLog(@"DO THIS!");
+//					NSLog(@"DO THIS!");
 				}
 			}
 			
@@ -1711,7 +1711,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 			// The indirect symbol table tells the dynamic linker that elements 2 and 3 of the symbol table need to be looked up and their stubs plugged
 			_nindirect_symbols = dsymtab->nindirectsyms;
-			NSLog( @"-- Number of indirect symbol table entries %i", _nindirect_symbols );
+//			NSLog( @"-- Number of indirect symbol table entries %i", _nindirect_symbols );
 
 			if( _nindirect_symbols>0 )
 			{
@@ -1760,11 +1760,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t extreloff;	/* offset to external relocation entries */
 			// uint32_t nextrel;	/* number of external relocation entries */
-			NSLog(@"-- Number of external relocation entries %i", dsymtab->nextrel);
+//			NSLog(@"-- Number of external relocation entries %i", dsymtab->nextrel);
 			if(dsymtab->nextrel>0){
 				struct relocation_info *ext_relocs = (struct relocation_info *)(_codeAddr + dsymtab->extreloff);
 				int32_t addressOfSymbol = ext_relocs->r_address;
-				NSLog(@"Relocate symbol %i", addressOfSymbol);
+//				NSLog(@"Relocate symbol %i", addressOfSymbol);
 			}
 			
 			/*
@@ -1774,11 +1774,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			 */
 			// uint32_t locreloff;	/* offset to local relocation entries */
 			// uint32_t nlocrel;	/* number of local relocation entries */			
-			NSLog(@"-- Number of of local relocation entries %i", dsymtab->nlocrel);
+//			NSLog(@"-- Number of of local relocation entries %i", dsymtab->nlocrel);
 			if(dsymtab->nlocrel>0){
 				struct relocation_info *loc_relocs = (struct relocation_info *)(_codeAddr + dsymtab->locreloff);
 				int32_t addressOfSymbol = loc_relocs->r_address;
-				NSLog(@"Relocate symbol %i", addressOfSymbol);
+//				NSLog(@"Relocate symbol %i", addressOfSymbol);
 			}
 		
 		} else if(cmd->cmd==LC_THREAD || cmd->cmd==LC_UNIXTHREAD) {
@@ -1786,7 +1786,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			// This load command specifies the contents of the registers at startup. I haven’t seen anything other than EIP populated, though. The program will not run unless this load command is present!
 			// For an executable file, the LC_UNIXTHREAD command defines the initial thread state of the main thread of the process. LC_THREAD is similar to LC_UNIXTHREAD but does not cause the kernel to allocate a stack.
 			const struct thread_command* threadtab = (struct thread_command*)cmd;
-			NSLog(@"LC_THREAD");
+//			NSLog(@"LC_THREAD");
 			
 		} else if(cmd->cmd==LC_LOAD_DYLIB) {
 			// Defines the name of a dynamic shared library that this file links against.
@@ -1800,24 +1800,24 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			// Specifies the install name of a dynamic shared library.
 			const struct dylib_command* seg = (struct dylib_command*)cmd;
 
-			NSLog(@"LC_ID_DYLIB");
+//			NSLog(@"LC_ID_DYLIB");
 
 		} else if(cmd->cmd==LC_PREBOUND_DYLIB) {
 			// For a shared library that this executable is linked prebound against, specifies the modules in the shared library that are used.
 			const struct prebound_dylib_command* seg = (struct prebound_dylib_command*)cmd;
-			NSLog(@"LC_PREBOUND_DYLIB");
+//			NSLog(@"LC_PREBOUND_DYLIB");
 
 		} else if(cmd->cmd==LC_LOAD_DYLINKER) {
 			// Specifies the dynamic linker that the kernel executes to load this file.
 			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
 			const char* dylibName = (char*)cmd + linkertab->name.offset;
 
-			NSLog(@"LC_LOAD_DYLINKER %s", dylibName );
+//			NSLog(@"LC_LOAD_DYLINKER %s", dylibName );
 
 		} else if(cmd->cmd==LC_ID_DYLINKER) {
 			// Identifies this file as a dynamic linker.
 			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
-			NSLog(@"LC_ID_DYLINKER");
+//			NSLog(@"LC_ID_DYLINKER");
 			
 		} else if( cmd->cmd==LC_ROUTINES || cmd->cmd==LC_ROUTINES_64 ) {
 			// Contains the address of the shared library initialization routine (specified by the linker’s -init option).
@@ -1830,31 +1830,31 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		} else if(cmd->cmd==LC_TWOLEVEL_HINTS){
 			// Contains the two-level namespace lookup hint table.
 			const struct twolevel_hints_command* seg = (struct twolevel_hints_command*)cmd;
-			NSLog(@"LC_TWOLEVEL_HINTS");
+//			NSLog(@"LC_TWOLEVEL_HINTS");
 			
 		} else if(cmd->cmd==LC_SUB_FRAMEWORK){
 			// Identifies this file as the implementation of a subframework of an umbrella framework. The name of the umbrella framework is stored in the string parameter.
 			struct sub_framework_command *subf = (struct sub_framework_command *)cmd;
 			const char* exportThruName = (char*)cmd + subf->umbrella.offset;
-			NSLog(@"LC_SUB_FRAMEWORK");
+//			NSLog(@"LC_SUB_FRAMEWORK");
 			
 		} else if(cmd->cmd==LC_SUB_UMBRELLA){
 			// Specifies a file that is a subumbrella of this umbrella framework.
 			const struct sub_umbrella_command* seg = (struct sub_umbrella_command *)cmd;
-			NSLog(@"LC_SUB_UMBRELLA");
+//			NSLog(@"LC_SUB_UMBRELLA");
 			
 		} else if(cmd->cmd==LC_SUB_LIBRARY){
 			// Defines the attributes of the LC_SUB_LIBRARY load command. Identifies a sublibrary of this framework and marks this framework as an umbrella framework.
 			const struct sub_library_command* seg = (struct sub_library_command *)cmd;
-			NSLog(@"LC_SUB_LIBRARY");
+//			NSLog(@"LC_SUB_LIBRARY");
 			
 		} else if(cmd->cmd==LC_SUB_CLIENT){
 			// A subframework can explicitly allow another framework or bundle to link against it by including an LC_SUB_CLIENT load command containing the name of the framework or a client name for a bundle.
 			const struct sub_client_command* seg = (struct sub_client_command *)cmd;
-			NSLog(@"LC_SUB_CLIENT");
+//			NSLog(@"LC_SUB_CLIENT");
 			
 		} else if(cmd->cmd==LC_DYLD_INFO_ONLY) {
-			NSLog(@"LC_DYLD_INFO_ONLY"); // The new compressed stuff?
+//			NSLog(@"LC_DYLD_INFO_ONLY"); // The new compressed stuff?
 	
 		} else if(cmd->cmd==LC_RPATH){ /* runpath additions */
 //			NSLog(@"which one?");
@@ -1989,7 +1989,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	// cpusubtype = CPU_SUBTYPE_POWERPC_ALL || CPU_SUBTYPE_I386_ALL
 	// filetype = MH_OBJECT || MH_EXECUTE || MH_BUNDLE || MH_DYLIB || MH_PRELOAD || MH_CORE || MH_DYLINKER || MH_DSYM
 	if( universalMachHeader->filetype==MH_EXECUTE ){
-		NSLog(@"Inside the guts of an executable");
+//		NSLog(@"Inside the guts of an executable");
 	}
 
 	[self readHeaderFlags:universalMachHeader->flags]; // MH_FORCE_FLAT etc

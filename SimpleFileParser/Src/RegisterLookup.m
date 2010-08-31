@@ -12,9 +12,26 @@
 
 @implementation RegisterLookup
 
-+ (void)parseYAML {
+- (id)init {
+	
+	self = [super init];
+	if(self){
+	}
+	return self;
+}
 
+- (void)dealloc {
+	
+	[super dealloc];
+}
 
+- (void)parseYAML {
+
+	NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"registers" ofType:@"yaml"];
+	NSAssert( filePath, @"Error loading opcode file" );
+	
+	YAMLParser *ayp = [[YAMLParser alloc] initWithFilePath:filePath];
+	CFMutableDictionaryRef root = [ayp rootDictionary];
 }
 
 @end

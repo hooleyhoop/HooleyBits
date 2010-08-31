@@ -11,6 +11,6 @@
 
 }
 
-+ (void)parseYAML;
+- (void)parseYAML;
 
 @end

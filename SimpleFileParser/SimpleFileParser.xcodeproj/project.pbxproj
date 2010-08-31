@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		730ECA42122D129C00E881D1 /* fileReadTest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 730ECA41122D129C00E881D1 /* fileReadTest.txt */; };
 		7310000A1209948B00AE9F6B /* OtoolDisassemblyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000091209948B00AE9F6B /* OtoolDisassemblyParser.m */; };
 		7310000B1209948B00AE9F6B /* OtoolDisassemblyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000091209948B00AE9F6B /* OtoolDisassemblyParser.m */; };
 		731000E21209C46C00AE9F6B /* SourceLineCategorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 731000E11209C46C00AE9F6B /* SourceLineCategorizer.m */; };
@@ -33,6 +34,7 @@
 		734B627E122569E1002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B627C122569E1002C0B0F /* libstdc++.dylib */; };
 		734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
 		734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
+		73674C21122CFA6C00394D12 /* VeryLargeFileReadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73674C20122CFA6C00394D12 /* VeryLargeFileReadTests.m */; };
 		73737123122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
 		73737124122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
 		73737129122A6F4300E05751 /* RegisterLookupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737128122A6F4300E05751 /* RegisterLookupTests.m */; };
@@ -260,6 +262,7 @@
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		730ECA41122D129C00E881D1 /* fileReadTest.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fileReadTest.txt; path = Resources/fileReadTest.txt; sourceTree = "<group>"; };
 		731000081209948B00AE9F6B /* OtoolDisassemblyParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtoolDisassemblyParser.h; path = Src/OtoolDisassemblyParser.h; sourceTree = "<group>"; };
 		731000091209948B00AE9F6B /* OtoolDisassemblyParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OtoolDisassemblyParser.m; path = Src/OtoolDisassemblyParser.m; sourceTree = "<group>"; };
 		7310000F120994A100AE9F6B /* OtoolDisassemblyParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OtoolDisassemblyParserTests.m; path = Tests/OtoolDisassemblyParserTests.m; sourceTree = "<group>"; };
@@ -318,6 +321,7 @@
 		734B627C122569E1002C0B0F /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
 		734B671C1226920E002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = ../MachoLoader/Classes/IntKeyDictionary.h; sourceTree = SOURCE_ROOT; };
 		734B671D1226920E002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = ../MachoLoader/Classes/IntKeyDictionary.m; sourceTree = SOURCE_ROOT; };
+		73674C20122CFA6C00394D12 /* VeryLargeFileReadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VeryLargeFileReadTests.m; path = Tests/VeryLargeFileReadTests.m; sourceTree = "<group>"; };
 		73737121122A6F2C00E05751 /* RegisterLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterLookup.h; path = Src/RegisterLookup.h; sourceTree = "<group>"; };
 		73737122122A6F2C00E05751 /* RegisterLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterLookup.m; path = Src/RegisterLookup.m; sourceTree = "<group>"; };
 		73737128122A6F4300E05751 /* RegisterLookupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterLookupTests.m; path = Tests/RegisterLookupTests.m; sourceTree = "<group>"; };
@@ -535,6 +539,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				730ECA41122D129C00E881D1 /* fileReadTest.txt */,
 				73BDCA68122BC221006D74F6 /* test2.yaml */,
 				73C07242122AF85000B31EF5 /* test1.yaml */,
 				73AD45D0122C32D5009F6F04 /* registers.yaml */,
@@ -652,6 +657,7 @@
 			children = (
 				7310FF161209895C00AE9F6B /* LinesInStringIteratorTests.m */,
 				73875FCC11C6951F00F714D9 /* StringCounterTests.m */,
+				73674C20122CFA6C00394D12 /* VeryLargeFileReadTests.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1069,6 +1075,7 @@
 				73C07243122AF85000B31EF5 /* test1.yaml in Resources */,
 				73BDCA69122BC221006D74F6 /* test2.yaml in Resources */,
 				73AD45D1122C32D5009F6F04 /* registers.yaml in Resources */,
+				730ECA42122D129C00E881D1 /* fileReadTest.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,6 +1162,7 @@
 				73737159122A779F00E05751 /* YAMLParser.m in Sources */,
 				73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
 				73BDC955122BAE22006D74F6 /* Hex.m in Sources */,
+				73674C21122CFA6C00394D12 /* VeryLargeFileReadTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

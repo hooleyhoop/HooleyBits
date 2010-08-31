@@ -13,8 +13,8 @@
 	NSDictionary *_normal_instructionsDict;
 }
 
-+ (void)parseYAML;
+- (void)parseYAML;
 
-+ (NSDictionary *)infoForInstructionString:(NSString *)instruction;
+- (NSDictionary *)infoForInstructionString:(NSString *)instruction;
 
 @end

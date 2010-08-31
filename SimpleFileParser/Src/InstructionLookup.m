@@ -12,7 +12,23 @@
 
 @implementation InstructionLookup
 
-+ (void)parseYAML {
+- (id)init {
+	
+	self = [super init];
+	if(self){
+	}
+	return self;
+}
+
+- (void)dealloc {
+
+	[_conditionalsDict release];
+	[_branch_instructionsDict release];
+	[_normal_instructionsDict release];
+	[super dealloc];
+}
+
+- (void)parseYAML {
 
 	NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"opcode" ofType:@"yaml"];
 	NSAssert( filePath, @"Error loading opcode file" );
@@ -20,18 +36,15 @@
 	YAMLParser *ayp = [[YAMLParser alloc] initWithFilePath:filePath];
 	CFMutableDictionaryRef root = [ayp rootDictionary];
 
-	*_conditionalsDict = (NSDictionary *)CFDictionaryGetValue( root, @"conditionals" );
-	*_branch_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"branch_instructions" );
-	*_normal_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"normal_instructions" );
+	_conditionalsDict = (NSDictionary *)CFDictionaryGetValue( root, @"conditionals" );
+	_branch_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"branch_instructions" );
+	_normal_instructionsDict = (NSDictionary *)CFDictionaryGetValue( root, @"normal_instructions" );
 	[_conditionalsDict retain];
 	[_branch_instructionsDict retain];
 	[_normal_instructionsDict retain];
 }
 
-
-init?
-
-+ (NSDictionary *)infoForInstructionString:(NSString *)instruction {
+- (NSDictionary *)infoForInstructionString:(NSString *)instruction {
 
 //	NSDictionary *result = (NSDictionary *)CFDictionaryGetValue( _opcodeLookup, instruction );
 //	if(!result)

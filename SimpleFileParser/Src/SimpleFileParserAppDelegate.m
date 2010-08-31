@@ -47,20 +47,24 @@ nil] retain];
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
 
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
-
+	
+	InstructionLookup *instructionLookup = [[InstructionLookup alloc] init];
+	RegisterLookup *registerLookup = [[RegisterLookup alloc] init];
+	
 	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-		[InstructionLookup parseYAML];
+		[instructionLookup parseYAML];
 	}];
 	//you can add more blocks
 	[operation addExecutionBlock:^{
-		[RegisterLookup parseYAML];
+		[registerLookup parseYAML];
 	}];
 	[queue addOperation:operation];
 
-//	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-//	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
-//	[_ml readFile];
+	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
+	[_ml readFile];
+	[HexLookup prepareWith:_ml];
 	
 	[queue waitUntilAllOperationsAreFinished];
 	[queue release];
@@ -70,13 +74,12 @@ nil] retain];
 	// read a large file
 	// http://www.softwareprojects.com/resources//t-1636goto.html
 	
-//	[HexLookup prepareWith:_ml];
-//
-//	NSError *outError;
-//	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
-//	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
-//	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
-//
+
+	NSError *outError;
+	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
+	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
+	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
+
 //	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
 // 	[_dissasembled gleanInfo:_ml];
 //	[_dissasembled reformat];
