@@ -12,6 +12,7 @@
 #import "InstructionLookup.h"
 #import "MachoLoader.h"
 #import "HexLookup.h"
+#import "GenericTimer.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -68,20 +69,21 @@ nil] retain];
 	
 	[queue waitUntilAllOperationsAreFinished];
 	[queue release];
-	
-	NSLog(@"done");
-	
-	// read a large file
-	// http://www.softwareprojects.com/resources//t-1636goto.html
-	
-
+		
+	// Read the output of otool
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 
-//	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
+		_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+	[readTimer close]; // 19 seconds just to iterate over each line (no processing)
+	
 // 	[_dissasembled gleanInfo:_ml];
+
+	NSLog(@"done");
+
 //	[_dissasembled reformat];
 
 	// This is asyncronous. Need to rethink some stuff

@@ -30,6 +30,7 @@
 	self = [super init];
 	if(self){
 
+		//putback -- this needs access to lookups
 		_internalRepresentation = [[OtoolDisassemblyParser constructInternalRepresentation:fileString] retain];
 	}
 	return self;

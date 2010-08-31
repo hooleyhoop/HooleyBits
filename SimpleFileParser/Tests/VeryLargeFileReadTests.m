@@ -31,7 +31,7 @@
 
 - (void)testHighLevelWay {
 
-	GenericTimer *readTimer = [[GenericTimer alloc] init];
+	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	NSError *outError;
 	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
@@ -101,9 +101,12 @@ long ProcessData( id self, char *buf, long bytesread_sizeLeftover, int bLoopComp
 	return pos;
 }
 
+// read a large file
+// http://www.softwareprojects.com/resources//t-1636goto.html
+
 - (void)testLowLevelWay {
 	
-	GenericTimer *readTimer = [[GenericTimer alloc] init];
+	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	long bytesread; 
     char buf[BUFSIZE]; 

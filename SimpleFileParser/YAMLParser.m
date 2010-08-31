@@ -133,7 +133,7 @@
 	
 - (void)newMapping:(yaml_event_t)e {
 	
-	NSLog(@"New Map");
+	// NSLog(@"New Map");
 
 	_state = 0;
 	if (_key) {
@@ -149,7 +149,7 @@
 
 - (void)endMapping:(yaml_event_t)e {
 	
-	NSLog(@"End Map");
+	// NSLog(@"End Map");
 
 	[self popDict];
 	// NSAssert( _state==6, @"_state is fucked");
@@ -160,7 +160,7 @@
 - (void)addScalar:(yaml_event_t)e {
 	
 	BOOL oddOrEven = _state & 1;
-	NSLog(@"Scalar: %s %i", e.data.scalar.value, oddOrEven);
+	// NSLog(@"Scalar: %s %i", e.data.scalar.value, oddOrEven);
 
 	if(!oddOrEven) {
 		[_key release];

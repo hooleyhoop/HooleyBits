@@ -50,6 +50,9 @@
 
 	self = [super init];
 	if(self) {
+		
+//		_instructionHash = [instHash retain];
+		
 		_codeBlockStore = [[CodeBlockStore store] retain];
 		_codeBlockfactory = [[CodeBlockFactory factoryWithStore:_codeBlockStore] retain];
 
@@ -63,15 +66,16 @@
 
 	[_codeBlockStore release];
 	[_codeBlockfactory release];
-	
+	[_instructionHash release];
+
 	[super dealloc];
 }
 
 
 - (void)constructLine:(NSString *)lineText {
 	
-	CodeLine *line = [self _tokeniseLine:lineText];
-	[_codeBlockfactory addCodeLine:line];
+//	CodeLine *line = [self _tokeniseLine:lineText];
+//	[_codeBlockfactory addCodeLine:line];
 }
 
 - (void)processSrcLine:(NSString *)lineText type:(enum srcLineType)lineType {
@@ -90,40 +94,41 @@
 	}	
 }
 
-
+// -- exactly how much should we do here?
 - (CodeLine *)_tokeniseLine:(NSString *)aLine {
 		
-	NSArray *components = worderize( aLine );
+//putback	NSArray *components = worderize( aLine );
 
 	// not optional
 	// NSString *lineOffset = [components objectAtIndex:0];
-	NSString *address = [components objectAtIndex:1];
+//putback	NSString *address = [components objectAtIndex:1];
 	// NSString *code = [components objectAtIndex:2];
-	NSString *opcode = [components objectAtIndex:3];
+//putback	NSString *opcode = [components objectAtIndex:3];
 
 	// Instructions are cached - ie you should always get the same Instruction back for the same opcode
-	Instruction *instr = [InstructionHash instructionForOpcode:opcode];
+//putback	Instruction *instr = [_instructionHash instructionForOpcode:opcode];
 	
-	NSString *arguments=nil, *functionHint=nil;
-	NSArray *allArgs = nil;
+//putback	NSString *arguments=nil, *functionHint=nil;
+//putback	NSArray *allArgs = nil;
 
 	// optional
-	if([components count]>=5)
-	{
-		arguments = [components objectAtIndex:4];
-		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
-		[tkns1 secondPass];
-		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+//putback	if([components count]>=5)
+//putback	{
+//putback		arguments = [components objectAtIndex:4];
+//putback		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
+//putback		[tkns1 secondPass];
+//putback		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 		
-		allArgs = [scanner.allArguments copy];
-		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
-	}
-	if([components count]>=6)
-		functionHint = [components objectAtIndex:5];
+//putback		allArgs = [scanner.allArguments copy];
+//putback		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
+//putback	}
+//putback	if([components count]>=6)
+//putback		functionHint = [components objectAtIndex:5];
 
-	NSUInteger addressInt = hexStringToInt(address);
-	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
-	return newLine;
+//putback	NSUInteger addressInt = hexStringToInt(address);
+//putback	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];
+//putback	return newLine;
+	return nil;
 }
 
 

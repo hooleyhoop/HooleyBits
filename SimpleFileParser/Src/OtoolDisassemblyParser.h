@@ -8,12 +8,14 @@
 
 #import "iParseSrc.h"
 
-@class CodeBlockStore, CodeBlockFactory;
+@class CodeBlockStore, CodeBlockFactory, InstructionHash;
 
 @interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
 	CodeBlockStore		*_codeBlockStore;
 	CodeBlockFactory	*_codeBlockfactory;
+	
+	InstructionHash		*_instructionHash;
 }
 
 @property (retain) CodeBlockStore *codeBlockStore;
