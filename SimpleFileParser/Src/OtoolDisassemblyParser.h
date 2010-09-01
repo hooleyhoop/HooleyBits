@@ -12,20 +12,22 @@
 
 @interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
-	NSString				*_title;
+	NSString			*_title;
 	NSMutableArray		*_blockLines;
-	
+
 	CodeBlockStore		*_codeBlockStore;
-	CodeBlockFactory		*_codeBlockfactory;
-	
+	CodeBlockFactory	*_codeBlockfactory;
+
 	InstructionHash		*_instructionHash;
+
+	dispatch_group_t	_lineTokenisizing_group;
 }
 
 @property (retain) CodeBlockStore *codeBlockStore;
 
-+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString;
-+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString;
++ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash;
++ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash;
 
-- (id)initWithSrcString:(NSString *)fileString;
+- (id)initWithSrcString:(NSString *)fileString :(InstructionHash *)instHash;
 
 @end

@@ -42,14 +42,27 @@
 	[_conditionalsDict retain];
 	[_branch_instructionsDict retain];
 	[_normal_instructionsDict retain];
+	
+	[ayp release];
 }
 
 - (NSDictionary *)infoForInstructionString:(NSString *)instruction {
 
-//	NSDictionary *result = (NSDictionary *)CFDictionaryGetValue( _opcodeLookup, instruction );
-//	if(!result)
-//		[NSException raise:@"Unknown Opcode" format:@"Error: Cant find %@ in opcode lookup", instruction];
-//	return result;
+	NSDictionary *result = [_conditionalsDict objectForKey:instruction];
+	if(result)
+		return result;
+
+	result = [_branch_instructionsDict objectForKey:instruction];
+	if(result)
+		return result;
+	
+	result = [_normal_instructionsDict objectForKey:instruction];
+	if(result)
+		return result;
+
+	if(!result)
+		[NSException raise:@"Unknown Opcode" format:@"Error: Cant find %@ in opcode lookup", instruction];
+
 	return nil;
 }
 

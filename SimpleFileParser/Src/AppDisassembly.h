@@ -7,7 +7,7 @@
 //
 #import "iAmOutputFormatterCallback.h"
 
-@class CodeBlockStore, OutputFormatter, MachoLoader;
+@class CodeBlockStore, OutputFormatter, MachoLoader, InstructionHash;
 
 @interface AppDisassembly : NSObject <iAmOutputFormatterCallback> {
 
@@ -17,9 +17,9 @@
 	OutputFormatter		*_of;
 }
 
-+ (id)createFromOtoolOutput:(NSString *)fileString;
++ (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash;
 
-- (id)initWithOtoolOutput:(NSString *)fileString;
+- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash;
 
 - (void)gleanInfo:(MachoLoader *)lookup;
 - (void)reformat;

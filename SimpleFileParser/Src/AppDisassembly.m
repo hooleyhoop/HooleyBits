@@ -16,22 +16,23 @@
 #import "BasicToken.h"
 #import "HexToken.h"
 #import "HexLookup.h"
+#import "InstructionHash.h"
 
 @implementation AppDisassembly
 
-+ (id)createFromOtoolOutput:(NSString *)fileString {
++ (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash {
 
-	id processedFile = [[[self alloc] initWithOtoolOutput:fileString] autorelease];
+	id processedFile = [[[self alloc] initWithOtoolOutput:fileString :instHash] autorelease];
 	return processedFile;
 }
 
-- (id)initWithOtoolOutput:(NSString *)fileString {
+- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash {
 
 	self = [super init];
 	if(self){
 
 		//putback -- this needs access to lookups
-		_internalRepresentation = [[OtoolDisassemblyParser constructInternalRepresentation:fileString] retain];
+		_internalRepresentation = [[OtoolDisassemblyParser constructInternalRepresentation:fileString :instHash] retain];
 	}
 	return self;
 }

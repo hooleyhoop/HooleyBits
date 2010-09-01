@@ -28,6 +28,8 @@
 @interface OtoolDisassemblyParser ()
 
 - (CodeLine *)_tokeniseLine:(NSString *)aLine;
+- (void)constructBlock:(BOOL)isFinal;
+
 @end
 
 #pragma mark -
@@ -35,22 +37,24 @@
 
 @synthesize codeBlockStore = _codeBlockStore;
 
-+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString {
++ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash {
 
-	OtoolDisassemblyParser *parser = [self OtoolDisassemblyParserWithSrcString:fileString];
+	OtoolDisassemblyParser *parser = [self OtoolDisassemblyParserWithSrcString:fileString :instHash];
 	return parser.codeBlockStore;
 }
 
-+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString {
++ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash {
 	
-	return [[[self alloc] initWithSrcString:fileString] autorelease];
+	return [[[self alloc] initWithSrcString:fileString :instHash] autorelease];
 }
 
-- (id)initWithSrcString:(NSString *)fileString {
+- (id)initWithSrcString:(NSString *)fileString :(InstructionHash *)instHash {
 
 	self = [super init];
 	if(self) {
 		
+		_lineTokenisizing_group = dispatch_group_create();
+
 		_instructionHash = [instHash retain];
 		
 		_codeBlockStore = [[CodeBlockStore store] retain];
@@ -67,19 +71,32 @@
 	[_codeBlockStore release];
 	[_codeBlockfactory release];
 	[_instructionHash release];
+	
+	dispatch_release( _lineTokenisizing_group );
 
 	[super dealloc];
 }
 
+// this means that the source has emptied
 - (void)noMoreLinesComing {
 
-	[self constructBlock];
+	BOOL final = YES;
+	[self constructBlock:final];
+	
+	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
+	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self finishedProcessingAllLines]; });
+}
+
+// This is the async callback
+- (void)finishedProcessingAllLines {
+	NSLog(@"This is the async callback");
 }
 
 - (void)newTitle:(NSString *)lineText {
 	
 	if(_title){
-		[self constructBlock];
+		BOOL isFinal = NO;
+		[self constructBlock:isFinal];
 	}
 	_title = [lineText retain];
 	_blockLines = [[NSMutableArray alloc] init];
@@ -94,7 +111,7 @@
 
 typedef void(^BasicBlock)(void); 
 
-- (void)constructBlock {
+- (void)constructBlock:(BOOL)isFinal {
 
 	NSArray *tempArray = [_blockLines copy];
 	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
@@ -102,18 +119,19 @@ typedef void(^BasicBlock)(void);
 		
 		NSMutableArray *lines = [[NSMutableArray alloc] initWithCapacity:[tempArray count]];
 		for( NSString *eachStr in tempArray ) {
-			// TODO: wy is this an instance method?
 			CodeLine *line = [self _tokeniseLine:eachStr];
 			if(line)
 				[lines addObject:line];
 		}
+		
 		// TODO: how to do this?
+
 		[_codeBlockfactory newCodeBlockWithName:_title lines:lines];
 		[lines release];
 		[tempArray release];
 	}; 
 
-	dispatch_async( q_default, block );
+	dispatch_group_async( _lineTokenisizing_group, q_default, block );
 	
 	[_title release];
 	_title = nil;

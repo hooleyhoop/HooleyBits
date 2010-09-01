@@ -13,6 +13,7 @@
 #import "MachoLoader.h"
 #import "HexLookup.h"
 #import "GenericTimer.h"
+#import "InstructionHash.h"
 
 @implementation SimpleFileParserAppDelegate
 
@@ -79,7 +80,7 @@ nil] retain];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
-		_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString];
+		_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString :[InstructionHash cachedInstructionHashWithLookup:instructionLookup]];	
 	[readTimer close]; // 19 seconds just to iterate over each line (no processing)
 	
 // 	[_dissasembled gleanInfo:_ml];

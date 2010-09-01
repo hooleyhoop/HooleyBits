@@ -531,7 +531,17 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 	[self doIt:_filePath];
 	[self parseLoadCommands];
-	[self print_indirect_symbols:_startOfLoadCommandsPtr :_ncmds :_sizeofcmds :_cputype :_indirectSymbolTable :_nindirect_symbols :_symtable_ptr :_UNUSED_symbols64 :_nsymbols :_strtable :_strings_size];	
+	[self print_indirect_symbols:_startOfLoadCommandsPtr 
+								:_ncmds 
+								:_sizeofcmds 
+								:_cputype
+								:_indirectSymbolTable
+								:_nindirect_symbols
+								:_symtable_ptr
+								:_UNUSED_symbols64
+								:_nsymbols
+								:_strtable
+								:_strings_size];	
 }
 
 - (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr {

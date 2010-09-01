@@ -43,7 +43,9 @@
 }
 
 - (void)newCodeBlockWithName:(NSString *)funcName lines:(NSArray *)lineArray {
-	NSLog(@"async woo woo woo woo woo");
+	//NSLog(@"async woo woo woo woo woo");
+	
+	here!
 }
 
 - (void)newCodeBlockWithName:(NSString *)funcName {

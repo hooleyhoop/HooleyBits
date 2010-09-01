@@ -14,29 +14,30 @@
 @implementation InstructionHash
 
 			 
-+ (InstructionHash *)cachedInstructionHash {
++ (InstructionHash *)cachedInstructionHashWithLookup:(InstructionLookup *)lookup {
 	
 	static InstructionHash *_cached;
 	if(_cached==nil)
-		_cached = [[InstructionHash alloc] init];
+		_cached = [[InstructionHash alloc] initWithLookup:lookup];
 	return _cached;
 }
 
-+ (Instruction *)instructionForOpcode:(NSString *)opcode {
-	
-	return [[self cachedInstructionHash] instructionForOpcode:opcode];
-}
+//+ (Instruction *)instructionForOpcode:(NSString *)opcode {
+//	
+//	return [[self cachedInstructionHash] instructionForOpcode:opcode];
+//}
+//
+//+ (NSDictionary *)hashForInstruction:(NSString *)opcode {
+//
+//	NSDictionary *instrInfo = [_instructionLookup infoForInstructionString:opcode];
+//	return instrInfo;
+//}
 
-+ (NSDictionary *)hashForInstruction:(NSString *)opcode {
-
-	NSDictionary *instrInfo = [InstructionLookup infoForInstructionString:opcode];
-	return instrInfo;
-}
-
-- (id)init {
+- (id)initWithLookup:(InstructionLookup *)lookup {
 
 	self = [super init];
 	if(self){
+		_instructionLookup = [lookup retain];
 		_cachedInstructions = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -44,7 +45,9 @@
 
 - (void)dealloc {
 
+	[_instructionLookup release];
 	[_cachedInstructions release];
+
 	[super dealloc];
 }
 
@@ -53,7 +56,7 @@
 	NSParameterAssert(opcode);
 	Instruction *insr = [_cachedInstructions objectForKey:opcode]; 
 	if( insr==nil ) {
-		NSDictionary *instrInfo = [InstructionHash hashForInstruction:opcode];
+		NSDictionary *instrInfo = [_instructionLookup infoForInstructionString:opcode];
 		insr = [Instruction instructionWithDict:instrInfo];
 		[_cachedInstructions setObject:insr forKey:opcode];
 	}
