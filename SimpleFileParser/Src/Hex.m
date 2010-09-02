@@ -37,13 +37,12 @@
 	
 	// Iterate through the string, adding each character (equivilent to 1/2 
 	// byte) to the NSData result
-	int i;
 	char current;
-	const int size = [hexString length] / 2;
+	const NSUInteger size = [hexString length] / 2;
 	const char * stringBuffer = [hexString cStringUsingEncoding:NSASCIIStringEncoding];
 	NSMutableData* result = [NSMutableData dataWithLength:size];
 	char * resultBuffer = [result mutableBytes];
-	for (i = 0; i < size; i++) {
+	for( NSUInteger i=0; i<size; i++ ) {
 		// Get first character, use as high order bits
 		current = stringBuffer[i * 2];
 		resultBuffer[i] = HEX_LOOKUP[current] << 4;

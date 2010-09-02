@@ -79,11 +79,15 @@ nil] retain];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 
-	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
-		_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString :[InstructionHash cachedInstructionHashWithLookup:instructionLookup]];	
-	[readTimer close]; // 19 seconds just to iterate over each line (no processing)
+	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString 
+															   :[InstructionHash cachedInstructionHashWithLookup:instructionLookup]
+															   :_ml];
+
+	[_dissasembled ripIt];
 	
-// 	[_dissasembled gleanInfo:_ml];
+//	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
+//	[readTimer close]; // 19 seconds just to iterate over each line (no processing)
+	
 
 	NSLog(@"done");
 

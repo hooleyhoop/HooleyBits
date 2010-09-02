@@ -7,20 +7,24 @@
 //
 #import "iAmOutputFormatterCallback.h"
 
-@class CodeBlockStore, OutputFormatter, MachoLoader, InstructionHash;
+@class CodeBlockStore, OutputFormatter, MachoLoader, InstructionHash, OtoolDisassemblyParser, MachoLoader;
 
 @interface AppDisassembly : NSObject <iAmOutputFormatterCallback> {
 
-	CodeBlockStore		*_internalRepresentation;
+	NSString				*_fileString;
+	OtoolDisassemblyParser	*_disassembleParser;
+	MachoLoader				*_ml;
+	CodeBlockStore			*_internalRepresentation;
 	
 	// wish this wasn't here - wrong level
-	OutputFormatter		*_of;
+	OutputFormatter			*_of;
 }
 
-+ (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash;
+// + (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash;
 
-- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash;
+- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash :(MachoLoader *)ml;
 
+- (void)ripIt;
 - (void)gleanInfo:(MachoLoader *)lookup;
 - (void)reformat;
 

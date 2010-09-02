@@ -15,12 +15,16 @@
 
 + (id)store;
 
-- (void)addCodeBlock:(CodeBlock *)aBlock;
+- (void)insertCodeBlock:(CodeBlock *)aBlock;
+- (void)addCodeBlockOutOfOrder:(CodeBlock *)aBlock;
+
 - (CodeBlock *)codeBlockForAddress:(NSUInteger)address;
 - (NSUInteger)blockCount;
 - (CodeBlock *)blockAtIndex:(NSUInteger)ind;
 - (NSArray *)allBlocks;
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len;
+
+- (void)sort;
 
 @end

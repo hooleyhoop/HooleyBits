@@ -45,7 +45,10 @@
 - (void)newCodeBlockWithName:(NSString *)funcName lines:(NSArray *)lineArray {
 	//NSLog(@"async woo woo woo woo woo");
 	
-	here!
+	CodeBlock *newBlock = [CodeBlock blockWithName:funcName];
+	for( CodeLine *each in lineArray)
+		[newBlock pushLine:each];
+	[_blockStore addCodeBlockOutOfOrder: newBlock];
 }
 
 - (void)newCodeBlockWithName:(NSString *)funcName {
@@ -62,6 +65,10 @@
 	[self setCurrentBlock:newBlock];
 }
 
+- (void)noMoreLines {
+	[_blockStore sort];
+}
+
 - (void)addCodeLine:(CodeLine *)line {
 
 	NSAssert( _currenBlock, @"need a blockstore" );
@@ -69,7 +76,7 @@
 	[_currenBlock pushLine:line];
 	
 	if( [_currenBlock lineCount]==1 )
-		[_blockStore addCodeBlock: _currenBlock];
+		[_blockStore insertCodeBlock: _currenBlock];
 }
 
 - (NSUInteger)countOfCodeBlocks {

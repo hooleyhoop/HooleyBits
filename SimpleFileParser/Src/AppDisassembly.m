@@ -20,19 +20,20 @@
 
 @implementation AppDisassembly
 
-+ (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash {
+//+ (id)createFromOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash {
+//
+//	id processedFile = [[[self alloc] initWithOtoolOutput:fileString :instHash] autorelease];
+//	return processedFile;
+//}
 
-	id processedFile = [[[self alloc] initWithOtoolOutput:fileString :instHash] autorelease];
-	return processedFile;
-}
-
-- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash {
+- (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash :(MachoLoader *)ml {
 
 	self = [super init];
 	if(self){
-
-		//putback -- this needs access to lookups
-		_internalRepresentation = [[OtoolDisassemblyParser constructInternalRepresentation:fileString :instHash] retain];
+		_fileString = [fileString retain];
+		_ml = [ml retain];
+		_disassembleParser = [[OtoolDisassemblyParser alloc] initWithSrcString:fileString :instHash];
+		_disassembleParser.delegate = self;
 	}
 	return self;
 }
@@ -42,8 +43,27 @@
 	NSAssert( _of==nil, @"Are we still outputting?");
 
 	[_internalRepresentation release];
+	[_disassembleParser release];
+	[_ml release];
+	[_fileString release];
 
 	[super dealloc];
+}
+
+// rip the file into code blocks (asynchronously)
+- (void)ripIt {
+	[_disassembleParser eatInputFile];
+}
+
+- (void)_OtoolDisassemblyParserFinished {
+
+	_internalRepresentation = [_disassembleParser codeBlockStore];
+	[_disassembleParser release];
+	_disassembleParser = nil;
+
+	[self gleanInfo:_ml];
+
+	NSLog(@"Finished everything muthafucka");
 }
 
 // http://www.scribd.com/doc/13353364/Primer-on-Reversing-Jail-Broken-iPhone-Native-ApplicationsbyShubNigurrath
@@ -102,7 +122,7 @@
 						{
 							// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
 							HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
-							[eachArg replaceToken:eachToken with:aHexToken];
+							[eachArg replaceToken:eachToken with:(BasicToken *)aHexToken];
 						}
 					}
 					[allToks release];

@@ -39,7 +39,7 @@
 	STAssertTrue([_fac countOfCodeBlocks]==0, nil);
 	[_mockStore verify];
 	
-	[[_mockStore expect] addCodeBlock:OCMOCK_ANY];
+	[[_mockStore expect] insertCodeBlock:OCMOCK_ANY];
 	[[[_mockStore expect] andReturnUIntValue:1] blockCount];
 
 	[_fac addCodeLine:@"aaa"];
@@ -51,7 +51,7 @@
 	STAssertTrue([_fac countOfCodeBlocks]==1, nil);
 	[_mockStore verify];
 	
-	[[_mockStore expect] addCodeBlock:OCMOCK_ANY];
+	[[_mockStore expect] insertCodeBlock:OCMOCK_ANY];
 	[_fac addCodeLine:@"bbb"];
 	[[[_mockStore expect] andReturnUIntValue:2] blockCount];
 	STAssertTrue([_fac countOfCodeBlocks]==2, nil);
@@ -61,7 +61,7 @@
 - (void)testAddCodeLine {
 	// - (void)addCodeLine:(NSString *)codeLine
 
-	[[_mockStore stub] addCodeBlock:OCMOCK_ANY];
+	[[_mockStore stub] insertCodeBlock:OCMOCK_ANY];
 
 	[_fac newCodeBlockWithName:@"steve"];
 	[_fac addCodeLine:@"aaa"];

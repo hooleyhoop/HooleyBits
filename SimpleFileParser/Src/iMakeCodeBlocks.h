@@ -17,4 +17,6 @@
 //-- this will change
 - (void)addCodeLine:(CodeLine *)codeLine;
 
+- (void)noMoreLines;
+
 @end

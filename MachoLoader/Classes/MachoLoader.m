@@ -524,6 +524,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_indirectSymbolLookup release];
 	[_cStringLookup release];
 	[_libraries release];
+	[_allFile release];
+
 	[super dealloc];
 }
 
@@ -598,13 +600,15 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
+
 			// 4 byte literals
 			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
 			NSUInteger newSectSize = sec.length;
 			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
-			float a4ByteLiteralFloat;
+		
+			float a4ByteLiteralFloat = 0.0f;
 			memcpy((char *)&a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
 //			NSLog(@"%f", a4ByteLiteralFloat);
 			si = [[[SymbolicInfo alloc] init] autorelease];
@@ -625,6 +629,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			return si;
 	
 		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
+
 			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
 			NSUInteger newSectSize = sec.length;
@@ -1898,12 +1903,12 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 - (void)doIt:(NSString *)aPath {
 
 	// path to this app
-	NSData *allFile = [NSData dataWithContentsOfFile:aPath];
-	if(!allFile)
+	_allFile = [[NSData dataWithContentsOfFile:aPath] retain];
+	if(!_allFile)
 		[NSException raise:@"App Not Found" format:@"%@", aPath];
 
-	_codeAddr = [allFile bytes];
-	_codeSize = [allFile length];
+	_codeAddr = [_allFile bytes];
+	_codeSize = [_allFile length];
 
 //	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
 	

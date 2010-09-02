@@ -36,23 +36,25 @@
 @implementation OtoolDisassemblyParser
 
 @synthesize codeBlockStore = _codeBlockStore;
+@synthesize delegate = _delegate;
 
-+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash {
+//+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash {
+//
+//	OtoolDisassemblyParser *parser = [self OtoolDisassemblyParserWithSrcString:fileString :instHash];
+//	return parser.codeBlockStore;
+//}
 
-	OtoolDisassemblyParser *parser = [self OtoolDisassemblyParserWithSrcString:fileString :instHash];
-	return parser.codeBlockStore;
-}
-
-+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash {
-	
-	return [[[self alloc] initWithSrcString:fileString :instHash] autorelease];
-}
+//+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash {
+//	
+//	return [[[self alloc] initWithSrcString:fileString :instHash] autorelease];
+//}
 
 - (id)initWithSrcString:(NSString *)fileString :(InstructionHash *)instHash {
 
 	self = [super init];
 	if(self) {
 		
+		_fileString = [fileString retain];
 		_lineTokenisizing_group = dispatch_group_create();
 
 		_instructionHash = [instHash retain];
@@ -60,8 +62,6 @@
 		_codeBlockStore = [[CodeBlockStore store] retain];
 		_codeBlockfactory = [[CodeBlockFactory factoryWithStore:_codeBlockStore] retain];
 
-		SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:self];
-		[LinesInStringIterator feedLines:fileString to:groker];
 	}
 	return self;
 }
@@ -73,8 +73,18 @@
 	[_instructionHash release];
 	
 	dispatch_release( _lineTokenisizing_group );
-
+	[_fileString release];
+	
 	[super dealloc];
+}
+
+// rip the file into code blocks (asynchronously)
+- (void)eatInputFile {
+		
+	SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:self];
+	[LinesInStringIterator feedLines:_fileString to:groker];
+	
+	// we have now finished with groker and LinesInStringIterator but we are still processing the resulting lines after this returns
 }
 
 // this means that the source has emptied
@@ -84,12 +94,19 @@
 	[self constructBlock:final];
 	
 	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
-	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self finishedProcessingAllLines]; });
+	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self performSelectorOnMainThread:@selector(finishedProcessingAllLines) withObject:nil waitUntilDone:NO]; });
 }
 
 // This is the async callback
 - (void)finishedProcessingAllLines {
-	NSLog(@"This is the async callback");
+	
+	[_codeBlockfactory noMoreLines];
+	[_delegate _OtoolDisassemblyParserFinished];				
+	
+	[_fileString release];
+	_fileString = nil;
+	
+	
 }
 
 - (void)newTitle:(NSString *)lineText {
@@ -124,8 +141,6 @@ typedef void(^BasicBlock)(void);
 				[lines addObject:line];
 		}
 		
-		// TODO: how to do this?
-
 		[_codeBlockfactory newCodeBlockWithName:_title lines:lines];
 		[lines release];
 		[tempArray release];
@@ -160,7 +175,7 @@ typedef void(^BasicBlock)(void);
 	}	
 }
 
-// -- exactly how much should we do here?
+// Not on main thread?
 - (CodeLine *)_tokeniseLine:(NSString *)aLine {
 		
 	NSArray *components = worderize( aLine );
@@ -185,11 +200,11 @@ typedef void(^BasicBlock)(void);
 		[tkns1 secondPass];
 		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 		
-		allArgs = [scanner.allArguments copy];
+		allArgs = [[scanner.allArguments copy] autorelease];
 		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
 	}
-	if([components count]>=6)
-		functionHint = [components objectAtIndex:5];
+//	if([components count]>=6)
+//		functionHint = [components objectAtIndex:5];
 
 	NSUInteger addressInt = hexStringToInt(address);
 	CodeLine *newLine = [CodeLine lineWithAddress:addressInt instruction:instr args:allArgs];

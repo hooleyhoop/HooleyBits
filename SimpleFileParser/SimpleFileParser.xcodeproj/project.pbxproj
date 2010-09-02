@@ -22,7 +22,6 @@
 		7317D8A2121306FB00597E32 /* YAMLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CF1EE511D8C31D00347BBD /* YAMLTests.m */; };
 		7317D9741213F0D700597E32 /* InstructionLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7317D9731213F0D700597E32 /* InstructionLookup.m */; };
 		7317D9751213F0D700597E32 /* InstructionLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7317D9731213F0D700597E32 /* InstructionLookup.m */; };
-		7317DA941213F83B00597E32 /* trashy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7317DA931213F83B00597E32 /* trashy.txt */; };
 		7317DA951213F83B00597E32 /* trashy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7317DA931213F83B00597E32 /* trashy.txt */; };
 		732CB0401211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
 		732CB0411211501F0019B5BC /* OutputFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 732CB03F1211501F0019B5BC /* OutputFormatter.m */; };
@@ -34,6 +33,7 @@
 		734B627E122569E1002C0B0F /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 734B627C122569E1002C0B0F /* libstdc++.dylib */; };
 		734B671E1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
 		734B671F1226920E002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B671D1226920E002C0B0F /* IntKeyDictionary.m */; };
+		73563756122FA4A1009288CA /* CodeBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A0F5FF11DC97C5008DD4E2 /* CodeBlockStoreTests.m */; };
 		73674C21122CFA6C00394D12 /* VeryLargeFileReadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73674C20122CFA6C00394D12 /* VeryLargeFileReadTests.m */; };
 		73737123122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
 		73737124122A6F2C00E05751 /* RegisterLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73737122122A6F2C00E05751 /* RegisterLookup.m */; };
@@ -1071,7 +1071,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				73CF1EF011D8C3A700347BBD /* opcode.yaml in Resources */,
-				7317DA941213F83B00597E32 /* trashy.txt in Resources */,
 				73C07243122AF85000B31EF5 /* test1.yaml in Resources */,
 				73BDCA69122BC221006D74F6 /* test2.yaml in Resources */,
 				73AD45D1122C32D5009F6F04 /* registers.yaml in Resources */,
@@ -1163,6 +1162,7 @@
 				73C071CD122AF38B00B31EF5 /* YAMLParserTests.m in Sources */,
 				73BDC955122BAE22006D74F6 /* Hex.m in Sources */,
 				73674C21122CFA6C00394D12 /* VeryLargeFileReadTests.m in Sources */,
+				73563756122FA4A1009288CA /* CodeBlockStoreTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

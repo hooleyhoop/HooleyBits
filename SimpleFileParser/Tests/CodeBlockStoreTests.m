@@ -26,7 +26,7 @@
 	[_cbs release];
 }
 
-- (void)testAddCodeBlock {
+- (void)testInsertCodeBlock {
 	
 	CodeLine *line1 = [CodeLine lineWithAddress:10];
 	CodeLine *line2 = [CodeLine lineWithAddress:20];
@@ -45,10 +45,10 @@
 	CodeBlock *aBlock4 = [CodeBlock blockWithName:nil];
 	[aBlock4 pushLine:line4];
 	
-	[_cbs addCodeBlock:aBlock4];
-	[_cbs addCodeBlock:aBlock2];
-	[_cbs addCodeBlock:aBlock3];
-	[_cbs addCodeBlock:aBlock1];
+	[_cbs insertCodeBlock:aBlock4];
+	[_cbs insertCodeBlock:aBlock2];
+	[_cbs insertCodeBlock:aBlock3];
+	[_cbs insertCodeBlock:aBlock1];
 	
 	STAssertTrue( [_cbs blockCount]==4, nil );
 	STAssertEqualObjects( [_cbs blockAtIndex:0], aBlock1, nil );
@@ -76,10 +76,10 @@
 	CodeBlock *aBlock4 = [CodeBlock blockWithName:nil];
 	[aBlock4 pushLine:line4];
 
-	[_cbs addCodeBlock:aBlock1];
-	[_cbs addCodeBlock:aBlock2];
-	[_cbs addCodeBlock:aBlock3];
-	[_cbs addCodeBlock:aBlock4];
+	[_cbs insertCodeBlock:aBlock1];
+	[_cbs insertCodeBlock:aBlock2];
+	[_cbs insertCodeBlock:aBlock3];
+	[_cbs insertCodeBlock:aBlock4];
 
 	CodeBlock *resultBlock1 = [_cbs codeBlockForAddress:10];
 	CodeBlock *resultBlock2 = [_cbs codeBlockForAddress:20];
@@ -101,7 +101,7 @@
 	[aBlock1 pushLine:line1];
 	[aBlock1 pushLine:line2];
 	
-	[_cbs addCodeBlock:aBlock1];
+	[_cbs insertCodeBlock:aBlock1];
 
 	CodeBlock *resultBlock1 = [_cbs codeBlockForAddress:1];
 	STAssertNil( resultBlock1, nil );
@@ -131,8 +131,8 @@
 	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
-	[_cbs addCodeBlock:aBlock1];
-	[_cbs addCodeBlock:aBlock2];
+	[_cbs insertCodeBlock:aBlock1];
+	[_cbs insertCodeBlock:aBlock2];
 
 	CodeBlock *block1 = [_cbs blockAtIndex:0];
 	STAssertTrue( block1==aBlock1, nil);
@@ -153,8 +153,8 @@
 	CodeBlock *aBlock2 = [CodeBlock blockWithName:nil];
 	[aBlock2 pushLine:line2];
 	
-	[_cbs addCodeBlock:aBlock1];
-	[_cbs addCodeBlock:aBlock2];
+	[_cbs insertCodeBlock:aBlock1];
+	[_cbs insertCodeBlock:aBlock2];
 	
 	NSArray *blocks = [_cbs allBlocks];
 	STAssertTrue([blocks count]==2, nil);
@@ -178,15 +178,41 @@
 	[block2 pushLine:line2];
 	[block3 pushLine:line3];
 	
-	[_cbs addCodeBlock:block1];
-	[_cbs addCodeBlock:block2];
-	[_cbs addCodeBlock:block3];
+	[_cbs insertCodeBlock:block1];
+	[_cbs insertCodeBlock:block2];
+	[_cbs insertCodeBlock:block3];
 	
 	NSUInteger i = 0;
 	for( id each in _cbs ) {
 		STAssertTrue( each==[_cbs blockAtIndex:i], nil );
 		i++;
 	}
+}
+
+- (void)testSort {
+		
+	CodeBlock *block1 = [CodeBlock blockWithName:nil];
+	CodeBlock *block2 = [CodeBlock blockWithName:nil];
+	CodeBlock *block3 = [CodeBlock blockWithName:nil];
+	
+	CodeLine *line1 = [CodeLine lineWithAddress:10];
+	CodeLine *line2 = [CodeLine lineWithAddress:20];
+	CodeLine *line3 = [CodeLine lineWithAddress:30];	
+	
+	[block1 pushLine:line1];
+	[block2 pushLine:line2];
+	[block3 pushLine:line3];
+	
+	[_cbs addCodeBlockOutOfOrder:block2];
+	[_cbs addCodeBlockOutOfOrder:block3];
+	[_cbs addCodeBlockOutOfOrder:block1];
+	
+	[_cbs sort];
+	
+	STAssertTrue( [_cbs blockAtIndex:0]==block1, nil );
+	STAssertTrue( [_cbs blockAtIndex:1]==block2, nil );
+	STAssertTrue( [_cbs blockAtIndex:2]==block3, nil );
+
 }
 
 @end

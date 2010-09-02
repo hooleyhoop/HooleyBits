@@ -47,9 +47,9 @@
 	[block2 pushLine:line2];
 	[block3 pushLine:line3];
 	
-	[_cbs addCodeBlock:block1];
-	[_cbs addCodeBlock:block2];
-	[_cbs addCodeBlock:block3];
+	[_cbs insertCodeBlock:block1];
+	[_cbs insertCodeBlock:block2];
+	[_cbs insertCodeBlock:block3];
 	
 	NSUInteger counter = 0;
 	NSString *lineString;

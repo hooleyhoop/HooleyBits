@@ -18,6 +18,8 @@
 
 - (id)initWithDict:(NSDictionary *)instrInfo {
 	
+	NSParameterAssert(instrInfo);
+
 	self = [super init];
 	if(self){
 		_values = instrInfo;

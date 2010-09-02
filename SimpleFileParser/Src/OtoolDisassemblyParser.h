@@ -8,10 +8,12 @@
 
 #import "iParseSrc.h"
 
-@class CodeBlockStore, CodeBlockFactory, InstructionHash;
+@class CodeBlockStore, CodeBlockFactory, InstructionHash, SourceLineCategorizer;
 
 @interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
+	NSString			*_fileString;
+	
 	NSString			*_title;
 	NSMutableArray		*_blockLines;
 
@@ -21,13 +23,18 @@
 	InstructionHash		*_instructionHash;
 
 	dispatch_group_t	_lineTokenisizing_group;
+	
+	id					_delegate;
+	
 }
 
 @property (retain) CodeBlockStore *codeBlockStore;
+@property (assign) id delegate;
 
-+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash;
-+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash;
+//+ (CodeBlockStore *)constructInternalRepresentation:(NSString *)fileString :(InstructionHash *)instHash;
+//+ (id)OtoolDisassemblyParserWithSrcString:(NSString *)fileString :(InstructionHash *)instHash;
 
 - (id)initWithSrcString:(NSString *)fileString :(InstructionHash *)instHash;
 
+- (void)eatInputFile;
 @end

@@ -22,6 +22,7 @@
 
 @interface MachoLoader : NSObject {
 
+	NSData				*_allFile;
 	NSString			*_filePath;
 
 	struct load_command *_startOfLoadCommandsPtr;

@@ -54,11 +54,16 @@
 - (Instruction *)instructionForOpcode:(NSString *)opcode {
 	
 	NSParameterAssert(opcode);
-	Instruction *insr = [_cachedInstructions objectForKey:opcode]; 
-	if( insr==nil ) {
-		NSDictionary *instrInfo = [_instructionLookup infoForInstructionString:opcode];
-		insr = [Instruction instructionWithDict:instrInfo];
-		[_cachedInstructions setObject:insr forKey:opcode];
+	Instruction *insr = nil;
+	@synchronized(self)
+    {
+		insr = [_cachedInstructions objectForKey:opcode]; 
+		if( insr==nil ) {
+			NSDictionary *instrInfo = [_instructionLookup infoForInstructionString:opcode];
+			insr = [Instruction instructionWithDict:instrInfo];
+			NSAssert(insr, @"no insr");
+			[_cachedInstructions setObject:insr forKey:opcode];
+		}
 	}
 	NSAssert(insr, @"grunch");
 	return insr;

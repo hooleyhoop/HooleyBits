@@ -32,6 +32,8 @@
 	
 	YAMLParser *ayp = [[YAMLParser alloc] initWithFilePath:filePath];
 	CFMutableDictionaryRef root = [ayp rootDictionary];
+	
+	[ayp release];
 }
 
 @end

@@ -34,9 +34,14 @@
 	[super dealloc];
 }
 
-- (void)addCodeBlock:(CodeBlock *)aBlock {
+- (void)addCodeBlockOutOfOrder:(CodeBlock *)aBlock {
+	[_codeBlockStore addObject:aBlock];
+}
+
+- (void)insertCodeBlock:(CodeBlock *)aBlock {
 	
 	NSUInteger ind = [self findInsertionPt:aBlock];
+	NSLog(@"Found Position is %i",ind );
 	[_codeBlockStore insertObject:aBlock atIndex:ind];
 }
 
@@ -124,6 +129,15 @@
     state->mutationsPtr = (unsigned long *)self;
 	
     return batchCount;
+}
+
+static NSInteger _compareBlocks( id p1, id p2, void *context) {
+	
+	return [(CodeBlock*)p1 compareStartAddress:(CodeBlock *)p2];
+}
+
+- (void)sort {
+	[_codeBlockStore sortUsingFunction:_compareBlocks context:nil];
 }
 
 @end
