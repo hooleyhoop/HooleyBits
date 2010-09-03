@@ -119,6 +119,62 @@ static void print_cstring_char( char c ) {
 }
 
 // -- see cctools-782 otool ofile_print.c
+- (void)print_cfstring_section:(char *)sect :(uint32_t)sect_size :(uint32_t)sect_addr {
+
+	UInt8 *locPtr = (UInt8 *)sect;
+	UInt8 *memPtr = (UInt8 *)sect_addr;
+	
+//	while( (locPtr)<(((UInt8 *)sect)+sect_size) ) {
+//		
+//		UInt32 val1 = *((UInt32 *)locPtr);
+//		locPtr = locPtr + sizeof val1;
+//		UInt32 val2 = *((UInt32 *)locPtr);
+//		locPtr = locPtr + sizeof val2;
+//		UInt32 val3 = *((UInt32 *)locPtr);
+//		locPtr = locPtr + sizeof val3;
+//		UInt32 val4 = *((UInt32 *)locPtr);
+//		locPtr = locPtr + sizeof val4;
+//		
+//		// NSString *hmm = [self CStringForAddress:val3];
+//		char *string1 = sect+val3;
+//		char *string2 = sect_addr+val3;
+//		char *string3 = memPtr+val3;
+//		char *string4 = locPtr+val3;
+//
+//		char *string5 = sect-val3;
+//		char *string6 = sect_addr-val3;
+//		char *string7 = memPtr-val3;
+//		char *string8 = locPtr-val3;
+////		NSLog(@"%s", string1);
+////		NSLog(@"%s", string2);
+////		NSLog(@"%s", string3);
+////		NSLog(@"%s", string4);
+//		NSLog(@"%s", string5);
+////		NSLog(@"%s", string6);
+////		NSLog(@"%s", string7);
+////		NSLog(@"%s", string8);
+//
+//		NSLog(@"%x %x %x %x length:%i", memPtr, val1, val2, val3, val4 );
+//		memPtr = memPtr + sizeof val1 + sizeof val2;
+//	}
+	
+		
+//	Contents of (__DATA,__cfstring) section
+//	0000c0b8	00000000 c8070000 189f0000 00000000
+//	0000c0c8	00000000 c8070000 1ba10000 05000000
+//	0000c0d8	00000000 c8070000 4ea10000 0e000000
+//	0000c0e8	00000000 c8070000 5da10000 08000000 
+//	0000c0f8	00000000 c8070000 70a10000 11000000 
+//	0000c108	00000000 c8070000 a0a10000 17000000 
+//	0000c118	00000000 c8070000 80a20000 19000000
+//	
+//	// The __ustring segment is the equivalent of the __cstring segment, except with UTF16 strings. So a constant NSString may refer to either ustring or cstring data.
+//	8 bytes = isa
+//	4 bytes = pointer
+//	4 bytes = length
+
+}
+
 void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) {
 		
 	for( uint32_t i=0; i<sect_size; i++ )
@@ -132,6 +188,25 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 		
 		if(i<sect_size && sect[i]=='\0' )
 			printf("\n");
+	}
+}
+
+
+- (void)save___cls_refs_section:(char *)sect_pointer :(uint32_t)sect_size :(uint32_t)sect_addr {
+	
+	UInt8 *locPtr = (UInt8 *)sect_pointer;
+	UInt8 *memPtr = (UInt8 *)sect_addr;
+	
+	while( (locPtr)<(((UInt8 *)sect_pointer)+sect_size) ) {
+		
+		UInt32 val1 = *((UInt32 *)locPtr);
+		locPtr = locPtr + sizeof val1;
+		
+	//	UInt32 val2 = *((UInt32 *)locPtr);
+//		locPtr = locPtr + sizeof val2;
+		
+		NSLog(@"%0x %0x", memPtr, val1 );
+		memPtr = memPtr + sizeof val1;
 	}
 }
 
@@ -594,11 +669,25 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			return si;
 
 		} else if( [[sec name] isEqualToString:@"__text"] ) {
-			
+			// yeah do this
+
 		} else if( [[sec name] isEqualToString:@"__StaticInit"] ) {
+			[NSException raise:@"what the fuck" format:@""];
 
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
+			// Initialised constant variables
 			
+			// try copying an int out to see what it is?
+			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+			int32_t a4ByteLiteral = 0;
+			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
+			
+			NSLog(@"oh well this doesnt work then %0x %0x %@", a4ByteLiteralAddress, memAddr, [self CStringForAddress:a4ByteLiteralAddress] );
+
+			// [NSException raise:@"what the fuck" format:@""];
+
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
 
 			// 4 byte literals
@@ -621,6 +710,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			return si;
 			
 		} else if( [[sec name] isEqualToString:@"__cstring"] ) {
+
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
@@ -656,19 +746,86 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		}
 	
 	} 
+		
 	
+	else if( [[seg name] isEqualToString:@"__OBJC"] ) {
+		
+		if( [[sec name] isEqualToString:@"__cls_refs"] ) {
+
+			NSLog(@"ha");
+		}
+	}
 	
+//	else if( [[seg name] isEqualToString:@"__DATA"] ) {
+//
+//		// Initialized gloabl mutable variables, such as writable C strings and data arrays (for example int a = 1; or static int a = 1;)
+//		if( [[sec name] isEqualToString:@"__data"] ) {
+//			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+//			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+//			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+//			int32_t a4ByteLiteral = 0;
+//			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
+//			
+//			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
+//			
+//		} else if ([[sec name] isEqualToString:@"__const_coal"]) {
+//			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+//			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+//			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+//			int32_t a4ByteLiteral = 0;
+//			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
+//			
+//			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
+//			
+//		// unitialised global variables: int i; (outside of functions)
+//		} else if ([[sec name] isEqualToString:@"__common"]) {
+//			UInt8 *memPtr = (UInt8 *)sec.startAddr;
+//			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+//			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+//			int32_t a4ByteLiteral = 0;
+//			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
+//			
+//			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
+//			
+//		// Constant data needing relocation (for example, char * const p = "foo";)
+//		} else if ([[sec name] isEqualToString:@"__const"]) {
+//		
+//			NSLog(@"a");
+//			
+//		// unitialised static variables: static int i;
+//		} else if ([[sec name] isEqualToString:@"__bss"]) {
+//			NSLog(@"a");
+//		} else if ([[sec name] isEqualToString:@"__cfstring"]) {
+//			NSLog(@"a");
+//		} else if ([[sec name] isEqualToString:@"__gcc_except_tab__DATA"]) {
+//			NSLog(@"a");
+//		// Placeholder section used by the dynamic linker
+//		} else if ([[sec name] isEqualToString:@"__dyld"]) {
+//			NSLog(@"a");
+//		// Lazy symbol pointers, which are indirect references to functions imported from a different file.
+//		} else if ([[sec name] isEqualToString:@"__la_symbol_ptr"]) {
+//			NSLog(@"a");
+//		// Non-lazy symbol pointers, which are indirect references to data items imported from a different file
+//		} else if ([[sec name] isEqualToString:@"__nl_symbol_ptr"]) {
+//			NSLog(@"a");
+//		// Module initialization functions. The C++ compiler places static constructors here
+//		} else if ([[sec name] isEqualToString:@"__mod_init_func"]) {
+//			NSLog(@"a");
+//		// Module termination functions.
+//		} else if ([[sec name] isEqualToString:@"__mod_term_func"]) {
+//			NSLog(@"a");
+//		} else {
+//			[NSException raise:@"mutah fucker" format:@""];
+//		}
+//	}
+
+
 	return nil;
 	
-	if( [[seg name] isEqualToString:@"__DATA"] ) {
-		// Read and write - we have a problemo!
-		if( [[sec name] isEqualToString:@"__data"] ) {
-			// return NO;
-		}
 
-	} else if( [[seg name] isEqualToString:@"__DATA"] ) {
 
-	} else if( [[seg name] isEqualToString:@"__PAGEZERO"] ) {
+
+	if( [[seg name] isEqualToString:@"__PAGEZERO"] ) {
 
 	} else {
 		[NSException raise:@"Unknown request" format:@"%@ %@", [seg name], [sec name]];
@@ -1126,7 +1283,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
 						[self save_cstring_section:sect_pointer :newSectSize :sect_addr];
 
-					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
+					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+					//	memAddr bc870c
 					} else if ( strcmp(thisSectionName, "__const")==0 ) {
 
 						// 00006d90	00 00 f0 41 cd cc 4c 3f 33 33 33 3f 00 00 00 00 
@@ -1301,9 +1459,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						
 					// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__cfstring")==0 ) {
-
-// TODO: PUTBACK! Shouldnt have bastardized the print_cstring_section()
-						print_cstring_section( sect_pointer, newSectSize, sect_addr );
+						[self print_cfstring_section:sect_pointer :newSectSize :sect_addr];
 				
 					// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__data")==0 ) {
@@ -1393,8 +1549,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						//000080e8  __TEXT:__cstring:dataWithLength:
 						//000080ec  __TEXT:__cstring:cStringUsingEncoding:
 						
-					// otool -s __OBJC __cls_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+					// otool -s __OBJC __cls_refs -v /Applications/6-386.app/Contents/MacOS/6-386						
 					} else if ( strcmp(thisSectionName, "__cls_refs")==0 ) {
+
+						[self save___cls_refs_section:sect_pointer :newSectSize :sect_addr];
+
 						//000080f0  __TEXT:__cstring:NSMutableArray
 						//000080f4  __TEXT:__cstring:NSMutableDictionary
 						//000080f8  __TEXT:__cstring:NSData

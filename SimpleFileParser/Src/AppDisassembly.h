@@ -13,7 +13,6 @@
 
 	NSString				*_fileString;
 	OtoolDisassemblyParser	*_disassembleParser;
-	MachoLoader				*_ml;
 	CodeBlockStore			*_internalRepresentation;
 	
 	// wish this wasn't here - wrong level
@@ -25,7 +24,7 @@
 - (id)initWithOtoolOutput:(NSString *)fileString :(InstructionHash *)instHash :(MachoLoader *)ml;
 
 - (void)ripIt;
-- (void)gleanInfo:(MachoLoader *)lookup;
+- (void)gleanInfo;
 - (void)reformat;
 
 - (void)outputToFile:(NSString *)fileName;

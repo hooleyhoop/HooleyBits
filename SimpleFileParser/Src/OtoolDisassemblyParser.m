@@ -105,8 +105,6 @@
 	
 	[_fileString release];
 	_fileString = nil;
-	
-	
 }
 
 - (void)newTitle:(NSString *)lineText {
