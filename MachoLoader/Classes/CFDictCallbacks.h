@@ -13,7 +13,9 @@
 
 + (CFDictionaryKeyCallBacks)nonRetainingDictionaryKeyCallbacks;
 + (CFDictionaryKeyCallBacks)cStringDictionaryKeyCallbacks;
++ (CFDictionaryKeyCallBacks)intKeyCallbacks;
 
 + (CFDictionaryValueCallBacks)nonRetainingDictionaryValueCallbacks;
++ (CFDictionaryValueCallBacks)intValCallbacks;
 
 @end

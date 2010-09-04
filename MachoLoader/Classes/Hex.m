@@ -37,20 +37,20 @@
 	
 	// Iterate through the string, adding each character (equivilent to 1/2 
 	// byte) to the NSData result
-	int i;
+	NSUInteger i;
 	char current;
-	const int size = [hexString length] / 2;
+	const NSUInteger size = [hexString length] / 2;
 	const char * stringBuffer = [hexString cStringUsingEncoding:NSASCIIStringEncoding];
 	NSMutableData* result = [NSMutableData dataWithLength:size];
 	char * resultBuffer = [result mutableBytes];
 	for (i = 0; i < size; i++) {
 		// Get first character, use as high order bits
 		current = stringBuffer[i * 2];
-		resultBuffer[i] = HEX_LOOKUP[current] << 4;
+		resultBuffer[i] = HEX_LOOKUP[(int)current] << 4;
 		
 		// Get second character, use as low order bits
 		current = stringBuffer[(i * 2) + 1];
-		resultBuffer[i] = resultBuffer[i] | HEX_LOOKUP[current];
+		resultBuffer[i] = resultBuffer[i] | HEX_LOOKUP[(int)current];
 	}
 	
 	return [NSData dataWithData:result];
@@ -78,6 +78,16 @@
 	immutableResult = [NSString stringWithString:result];
 	[result release];
 	return immutableResult;
+}
+
+NSUInteger hexCharHash(const char *str) {
+	
+	NSUInteger hash = 5381;
+	int c;
+	
+	while(c=*str++)
+		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+	return hash;
 }
 
 @end

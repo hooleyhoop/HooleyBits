@@ -101,9 +101,9 @@
 // • __TEXT __literal8			// double precision float constants
 // • __TEXT __cstring			// constant c strings
 
-//	__OBJC __message_refs
-//	__OBJC __cls_refs
-//	__OBJC __class
+//	__OBJC •__message_refs
+//	__OBJC •__cls_refs
+//	__OBJC •__class
 
 //	__PAGEZERO (null)
 

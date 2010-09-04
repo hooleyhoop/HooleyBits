@@ -49,7 +49,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	}
 	if(demangledName!=nil) {
 		NSLog(@"yay %s",demangledName );
-		free(demangledName);
+//		free(demangledName);
 	}
 }
 

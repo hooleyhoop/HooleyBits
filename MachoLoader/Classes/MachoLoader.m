@@ -40,6 +40,7 @@
 #import "MemoryMap.h"
 #import "Segment.h"
 #import "Section.h"
+#import "IntHash.h"
 
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
@@ -191,24 +192,6 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 	}
 }
 
-
-- (void)save___cls_refs_section:(char *)sect_pointer :(uint32_t)sect_size :(uint32_t)sect_addr {
-	
-	UInt8 *locPtr = (UInt8 *)sect_pointer;
-	UInt8 *memPtr = (UInt8 *)sect_addr;
-	
-	while( (locPtr)<(((UInt8 *)sect_pointer)+sect_size) ) {
-		
-		UInt32 val1 = *((UInt32 *)locPtr);
-		locPtr = locPtr + sizeof val1;
-		
-	//	UInt32 val2 = *((UInt32 *)locPtr);
-//		locPtr = locPtr + sizeof val2;
-		
-		NSLog(@"%0x %0x", memPtr, val1 );
-		memPtr = memPtr + sizeof val1;
-	}
-}
 
 // -- see cctools-782 otool ofile_print.c
 - (void)save_cstring_section:(char *)sect :(uint32_t)sect_size :(uint32_t)sect_addr {
@@ -417,7 +400,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	    else
 			continue;
 		
-	    count = sect_ind[i].size / stride;
+	    count = (uint32_t)sect_ind[i].size / stride;
 //	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
 		
 	    n = sect_ind[i].reserved1;
@@ -535,10 +518,15 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					symbolString++;
 			
 					int demangledStat;
-					char demangledOutput[256];
+			
+			// TODO: leaking! crashes if i dont
+					char *demangledOutput = malloc(256); //[256];
 					size_t demangledLength;
 			
-					char *demangledName = __cxa_demangle( (const char *)symbolString, demangledOutput, &demangledLength, &demangledStat );
+					char *demangledName = __cxa_demangle( (const char *)symbolString, 
+														 demangledOutput,
+														 &demangledLength, 
+														 &demangledStat );
 					switch (demangledStat) {
 						case 0:
 							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
@@ -550,6 +538,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 							break;
 						case -2:
 							symbolInfo.stringValue = [NSString stringWithCString:symbolString encoding:NSUTF8StringEncoding];
+							free(demangledOutput);
 							break;
 						case -3:
 							[NSException raise:@"invalid argument" format:@""];
@@ -557,7 +546,6 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 						default:
 							break;
 					}
-				
 					[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 //				}
 	
@@ -584,6 +572,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		
 		_indirectSymbolLookup	= [[IntKeyDictionary alloc] init];
 		_cStringLookup			= [[IntKeyDictionary alloc] init];
+		_cls_refsLookup			= [[IntHash alloc] init];
 
 		_libraries = [[NSMutableArray alloc] init];
 	}
@@ -600,7 +589,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_cStringLookup release];
 	[_libraries release];
 	[_allFile release];
-
+	[_cls_refsLookup release];
+	
 	[super dealloc];
 }
 
@@ -612,7 +602,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 								:_ncmds 
 								:_sizeofcmds 
 								:_cputype
-								:_indirectSymbolTable
+								:(uint32_t *)_indirectSymbolTable
 								:_nindirect_symbols
 								:_symtable_ptr
 								:_UNUSED_symbols64
@@ -684,7 +674,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			int32_t a4ByteLiteral = 0;
 			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
 			
-			NSLog(@"oh well this doesnt work then %0x %0x %@", a4ByteLiteralAddress, memAddr, [self CStringForAddress:a4ByteLiteralAddress] );
+			NSLog(@"oh well this doesnt work then %0x %0x %@", (uint)a4ByteLiteralAddress, (uint)memAddr, [self CStringForAddress:(NSUInteger)a4ByteLiteralAddress] );
 
 			// [NSException raise:@"what the fuck" format:@""];
 
@@ -751,8 +741,42 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	else if( [[seg name] isEqualToString:@"__OBJC"] ) {
 		
 		if( [[sec name] isEqualToString:@"__cls_refs"] ) {
-
-			NSLog(@"ha");
+			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
+			NSAssert( stringTableEntry, @"what?");
+			
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			si.stringValue = stringTableEntry;
+			si.address = memAddr;
+			return si;
+		}
+		else if( [[sec name] isEqualToString:@"__class"] ) {
+			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
+			NSAssert( stringTableEntry, @"what?");
+			
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			si.stringValue = stringTableEntry;
+			si.address = memAddr;
+			return si;
+		}
+		else if( [[sec name] isEqualToString:@"__message_refs"] ) {
+			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
+			NSAssert( stringTableEntry, @"what?");
+			
+			si = [[[SymbolicInfo alloc] init] autorelease];
+			si.segmentName = [seg name];
+			si.sectionName = [sec name];
+			si.stringValue = stringTableEntry;
+			si.address = memAddr;
+			return si;
+		} else {
+			NSLog(@"%@", [sec name] );
 		}
 	}
 	
@@ -1488,6 +1512,18 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					// OBJC Segment sections
 					// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__message_refs")==0 ) {
+						
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+							UInt32 val1 = *((UInt32 *)locPtr);
+							locPtr = locPtr + sizeof val1;
+							
+							// reusing _cls_refsLookup out of lazyness
+							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+							
+							memPtr = memPtr + sizeof val1;
+						}
 						//00008000  __TEXT:__cstring:addObject:
 						//00008004  __TEXT:__cstring:numberWithUnsignedInteger:
 						//00008008  __TEXT:__cstring:setTotalBoundsWithSize:label:
@@ -1552,8 +1588,16 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					// otool -s __OBJC __cls_refs -v /Applications/6-386.app/Contents/MacOS/6-386						
 					} else if ( strcmp(thisSectionName, "__cls_refs")==0 ) {
 
-						[self save___cls_refs_section:sect_pointer :newSectSize :sect_addr];
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+							UInt32 val1 = *((UInt32 *)locPtr);
+							locPtr = locPtr + sizeof val1;
+							// NSLog(@"%0x %0x", memPtr, val1 );
+							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
 
+							memPtr = memPtr + sizeof val1;
+						}
 						//000080f0  __TEXT:__cstring:NSMutableArray
 						//000080f4  __TEXT:__cstring:NSMutableDictionary
 						//000080f8  __TEXT:__cstring:NSData
@@ -1575,6 +1619,18 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 					// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 					} else if ( strcmp(thisSectionName, "__class")==0 ) {
+						
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+							UInt32 val1 = *((UInt32 *)locPtr);
+							locPtr = locPtr + sizeof val1;
+							
+							// reusing _cls_refsLookup out of lazyness
+							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+							
+							memPtr = memPtr + sizeof val1;
+						}						
 						//0000812c	bc 81 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
 						//0000813c	01 00 00 00 1c 00 00 00 e8 82 00 00 4c 82 00 00 
 						//0000814c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 

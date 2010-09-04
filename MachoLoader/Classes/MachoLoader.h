@@ -13,7 +13,7 @@
 // eg, dump cstrings otool -s __TEXT __cstring -v test    
 
 @class MemoryMap, SymbolicInfo;
-@class IntKeyDictionary;
+@class IntKeyDictionary, IntHash;
 
 // How to install libiberty
 //> port variants binutils
@@ -48,6 +48,7 @@
 	const uint32_t*		_indirectSymbolTable;
 	
 	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
+	IntHash			*_cls_refsLookup;
 	
 	MemoryMap			*_memoryMap;
 	MemoryMap			*_uncodedMemoryMap;

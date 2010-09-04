@@ -59,17 +59,17 @@
 	[_mm insertSegment:seg2];
 	[_mm insertSegment:seg3];
 	
-	Section *sec1 = [Section name:@"sec1" segment:@"seg1" start:1 length:9];
-	Section *sec2 = [Section name:@"sec2" segment:@"seg1" start:20 length:9];
-	Section *sec3 = [Section name:@"sec3" segment:@"seg1" start:30 length:9];
+	Section *sec1 = [Section name:@"sec1" segment:@"seg1" start:1 length:9 fileAddr:0];
+	Section *sec2 = [Section name:@"sec2" segment:@"seg1" start:20 length:9 fileAddr:0];
+	Section *sec3 = [Section name:@"sec3" segment:@"seg1" start:30 length:9 fileAddr:0];
 	
-	Section *sec4 = [Section name:@"sec4" segment:@"seg2" start:101 length:9];
-	Section *sec5 = [Section name:@"sec5" segment:@"seg2" start:120 length:9];
+	Section *sec4 = [Section name:@"sec4" segment:@"seg2" start:101 length:9 fileAddr:0];
+	Section *sec5 = [Section name:@"sec5" segment:@"seg2" start:120 length:9 fileAddr:0];
 
-	Section *sec6 = [Section name:@"sec6" segment:@"seg3" start:201 length:9];
-	Section *sec7 = [Section name:@"sec7" segment:@"seg3" start:220 length:9];
+	Section *sec6 = [Section name:@"sec6" segment:@"seg3" start:201 length:9 fileAddr:0];
+	Section *sec7 = [Section name:@"sec7" segment:@"seg3" start:220 length:9 fileAddr:0];
 	
-	Section *messedUpSec = [Section name:@"messedUpSec" segment:@"seg1" start:1000 length:9];
+	Section *messedUpSec = [Section name:@"messedUpSec" segment:@"seg1" start:1000 length:9 fileAddr:0];
 
 	[_mm insertSection:sec4];
 	[_mm insertSection:sec6];

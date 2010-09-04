@@ -15,6 +15,35 @@
 
 #pragma mark Callbacks
 
+Boolean shIntKeyEqual( const void *value1,const void *value2 ) {
+	
+	int *val1Ptr = (int *)value1;
+	int val1 = *val1Ptr;
+	
+	int *val2Ptr = (int *)value2;
+	int val2 = *val2Ptr;
+	
+	return val1==val2;
+}
+
+CFHashCode shIntKeyHash( const void *value  ) {
+	
+	int *hashPtr = (int *)value;
+	int hash = *hashPtr;
+	return (CFHashCode)hash;
+}
+
+const void *shIntKeyRetain( CFAllocatorRef allocator, const void *ptr ) {
+	
+	void *newKey = malloc(sizeof ptr);
+	memcpy(newKey,ptr,sizeof ptr);
+	return newKey;
+}
+
+void shIntKeyRelease( CFAllocatorRef allocator, const void *ptr ) {
+	free((void *)ptr);
+}
+
 const void *myKeyRetainCallback( CFAllocatorRef allocator, const void *ptr ) {
     return ptr;
 }
@@ -50,6 +79,17 @@ CFHashCode myKeyHashCallBack( const void *value  ) {
 	return cStringDictionaryKeyCallbacks;
 }
 
++ (CFDictionaryKeyCallBacks)intKeyCallbacks {
+
+	CFDictionaryKeyCallBacks KeyCallbacks = kCFTypeDictionaryKeyCallBacks;
+	KeyCallbacks.retain = shIntKeyRetain;
+	KeyCallbacks.release = shIntKeyRelease;
+	KeyCallbacks.copyDescription = NULL;
+	KeyCallbacks.equal = shIntKeyEqual;
+	KeyCallbacks.hash = shIntKeyHash;
+	return KeyCallbacks;
+}
+
 #pragma mark VALUE setups
 + (CFDictionaryValueCallBacks)nonRetainingDictionaryValueCallbacks {
 	
@@ -59,7 +99,15 @@ CFHashCode myKeyHashCallBack( const void *value  ) {
 	return nonRetainingDictionaryValueCallbacks;
 }
 
-
++ (CFDictionaryValueCallBacks)intValCallbacks {
+	
+	CFDictionaryValueCallBacks valCallbacks = kCFTypeDictionaryValueCallBacks;
+	valCallbacks.retain = shIntKeyRetain;
+	valCallbacks.release = shIntKeyRelease;
+	valCallbacks.copyDescription = NULL;
+	valCallbacks.equal = shIntKeyEqual;
+	return valCallbacks;
+}
 
 
 @end
