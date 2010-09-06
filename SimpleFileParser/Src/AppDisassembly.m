@@ -17,6 +17,7 @@
 #import "HexToken.h"
 #import "HexLookup.h"
 #import "InstructionHash.h"
+#import "CodeBlockStore.h"
 
 @implementation AppDisassembly
 
@@ -110,34 +111,52 @@
 
 - (void)gleanInfo {
 	
-	// TODO: use dispach to iterate this?
-	for( CodeBlock *eachCodeBlock in _internalRepresentation )
-	{
-		for( CodeLine *eachCodeLine in eachCodeBlock)
+	// TODO: implement this using strides
+	dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	NSUInteger count = [_internalRepresentation blockCount];
+	count = count/10 + 1;
+	dispatch_apply(count, queue, ^(size_t i) {
+		
+		for( NSUInteger j=0; j<10; j++ )
 		{
-			NSArray *allArgs = eachCodeLine.arguments;
-			
-			if (allArgs && [allArgs count])
-			{
-				// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
-				for( Argument *eachArg in allArgs )
+			CodeBlock *eachCodeBlock = [_internalRepresentation blockAtIndex:(i*10)+j];
+			if(eachCodeBlock){
+				NSLog(@"%i",(i*10)+j );
+
+				for( CodeLine *eachCodeLine in eachCodeBlock)
 				{
-					NSMutableArray *allToks = [eachArg.allTokens copy];
-					for( BasicToken *eachToken in allToks )
+					NSArray *allArgs = eachCodeLine.arguments;
+					if (allArgs && [allArgs count])
 					{
-						if( eachToken.type==hexNum )
+						// one argument can contain more than one Hex number 0xff ( %r , %r , 66 )
+						for( Argument *eachArg in allArgs )
 						{
-							// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
-							HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
-							[eachArg replaceToken:eachToken with:(BasicToken *)aHexToken];
+							NSMutableArray *allToks = [eachArg.allTokens copy];
+							for( BasicToken *eachToken in allToks )
+							{
+								if( eachToken.type==hexNum )
+								{
+									// Hex tokens are cached - ie you should always get the same hex token back for the same hexString
+									HexToken *aHexToken = [HexLookup tokenForHexString:eachToken.value];
+									[eachArg replaceToken:eachToken with:(BasicToken *)aHexToken];
+								}
+							}
+							[allToks release];
+							allToks = nil;
 						}
 					}
-					[allToks release];
-					allToks = nil;
+					
 				}
 			}
-		}	
-	}
+		}
+	});
+	
+//	NSLog(@"end");
+//	for( CodeBlock *eachCodeBlock in _internalRepresentation ) {
+//		for( CodeLine *eachCodeLine in eachCodeBlock) {
+//			NSArray *allArgs = eachCodeLine.arguments;
+//		}	
+//	}
 }
 
 - (void)reformat {

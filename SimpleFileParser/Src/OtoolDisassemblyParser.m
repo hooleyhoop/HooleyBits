@@ -28,7 +28,7 @@
 @interface OtoolDisassemblyParser ()
 
 - (CodeLine *)_tokeniseLine:(NSString *)aLine;
-- (void)constructBlock:(BOOL)isFinal;
+- (void)constructBlock;
 
 @end
 
@@ -91,7 +91,7 @@
 - (void)noMoreLinesComing {
 
 	BOOL final = YES;
-	[self constructBlock:final];
+	[self constructBlock];
 	
 	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
 	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self performSelectorOnMainThread:@selector(finishedProcessingAllLines) withObject:nil waitUntilDone:NO]; });
@@ -107,14 +107,33 @@
 	_fileString = nil;
 }
 
-- (void)newTitle:(NSString *)lineText {
+- (void)_pushCurrentBlock {
 	
-	if(_title){
+	static NSUInteger _titleCount=0;
+	if(_blockLines){// test for first run
 		BOOL isFinal = NO;
-		[self constructBlock:isFinal];
+		[self constructBlock];
+		// NSLog(@"BlockCount %i", _titleCount);
+		_titleCount++;
 	}
+	NSAssert( _title==nil, @"oops why have _title?");
+	NSAssert( _blockLines==nil, @"oops why have _blockLines?");
+}
+
+- (void)_readyNextBlock:(NSString *)lineText  {
+	
 	_title = [lineText retain];
 	_blockLines = [[NSMutableArray alloc] init];
+}
+
+- (void)newTitle:(NSString *)lineText {
+	
+	[self _pushCurrentBlock];
+	
+	NSAssert( _title==nil, @"oops why have _title?");
+	NSAssert( _blockLines==nil, @"oops why have _blockLines?");
+
+	[self _readyNextBlock:lineText];
 }
 
 - (void)newLine:(NSString *)lineText {
@@ -126,7 +145,9 @@
 
 typedef void(^BasicBlock)(void); 
 
-- (void)constructBlock:(BOOL)isFinal {
+- (void)constructBlock {
+
+	NSParameterAssert(_blockLines);
 
 	NSArray *tempArray = [_blockLines copy];
 	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);

@@ -573,6 +573,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_indirectSymbolLookup	= [[IntKeyDictionary alloc] init];
 		_cStringLookup			= [[IntKeyDictionary alloc] init];
 		_cls_refsLookup			= [[IntHash alloc] init];
+		_temporaryExperiment		= [[IntHash alloc] init];
 
 		_libraries = [[NSMutableArray alloc] init];
 	}
@@ -590,6 +591,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_libraries release];
 	[_allFile release];
 	[_cls_refsLookup release];
+	[_temporaryExperiment release];
 	
 	[super dealloc];
 }
@@ -665,7 +667,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			[NSException raise:@"what the fuck" format:@""];
 
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
-			// Initialised constant variables
+			// Initialised constant variables ALSO switch statement jump table
+			
+			NSInteger aMemPtrToSomething = [_temporaryExperiment intForIntKey:memAddr];
+			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
+			NSAssert( stringTableEntry, @"what?");
 			
 			// try copying an int out to see what it is?
 			UInt8 *memPtr = (UInt8 *)sec.startAddr;
@@ -780,10 +786,11 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		}
 	}
 	
-//	else if( [[seg name] isEqualToString:@"__DATA"] ) {
-//
-//		// Initialized gloabl mutable variables, such as writable C strings and data arrays (for example int a = 1; or static int a = 1;)
-//		if( [[sec name] isEqualToString:@"__data"] ) {
+	/* Read and write */
+	else if( [[seg name] isEqualToString:@"__DATA"] ) {
+
+		// Initialized gloabl mutable variables, such as writable C strings and data arrays (for example int a = 1; or static int a = 1;)
+		if( [[sec name] isEqualToString:@"__data"] ) {
 //			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 //			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
 //			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
@@ -792,7 +799,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //			
 //			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
 //			
-//		} else if ([[sec name] isEqualToString:@"__const_coal"]) {
+		} else if ([[sec name] isEqualToString:@"__const_coal"]) {
 //			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 //			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
 //			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
@@ -802,7 +809,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
 //			
 //		// unitialised global variables: int i; (outside of functions)
-//		} else if ([[sec name] isEqualToString:@"__common"]) {
+		} else if ([[sec name] isEqualToString:@"__common"]) {
 //			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 //			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
 //			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
@@ -812,9 +819,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //			NSLog(@"oh well this doesnt work then %0x %@", memAddr, [self CStringForAddress:memAddr] );
 //			
 //		// Constant data needing relocation (for example, char * const p = "foo";)
-//		} else if ([[sec name] isEqualToString:@"__const"]) {
-//		
-//			NSLog(@"a");
+		} else if ([[sec name] isEqualToString:@"__const"]) {
+
 //			
 //		// unitialised static variables: static int i;
 //		} else if ([[sec name] isEqualToString:@"__bss"]) {
@@ -838,10 +844,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //		// Module termination functions.
 //		} else if ([[sec name] isEqualToString:@"__mod_term_func"]) {
 //			NSLog(@"a");
-//		} else {
+		} else {
 //			[NSException raise:@"mutah fucker" format:@""];
-//		}
-//	}
+		}
+	}
 
 
 	return nil;
@@ -1311,6 +1317,18 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					//	memAddr bc870c
 					} else if ( strcmp(thisSectionName, "__const")==0 ) {
 
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+							UInt32 val1 = *((UInt32 *)locPtr);
+							locPtr = locPtr + sizeof val1;
+							
+							// reusing _cls_refsLookup out of lazyness
+							[_temporaryExperiment addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+							
+							memPtr = memPtr + sizeof val1;
+						}
+						
 						// 00006d90	00 00 f0 41 cd cc 4c 3f 33 33 33 3f 00 00 00 00 
 						// 00006da0	00 00 80 3f 00 00 20 41 00 00 48 43 00 00 04 42 
 						// 00006db0	00 00 10 41 00 00 a0 40 00 00 00 00 00 00 00 00 

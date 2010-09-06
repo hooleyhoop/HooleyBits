@@ -60,11 +60,13 @@
 
 - (void)addLineToTarget:(NSString *)aLine {
 
+	static NSUInteger _blockCount=0;
+	
 	if(_stateChanged) {
 		if( _state==ANON_FUNCTION || _state==NAMED_FUNCTION ) {
 			_target = _delegate;
 			[_target processSrcLine:_lastString type:BLOCK_TITLE];
-
+			_blockCount++;
 		} else if ( _state==NO_FUNCTION || _state==TEXT  ) {
 			_target = nil;
 		}

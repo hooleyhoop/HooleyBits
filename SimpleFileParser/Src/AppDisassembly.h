@@ -11,7 +11,7 @@
 
 @interface AppDisassembly : NSObject <iAmOutputFormatterCallback> {
 
-	NSString				*_fileString;
+	NSString					*_fileString;
 	OtoolDisassemblyParser	*_disassembleParser;
 	CodeBlockStore			*_internalRepresentation;
 	

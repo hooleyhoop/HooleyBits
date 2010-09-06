@@ -35,7 +35,11 @@
 }
 
 - (void)addCodeBlockOutOfOrder:(CodeBlock *)aBlock {
-	[_codeBlockStore addObject:aBlock];
+
+//	@synchronized(self)
+//	{
+		[_codeBlockStore addObject:aBlock];
+//	}
 }
 
 - (void)insertCodeBlock:(CodeBlock *)aBlock {

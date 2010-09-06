@@ -49,7 +49,8 @@
 	
 	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
 	IntHash			*_cls_refsLookup;
-	
+	IntHash			*_temporaryExperiment;
+
 	MemoryMap			*_memoryMap;
 	MemoryMap			*_uncodedMemoryMap;
 

@@ -66,7 +66,10 @@
 }
 
 - (void)noMoreLines {
+
+	NSLog(@"about to sort blockstore %i", [_blockStore blockCount]);
 	[_blockStore sort];
+	NSLog(@"sorted blockstore %i", [_blockStore blockCount]);
 }
 
 - (void)addCodeLine:(CodeLine *)line {
