@@ -70,7 +70,7 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
     count = CFStringGetLength((CFStringRef)iString);
 	
     // Allocate our buffers for characters and glyphs.
-    characters = (UniChar *)malloc(sizeof(UniChar) * count);
+    characters = malloc(sizeof(UniChar) * count);
     assert(characters != NULL);
 	
     // Get the characters from the string.
@@ -93,7 +93,7 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
 
 	self = [super init];
 	if( self ) {
-		_glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * c);
+		_glyphs = malloc(sizeof(CGGlyph) * c);
 		_count = c;
 		assert( _glyphs != NULL );
 	}
@@ -375,8 +375,10 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
     NSUInteger count = [iString length];
 	
     // Allocate our buffers for characters and glyphs.
-	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
-	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+	
+	how big is UniChar? do we need sizeof ? >
+	UniChar *characters = malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert( characters != NULL );
     assert( glyphs != NULL );
 	
@@ -481,8 +483,8 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
     NSUInteger count = [iString length];
 	
     // Allocate our buffers for characters and glyphs.
-	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
-	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+	UniChar *characters = malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert( characters != NULL );
     assert( glyphs != NULL );
 	
@@ -579,8 +581,8 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
     NSUInteger count = [iString length];
 	
     // Allocate our buffers for characters and glyphs.
-	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
-	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+	UniChar *characters = malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert( characters != NULL );
     assert(glyphs != NULL);
 	
@@ -780,10 +782,10 @@ shitStack:
     NSUInteger count = [iString length];
 	
     // Allocate our buffers for characters and glyphs.
-	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+	UniChar *characters = malloc(sizeof(UniChar) * count);
     assert(characters != NULL);
 	
-	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert(glyphs != NULL);
 	
     // Get the characters from the string.
@@ -907,7 +909,7 @@ shitStack:
 					if(!gotGlyphs){
 						NSString *utf32String = [NSString stringWithUTF32Characters:&codePt length:1];
 						CFIndex count = CFStringGetLength((CFStringRef)utf32String);
-						UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
+						UniChar *characters = malloc(sizeof(UniChar) * count);
 						CFStringGetCharacters( (CFStringRef)utf32String, CFRangeMake(0, count), characters );
 						Boolean gotGlyphs = CTFontGetGlyphsForCharacters( iFont, characters, glyphs, count );
 						free(characters);

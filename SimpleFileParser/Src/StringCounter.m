@@ -24,6 +24,10 @@ NSArray *worderize( NSString *aLine ) {
 
 	NSArray *components = [aLine componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	NSMutableArray *betterComponents = [NSMutableArray array];
+//	for(NSString *each in components){
+//		if([each isEqualToString:@""]==NO)
+//			[betterComponents addObject:each];
+//	}
 	[components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
 		if([obj isEqualToString:@""])
 			return;

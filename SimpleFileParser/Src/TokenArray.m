@@ -38,6 +38,8 @@
 - (void)_tokenizeString:(NSString *)arg {
 	
 	const char *cString = [arg UTF8String];
+	
+	// remember strlen doesn't include the null
 	size_t length = strlen(cString);
 	for( uint i=0; i<length; i++ ){
 

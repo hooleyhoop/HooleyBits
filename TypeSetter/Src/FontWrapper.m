@@ -188,8 +188,8 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	CTFontRef iFont = CreateFont( fdesc, size );
 	assert(iFont != NULL && iString != NULL);
     NSUInteger count = [iString length];
-	UniChar *characters = (UniChar *)malloc(sizeof(UniChar) * count);
-	CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * count);
+	UniChar *characters = malloc(sizeof(UniChar) * count);
+	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert( characters != NULL );
     assert(glyphs != NULL);
     CFStringGetCharacters( (CFStringRef)iString, CFRangeMake(0, count), characters );

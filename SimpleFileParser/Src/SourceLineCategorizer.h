@@ -29,6 +29,7 @@ enum srcLineType {
 	NSObject <iParseSrc>		*_target;
 	NSObject <iParseSrc>		*_delegate;
 	NSString					*_lastString;
+	NSCharacterSet				*_wsp;
 }
 
 + (id)grokerWithDelegate:(NSObject <iParseSrc> *)obj;

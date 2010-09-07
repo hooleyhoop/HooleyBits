@@ -60,7 +60,7 @@
 	[_disassembleParser release];
 	_disassembleParser = nil;
 
-	[self gleanInfo];
+//here	[self gleanInfo];
 
 	NSLog(@"Finished everything muthafucka");
 }

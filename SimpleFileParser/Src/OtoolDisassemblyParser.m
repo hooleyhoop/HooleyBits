@@ -24,6 +24,7 @@
 #import "HexValueHash.h"
 #import "HexLookup.h"
 #import "Argument.h"
+#import "GenericTimer.h"
 
 @interface OtoolDisassemblyParser ()
 
@@ -81,6 +82,8 @@
 // rip the file into code blocks (asynchronously)
 - (void)eatInputFile {
 		
+	_parseTimer = [[GenericTimer alloc] init];
+	
 	SourceLineCategorizer *groker = [SourceLineCategorizer grokerWithDelegate:self];
 	[LinesInStringIterator feedLines:_fileString to:groker];
 	
@@ -94,17 +97,23 @@
 	[self constructBlock];
 	
 	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
-	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self performSelectorOnMainThread:@selector(finishedProcessingAllLines) withObject:nil waitUntilDone:NO]; });
+//notasync	dispatch_group_notify( _lineTokenisizing_group, q_default, ^{ [self performSelectorOnMainThread:@selector(finishedProcessingAllLines) withObject:nil waitUntilDone:NO]; });
+	[self finishedProcessingAllLines];
 }
 
 // This is the async callback
 - (void)finishedProcessingAllLines {
 	
 	[_codeBlockfactory noMoreLines];
-	[_delegate _OtoolDisassemblyParserFinished];				
 	
 	[_fileString release];
 	_fileString = nil;
+	
+	[_parseTimer close];
+	[_parseTimer release];
+	
+	// This will (should!) cause us to be dealloced. Must be last
+	[_delegate _OtoolDisassemblyParserFinished];				
 }
 
 - (void)_pushCurrentBlock {
@@ -149,9 +158,11 @@ typedef void(^BasicBlock)(void);
 
 	NSParameterAssert(_blockLines);
 
-	NSArray *tempArray = [_blockLines copy];
-	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
-	BasicBlock block = ^{
+//notasync	NSArray *tempArray = [_blockLines copy];
+			NSArray *tempArray = _blockLines;
+
+//notasync	dispatch_queue_t q_default = dispatch_get_global_queue(0, 0);
+//notasync	BasicBlock block = ^{
 		
 		NSMutableArray *lines = [[NSMutableArray alloc] initWithCapacity:[tempArray count]];
 		for( NSString *eachStr in tempArray ) {
@@ -162,10 +173,10 @@ typedef void(^BasicBlock)(void);
 		
 		[_codeBlockfactory newCodeBlockWithName:_title lines:lines];
 		[lines release];
-		[tempArray release];
-	}; 
+//notasync		[tempArray release];
+//notasync	}; 
 
-	dispatch_group_async( _lineTokenisizing_group, q_default, block );
+//notasync	dispatch_group_async( _lineTokenisizing_group, q_default, block );
 	
 	[_title release];
 	_title = nil;
@@ -203,25 +214,27 @@ typedef void(^BasicBlock)(void);
 	// NSString *lineOffset = [components objectAtIndex:0];
 	NSString *address = [components objectAtIndex:1];
 	// NSString *code = [components objectAtIndex:2];
-	NSString *opcode = [components objectAtIndex:3];
-
-	// Instructions are cached - ie you should always get the same Instruction back for the same opcode
-	Instruction *instr = [_instructionHash instructionForOpcode:opcode];
+//here	NSString *opcode = [components objectAtIndex:3];
 	
-	NSString *arguments=nil, *functionHint=nil;
+	Instruction *instr = nil;
 	NSArray *allArgs = nil;
+	
+	// Instructions are cached - ie you should always get the same Instruction back for the same opcode
+//here	Instruction *instr = [_instructionHash instructionForOpcode:opcode];
+	
+//here	NSString *arguments=nil, *functionHint=nil;
 
 	// optional
-	if([components count]>=5)
-	{
-		arguments = [components objectAtIndex:4];
-		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
-		[tkns1 secondPass];
-		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+//here	if([components count]>=5)
+//here	{
+//here		arguments = [components objectAtIndex:4];
+//here		TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
+//here		[tkns1 secondPass];
+//here		ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 		
-		allArgs = [[scanner.allArguments copy] autorelease];
-		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
-	}
+//here		allArgs = [[scanner.allArguments copy] autorelease];
+//here		NSAssert([allArgs count]<=3, @"we should formalise this - there is never more than 2 - we dont need an array");
+//here	}
 //	if([components count]>=6)
 //		functionHint = [components objectAtIndex:5];
 

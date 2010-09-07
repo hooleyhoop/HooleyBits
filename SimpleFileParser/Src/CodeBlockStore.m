@@ -36,10 +36,10 @@
 
 - (void)addCodeBlockOutOfOrder:(CodeBlock *)aBlock {
 
-//	@synchronized(self)
-//	{
+//notasync		@synchronized(self)
+//notasync		{
 		[_codeBlockStore addObject:aBlock];
-//	}
+//notasync		}
 }
 
 - (void)insertCodeBlock:(CodeBlock *)aBlock {

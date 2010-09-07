@@ -29,6 +29,7 @@
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
+		7363ABC91236649E00018772 /* i386_disasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 7363ABC71236649E00018772 /* i386_disasm.c */; };
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
@@ -86,6 +87,8 @@
 		734B66DA1226900A002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = Classes/IntKeyDictionary.h; sourceTree = "<group>"; };
 		734B66DB1226900A002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = Classes/IntKeyDictionary.m; sourceTree = "<group>"; };
 		734B677812269AD6002C0B0F /* DemangleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemangleTests.m; path = Tests/DemangleTests.m; sourceTree = "<group>"; };
+		7363ABC71236649E00018772 /* i386_disasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = i386_disasm.c; path = Classes/i386_disasm.c; sourceTree = "<group>"; };
+		7363ABC81236649E00018772 /* i386_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i386_disasm.h; path = Classes/i386_disasm.h; sourceTree = "<group>"; };
 		73794F181223F903001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = Classes/SymbolicInfo.h; sourceTree = "<group>"; };
 		73794F191223F903001B8AF6 /* SymbolicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolicInfo.m; path = Classes/SymbolicInfo.m; sourceTree = "<group>"; };
 		737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionaryTests.m; path = Tests/IntKeyDictionaryTests.m; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 				7302196A0F864C6E00906D18 /* Infrastructure */,
 				73EDD9230F863E4700E09434 /* MachoLoader.h */,
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
+				7363ABC71236649E00018772 /* i386_disasm.c */,
+				7363ABC81236649E00018772 /* i386_disasm.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 				734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */,
 				737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */,
 				731702DA123290EF00EE9ED6 /* IntHash.m in Sources */,
+				7363ABC91236649E00018772 /* i386_disasm.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

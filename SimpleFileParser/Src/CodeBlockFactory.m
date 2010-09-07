@@ -10,6 +10,7 @@
 #import "CodeBlockStore.h"
 #import "CodeBlock.h"
 #import "CodeLine.h"
+#import "GenericTimer.h"
 
 @interface CodeBlockFactory ()
 
@@ -67,9 +68,13 @@
 
 - (void)noMoreLines {
 
+	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
+
 	NSLog(@"about to sort blockstore %i", [_blockStore blockCount]);
 	[_blockStore sort];
 	NSLog(@"sorted blockstore %i", [_blockStore blockCount]);
+	
+	[readTimer close];
 }
 
 - (void)addCodeLine:(CodeLine *)line {

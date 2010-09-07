@@ -30,6 +30,8 @@
 	if(self){
 		_state = NO_FUNCTION;
 		_delegate = obj;
+		_wsp = [[NSCharacterSet whitespaceAndNewlineCharacterSet] retain];
+
 	}
 	return self;
 }
@@ -37,7 +39,7 @@
 - (void)dealloc {
 	
 	[_lastString release];
-
+	[_wsp release];
 	[super dealloc];
 }
 
@@ -45,8 +47,7 @@
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	NSCharacterSet *wsp = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-	NSString *strippedline = [aLine stringByTrimmingCharactersInSet:wsp];
+	NSString *strippedline = [aLine stringByTrimmingCharactersInSet:_wsp];
 	
 	[self categorizeLine: strippedline];
 	[self addLineToTarget: strippedline];

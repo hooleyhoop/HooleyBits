@@ -75,7 +75,7 @@ nil] retain];
 		
 	// Read the output of otool
 	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_small.txt" stringByExpandingTildeInPath];
+	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
 	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
 	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 

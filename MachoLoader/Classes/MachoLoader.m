@@ -42,6 +42,8 @@
 #import "Section.h"
 #import "IntHash.h"
 
+#import "i386_disasm.h"
+
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
 @interface MachoLoader (PrivateMethods) 
@@ -52,7 +54,6 @@
 @end
 
 @implementation MachoLoader
-
 void system_fatal( const char *format,  ...) {
     va_list ap;
 	va_start(ap, format);
@@ -510,6 +511,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			
 					// assert first char is _ the remove it
 					char *symbolString = strings+n_stringIndex;
+			
+					// remember strlen doesn't include the null
 					size_t len = strlen(symbolString);
 					NSAssert(len>1, @"Function name seems wrong");
 					char firstChar = symbolString[0];
@@ -1189,6 +1192,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //	}
 //}
 
+extern struct instable const *distableEntry( int opcode1, int opcode2 );
+
 // http://serenity.uncc.edu/web/ADC/2005/Developer_DVD_Series/April/ADC%20Reference%20Library/documentation/DeveloperTools/Conceptual/MachORuntime/FileStructure/chapter_4_section_1.html#//apple_ref/doc/uid/20001298/BAJBDBBC
 - (void)parseLoadCommands {
 	
@@ -1307,8 +1312,62 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 					// TEXT Segment sections
 					if ( strcmp(thisSectionName, "__text")==0 ) {
-						// print_text_section( char *sect, uint32_t sect_size, uint32_t sect_addr ) {
-			
+
+						if(_cputype!=CPU_TYPE_I386) 
+							[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
+
+						UInt8 *locPtr = (UInt8 *)sect_pointer;
+						UInt8 *memPtr = (UInt8 *)sect_addr;
+						
+						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+						
+							UInt8 byte = *((UInt8 *)locPtr);
+							locPtr = locPtr + sizeof byte;
+
+							unsigned opcode1 = byte >> 4 & 0xf;
+							unsigned opcode2 = byte & 0xf;
+							
+							struct instable const *dp = distableEntry(opcode1,opcode2);
+							if(dp->adr_mode == PREFIX)
+							{
+								if(prefix_dp != NULL)
+									printf("%s", dp->name);
+								prefix_dp = dp;
+								prefix_byte = byte;
+							}
+							else if(dp->adr_mode == AM){
+								addr16 = !addr16;
+								prefix_byte = byte;
+							}
+							else if(dp->adr_mode == DM){
+								data16 = !data16;
+								prefix_byte = byte;
+							}
+							else if(dp->adr_mode == OVERRIDE){
+								seg = dp->name;
+								prefix_byte = byte;
+							}
+							else if(dp->adr_mode == REX){
+								rex = byte;
+								/*
+								 * REX is a prefix, but we don't set prefix_byte here because
+								 * we use that to detect things related to the other prefixes
+								 * and we don't want the existence of those bytes to be hidden
+								 * by the presence of a REX prefix.
+								 */
+							}
+							else
+								break;
+						}
+						
+							NSLog(@"%x %x", memPtr, byte );
+							memPtr = memPtr + sizeof byte; // + sizeof val2;
+						}
+						
+						
+						
+		
+						
 					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
 						[self save_cstring_section:sect_pointer :newSectSize :sect_addr];

@@ -8,7 +8,7 @@
 
 #import "iParseSrc.h"
 
-@class CodeBlockStore, CodeBlockFactory, InstructionHash, SourceLineCategorizer;
+@class CodeBlockStore, CodeBlockFactory, InstructionHash, SourceLineCategorizer, GenericTimer;
 
 @interface OtoolDisassemblyParser : NSObject <iParseSrc> {
 
@@ -26,6 +26,7 @@
 	
 	id					_delegate;
 	
+	GenericTimer		*_parseTimer;
 }
 
 @property (retain) CodeBlockStore *codeBlockStore;
