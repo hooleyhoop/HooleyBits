@@ -1319,54 +1319,34 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						UInt8 *locPtr = (UInt8 *)sect_pointer;
 						UInt8 *memPtr = (UInt8 *)sect_addr;
 						
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-						
-							UInt8 byte = *((UInt8 *)locPtr);
-							locPtr = locPtr + sizeof byte;
+						UInt8 left = newSectSize;
+						NSUInteger j;
+						for( NSUInteger i=0; i<newSectSize; ){
 
-							unsigned opcode1 = byte >> 4 & 0xf;
-							unsigned opcode2 = byte & 0xf;
-							
-							struct instable const *dp = distableEntry(opcode1,opcode2);
-							if(dp->adr_mode == PREFIX)
-							{
-								if(prefix_dp != NULL)
-									printf("%s", dp->name);
-								prefix_dp = dp;
-								prefix_byte = byte;
-							}
-							else if(dp->adr_mode == AM){
-								addr16 = !addr16;
-								prefix_byte = byte;
-							}
-							else if(dp->adr_mode == DM){
-								data16 = !data16;
-								prefix_byte = byte;
-							}
-							else if(dp->adr_mode == OVERRIDE){
-								seg = dp->name;
-								prefix_byte = byte;
-							}
-							else if(dp->adr_mode == REX){
-								rex = byte;
-								/*
-								 * REX is a prefix, but we don't set prefix_byte here because
-								 * we use that to detect things related to the other prefixes
-								 * and we don't want the existence of those bytes to be hidden
-								 * by the presence of a REX prefix.
-								 */
-							}
-							else
-								break;
+							j = i386_disassemble( (char *)locPtr, left, 
+//													  uint64_t addr, uint64_t sect_addr, 
+//													  enum byte_sex object_byte_sex,
+//											 struct relocation_info *sorted_relocs,
+//											 uint32_t nsorted_relocs,
+//											 struct nlist *symbols,
+//											 struct nlist_64 *symbols64,
+//											 uint32_t nsymbols,
+//											 struct symbol *sorted_symbols,
+//											 uint32_t nsorted_symbols,
+//											 char *strings,
+//											 uint32_t strings_size,
+//											 uint32_t *indirect_symbols,
+//											 uint32_t nindirect_symbols,
+											 _cputype
+//											 struct load_command *load_commands,
+//											 uint32_t ncmds,
+//											 uint32_t sizeofcmds //,
+//											 enum bool verbose
+													);
+							locPtr = locPtr + j;
+									
 						}
-						
-							NSLog(@"%x %x", memPtr, byte );
-							memPtr = memPtr + sizeof byte; // + sizeof val2;
-						}
-						
-						
-						
-		
+
 						
 					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
