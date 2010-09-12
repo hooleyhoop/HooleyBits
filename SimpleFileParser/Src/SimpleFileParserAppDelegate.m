@@ -1,3 +1,28 @@
+woah! In the 32bit abi every function has this signiture
+
+pushl		  %ebp				Pushes the value of the stack frame pointer (EBP) onto the stack.
+movl		  %esp,%ebp		Sets the stack frame pointer to the value of the stack pointer (ESP)
+pushl		  %edi				Pushes the values of the registers that must be preserved (EDI, ESI, and EBX) onto the stack.
+pushl		  %esi
+pushl		  %ebx
+subl		  $0x3c,%esp		Allocates space in the stack frame for local storage.
+
+... 
+
+addl		  $0x3c,%esp		Deallocates the space used for local storage in the stack.
+popl		  %ebx				Restores the preserved registers (EDI, ESI, EBX, EBP) by popping the values saved on the stack by the prolog
+popl		  %esi
+popl		  %edi
+leave		
+ret								Returns
+
+
+try a system call and see if it uses calll 
+
+execve(path, args, NSPlatform_environ());
+
+look at instructions folling calll for returned results eax
+
 //
 //  SimpleFileParserAppDelegate.m
 //  SimpleFileParser
