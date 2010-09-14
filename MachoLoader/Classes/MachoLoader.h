@@ -18,6 +18,12 @@
 // How to install libiberty
 //> port variants binutils
 //> sudo port install binutils +universal
+struct symbol {
+    char *name;
+    char *indr_name;
+    uint64_t n_value;
+    int is_thumb;
+};
 
 
 @interface MachoLoader : NSObject {
@@ -48,8 +54,8 @@
 	const uint32_t*		_indirectSymbolTable;
 	
 	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
-	IntHash			*_cls_refsLookup;
-	IntHash			*_temporaryExperiment;
+	IntHash				*_cls_refsLookup;
+	IntHash				*_temporaryExperiment;
 
 	MemoryMap			*_memoryMap;
 	MemoryMap			*_uncodedMemoryMap;
@@ -70,4 +76,8 @@
 - (void)addCstring:(NSString *)aCstring forAddress:(NSUInteger)cStringAddress;
 - (NSString *)CStringForAddress:(NSUInteger)addr;
 
+const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in) */
+			 const struct symbol *sorted_symbols,
+			 const uint32_t nsorted_symbols,
+			 int verbose);
 @end

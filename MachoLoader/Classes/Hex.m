@@ -61,20 +61,20 @@
 	return [self initWithData:[NSData dataWithHexString:hexString]];	
 }
 
-- (NSString *) hexString
+- (NSString *)hexString
 {
 	int i;
 	const char * data = [self bytes];
 	NSMutableString *result;
 	NSString *immutableResult;
-	
+
 	// Iterate through NSData's buffer, converting every byte into hex
 	// and appending the result to a string.
 	result = [[NSMutableString alloc] init];
 	for (i = 0; i < [self length]; i++) {
 		[result appendFormat:@"%02x", data[i] & 0xff];
 	}
-	
+
 	immutableResult = [NSString stringWithString:result];
 	[result release];
 	return immutableResult;

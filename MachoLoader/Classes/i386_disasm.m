@@ -53,6 +53,8 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
 #include <mach-o/reloc.h>
+#import "MachoLoader.h"
+
 //#include "stuff/symbol.h"
 //#include "stuff/bytesex.h"
 //#include "otool.h"
@@ -81,6 +83,8 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #define EBP 5
 #define ESP 4
 
+extern struct symbol;
+
 /*
  * This is the structure that is used for storing all the op code information.
  */
@@ -106,59 +110,63 @@ static const struct instable op_invalid_64 = {"",TERM,/* UNKNOWN */0,0};
 #define HAS_SUFFIX			0x1	/* For instructions which may have a 'w', 'l', or 'q' suffix */
 #define IS_POINTER_SIZED	0x2	/* For instructions which implicitly have operands which are sizeof(void *) */
 
-//static void get_operand(
-//    const char **symadd,
-//    const char **symsub,
-//    uint32_t *value,
-//    uint32_t *value_size,
-//    char *result,
-//    const cpu_type_t cputype,
-//    const uint32_t mode,
-//    const uint32_t r_m,
-//    const uint32_t wbit,
-//    const enum bool data16,
-//    const enum bool addr16,
-//    const enum bool sse2,
-//    const enum bool mmx,
-//	const unsigned int rex,
-//    const char *sect,
-//    uint32_t sect_addr,
-//    uint32_t *length,
-//    uint32_t *left,
-//    const uint32_t addr,
-//    const struct relocation_info *sorted_relocs,
-//    const uint32_t nsorted_relocs,
-//    const struct nlist *symbols,
-//    const struct nlist_64 *symbols64,
-//    const uint32_t nsymbols,
-//    const char *strings,
-//    const uint32_t strings_size,
-//    const struct symbol *sorted_symbols,
-//    const uint32_t nsorted_symbols,
-//    const enum bool verbose);
+static void get_operand(
+const char **symadd,
+const char **symsub,
+uint32_t *value,
+uint32_t *value_size,
+char *result,
 
-//static void immediate(
-//    const char **symadd,
-//    const char **symsub,
-//    uint64_t *value,
-//    uint32_t value_size,
-//    const char *sect,
-//    uint32_t sect_addr,
-//    uint32_t *length,
-//    uint32_t *left,
-//    const cpu_type_t cputype,
-//    const uint32_t addr,
-//    const struct relocation_info *sorted_relocs,
-//    const uint32_t nsorted_relocs,
-//    const struct nlist *symbols,
-//    const struct nlist_64 *symbols64,
-//    const uint32_t nsymbols,
-//    const char *strings,
-//    const uint32_t strings_size,
-//    const struct symbol *sorted_symbols,
-//    const uint32_t nsorted_symbols,
-//    const enum bool verbose);
+const cpu_type_t cputype,
+const uint32_t mode,
+const uint32_t r_m,
+const uint32_t wbit,
+const int data16,
+const int addr16,
+const int sse2,
+const int mmx,
+const unsigned int rex,
 
+const char *sect,
+	uint32_t sect_addr,
+uint32_t *length,
+uint32_t *left,
+	const uint32_t addr,
+	const struct relocation_info *sorted_relocs,
+	const uint32_t nsorted_relocs,
+	const struct nlist *symbols,
+	const struct nlist_64 *symbols64,
+	const uint32_t nsymbols,
+	const char *strings,
+	const uint32_t strings_size,
+	const struct symbol *sorted_symbols,
+	const uint32_t nsorted_symbols,
+	const int verbose
+);
+
+static void immediate(
+	const char **symadd,
+	const char **symsub,
+	uint64_t *value,
+	uint32_t value_size,
+	const char *sect,
+	uint32_t sect_addr,
+	uint32_t *length,
+	uint32_t *left,
+	const cpu_type_t cputype,
+	const uint32_t addr,
+	const struct relocation_info *sorted_relocs,
+	const uint32_t nsorted_relocs,
+	const struct nlist *symbols,
+	const struct nlist_64 *symbols64,
+	const uint32_t nsymbols,
+	const char *strings,
+	const uint32_t strings_size,
+	const struct symbol *sorted_symbols,
+	const uint32_t nsorted_symbols,
+	const int verbose
+);
+					  
 //static void displacement(
 //    const char **symadd,
 //    const char **symsub,
@@ -179,27 +187,27 @@ static const struct instable op_invalid_64 = {"",TERM,/* UNKNOWN */0,0};
 //    const uint32_t strings_size,
 //    const struct symbol *sorted_symbols,
 //    const uint32_t nsorted_symbols,
-//    const enum bool verbose);
+//    const int verbose);
 
-//static void get_symbol(
-//    const char **symadd,
-//    const char **symsub,
-//    uint64_t *offset,
-//    const cpu_type_t cputype,
-//    const uint32_t sect_offset,
-//    const uint64_t value,
-//    const struct relocation_info *relocs,
-//    const uint32_t nrelocs,
-//    const struct nlist *symbols,
-//    const struct nlist_64 *symbols64,
-//    const uint32_t nsymbols,
-//    const char *strings,
-//    const uint32_t strings_size,
-//    const struct symbol *sorted_symbols,
-//    const uint32_t nsorted_symbols,
-//    const enum bool verbose);
+static void get_symbol(
+    const char **symadd,
+    const char **symsub,
+    uint64_t *offset,
+    const cpu_type_t cputype,
+    const uint32_t sect_offset,
+    const uint64_t value,
+    const struct relocation_info *relocs,
+    const uint32_t nrelocs,
+    const struct nlist *symbols,
+    const struct nlist_64 *symbols64,
+    const uint32_t nsymbols,
+    const char *strings,
+    const uint32_t strings_size,
+    const struct symbol *sorted_symbols,
+    const uint32_t nsorted_symbols,
+    const int verbose);
 
-/*
+
 static void print_operand(
     const char *seg,
     const char *symadd,
@@ -208,7 +216,7 @@ static void print_operand(
     unsigned int value_size,
     const char *result,
     const char *tail);
-*/
+
 static uint64_t get_value(
     const uint32_t size,
     const char *sect,
@@ -223,11 +231,11 @@ static void modrm_byte(
 
 
 #define GET_OPERAND(symadd, symsub, value, value_size, result) \
-	get_operand((symadd), (symsub), (value), (value_size), (result), \
-		    cputype, mode, r_m, wbit, data16, addr16, sse2, mmx, rex, \
-		    sect, sect_addr, &length, &left, addr, sorted_relocs, \
-		    nsorted_relocs, symbols, symbols64, nsymbols, strings, \
-		    strings_size, sorted_symbols, nsorted_symbols, verbose)
+get_operand((symadd), (symsub), (value), (value_size), (result), \
+cputype, mode, r_m, wbit, data16, addr16, sse2, mmx, rex, \
+sect, sect_addr, &length, &left, addr, sorted_relocs, \
+nsorted_relocs, symbols, symbols64, nsymbols, strings, \
+strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 #define DISPLACEMENT(symadd, symsub, value, value_size) \
 	displacement((symadd), (symsub), (value), (value_size), sect, \
@@ -236,10 +244,10 @@ static void modrm_byte(
 		     strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 #define IMMEDIATE(symadd, symsub, value, value_size) \
-	immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
-		  &length, &left, cputype, addr, sorted_relocs, \
-		  nsorted_relocs, symbols, symbols64, nsymbols, strings, \
-		  strings_size, sorted_symbols, nsorted_symbols, verbose)
+immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
+&length, &left, cputype, addr, sorted_relocs, \
+nsorted_relocs, symbols, symbols64, nsymbols, strings, \
+strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 #define GET_SYMBOL(symadd, symsub, offset, sect_offset, value) \
 	get_symbol((symadd), (symsub), (offset), cputype, (sect_offset), \
@@ -1545,25 +1553,25 @@ uint32_t
 i386_disassemble(
 char *sect,
 uint32_t left,
-//uint64_t addr,
-//uint64_t sect_addr,
+uint64_t addr,
+uint64_t sect_addr,
 //enum byte_sex object_byte_sex,
-//struct relocation_info *sorted_relocs,
-//uint32_t nsorted_relocs,
-//struct nlist *symbols,
-//struct nlist_64 *symbols64,
-//uint32_t nsymbols,
-//struct symbol *sorted_symbols,
-//uint32_t nsorted_symbols,
-//char *strings,
-//uint32_t strings_size,
-//uint32_t *indirect_symbols,
-//uint32_t nindirect_symbols,
-cpu_type_t cputype
+struct relocation_info *sorted_relocs,
+uint32_t nsorted_relocs,
+struct nlist *symbols,
+struct nlist_64 *symbols64,
+uint32_t nsymbols,
+struct symbol *sorted_symbols,
+uint32_t nsorted_symbols,
+char *strings,
+uint32_t strings_size,
+uint32_t *indirect_symbols,
+int32_t nindirect_symbols,
+cpu_type_t cputype,
 //struct load_command *load_commands,
 //uint32_t ncmds,
 //uint32_t sizeofcmds //,
-//enum bool verbose
+int verbose
 )
 {
     char mnemonic[MAX_MNEMONIC+2]; /* one extra for suffix */
@@ -1637,31 +1645,31 @@ cpu_type_t cputype
 			dp = dp->arch64;
 
 	    if(dp->adr_mode == PREFIX){
-		if(prefix_dp != NULL)
-		    printf("%s", dp->name);
-		prefix_dp = dp;
-		prefix_byte = byte;
+			if(prefix_dp != NULL)
+				printf("%s", dp->name);
+			prefix_dp = dp;
+			prefix_byte = byte;
 	    }
 	    else if(dp->adr_mode == AM){
-		addr16 = !addr16;
-		prefix_byte = byte;
+			addr16 = !addr16;
+			prefix_byte = byte;
 	    }
 	    else if(dp->adr_mode == DM){
-		data16 = !data16;
-		prefix_byte = byte;
+			data16 = !data16;
+			prefix_byte = byte;
 	    }
 	    else if(dp->adr_mode == OVERRIDE){
-		seg = dp->name;
-		prefix_byte = byte;
+			seg = dp->name;
+			prefix_byte = byte;
 	    }
 	    else if(dp->adr_mode == REX){
-		rex = byte;
-		/*
-		 * REX is a prefix, but we don't set prefix_byte here because
-		 * we use that to detect things related to the other prefixes
-		 * and we don't want the existence of those bytes to be hidden
-		 * by the presence of a REX prefix.
-		 */
+			rex = byte;
+			/*
+			 * REX is a prefix, but we don't set prefix_byte here because
+			 * we use that to detect things related to the other prefixes
+			 * and we don't want the existence of those bytes to be hidden
+			 * by the presence of a REX prefix.
+			 */
 	    }
 	    else
 		break;
@@ -1722,7 +1730,7 @@ cpu_type_t cputype
 			byte = get_value(sizeof(char), sect, &length, &left);
 			modrm_byte(&mode, &reg, &r_m, byte);
 		    }
-//putback		    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 		    opcode_suffix = get_value(sizeof(char), sect, &length, &left);
 		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
 		}
@@ -1797,9 +1805,9 @@ cpu_type_t cputype
 	     * exist.  The opcode3 field further decodes the instruction.
 	     */
 	    if(got_modrm_byte == FALSE){
-		got_modrm_byte = TRUE;
-		byte = get_value(sizeof(char), sect, &length, &left);
-		modrm_byte(&mode, (uint32_t *)&opcode3, &r_m, byte);
+			got_modrm_byte = TRUE;
+			byte = get_value(sizeof(char), sect, &length, &left);
+				modrm_byte(&mode, (uint32_t *)&opcode3, &r_m, byte);
 	    }
 	    /*
 	     * decode 287 instructions (D8-DF) from opcodeN
@@ -1825,7 +1833,7 @@ cpu_type_t cputype
 		    dp = &opFP1n2[opcode2-8][opcode3];
 	    }
 	    else
-		dp = dp->indirect + opcode3;
+			dp = dp->indirect + opcode3;
 		/* now dp points the proper subdecode table entry */
 	}
 
@@ -1840,36 +1848,36 @@ cpu_type_t cputype
 	 */
 	if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 	    if((dp->flags & IS_POINTER_SIZED) != 0){
-		rex |= 0x8;	/* Set REX.W if it isn't already set */
+			rex |= 0x8;	/* Set REX.W if it isn't already set */
 	    }
 	}
 
 	/* setup the mnemonic with a possible suffix */
 	if(dp->adr_mode != CBW && dp->adr_mode != CWD){
 	    if((dp->flags & HAS_SUFFIX) != 0){
-		if(data16 == TRUE)
-		    sprintf(mnemonic, "%sw", dp->name);
-		else{
-		    if(dp->adr_mode == Mnol || dp->adr_mode == INM)
-			sprintf(mnemonic, "%s", dp->name);
-		    else if(REX_W(rex) != 0)
-			sprintf(mnemonic, "%sq", dp->name);
-		    else
-			sprintf(mnemonic, "%sl", dp->name);
-		}
+			if(data16 == TRUE)
+				sprintf(mnemonic, "%sw", dp->name);
+			else{
+				if(dp->adr_mode == Mnol || dp->adr_mode == INM)
+					printf(mnemonic, "%s", dp->name);
+				else if(REX_W(rex) != 0)
+					sprintf(mnemonic, "%sq", dp->name);
+				else
+					sprintf(mnemonic, "%sl", dp->name);
+			}
 	    }
 	    else{
-		sprintf(mnemonic, "%s", dp->name);
+			sprintf(mnemonic, "%s", dp->name);
 	    }
 	    if(dp->adr_mode == BD){
-		if(strcmp(seg, "%cs:") == 0){
-		    sprintf(mnemonic, "%s,pn", mnemonic);
-		    seg = "";
-		}
-		else if(strcmp(seg, "%ds:") == 0){
-		    sprintf(mnemonic, "%s,pt", mnemonic);
-		    seg = "";
-		}
+			if(strcmp(seg, "%cs:") == 0){
+				sprintf(mnemonic, "%s,pn", mnemonic);
+				seg = "";
+			}
+			else if(strcmp(seg, "%ds:") == 0){
+				sprintf(mnemonic, "%s,pt", mnemonic);
+				seg = "";
+			}
 	    }
 	}
 
@@ -1894,10 +1902,10 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+		GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 		reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t%s,", mnemonic, reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+		print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
@@ -1906,16 +1914,16 @@ cpu_type_t cputype
 	case MOVZ:
 	    /* Get second operand first so data16 can be destroyed */
 	    if(got_modrm_byte == FALSE){
-		got_modrm_byte = TRUE;
-		byte = get_value(sizeof(char), sect, &length, &left);
-		modrm_byte(&mode, &reg, &r_m, byte);
+			got_modrm_byte = TRUE;
+			byte = get_value(sizeof(char), sect, &length, &left);
+			modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
 	    wbit = WBIT(opcode5);
 	    data16 = 1;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -1927,15 +1935,15 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+		GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 	    /* opcode 0x6B for byte, sign-extended displacement,
 		0x69 for word(s) */
 	    value0_size = OPSIZE(data16, opcode2 == 0x9, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-//putback	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
+		print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+		print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -1948,10 +1956,10 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+		GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+		print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -1964,10 +1972,10 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+		GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t%s,", mnemonic, reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+		print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* SSE2 instructions with further prefix decoding dest to memory or
@@ -1985,30 +1993,30 @@ cpu_type_t cputype
 		    /* movd from xmm to r/m32 */
 		    printf("%sd\t%%xmm%u,", mnemonic, xmm_reg(reg, rex));
 		    wbit = LONGOPERAND;
-//putback		    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback		    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+		    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 		}
 		else if(prefix_byte == 0xf0){
 		    /* movq from mm to mm/m64 */
 		    printf("%sd\t%%mm%u,", mnemonic, reg);
 		    mmx = TRUE;
-//putback		    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-//putback		    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+		    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 		}
 		else if(prefix_byte == 0xf3){
 		    /* movq from xmm2/mem64 to xmm1 */
 		    printf("%sq\t", mnemonic);
 		    sse2 = TRUE;
-//putback		    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback		    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 		    printf("%%xmm%u\n", xmm_reg(reg, rex));
 		}
 		else{ /* no prefix_byte */
 		    /* movd from mm to r/m32 */
 		    printf("%sd\t%%mm%u,", mnemonic, reg);
 		    wbit = LONGOPERAND;
-//putback		    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-//putback		    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+			GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 		}
 	    }
 	    return(length);
@@ -2083,8 +2091,8 @@ cpu_type_t cputype
 		break;
 	    }
 	    printf("%s,", result0);
-//putback	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-//putback	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 	    return(length);
 
 	/* MNI instructions */
@@ -2100,12 +2108,12 @@ cpu_type_t cputype
 		sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
 	    }
 	    else{ /* no prefix byte */
-		mmx = TRUE;
-		sprintf(result1, "%%mm%u", reg);
+			mmx = TRUE;
+			sprintf(result1, "%%mm%u", reg);
 	    }
 	    printf("%s\t", mnemonic);
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", result1);
 		return length;
 
@@ -2118,18 +2126,18 @@ cpu_type_t cputype
 			modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    if(prefix_byte == 0x66){
-		sse2 = TRUE;
-		sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
+			sse2 = TRUE;
+			sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
 	    }
 	    else{ /* no prefix byte */
-		mmx = TRUE;
-		sprintf(result1, "%%mm%u", reg);
+			mmx = TRUE;
+			sprintf(result1, "%%mm%u", reg);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    byte = get_value(sizeof(char), sect, &length, &left);
 		printf("%s\t$0x%x,", mnemonic, byte);
 		
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+		print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", result1);
 		return length;
 
@@ -2495,8 +2503,8 @@ cpu_type_t cputype
 		}
 		break;
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", result1);
 	    return(length);
 
@@ -2512,8 +2520,8 @@ cpu_type_t cputype
 	    }
 	    printf("%s\t", mnemonic);
 	    sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", result1);
 	    return(length);
 
@@ -2527,10 +2535,10 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    byte = get_value(sizeof(char), sect, &length, &left);
 	    printf("%s\t$0x%x,", mnemonic, byte);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%%xmm%u\n", xmm_reg(reg, rex));
 	    return(length);
 
@@ -2544,7 +2552,7 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    byte = get_value(sizeof(char), sect, &length, &left);
 	    if(dp == &op0F3A[0x16]){
 		if(rex != 0)
@@ -2555,7 +2563,7 @@ cpu_type_t cputype
 	    else
 		printf("%s\t$0x%x,", mnemonic, byte);
 	    printf("%%xmm%u,", xmm_reg(reg, rex));
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* SSE4 instructions with src from memory and 8-bit immediate */
@@ -2568,7 +2576,7 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    byte = get_value(sizeof(char), sect, &length, &left);
 	    if(dp == &op0F3A[0x22]){
 		if(rex != 0)
@@ -2578,7 +2586,7 @@ cpu_type_t cputype
 	    }
 	    else
 		printf("%s\t$0x%x,", mnemonic, byte);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%%xmm%u\n", xmm_reg(reg, rex));
 	    return(length);
 
@@ -2598,11 +2606,11 @@ cpu_type_t cputype
 	    rex_save = rex;
 	    if(mode == 0x3)
 		rex = 0;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    rex = rex_save;
 	    reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -2613,10 +2621,10 @@ cpu_type_t cputype
 		byte = get_value(sizeof(char), sect, &length, &left);
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -2636,7 +2644,7 @@ cpu_type_t cputype
 		wbit = LONGOPERAND;
 	    else
 		sse2 = TRUE;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    byte = get_value(sizeof(char), sect, &length, &left);
 
 	    switch(opcode4 << 4 | opcode5){
@@ -2649,7 +2657,7 @@ cpu_type_t cputype
 		    printf("%sfhw\t$0x%x,", mnemonic, byte);
 		else{ /* no prefix_byte */
 		    printf("%sfw\t$0x%x,", mnemonic, byte);
-//putback		    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 		    printf("%%mm%u\n", reg);
 		    return(length);
 		}
@@ -2660,7 +2668,7 @@ cpu_type_t cputype
 		}
 		else{ /* no prefix_byte */
 		    printf("%s\t$0x%x,", mnemonic, byte);
-//putback		    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 		    printf("%%mm%u\n", reg);
 		    return(length);
 		}
@@ -2690,7 +2698,7 @@ cpu_type_t cputype
 		    printf("%sps\t$0x%x,", mnemonic, byte);
 		break;
 	    }
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%%xmm%u\n", xmm_reg(reg, rex));
 	    return(length);
 
@@ -2771,7 +2779,7 @@ cpu_type_t cputype
        case AMD3DNOW:
                printf("%s\t", mnemonic);
            sprintf(result1, "%%mm%u", reg);
-//putback           print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
            printf("%s\n", result1);
            return(length);
 
@@ -2800,8 +2808,8 @@ cpu_type_t cputype
 		printf("w\t");
 	    else
 		printf("l\t");
-//putback           GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback           print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
            return(length);
 
        /* 3DNow! prefetch instructions */
@@ -2819,8 +2827,8 @@ cpu_type_t cputype
                printf("%sw\t", dp->name);
                break;
            }
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* sfence & clflush */
@@ -2831,8 +2839,8 @@ cpu_type_t cputype
 	    }
 	    printf("%s\t", mnemonic);
 	    reg = opcode3;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* Double shift. Has immediate operand specifying the shift. */
@@ -2843,14 +2851,14 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 	    value0_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+		IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+			print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 	    printf("%s,", reg_name);
-//putback	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 	    return(length);
 
 	/* Double shift. With no immediate operand, specifies using %cl. */
@@ -2861,22 +2869,24 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t%%cl,%s,", mnemonic, reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* immediate to memory or register operand */
 	case IMlw:
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+		GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+
 	    /* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
 	    value0_size = OPSIZE(data16, opcode2 == 1, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-//putback	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+		print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+		print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 	    return(length);
 
 	/* immediate to memory or register operand with the 'w' bit present */
@@ -2887,12 +2897,13 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+	    GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 	    value0_size = OPSIZE(data16, wbit, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-//putback	    print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+	print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+	print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 	    return(length);
 
 	/* immediate to register with register in low 3 bits of op code */
@@ -2900,10 +2911,10 @@ cpu_type_t cputype
 	    wbit = (opcode2 >> 3) & 0x1; /* w-bit here (with regs) is bit 3 */
 	    reg = REGNO(opcode2);
 	    value0_size = OPSIZE(data16, wbit, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    reg_name = get_r_m_name(reg, wbit, data16, rex);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+	print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -2913,10 +2924,10 @@ cpu_type_t cputype
 	    wbit = (opcode2 >> 3) & 0x1; /* w-bit here (with regs) is bit 3 */
 	    reg = REGNO(opcode2);
 	    value0_size = OPSIZE(data16, wbit, REX_W(rex));
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    reg_name = get_r_m_name(reg, wbit, data16, rex);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+	print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -2928,9 +2939,9 @@ cpu_type_t cputype
 	    }
 	    else
 		value0_size = OPSIZE(addr16, LONGOPERAND, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+		IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",");
+	print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",");
 	    wbit = WBIT(opcode2);
 	    reg_name = get_reg_name(0, wbit, data16, rex);
 	    printf("%s\n", reg_name);
@@ -2944,11 +2955,11 @@ cpu_type_t cputype
 	    }
 	    else
 		value0_size = OPSIZE(addr16, LONGOPERAND, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+		IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    wbit = WBIT(opcode2);
 	    reg_name = get_reg_name(0, wbit, data16, rex);
 	    printf("%s\t%s,", mnemonic, reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+	print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	/* memory or register operand to segment register */
@@ -2959,9 +2970,9 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", SEGREG[reg]);
 	    return(length);
 
@@ -2973,9 +2984,9 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t%s,", mnemonic, SEGREG[reg]);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* rotate or shift instrutions, which may shift by 1 or */
@@ -2983,11 +2994,11 @@ cpu_type_t cputype
 	case Mv:
 	    vbit = VBIT(opcode2);
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    /* When vbit is set, register is an operand, otherwise just $0x1 */
 	    reg_name = vbit ? "%cl," : "" ;
 	    printf("%s\t%s", mnemonic, reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* immediate rotate or shift instrutions, which may or */
@@ -2995,33 +3006,33 @@ cpu_type_t cputype
 	case MvI:
 	    vbit = VBIT(opcode2);
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    value1_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
+	    IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 	    /* When vbit is set, register is an operand, otherwise just $0x1 */
 	    reg_name = vbit ? "%cl," : "" ;
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
+	print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
 	    printf("%s", reg_name);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	case MIb:
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    value1_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
+	    IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* single memory or register operand with 'w' bit present */
 	case Mw:
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* single memory or register operand but don't use 'l' suffix */
@@ -3065,9 +3076,9 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* single memory or register operand */
@@ -3078,9 +3089,9 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = BYTEOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	case SREG: /* special register */
@@ -3154,10 +3165,10 @@ cpu_type_t cputype
 		modrm_byte(&mode, &reg, &r_m, byte);
 	    }
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    reg_name = get_reg_name(reg, wbit, data16, rex);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
@@ -3169,18 +3180,18 @@ cpu_type_t cputype
 		case 2: reg_name = "%ax"; break;
 		case 4: reg_name = "%eax"; break;
 	    }
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 	    printf("%s\n", reg_name);
 	    return(length);
 
 	/* memory or register operand to accumulator */
 	case MA:
 	    wbit = WBIT(opcode2);
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* si register to di register */
@@ -3214,9 +3225,9 @@ cpu_type_t cputype
 	/* single operand, a 16/32 bit displacement */
 	case D:
 	    value0_size = OPSIZE(data16, LONGOPERAND, 0);
-//putback	    DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
+//putback	    DISPLACEMENT(&value0, value0_size);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");//putback
+	print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");//putback
 //putback	    if(verbose){
 //putback		indirect_symbol_name = guess_indirect_symbol(value0,
 //putback		    ncmds, sizeofcmds, load_commands, object_byte_sex,
@@ -3231,21 +3242,21 @@ cpu_type_t cputype
 	/* indirect to memory or register operand */
 	case INM:
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 ||
 		mode == 2 || mode == 3)
 		printf("%s\t*", mnemonic);
 	    else
 		printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/* indirect to memory or register operand (for lcall and ljmp) */
 	case INMl:
 	    wbit = LONGOPERAND;
-//putback	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+	    GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+	    print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 	    return(length);
 
 	/*
@@ -3255,78 +3266,95 @@ cpu_type_t cputype
 	 */
 	case SO:
 	    value1_size = OPSIZE(data16, LONGOPERAND, 0);
-//putback	    IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
+	    IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
 	    value0_size = sizeof(short);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
-//putback	    print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
+	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
+	    print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
 	    return(length);
 
 	/* jmp/call. single operand, 8 bit displacement */
 	case BD:
 	    value0_size = sizeof(char);
-//putback	    DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
+//putback	    DISPLACEMENT(&value0, value0_size);
 	    printf("%s\t", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
+	print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
 	    return(length);
 
 	/* single 32/16 bit immediate operand */
 	case I:
 	    value0_size = OPSIZE(data16, LONGOPERAND, 0);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+	    print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	/* single 8 bit immediate operand */
 	case Ib:
 	    value0_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+		
+		//very temp
+//		uint64_t sect_addr = 0;
+//		uint64_t addr = 0;
+//		uint64_t sorted_relocs = 0;
+//		uint64_t nsorted_relocs = 0;
+//		uint64_t symbols = 0;
+//		uint64_t symadd= 0;
+//		uint64_t symbols64 = 0;
+//		uint64_t nsymbols = 0;
+//		uint64_t strings = 0;
+//		uint64_t strings_size = 0;
+//		uint64_t sorted_symbols= 0;
+//		uint64_t nsorted_symbols= 0;
+//		uint64_t verbose= 0;
+
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+		print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	case ENTER:
 	    value0_size = sizeof(short);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    value1_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
+	    IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
-//putback	    print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
+	    print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
+	    print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
 	    return(length);
 
 	/* 16-bit immediate operand */
 	case RET:
 	    value0_size = sizeof(short);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+	    print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	/* single 8 bit port operand */
 	case P:
 	    value0_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	/* single 8 bit (input) port operand				*/
 	case Pi:
 	    value0_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t$", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
+	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
 	    return(length);
 
 	/* single 8 bit (output) port operand				*/
 	case Po:
 	    value0_size = sizeof(char);
-//putback	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+	    IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 	    printf("%s\t%%eax,$", mnemonic);
-//putback	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+	    print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 	    return(length);
 
 	/* single operand, dx register (variable port instruction) */
@@ -3411,240 +3439,223 @@ cpu_type_t cputype
  * get_operand() is used to return the symbolic operand for an operand that is
  * encoded with a mod r/m byte.
  */
-//static
-//void
-//get_operand(
-//const char **symadd,
-//const char **symsub,
-//uint32_t *value,
-//uint32_t *value_size,
-//char *result,
-//
-//const cpu_type_t cputype,
-//const uint32_t mode,
-//const uint32_t r_m,
-//const uint32_t wbit,
-//const enum bool data16,
-//const enum bool addr16,
-//const enum bool sse2,
-//const enum bool mmx,
-//const unsigned int rex,
-//
-//const char *sect,
-//uint32_t sect_addr,
-//uint32_t *length,
-//uint32_t *left,
-//
-//const uint32_t addr,
-//const struct relocation_info *sorted_relocs,
-//const uint32_t nsorted_relocs,
-//const struct nlist *symbols,
-//const struct nlist_64 *symbols64,
-//const uint32_t nsymbols,
-//const char *strings,
-//const uint32_t strings_size,
-//
-//const struct symbol *sorted_symbols,
-//const uint32_t nsorted_symbols,
-//const enum bool verbose)
-//{
-//    enum bool s_i_b;		/* flag presence of scale-index-byte */
-//    unsigned char byte;		/* the scale-index-byte */
-//    uint32_t ss;		/* scale-factor from scale-index-byte */
-//    uint32_t index; 		/* index register number from scale-index-byte*/
-//    uint32_t base;  		/* base register number from scale-index-byte */
-//    uint32_t sect_offset;
-//    uint64_t offset;
-//
-//	*symadd = NULL;
-//	*symsub = NULL;
-//	*value = 0;
-//	*result = '\0';
-//
-//	/* check for the presence of the s-i-b byte */
-//	if(r_m == ESP && mode != REG_ONLY &&
-//	   (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
-//	    s_i_b = TRUE;
-//	    byte = get_value(sizeof(char), sect, length, left);
-//	    modrm_byte(&ss, &index, &base, byte);
-//	}
-//	else
-//	    s_i_b = FALSE;
-//
-//	if(addr16)
-//	    *value_size = dispsize16[r_m][mode];
-//	else
-//	    *value_size = dispsize32[r_m][mode];
-//
-//	if(s_i_b == TRUE && mode == 0 && base == EBP)
-//	    *value_size = sizeof(int32_t);
-//
-//	if(*value_size != 0){
-//	    sect_offset = addr + *length - sect_addr;
-//	    *value = get_value(*value_size, sect, length, left);
-//	    GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
-//	    if(*symadd != NULL){
-//		*value = offset;
-//	    }
-//	    else{
-//		*symadd = GUESS_SYMBOL(*value);
-//		if(*symadd != NULL)
-//		    *value = 0;
-//	    }
-//	}
-//
-//	if(s_i_b == TRUE){
-//	    if(((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) && !addr16){
-//		/* If the scale factor is 1, don't display it. */
-//		if(ss == 0){
-//		    /*
-//		     * If mode is 0 and base is 5 (regardless of the rex bit)
-//		     * there is no base register, and if the index is
-//		     * also 4 then the operand is just a displacement.
-//		     */
-//		    if(mode == 0 && base == 5 && index == 4){
-//			result = "";
-//		    }
-//		    else{
-//			sprintf(result, "(%s%s)", regname64[mode][base +
-//				(REX_B(rex) << 3)], indexname64[index +
-//				(REX_X(rex) << 3)]);
-//		    }
-//		}
-//		else{
-//		    /*
-//		     * If mode is 0 and base is 5 (regardless of the rex bit)
-//		     * there is no base register.
-//		     */
-//		    if(mode == 0 && base == 5){
-//			sprintf(result, "(%s,%s)", indexname64[index +
-//				(REX_X(rex) << 3)], scale_factor[ss]);
-//		    }
-//		    else{
-//			sprintf(result, "(%s%s,%s)", regname64[mode][base +
-//				(REX_B(rex) << 3)], indexname64[index +
-//				(REX_X(rex) << 3)], scale_factor[ss]);
-//		    }
-//		}
-//	    }
-//	    else{
-//		/* If the scale factor is 1, don't display it. */
-//		if(ss == 0){
-//		    /*
-//		     * If mode is 0 and base is 5 it there is no base register,
-//		     * and if the index is also 4 then the operand is just a
-//		     * displacement.
-//		     */
-//		    if(mode == 0 && base == 5 && index == 4){
-//			result = "";
-//		    }
-//		    else{
-//			sprintf(result, "(%s%s)", regname32[mode][base],
-//				indexname[index]);
-//		    }
-//		}
-//		else{
-//		    sprintf(result, "(%s%s,%s)", regname32[mode][base],
-//			    indexname[index], scale_factor[ss]);
-//		}
-//	    }
-//	}
-//	else{ /* no s-i-b */
-//	    if(mode == REG_ONLY){
-//		if(sse2 == TRUE)
-//		    sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
-//		else if(mmx == TRUE)
-//		    sprintf(result, "%%mm%u", r_m);
-//		else if (data16 == FALSE || rex != 0)
-//		    /* The presence of a REX byte overrides 66h. */
-//		    strcpy(result, REG32[r_m + (REX_B(rex) << 3)][wbit +
-//			   REX_W(rex)]);
-//		else
-//		    strcpy(result, REG16[r_m][wbit]);
-//	    }
-//	    else{ /* Modes 00, 01, or 10 */
-//		if(r_m == EBP && mode == 0){ /* displacement only */
-//		    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
-//			/*
-//			 * In 64-bit mode, mod=00 and r/m=101 defines
-//			 * RIP-relative addressing with a 32-bit displacement.
-//			 * In 32-bit mode, it's just a 32-bit displacement. See
-//			 * section 2.2.1.6 ("RIP-Relative Addressing") of Volume
-//			 * 2A of the Intel IA-32 manual.
-//			 */
-//			sprintf(result, "(%%rip)");
-//		    else
-//			*result = '\0';
-//		}
-//		else {
-//		    /* Modes 00, 01, or 10, not displacement only, no s-i-b */
-//		    if(addr16 == TRUE) {
-//			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
-//			    /*
-//			     *  In 64-bit mode, the address size prefix drops us
-//			     * down to 32-bit, not 16-bit.
-//			     */
-//			    sprintf(result, "(%s)", regname32[mode][r_m]);
-//			else
-//			    sprintf(result, "(%s)", regname16[mode][r_m]);
-//		    }
-//		    else{
-//			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
-//			    sprintf(result, "(%s)", regname64[mode][r_m +
-//				    (REX_B(rex) << 3)]);
-//			else
-//			    sprintf(result, "(%s)", regname32[mode][r_m]);
-//		    }
-//		}
-//	    }
-//	}
-//}
+static void get_operand(
+const char **symadd,
+const char **symsub,
+uint32_t *value,
+uint32_t *value_size,
+char *result,
+
+const cpu_type_t cputype,
+const uint32_t mode,
+const uint32_t r_m,
+const uint32_t wbit,
+const int data16,
+const int addr16,
+const int sse2,
+const int mmx,
+const unsigned int rex,
+
+const char *sect,
+	uint32_t sect_addr,
+	uint32_t *length,
+	uint32_t *left,
+	const uint32_t addr,
+	const struct relocation_info *sorted_relocs,
+	const uint32_t nsorted_relocs,
+	const struct nlist *symbols,
+	const struct nlist_64 *symbols64,
+	const uint32_t nsymbols,
+	const char *strings,
+	const uint32_t strings_size,
+	const struct symbol *sorted_symbols,
+	const uint32_t nsorted_symbols,
+	const int verbose
+)
+{
+    int s_i_b;		/* flag presence of scale-index-byte */
+    unsigned char byte;		/* the scale-index-byte */
+    uint32_t ss;		/* scale-factor from scale-index-byte */
+    uint32_t index; 		/* index register number from scale-index-byte*/
+    uint32_t base;  		/* base register number from scale-index-byte */
+	uint32_t sect_offset;
+    uint64_t offset;
+
+	*symadd = NULL;
+	*symsub = NULL;
+	*value = 0;
+	*result = '\0';
+
+	/* check for the presence of the s-i-b byte */
+	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
+	    s_i_b = TRUE;
+	    byte = get_value(sizeof(char), sect, length, left);
+	    modrm_byte(&ss, &index, &base, byte);
+	}
+	else
+	    s_i_b = FALSE;
+
+	if(addr16)
+	    *value_size = dispsize16[r_m][mode];
+	else
+	    *value_size = dispsize32[r_m][mode];
+
+	if(s_i_b == TRUE && mode == 0 && base == EBP)
+	    *value_size = sizeof(int32_t);
+
+	if(*value_size != 0){
+		sect_offset = addr + *length - sect_addr;
+	    *value = get_value(*value_size, sect, length, left);
+		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+		if(*symadd != NULL){
+			*value = offset;
+		}
+		else{
+			*symadd = GUESS_SYMBOL(*value);
+			if(*symadd != NULL)
+				*value = 0;
+			}
+	}
+
+	if(s_i_b == TRUE){
+	    if(((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) && !addr16){
+		/* If the scale factor is 1, don't display it. */
+		if(ss == 0){
+		    /*
+		     * If mode is 0 and base is 5 (regardless of the rex bit)
+		     * there is no base register, and if the index is
+		     * also 4 then the operand is just a displacement.
+		     */
+		    if(mode == 0 && base == 5 && index == 4){
+				result = "";
+		    }
+		    else{
+				sprintf(result, "(%s%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)]);
+		    }
+		}
+		else{
+		    /*
+		     * If mode is 0 and base is 5 (regardless of the rex bit)
+		     * there is no base register.
+		     */
+		    if(mode == 0 && base == 5){
+				sprintf(result, "(%s,%s)", indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+		    }
+		    else{
+				sprintf(result, "(%s%s,%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+		    }
+		}
+	    }
+	    else{
+		/* If the scale factor is 1, don't display it. */
+		if(ss == 0){
+		    /*
+		     * If mode is 0 and base is 5 it there is no base register,
+		     * and if the index is also 4 then the operand is just a
+		     * displacement.
+		     */
+		    if(mode == 0 && base == 5 && index == 4){
+			result = "";
+		    }
+		    else{
+				sprintf(result, "(%s%s)", regname32[mode][base], indexname[index]);
+		    }
+		}
+		else{
+		    sprintf(result, "(%s%s,%s)", regname32[mode][base], indexname[index], scale_factor[ss]);
+		}
+	    }
+	}
+	else{ /* no s-i-b */
+	    if(mode == REG_ONLY){
+		if(sse2 == TRUE)
+		    sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
+		else if(mmx == TRUE)
+		    sprintf(result, "%%mm%u", r_m);
+		else if (data16 == FALSE || rex != 0)
+		    /* The presence of a REX byte overrides 66h. */
+		    strcpy(result, REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)]);
+		else
+		    strcpy(result, REG16[r_m][wbit]);
+	    }
+	    else{ /* Modes 00, 01, or 10 */
+		if(r_m == EBP && mode == 0){ /* displacement only */
+		    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
+			/*
+			 * In 64-bit mode, mod=00 and r/m=101 defines
+			 * RIP-relative addressing with a 32-bit displacement.
+			 * In 32-bit mode, it's just a 32-bit displacement. See
+			 * section 2.2.1.6 ("RIP-Relative Addressing") of Volume
+			 * 2A of the Intel IA-32 manual.
+			 */
+				sprintf(result, "(%%rip)");
+		    else
+				*result = '\0';
+		}
+		else {
+		    /* Modes 00, 01, or 10, not displacement only, no s-i-b */
+		    if(addr16 == TRUE) {
+			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
+			    /*
+			     *  In 64-bit mode, the address size prefix drops us
+			     * down to 32-bit, not 16-bit.
+			     */
+			    sprintf(result, "(%s)", regname32[mode][r_m]);
+			else
+			    sprintf(result, "(%s)", regname16[mode][r_m]);
+		    }
+		    else{
+			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
+			    sprintf(result, "(%s)", regname64[mode][r_m +
+				    (REX_B(rex) << 3)]);
+			else
+			    sprintf(result, "(%s)", regname32[mode][r_m]);
+		    }
+		}
+	    }
+	}
+}
 
 /*
  * immediate() is used to return the symbolic operand for an immediate operand.
  */
-//static
-//void
-//immediate(
-//const char **symadd,
-//const char **symsub,
-//uint64_t *value,
-//uint32_t value_size,
-//
-//const char *sect,
-//uint32_t sect_addr,
-//uint32_t *length,
-//uint32_t *left,
-//
-//const cpu_type_t cputype,
-//const uint32_t addr,
-//const struct relocation_info *sorted_relocs,
-//const uint32_t nsorted_relocs,
-//const struct nlist *symbols,
-//const struct nlist_64 *symbols64,
-//const uint32_t nsymbols,
-//const char *strings,
-//const uint32_t strings_size,
-//
-//const struct symbol *sorted_symbols,
-//const uint32_t nsorted_symbols,
-//const enum bool verbose)
-//{
-//    uint32_t sect_offset;
-//	uint64_t offset;
-//
-//	sect_offset = addr + *length - sect_addr;
-//	*value = get_value(value_size, sect, length, left);
-//	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
-//	if(*symadd == NULL){
-//	    *symadd = GUESS_SYMBOL(*value);
-//	    if(*symadd != NULL)
-//		*value = 0;
-//	}
-//	else if(*symsub != NULL){
-//	    *value = offset;
-//	}
-//}
+static void immediate(
+	const char **symadd,
+	const char **symsub,
+	uint64_t *value,
+	uint32_t value_size,
+	const char *sect,
+	uint32_t sect_addr,
+	uint32_t *length,
+	uint32_t *left,
+	cpu_type_t cputype,
+	const uint32_t addr,
+	const struct relocation_info *sorted_relocs,
+	const uint32_t nsorted_relocs,
+	const struct nlist *symbols,
+	const struct nlist_64 *symbols64,
+	const uint32_t nsymbols,
+	const char *strings,
+	const uint32_t strings_size,
+	const struct symbol *sorted_symbols,
+	const uint32_t nsorted_symbols,
+	const int verbose
+) {
+
+	uint64_t offset;
+
+	uint32_t sect_offset = addr + *length - sect_addr;
+	*value = get_value(value_size, sect, length, left);
+	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+//put back	if(*symadd == NULL){
+//put back	    *symadd = GUESS_SYMBOL(*value);
+//put back	    if(*symadd != NULL)
+//put back		*value = 0;
+//put back	}
+//put back	else if(*symsub != NULL){
+//put back	    *value = offset;
+//put back	}
+}
 
 /*
  * displacement() is used to return the symbolic operand for an operand that is
@@ -3674,7 +3685,7 @@ const uint32_t strings_size,
 
 const struct symbol *sorted_symbols,
 const uint32_t nsorted_symbols,
-const enum bool verbose)
+const int verbose)
 {
     uint32_t sect_offset;
 	uint64_t offset;
@@ -3719,185 +3730,179 @@ const enum bool verbose)
 	}
 }
 */
-/*
- * get_symbol() returns the name of a symbol (or NULL) based on the relocation
- * information at the specified address.
- */
-//static
-//void
-//get_symbol(
-//const char **symadd,
-//const char **symsub,
-//uint64_t *offset,
-//
-//const cpu_type_t cputype,
-//const uint32_t sect_offset,
-//const uint64_t value,
-//const struct relocation_info *relocs,
-//const uint32_t nrelocs,
-//const struct nlist *symbols,
-//const struct nlist_64 *symbols64,
-//const uint32_t nsymbols,
-//const char *strings,
-//const uint32_t strings_size,
-//const struct symbol *sorted_symbols,
-//const uint32_t nsorted_symbols,
-//const enum bool verbose)
-//{
-//    uint32_t i;
-//    unsigned int r_symbolnum;
-//    uint32_t n_strx;
-//    struct scattered_relocation_info *sreloc, *pair;
-//    const char *name, *add, *sub;
-//
-//    static char add_buffer[11]; /* max is "0x1234678\0" */
-//    static char sub_buffer[11];
-//
-//	*symadd = NULL;
-//	*symsub = NULL;
-//	*offset = value;
-//
-//	if(verbose == FALSE)
-//	    return;
-//
-//	for(i = 0; i < nrelocs; i++){
-//	    if((cputype & CPU_ARCH_ABI64) != CPU_ARCH_ABI64 &&
-//	       ((relocs[i].r_address) & R_SCATTERED) != 0){
-//		sreloc = (struct scattered_relocation_info *)(relocs + i);
-//		if(sreloc->r_type == GENERIC_RELOC_PAIR){
-//		    fprintf(stderr, "Stray GENERIC_RELOC_PAIR relocation entry "
-//			    "%u\n", i);
-//		    continue;
-//		}
-//		if(sreloc->r_type == GENERIC_RELOC_VANILLA){
-//		    if(sreloc->r_address == sect_offset){
-//			name = guess_symbol(sreloc->r_value,
-//					    sorted_symbols,
-//					    nsorted_symbols,
-//					    verbose);
-//			if(name != NULL){
-//			    *symadd = name;
-//			    *offset = value - sreloc->r_value;
-//			    return;
-//			}
-//		    }
-//		    continue;
-//		}
-//		if(sreloc->r_type != GENERIC_RELOC_SECTDIFF &&
-//		   sreloc->r_type != GENERIC_RELOC_LOCAL_SECTDIFF){
-//		    fprintf(stderr, "Unknown relocation r_type for entry "
-//			    "%u\n", i);
-//		    continue;
-//		}
-//		if(i + 1 < nrelocs){
-//		    pair = (struct scattered_relocation_info *)(relocs + i + 1);
-//		    if(pair->r_scattered == 0 ||
-//		       pair->r_type != GENERIC_RELOC_PAIR){
-//			fprintf(stderr, "No GENERIC_RELOC_PAIR relocation "
-//				"entry after entry %u\n", i);
-//			continue;
-//		    }
-//		}
-//		else{
-//		    fprintf(stderr, "No GENERIC_RELOC_PAIR relocation entry "
-//			    "after entry %u\n", i);
-//		    continue;
-//		}
-//		i++; /* skip the pair reloc */
-//
-//		if(sreloc->r_address == sect_offset){
-//		    add = guess_symbol(sreloc->r_value, sorted_symbols,
-//				       nsorted_symbols, verbose);
-//		    sub = guess_symbol(pair->r_value, sorted_symbols,
-//				       nsorted_symbols, verbose);
-//		    if(add == NULL){
-//			sprintf(add_buffer, "0x%x",
-//				(unsigned int)sreloc->r_value);
-//			add = add_buffer;
-//		    }
-//		    if(sub == NULL){
-//			sprintf(sub_buffer, "0x%x",
-//				(unsigned int)pair->r_value);
-//			sub = sub_buffer;
-//		    }
-//		    *symadd = add;
-//		    *symsub = sub;
-//		    *offset = value - (sreloc->r_value - pair->r_value);
-//		    return;
-//		}
-//	    }
-//	    else{
-//		if((uint32_t)relocs[i].r_address == sect_offset){
-//		    r_symbolnum = relocs[i].r_symbolnum;
-//		    if(relocs[i].r_extern){
-//		        if(r_symbolnum >= nsymbols)
-//			    return;
-//			if(symbols != NULL)
-//			    n_strx = symbols[r_symbolnum].n_un.n_strx;
-//			else
-//			    n_strx = symbols64[r_symbolnum].n_un.n_strx;
-//			if(n_strx <= 0 || n_strx >= strings_size)
-//			    return;
-//			*symadd = strings + n_strx;
-//			return;
-//		    }
-//		    break;
-//		}
-//	    }
-//	}
-//}
+
+static void get_symbol(
+const char **symadd,
+const char **symsub,
+uint64_t *offset,
+const cpu_type_t cputype,
+const uint32_t sect_offset,
+const uint64_t value,
+const struct relocation_info *relocs,
+const uint32_t nrelocs,
+const struct nlist *symbols,
+const struct nlist_64 *symbols64,
+const uint32_t nsymbols,
+const char *strings,
+const uint32_t strings_size,
+const struct symbol *sorted_symbols,
+const uint32_t nsorted_symbols,
+const int verbose)
+{
+    uint32_t i;
+    unsigned int r_symbolnum;
+    uint32_t n_strx;
+    struct scattered_relocation_info *sreloc, *pair;
+    const char *name, *add, *sub;
+
+    static char add_buffer[11]; /* max is "0x1234678\0" */
+    static char sub_buffer[11];
+
+	*symadd = NULL;
+	*symsub = NULL;
+	*offset = value;
+
+//if(verbose == FALSE)
+//    return;
+
+for(i = 0; i < nrelocs; i++){
+    if((cputype & CPU_ARCH_ABI64) != CPU_ARCH_ABI64 &&
+       ((relocs[i].r_address) & R_SCATTERED) != 0){
+	sreloc = (struct scattered_relocation_info *)(relocs + i);
+	if(sreloc->r_type == GENERIC_RELOC_PAIR){
+	    fprintf(stderr, "Stray GENERIC_RELOC_PAIR relocation entry "
+		    "%u\n", i);
+	    continue;
+	}
+	if(sreloc->r_type == GENERIC_RELOC_VANILLA){
+	    if(sreloc->r_address == sect_offset){
+		name = guess_symbol(sreloc->r_value,
+				    sorted_symbols,
+				    nsorted_symbols,
+				    verbose);
+		if(name != NULL){
+		    *symadd = name;
+		    *offset = value - sreloc->r_value;
+		    return;
+		}
+	    }
+	    continue;
+	}
+	if(sreloc->r_type != GENERIC_RELOC_SECTDIFF &&
+	   sreloc->r_type != GENERIC_RELOC_LOCAL_SECTDIFF){
+	    fprintf(stderr, "Unknown relocation r_type for entry "
+		    "%u\n", i);
+	    continue;
+	}
+	if(i + 1 < nrelocs){
+	    pair = (struct scattered_relocation_info *)(relocs + i + 1);
+	    if(pair->r_scattered == 0 ||
+	       pair->r_type != GENERIC_RELOC_PAIR){
+		fprintf(stderr, "No GENERIC_RELOC_PAIR relocation "
+			"entry after entry %u\n", i);
+		continue;
+	    }
+	}
+	else{
+	    fprintf(stderr, "No GENERIC_RELOC_PAIR relocation entry "
+		    "after entry %u\n", i);
+	    continue;
+	}
+	i++; /* skip the pair reloc */
+
+	if(sreloc->r_address == sect_offset){
+	    add = guess_symbol(sreloc->r_value, sorted_symbols,
+			       nsorted_symbols, verbose);
+		    sub = guess_symbol(pair->r_value, sorted_symbols,
+				       nsorted_symbols, verbose);
+		    if(add == NULL){
+			sprintf(add_buffer, "0x%x",
+				(unsigned int)sreloc->r_value);
+			add = add_buffer;
+		    }
+		    if(sub == NULL){
+			sprintf(sub_buffer, "0x%x",
+				(unsigned int)pair->r_value);
+			sub = sub_buffer;
+		    }
+		    *symadd = add;
+		    *symsub = sub;
+		    *offset = value - (sreloc->r_value - pair->r_value);
+		    return;
+		}
+	    }
+	    else{
+		if((uint32_t)relocs[i].r_address == sect_offset){
+		    r_symbolnum = relocs[i].r_symbolnum;
+		    if(relocs[i].r_extern){
+		        if(r_symbolnum >= nsymbols)
+			    return;
+			if(symbols != NULL)
+			    n_strx = symbols[r_symbolnum].n_un.n_strx;
+			else
+			    n_strx = symbols64[r_symbolnum].n_un.n_strx;
+			if(n_strx <= 0 || n_strx >= strings_size)
+			    return;
+			*symadd = strings + n_strx;
+			return;
+		    }
+		    break;
+		}
+	    }
+	}
+}
 
 /*
  * print_operand() prints an operand from it's broken out symbolic
  * representation.
  */
-//static
-//void
-//print_operand(
-//const char *seg,
-//const char *symadd,
-//const char *symsub,
-//uint64_t value,
-//unsigned int value_size,
-//const char *result,
-//const char *tail)
-//{
-//	if(symadd != NULL){
-//	    if(symsub != NULL){
-//		if(value_size != 0){
-//		    if(value != 0)
-//			printf("%s%s-%s+0x%0*llx%s%s", seg, symadd, symsub,
-//			       (int)value_size * 2, value, result, tail);
-//		    else
-//			printf("%s%s-%s%s%s",seg, symadd, symsub, result, tail);
-//		}
-//		else{
-//		    printf("%s%s%s%s", seg, symadd, result, tail);
-//		}
-//	    }
-//	    else{
-//		if(value_size != 0){
-//		    if(value != 0)
-//			printf("%s%s+0x%0*llx%s%s", seg, symadd,
-//			       (int)value_size * 2, value, result, tail);
-//		    else
-//			printf("%s%s%s%s", seg, symadd, result, tail);
-//		}
-//		else{
-//		    printf("%s%s%s%s", seg, symadd, result, tail);
-//		}
-//	    }
-//	}
-//	else{
-//	    if(value_size != 0){
-//		printf("%s0x%0*llx%s%s", seg, (int)value_size *2, value, result,
-//		       tail);
-//	    }
-//	    else{
-//		printf("%s%s%s", seg, result, tail);
-//	    }
-//	}
-//}
+static
+void
+print_operand(
+const char *seg,
+const char *symadd,
+const char *symsub,
+uint64_t value,
+unsigned int value_size,
+const char *result,
+const char *tail)
+{
+	if(symadd != NULL){
+	    if(symsub != NULL){
+			if(value_size != 0){
+				if(value != 0)
+					printf("%s%s-%s+0x%0*llx%s%s", seg, symadd, symsub, (int)value_size * 2, value, result, tail);
+				else
+//putback					printf("%s%s-%s%s%s", seg, symadd, symsub, result, tail);
+					printf("%s", result );
+
+			}
+			else{
+				printf("%s%s%s%s", seg, symadd, result, tail);
+			}
+	    }
+	    else{
+		if(value_size != 0){
+		    if(value != 0)
+			printf("%s%s+0x%0*llx%s%s", seg, symadd,
+			       (int)value_size * 2, value, result, tail);
+		    else
+			printf("%s%s%s%s", seg, symadd, result, tail);
+		}
+		else{
+		    printf("%s%s%s%s", seg, symadd, result, tail);
+		}
+	    }
+	}
+	else{
+	    if(value_size != 0){
+			printf("%s0x%0*llx%s%s", seg, (int)value_size *2, value, result, tail);
+	    }
+	    else{
+			printf("%s%s%s", seg, result, tail);
+	    }
+	}
+}
 
 /*
  * get_value() gets a value of size from sect + length and decrease left by the

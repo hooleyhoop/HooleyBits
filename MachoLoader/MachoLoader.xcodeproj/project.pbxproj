@@ -9,16 +9,12 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		730219640F864C5000906D18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 730219630F864C5000906D18 /* AppDelegate.m */; };
+		730830B112392CA7007F8247 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
 		731701A0123286BF00EE9ED6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
-		7317023D12328B6D00EE9ED6 /* MemoryMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA9E1219717000D3EE3D /* MemoryMapTests.m */; };
-		731702B112328FD600EE9ED6 /* DemangleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B677812269AD6002C0B0F /* DemangleTests.m */; };
-		731702B212328FD700EE9ED6 /* IndirectSymbolTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */; };
-		731702B312328FD700EE9ED6 /* IntKeyDictionaryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */; };
 		731702BB1232903700EE9ED6 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 731702BA1232903700EE9ED6 /* libstdc++.dylib */; };
 		731702C01232906900EE9ED6 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 731702BA1232903700EE9ED6 /* libstdc++.dylib */; };
 		731702D9123290EF00EE9ED6 /* IntHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702D8123290EF00EE9ED6 /* IntHash.m */; };
 		731702DA123290EF00EE9ED6 /* IntHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702D8123290EF00EE9ED6 /* IntHash.m */; };
-		731702DF1232910200EE9ED6 /* IntHashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702DE1232910200EE9ED6 /* IntHashTests.m */; };
 		731FAA831219702700D3EE3D /* FileMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA821219702700D3EE3D /* FileMapView.m */; };
 		731FAA851219703B00D3EE3D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA841219703B00D3EE3D /* main.m */; };
 		731FAA871219704800D3EE3D /* SimpleApp_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA861219704800D3EE3D /* SimpleApp_main.m */; };
@@ -29,11 +25,13 @@
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
-		7363ABC91236649E00018772 /* i386_disasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 7363ABC71236649E00018772 /* i386_disasm.c */; };
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
+		73A7BD8B123A2ED3003FF058 /* TextSectionDisasemble.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */; };
+		73A7BDCF123A369A003FF058 /* TextSectionDisasemble.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */; };
+		73A7BDEE123A3985003FF058 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -54,6 +52,7 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		730219620F864C5000906D18 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		730219630F864C5000906D18 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
+		730830B012392CA7007F8247 /* i386_disasm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = i386_disasm.m; path = Classes/i386_disasm.m; sourceTree = "<group>"; };
 		7310FD1512095D5C00AE9F6B /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		731702BA1232903700EE9ED6 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = SDKROOT; };
 		731702D7123290EF00EE9ED6 /* IntHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntHash.h; path = Classes/IntHash.h; sourceTree = "<group>"; };
@@ -94,6 +93,9 @@
 		737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionaryTests.m; path = Tests/IntKeyDictionaryTests.m; sourceTree = "<group>"; };
 		737B3DFC12324D38008C67FC /* CFDictCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFDictCallbacks.h; path = Classes/CFDictCallbacks.h; sourceTree = "<group>"; };
 		737B3DFD12324D38008C67FC /* CFDictCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFDictCallbacks.m; path = Classes/CFDictCallbacks.m; sourceTree = "<group>"; };
+		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
+		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
+		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
 		73E761E8121C28C900A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Classes/Section.m; sourceTree = "<group>"; };
 		73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = Classes/SHMemoryBlock.h; sourceTree = "<group>"; };
@@ -243,7 +245,10 @@
 				73EDD9230F863E4700E09434 /* MachoLoader.h */,
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
 				7363ABC81236649E00018772 /* i386_disasm.h */,
+				730830B012392CA7007F8247 /* i386_disasm.m */,
 				7363ABC71236649E00018772 /* i386_disasm.c */,
+				73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */,
+				73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */,
 				737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */,
 				731702DE1232910200EE9ED6 /* IntHashTests.m */,
+				73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -461,12 +467,10 @@
 				734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */,
 				737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */,
 				731701A0123286BF00EE9ED6 /* Hex.m in Sources */,
-				7317023D12328B6D00EE9ED6 /* MemoryMapTests.m in Sources */,
-				731702B112328FD600EE9ED6 /* DemangleTests.m in Sources */,
-				731702B212328FD700EE9ED6 /* IndirectSymbolTableTests.m in Sources */,
-				731702B312328FD700EE9ED6 /* IntKeyDictionaryTests.m in Sources */,
 				731702D9123290EF00EE9ED6 /* IntHash.m in Sources */,
-				731702DF1232910200EE9ED6 /* IntHashTests.m in Sources */,
+				73A7BD8B123A2ED3003FF058 /* TextSectionDisasemble.m in Sources */,
+				73A7BDCF123A369A003FF058 /* TextSectionDisasemble.m in Sources */,
+				73A7BDEE123A3985003FF058 /* i386_disasm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,7 +492,7 @@
 				734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */,
 				737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */,
 				731702DA123290EF00EE9ED6 /* IntHash.m in Sources */,
-				7363ABC91236649E00018772 /* i386_disasm.c in Sources */,
+				730830B112392CA7007F8247 /* i386_disasm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

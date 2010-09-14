@@ -17,7 +17,7 @@ leave
 ret								Returns
 
 
-try a system call and see if it uses calll 
+try a system call and see if it uses calll - NO, it uses callq
 
 execve(path, args, NSPlatform_environ());
 

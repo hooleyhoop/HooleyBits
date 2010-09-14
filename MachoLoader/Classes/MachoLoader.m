@@ -1312,38 +1312,45 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 					// TEXT Segment sections
 					if ( strcmp(thisSectionName, "__text")==0 ) {
-
+						
 						if(_cputype!=CPU_TYPE_I386) 
 							[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
 
 						UInt8 *locPtr = (UInt8 *)sect_pointer;
 						UInt8 *memPtr = (UInt8 *)sect_addr;
 						
-						UInt8 left = newSectSize;
 						NSUInteger j;
+						
 						for( NSUInteger i=0; i<newSectSize; ){
 
-							j = i386_disassemble( (char *)locPtr, left, 
-//													  uint64_t addr, uint64_t sect_addr, 
-//													  enum byte_sex object_byte_sex,
-//											 struct relocation_info *sorted_relocs,
-//											 uint32_t nsorted_relocs,
-//											 struct nlist *symbols,
-//											 struct nlist_64 *symbols64,
-//											 uint32_t nsymbols,
-//											 struct symbol *sorted_symbols,
-//											 uint32_t nsorted_symbols,
-//											 char *strings,
-//											 uint32_t strings_size,
-//											 uint32_t *indirect_symbols,
-//											 uint32_t nindirect_symbols,
-											 _cputype
+							NSUInteger bytesLeft = newSectSize-i;
+
+							j = i386_disassemble( 
+												 (char *)locPtr, 
+												 bytesLeft, 
+												 (uint64_t)locPtr, 
+												 (uint64_t)memPtr,
+											// enum byte_sex object_byte_sex,
+											 sect_relocs,
+											 sect_nrelocs,
+											 _symtable_ptr,
+											 _UNUSED_symbols64,
+											 _nsymbols,
+											 NULL, //struct symbol *sorted_symbols,
+											 0, //uint32_t nsorted_symbols,
+											 _strtable,
+											 _strings_size,
+											 (uint32_t *)_indirectSymbolTable,
+											 _nindirect_symbols,
+											 _cputype,
 //											 struct load_command *load_commands,
 //											 uint32_t ncmds,
 //											 uint32_t sizeofcmds //,
-//											 enum bool verbose
+											 1
 													);
 							locPtr = locPtr + j;
+							i += j;
+						//	NSLog(@"%i", j);
 									
 						}
 
@@ -2297,5 +2304,38 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 }
 
 
+/*
+ * guess_symbol() guesses the name for a symbol based on the specified value.
+ * It returns the name of symbol or NULL.  It only returns a symbol name if
+ *  a symbol with that exact value exists.
+ */
+const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in) */
+			 const struct symbol *sorted_symbols,
+			 const uint32_t nsorted_symbols,
+			 int verbose)
+{
+    int32_t high, low, mid;
+	
+	if(verbose == FALSE)
+	    return(NULL);
+	
+	low = 0;
+	high = nsorted_symbols - 1;
+	mid = (high - low) / 2;
+	while(high >= low){
+	    if(sorted_symbols[mid].n_value == value){
+			return(sorted_symbols[mid].name);
+	    }
+	    if(sorted_symbols[mid].n_value > value){
+			high = mid - 1;
+			mid = (high + low) / 2;
+	    }
+	    else{
+			low = mid + 1;
+			mid = (high + low) / 2;
+	    }
+	}
+	return(NULL);
+}
 
 @end
