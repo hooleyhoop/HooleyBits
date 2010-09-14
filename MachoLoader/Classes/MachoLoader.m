@@ -613,7 +613,38 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 								:_UNUSED_symbols64
 								:_nsymbols
 								:_strtable
-								:_strings_size];	
+								:_strings_size];
+		
+	// Do text
+	UInt8 *locPtr = (UInt8 *)_text_sect_pointer;
+	
+	NSUInteger j;
+	for( NSUInteger i=0; i<_textSectSize; ){
+		
+		NSUInteger bytesLeft = _textSectSize-i;
+		
+		j = i386_disassemble( 
+							 locPtr,
+							 bytesLeft,
+							 locPtr,
+							 _text_sect_addr,
+							 _text_sorted_relocs,
+							 _text_nsorted_relocs,
+							 _symtable_ptr,
+							 _UNUSED_symbols64,
+							 _nsymbols,										 
+							 NULL, //struct symbol *sorted_symbols,
+							 0, //uint32_t nsorted_symbols,
+							 _strtable,
+							 _strings_size,
+							 (uint32_t *)_indirectSymbolTable,
+							 _nindirect_symbols,
+							 _cputype,
+							 1 );
+		locPtr = locPtr + j;
+		i += j;
+		
+	}	
 }
 
 - (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr {
@@ -1316,45 +1347,12 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						if(_cputype!=CPU_TYPE_I386) 
 							[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
 
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						
-						NSUInteger j;
-						
-						for( NSUInteger i=0; i<newSectSize; ){
+						_text_sect_pointer = (UInt8 *)sect_pointer;
+						_text_sect_addr = (UInt8 *)sect_addr;
+						_text_sorted_relocs = sect_relocs;
+						_text_nsorted_relocs = sect_nrelocs;
+						_textSectSize = newSectSize;
 
-							NSUInteger bytesLeft = newSectSize-i;
-
-							j = i386_disassemble( 
-												 (char *)locPtr, 
-												 bytesLeft, 
-												 (uint64_t)locPtr, 
-												 (uint64_t)memPtr,
-											// enum byte_sex object_byte_sex,
-											 sect_relocs,
-											 sect_nrelocs,
-											 _symtable_ptr,
-											 _UNUSED_symbols64,
-											 _nsymbols,
-											 NULL, //struct symbol *sorted_symbols,
-											 0, //uint32_t nsorted_symbols,
-											 _strtable,
-											 _strings_size,
-											 (uint32_t *)_indirectSymbolTable,
-											 _nindirect_symbols,
-											 _cputype,
-//											 struct load_command *load_commands,
-//											 uint32_t ncmds,
-//											 uint32_t sizeofcmds //,
-											 1
-													);
-							locPtr = locPtr + j;
-							i += j;
-						//	NSLog(@"%i", j);
-									
-						}
-
-						
 					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
 						[self save_cstring_section:sect_pointer :newSectSize :sect_addr];

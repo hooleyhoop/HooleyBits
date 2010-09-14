@@ -28,40 +28,47 @@ struct symbol {
 
 @interface MachoLoader : NSObject {
 
-	NSData				*_allFile;
-	NSString			*_filePath;
+	NSData						*_allFile;
+	NSString					*_filePath;
 
-	struct load_command *_startOfLoadCommandsPtr;
-	NSUInteger			_sizeofcmds;
-	NSUInteger			_ncmds;
-	NSMutableArray		*_loadCommandsArray;
-	const void			*_codeAddr;
-	size_t				_codeSize;
-	cpu_type_t			_cputype;
+	struct load_command		*_startOfLoadCommandsPtr;
+	NSUInteger					_sizeofcmds;
+	NSUInteger					_ncmds;
+	NSMutableArray			*_loadCommandsArray;
+	const void					*_codeAddr;
+	size_t						_codeSize;
+	cpu_type_t					_cputype;
 	
-	NSMutableDictionary *addresses_;    // Addresses and symbols (STRONG)
+	NSMutableDictionary		*addresses_;    // Addresses and symbols (STRONG)
 	
 	// Symbol table
-	struct nlist		*_symtable_ptr;
-	struct nlist_64		*_UNUSED_symbols64;
-	NSUInteger			_nsymbols;
-	NSUInteger			_strings_size;
+	struct nlist				*_symtable_ptr;
+	struct nlist_64			*_UNUSED_symbols64;
+	NSUInteger					_nsymbols;
+	NSUInteger					_strings_size;
 	
-	char				*_strtable;
+	char						*_strtable;
 	
 	// Indirect Symbol Table
-	NSUInteger			_nindirect_symbols;
-	const uint32_t*		_indirectSymbolTable;
+	NSUInteger					_nindirect_symbols;
+	const uint32_t*			_indirectSymbolTable;
 	
-	IntKeyDictionary	*_indirectSymbolLookup, *_cStringLookup;
-	IntHash				*_cls_refsLookup;
-	IntHash				*_temporaryExperiment;
+	IntKeyDictionary			*_indirectSymbolLookup, *_cStringLookup;
+	IntHash					*_cls_refsLookup;
+	IntHash					*_temporaryExperiment;
 
-	MemoryMap			*_memoryMap;
-	MemoryMap			*_uncodedMemoryMap;
+	MemoryMap					*_memoryMap;
+	MemoryMap					*_uncodedMemoryMap;
 
-	BOOL				_MH_TWOLEVEL, _MH_FORCE_FLAT;
-	NSMutableArray		*_libraries;
+	BOOL						_MH_TWOLEVEL, _MH_FORCE_FLAT;
+	NSMutableArray			*_libraries;
+	
+	// text section bodge
+	UInt8						*_text_sect_pointer;
+	UInt8						*_text_sect_addr;
+	struct relocation_info	*_text_sorted_relocs;
+	uint32_t					_text_nsorted_relocs;
+	NSUInteger					_textSectSize;
 }
 
 - (id)initWithPath:(NSString *)aPath;
