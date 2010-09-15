@@ -739,6 +739,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	}
 	qsort(sorted_symbols, nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
 
+	// otx decompiles other sections as well? __coalesced_text __textcoal_nt
+	
 	NSUInteger j;
 	for( NSUInteger i=0; i<_textSectSize; ){
 		
@@ -746,6 +748,13 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		
 		print_label((uint64_t)memPtr, 1, sorted_symbols, nsorted_symbols);
 
+		/* otx setup - try to incorporate into one pass
+		[self gatherLineInfos]; -- marks a line as code or other
+		[self findFunctions];	-- mark a line as first line of a function or other - this should be possible on first pass
+		[self gatherFuncInfos];
+		[self gatherFuncInfos];
+		*/
+		
 		printf("%0x ", memPtr);
 		j = i386_disassemble( 
 							 (char *)locPtr,

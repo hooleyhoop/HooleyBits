@@ -1550,6 +1550,16 @@ static unsigned int xmm_rm(int r_m, int rex)
 	return (r_m + (REX_B(rex) << 3));
 }
 
+void addLine( const struct instable *dp ) {
+	
+	FUNCTION
+	
+	newLine->instr = dp
+	newLine->prev = currentLine;
+	currentLine->next = newLine;
+	currentLine = newLine
+}
+
 /*
  * i386_disassemble()
  */
@@ -3532,14 +3542,14 @@ int verbose
 					value0_size = OPSIZE(data16, LONGOPERAND, 0);
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");//putback
+					print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");
 					//putback	    if(verbose){
 					indirect_symbol_name = guess_indirect_symbol(value0, ncmds, sizeofcmds, load_commands, indirect_symbols, nindirect_symbols, symbols, symbols64,nsymbols, strings,strings_size);
 					if(indirect_symbol_name != NULL) {
 						printf("\t; symbol stub for: %s", indirect_symbol_name);
 					}
 					//putback		}
-//addline			eg. calll 0x00002aea
+					addLine( dp ); // eg. calll 0x00002aea
 					printf("\n");
 					return(length);
 
