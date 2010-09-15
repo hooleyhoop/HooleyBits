@@ -599,6 +599,79 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[super dealloc];
 }
 
+/*
+ * Function for qsort for comparing relocation entries.
+ */
+static int rel_compare( struct relocation_info *rel1, struct relocation_info *rel2) {
+	
+    struct scattered_relocation_info *srel;
+    unsigned long r_address1, r_address2;
+	
+	if((rel1->r_address & R_SCATTERED) != 0){
+	    srel = (struct scattered_relocation_info *)rel1;
+	    r_address1 = srel->r_address;
+	}
+	else
+	    r_address1 = rel1->r_address;
+	if((rel2->r_address & R_SCATTERED) != 0){
+	    srel = (struct scattered_relocation_info *)rel2;
+	    r_address2 = srel->r_address;
+	}
+	else
+	    r_address2 = rel2->r_address;
+	
+	if(r_address1 == r_address2)
+	    return(0);
+	if(r_address1 < r_address2)
+	    return(-1);
+	else
+	    return(1);
+}
+
+/*
+ * Function for qsort for comparing symbols.
+ */
+static int sym_compare( struct symbol *sym1, struct symbol *sym2) {
+	if(sym1->n_value == sym2->n_value)
+	    return(0);
+	if(sym1->n_value < sym2->n_value)
+	    return(-1);
+	else
+	    return(1);
+}
+
+/*
+ * Print_label prints a symbol name for the addr if a symbol exist with the
+ * same address in label form, namely:.
+ *
+ * <symbol name>:\n
+ *
+ * The colon and the newline are printed if colon_and_newline is TRUE.
+ */
+void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_symbols, uint32_t nsorted_symbols) {
+    int32_t high, low, mid;
+	
+	low = 0;
+	high = nsorted_symbols - 1;
+	mid = (high - low) / 2;
+	while(high >= low){
+	    if(sorted_symbols[mid].n_value == addr){
+			printf("%s", sorted_symbols[mid].name);
+			if(colon_and_newline == TRUE)
+				printf(":\n");
+			return;
+	    }
+	    if(sorted_symbols[mid].n_value > addr){
+			high = mid - 1;
+			mid = (high + low) / 2;
+	    }
+	    else{
+			low = mid + 1;
+			mid = (high + low) / 2;
+	    }
+	}
+}
+
 - (void)readFile {
 
 	[self doIt:_filePath];
@@ -617,31 +690,86 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		
 	// Do text
 	UInt8 *locPtr = (UInt8 *)_text_sect_pointer;
+	UInt8 *memPtr = (UInt8 *)_text_sect_addr;
 	
+	struct symbol *sorted_symbols = allocate(_nsymbols * sizeof(struct symbol));
+	struct relocation_info	*text_sorted_relocs = allocate(_text_nsorted_relocs * sizeof(struct relocation_info));
+	memcpy(text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
+	qsort(text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
+
+	uint32_t nsorted_symbols = 0;
+	for( NSUInteger i=0; i<_nsymbols; i++ )
+	{
+		uint32_t n_strx;
+		uint8_t n_type;
+		uint64_t n_value;
+		char *p;
+		unsigned long len;
+		
+		if(_symtable_ptr != NULL){
+			n_strx = _symtable_ptr[i].n_un.n_strx;
+			n_type = _symtable_ptr[i].n_type;
+			n_value = _symtable_ptr[i].n_value;
+		}
+		else{
+			n_strx = _UNUSED_symbols64[i].n_un.n_strx;
+			n_type = _UNUSED_symbols64[i].n_type;
+			n_value = _UNUSED_symbols64[i].n_value;
+		}
+		if(n_strx > 0 && n_strx < _strings_size)
+			p = _strtable + n_strx;
+		else
+			p = "symbol with bad string index";
+		if(n_type & ~(N_TYPE|N_EXT|N_PEXT))
+			continue;
+		n_type = n_type & N_TYPE;
+		if(n_type == N_ABS || n_type == N_SECT){
+			len = strlen(p);
+			if(len > sizeof(".o") - 1 &&
+			   strcmp(p + (len - (sizeof(".o") - 1)), ".o") == 0)
+				continue;
+			if(strcmp(p, "gcc_compiled.") == 0)
+				continue;
+			if(n_type == N_ABS && n_value == 0 && *p == '.')
+				continue;
+			sorted_symbols[nsorted_symbols].n_value = n_value;
+			sorted_symbols[nsorted_symbols].name = p;
+			nsorted_symbols++;
+		}
+	}
+	qsort(sorted_symbols, nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
+
 	NSUInteger j;
 	for( NSUInteger i=0; i<_textSectSize; ){
 		
 		NSUInteger bytesLeft = _textSectSize-i;
 		
+		print_label((uint64_t)memPtr, 1, sorted_symbols, nsorted_symbols);
+
+		printf("%0x ", memPtr);
 		j = i386_disassemble( 
-							 locPtr,
+							 (char *)locPtr,
 							 bytesLeft,
-							 locPtr,
-							 _text_sect_addr,
-							 _text_sorted_relocs,
+							(uint64_t)memPtr,
+							(uint64_t)_text_sect_addr,
+							 text_sorted_relocs,
 							 _text_nsorted_relocs,
 							 _symtable_ptr,
 							 _UNUSED_symbols64,
 							 _nsymbols,										 
-							 NULL, //struct symbol *sorted_symbols,
-							 0, //uint32_t nsorted_symbols,
+							 sorted_symbols, 
+							 nsorted_symbols,
 							 _strtable,
 							 _strings_size,
 							 (uint32_t *)_indirectSymbolTable,
 							 _nindirect_symbols,
 							 _cputype,
+							 _startOfLoadCommandsPtr,
+							 _ncmds,
+							 _sizeofcmds,
 							 1 );
 		locPtr = locPtr + j;
+		memPtr = memPtr + j;
 		i += j;
 		
 	}	
@@ -1349,7 +1477,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 						_text_sect_pointer = (UInt8 *)sect_pointer;
 						_text_sect_addr = (UInt8 *)sect_addr;
-						_text_sorted_relocs = sect_relocs;
+						_text_relocs = sect_relocs;
 						_text_nsorted_relocs = sect_nrelocs;
 						_textSectSize = newSectSize;
 
@@ -2332,6 +2460,129 @@ const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in
 			low = mid + 1;
 			mid = (high + low) / 2;
 	    }
+	}
+	return(NULL);
+}
+
+/*
+ * guess_indirect_symbol() returns the name of the indirect symbol for the
+ * value passed in or NULL.
+ */
+const char * guess_indirect_symbol(
+					  const uint64_t value,	/* the value of this symbol (in) */
+					  const uint32_t ncmds,
+					  const uint32_t sizeofcmds,
+					  const struct load_command *load_commands,
+				//	  const enum byte_sex load_commands_byte_sex,
+					  const uint32_t *indirect_symbols,
+					  const uint32_t nindirect_symbols,
+					  const struct nlist *symbols,
+					  const struct nlist_64 *symbols64,
+					  const uint32_t nsymbols,
+					  const char *strings,
+					  const uint32_t strings_size)
+{
+ //   enum byte_sex host_byte_sex;
+//    enum bool swapped;
+    uint32_t i, j, section_type, index, stride;
+    const struct load_command *lc;
+    struct load_command l;
+    struct segment_command sg;
+    struct section s;
+    struct segment_command_64 sg64;
+    struct section_64 s64;
+    char *p;
+    uint64_t big_load_end;
+	
+//	host_byte_sex = get_host_byte_sex();
+//	swapped = host_byte_sex != load_commands_byte_sex;
+	
+	lc = load_commands;
+	big_load_end = 0;
+	for( i=0 ; i<ncmds; i++){
+	    memcpy((char *)&l, (char *)lc, sizeof(struct load_command));
+//	    if(swapped)
+//			swap_load_command(&l, host_byte_sex);
+	    if(l.cmdsize % sizeof(int32_t) != 0)
+			return(NULL);
+	    big_load_end += l.cmdsize;
+	    if(big_load_end > sizeofcmds)
+			return(NULL);
+	    switch(l.cmd){
+			case LC_SEGMENT:
+				memcpy((char *)&sg, (char *)lc, sizeof(struct segment_command));
+//				if(swapped)
+//					swap_segment_command(&sg, host_byte_sex);
+				p = (char *)lc + sizeof(struct segment_command);
+				for(j = 0 ; j < sg.nsects ; j++){
+					memcpy((char *)&s, p, sizeof(struct section));
+					p += sizeof(struct section);
+//					if(swapped)
+//						swap_section(&s, 1, host_byte_sex);
+					section_type = s.flags & SECTION_TYPE;
+					if((section_type == S_NON_LAZY_SYMBOL_POINTERS ||
+						section_type == S_LAZY_SYMBOL_POINTERS ||
+						section_type == S_LAZY_DYLIB_SYMBOL_POINTERS ||
+						section_type == S_SYMBOL_STUBS) &&
+					   value >= s.addr && value < s.addr + s.size){
+						if(section_type == S_SYMBOL_STUBS)
+							stride = s.reserved2;
+						else
+							stride = 4;
+						index = s.reserved1 + (value - s.addr) / stride;
+						if(index < nindirect_symbols &&
+						   symbols != NULL && strings != NULL &&
+						   indirect_symbols[index] < nsymbols &&
+						   (uint32_t)symbols[indirect_symbols[index]].
+						   n_un.n_strx < strings_size)
+							return(strings +
+								   symbols[indirect_symbols[index]].n_un.n_strx);
+						else
+							return(NULL);
+					}
+				}
+				break;
+			case LC_SEGMENT_64:
+				memcpy((char *)&sg64, (char *)lc,
+					   sizeof(struct segment_command_64));
+//				if(swapped)
+//					swap_segment_command_64(&sg64, host_byte_sex);
+				p = (char *)lc + sizeof(struct segment_command_64);
+				for(j = 0 ; j < sg64.nsects ; j++){
+					memcpy((char *)&s64, p, sizeof(struct section_64));
+					p += sizeof(struct section_64);
+//					if(swapped)
+//						swap_section_64(&s64, 1, host_byte_sex);
+					section_type = s64.flags & SECTION_TYPE;
+					if((section_type == S_NON_LAZY_SYMBOL_POINTERS ||
+						section_type == S_LAZY_SYMBOL_POINTERS ||
+						section_type == S_LAZY_DYLIB_SYMBOL_POINTERS ||
+						section_type == S_SYMBOL_STUBS) &&
+					   value >= s64.addr && value < s64.addr + s64.size){
+						if(section_type == S_SYMBOL_STUBS)
+							stride = s64.reserved2;
+						else
+							stride = 8;
+						index = s64.reserved1 + (value - s64.addr) / stride;
+						if(index < nindirect_symbols &&
+						   symbols64 != NULL && strings != NULL &&
+						   indirect_symbols[index] < nsymbols &&
+						   (uint32_t)symbols64[indirect_symbols[index]].
+						   n_un.n_strx < strings_size)
+							return(strings +
+								   symbols64[indirect_symbols[index]].n_un.n_strx);
+						else
+							return(NULL);
+					}
+				}
+				break;
+	    }
+	    if(l.cmdsize == 0){
+			return(NULL);
+	    }
+	    lc = (struct load_command *)((char *)lc + l.cmdsize);
+	    if((char *)lc > (char *)load_commands + sizeofcmds)
+			return(NULL);
 	}
 	return(NULL);
 }

@@ -45,8 +45,8 @@ extern uint32_t i386_disassemble(
     uint32_t *indirect_symbols,
     uint32_t nindirect_symbols,
 	cpu_type_t cputype,
-//    struct load_command *load_commands,
-//    uint32_t ncmds,
-//    uint32_t sizeofcmds //,
+    struct load_command *load_commands,
+    uint32_t ncmds,
+    uint32_t sizeofcmds,
     int verbose
 );

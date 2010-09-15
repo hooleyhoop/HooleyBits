@@ -31,19 +31,19 @@ struct symbol {
 	NSData						*_allFile;
 	NSString					*_filePath;
 
-	struct load_command		*_startOfLoadCommandsPtr;
+	struct load_command			*_startOfLoadCommandsPtr;
 	NSUInteger					_sizeofcmds;
 	NSUInteger					_ncmds;
-	NSMutableArray			*_loadCommandsArray;
+	NSMutableArray				*_loadCommandsArray;
 	const void					*_codeAddr;
 	size_t						_codeSize;
 	cpu_type_t					_cputype;
 	
-	NSMutableDictionary		*addresses_;    // Addresses and symbols (STRONG)
+	NSMutableDictionary			*addresses_;    // Addresses and symbols (STRONG)
 	
 	// Symbol table
 	struct nlist				*_symtable_ptr;
-	struct nlist_64			*_UNUSED_symbols64;
+	struct nlist_64				*_UNUSED_symbols64;
 	NSUInteger					_nsymbols;
 	NSUInteger					_strings_size;
 	
@@ -51,22 +51,22 @@ struct symbol {
 	
 	// Indirect Symbol Table
 	NSUInteger					_nindirect_symbols;
-	const uint32_t*			_indirectSymbolTable;
+	const uint32_t*				_indirectSymbolTable;
 	
 	IntKeyDictionary			*_indirectSymbolLookup, *_cStringLookup;
-	IntHash					*_cls_refsLookup;
-	IntHash					*_temporaryExperiment;
+	IntHash						*_cls_refsLookup;
+	IntHash						*_temporaryExperiment;
 
 	MemoryMap					*_memoryMap;
 	MemoryMap					*_uncodedMemoryMap;
 
 	BOOL						_MH_TWOLEVEL, _MH_FORCE_FLAT;
-	NSMutableArray			*_libraries;
+	NSMutableArray				*_libraries;
 	
 	// text section bodge
 	UInt8						*_text_sect_pointer;
 	UInt8						*_text_sect_addr;
-	struct relocation_info	*_text_sorted_relocs;
+	struct relocation_info		*_text_relocs;
 	uint32_t					_text_nsorted_relocs;
 	NSUInteger					_textSectSize;
 }
@@ -87,4 +87,17 @@ const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in
 			 const struct symbol *sorted_symbols,
 			 const uint32_t nsorted_symbols,
 			 int verbose);
+const char * guess_indirect_symbol(
+								   const uint64_t value,	/* the value of this symbol (in) */
+								   const uint32_t ncmds,
+								   const uint32_t sizeofcmds,
+								   const struct load_command *load_commands,
+								   //	  const enum byte_sex load_commands_byte_sex,
+								   const uint32_t *indirect_symbols,
+								   const uint32_t nindirect_symbols,
+								   const struct nlist *symbols,
+								   const struct nlist_64 *symbols64,
+								   const uint32_t nsymbols,
+								   const char *strings,
+								   const uint32_t strings_size);
 @end
