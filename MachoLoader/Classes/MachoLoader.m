@@ -739,10 +739,14 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	}
 	qsort(sorted_symbols, nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
 
-	// otx decompiles other sections as well? __coalesced_text __textcoal_nt
+	// otx decompiles other sections as well? __coalesced_text __textcoal_nt - they dont seem to be present here
+	_headFunction = calloc( 1, sizeof(struct hooleyFuction));
 	
-	NSUInteger j;
-	for( NSUInteger i=0; i<_textSectSize; ){
+	struct hooleyFuction *currentFunction = _headFunction;
+
+	NSUInteger j=0;
+	for( NSUInteger i=0; i<_textSectSize; )
+	{
 		
 		NSUInteger bytesLeft = _textSectSize-i;
 		
@@ -757,6 +761,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		
 		printf("%0x ", memPtr);
 		j = i386_disassemble( 
+							 &currentFunction,
 							 (char *)locPtr,
 							 bytesLeft,
 							(uint64_t)memPtr,
@@ -1190,7 +1195,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 
 - (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table {
 	
-	uint32_t lastStartAddress_;
+	uint32_t lastStartAddress_=0;
 	uint32_t n_stringIndex = list->n_un.n_strx;
 	BOOL result = NO;
 

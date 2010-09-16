@@ -25,6 +25,18 @@ struct symbol {
     int is_thumb;
 };
 
+struct hooleyCodeLine {
+	struct hooleyCodeLine *prev;
+	struct hooleyCodeLine *next;	
+	const struct instable *instr;
+};
+
+struct hooleyFuction {
+	struct hooleyFuction *prev;
+	struct hooleyFuction *next;
+	struct hooleyCodeLine *firstLine;	
+	struct hooleyCodeLine *lastLine;
+};
 
 @interface MachoLoader : NSObject {
 
@@ -63,12 +75,15 @@ struct symbol {
 	BOOL						_MH_TWOLEVEL, _MH_FORCE_FLAT;
 	NSMutableArray				*_libraries;
 	
-	// text section bodge
+	// text section bodge - stuff needed to get the code lifted straight from otool to work
 	UInt8						*_text_sect_pointer;
 	UInt8						*_text_sect_addr;
 	struct relocation_info		*_text_relocs;
 	uint32_t					_text_nsorted_relocs;
 	NSUInteger					_textSectSize;
+	
+	// ok - the results of the disasembly
+	struct hooleyFuction		*_headFunction;
 }
 
 - (id)initWithPath:(NSString *)aPath;

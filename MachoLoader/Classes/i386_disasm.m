@@ -398,6 +398,43 @@ static const char * const REG32[16][3] = {
 /* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
 };
 
+struct hooReg {
+    char name[MAX_MNEMONIC];
+    char prettyName[24];	
+};
+
+static const struct hooReg REG16_Struct[8][2] = {
+	{ {"%al","%accumulator"},	{"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
+	{ {"%cl","%count"},			{"%cx","%count"} },
+	{ {"%dl","%data"},			{"%dx","%data"} },
+	{ {"%bl","%base"},			{"%bx","%base"} },
+	{ {"%ah","%accumulator"},	{"%sp","%stackPointer_top"} },
+	{ {"%ch","%count"},			{"%bp","%stackPointer_base"} },
+	{ {"%dh","%data"},			{"%si","%source_index"} },
+	{ {"%bh","%base"},			{"%di","%destination_index"} }
+};
+
+static const struct hooReg REG32_Struct[16][3] = {
+	{ {"%al","%accumulator"},	{"%eax","%accumulator"},		{"%rax","%accumulator"} },
+	{ {"%cl","%count"},			{"%ecx","%count"},				{"%rcx","%count"} },
+	{ {"%dl","%data"},			{"%edx","%data"},				{"%rdx","%data"} },
+	{ {"%bl","%base"},			{"%ebx","%base"},				{"%rbx","%base"} },
+	{ {"%ah","%accumulator"},	{"%esp","%stackPointer_top"},	{"%rsp","%stackPointer_top"} },
+	{ {"%ch","%count"},			{"%ebp","%stackPointer_base"},	{"%rbp","%stackPointer_base"} },
+	{ {"%dh","%data"},			{"%esi","%source_index"},		{"%rsi","%source_index"} },
+	{ {"%bh","%base"},			{"%edi","%destination_index"},	{"%rdi","%destination_index"} },
+	{ {"%r8b","%reg8"},			{"%r8d","%reg8"},				{"%r8","%reg8"} },
+	{ {"%r9b","%reg9"},			{"%r9d","%reg9"},				{"%r9","%reg9"} },
+	{ {"%r10b","%reg10"},		{"%r10d","%reg10"},				{"%r10","%reg10"} },
+	{ {"%r11b","%reg11"},		{"%r11d","%reg11"},				{"%r11","%reg11"} },
+	{ {"%r12b","%reg12"},		{"%r12d","%reg12"},				{"%r12","%reg12"} },
+	{ {"%r13b","%reg13"},		{"%r13d","%reg13"},				{"%r13","%reg13"} },
+	{ {"%r14b","%reg14"},		{"%r14d","%reg14"},				{"%r14","%reg14"} },
+	{ {"%r15b","%reg15"},		{"%r15d","%reg15"},				{"%r15","%reg15"} }
+};
+
+
+
 /*
  * In 16-bit mode:
  * This initialized array will be indexed by the 'r/m' and 'mod'
@@ -1522,10 +1559,23 @@ static const char *get_reg_name(int reg, int wbit, int data16, int rex)
 	return reg_name;
 }
 
-static const char *get_r_m_name(int r_m, int wbit, int data16, int rex)
-{
-	const char *reg_name;
+/* yeah */
+static const struct hooReg *get_r_m_regStruct( int r_m, int wbit, int data16, int rex ) {
 
+	const struct hooReg *regStruct;
+	if( rex!=0 ) {
+		regStruct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
+	} else if (data16) {
+		regStruct = &REG16_Struct[r_m][wbit];
+	} else {
+		regStruct = &REG32_Struct[r_m][wbit];
+	}
+	return regStruct;	
+}
+
+static const char *get_r_m_name( int r_m, int wbit, int data16, int rex ) {
+
+	const char *reg_name;
 	// A REX prefix takes precedent over a 66h prefix.
 	if (rex != 0) {
 		reg_name = REG32[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
@@ -1534,7 +1584,6 @@ static const char *get_r_m_name(int r_m, int wbit, int data16, int rex)
 	} else {
 		reg_name = REG32[r_m][wbit];
 	}
-
 	return reg_name;
 }
 
@@ -1550,21 +1599,40 @@ static unsigned int xmm_rm(int r_m, int rex)
 	return (r_m + (REX_B(rex) << 3));
 }
 
-void addLine( const struct instable *dp ) {
+void addLine( struct hooleyFuction **currentFuncPtr, const struct instable *dp ) {
 	
-	FUNCTION
+	struct hooleyFuction *currentFunc = *currentFuncPtr;
 	
-	newLine->instr = dp
-	newLine->prev = currentLine;
-	currentLine->next = newLine;
-	currentLine = newLine
+	BOOL isNewFunc = !strcmp(dp->name, "push");
+	
+	if (isNewFunc) {
+		struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction *) );
+		newFunc->prev = currentFunc;
+		currentFunc->next = newFunc;
+		currentFunc = newFunc;
+		*currentFuncPtr = currentFunc;
+	}
+
+	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine *) );
+	newLine->instr = dp;
+	
+	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
+	if(currentLine) {
+		// append this new line
+		newLine->prev = currentLine;
+		currentLine->next = newLine;
+	} else {
+		// new line is the only line at the moment
+		currentFunc->firstLine = newLine;
+	}
+	currentFunc->lastLine = newLine;
 }
 
 /*
  * i386_disassemble()
  */
-uint32_t
-i386_disassemble(
+uint32_t i386_disassemble(
+struct hooleyFuction **currentFunc,
 char *sect,
 uint32_t left,
 uint64_t addr,
@@ -1589,30 +1657,30 @@ int verbose
 )
 {
     char mnemonic[MAX_MNEMONIC+2]; /* one extra for suffix */
-    const char *seg;
-    const char *symbol0, *symbol1;
-    const char *symadd0, *symsub0, *symadd1, *symsub1;
-    uint32_t value0, value1;
-    uint64_t imm0, imm1;
-    uint32_t value0_size, value1_size;
-		char result0[MAX_RESULT], result1[MAX_RESULT];
-    const char *indirect_symbol_name;
+    const char *seg = "";
+    const char *symbol0=NULL, *symbol1=NULL;
+    const char *symadd0=NULL, *symsub0=NULL, *symadd1=NULL, *symsub1=NULL;
+    uint32_t value0=0, value1=0;
+    uint64_t imm0=0, imm1=0;
+    uint32_t value0_size=0, value1_size=0;
+	char result0[MAX_RESULT], result1[MAX_RESULT];
+    const char *indirect_symbol_name=NULL;
 
-    uint32_t i, length;
-    unsigned char byte;
-       unsigned char opcode_suffix;
+    uint32_t i=0, length=0;
+    unsigned char byte=0;
+    unsigned char opcode_suffix=0;
     /* nibbles (4 bits) of the opcode */
-    unsigned opcode1, opcode2, opcode3, opcode4, opcode5, prefix_byte;
-    const struct instable *dp, *prefix_dp;
-    uint32_t wbit, vbit;
-    int got_modrm_byte;
-    uint32_t mode, reg, r_m;
-    const char *reg_name;
-    int data16;		/* 16- or 32-bit data */
-    int addr16;		/* 16- or 32-bit addressing */
-    int sse2;		/* sse2 instruction using xmmreg's */
-    int mmx;		/* mmx instruction using mmreg's */
-    unsigned char rex, rex_save;/* x86-64 REX prefix */
+    unsigned opcode1=0, opcode2=0, opcode3=0, opcode4=0, opcode5=0, prefix_byte=0;
+    const struct instable *dp=NULL, *prefix_dp=NULL;
+    uint32_t wbit=0, vbit=0;
+    int got_modrm_byte=0;
+    uint32_t mode=0, reg=0, r_m=0;
+    const char *reg_name = NULL;
+    int data16=FALSE;		/* 16- or 32-bit data */
+    int addr16=FALSE;		/* 16- or 32-bit addressing */
+    int sse2=FALSE;		/* sse2 instruction using xmmreg's */
+    int mmx=FALSE;		/* mmx instruction using mmreg's */
+    unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
 
 	if(left == 0){
 	   printf("(end of section)\n");
@@ -1620,27 +1688,8 @@ int verbose
 	}
 
 	memset(mnemonic, '\0', sizeof(mnemonic));
-	seg = "";
-	symbol0 = NULL;
-	symbol1 = NULL;
-	value0 = 0;
-	value1 = 0;
-	value0_size = 0;
-	value1_size = 0;
 	memset(result0, '\0', sizeof(result0));
 	memset(result1, '\0', sizeof(result1));
-	data16 = FALSE;
-	addr16 = FALSE;
-	sse2 = FALSE;
-	mmx = FALSE;
-	rex = 0;
-	reg_name = NULL;
-	wbit = 0;
-
-	length = 0;
-	byte = 0;
-	opcode4 = 0; /* to remove a compiler warning only */
-	opcode5 = 0; /* to remove a compiler warning only */
 
 	/*
 	 * As long as there is a prefix, the default segment register,
@@ -1946,7 +1995,7 @@ int verbose
 		case BSWAP:
 			reg_name = get_reg_name((opcode5 & 0x7), 1, data16, rex);
 			printf("%s\t%s\n", mnemonic, reg_name);
-//addline eg bswap	%eax			
+			addLine( currentFunc, dp ); // eg bswap	%eax			
 			return(length);
 
 		case XINST:
@@ -1981,7 +2030,7 @@ int verbose
 			printf("%s\t", mnemonic);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", reg_name);
-//addline eg movzbl	(%edx),%eax			
+			addLine( currentFunc, dp ); // eg movzbl	(%edx),%eax			
 			return(length);
 
 		/* imul instruction, with either 8-bit or longer immediate */
@@ -2002,7 +2051,7 @@ int verbose
 			print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
 			printf("%s\n", reg_name);
-//addline		eg imull	$0x44,%edx,%eax	
+			addLine( currentFunc, dp ); //		eg imull	$0x44,%edx,%eax	
 			return(length);
 
 		/* memory or register operand to register, with 'w' bit	*/
@@ -2019,7 +2068,7 @@ int verbose
 			printf("%s\t", mnemonic);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", reg_name);
-//addline	eg. movl 0x04(%ebp),%ebx			
+			addLine( currentFunc, dp );	// eg. movl 0x04(%ebp),%ebx			
 			return(length);
 
 		/* register to memory or register operand, with 'w' bit	*/
@@ -2035,7 +2084,7 @@ int verbose
 			reg_name = get_reg_name(reg, wbit, data16, rex);
 			printf("%s\t%s,", mnemonic, reg_name);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addLine			-- move register to oprand eg. movl	%esp,%ebp	movl %ebx,0x00(%esp)
+			addLine( currentFunc, dp ); //			-- move register to oprand eg. movl	%esp,%ebp	movl %ebx,0x00(%esp)
 			return(length);
 
 		/* SSE2 instructions with further prefix decoding dest to memory or
@@ -2176,7 +2225,7 @@ int verbose
 			printf("%s,", result0);
 			GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-//addline				eg movsd	%xmm0,0x20(%edx,%ecx)
+			addLine( currentFunc, dp ); //				eg movsd	%xmm0,0x20(%edx,%ecx)
 			return(length);
 
 		/* MNI instructions */
@@ -2661,7 +2710,7 @@ int verbose
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", result1);
-//addline   eg movsd	(%eax),%xmm0			
+			addLine( currentFunc, dp ); //   eg movsd	(%eax),%xmm0			
 			return(length);
 
 			/* SSE4 instructions */
@@ -3128,7 +3177,7 @@ int verbose
 					reg_name = get_reg_name(reg, wbit, data16, rex);
 					printf("%s\t%%cl,%s,", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline eg shldl	%cl,%eax,%esi			
+					addLine( currentFunc, dp ); // eg shldl	%cl,%eax,%esi			
 					return(length);
 
 				/* immediate to memory or register operand */
@@ -3143,7 +3192,7 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-//addLine			eg. andl $0xf0,%esp    subl $0x10,%esp
+					addLine( currentFunc, dp ); //			eg. andl $0xf0,%esp    subl $0x10,%esp
 					return(length);
 
 				/* immediate to memory or register operand with the 'w' bit present */
@@ -3161,7 +3210,7 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-//addline				eg movl	$0x00021730,0x04(%edx)
+					addLine( currentFunc, dp ); //				eg movl	$0x00021730,0x04(%edx)
 					return(length);
 
 				/* immediate to register with register in low 3 bits of op code */
@@ -3174,7 +3223,7 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-//addline			eg movb	$0x00,%al
+					addLine( currentFunc, dp ); //			eg movb	$0x00,%al
 					return(length);
 
 				/* immediate to register with register in low 3 bits of op code,
@@ -3188,8 +3237,7 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-//addline				eg movl	$0x00b9ee00,%ecx
-
+					addLine( currentFunc, dp ); //				eg movl	$0x00b9ee00,%ecx
 					return(length);
 
 				/* memory operand to accumulator */
@@ -3207,7 +3255,7 @@ int verbose
 					wbit = WBIT(opcode2);
 					reg_name = get_reg_name(0, wbit, data16, rex);
 					printf("%s\n", reg_name);
-//addline eg movl	0x0123d000,%eax			
+					addLine( currentFunc, dp ); // eg movl	0x0123d000,%eax			
 					return(length);
 
 				/* accumulator to memory operand */
@@ -3224,7 +3272,7 @@ int verbose
 					reg_name = get_reg_name(0, wbit, data16, rex);
 					printf("%s\t%s,", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
-//addline			eg movl	%eax,0x00f2300c
+					addLine( currentFunc, dp ); //			eg movl	%eax,0x00f2300c
 					return(length);
 
 				/* memory or register operand to segment register */
@@ -3268,7 +3316,7 @@ int verbose
 					reg_name = vbit ? "%cl," : "" ;
 					printf("%s\t%s", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline eg sarl	%eax			
+					addLine( currentFunc, dp ); //		eg sarl	%eax			
 					return(length);
 
 				/* immediate rotate or shift instrutions, which may or */
@@ -3285,7 +3333,7 @@ int verbose
 					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
 					printf("%s", reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline				eg shll	$0x02,%ebx
+					addLine( currentFunc, dp ); //				eg shll	$0x02,%ebx
 					return(length);
 
 				case MIb:
@@ -3365,7 +3413,7 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline				eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
+					addLine( currentFunc, dp ); //				eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 					return(length);
 
 				/* single memory or register operand */
@@ -3379,7 +3427,7 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline				eg setbe	%al
+					addLine( currentFunc, dp ); //				eg setbe	%al
 					return(length);
 
 				case SREG: /* special register */
@@ -3423,13 +3471,21 @@ int verbose
 					}
 					return(length);
 
-				/* single register operand with register in the low 3	*/
-				/* bits of op code					*/
+				/* single register operand with register in the low 3 bits of op code */
 				case R:
 					reg = REGNO(opcode2);
-					reg_name = get_r_m_name(reg, LONGOPERAND, data16, rex);
-					printf("%s\t%s\n", mnemonic, reg_name);
-	//addline				eg. pushl %ebp
+			
+					/* experimental */
+					// reg_name = get_r_m_name(reg, LONGOPERAND, data16, rex);
+					const struct hooReg *reg_struct = get_r_m_regStruct(reg, LONGOPERAND, data16, rex);
+					reg_name = reg_struct->prettyName;
+					if( !strcmp( reg_name, "unknown") )
+						reg_name = reg_struct->name;
+			
+					/* -- we should so make the new function here -- */
+					
+					printf("%s\t%s\n", mnemonic, reg_name );
+					addLine( currentFunc, dp );	// eg. pushl %ebp
 					return(length);
 
 				/* register to accumulator with register in the low 3 */
@@ -3469,7 +3525,7 @@ int verbose
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 					printf("%s\n", reg_name);
-//addline			eg. leal 0x08(%ebp),%ecx
+					addLine( currentFunc, dp ); //			eg. leal 0x08(%ebp),%ecx
 					return(length);
 
 				/* immediate operand to accumulator */
@@ -3484,7 +3540,7 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-//addline				eg cmpb	$0x2f,%al
+					addLine( currentFunc, dp );				 //eg cmpb	$0x2f,%al
 					return(length);
 
 				/* memory or register operand to accumulator */
@@ -3493,8 +3549,7 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline eg mull	%ecx
-			
+					addLine( currentFunc, dp ); // eg mull	%ecx
 					return(length);
 
 				/* si register to di register */
@@ -3549,7 +3604,7 @@ int verbose
 						printf("\t; symbol stub for: %s", indirect_symbol_name);
 					}
 					//putback		}
-					addLine( dp ); // eg. calll 0x00002aea
+					addLine( currentFunc, dp ); // eg. calll 0x00002aea
 					printf("\n");
 					return(length);
 
@@ -3564,7 +3619,7 @@ int verbose
 						printf("%s\t", mnemonic);
 					}
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//addline				eg jmp	*%ecx
+					addLine( currentFunc, dp ); // eg jmp	*%ecx
 					return(length);
 
 				/* indirect to memory or register operand (for lcall and ljmp) */
@@ -3598,7 +3653,7 @@ int verbose
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
-//addline			eg jne	0x00002b1a
+					addLine( currentFunc, dp ); //			eg jne	0x00002b1a
 					return(length);
 
 				/* single 32/16 bit immediate operand */
@@ -3616,7 +3671,7 @@ int verbose
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
-//addLine			-- we have an instruction and an 8-bit imediate operand eg. pushl	$0x00
+					addLine( currentFunc, dp ); // eg. pushl $0x00
 					return(length);
 
 				case ENTER:
@@ -3636,7 +3691,7 @@ int verbose
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
-//addline  eg ret	$0x0004			
+					addLine( currentFunc, dp ); //  eg ret	$0x0004			
 					return(length);
 
 				/* single 8 bit port operand */
@@ -3725,8 +3780,10 @@ int verbose
 
 				/* no disassembly, the mnemonic was all there was so go on */
 				case GO_ON:
-					printf("%s\n", mnemonic);
-//addline			eg hlt
+					if( strcmp(dp->name, "nop" )) {
+						printf("%s\n", mnemonic);
+						addLine( currentFunc, dp ); // eg. hlt
+					}
 					return(length);
 
 				/* float reg */
@@ -3976,14 +4033,13 @@ static void immediate(
 	uint32_t sect_offset = addr + *length - sect_addr;
 	*value = get_value(value_size, sect, length, left);
 	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
-//put back	if(*symadd == NULL){
-//put back	    *symadd = GUESS_SYMBOL(*value);
-//put back	    if(*symadd != NULL)
-//put back		*value = 0;
-//put back	}
-//put back	else if(*symsub != NULL){
-//put back	    *value = offset;
-//put back	}
+	if(*symadd == NULL){
+		*symadd = GUESS_SYMBOL(*value);
+		if(*symadd != NULL)
+			*value = 0;
+	} else if(*symsub != NULL){
+		*value = offset;
+	}
 }
 
 /*

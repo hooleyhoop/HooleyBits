@@ -21,6 +21,7 @@
 	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	[ml readFile];
 
+	[ml release];
 //	NSString *section = [ml sectionForMemAddress:0];
 
 }

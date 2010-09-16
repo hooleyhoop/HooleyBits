@@ -28,6 +28,7 @@
 
 extern uint32_t i386_disassemble(
 
+	struct hooleyFuction **currentFunc,
     char *sect,
     uint32_t left,
     uint64_t addr,
