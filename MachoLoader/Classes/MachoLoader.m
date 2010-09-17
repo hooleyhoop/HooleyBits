@@ -759,7 +759,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		[self gatherFuncInfos];
 		*/
 		
-		printf("%0x ", memPtr);
+//		printf("%0x ", memPtr);
 		j = i386_disassemble( 
 							 &currentFunction,
 							 (char *)locPtr,

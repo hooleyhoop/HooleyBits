@@ -13,10 +13,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
+//	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
 //	NSString *pathToApp = @"/Applications/modo.app/Contents/MacOS/modo";
 //	NSString *pathToApp = @"/Applications/Adobe After Effects CS3/Adobe After Effects CS3.app/Contents/MacOS/After Effects";
-//	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	
 	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	[ml readFile];

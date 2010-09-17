@@ -233,6 +233,10 @@ static void modrm_byte(
     uint32_t *r_m,
     unsigned char byte);
 
+#define GET_BEST_REG_NAME( reg_name, reg_struct ) \
+reg_name = reg_struct->prettyName;  \
+if( !strcmp( reg_name, "unknown") ) \
+reg_name = reg_struct->name; \
 
 #define GET_OPERAND(symadd, symsub, value, value_size, result) \
 get_operand((symadd), (symsub), (value), (value_size), (result), \
@@ -357,18 +361,18 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
  * and a '16' bit register is selected if the 'w' bit is equal to
  * 1 and also if there is no 'w' bit.
  */
-static const char * const REG16[8][2] = {
-/* w bit		0		1		*/
-/* reg bits */
-/* 000	*/		{"%al",		"%ax"},
-/* 001  */		{"%cl",		"%cx"},
-/* 010  */		{"%dl",		"%dx"},
-/* 011	*/		{"%bl",		"%bx"},
-/* 100	*/		{"%ah",		"%sp"},
-/* 101	*/		{"%ch",		"%bp"},
-/* 110	*/		{"%dh",		"%si"},
-/* 111	*/		{"%bh",		"%di"}
-};
+//static const char * const REG16[8][2] = {
+///* w bit		0		1		*/
+///* reg bits */
+///* 000	*/		{"%al",		"%ax"},
+///* 001  */		{"%cl",		"%cx"},
+///* 010  */		{"%dl",		"%dx"},
+///* 011	*/		{"%bl",		"%bx"},
+///* 100	*/		{"%ah",		"%sp"},
+///* 101	*/		{"%ch",		"%bp"},
+///* 110	*/		{"%dh",		"%si"},
+///* 111	*/		{"%bh",		"%di"}
+//};
 
 /*
  * In 32-bit or 64-bit addressing mode:
@@ -377,26 +381,26 @@ static const char * const REG16[8][2] = {
  * and a '32' bit register is selected if the 'w' bit is equal to
  * 1 and also if there is no 'w' bit.
  */
-static const char * const REG32[16][3] = {
-/* w bit		0				1			1 + REX.W	*/
-/* reg bits */
-/* 0000	*/		{"%al",			"%eax",			"%rax"},
-/* 0001  */		{"%cl",			"%ecx",			"%rcx"},
-/* 0010  */		{"%dl",			"%edx",			"%rdx"},
-/* 0011	*/		{"%bl",			"%ebx",			"%rbx"},
-/* 0100	*/		{"%ah",			"%esp",			"%rsp"},
-/* 0101	*/		{"%ch",			"%ebp",			"%rbp"},
-/* 0110	*/		{"%dh",			"%esi",			"%rsi"},
-/* 0111	*/		{"%bh",			"%edi",			"%rdi"},
-/* 1000	*/		{"%r8b",		"%r8d",			"%r8"},
-/* 1001 */		{"%r9b",		"%r9d",			"%r9"},
-/* 1010 */		{"%r10b",		"%r10d",		"%r10"},
-/* 1011	*/		{"%r11b",		"%r11d",		"%r11"},
-/* 1100	*/		{"%r12b",		"%r12d",		"%r12"},
-/* 1101	*/		{"%r13b",		"%r13d",		"%r13"},
-/* 1110	*/		{"%r14b",		"%r14d",		"%r14"},
-/* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
-};
+//static const char * const REG32[16][3] = {
+///* w bit		0				1			1 + REX.W	*/
+///* reg bits */
+///* 0000	*/		{"%al",			"%eax",			"%rax"},
+///* 0001  */		{"%cl",			"%ecx",			"%rcx"},
+///* 0010  */		{"%dl",			"%edx",			"%rdx"},
+///* 0011	*/		{"%bl",			"%ebx",			"%rbx"},
+///* 0100	*/		{"%ah",			"%esp",			"%rsp"},
+///* 0101	*/		{"%ch",			"%ebp",			"%rbp"},
+///* 0110	*/		{"%dh",			"%esi",			"%rsi"},
+///* 0111	*/		{"%bh",			"%edi",			"%rdi"},
+///* 1000	*/		{"%r8b",		"%r8d",			"%r8"},
+///* 1001 */		{"%r9b",		"%r9d",			"%r9"},
+///* 1010 */		{"%r10b",		"%r10d",		"%r10"},
+///* 1011	*/		{"%r11b",		"%r11d",		"%r11"},
+///* 1100	*/		{"%r12b",		"%r12d",		"%r12"},
+///* 1101	*/		{"%r13b",		"%r13d",		"%r13"},
+///* 1110	*/		{"%r14b",		"%r14d",		"%r14"},
+///* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
+//};
 
 struct hooReg {
     char name[MAX_MNEMONIC];
@@ -476,7 +480,15 @@ static const char dispsize32 [8][4] = {
  * for the different addressing modes.  Indexed first by mode, then by register
  * number.
  */
-static const char * const regname16[4][8] = {
+//static const char * const regname16[4][8] = {
+///*reg  000        001        010        011        100    101   110     111 */
+///*mod*/
+///*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
+///*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
+///*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
+///*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
+//};
+static const struct hooReg regname16_Struct[4][8] = {
 /*reg  000        001        010        011        100    101   110     111 */
 /*mod*/
 /*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
@@ -484,7 +496,7 @@ static const char * const regname16[4][8] = {
 /*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
 /*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
 };
-
+ 
 /*
  * When data16 has not been specified, fields, to determine the addressing mode,
  * and will also provide strings for printing.
@@ -1543,20 +1555,34 @@ static const struct instable distable[16][16] = {
 //}
 
 
-static const char *get_reg_name(int reg, int wbit, int data16, int rex)
-{
-	const char *reg_name;
+//static const char *get_reg_name(int reg, int wbit, int data16, int rex) {
+//	
+//	const char *reg_name;
+//
+//	// A REX prefix takes precedent over a 66h prefix.
+//	if (rex != 0) {
+//		reg_name = REG32[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
+//	} else if (data16) {
+//		reg_name = REG16[reg][wbit];
+//	} else {
+//		reg_name = REG32[reg][wbit];
+//	}
+//
+//	return reg_name;
+//}
 
-	// A REX prefix takes precedent over a 66h prefix.
+/* yeah */
+static const struct hooReg *get_regStruct( int reg, int wbit, int data16, int rex ) {
+	
+	const struct hooReg *regStruct;
 	if (rex != 0) {
-		reg_name = REG32[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
+		regStruct = &REG32_Struct[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
 	} else if (data16) {
-		reg_name = REG16[reg][wbit];
+		regStruct = &REG16_Struct[reg][wbit];
 	} else {
-		reg_name = REG32[reg][wbit];
+		regStruct = &REG32_Struct[reg][wbit];
 	}
-
-	return reg_name;
+	return regStruct;
 }
 
 /* yeah */
@@ -1573,45 +1599,33 @@ static const struct hooReg *get_r_m_regStruct( int r_m, int wbit, int data16, in
 	return regStruct;	
 }
 
-static const char *get_r_m_name( int r_m, int wbit, int data16, int rex ) {
-
-	const char *reg_name;
-	// A REX prefix takes precedent over a 66h prefix.
-	if (rex != 0) {
-		reg_name = REG32[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
-	} else if (data16) {
-		reg_name = REG16[r_m][wbit];
-	} else {
-		reg_name = REG32[r_m][wbit];
-	}
-	return reg_name;
-}
+//static const char *get_r_m_name( int r_m, int wbit, int data16, int rex ) {
+//
+//	const char *reg_name;
+//	// A REX prefix takes precedent over a 66h prefix.
+//	if (rex != 0) {
+//		reg_name = REG32[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
+//	} else if (data16) {
+//		reg_name = REG16[r_m][wbit];
+//	} else {
+//		reg_name = REG32[r_m][wbit];
+//	}
+//	return reg_name;
+//}
 
 // Returns the xmm register number referenced by reg and rex.
-static unsigned int xmm_reg(int reg, int rex)
-{
+static unsigned int xmm_reg(int reg, int rex) {
 	return (reg + (REX_R(rex) << 3));
 }
 
 // Returns the xmm register number referenced by r_m and rex.
-static unsigned int xmm_rm(int r_m, int rex)
-{
+static unsigned int xmm_rm(int r_m, int rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
 void addLine( struct hooleyFuction **currentFuncPtr, const struct instable *dp ) {
 	
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
-	
-	BOOL isNewFunc = !strcmp(dp->name, "push");
-	
-	if (isNewFunc) {
-		struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction *) );
-		newFunc->prev = currentFunc;
-		currentFunc->next = newFunc;
-		currentFunc = newFunc;
-		*currentFuncPtr = currentFunc;
-	}
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine *) );
 	newLine->instr = dp;
@@ -1632,7 +1646,7 @@ void addLine( struct hooleyFuction **currentFuncPtr, const struct instable *dp )
  * i386_disassemble()
  */
 uint32_t i386_disassemble(
-struct hooleyFuction **currentFunc,
+struct hooleyFuction **currentFuncPtr,
 char *sect,
 uint32_t left,
 uint64_t addr,
@@ -1681,7 +1695,8 @@ int verbose
     int sse2=FALSE;		/* sse2 instruction using xmmreg's */
     int mmx=FALSE;		/* mmx instruction using mmreg's */
     unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
-
+	const struct hooReg *reg_struct = NULL;
+	
 	if(left == 0){
 	   printf("(end of section)\n");
 	   return(0);
@@ -1707,7 +1722,7 @@ int verbose
 	    dp = &distable[opcode1][opcode2];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL){
 			hooleyDebug();
-			dp = dp->arch64;
+//NEVER			dp = dp->arch64;
 		}
 	    if(dp->adr_mode == PREFIX){
 			if(prefix_dp != NULL)
@@ -1716,8 +1731,8 @@ int verbose
 			prefix_byte = byte;
 	    } else if(dp->adr_mode == AM){
 			hooleyDebug();
-			addr16 = !addr16;
-			prefix_byte = byte;
+//NEVER			addr16 = !addr16;
+//NEVER			prefix_byte = byte;
 	    } else if(dp->adr_mode == DM){
 			data16 = !data16;
 			prefix_byte = byte;
@@ -1726,7 +1741,7 @@ int verbose
 			prefix_byte = byte;
 	    } else if(dp->adr_mode == REX){
 			hooleyDebug();
-			rex = byte;
+//NEVER			rex = byte;
 			/*
 			 * REX is a prefix, but we don't set prefix_byte here because
 			 * we use that to detect things related to the other prefixes
@@ -1752,7 +1767,7 @@ int verbose
 	    dp = &op0F[opcode4][opcode5];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL) {
 			hooleyDebug();
-			dp = dp->arch64;
+//NEVER			dp = dp->arch64;
 		}
 	    if(dp->indirect == op0F38 || dp->indirect == op0F3A)
 		{
@@ -1762,8 +1777,8 @@ int verbose
 			* MNI instructions are SSE2ish instructions with an
 			* extra byte.  Do the extra indirection here.
 			*/
-			byte = get_value(sizeof(char), sect, &length, &left);
-			dp = &dp->indirect[byte];
+//NEVER			byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER			dp = &dp->indirect[byte];
 	    }
 	    /*
 	     * SSE and SSE2 instructions have 3 bytes of opcode and the
@@ -1792,46 +1807,45 @@ int verbose
 		if(dp->indirect == (const struct instable *)op0F0F)
 		{
 			hooleyDebug();
-		    data16 = FALSE;
-		    mmx = TRUE;
-		    if(got_modrm_byte == FALSE){
-				hooleyDebug();
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-		    }
-			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-		    opcode_suffix = get_value(sizeof(char), sect, &length, &left);
-		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
+//NEVER		    data16 = FALSE;
+//NEVER		    mmx = TRUE;
+//NEVER		    if(got_modrm_byte == FALSE){
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER		    }
+//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER		    opcode_suffix = get_value(sizeof(char), sect, &length, &left);
+//NEVER		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
 
 		} else if(dp->indirect == (const struct instable *)op0F01) {
 
 			hooleyDebug();
-		    if(got_modrm_byte == FALSE){
-				hooleyDebug();
-
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-				opcode3 = reg;
-		    }
+//NEVER		    if(got_modrm_byte == FALSE){
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER				opcode3 = reg;
+//NEVER		    }
 		    if(byte == 0xc8){
 				hooleyDebug();
-				data16 = FALSE;
-				mmx = TRUE;
-				dp = &op_monitor;
+//NEVER				data16 = FALSE;
+//NEVER				mmx = TRUE;
+//NEVER				dp = &op_monitor;
 		    } else if(byte == 0xc9){
 				hooleyDebug();
-				data16 = FALSE;
-				mmx = TRUE;
-				dp = &op_mwait;
+//NEVER				data16 = FALSE;
+//NEVER				mmx = TRUE;
+//NEVER				dp = &op_mwait;
 		    }
 		    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 				hooleyDebug();
-				if(opcode3 == 0x7 && got_modrm_byte && mode == REG_ONLY && r_m == 0) {
-					hooleyDebug();
-					dp = &op_swapgs;
-				}
+//NEVER				if(opcode3 == 0x7 && got_modrm_byte && mode == REG_ONLY && r_m == 0) {
+//NEVER					hooleyDebug();
+//NEVER					dp = &op_swapgs;
+//NEVER				}
 		    }
 		} else {
 
@@ -1842,7 +1856,7 @@ int verbose
 		     */
 		    if(prefix_dp != NULL) {
 				hooleyDebug();
-				printf("%s", prefix_dp->name);
+//NEVER				printf("%s", prefix_dp->name);
 			}
 		}
             }
@@ -1854,34 +1868,31 @@ int verbose
 	     */
 	    if(prefix_dp != NULL && prefix_byte == 0xf3 && opcode1 == 0x9 && opcode2 == 0x0){
 			hooleyDebug();
-
-			printf("pause\n");
-			return(length);
+//NEVER			printf("pause\n");
+//NEVER			return(length);
 	    }
 	    /*
 	     * Since the opcode is not an SSE or SSE2 instruction print the
 	     * delayed last prefix if any.
 	     */
-	    if(prefix_dp != NULL){
-			hooleyDebug();
-
-		/*
-		 * If the prefix is "repz" and the instruction is ins, outs,
-		 * movs, lods, or stos then the name used is "rep".
-		 */
-		if(strcmp(prefix_dp->name, "repz/") == 0 &&
-		   (byte == 0x6c || byte == 0x6d || /* ins */
-		    byte == 0x6e || byte == 0x6f || /* outs */
-		    byte == 0xa4 || byte == 0xa5 || /* movs */
-		    byte == 0xac || byte == 0xad || /* lods */
-		    byte == 0xaa || byte == 0xab))  /* stos */
+	    if(prefix_dp != NULL)
 		{
-			hooleyDebug();
-		    printf("rep/");
-		} else {
-			hooleyDebug();
-		    printf("%s", prefix_dp->name);
-		}
+			/*
+			 * If the prefix is "repz" and the instruction is ins, outs,
+			 * movs, lods, or stos then the name used is "rep".
+			 */
+			if(strcmp(prefix_dp->name, "repz/") == 0 &&
+			   (byte == 0x6c || byte == 0x6d || /* ins */
+				byte == 0x6e || byte == 0x6f || /* outs */
+				byte == 0xa4 || byte == 0xa5 || /* movs */
+				byte == 0xac || byte == 0xad || /* lods */
+				byte == 0xaa || byte == 0xab))  /* stos */
+			{
+				hooleyDebug();
+//NEVER				printf("rep/");
+			} else {
+				printf("%s", prefix_dp->name);
+			}
 	    }
 	}
 
@@ -1904,23 +1915,20 @@ int verbose
 			/* instruction form 5 */
 			if(opcode2 == 0xB && mode == 0x3 && opcode3 == 4) {
 				hooleyDebug();
-				dp = &opFP5[r_m];
+//NEVER				dp = &opFP5[r_m];
 			} else if(opcode2 == 0xB && mode == 0x3 && opcode3 > 6){
 				hooleyDebug();
-				printf(".byte 0x%01x%01x, 0x%01x%01x 0x%02x #bad opcode\n",
-			   (unsigned int)opcode1, (unsigned int)opcode2,
-			   (unsigned int)opcode4, (unsigned int)opcode5,
-			   (unsigned int)byte);
+//NEVER				printf(".byte 0x%01x%01x, 0x%01x%01x 0x%02x #bad opcode\n", (unsigned int)opcode1, (unsigned int)opcode2, (unsigned int)opcode4, (unsigned int)opcode5, (unsigned int)byte);
 				return(length);
 			}
 		/* instruction form 4 */
 		else if(opcode2 == 0x9 && mode == 0x3 && opcode3 >= 4) {
 			hooleyDebug();
-		    dp = &opFP4[opcode3-4][r_m];
+//NEVER		    dp = &opFP4[opcode3-4][r_m];
 		/* instruction form 3 */
 		} else if(mode == 0x3) {
 			hooleyDebug();
-		    dp = &opFP3[opcode2-8][opcode3];
+//NEVER		    dp = &opFP3[opcode2-8][opcode3];
 		} else { /* instruction form 1 and 2 */
 		    dp = &opFP1n2[opcode2-8][opcode3];
 		}
@@ -1932,8 +1940,8 @@ int verbose
 
 	if(dp->indirect != TERM){
 		hooleyDebug();
-	    printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
-	    return(length);
+//NEVER	    printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
+//NEVER	    return(length);
 	}
 
 	/*
@@ -1942,10 +1950,10 @@ int verbose
 	 */
 	if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 		hooleyDebug();
-	    if((dp->flags & IS_POINTER_SIZED) != 0){
-			hooleyDebug();
-			rex |= 0x8;	/* Set REX.W if it isn't already set */
-	    }
+//NEVER	    if((dp->flags & IS_POINTER_SIZED) != 0){
+//NEVER			hooleyDebug();
+//NEVER			rex |= 0x8;	/* Set REX.W if it isn't already set */
+//NEVER	    }
 	}
 
 	/* setup the mnemonic with a possible suffix */
@@ -1973,12 +1981,12 @@ int verbose
 		{
 			if(strcmp(seg, "%cs:") == 0){
 				hooleyDebug();
-				sprintf(mnemonic, "%s,pn", mnemonic);
-				seg = "";
+//NEVER				sprintf(mnemonic, "%s,pn", mnemonic);
+//NEVER				seg = "";
 			} else if(strcmp(seg, "%ds:") == 0){
 				hooleyDebug();
-				sprintf(mnemonic, "%s,pt", mnemonic);
-				seg = "";
+//NEVER				sprintf(mnemonic, "%s,pt", mnemonic);
+//NEVER				seg = "";
 			}
 	    }
 	}
@@ -1993,25 +2001,28 @@ int verbose
 	switch( dp -> adr_mode ) {
 
 		case BSWAP:
-			reg_name = get_reg_name((opcode5 & 0x7), 1, data16, rex);
+			// reg_name = get_reg_name((opcode5 & 0x7), 1, data16, rex);
+			reg_struct = get_regStruct((opcode5 & 0x7), 1, data16, rex);
+			GET_BEST_REG_NAME( reg_name, reg_struct );
+
 			printf("%s\t%s\n", mnemonic, reg_name);
-			addLine( currentFunc, dp ); // eg bswap	%eax			
+			addLine( currentFuncPtr, dp ); // eg bswap	%eax			
 			return(length);
 
 		case XINST:
 			hooleyDebug();
-			wbit = WBIT(opcode5);
-			if(got_modrm_byte == FALSE){
-				hooleyDebug();
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-			}
-			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			reg_name = get_reg_name(reg, wbit, data16, rex);
-			printf("%s\t%s,", mnemonic, reg_name);
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-			return(length);
+//NEVER			wbit = WBIT(opcode5);
+//NEVER			if(got_modrm_byte == FALSE){
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER			}
+//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER			reg_name = get_reg_name(reg, wbit, data16, rex);
+//NEVER			printf("%s\t%s,", mnemonic, reg_name);
+//NEVER			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER			return(length);
 
 		/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
 		/* movzbl movzbw (0x0FB6) or mobzwl (0x0FB7) */
@@ -2023,14 +2034,17 @@ int verbose
 				byte = get_value(sizeof(char), sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
+			// reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
+			reg_struct = get_regStruct(reg, LONGOPERAND, data16, rex);
+			GET_BEST_REG_NAME( reg_name, reg_struct );
+				
 			wbit = WBIT(opcode5);
 			data16 = 1;
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			printf("%s\t", mnemonic);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", reg_name);
-			addLine( currentFunc, dp ); // eg movzbl	(%edx),%eax			
+			addLine( currentFuncPtr, dp ); // eg movzbl	(%edx),%eax			
 			return(length);
 
 		/* imul instruction, with either 8-bit or longer immediate */
@@ -2046,12 +2060,15 @@ int verbose
 			0x69 for word(s) */
 			value0_size = OPSIZE(data16, opcode2 == 0x9, 0);
 			IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-			reg_name = get_reg_name(reg, wbit, data16, rex);
+			// reg_name = get_reg_name(reg, wbit, data16, rex);
+			reg_struct = get_regStruct(reg, wbit, data16, rex);
+			GET_BEST_REG_NAME( reg_name, reg_struct );
+
 			printf("%s\t$", mnemonic);
 			print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
 			printf("%s\n", reg_name);
-			addLine( currentFunc, dp ); //		eg imull	$0x44,%edx,%eax	
+			addLine( currentFuncPtr, dp ); //		eg imull	$0x44,%edx,%eax	
 			return(length);
 
 		/* memory or register operand to register, with 'w' bit	*/
@@ -2064,11 +2081,14 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			reg_name = get_reg_name(reg, wbit, data16, rex);
+			// reg_name = get_reg_name(reg, wbit, data16, rex);
+			reg_struct = get_regStruct(reg, wbit, data16, rex);
+			GET_BEST_REG_NAME( reg_name, reg_struct );
+
 			printf("%s\t", mnemonic);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", reg_name);
-			addLine( currentFunc, dp );	// eg. movl 0x04(%ebp),%ebx			
+			addLine( currentFuncPtr, dp );	// eg. movl 0x04(%ebp),%ebx			
 			return(length);
 
 		/* register to memory or register operand, with 'w' bit	*/
@@ -2081,62 +2101,65 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			reg_name = get_reg_name(reg, wbit, data16, rex);
+			// reg_name = get_reg_name(reg, wbit, data16, rex);
+			reg_struct = get_regStruct(reg, wbit, data16, rex);
+			GET_BEST_REG_NAME( reg_name, reg_struct );
+
 			printf("%s\t%s,", mnemonic, reg_name);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-			addLine( currentFunc, dp ); //			-- move register to oprand eg. movl	%esp,%ebp	movl %ebx,0x00(%esp)
+			addLine( currentFuncPtr, dp ); //			-- move register to oprand eg. movl	%esp,%ebp	movl %ebx,0x00(%esp)
 			return(length);
 
 		/* SSE2 instructions with further prefix decoding dest to memory or
 		   memory to dest depending on the opcode */
 		case SSE2tfm:
 			hooleyDebug();
-			data16 = FALSE;
-			if(got_modrm_byte == FALSE){
-				hooleyDebug();
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-			}
-			switch(opcode4 << 4 | opcode5)
-			{
-				case 0x7e: /* movq & movd */
-					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						/* movd from xmm to r/m32 */
-						printf("%sd\t%%xmm%u,", mnemonic, xmm_reg(reg, rex));
-						wbit = LONGOPERAND;
-						GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-
-					} else if(prefix_byte == 0xf0){
-						hooleyDebug();
-						/* movq from mm to mm/m64 */
-						printf("%sd\t%%mm%u,", mnemonic, reg);
-						mmx = TRUE;
-						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-						print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						/* movq from xmm2/mem64 to xmm1 */
-						printf("%sq\t", mnemonic);
-						sse2 = TRUE;
-						GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-						printf("%%xmm%u\n", xmm_reg(reg, rex));
-
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						/* movd from mm to r/m32 */
-						printf("%sd\t%%mm%u,", mnemonic, reg);
-						wbit = LONGOPERAND;
-						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-						print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-					}
-			}
-			return(length);
+//NEVER			data16 = FALSE;
+//NEVER			if(got_modrm_byte == FALSE){
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER			}
+//NEVER			switch(opcode4 << 4 | opcode5)
+//NEVER			{
+//NEVER				case 0x7e: /* movq & movd */
+//NEVER					hooleyDebug();
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						/* movd from xmm to r/m32 */
+//NEVER						printf("%sd\t%%xmm%u,", mnemonic, xmm_reg(reg, rex));
+//NEVER						wbit = LONGOPERAND;
+//NEVER						GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER
+//NEVER					} else if(prefix_byte == 0xf0){
+//NEVER						hooleyDebug();
+//NEVER						/* movq from mm to mm/m64 */
+//NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
+//NEVER						mmx = TRUE;
+//NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+//NEVER						print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+//NEVER
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						/* movq from xmm2/mem64 to xmm1 */
+//NEVER						printf("%sq\t", mnemonic);
+//NEVER						sse2 = TRUE;
+//NEVER						GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER						printf("%%xmm%u\n", xmm_reg(reg, rex));
+//NEVER
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						/* movd from mm to r/m32 */
+//NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
+//NEVER						wbit = LONGOPERAND;
+//NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+//NEVER						print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+//NEVER					}
+//NEVER			}
+//NEVER			return(length);
 
 		/* SSE2 instructions with further prefix decoding dest to memory */
 		case SSE2tm:
@@ -2154,14 +2177,14 @@ int verbose
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						printf("%supd\t", mnemonic);
+//NEVER						printf("%supd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3) {
 						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */ {
 						hooleyDebug();
-						printf("%sups\t", mnemonic);
+//NEVER						printf("%sups\t", mnemonic);
 					}
 					break;
 
@@ -2182,103 +2205,103 @@ int verbose
 					break;
 				case 0xd6: /* movq */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%sq\t", mnemonic);
-
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-						printf("%sdq2q\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%sq\t", mnemonic);
+//NEVER
+//NEVER					} else if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sdq2q\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0x7f: /* movdqa, movdqu, movq */
 					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%sdqa\t", mnemonic);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						printf("%sdqu\t", mnemonic);
-					} else {
-						hooleyDebug();
-						sprintf(result0, "%%mm%u", reg);
-						printf("%sq\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sdqa\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sdqu\t", mnemonic);
+//NEVER					} else {
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result0, "%%mm%u", reg);
+//NEVER						printf("%sq\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0xe7: /* movntdq & movntq */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%stdq\t", mnemonic);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result0, "%%mm%u", reg);
-						printf("%stq\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%stdq\t", mnemonic);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result0, "%%mm%u", reg);
+//NEVER						printf("%stq\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 			}
 			printf("%s,", result0);
 			GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-			addLine( currentFunc, dp ); //				eg movsd	%xmm0,0x20(%edx,%ecx)
+			addLine( currentFuncPtr, dp ); //				eg movsd	%xmm0,0x20(%edx,%ecx)
 			return(length);
 
 		/* MNI instructions */
 		case MNI:
 			hooleyDebug();
-			data16 = FALSE;
-			if(got_modrm_byte == FALSE){
-				hooleyDebug();
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-			}
-			if(prefix_byte == 0x66){
-				hooleyDebug();
-				sse2 = TRUE;
-				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
-			} else { /* no prefix byte */
-				hooleyDebug();
-				mmx = TRUE;
-				sprintf(result1, "%%mm%u", reg);
-			}
-			printf("%s\t", mnemonic);
-			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-			printf("%s\n", result1);
-			return length;
+//NEVER			data16 = FALSE;
+//NEVER			if(got_modrm_byte == FALSE){
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER			}
+//NEVER			if(prefix_byte == 0x66){
+//NEVER				hooleyDebug();
+//NEVER				sse2 = TRUE;
+//NEVER				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
+//NEVER			} else { /* no prefix byte */
+//NEVER				hooleyDebug();
+//NEVER				mmx = TRUE;
+//NEVER				sprintf(result1, "%%mm%u", reg);
+//NEVER			}
+//NEVER			printf("%s\t", mnemonic);
+//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER			printf("%s\n", result1);
+//NEVER			return length;
 
 		/* MNI instructions with 8-bit immediate */
 		case MNIi:
 			hooleyDebug();
-			data16 = FALSE;
-			if (got_modrm_byte == FALSE) {
-				hooleyDebug();
-				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
-				modrm_byte(&mode, &reg, &r_m, byte);
-			}
-			if(prefix_byte == 0x66){
-				hooleyDebug();
-				sse2 = TRUE;
-				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
-			} else { /* no prefix byte */
-				hooleyDebug();
-				mmx = TRUE;
-				sprintf(result1, "%%mm%u", reg);
-			}
-			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			byte = get_value(sizeof(char), sect, &length, &left);
-			printf("%s\t$0x%x,", mnemonic, byte);
-
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-			printf("%s\n", result1);
-			return length;
+//NEVER			data16 = FALSE;
+//NEVER			if (got_modrm_byte == FALSE) {
+//NEVER				hooleyDebug();
+//NEVER				got_modrm_byte = TRUE;
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER			}
+//NEVER			if(prefix_byte == 0x66){
+//NEVER				hooleyDebug();
+//NEVER				sse2 = TRUE;
+//NEVER				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
+//NEVER			} else { /* no prefix byte */
+//NEVER				hooleyDebug();
+//NEVER				mmx = TRUE;
+//NEVER				sprintf(result1, "%%mm%u", reg);
+//NEVER			}
+//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER			byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER			printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER
+//NEVER			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER			printf("%s\n", result1);
+//NEVER			return length;
 
 		/* SSE2 instructions with further prefix decoding */
 		case SSE2:
@@ -2320,85 +2343,84 @@ int verbose
 					break;
 				case 0x12: /*   movlpd, movlps & movhlps */
 					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%slpd\t", mnemonic);
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-						printf("movddup\t");
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						printf("%movsldup\t");
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						if(mode == REG_ONLY){
-							hooleyDebug();
-							printf("%shlps\t", mnemonic);
-						} else {
-							hooleyDebug();
-							printf("%slps\t", mnemonic);
-						}
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%slpd\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						printf("movddup\t");
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						printf("%movsldup\t");
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						if(mode == REG_ONLY){
+//NEVER							hooleyDebug();
+//NEVER							printf("%shlps\t", mnemonic);
+//NEVER						} else {
+//NEVER							hooleyDebug();
+//NEVER							printf("%slps\t", mnemonic);
+//NEVER						}
+//NEVER					}
+//NEVER					break;
 				case 0x16: /* movhpd, movhps & movlhps */
 					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%shpd\t", mnemonic);
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-						printf("%shsd\t", mnemonic);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						printf("movshdup\t");
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						if(mode == REG_ONLY){
-							hooleyDebug();
-							printf("%slhps\t", mnemonic);
-						} else {
-							hooleyDebug();
-							printf("%shps\t", mnemonic);
-						}
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%shpd\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						printf("%shsd\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						printf("movshdup\t");
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						if(mode == REG_ONLY){
+//NEVER							hooleyDebug();
+//NEVER							printf("%slhps\t", mnemonic);
+//NEVER						} else {
+//NEVER							hooleyDebug();
+//NEVER							printf("%shps\t", mnemonic);
+//NEVER						}
+//NEVER					}
+//NEVER					break;
 				case 0x50: /* movmskpd &         movmskps */
 					hooleyDebug();
-					sse2 = TRUE;
-					reg_name = get_reg_name(reg, 1, data16, rex);
-					strcpy(result1, reg_name);
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%spd\t", mnemonic);
-					} else /* no prefix_byte */{
-						hooleyDebug();
-						printf("%sps\t", mnemonic);
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER					strcpy(result1, reg_name);
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%spd\t", mnemonic);
+//NEVER					} else /* no prefix_byte */{
+//NEVER						hooleyDebug();
+//NEVER						printf("%sps\t", mnemonic);
+//NEVER					}
+//NEVER					break;
 				case 0x10: /*  movupd &                 movups */
 				   /*             movsd & movss */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						printf("%supd\t", mnemonic);
+//NEVER						printf("%supd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
 						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */{
 						hooleyDebug();
-						printf("%sups\t", mnemonic);
+//NEVER						printf("%sups\t", mnemonic);
 					}
 					break;
 				case 0x2a: /* cvtpi2pd, cvtsi2sd, cvtsi2ss & cvtpi2ps */
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						mmx = TRUE;
-						printf("%spi2pd\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER						printf("%spi2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
 						wbit = LONGOPERAND;
 						printf("%ssi2sd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
@@ -2406,101 +2428,99 @@ int verbose
 						printf("%ssi2ss\t", mnemonic);
 					} else { /* no prefix_byte */
 						hooleyDebug();
-						mmx = TRUE;
-						printf("%spi2ps\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER						printf("%spi2ps\t", mnemonic);
 					}
 					break;
 				case 0x2c: /* cvttpd2pi, cvttsd2si, cvttss2si & cvttps2pi */
-					hooleyDebug();
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						sse2 = TRUE;
-						printf("%stpd2pi\t", mnemonic);
-						sprintf(result1, "%%mm%u", reg);
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%stpd2pi\t", mnemonic);
+//NEVER						sprintf(result1, "%%mm%u", reg);
+					} else if(prefix_byte==0xf2){
 						sse2 = TRUE;
 						printf("%stsd2si\t", mnemonic);
-						reg_name = get_reg_name(reg, 1, data16, rex);
+						// reg_name = get_reg_name(reg, 1, data16, rex);
+						reg_struct = get_regStruct(reg, 1, data16, rex);
+						GET_BEST_REG_NAME( reg_name, reg_struct );
+						
 						strcpy(result1, reg_name);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
+					} else if( prefix_byte==0xf3 ){
 						sse2 = TRUE;
 						printf("%stss2si\t", mnemonic);
 						reg_name = get_reg_name(reg, 1, data16, rex);
+						-- here
 						strcpy(result1, reg_name);
 					} else { /* no prefix_byte */
 						hooleyDebug();
-						sse2 = TRUE;
-						printf("%stps2pi\t", mnemonic);
-						sprintf(result1, "%%mm%u", reg);
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%stps2pi\t", mnemonic);
+//NEVER						sprintf(result1, "%%mm%u", reg);
 					}
 					break;
+
 				case 0x2d: /* cvtpd2pi, cvtsd2si, cvtss2si & cvtps2pi */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%spd2pi\t", mnemonic);
-						sprintf(result1, "%%mm%u", reg);
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%ssd2si\t", mnemonic);
-						reg_name = get_reg_name(reg, 1, data16, rex);
-						strcpy(result1, reg_name);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%sss2si\t", mnemonic);
-						reg_name = get_reg_name(reg, 1, data16, rex);
-						strcpy(result1, reg_name);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%sps2pi\t", mnemonic);
-						sprintf(result1, "%%mm%u", reg);
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%spd2pi\t", mnemonic);
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER					} else if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%ssd2si\t", mnemonic);
+//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER						strcpy(result1, reg_name);
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%sss2si\t", mnemonic);
+//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER						strcpy(result1, reg_name);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%sps2pi\t", mnemonic);
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER					}
+//NEVER					break;
 				case 0x2e: /* ucomisd & ucomiss */
 				case 0x2f: /*  comisd &  comiss */
-					hooleyDebug();
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						printf("%ssd\t", mnemonic);
+//NEVER						printf("%ssd\t", mnemonic);
 					} else /* no prefix_byte */{
-						hooleyDebug();
 						printf("%sss\t", mnemonic);
 					}
 					break;
 				case 0xe0: /* pavgb */
 				case 0xe3: /* pavgw */
-					hooleyDebug();
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						sse2 = TRUE;
+//NEVER						sse2 = TRUE;
 						printf("%s\t", mnemonic);
 					} else { /* no prefix_byte */
 						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%s\t", mnemonic);
-						mmx = TRUE;
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%s\t", mnemonic);
+//NEVER						mmx = TRUE;
 					}
 					break;
 				case 0xe6: /* cvttpd2dq, cvtdq2pd & cvtpd2dq */
-					hooleyDebug();
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
 						hooleyDebug();
-						printf("%stpd2dq\t", mnemonic);
+//NEVER						printf("%stpd2dq\t", mnemonic);
 					}
 					if(prefix_byte == 0xf3){
 						hooleyDebug();
-						printf("%sdq2pd\t", mnemonic);
+//NEVER						printf("%sdq2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						hooleyDebug();
-						printf("%spd2dq\t", mnemonic);
+//NEVER						printf("%spd2dq\t", mnemonic);
 					}
 					break;
 				case 0x5a: /* cvtpd2ps, cvtsd2ss, cvtss2sd & cvtps2pd */
@@ -2517,18 +2537,18 @@ int verbose
 					break;
 				case 0x5b: /* cvtdq2ps, cvttps2dq & cvtps2dq */
 					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%sps2dq\t", mnemonic);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						printf("%stps2dq\t", mnemonic);
-					} else /* no prefix_byte */{
-						hooleyDebug();
-						printf("%sdq2ps\t", mnemonic);
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sps2dq\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						printf("%stps2dq\t", mnemonic);
+//NEVER					} else /* no prefix_byte */{
+//NEVER						hooleyDebug();
+//NEVER						printf("%sdq2ps\t", mnemonic);
+//NEVER					}
+//NEVER					break;
 				case 0x60: /* punpcklbw */
 				case 0x61: /* punpcklwd */
 				case 0x62: /* punpckldq */
@@ -2576,56 +2596,56 @@ int verbose
 				case 0xfd: /* paddw */
 				case 0xfe: /* paddd */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%s\t", mnemonic);
-						sse2 = TRUE;
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%s\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t", mnemonic);
+//NEVER						sse2 = TRUE;
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%s\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0x6c: /* punpcklqdq */
 				case 0x6d: /* punpckhqdq */
 					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66) {
-						hooleyDebug();
-						printf("%sqdq\t", mnemonic);
-					}
-					break;
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66) {
+//NEVER						hooleyDebug();
+//NEVER						printf("%sqdq\t", mnemonic);
+//NEVER					}
+//NEVER					break;
 				case 0x6f: /* movdqa, movdqu & movq */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%sdqa\t", mnemonic);
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%sdqu\t", mnemonic);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%sq\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%sdqa\t", mnemonic);
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%sdqu\t", mnemonic);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%sq\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0xd6: /* movdq2q & movq2dq */
 					hooleyDebug();
-					if(prefix_byte == 0xf2){
-						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%sdq2q\t", mnemonic);
-						sse2 = TRUE;
-					} else if(prefix_byte == 0xf3){
-						hooleyDebug();
-						printf("%sq2dq\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%sdq2q\t", mnemonic);
+//NEVER						sse2 = TRUE;
+//NEVER					} else if(prefix_byte == 0xf3){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sq2dq\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0x6e: /* movd */
 					if(prefix_byte == 0x66){
 						printf("%s\t", mnemonic);
@@ -2640,35 +2660,35 @@ int verbose
 				case 0x7c: /* haddp */
 				case 0x7d: /* hsubp */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						printf("%sd\t", mnemonic);
-						sse2 = TRUE;
-					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-						printf("%ss\t", mnemonic);
-						sse2 = TRUE;
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%s\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						printf("%sd\t", mnemonic);
+//NEVER						sse2 = TRUE;
+//NEVER					} else if(prefix_byte == 0xf2){
+//NEVER						hooleyDebug();
+//NEVER						printf("%ss\t", mnemonic);
+//NEVER						sse2 = TRUE;
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%s\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
 				case 0xd7: /* pmovmskb */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						reg_name = get_reg_name(reg, 1, data16, rex);
-						printf("%s\t%%xmm%u,%s\n", mnemonic, xmm_rm(r_m, rex), reg_name);
-						return(length);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						reg_name = get_reg_name(reg, 1, data16, rex);
-						printf("%s\t%%mm%u,%s\n", mnemonic, r_m, reg_name);
-						return(length);
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER						printf("%s\t%%xmm%u,%s\n", mnemonic, xmm_rm(r_m, rex), reg_name);
+//NEVER						return(length);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER						printf("%s\t%%mm%u,%s\n", mnemonic, r_m, reg_name);
+//NEVER						return(length);
+//NEVER					}
+//NEVER					break;
 				case 0xda: /* pminub */
 				case 0xde: /* pmaxub */
 				case 0xe4: /* pmulhuw */
@@ -2677,211 +2697,210 @@ int verbose
 				case 0xf4: /* pmuludq */
 				case 0xf6: /* psadbw */
 					hooleyDebug();
-					if(prefix_byte == 0x66){
-						hooleyDebug();
-						sse2 = TRUE;
-						printf("%s\t", mnemonic);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
-						printf("%s\t", mnemonic);
-						mmx = TRUE;
-					}
-					break;
-				case 0xf0: /* lddqu */
-					hooleyDebug();
-					printf("%s\t", mnemonic);
-					sse2 = TRUE;
-					break;
-				case 0xf7: /* maskmovdqu & maskmovq */
-					hooleyDebug();
-					sse2 = TRUE;
-					if(prefix_byte == 0x66) {
-						hooleyDebug();
-						printf("%sdqu\t", mnemonic);
-					} else { /* no prefix_byte */
-						hooleyDebug();
-						printf("%sq\t%%mm%u,%%mm%u\n", mnemonic, r_m, reg);
-						return(length);
-					}
-					break;
+//NEVER					if(prefix_byte == 0x66){
+//NEVER						hooleyDebug();
+//NEVER						sse2 = TRUE;
+//NEVER						printf("%s\t", mnemonic);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						sprintf(result1, "%%mm%u", reg);
+//NEVER						printf("%s\t", mnemonic);
+//NEVER						mmx = TRUE;
+//NEVER					}
+//NEVER					break;
+//NEVER				case 0xf0: /* lddqu */
+//NEVER					hooleyDebug();
+//NEVER					printf("%s\t", mnemonic);
+//NEVER					sse2 = TRUE;
+//NEVER					break;
+//NEVER				case 0xf7: /* maskmovdqu & maskmovq */
+//NEVER					hooleyDebug();
+//NEVER					sse2 = TRUE;
+//NEVER					if(prefix_byte == 0x66) {
+//NEVER						hooleyDebug();
+//NEVER						printf("%sdqu\t", mnemonic);
+//NEVER					} else { /* no prefix_byte */
+//NEVER						hooleyDebug();
+//NEVER						printf("%sq\t%%mm%u,%%mm%u\n", mnemonic, r_m, reg);
+//NEVER						return(length);
+//NEVER					}
+//NEVER					break;
 			} // end switch
 
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			printf("%s\n", result1);
-			addLine( currentFunc, dp ); //   eg movsd	(%eax),%xmm0			
+			addLine( currentFuncPtr, dp ); //   eg movsd	(%eax),%xmm0			
 			return(length);
 
 			/* SSE4 instructions */
 			case SSE4:
 				hooleyDebug();
-				sse2 = TRUE;
-				data16 = FALSE;
-				wbit = LONGOPERAND;
-				if(got_modrm_byte == FALSE){
-					hooleyDebug();
-					got_modrm_byte = TRUE;
-					byte = get_value(sizeof(char), sect, &length, &left);
-					modrm_byte(&mode, &reg, &r_m, byte);
-				}
-				printf("%s\t", mnemonic);
-				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
-				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-				print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-				printf("%s\n", result1);
-				return(length);
+//NEVER				sse2 = TRUE;
+//NEVER				data16 = FALSE;
+//NEVER				wbit = LONGOPERAND;
+//NEVER				if(got_modrm_byte == FALSE){
+//NEVER					hooleyDebug();
+//NEVER					got_modrm_byte = TRUE;
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER				}
+//NEVER				printf("%s\t", mnemonic);
+//NEVER				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
+//NEVER				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER				print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER				printf("%s\n", result1);
+//NEVER				return(length);
 
 			/* SSE4 instructions with 8 bit immediate */
 			case SSE4i:
 				hooleyDebug();
-				sse2 = TRUE;
-				data16 = FALSE;
-				wbit = LONGOPERAND;
-				if(got_modrm_byte == FALSE){
-					hooleyDebug();
-					got_modrm_byte = TRUE;
-					byte = get_value(sizeof(char), sect, &length, &left);
-					modrm_byte(&mode, &reg, &r_m, byte);
-				}
-				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-				byte = get_value(sizeof(char), sect, &length, &left);
-				printf("%s\t$0x%x,", mnemonic, byte);
-				print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-				printf("%%xmm%u\n", xmm_reg(reg, rex));
-				return(length);
+//NEVER				sse2 = TRUE;
+//NEVER				data16 = FALSE;
+//NEVER				wbit = LONGOPERAND;
+//NEVER				if(got_modrm_byte == FALSE){
+//NEVER					hooleyDebug();
+//NEVER					got_modrm_byte = TRUE;
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER				}
+//NEVER				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER				print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER				printf("%%xmm%u\n", xmm_reg(reg, rex));
+//NEVER				return(length);
 
-				/* SSE4 instructions with dest to memory and 8-bit immediate */
-				case SSE4itm:
-					hooleyDebug();
-					sse2 = FALSE;
+			/* SSE4 instructions with dest to memory and 8-bit immediate */
+			case SSE4itm:
+				hooleyDebug();
+//NEVER					sse2 = FALSE;
+//NEVER					data16 = FALSE;
+//NEVER					wbit = LONGOPERAND;
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					if(dp == &op0F3A[0x16])
+//NEVER					{
+//NEVER						hooleyDebug();
+//NEVER						if(rex != 0)
+//NEVER						{
+//NEVER							hooleyDebug();
+//NEVER							printf("%sq\t$0x%x,", mnemonic, byte);
+//NEVER						} else {
+//NEVER							hooleyDebug();
+//NEVER							printf("%sd\t$0x%x,", mnemonic, byte);
+//NEVER						}
+//NEVER					} else {
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER					}
+//NEVER					printf("%%xmm%u,", xmm_reg(reg, rex));
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
+
+			/* SSE4 instructions with src from memory and 8-bit immediate */
+			case SSE4ifm:
+				hooleyDebug();
+
+//NEVER					sse2 = FALSE;
+//NEVER					data16 = FALSE;
+//NEVER					wbit = LONGOPERAND;
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					if(dp == &op0F3A[0x22]){
+//NEVER						hooleyDebug();
+//NEVER						if(rex != 0) {
+//NEVER							hooleyDebug();
+//NEVER							printf("%sq\t$0x%x,", mnemonic, byte);
+//NEVER						} else {
+//NEVER							hooleyDebug();
+//NEVER							printf("%sd\t$0x%x,", mnemonic, byte);
+//NEVER						}
+//NEVER					} else {
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER					}
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER					printf("%%xmm%u\n", xmm_reg(reg, rex));
+//NEVER					return(length);
+
+			/* SSE4.2 instructions memory or register operand to register */
+			case SSE4CRCb:
+				hooleyDebug();
+//NEVER					wbit = 0;
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					/*
+//NEVER					* This hack is to get the byte register name for SSE4CRCb opcodes
+//NEVER					* when get_operand() is called but not when reg_name() is called
+//NEVER					* after that.
+//NEVER					*/
+//NEVER					rex_save = rex;
+//NEVER					if(mode == 0x3){
+//NEVER						hooleyDebug();
+//NEVER						rex = 0;
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					rex = rex_save;
+//NEVER					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
+//NEVER					printf("%s\t", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER					printf("%s\n", reg_name);
+//NEVER					return(length);
+
+			case SSE4CRC:
+				hooleyDebug();
+//NEVER					wbit = 1;
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
+//NEVER					printf("%s\t", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER					printf("%s\n", reg_name);
+//NEVER					return(length);
+
+			/* SSE2 instructions with 8 bit immediate with further prefix decoding*/
+			case SSE2i:
 					data16 = FALSE;
-					wbit = LONGOPERAND;
 					if(got_modrm_byte == FALSE){
 						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					byte = get_value(sizeof(char), sect, &length, &left);
-					if(dp == &op0F3A[0x16])
-					{
-						hooleyDebug();
-						if(rex != 0)
-						{
-							hooleyDebug();
-							printf("%sq\t$0x%x,", mnemonic, byte);
-						} else {
-							hooleyDebug();
-							printf("%sd\t$0x%x,", mnemonic, byte);
-						}
-					} else {
-						hooleyDebug();
-						printf("%s\t$0x%x,", mnemonic, byte);
-					}
-					printf("%%xmm%u,", xmm_reg(reg, rex));
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
-
-				/* SSE4 instructions with src from memory and 8-bit immediate */
-				case SSE4ifm:
-					hooleyDebug();
-
-					sse2 = FALSE;
-					data16 = FALSE;
-					wbit = LONGOPERAND;
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					byte = get_value(sizeof(char), sect, &length, &left);
-					if(dp == &op0F3A[0x22]){
-						hooleyDebug();
-						if(rex != 0) {
-							hooleyDebug();
-							printf("%sq\t$0x%x,", mnemonic, byte);
-						} else {
-							hooleyDebug();
-							printf("%sd\t$0x%x,", mnemonic, byte);
-						}
-					} else {
-						hooleyDebug();
-						printf("%s\t$0x%x,", mnemonic, byte);
-					}
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%%xmm%u\n", xmm_reg(reg, rex));
-					return(length);
-
-				/* SSE4.2 instructions memory or register operand to register */
-				case SSE4CRCb:
-					hooleyDebug();
-					wbit = 0;
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					/*
-					* This hack is to get the byte register name for SSE4CRCb opcodes
-					* when get_operand() is called but not when reg_name() is called
-					* after that.
-					*/
-					rex_save = rex;
-					if(mode == 0x3){
-						hooleyDebug();
-						rex = 0;
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					rex = rex_save;
-					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", reg_name);
-					return(length);
-
-				case SSE4CRC:
-					hooleyDebug();
-					wbit = 1;
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", reg_name);
-					return(length);
-
-				/* SSE2 instructions with 8 bit immediate with further prefix decoding*/
-				case SSE2i:
-					hooleyDebug();
-					data16 = FALSE;
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 					}
 					/* pshufw */
 					if((opcode4 << 4 | opcode5) == 0x70 && prefix_byte == 0) {
 						hooleyDebug();
-						mmx = TRUE;
+//NEVER						mmx = TRUE;
 					}
 					/* pinsrw */
 					else if((opcode4 << 4 | opcode5) == 0xc4) {
 						hooleyDebug();
-						wbit = LONGOPERAND;
+//NEVER						wbit = LONGOPERAND;
 					} else {
 						hooleyDebug();
-						sse2 = TRUE;
+//NEVER						sse2 = TRUE;
 					}
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					byte = get_value(sizeof(char), sect, &length, &left);
@@ -2890,64 +2909,64 @@ int verbose
 					{
 						case 0x70: /* pshufd, pshuflw, pshufhw & pshufw */
 							hooleyDebug();
-							if(prefix_byte == 0x66) {
-								hooleyDebug();
-								printf("%sfd\t$0x%x,", mnemonic, byte);
-							} else if(prefix_byte == 0xf2) {
-								hooleyDebug();
-								printf("%sflw\t$0x%x,", mnemonic, byte);
-							} else if(prefix_byte == 0xf3) {
-								hooleyDebug();
-								printf("%sfhw\t$0x%x,", mnemonic, byte);
-							} else { /* no prefix_byte */
-								hooleyDebug();
-								printf("%sfw\t$0x%x,", mnemonic, byte);
-								print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-								printf("%%mm%u\n", reg);
-								return(length);
-							}
+//NEVER							if(prefix_byte == 0x66) {
+//NEVER								hooleyDebug();
+//NEVER								printf("%sfd\t$0x%x,", mnemonic, byte);
+//NEVER							} else if(prefix_byte == 0xf2) {
+//NEVER								hooleyDebug();
+//NEVER								printf("%sflw\t$0x%x,", mnemonic, byte);
+//NEVER							} else if(prefix_byte == 0xf3) {
+//NEVER								hooleyDebug();
+//NEVER								printf("%sfhw\t$0x%x,", mnemonic, byte);
+//NEVER							} else { /* no prefix_byte */
+//NEVER								hooleyDebug();
+//NEVER								printf("%sfw\t$0x%x,", mnemonic, byte);
+//NEVER								print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER								printf("%%mm%u\n", reg);
+//NEVER								return(length);
+//NEVER							}
 							break;
 						case 0xc4: /* pinsrw */
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								printf("%s\t$0x%x,", mnemonic, byte);
-							} else { /* no prefix_byte */
-								hooleyDebug();
-								printf("%s\t$0x%x,", mnemonic, byte);
-								print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-								printf("%%mm%u\n", reg);
-								return(length);
-							}
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER							} else { /* no prefix_byte */
+//NEVER								hooleyDebug();
+//NEVER								printf("%s\t$0x%x,", mnemonic, byte);
+//NEVER								print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER								printf("%%mm%u\n", reg);
+//NEVER								return(length);
+//NEVER							}
 							break;
 						case 0xc5: /* pextrw */
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								reg_name = get_reg_name(reg, 1, data16, rex);
-								printf("%s\t$0x%x,%%xmm%u,%s\n", mnemonic, byte,
-								   xmm_rm(r_m, rex), reg_name);
-								return(length);
-							} else { /* no prefix_byte */
-								hooleyDebug();
-								reg_name = get_reg_name(reg, 1, data16, rex);
-								printf("%s\t$0x%x,%%mm%u,%s\n", mnemonic, byte, r_m,reg_name);
-								return(length);
-							}
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER								printf("%s\t$0x%x,%%xmm%u,%s\n", mnemonic, byte,
+//NEVER								   xmm_rm(r_m, rex), reg_name);
+//NEVER								return(length);
+//NEVER							} else { /* no prefix_byte */
+//NEVER								hooleyDebug();
+//NEVER								reg_name = get_reg_name(reg, 1, data16, rex);
+//NEVER								printf("%s\t$0x%x,%%mm%u,%s\n", mnemonic, byte, r_m,reg_name);
+//NEVER								return(length);
+//NEVER							}
 							break;
 						default:
 							if(prefix_byte == 0x66) {
 								hooleyDebug();
-								printf("%spd\t$0x%x,", mnemonic, byte);
+//NEVER								printf("%spd\t$0x%x,", mnemonic, byte);
 							} else if(prefix_byte == 0xf2) {
 								hooleyDebug();
-								printf("%ssd\t$0x%x,", mnemonic, byte);
+//NEVER								printf("%ssd\t$0x%x,", mnemonic, byte);
 							} else if(prefix_byte == 0xf3) {
 								hooleyDebug();
-								printf("%sss\t$0x%x,", mnemonic, byte);
+//NEVER								printf("%sss\t$0x%x,", mnemonic, byte);
 							} else {/* no prefix_byte */
 								hooleyDebug();
-								printf("%sps\t$0x%x,", mnemonic, byte);
+//NEVER								printf("%sps\t$0x%x,", mnemonic, byte);
 							}
 							break;
 					}
@@ -2955,113 +2974,111 @@ int verbose
 					printf("%%xmm%u\n", xmm_reg(reg, rex));
 					return(length);
 
-				/* SSE2 instructions with 8 bit immediate and only 1 reg */
-				case SSE2i1:
-					hooleyDebug();
+			/* SSE2 instructions with 8 bit immediate and only 1 reg */
+			case SSE2i1:
 					if(got_modrm_byte == FALSE){
 						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 					}
 					byte = get_value(sizeof(char), sect, &length, &left);
 					switch(opcode4 << 4 | opcode5)
 					{
 						case 0x71: /* psrlw, psllw, psraw & psrld */
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								if(reg == 0x2){
-									hooleyDebug();
-									printf("%srlw\t$0x%x,", mnemonic, byte);
-								} else if(reg == 0x4) {
-									hooleyDebug();
-									printf("%sraw\t$0x%x,", mnemonic, byte);
-								} else if(reg == 0x6) {
-									hooleyDebug();
-									printf("%sllw\t$0x%x,", mnemonic, byte);
-								}
-							} else { /* no prefix_byte */
-								if(reg == 0x2) {
-									hooleyDebug();
-									printf("%srlw\t$0x%x,", mnemonic, byte);
-								} else if(reg == 0x4) {
-									hooleyDebug();
-									printf("%sraw\t$0x%x,", mnemonic, byte);
-								} else if(reg == 0x6) {
-									hooleyDebug();
-									printf("%sllw\t$0x%x,", mnemonic, byte);
-								}
-								printf("%%mm%u\n", r_m);
-								return(length);
-							}
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								if(reg == 0x2){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srlw\t$0x%x,", mnemonic, byte);
+//NEVER								} else if(reg == 0x4) {
+//NEVER									hooleyDebug();
+//NEVER									printf("%sraw\t$0x%x,", mnemonic, byte);
+//NEVER								} else if(reg == 0x6) {
+//NEVER									hooleyDebug();
+//NEVER									printf("%sllw\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER							} else { /* no prefix_byte */
+//NEVER								if(reg == 0x2) {
+//NEVER									hooleyDebug();
+//NEVER									printf("%srlw\t$0x%x,", mnemonic, byte);
+//NEVER								} else if(reg == 0x4) {
+//NEVER									hooleyDebug();
+//NEVER									printf("%sraw\t$0x%x,", mnemonic, byte);
+//NEVER								} else if(reg == 0x6) {
+//NEVER									hooleyDebug();
+//NEVER									printf("%sllw\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER								printf("%%mm%u\n", r_m);
+//NEVER								return(length);
+//NEVER							}
 							break;
 						case 0x72: /* psrld, pslld & psrad */
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								if(reg == 0x2){
-									hooleyDebug();
-									printf("%srld\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x4){
-									hooleyDebug();
-									printf("%srad\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x6){
-									hooleyDebug();
-									printf("%slld\t$0x%x,", mnemonic, byte);
-								}
-							} else { /* no prefix_byte */
-								if(reg == 0x2){
-									hooleyDebug();
-									printf("%srld\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x4){
-									hooleyDebug();
-									printf("%srad\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x6){
-									hooleyDebug();
-									printf("%slld\t$0x%x,", mnemonic, byte);
-								}
-								printf("%%mm%u\n", r_m);
-								return(length);
-							}
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								if(reg == 0x2){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srld\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x4){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srad\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x6){
+//NEVER									hooleyDebug();
+//NEVER									printf("%slld\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER							} else { /* no prefix_byte */
+//NEVER								if(reg == 0x2){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srld\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x4){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srad\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x6){
+//NEVER									hooleyDebug();
+//NEVER									printf("%slld\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER								printf("%%mm%u\n", r_m);
+//NEVER								return(length);
+//NEVER							}
 							break;
 						case 0x73: /* pslldq & psrldq, psrlq & psllq */
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								if(reg == 0x7){
-									hooleyDebug();
-									printf("%slldq\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x3){
-									hooleyDebug();
-									printf("%srldq\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x2){
-									hooleyDebug();
-									printf("%srlq\t$0x%x,", mnemonic, byte);
-								}else if(reg == 0x6){
-									hooleyDebug();
-									printf("%sllq\t$0x%x,", mnemonic, byte);
-								}
-							} else { /* no prefix_byte */
-								hooleyDebug();
-								if(reg == 0x2){
-									hooleyDebug();
-									printf("%srlq\t$0x%x,", mnemonic, byte);
-								} else if(reg == 0x6){
-									hooleyDebug();
-									printf("%sllq\t$0x%x,", mnemonic, byte);
-								}
-								printf("%%mm%u\n", r_m);
-								return(length);
-							}
-							break;
-						}
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								if(reg == 0x7){
+//NEVER									hooleyDebug();
+//NEVER									printf("%slldq\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x3){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srldq\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x2){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srlq\t$0x%x,", mnemonic, byte);
+//NEVER								}else if(reg == 0x6){
+//NEVER									hooleyDebug();
+//NEVER									printf("%sllq\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER							} else { /* no prefix_byte */
+//NEVER								hooleyDebug();
+//NEVER								if(reg == 0x2){
+//NEVER									hooleyDebug();
+//NEVER									printf("%srlq\t$0x%x,", mnemonic, byte);
+//NEVER								} else if(reg == 0x6){
+//NEVER									hooleyDebug();
+//NEVER									printf("%sllq\t$0x%x,", mnemonic, byte);
+//NEVER								}
+//NEVER								printf("%%mm%u\n", r_m);
+//NEVER								return(length);
+//NEVER							}
+//NEVER							break;
+//NEVER						}
 						printf("%%xmm%u\n", xmm_rm(r_m, rex));
 						return(length);
 
-				/* 3DNow instructions */
-				case AMD3DNOW:
-					hooleyDebug();
+			/* 3DNow instructions */
+			case AMD3DNOW:
 					printf("%s\t", mnemonic);
 					sprintf(result1, "%%mm%u", reg);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
@@ -3071,117 +3088,121 @@ int verbose
 				/* prefetch instructions */
 				case PFCH:
 					hooleyDebug();
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					switch(reg)
-					{
-						case 0:
-							hooleyDebug();
-							printf("%snta", dp->name);
-							break;
-						case 1:
-							hooleyDebug();
-							printf("%st0", dp->name);
-							break;
-						case 2:
-							hooleyDebug();
-							printf("%st1", dp->name);
-							break;
-						case 3:
-							hooleyDebug();
-							printf("%st2", dp->name);
-							break;
-					}
-					if(data16 == TRUE){
-						hooleyDebug();
-						printf("w\t");
-					}else{
-						hooleyDebug();
-						printf("l\t");
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					switch(reg)
+//NEVER					{
+//NEVER						case 0:
+//NEVER							hooleyDebug();
+//NEVER							printf("%snta", dp->name);
+//NEVER							break;
+//NEVER						case 1:
+//NEVER							hooleyDebug();
+//NEVER							printf("%st0", dp->name);
+//NEVER							break;
+//NEVER						case 2:
+//NEVER							hooleyDebug();
+//NEVER							printf("%st1", dp->name);
+//NEVER							break;
+//NEVER						case 3:
+//NEVER							hooleyDebug();
+//NEVER							printf("%st2", dp->name);
+//NEVER							break;
+//NEVER					}
+//NEVER					if(data16 == TRUE){
+//NEVER						hooleyDebug();
+//NEVER						printf("w\t");
+//NEVER					}else{
+//NEVER						hooleyDebug();
+//NEVER						printf("l\t");
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
 
-					/* 3DNow! prefetch instructions */
-				case PFCH3DNOW:
-					hooleyDebug();
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					switch(reg)
-					{
-						case 0:
-							hooleyDebug();
-							printf("%s\t", dp->name);
-							break;
-						case 1:
-							hooleyDebug();
-							printf("%sw\t", dp->name);
-							break;
-					}
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			/* 3DNow! prefetch instructions */
+			case PFCH3DNOW:
+				hooleyDebug();
+//NEVER					if(got_modrm_byte == FALSE)
+//NEVER					{
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					switch(reg)
+//NEVER					{
+//NEVER						case 0:
+//NEVER							hooleyDebug();
+//NEVER							printf("%s\t", dp->name);
+//NEVER							break;
+//NEVER						case 1:
+//NEVER							hooleyDebug();
+//NEVER							printf("%sw\t", dp->name);
+//NEVER							break;
+//NEVER					}
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
 
-				/* sfence & clflush */
-				case SFEN:
-					hooleyDebug();
-					if(mode == REG_ONLY && r_m == 0){
-						hooleyDebug();
-						printf("sfence\n");
-						return(length);
-					}
-					printf("%s\t", mnemonic);
-					reg = opcode3;
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			/* sfence & clflush */
+			case SFEN:
+				hooleyDebug();
+//NEVER					if(mode == REG_ONLY && r_m == 0){
+//NEVER						hooleyDebug();
+//NEVER						printf("sfence\n");
+//NEVER						return(length);
+//NEVER					}
+//NEVER					printf("%s\t", mnemonic);
+//NEVER					reg = opcode3;
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
 
-				/* Double shift. Has immediate operand specifying the shift. */
-				case DSHIFT:
-					hooleyDebug();
+			/* Double shift. Has immediate operand specifying the shift. */
+			case DSHIFT:
+				hooleyDebug();
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					wbit = LONGOPERAND;
+//NEVER					GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+//NEVER					value0_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+//NEVER					reg_name = get_reg_name(reg, wbit, data16, rex);
+//NEVER					printf("%s\t$", mnemonic);
+//NEVER					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+//NEVER					printf("%s,", reg_name);
+//NEVER					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+//NEVER					return(length);
+
+			/* Double shift. With no immediate operand, specifies using %cl. */
+			case DSHIFTcl:
 					if(got_modrm_byte == FALSE){
-						hooleyDebug();
 						got_modrm_byte = TRUE;
 						byte = get_value(sizeof(char), sect, &length, &left);
 						modrm_byte(&mode, &reg, &r_m, byte);
 					}
 					wbit = LONGOPERAND;
-					GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-					value0_size = sizeof(char);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					reg_name = get_reg_name(reg, wbit, data16, rex);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					printf("%s,", reg_name);
-					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-					return(length);
-
-				/* Double shift. With no immediate operand, specifies using %cl. */
-				case DSHIFTcl:
-					if(got_modrm_byte == FALSE){
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					reg_name = get_reg_name(reg, wbit, data16, rex);
+					// reg_name = get_reg_name(reg, wbit, data16, rex);
+					reg_struct = get_regStruct(reg, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+			
 					printf("%s\t%%cl,%s,", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); // eg shldl	%cl,%eax,%esi			
+					addLine( currentFuncPtr, dp ); // eg shldl	%cl,%eax,%esi			
 					return(length);
 
-				/* immediate to memory or register operand */
-				case IMlw:
+			/* immediate to memory or register operand */
+			case IMlw:
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 
@@ -3192,11 +3213,11 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-					addLine( currentFunc, dp ); //			eg. andl $0xf0,%esp    subl $0x10,%esp
+					addLine( currentFuncPtr, dp ); //			eg. andl $0xf0,%esp    subl $0x10,%esp
 					return(length);
 
-				/* immediate to memory or register operand with the 'w' bit present */
-				case IMw:
+			/* immediate to memory or register operand with the 'w' bit present */
+			case IMw:
 					if(got_modrm_byte == FALSE){
 						got_modrm_byte = TRUE;
 						byte = get_value(sizeof(char), sect, &length, &left);
@@ -3210,42 +3231,49 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-					addLine( currentFunc, dp ); //				eg movl	$0x00021730,0x04(%edx)
+					addLine( currentFuncPtr, dp ); //				eg movl	$0x00021730,0x04(%edx)
 					return(length);
 
-				/* immediate to register with register in low 3 bits of op code */
-				case IR:
+			/* immediate to register with register in low 3 bits of op code */
+			case IR:
 					wbit = (opcode2 >> 3) & 0x1; /* w-bit here (with regs) is bit 3 */
 					reg = REGNO(opcode2);
 					value0_size = OPSIZE(data16, wbit, 0);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					reg_name = get_r_m_name(reg, wbit, data16, rex);
+			
+					// reg_name = get_r_m_name(reg, wbit, data16, rex);
+					reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-					addLine( currentFunc, dp ); //			eg movb	$0x00,%al
+			
+					addLine( currentFuncPtr, dp ); //			eg movb	$0x00,%al
 					return(length);
 
-				/* immediate to register with register in low 3 bits of op code,
-				   possibly with a 64-bit immediate */
-				case IR64:
+			/* immediate to register with register in low 3 bits of op code,
+			possibly with a 64-bit immediate */
+			case IR64:
 					wbit = (opcode2 >> 3) & 0x1; /* w-bit here (with regs) is bit 3 */
 					reg = REGNO(opcode2);
 					value0_size = OPSIZE(data16, wbit, REX_W(rex));
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					reg_name = get_r_m_name(reg, wbit, data16, rex);
+			
+					//reg_name = get_r_m_name(reg, wbit, data16, rex);
+					reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-					addLine( currentFunc, dp ); //				eg movl	$0x00b9ee00,%ecx
+					addLine( currentFuncPtr, dp ); // eg. movl	$0x00b9ee00,%ecx
 					return(length);
 
-				/* memory operand to accumulator */
-				case OA:
+			/* memory operand to accumulator */
+			case OA:
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 						hooleyDebug();
-						value0_size = OPSIZE(addr16, LONGOPERAND, 1);
-						strcpy(mnemonic, "movabsl");
+//NEVER						value0_size = OPSIZE(addr16, LONGOPERAND, 1);
+//NEVER						strcpy(mnemonic, "movabsl");
 					} else {
 						value0_size = OPSIZE(addr16, LONGOPERAND, 0);
 					}
@@ -3253,62 +3281,68 @@ int verbose
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",");
 					wbit = WBIT(opcode2);
-					reg_name = get_reg_name(0, wbit, data16, rex);
+					// reg_name = get_reg_name(0, wbit, data16, rex);
+					reg_struct = get_regStruct(0, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
 					printf("%s\n", reg_name);
-					addLine( currentFunc, dp ); // eg movl	0x0123d000,%eax			
+			
+					addLine( currentFuncPtr, dp ); // eg movl	0x0123d000,%eax			
 					return(length);
 
-				/* accumulator to memory operand */
-				case AO:
+			/* accumulator to memory operand */
+			case AO:
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 						hooleyDebug();
-						value0_size = OPSIZE(addr16, LONGOPERAND, 1);
-						strcpy(mnemonic, "movabsl");
+//NEVER						value0_size = OPSIZE(addr16, LONGOPERAND, 1);
+//NEVER						strcpy(mnemonic, "movabsl");
 					} else {
 						value0_size = OPSIZE(addr16, LONGOPERAND, 0);
 					}
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					wbit = WBIT(opcode2);
-					reg_name = get_reg_name(0, wbit, data16, rex);
+					// reg_name = get_reg_name(0, wbit, data16, rex);
+					reg_struct = get_regStruct(0, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+			
 					printf("%s\t%s,", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
-					addLine( currentFunc, dp ); //			eg movl	%eax,0x00f2300c
+					addLine( currentFuncPtr, dp ); //			eg movl	%eax,0x00f2300c
 					return(length);
 
-				/* memory or register operand to segment register */
-				case MS:
-					hooleyDebug();
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					wbit = LONGOPERAND;
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", SEGREG[reg]);
-					return(length);
+			/* memory or register operand to segment register */
+			case MS:
+				hooleyDebug();
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					wbit = LONGOPERAND;
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					printf("%s\t", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//NEVER					printf("%s\n", SEGREG[reg]);
+//NEVER					return(length);
 
-				/* segment register to memory or register operand	*/
-				case SM:
-					hooleyDebug();
-					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-						got_modrm_byte = TRUE;
-						byte = get_value(sizeof(char), sect, &length, &left);
-						modrm_byte(&mode, &reg, &r_m, byte);
-					}
-					wbit = LONGOPERAND;
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t%s,", mnemonic, SEGREG[reg]);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			/* segment register to memory or register operand	*/
+			case SM:
+				hooleyDebug();
+//NEVER					if(got_modrm_byte == FALSE){
+//NEVER						hooleyDebug();
+//NEVER						got_modrm_byte = TRUE;
+//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					}
+//NEVER					wbit = LONGOPERAND;
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					printf("%s\t%s,", mnemonic, SEGREG[reg]);
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
 
-				/* rotate or shift instrutions, which may shift by 1 or */
-				/* consult the cl register, depending on the 'v' bit	*/
-				case Mv:
+			/* rotate or shift instrutions, which may shift by 1 or */
+			/* consult the cl register, depending on the 'v' bit	*/
+			case Mv:
 					vbit = VBIT(opcode2);
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -3316,12 +3350,12 @@ int verbose
 					reg_name = vbit ? "%cl," : "" ;
 					printf("%s\t%s", mnemonic, reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); //		eg sarl	%eax			
+					addLine( currentFuncPtr, dp ); //		eg sarl	%eax			
 					return(length);
 
-				/* immediate rotate or shift instrutions, which may or */
-				/* may not consult the cl register, depending on the 'v' bit */
-				case MvI:
+			/* immediate rotate or shift instrutions, which may or */
+			/* may not consult the cl register, depending on the 'v' bit */
+			case MvI:
 					vbit = VBIT(opcode2);
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -3333,33 +3367,32 @@ int verbose
 					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
 					printf("%s", reg_name);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); //				eg shll	$0x02,%ebx
+					addLine( currentFuncPtr, dp ); //				eg shll	$0x02,%ebx
 					return(length);
 
-				case MIb:
-					hooleyDebug();
-					wbit = LONGOPERAND;
-					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					value1_size = sizeof(char);
-					IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			case MIb:
+				hooleyDebug();
+//NEVER					wbit = LONGOPERAND;
+//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//NEVER					value1_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
+//NEVER					printf("%s\t$", mnemonic);
+//NEVER					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
+//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//NEVER					return(length);
 
-				/* single memory or register operand with 'w' bit present */
-				case Mw:
-					hooleyDebug();
+			/* single memory or register operand with 'w' bit present */
+			case Mw:
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					return(length);
 
-				/* single memory or register operand but don't use 'l' suffix */
-				case Mnol:
-				/* single memory or register operand */
-				case M:
+			/* single memory or register operand but don't use 'l' suffix */
+			case Mnol:
+			/* single memory or register operand */
+			case M:
 					switch(byte)
 					{
 						case 0xc1:
@@ -3376,33 +3409,33 @@ int verbose
 							return(length);
 						case 0xc4:
 							hooleyDebug();
-							printf("vmxoff\n");
-							return(length);
+//NEVER							printf("vmxoff\n");
+//NEVER							return(length);
 						case 0xc7:
 							hooleyDebug();
-							if(prefix_byte == 0x66){
-								hooleyDebug();
-								sprintf(mnemonic, "vmclear");
-							}else if(prefix_byte == 0xf3){
-								hooleyDebug();
-								sprintf(mnemonic, "vmxon");
-							}else {
-								hooleyDebug();
-								if(got_modrm_byte == FALSE){
-									hooleyDebug();
-									got_modrm_byte = TRUE;
-									byte = get_value(sizeof(char), sect, &length, &left);
-									modrm_byte(&mode, &reg, &r_m, byte);
-								}
-								if(reg == 6){
-									hooleyDebug();
-									sprintf(mnemonic, "vmptrld");
-								}else if(reg == 7){
-									hooleyDebug();
-									sprintf(mnemonic, "vmptrst");
-								}
-							}
-						break;
+//NEVER							if(prefix_byte == 0x66){
+//NEVER								hooleyDebug();
+//NEVER								sprintf(mnemonic, "vmclear");
+//NEVER							}else if(prefix_byte == 0xf3){
+//NEVER								hooleyDebug();
+//NEVER								sprintf(mnemonic, "vmxon");
+//NEVER							} else {
+//NEVER								hooleyDebug();
+//NEVER								if(got_modrm_byte == FALSE){
+//NEVER									hooleyDebug();
+//NEVER									got_modrm_byte = TRUE;
+//NEVER									byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER									modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER								}
+//NEVER								if(reg == 6){
+//NEVER									hooleyDebug();
+//NEVER									sprintf(mnemonic, "vmptrld");
+//NEVER								}else if(reg == 7){
+//NEVER									hooleyDebug();
+//NEVER									sprintf(mnemonic, "vmptrst");
+//NEVER								}
+//NEVER							}
+//NEVER						break;
 					}
 					if(got_modrm_byte == FALSE){
 						got_modrm_byte = TRUE;
@@ -3413,11 +3446,11 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); //				eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
+					addLine( currentFuncPtr, dp ); //				eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 					return(length);
 
-				/* single memory or register operand */
-				case Mb:
+			/* single memory or register operand */
+			case Mb:
 					if(got_modrm_byte == FALSE){
 						got_modrm_byte = TRUE;
 						byte = get_value(sizeof(char), sect, &length, &left);
@@ -3427,93 +3460,101 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); //				eg setbe	%al
+					addLine( currentFuncPtr, dp ); //				eg setbe	%al
 					return(length);
 
-				case SREG: /* special register */
-					hooleyDebug();
-					byte = get_value(sizeof(char), sect, &length, &left);
-					modrm_byte(&mode, &reg, &r_m, byte);
-					vbit = 0;
-					switch(opcode5)
-					{
-						case 2:
-							hooleyDebug();
-							vbit = 1;
-							/* fall thru */
-						case 0:
-							hooleyDebug();
-							reg_name = CONTROLREG[reg + (REX_R(rex) << 3)];
-							break;
-						case 3:
-							hooleyDebug();
-							vbit = 1;
-							/* fall thru */
-						case 1:
-							hooleyDebug();
-							reg_name = DEBUGREG[reg + (REX_R(rex) << 3)];
-							break;
-						case 6:
-							hooleyDebug();
-							vbit = 1;
-							/* fall thru */
-						case 4:
-							hooleyDebug();
-							reg_name = TESTREG[reg];
-							break;
-					}
-					if(vbit){
-						hooleyDebug();
-						printf("%s\t%s,%s\n", mnemonic, get_r_m_name(r_m, 1, data16,rex), reg_name);
-					} else {
-						hooleyDebug();
-						printf("%s\t%s,%s\n", mnemonic, reg_name, get_r_m_name(r_m, 1,data16, rex));
-					}
-					return(length);
+			case SREG: /* special register */
+				hooleyDebug();
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					modrm_byte(&mode, &reg, &r_m, byte);
+//NEVER					vbit = 0;
+//NEVER					switch(opcode5)
+//NEVER					{
+//NEVER						case 2:
+//NEVER							hooleyDebug();
+//NEVER							vbit = 1;
+//NEVER							/* fall thru */
+//NEVER						case 0:
+//NEVER							hooleyDebug();
+//NEVER							reg_name = CONTROLREG[reg + (REX_R(rex) << 3)];
+//NEVER							break;
+//NEVER						case 3:
+//NEVER							hooleyDebug();
+//NEVER							vbit = 1;
+//NEVER							/* fall thru */
+//NEVER						case 1:
+//NEVER							hooleyDebug();
+//NEVER							reg_name = DEBUGREG[reg + (REX_R(rex) << 3)];
+//NEVER							break;
+//NEVER						case 6:
+//NEVER							hooleyDebug();
+//NEVER							vbit = 1;
+//NEVER							/* fall thru */
+//NEVER						case 4:
+//NEVER							hooleyDebug();
+//NEVER							reg_name = TESTREG[reg];
+//NEVER							break;
+//NEVER					}
+//NEVER					if(vbit){
+//NEVER						hooleyDebug();
+//NEVER						const char *reg_name2 =  get_r_m_name(r_m, 1, data16,rex);
+//NEVER						printf("%s\t%s,%s\n", mnemonic, reg_name2, reg_name);
+//NEVER					} else {
+//NEVER						hooleyDebug();
+//NEVER						const char *reg_name2 =  get_r_m_name(r_m, 1,data16, rex);
+//NEVER						printf("%s\t%s,%s\n", mnemonic, reg_name, reg_name2);
+//NEVER					}
+//NEVER					return(length);
 
-				/* single register operand with register in the low 3 bits of op code */
-				case R:
+			/* single register operand with register in the low 3 bits of op code */
+			case R:
 					reg = REGNO(opcode2);
 			
 					/* experimental */
 					// reg_name = get_r_m_name(reg, LONGOPERAND, data16, rex);
-					const struct hooReg *reg_struct = get_r_m_regStruct(reg, LONGOPERAND, data16, rex);
-					reg_name = reg_struct->prettyName;
-					if( !strcmp( reg_name, "unknown") )
-						reg_name = reg_struct->name;
-			
-					/* -- we should so make the new function here -- */
+					reg_struct = get_r_m_regStruct(reg, LONGOPERAND, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+
+					BOOL isNewFunc = !strcmp(dp->name, "push") && !strcmp(reg_struct->name,"%ebp");
+					if (isNewFunc) {
+						struct hooleyFuction *currentFunc = *currentFuncPtr;
+						struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction *) );
+						newFunc->prev = currentFunc;
+						currentFunc->next = newFunc;
+						currentFunc = newFunc;
+						*currentFuncPtr = currentFunc;
+					}
 					
 					printf("%s\t%s\n", mnemonic, reg_name );
-					addLine( currentFunc, dp );	// eg. pushl %ebp
+					addLine( currentFuncPtr, dp );	// eg. pushl %ebp
 					return(length);
 
-				/* register to accumulator with register in the low 3 */
-				/* bits of op code, xchg instructions */
-				case RA:
+			/* register to accumulator with register in the low 3 */
+			/* bits of op code, xchg instructions */
+			case RA:
 					hooleyDebug();
-					reg = REGNO(opcode2);
-					reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
-					printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
-					return(length);
+//NEVER					reg = REGNO(opcode2);
+//NEVER					reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
+//NEVER					printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
+//NEVER					return(length);
 
-				/* single segment register operand, with reg in bits 3-4 of op code */
-				case SEG:
+			/* single segment register operand, with reg in bits 3-4 of op code */
+			case SEG:
 					hooleyDebug();
-					reg = byte >> 3 & 0x3; /* segment register */
-					printf("%s\t%s\n", mnemonic, SEGREG[reg]);
-					return(length);
+//NEVER					reg = byte >> 3 & 0x3; /* segment register */
+//NEVER					printf("%s\t%s\n", mnemonic, SEGREG[reg]);
+//NEVER					return(length);
 
-				/* single segment register operand, with register in	*/
-				/* bits 3-5 of op code					*/
-				case LSEG:
+			/* single segment register operand, with register in	*/
+			/* bits 3-5 of op code					*/
+			case LSEG:
 					hooleyDebug();
-					reg = byte >> 3 & 0x7; /* long seg reg from opcode */
-					printf("%s\t%s\n", mnemonic, SEGREG[reg]);
-					return(length);
+//NEVER					reg = byte >> 3 & 0x7; /* long seg reg from opcode */
+//NEVER					printf("%s\t%s\n", mnemonic, SEGREG[reg]);
+//NEVER					return(length);
 
-				/* memory or register operand to register */
-				case MR:
+			/* memory or register operand to register */
+			case MR:
 					if(got_modrm_byte == FALSE){
 						got_modrm_byte = TRUE;
 						byte = get_value(sizeof(char), sect, &length, &left);
@@ -3521,15 +3562,19 @@ int verbose
 					}
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					reg_name = get_reg_name(reg, wbit, data16, rex);
+					// reg_name = get_reg_name(reg, wbit, data16, rex);
+					reg_struct = get_regStruct(reg, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+
+			
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 					printf("%s\n", reg_name);
-					addLine( currentFunc, dp ); //			eg. leal 0x08(%ebp),%ecx
+					addLine( currentFuncPtr, dp ); //			eg. leal 0x08(%ebp),%ecx
 					return(length);
 
-				/* immediate operand to accumulator */
-				case IA:
+			/* immediate operand to accumulator */
+			case IA:
 					value0_size = OPSIZE(data16, WBIT(opcode2), 0);
 					switch(value0_size) {
 						case 1: reg_name = "%al"; break;
@@ -3540,60 +3585,62 @@ int verbose
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 					printf("%s\n", reg_name);
-					addLine( currentFunc, dp );				 //eg cmpb	$0x2f,%al
+					addLine( currentFuncPtr, dp );				 //eg cmpb	$0x2f,%al
 					return(length);
 
-				/* memory or register operand to accumulator */
-				case MA:
+			/* memory or register operand to accumulator */
+			case MA:
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); // eg mull	%ecx
+					addLine( currentFuncPtr, dp ); // eg mull	%ecx
 					return(length);
 
-				/* si register to di register */
-				case SD:
-					hooleyDebug();
+			/* si register to di register */
+			case SD:
 					if(addr16 == TRUE) {
 						hooleyDebug();
-						printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
+//NEVER						printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
 					} else {
 						hooleyDebug();
-					 	printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, seg);
+//NEVER					 	printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, seg);
 					}
 					return(length);
 
-				/* accumulator to di register */
-				case AD:
-					hooleyDebug();
+			/* accumulator to di register */
+			case AD:
 					wbit = WBIT(opcode2);
-					reg_name = get_reg_name(0, wbit, data16, rex);
+					// reg_name = get_reg_name(0, wbit, data16, rex);
+					reg_struct = get_regStruct(0, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+					
 					if(addr16 == TRUE) {
-						hooleyDebug();
-						printf("%s\t%s,%s(%%di)\n", mnemonic, reg_name, seg);
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t%s,%s(%%di)\n", mnemonic, reg_name, seg);
 					} else {
 						hooleyDebug();
-						printf("%s\t%s,%s(%%edi)\n", mnemonic, reg_name, seg);
+//NEVER						printf("%s\t%s,%s(%%edi)\n", mnemonic, reg_name, seg);
 					}
 					return(length);
 
-				/* si register to accumulator */
-				case SA:
-					hooleyDebug();
+			/* si register to accumulator */
+			case SA:
 					wbit = WBIT(opcode2);
-					reg_name = get_reg_name(0, wbit, data16, rex);
+					// reg_name = get_reg_name(0, wbit, data16, rex);
+					reg_struct = get_regStruct(0, wbit, data16, rex);
+					GET_BEST_REG_NAME( reg_name, reg_struct );
 					if(addr16 == TRUE){
 						hooleyDebug();
-						printf("%s\t%s(%%si),%s\n", mnemonic, seg, reg_name);
+//NEVER						printf("%s\t%s(%%si),%s\n", mnemonic, seg, reg_name);
 					}else{
 						hooleyDebug();
-						printf("%s\t%s(%%esi),%s\n", mnemonic, seg, reg_name);
+//NEVER						printf("%s\t%s(%%esi),%s\n", mnemonic, seg, reg_name);
 					}
 					return(length);
 
-				/* single operand, a 16/32 bit displacement */
-				case D:
+			/* single operand, a 16/32 bit displacement */
+			case D:
 					value0_size = OPSIZE(data16, LONGOPERAND, 0);
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 					printf("%s\t", mnemonic);
@@ -3604,12 +3651,12 @@ int verbose
 						printf("\t; symbol stub for: %s", indirect_symbol_name);
 					}
 					//putback		}
-					addLine( currentFunc, dp ); // eg. calll 0x00002aea
+					addLine( currentFuncPtr, dp ); // eg. calll 0x00002aea
 					printf("\n");
 					return(length);
 
-				/* indirect to memory or register operand */
-				case INM:
+			/* indirect to memory or register operand */
+			case INM:
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
@@ -3619,25 +3666,23 @@ int verbose
 						printf("%s\t", mnemonic);
 					}
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					addLine( currentFunc, dp ); // eg jmp	*%ecx
+					addLine( currentFuncPtr, dp ); // eg jmp	*%ecx
 					return(length);
 
-				/* indirect to memory or register operand (for lcall and ljmp) */
-				case INMl:
-					hooleyDebug();
+			/* indirect to memory or register operand (for lcall and ljmp) */
+			case INMl:
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					return(length);
 
-				/*
-				* For long jumps and long calls -- a new code segment
-				* register and an offset in IP -- stored in object
-				* code in reverse order
-				*/
-				case SO:
-					hooleyDebug();
+			/*
+			* For long jumps and long calls -- a new code segment
+			* register and an offset in IP -- stored in object
+			* code in reverse order
+			*/
+			case SO:
 					value1_size = OPSIZE(data16, LONGOPERAND, 0);
 					IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
 					value0_size = sizeof(short);
@@ -3647,23 +3692,22 @@ int verbose
 					print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
 					return(length);
 
-				/* jmp/call. single operand, 8 bit displacement */
-				case BD:
+			/* jmp/call. single operand, 8 bit displacement */
+			case BD:
 					value0_size = sizeof(char);
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
-					addLine( currentFunc, dp ); //			eg jne	0x00002b1a
+					addLine( currentFuncPtr, dp ); //			eg jne	0x00002b1a
 					return(length);
 
-				/* single 32/16 bit immediate operand */
-				case I:
-					hooleyDebug();
-					value0_size = OPSIZE(data16, LONGOPERAND, 0);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
-					return(length);
+			/* single 32/16 bit immediate operand */
+			case I:
+				value0_size = OPSIZE(data16, LONGOPERAND, 0);
+				IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+				printf("%s\t$", mnemonic);
+				print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+				return(length);
 
 				/* single 8 bit immediate operand */
 				case Ib:
@@ -3671,19 +3715,19 @@ int verbose
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
-					addLine( currentFunc, dp ); // eg. pushl $0x00
+					addLine( currentFuncPtr, dp ); // eg. pushl $0x00
 					return(length);
 
 				case ENTER:
 					hooleyDebug();
-					value0_size = sizeof(short);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					value1_size = sizeof(char);
-					IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
-					print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
-					return(length);
+//NEVER					value0_size = sizeof(short);
+//NEVER					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+//NEVER					value1_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
+//NEVER					printf("%s\t$", mnemonic);
+//NEVER					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
+//NEVER					print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
+//NEVER					return(length);
 
 				/* 16-bit immediate operand */
 				case RET:
@@ -3691,53 +3735,53 @@ int verbose
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					printf("%s\t$", mnemonic);
 					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
-					addLine( currentFunc, dp ); //  eg ret	$0x0004			
+					addLine( currentFuncPtr, dp ); //  eg ret	$0x0004			
 					return(length);
 
 				/* single 8 bit port operand */
 				case P:
 					hooleyDebug();
-					value0_size = sizeof(char);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
-					return(length);
+//NEVER					value0_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+//NEVER					printf("%s\t$", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+//NEVER					return(length);
 
 				/* single 8 bit (input) port operand				*/
 				case Pi:
 					hooleyDebug();
-					value0_size = sizeof(char);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
-					return(length);
+//NEVER					value0_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+//NEVER					printf("%s\t$", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
+//NEVER					return(length);
 
 				/* single 8 bit (output) port operand				*/
 				case Po:
 					hooleyDebug();
-					value0_size = sizeof(char);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t%%eax,$", mnemonic);
-					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
-					return(length);
+//NEVER					value0_size = sizeof(char);
+//NEVER					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+//NEVER					printf("%s\t%%eax,$", mnemonic);
+//NEVER					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+//NEVER					return(length);
 
 				/* single operand, dx register (variable port instruction) */
 				case V:
 					hooleyDebug();
-					printf("%s\t%s(%%dx)\n", mnemonic, seg);
-					return(length);
+//NEVER					printf("%s\t%s(%%dx)\n", mnemonic, seg);
+//NEVER					return(length);
 
 				/* single operand, dx register (variable (input) port instruction) */
 				case Vi:
 					hooleyDebug();
-					printf("%s\t%s%%dx,%%eax\n", mnemonic, seg);
-					return(length);
+//NEVER					printf("%s\t%s%%dx,%%eax\n", mnemonic, seg);
+//NEVER					return(length);
 
 				/* single operand, dx register (variable (output) port instruction)*/
 				case Vo:
 					hooleyDebug();
-					printf("%s\t%s%%eax,%%dx\n", mnemonic, seg);
-					return(length);
+//NEVER					printf("%s\t%s%%eax,%%dx\n", mnemonic, seg);
+//NEVER					return(length);
 
 				/* The int instruction, which has two forms: int 3 (breakpoint) or  */
 				/* int n, where n is indicated in the subsequent byte (format Ib).  */
@@ -3746,79 +3790,79 @@ int verbose
 				/* to the correct base and output. */
 				case INT3:
 					hooleyDebug();
-					printf("%s\t$0x3\n", mnemonic);
-					return(length);
+//NEVER					printf("%s\t$0x3\n", mnemonic);
+//NEVER					return(length);
 
 				/* just an opcode and an unused byte that must be discarded */
 				case U:
 					hooleyDebug();
-					byte = get_value(sizeof(char), sect, &length, &left);
-					printf("%s\n", mnemonic);
-					return(length);
+//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					printf("%s\n", mnemonic);
+//NEVER					return(length);
 
 				case CBW:
 					hooleyDebug();
-					if(data16 == TRUE){
-						hooleyDebug();
-						printf("cbtw\n");
-					}else{
-						hooleyDebug();
-						printf("cwtl\n");
-					}
-					return(length);
+//NEVER					if(data16 == TRUE){
+//NEVER						hooleyDebug();
+//NEVER						printf("cbtw\n");
+//NEVER					}else{
+//NEVER						hooleyDebug();
+//NEVER						printf("cwtl\n");
+//NEVER					}
+//NEVER					return(length);
 
 				case CWD:
 					hooleyDebug();
-					if(data16 == TRUE){
-						hooleyDebug();
-						printf("cwtd\n");
-					}else{
-						hooleyDebug();
-						printf("cltd\n");
-					}
-					return(length);
+//NEVER					if(data16 == TRUE){
+//NEVER						hooleyDebug();
+//NEVER						printf("cwtd\n");
+//NEVER					}else{
+//NEVER						hooleyDebug();
+//NEVER						printf("cltd\n");
+//NEVER					}
+//NEVER					return(length);
 
 				/* no disassembly, the mnemonic was all there was so go on */
 				case GO_ON:
 					if( strcmp(dp->name, "nop" )) {
 						printf("%s\n", mnemonic);
-						addLine( currentFunc, dp ); // eg. hlt
+						addLine( currentFuncPtr, dp ); // eg. hlt
 					}
 					return(length);
 
 				/* float reg */
 				case F:
 					hooleyDebug();
-					printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
-					return(length);
+//NEVER					printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
+//NEVER					return(length);
 
 				/* float reg to float reg, with ret bit present */
 				case FF:
 					hooleyDebug();
 					/* return result bit for 287 instructions */
-					if(((opcode2 >> 2) & 0x1) == 0x1 && opcode2 != 0xf) {
-						hooleyDebug();
-						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
-					} else {
-						hooleyDebug();
-						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
-					}
-					return(length);
+//NEVER					if(((opcode2 >> 2) & 0x1) == 0x1 && opcode2 != 0xf) {
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
+//NEVER					} else {
+//NEVER						hooleyDebug();
+//NEVER						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
+//NEVER					}
+//NEVER					return(length);
 
-				/* an invalid op code */
-				case AM:
-				case DM:
-				case OVERRIDE:
-				case PREFIX:
-				case UNKNOWN:
-				default:
+			/* an invalid op code */
+			case AM:
+			case DM:
+			case OVERRIDE:
+			case PREFIX:
+			case UNKNOWN:
+			default:
 					hooleyDebug();
-					printf(".byte 0x%02x", 0xff & sect[0]);
-					for(i = 1; i < length; i++) {
-						printf(", 0x%02x", 0xff & sect[i]);
-					}
-					printf(" #bad opcode\n");
-					return(length);
+//NEVER					printf(".byte 0x%02x", 0xff & sect[0]);
+//NEVER					for(i = 1; i < length; i++) {
+//NEVER						printf(", 0x%02x", 0xff & sect[i]);
+//NEVER					}
+//NEVER					printf(" #bad opcode\n");
+//NEVER					return(length);
 	} /* end switch */
 }
 
@@ -3933,40 +3977,46 @@ const char *sect,
 		}
 	    }
 	    else {
-		/* If the scale factor is 1, don't display it. */
-		if(ss == 0){
-		    /*
-		     * If mode is 0 and base is 5 it there is no base register,
-		     * and if the index is also 4 then the operand is just a
-		     * displacement.
-		     */
-		    if(mode == 0 && base == 5 && index == 4){
-			result = "";
-		    }
-		    else {
-				sprintf(result, "(%s%s)", regname32[mode][base], indexname[index]);
-		    }
-		}
-		else {
-		    sprintf(result, "(%s%s,%s)", regname32[mode][base], indexname[index], scale_factor[ss]);
-		}
+			/* If the scale factor is 1, don't display it. */
+			if(ss == 0){
+				/*
+				 * If mode is 0 and base is 5 it there is no base register,
+				 * and if the index is also 4 then the operand is just a
+				 * displacement.
+				 */
+				if(mode == 0 && base == 5 && index == 4){
+					result = "";
+				} else {
+					const char *regname = regname32[mode][base];
+					sprintf(result, "(%s%s)", regname, indexname[index]);
+				}
+			} else {
+				const char *regname = regname32[mode][base];				
+				sprintf(result, "(%s%s,%s)", regname, indexname[index], scale_factor[ss]);
+			}
 	    }
-	}
-	else { /* no s-i-b */
+	} else { /* no s-i-b */
 	    if(mode == REG_ONLY){
-		if(sse2 == TRUE)
-		    sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
-		else if(mmx == TRUE)
-		    sprintf(result, "%%mm%u", r_m);
-		else if (data16 == FALSE || rex != 0)
-		    /* The presence of a REX byte overrides 66h. */
-		    strcpy(result, REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)]);
-		else
-		    strcpy(result, REG16[r_m][wbit]);
-	    }
-	    else { /* Modes 00, 01, or 10 */
+			if(sse2 == TRUE) {
+				sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
+			} else if(mmx == TRUE) {
+				sprintf(result, "%%mm%u", r_m);
+			} else if (data16 == FALSE || rex != 0) {
+				/* The presence of a REX byte overrides 66h. */
+				// const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				const struct hooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				char *reg_name;
+				GET_BEST_REG_NAME( reg_name, reg_struct );
+				strcpy(result, reg_name);
+			} else {
+				const struct hooReg *reg_struct = &REG16_Struct[r_m][wbit];
+				const char *reg_name; // = REG16[r_m][wbit];
+				GET_BEST_REG_NAME( reg_name, reg_struct );
+				strcpy(result, reg_name);
+			}
+	    } else { /* Modes 00, 01, or 10 */
 		if(r_m == EBP && mode == 0){ /* displacement only */
-		    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
+		    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
 			/*
 			 * In 64-bit mode, mod=00 and r/m=101 defines
 			 * RIP-relative addressing with a 32-bit displacement.
@@ -3975,27 +4025,35 @@ const char *sect,
 			 * 2A of the Intel IA-32 manual.
 			 */
 				sprintf(result, "(%%rip)");
-		    else
+		    } else {
 				*result = '\0';
-		}
-		else {
+			}
+		} else {
 		    /* Modes 00, 01, or 10, not displacement only, no s-i-b */
 		    if(addr16 == TRUE) {
-			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
+				if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
 			    /*
 			     *  In 64-bit mode, the address size prefix drops us
 			     * down to 32-bit, not 16-bit.
 			     */
-			    sprintf(result, "(%s)", regname32[mode][r_m]);
-			else
-			    sprintf(result, "(%s)", regname16[mode][r_m]);
-		    }
-		    else {
-			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64)
-			    sprintf(result, "(%s)", regname64[mode][r_m +
-				    (REX_B(rex) << 3)]);
-			else
-			    sprintf(result, "(%s)", regname32[mode][r_m]);
+					const char *reg_name = regname32[mode][r_m];					
+					sprintf(result, "(%s)", reg_name);
+				} else {
+					/* Woahh.. This is Fun */
+					// const struct hooReg *reg_struct = &regname16_Struct[mode][r_m];
+					
+					// const char *reg_name; // = regname16[mode][r_m];
+					// GET_BEST_REG_NAME( reg_name, reg_struct );
+					// TODO: This returns 2 registers, like this… 
+					sprintf(result, "(%s)", "%bp,%si" );
+				}
+		    } else {
+				if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
+					sprintf(result, "(%s)", regname64[mode][r_m + (REX_B(rex) << 3)]);
+				} else {
+					const char *regname = regname32[mode][r_m];					
+					sprintf(result, "(%s)", regname);
+				}
 		    }
 		}
 	    }
@@ -4235,17 +4293,14 @@ for(i = 0; i < nrelocs; i++){
  * print_operand() prints an operand from it's broken out symbolic
  * representation.
  */
-static
-void
-print_operand(
+static void print_operand(
 const char *seg,
 const char *symadd,
 const char *symsub,
 uint64_t value,
 unsigned int value_size,
 const char *result,
-const char *tail)
-{
+const char *tail) {
 	if(symadd != NULL){
 	    if(symsub != NULL){
 			if(value_size != 0){
@@ -4262,10 +4317,9 @@ const char *tail)
 	    else {
 		if(value_size != 0){
 		    if(value != 0)
-			printf("%s%s+0x%0*llx%s%s", seg, symadd,
-			       (int)value_size * 2, value, result, tail);
+				printf("%s%s+0x%0*llx%s%s", seg, symadd, (int)value_size * 2, value, result, tail);
 		    else
-			printf("%s%s%s%s", seg, symadd, result, tail);
+				printf("%s%s%s%s", seg, symadd, result, tail);
 		}
 		else {
 		    printf("%s%s%s%s", seg, symadd, result, tail);
