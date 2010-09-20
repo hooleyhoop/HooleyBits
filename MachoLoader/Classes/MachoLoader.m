@@ -41,7 +41,7 @@
 #import "Segment.h"
 #import "Section.h"
 #import "IntHash.h"
-
+#import "StringManipulation.h"
 #import "i386_disasm.h"
 
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
@@ -745,6 +745,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	struct hooleyFuction *currentFunction = _headFunction;
 
 	NSUInteger j=0;
+	NSUInteger iterationCounter = 0;
 	for( NSUInteger i=0; i<_textSectSize; )
 	{
 		
@@ -760,6 +761,12 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		*/
 		
 //		printf("%0x ", memPtr);
+		
+		printf("%i ", iterationCounter);
+		if(iterationCounter==0)
+			NSLog(@"stop here");
+		iterationCounter++;
+		
 		j = i386_disassemble( 
 							 &currentFunction,
 							 (char *)locPtr,

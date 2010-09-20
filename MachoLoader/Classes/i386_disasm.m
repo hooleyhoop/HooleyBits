@@ -115,13 +115,12 @@ void hooleyDebug() {
 	NSLog(@"woohoo");
 }
 
-static void get_operand(
+static void replacement_get_operand(
 const char **symadd,
 const char **symsub,
 uint32_t *value,
 uint32_t *value_size,
 void *result,
-
 const cpu_type_t cputype,
 const uint32_t mode,
 const uint32_t r_m,
@@ -131,22 +130,53 @@ const int addr16,
 const int sse2,
 const int mmx,
 const unsigned int rex,
-
 const char *sect,
-	uint32_t sect_addr,
+uint32_t sect_addr,
 uint32_t *length,
 uint32_t *left,
-	const uint32_t addr,
-	const struct relocation_info *sorted_relocs,
-	const uint32_t nsorted_relocs,
-	const struct nlist *symbols,
-	const struct nlist_64 *symbols64,
-	const uint32_t nsymbols,
-	const char *strings,
-	const uint32_t strings_size,
-	const struct symbol *sorted_symbols,
-	const uint32_t nsorted_symbols,
-	const int verbose
+const uint32_t addr,
+const struct relocation_info *sorted_relocs,
+const uint32_t nsorted_relocs,
+const struct nlist *symbols,
+const struct nlist_64 *symbols64,
+const uint32_t nsymbols,
+const char *strings,
+const uint32_t strings_size,
+const struct symbol *sorted_symbols,
+const uint32_t nsorted_symbols,
+const int verbose
+);
+
+static void get_operand(
+const char **symadd,
+const char **symsub,
+uint32_t *value,
+uint32_t *value_size,
+void *result,
+const cpu_type_t cputype,
+const uint32_t mode,
+const uint32_t r_m,
+const uint32_t wbit,
+const int data16,
+const int addr16,
+const int sse2,
+const int mmx,
+const unsigned int rex,
+const char *sect,
+uint32_t sect_addr,
+uint32_t *length,
+uint32_t *left,
+const uint32_t addr,
+const struct relocation_info *sorted_relocs,
+const uint32_t nsorted_relocs,
+const struct nlist *symbols,
+const struct nlist_64 *symbols64,
+const uint32_t nsymbols,
+const char *strings,
+const uint32_t strings_size,
+const struct symbol *sorted_symbols,
+const uint32_t nsorted_symbols,
+const int verbose
 );
 
 static void immediate(
@@ -171,6 +201,29 @@ static void immediate(
 	const uint32_t nsorted_symbols,
 	const int verbose
 );
+static void replacement_immediate(
+					  const char **symadd,
+					  const char **symsub,
+					  uint64_t *value,
+					  uint32_t value_size,
+					  const char *sect,
+					  uint32_t sect_addr,
+					  uint32_t *length,
+					  uint32_t *left,
+					  const cpu_type_t cputype,
+					  const uint32_t addr,
+					  const struct relocation_info *sorted_relocs,
+					  const uint32_t nsorted_relocs,
+					  const struct nlist *symbols,
+					  const struct nlist_64 *symbols64,
+					  const uint32_t nsymbols,
+					  const char *strings,
+					  const uint32_t strings_size,
+					  const struct symbol *sorted_symbols,
+					  const uint32_t nsorted_symbols,
+					  const int verbose
+					  );
+
 
 static void displacement(
     const char **symadd,
@@ -213,31 +266,22 @@ static void get_symbol(
     const int verbose);
 
 
-static void print_operand(
-    const char *seg,
-    const char *symadd,
-    const char *symsub,
-    uint64_t value,
-    unsigned int value_size,
-    const char *result,
-    const char *tail);
-
-static uint64_t get_value(
-    const uint32_t size,
-    const char *sect,
-    uint32_t *length,
-    uint32_t *left);
-
-static void modrm_byte(
-    uint32_t *mode,
-    uint32_t *reg,
-    uint32_t *r_m,
-    unsigned char byte);
+static void print_operand( const char *seg, const char *symadd, const char *symsub, uint64_t value, unsigned int value_size, const char *result, const char *tail);
+static void replacementPrint_operand( char * outPutBuffer, const char *seg, const char *symadd, const char *symsub, uint64_t value, unsigned int value_size, const char *result, const char *tail);
+static uint64_t get_value( const uint32_t size, const char *sect, uint32_t *length, uint32_t *left);
+static void modrm_byte( uint32_t *mode, uint32_t *reg, uint32_t *r_m, unsigned char byte);
 
 #define GET_BEST_REG_NAME( reg_name, reg_struct ) \
 reg_name = reg_struct->prettyName;  \
 if( !strcmp( reg_name, "unknown") ) \
 reg_name = reg_struct->name; \
+
+#define REPLACEMENT_GET_OPERAND(symadd, symsub, value, value_size, result) \
+replacement_get_operand((symadd), (symsub), (value), (value_size), (result), \
+cputype, mode, r_m, wbit, data16, addr16, sse2, mmx, rex, \
+sect, sect_addr, &length, &left, addr, sorted_relocs, \
+nsorted_relocs, symbols, symbols64, nsymbols, strings, \
+strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 #define GET_OPERAND(symadd, symsub, value, value_size, result) \
 get_operand((symadd), (symsub), (value), (value_size), (result), \
@@ -257,6 +301,14 @@ immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
 &length, &left, cputype, addr, sorted_relocs, \
 nsorted_relocs, symbols, symbols64, nsymbols, strings, \
 strings_size, sorted_symbols, nsorted_symbols, verbose)
+
+#define REPLACEMENT_IMMEDIATE(symadd, symsub, value, value_size) \
+replacement_immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
+&length, &left, cputype, addr, sorted_relocs, \
+nsorted_relocs, symbols, symbols64, nsymbols, strings, \
+strings_size, sorted_symbols, nsorted_symbols, verbose)
+
+
 
 #define GET_SYMBOL(symadd, symsub, offset, sect_offset, value) \
 	get_symbol((symadd), (symsub), (offset), cputype, (sect_offset), \
@@ -990,7 +1042,7 @@ static const struct instable op0F[16][16] = {
 /*  [0C]  */	INVALID,                {"prefetch",TERM,PFCH3DNOW,1},
 		{"femms",TERM,GO_ON,0},
 				{"",(const struct instable *)op0F0F,TERM,0} },
-/*  [10]  */ {  {"mov",TERM,SSE2,0},	{"mov",TERM,SSE2tm,0},
+/*  [10]  */ {  {"1mov",TERM,SSE2,0},	{"2mov",TERM,SSE2tm,0},
 		{"mov",TERM,SSE2,0},	{"movl",TERM,SSE2tm,0},
 /*  [14]  */	{"unpckl",TERM,SSE2,0},	{"unpckh",TERM,SSE2,0},
 		{"mov",TERM,SSE2,0},	{"movh",TERM,SSE2tm,0},
@@ -998,10 +1050,10 @@ static const struct instable op0F[16][16] = {
 		INVALID,		INVALID,
 /*  [1C]  */	INVALID,		INVALID,
 		INVALID,		{"nop",TERM,M,1} },
-/*  [20]  */ {  {"mov",TERM,SREG,0x03},	{"mov",TERM,SREG,0x03},
-		{"mov",TERM,SREG,0x03},	{"mov",TERM,SREG,0x03},
-/*  [24]  */	{"mov",TERM,SREG,0x03},	INVALID,
-		{"mov",TERM,SREG,0x03},	INVALID,
+/*  [20]  */ {  {"3mov",TERM,SREG,0x03},	{"4mov",TERM,SREG,0x03},
+		{"5mov",TERM,SREG,0x03},	{"6mov",TERM,SREG,0x03},
+/*  [24]  */	{"7mov",TERM,SREG,0x03},	INVALID,
+		{"8mov",TERM,SREG,0x03},	INVALID,
 /*  [28]  */	{"mova",TERM,SSE2,0},	{"mova",TERM,SSE2tm,0},
 		{"cvt",TERM,SSE2,0},	{"movnt",TERM,SSE2tm,0},
 /*  [2C]  */	{"cvt",TERM,SSE2,0},	{"cvt",TERM,SSE2,0} ,
@@ -1026,7 +1078,7 @@ static const struct instable op0F[16][16] = {
 		{"rsqrt",TERM,SSE2,0},	{"rcp",TERM,SSE2,0},
 /*  [54]  */	{"and",TERM,SSE2,0},	{"andn",TERM,SSE2,0},
 		{"or",TERM,SSE2,0},	{"xor",TERM,SSE2,0},
-/*  [58]  */	{"add",TERM,SSE2,0},	{"mul",TERM,SSE2,0},
+/*  [58]  */	{"1add",TERM,SSE2,0},	{"mul",TERM,SSE2,0},
 		{"cvt",TERM,SSE2,0},	{"cvt",TERM,SSE2,0},
 /*  [5C]  */	{"sub",TERM,SSE2,0},	{"min",TERM,SSE2,0},
 		{"div",TERM,SSE2,0},	{"max",TERM,SSE2,0} },
@@ -1037,7 +1089,7 @@ static const struct instable op0F[16][16] = {
 /*  [68]  */	{"punpckhbw",TERM,SSE2,0},{"punpckhwd",TERM,SSE2,0},
 		{"punpckhdq",TERM,SSE2,0},{"packssdw",TERM,SSE2,0},
 /*  [6C]  */	{"punpckl",TERM,SSE2,0},{"punpckh",TERM,SSE2,0},
-		{"movd",TERM,SSE2,0},	{"mov",TERM,SSE2,0} },
+		{"movd",TERM,SSE2,0},	{"9mov",TERM,SSE2,0} },
 /*  [70]  */ {  {"pshu",TERM,SSE2i,0},	{"ps",TERM,SSE2i1,0},
 		{"ps",TERM,SSE2i1,0},	{"ps",TERM,SSE2i1,0},
 /*  [74]  */	{"pcmpeqb",TERM,SSE2,0},{"pcmpeqw",TERM,SSE2,0},
@@ -1045,7 +1097,7 @@ static const struct instable op0F[16][16] = {
 /*  [78]  */	{"vmread",TERM,RMw,0},  {"vmwrite",TERM,MRw,0},
 		INVALID,		INVALID,
 /*  [7C]  */	{"haddp",TERM,SSE2,0},  {"hsubp",TERM,SSE2,0},
-		{"mov",TERM,SSE2tfm,0},	{"mov",TERM,SSE2tm,0} },
+		{"10mov",TERM,SSE2tfm,0},	{"11mov",TERM,SSE2tm,0} },
 /*  [80]  */ {  {"jo",TERM,D,0x03},	{"jno",TERM,D,0x03},
 		{"jb",TERM,D,0x03},	{"jae",TERM,D,0x03},
 /*  [84]  */	{"je",TERM,D,0x03},	{"jne",TERM,D,0x03},
@@ -1090,7 +1142,7 @@ static const struct instable op0F[16][16] = {
 /*  [D0]  */ {  {"addsubp",TERM,SSE2,0},{"psrlw",TERM,SSE2,0},
 		{"psrld",TERM,SSE2,0},	{"psrlq",TERM,SSE2,0},
 /*  [D4]  */	{"paddq",TERM,SSE2,0},	{"pmullw",TERM,SSE2,0},
-		{"mov",TERM,SSE2tm,0},	{"pmovmskb",TERM,SSE2,0},
+		{"12mov",TERM,SSE2tm,0},	{"pmovmskb",TERM,SSE2,0},
 /*  [D8]  */	{"psubusb",TERM,SSE2,0},{"psubusw",TERM,SSE2,0},
 		{"pminub",TERM,SSE2,0},	{"pand",TERM,SSE2,0},
 /*  [DC]  */	{"paddusb",TERM,SSE2,0},{"paddusw",TERM,SSE2,0},
@@ -1127,7 +1179,7 @@ static const struct instable op80[8] = {
  * Decode table for 0x81 opcodes.
  */
 static const struct instable op81[8] = {
-/*  [0]  */	{"add",TERM,IMlw,1},	{"or",TERM,IMw,1},
+/*  [0]  */	{"2add",TERM,IMlw,1},	{"or",TERM,IMw,1},
 		{"adc",TERM,IMlw,1},	{"sbb",TERM,IMlw,1},
 /*  [4]  */	{"and",TERM,IMw,1},	{"sub",TERM,IMlw,1},
 		{"xor",TERM,IMw,1},	{"cmp",TERM,IMlw,1},
@@ -1147,7 +1199,7 @@ static const struct instable op82[8] = {
  * Decode table for 0x83 opcodes.
  */
 static const struct instable op83[8] = {
-/*  [0]  */	{"add",TERM,IMlw,1},	{"or",TERM,IMlw,1},
+/*  [0]  */	{"add",TERM,IMlw,1, 0, "@1 = @1 + @2"},	{"or",TERM,IMlw,1},
 		{"adc",TERM,IMlw,1},	{"sbb",TERM,IMlw,1},
 /*  [4]  */	{"and",TERM,IMlw,1},	{"sub",TERM,IMlw,1},
 		{"xor",TERM,IMlw,1},	{"cmp",TERM,IMlw,1},
@@ -1365,9 +1417,9 @@ static const struct instable opFP5[8] = {
  * empty.
  */
 static const struct instable distable[16][16] = {
-/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1},
-		{"addb",TERM,MRw,0},	{"add",TERM,MRw,1},
-/* [0,4] */	{"addb",TERM,IA,0},	{"add",TERM,IA,1},
+/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1,0,"@1 = @1 + @2"},
+		{"addb",TERM,MRw,0},	{"5add",TERM,MRw,1},
+/* [0,4] */	{"addb",TERM,IA,0},	{"6add",TERM,IA,1},
 		{"3push",TERM,SEG,0x03,INVALID_64},
 					{"pop",TERM,SEG,0x03,INVALID_64},
 /* [0,8] */	{"orb",TERM,RMw,0},	{"or",TERM,RMw,1},
@@ -1415,7 +1467,7 @@ static const struct instable distable[16][16] = {
 		{"dec",TERM,R,1,&opREX},{"dec",TERM,R,1,&opREX} },
 /* [5,0] */  {  {"7push",TERM,R,0x03},	{"8push",TERM,R,0x03},
 		{"9push",TERM,R,0x03},	{"10push",TERM,R,0x03},
-/* [5,4] */	{"11push",TERM,R,0x03},	{"12push",TERM,R,0x03},
+/* [5,4] */	{"11push",TERM,R,0x03},	{"push",TERM,R,0x03,0,(char *)"stackPush( @1 )"},
 		{"13push",TERM,R,0x03},	{"14push",TERM,R,0x03},
 /* [5,8] */	{"pop",TERM,R,0x03},	{"pop",TERM,R,0x03},
 		{"pop",TERM,R,0x03},	{"pop",TERM,R,0x03},
@@ -1429,7 +1481,7 @@ static const struct instable distable[16][16] = {
 					{"%gs:",TERM,OVERRIDE,0},
 		{"data16",TERM,DM,0},	{"addr16",TERM,AM,0},
 /* [6,8] */	{"15push",TERM,I,0x03},	{"imul",TERM,IMUL,1},
-		{"16push",TERM,Ib,0x03,0,(char *)"stackPush(@)"},	{"imul",TERM,IMUL,1},
+		{"push",TERM,Ib,0x03,0,(char *)"stackPush( @1 )"},	{"imul",TERM,IMUL,1},
 /* [6,C] */	{"insb",TERM,GO_ON,0},	{"ins",TERM,GO_ON,1},
 		{"outsb",TERM,GO_ON,0},	{"outs",TERM,GO_ON,1} },
 /* [7,0] */  {  {"jo",TERM,BD,0},	{"jno",TERM,BD,0},
@@ -1444,10 +1496,10 @@ static const struct instable distable[16][16] = {
 		{"",op82,TERM,0},	{"",op83,TERM,0},
 /* [8,4] */	{"testb",TERM,MRw,0},	{"test",TERM,MRw,1},
 		{"xchgb",TERM,MRw,0},	{"xchg",TERM,MRw,1},
-/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1},
-		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1},
-/* [8,C] */	{"mov",TERM,SM,1},	{"lea",TERM,MR,1},
-		{"mov",TERM,MS,1},	{"pop",TERM,M,0x03} },
+/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1,0,"@1 = @2" },
+		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1,0,"@1 = @2"},
+/* [8,C] */	{"15mov",TERM,SM,1},	{"lea",TERM,MR,1},
+		{"16mov",TERM,MS,1},	{"pop",TERM,M,0x03} },
 /* [9,0] */  {  {"nop",TERM,GO_ON,0},	{"xchg",TERM,RA,1},
 		{"xchg",TERM,RA,1},	{"xchg",TERM,RA,1},
 /* [9,4] */	{"xchg",TERM,RA,1},	{"xchg",TERM,RA,1},
@@ -1456,8 +1508,8 @@ static const struct instable distable[16][16] = {
 		{"lcall",TERM,SO,0},	{"wait/",TERM,PREFIX,0},
 /* [9,C] */	{"pushf",TERM,GO_ON,1},	{"popf",TERM,GO_ON,1},
 		{"sahf",TERM,GO_ON,0},	{"lahf",TERM,GO_ON,0} },
-/* [A,0] */  {  {"movb",TERM,OA,0},	{"mov",TERM,OA,1},
-		{"movb",TERM,AO,0},	{"mov",TERM,AO,1},
+/* [A,0] */  {  {"movb",TERM,OA,0},	{"17mov",TERM,OA,1},
+		{"movb",TERM,AO,0},	{"18mov",TERM,AO,1},
 /* [A,4] */	{"movsb",TERM,SD,0},	{"movs",TERM,SD,1},
 		{"cmpsb",TERM,SD,0},	{"cmps",TERM,SD,1},
 /* [A,8] */	{"testb",TERM,IA,0},	{"test",TERM,IA,1},
@@ -1468,15 +1520,15 @@ static const struct instable distable[16][16] = {
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 /* [B,4] */	{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
-/* [B,8] */	{"mov",TERM,IR64,1},	{"mov",TERM,IR64,1},
-		{"mov",TERM,IR64,1},	{"mov",TERM,IR64,1},
-/* [B,C] */	{"mov",TERM,IR64,1},	{"mov",TERM,IR64,1},
-		{"mov",TERM,IR64,1},	{"mov",TERM,IR64,1} },
+/* [B,8] */	{"19mov",TERM,IR64,1},	{"20mov",TERM,IR64,1},
+		{"21mov",TERM,IR64,1},	{"22mov",TERM,IR64,1},
+/* [B,C] */	{"23mov",TERM,IR64,1},	{"24mov",TERM,IR64,1},
+		{"25mov",TERM,IR64,1},	{"26mov",TERM,IR64,1} },
 /* [C,0] */  {  {"",opC0,TERM,0},	{"",opC1,TERM,0},
 		{"ret",TERM,RET,0},	{"ret",TERM,GO_ON,0},
 /* [C,4] */	{"les",TERM,MR,0,INVALID_64},
 					{"lds",TERM,MR,0,INVALID_64},
-		{"movb",TERM,IMw,0},	{"mov",TERM,IMw,1},
+		{"movb",TERM,IMw,0},	{"27mov",TERM,IMw,1},
 /* [C,8] */	{"enter",TERM,ENTER,0},	{"leave",TERM,GO_ON,0},
 		{"lret",TERM,RET,0},	{"lret",TERM,GO_ON,0},
 /* [C,C] */	{"int",TERM,INT3,0},	{"int",TERM,Ib,0},
@@ -1645,7 +1697,7 @@ void addLine( struct hooleyFuction **currentFuncPtr, const struct instable *dp, 
 }
 
 /*
- * i386_disassemble()
+  * i386_disassemble()
  */
 uint32_t i386_disassemble(
 struct hooleyFuction **currentFuncPtr,
@@ -1680,10 +1732,8 @@ int verbose
     uint64_t imm0=0, imm1=0;
     uint32_t value0_size=0, value1_size=0;
 	
-	//TODO: A bit experimental..
-	char result1[MAX_RESULT]; // result0[MAX_RESULT], 
-	void *result0;
-	
+    char result0[MAX_RESULT], result1[MAX_RESULT];
+
 	const char *indirect_symbol_name=NULL;
 
     uint32_t i=0, length=0;
@@ -1709,8 +1759,7 @@ int verbose
 	}
 
 	memset(mnemonic, '\0', sizeof(mnemonic));
-//	memset(result0, '\0', sizeof(result0));
-	result0 = NULL;
+	memset(result0, '\0', sizeof(result0));
 	memset(result1, '\0', sizeof(result1));
 
 	/*
@@ -2083,13 +2132,28 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			char *regNameStringBuf2[256];
+			replacementPrint_operand( regNameStringBuf2, seg, symadd0, symsub0, value0, value0_size, result0, ",");
 			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
-			printf("%s\t", mnemonic);
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-			printf("%s\n", reg_name);
+			if(!strcmp(dp->name, "mov")){
+				if(dp->printStr){
+					char *newString = replaceArgsInStr( dp->printStr, regNameStringBuf2, reg_name, NULL );
+					printf("%s\n", newString);
+				} else {
+					[NSException raise:@"who is here?" format:nil];
+				}
+			} else {
+				[NSException raise:@"who is here?" format:nil];
+				//printf("%s\t", mnemonic);
+				//printf("%s", regNameStringBuf2);
+				//old			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+				//printf("%s\n", reg_name);
+			}
+			
+			
 			addLine( currentFuncPtr, dp, NULL );	// eg. movl 0x04(%ebp),%ebx			
 			return(length);
 
@@ -2105,12 +2169,23 @@ int verbose
 			// here
 			// TODO: puts regname in result0
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
+			char *regNameStringBuf[256];
+			replacementPrint_operand( regNameStringBuf, seg, symadd0, symsub0, value0, value0_size, result0, "");
+			
 			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
-			printf("%s\t%s,", mnemonic, reg_name);
 			
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			if(dp->printStr){
+				char *newString = replaceArgsInStr( dp->printStr, reg_name, regNameStringBuf, NULL );
+				printf("%s\n", newString);
+			} else {
+				[NSException raise:@"who is here?" format:nil];
+			}
+		
+//				printf("%s\t%s,", mnemonic, reg_name);
+//				printf("%s\n,", regNameStringBuf );
+			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			
 			struct InstrArgStruct *testExperimentOnly = calloc(2, sizeof(struct InstrArgStruct) );
 			testExperimentOnly[0].numberOfArgs = 2;
@@ -3689,30 +3764,23 @@ int verbose
 
 				/* single 8 bit immediate operand */
 				case Ib:
-					value0_size = sizeof(char);
-					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+					value0_size = 1;
+			
+					// look up the symbol
+					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			
+					char *immediateOperandStringBuf[256];
+					replacementPrint_operand( (char *)immediateOperandStringBuf, "", symadd0, symsub0, imm0, value0_size, "", "");
+			
 					if(dp->printStr){
-						int numberOfArgs = 1;
-						int len = strlen(dp->printStr)+1;
-						char *replaceeVal = "cuckoo";
-						int replaceeLen = strlen(replaceeVal);
-						int newStringLen = len - numberOfArgs + replaceeLen;
-						char *newStr = malloc(newStringLen);
-						char *p = strchr(dp->printStr,'@');
-						int indexOfToken = p-(dp->printStr);
-						
-						//copy the bit before the @
-						strncpy( newStr, dp->printStr, indexOfToken );
-						
-						//add in the replacement
-						//copy the bit after the @
-						sprintf( newStr+indexOfToken, " %s %s", replaceeVal, dp->printStr+indexOfToken+1 );		
-						assert( newStringLen == strlen(newStr)+1 );
-						
+						char *newString = replaceArgsInStr( dp->printStr, immediateOperandStringBuf, NULL, NULL );
+						printf("%s\n", newString);
 					} else {
 						printf("%s\t$", mnemonic);
+						printf("%s\n", immediateOperandStringBuf);
 					}
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+
+					// TODO: somehow need to pass in the immediate argument
 					addLine( currentFuncPtr, dp, NULL ); // eg. pushl $0x00
 					return(length);
 
@@ -3853,13 +3921,12 @@ int verbose
  * get_operand() is used to return the symbolic operand for an operand that is
  * encoded with a mod r/m byte.
  */
-static void get_operand(
+static void replacemnet_get_operand(
 const char **symadd,
 const char **symsub,
 uint32_t *value,
 uint32_t *value_size,
 void *result,
-
 const cpu_type_t cputype,
 const uint32_t mode,
 const uint32_t r_m,
@@ -3869,22 +3936,209 @@ const int addr16,
 const int sse2,
 const int mmx,
 const unsigned int rex,
-
 const char *sect,
-	uint32_t sect_addr,
-	uint32_t *length,
-	uint32_t *left,
-	const uint32_t addr,
-	const struct relocation_info *sorted_relocs,
-	const uint32_t nsorted_relocs,
-	const struct nlist *symbols,
-	const struct nlist_64 *symbols64,
-	const uint32_t nsymbols,
-	const char *strings,
-	const uint32_t strings_size,
-	const struct symbol *sorted_symbols,
-	const uint32_t nsorted_symbols,
-	const int verbose
+uint32_t sect_addr,
+uint32_t *length,
+uint32_t *left,
+const uint32_t addr,
+const struct relocation_info *sorted_relocs,
+const uint32_t nsorted_relocs,
+const struct nlist *symbols,
+const struct nlist_64 *symbols64,
+const uint32_t nsymbols,
+const char *strings,
+const uint32_t strings_size,
+const struct symbol *sorted_symbols,
+const uint32_t nsorted_symbols,
+const int verbose
+){
+    int s_i_b;		/* flag presence of scale-index-byte */
+    unsigned char byte;		/* the scale-index-byte */
+    uint32_t ss;		/* scale-factor from scale-index-byte */
+    uint32_t index; 		/* index register number from scale-index-byte*/
+    uint32_t base;  		/* base register number from scale-index-byte */
+	uint32_t sect_offset;
+    uint64_t offset;
+	
+	*symadd = NULL;
+	*symsub = NULL;
+	*value = 0;
+	//	*result = '\0';
+	
+	/* check for the presence of the s-i-b byte */
+	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
+	    s_i_b = TRUE;
+	    byte = get_value(sizeof(char), sect, length, left);
+	    modrm_byte(&ss, &index, &base, byte);
+	} else {
+	    s_i_b = FALSE;
+	}
+	if(addr16) {
+	    *value_size = dispsize16[r_m][mode];
+	}else{
+	    *value_size = dispsize32[r_m][mode];
+	}
+	if(s_i_b == TRUE && mode == 0 && base == EBP)
+	    *value_size = sizeof(int32_t);
+	
+	if(*value_size != 0){
+		sect_offset = addr + *length - sect_addr;
+	    *value = get_value(*value_size, sect, length, left);
+		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+		if(*symadd != NULL){
+			*value = offset;
+		}
+		else {
+			*symadd = GUESS_SYMBOL(*value);
+			if(*symadd != NULL)
+				*value = 0;
+		}
+	}
+	
+	if(s_i_b == TRUE){
+	    if(((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) && !addr16){
+			/* If the scale factor is 1, don't display it. */
+			if(ss == 0){
+				/*
+				 * If mode is 0 and base is 5 (regardless of the rex bit)
+				 * there is no base register, and if the index is
+				 * also 4 then the operand is just a displacement.
+				 */
+				if(mode == 0 && base == 5 && index == 4){
+					result = "";
+				}
+				else {
+					sprintf(result, "(%s%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)]);
+				}
+			}
+			else {
+				/*
+				 * If mode is 0 and base is 5 (regardless of the rex bit)
+				 * there is no base register.
+				 */
+				if(mode == 0 && base == 5){
+					sprintf(result, "(%s,%s)", indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+				}
+				else {
+					sprintf(result, "(%s%s,%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+				}
+			}
+	    }
+	    else {
+			/* If the scale factor is 1, don't display it. */
+			if(ss == 0){
+				/*
+				 * If mode is 0 and base is 5 it there is no base register,
+				 * and if the index is also 4 then the operand is just a
+				 * displacement.
+				 */
+				if(mode == 0 && base == 5 && index == 4){
+					result = "";
+				} else {
+					const char *regname = regname32[mode][base];
+					sprintf(result, "(%s%s)", regname, indexname[index]);
+				}
+			} else {
+				const char *regname = regname32[mode][base];				
+				sprintf(result, "(%s%s,%s)", regname, indexname[index], scale_factor[ss]);
+			}
+	    }
+	} else { /* no s-i-b */
+	    if(mode == REG_ONLY){
+			if(sse2 == TRUE) {
+				sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
+			} else if(mmx == TRUE) {
+				sprintf(result, "%%mm%u", r_m);
+			} else if (data16 == FALSE || rex != 0) {
+				/* The presence of a REX byte overrides 66h. */
+				// const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				const struct hooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				*(struct hooReg *)result = *reg_struct;
+				//char *reg_name;
+				//GET_BEST_REG_NAME( reg_name, reg_struct );
+				//strcpy(result, reg_name);
+			} else {
+				const struct hooReg *reg_struct = &REG16_Struct[r_m][wbit];
+				const char *reg_name; // = REG16[r_m][wbit];
+				GET_BEST_REG_NAME( reg_name, reg_struct );
+				strcpy(result, reg_name);
+			}
+	    } else { /* Modes 00, 01, or 10 */
+			if(r_m == EBP && mode == 0){ /* displacement only */
+				if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
+					/*
+					 * In 64-bit mode, mod=00 and r/m=101 defines
+					 * RIP-relative addressing with a 32-bit displacement.
+					 * In 32-bit mode, it's just a 32-bit displacement. See
+					 * section 2.2.1.6 ("RIP-Relative Addressing") of Volume
+					 * 2A of the Intel IA-32 manual.
+					 */
+					sprintf(result, "(%%rip)");
+				} else {
+					//eh				*result = '\0';
+				}
+			} else {
+				/* Modes 00, 01, or 10, not displacement only, no s-i-b */
+				if(addr16 == TRUE) {
+					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
+						/*
+						 *  In 64-bit mode, the address size prefix drops us
+						 * down to 32-bit, not 16-bit.
+						 */
+						const char *reg_name = regname32[mode][r_m];					
+						sprintf(result, "(%s)", reg_name);
+					} else {
+						/* Woahh.. This is Fun */
+						// const struct hooReg *reg_struct = &regname16_Struct[mode][r_m];
+						
+						// const char *reg_name; // = regname16[mode][r_m];
+						// GET_BEST_REG_NAME( reg_name, reg_struct );
+						// TODO: This returns 2 registers, like this… (reg1,reg2)
+						sprintf(result, "(%s)", "%bp,%si" );
+					}
+				} else {
+					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
+						sprintf(result, "(%s)", regname64[mode][r_m + (REX_B(rex) << 3)]);
+					} else {
+						const char *regname = regname32[mode][r_m];					
+						sprintf(result, "(%s)", regname);
+					}
+				}
+			}
+	    }
+	}
+}
+
+static void get_operand(
+const char **symadd,
+const char **symsub,
+uint32_t *value,
+uint32_t *value_size,
+void *result,
+const cpu_type_t cputype,
+const uint32_t mode,
+const uint32_t r_m,
+const uint32_t wbit,
+const int data16,
+const int addr16,
+const int sse2,
+const int mmx,
+const unsigned int rex,
+const char *sect,
+uint32_t sect_addr,
+uint32_t *length,
+uint32_t *left,
+const uint32_t addr,
+const struct relocation_info *sorted_relocs,
+const uint32_t nsorted_relocs,
+const struct nlist *symbols,
+const struct nlist_64 *symbols64,
+const uint32_t nsymbols,
+const char *strings,
+const uint32_t strings_size,
+const struct symbol *sorted_symbols,
+const uint32_t nsorted_symbols,
+const int verbose
 )
 {
     int s_i_b;		/* flag presence of scale-index-byte */
@@ -3986,13 +4240,12 @@ const char *sect,
 				sprintf(result, "%%mm%u", r_m);
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
-				// const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
 				const struct hooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				
-				*(struct hooReg *)result = *reg_struct;
-				//char *reg_name;
-				//GET_BEST_REG_NAME( reg_name, reg_struct );
-				//strcpy(result, reg_name);
+				// *(struct hooReg *)result = *reg_struct;
+				char *reg_name;
+				GET_BEST_REG_NAME( reg_name, reg_struct );
+				strcpy(result, reg_name);
 			} else {
 				const struct hooReg *reg_struct = &REG16_Struct[r_m][wbit];
 				const char *reg_name; // = REG16[r_m][wbit];
@@ -4011,7 +4264,7 @@ const char *sect,
 			 */
 				sprintf(result, "(%%rip)");
 		    } else {
-//eh				*result = '\0';
+//eh?				*result = '\0';
 			}
 		} else {
 		    /* Modes 00, 01, or 10, not displacement only, no s-i-b */
@@ -4042,6 +4295,43 @@ const char *sect,
 		    }
 		}
 	    }
+	}
+}
+
+
+static void replacement_immediate(
+					  const char **symadd,
+					  const char **symsub,
+					  uint64_t *value,
+					  uint32_t value_size,
+					  const char *sect,
+					  uint32_t sect_addr,
+					  uint32_t *length,
+					  uint32_t *left,
+					  cpu_type_t cputype,
+					  const uint32_t addr,
+					  const struct relocation_info *sorted_relocs,
+					  const uint32_t nsorted_relocs,
+					  const struct nlist *symbols,
+					  const struct nlist_64 *symbols64,
+					  const uint32_t nsymbols,
+					  const char *strings,
+					  const uint32_t strings_size,
+					  const struct symbol *sorted_symbols,
+					  const uint32_t nsorted_symbols,
+					  const int verbose
+					  ) {
+	
+	uint64_t offset;
+	uint32_t sect_offset = addr + *length - sect_addr;
+	*value = get_value(value_size, sect, length, left);
+	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+	if(*symadd==NULL){
+		*symadd = GUESS_SYMBOL(*value);
+		if(*symadd != NULL)
+			*value = 0; //TODO: stop zeroing out this!
+	} else if(*symsub != NULL){
+		*value = offset;
 	}
 }
 
@@ -4278,14 +4568,42 @@ for(i = 0; i < nrelocs; i++){
  * print_operand() prints an operand from it's broken out symbolic
  * representation.
  */
-static void print_operand(
-const char *seg,
-const char *symadd,
-const char *symsub,
-uint64_t value,
-unsigned int value_size,
-const char *result,
-const char *tail) {
+
+
+static void replacementPrint_operand( char *outPutBuffer, const char *seg, const char *symadd, const char *symsub, uint64_t value, unsigned int value_size, const char *result, const char *tail) {
+
+	if(symadd != NULL){
+	    if(symsub != NULL){
+			if(value_size != 0){
+				if(value != 0)
+					sprintf( outPutBuffer, "%s%s-%s+0x%0*llx%s%s", seg, symadd, symsub, (int)value_size * 2, value, result, tail);
+				else
+					sprintf( outPutBuffer, "%s%s-%s%s%s", seg, symadd, symsub, result, tail);
+				
+			} else {
+				sprintf( outPutBuffer, "%s%s%s%s", seg, symadd, result, tail);
+			}
+	    } else {
+			if(value_size != 0){
+				if(value != 0)
+					sprintf( outPutBuffer, "%s%s+0x%0*llx%s%s", seg, symadd, (int)value_size * 2, value, result, tail);
+				else
+					sprintf( outPutBuffer, "%s%s%s%s", seg, symadd, result, tail);
+			} else {
+				sprintf( outPutBuffer, "%s%s%s%s", seg, symadd, result, tail);
+			}
+	    }
+	} else {
+	    if(value_size != 0){
+			sprintf( outPutBuffer, "%s0x%0*llx%s%s", seg, (int)value_size *2, value, result, tail);
+	    } else {
+			sprintf( outPutBuffer, "%s%s%s", seg, result, tail);
+	    }
+	}
+}
+
+static void print_operand( const char *seg, const char *symadd, const char *symsub, uint64_t value, unsigned int value_size, const char *result, const char *tail) {
+	
 	if(symadd != NULL){
 	    if(symsub != NULL){
 			if(value_size != 0){
@@ -4312,7 +4630,7 @@ const char *tail) {
 	    if(value_size != 0){
 			printf("%s0x%0*llx%s%s", seg, (int)value_size *2, value, result, tail);
 	    } else {
-//quiet			printf("%s%s%s", seg, result, tail);
+			printf("%s%s%s", seg, result, tail);
 	    }
 	}
 }

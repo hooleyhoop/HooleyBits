@@ -31,9 +31,9 @@
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
-		73A7BD8B123A2ED3003FF058 /* TextSectionDisasemble.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */; };
-		73A7BDCF123A369A003FF058 /* TextSectionDisasemble.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */; };
-		73A7BDEE123A3985003FF058 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
+		73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */; };
+		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
+		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -99,6 +99,9 @@
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
+		73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrettyStringFindReplace.m; path = Tests/PrettyStringFindReplace.m; sourceTree = "<group>"; };
+		73DBEAD912476D1A0024B450 /* StringManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringManipulation.h; path = Classes/StringManipulation.h; sourceTree = "<group>"; };
+		73DBEADA12476D1A0024B450 /* StringManipulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringManipulation.m; path = Classes/StringManipulation.m; sourceTree = "<group>"; };
 		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
 		73E761E8121C28C900A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Classes/Section.m; sourceTree = "<group>"; };
 		73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = Classes/SHMemoryBlock.h; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 				731702D8123290EF00EE9ED6 /* IntHash.m */,
 				73FF6B250FD6AB8B00A8136A /* Hex.h */,
 				73FF6B240FD6AB8B00A8136A /* Hex.m */,
+				73DBEAD912476D1A0024B450 /* StringManipulation.h */,
+				73DBEADA12476D1A0024B450 /* StringManipulation.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */,
 				731702DE1232910200EE9ED6 /* IntHashTests.m */,
 				73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */,
+				73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -472,10 +478,9 @@
 				737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */,
 				731701A0123286BF00EE9ED6 /* Hex.m in Sources */,
 				731702D9123290EF00EE9ED6 /* IntHash.m in Sources */,
-				73A7BD8B123A2ED3003FF058 /* TextSectionDisasemble.m in Sources */,
-				73A7BDCF123A369A003FF058 /* TextSectionDisasemble.m in Sources */,
-				73A7BDEE123A3985003FF058 /* i386_disasm.m in Sources */,
 				73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
+				73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */,
+				73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +504,7 @@
 				731702DA123290EF00EE9ED6 /* IntHash.m in Sources */,
 				730830B112392CA7007F8247 /* i386_disasm.m in Sources */,
 				73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
+				73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
