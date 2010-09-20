@@ -455,12 +455,18 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 ///* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
 //};
 
-struct hooReg {
-    char name[MAX_MNEMONIC];
-    char prettyName[24];	
+struct HooReg {
+	char name[MAX_MNEMONIC];
+	char prettyName[24];	
 };
 
-static const struct hooReg REG16_Struct[8][2] = {
+struct ImediateValue {
+	char name[MAX_MNEMONIC];
+	char prettyName[24];
+	int value;
+};
+
+static const struct HooReg REG16_Struct[8][2] = {
 	{ {"%al","%accumulator"},	{"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
 	{ {"%cl","%count"},			{"%cx","%count"} },
 	{ {"%dl","%data"},			{"%dx","%data"} },
@@ -471,7 +477,7 @@ static const struct hooReg REG16_Struct[8][2] = {
 	{ {"%bh","%base"},			{"%di","%destination_index"} }
 };
 
-static const struct hooReg REG32_Struct[16][3] = {
+static const struct HooReg REG32_Struct[16][3] = {
 	{ {"%al","%accumulator"},	{"%eax","%accumulator"},		{"%rax","%accumulator"} },
 	{ {"%cl","%count"},			{"%ecx","%count"},				{"%rcx","%count"} },
 	{ {"%dl","%data"},			{"%edx","%data"},				{"%rdx","%data"} },
@@ -541,7 +547,7 @@ static const char dispsize32 [8][4] = {
 ///*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
 ///*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
 //};
-static const struct hooReg regname16_Struct[4][8] = {
+static const struct HooReg regname16_Struct[4][8] = {
 /*reg  000        001        010        011        100    101   110     111 */
 /*mod*/
 /*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
@@ -1199,7 +1205,7 @@ static const struct instable op82[8] = {
  * Decode table for 0x83 opcodes.
  */
 static const struct instable op83[8] = {
-/*  [0]  */	{"add",TERM,IMlw,1, 0, "@1 = @1 + @2"},	{"or",TERM,IMlw,1},
+/*  [0]  */	{"add",TERM,IMlw,1, 0, (char *)"@1 = @1 + @2"},	{"or",TERM,IMlw,1},
 		{"adc",TERM,IMlw,1},	{"sbb",TERM,IMlw,1},
 /*  [4]  */	{"and",TERM,IMlw,1},	{"sub",TERM,IMlw,1},
 		{"xor",TERM,IMlw,1},	{"cmp",TERM,IMlw,1},
@@ -1417,7 +1423,7 @@ static const struct instable opFP5[8] = {
  * empty.
  */
 static const struct instable distable[16][16] = {
-/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1,0,"@1 = @1 + @2"},
+/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1,0,(char *)"@1 = @1 + @2"},
 		{"addb",TERM,MRw,0},	{"5add",TERM,MRw,1},
 /* [0,4] */	{"addb",TERM,IA,0},	{"6add",TERM,IA,1},
 		{"3push",TERM,SEG,0x03,INVALID_64},
@@ -1466,9 +1472,9 @@ static const struct instable distable[16][16] = {
 /* [4,C] */	{"dec",TERM,R,1,&opREX},{"dec",TERM,R,1,&opREX},
 		{"dec",TERM,R,1,&opREX},{"dec",TERM,R,1,&opREX} },
 /* [5,0] */  {  {"7push",TERM,R,0x03},	{"8push",TERM,R,0x03},
-		{"9push",TERM,R,0x03},	{"10push",TERM,R,0x03},
+		{"9push",TERM,R,0x03},	{"push",TERM,R,0x03,0,(char *)"stackPush( @1 )"},
 /* [5,4] */	{"11push",TERM,R,0x03},	{"push",TERM,R,0x03,0,(char *)"stackPush( @1 )"},
-		{"13push",TERM,R,0x03},	{"14push",TERM,R,0x03},
+		{"push",TERM,R,0x03,0,(char *)"stackPush( @1 )"},	{"push",TERM,R,0x03,0,(char *)"stackPush( @1 )"},
 /* [5,8] */	{"pop",TERM,R,0x03},	{"pop",TERM,R,0x03},
 		{"pop",TERM,R,0x03},	{"pop",TERM,R,0x03},
 /* [5,C] */	{"pop",TERM,R,0x03},	{"pop",TERM,R,0x03},
@@ -1480,7 +1486,7 @@ static const struct instable distable[16][16] = {
 /* [6,4] */	{"%fs:",TERM,OVERRIDE,0},
 					{"%gs:",TERM,OVERRIDE,0},
 		{"data16",TERM,DM,0},	{"addr16",TERM,AM,0},
-/* [6,8] */	{"15push",TERM,I,0x03},	{"imul",TERM,IMUL,1},
+/* [6,8] */	{"push",TERM,I,0x03,0,(char *)"stackPush( @1 )"},	{"imul",TERM,IMUL,1},
 		{"push",TERM,Ib,0x03,0,(char *)"stackPush( @1 )"},	{"imul",TERM,IMUL,1},
 /* [6,C] */	{"insb",TERM,GO_ON,0},	{"ins",TERM,GO_ON,1},
 		{"outsb",TERM,GO_ON,0},	{"outs",TERM,GO_ON,1} },
@@ -1496,8 +1502,8 @@ static const struct instable distable[16][16] = {
 		{"",op82,TERM,0},	{"",op83,TERM,0},
 /* [8,4] */	{"testb",TERM,MRw,0},	{"test",TERM,MRw,1},
 		{"xchgb",TERM,MRw,0},	{"xchg",TERM,MRw,1},
-/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1,0,"@1 = @2" },
-		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1,0,"@1 = @2"},
+/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1,0,(char *)"@1 = @2" },
+		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1,0,(char *)"@1 = @2"},
 /* [8,C] */	{"15mov",TERM,SM,1},	{"lea",TERM,MR,1},
 		{"16mov",TERM,MS,1},	{"pop",TERM,M,0x03} },
 /* [9,0] */  {  {"nop",TERM,GO_ON,0},	{"xchg",TERM,RA,1},
@@ -1508,8 +1514,8 @@ static const struct instable distable[16][16] = {
 		{"lcall",TERM,SO,0},	{"wait/",TERM,PREFIX,0},
 /* [9,C] */	{"pushf",TERM,GO_ON,1},	{"popf",TERM,GO_ON,1},
 		{"sahf",TERM,GO_ON,0},	{"lahf",TERM,GO_ON,0} },
-/* [A,0] */  {  {"movb",TERM,OA,0},	{"17mov",TERM,OA,1},
-		{"movb",TERM,AO,0},	{"18mov",TERM,AO,1},
+/* [A,0] */  {  {"movb",TERM,OA,0},	{"1mov",TERM,OA,1,0,(char *)"@1 = @2"},
+		{"movb",TERM,AO,0},	{"mov",TERM,AO,1,0,(char *)"@1 = @2"},
 /* [A,4] */	{"movsb",TERM,SD,0},	{"movs",TERM,SD,1},
 		{"cmpsb",TERM,SD,0},	{"cmps",TERM,SD,1},
 /* [A,8] */	{"testb",TERM,IA,0},	{"test",TERM,IA,1},
@@ -1520,7 +1526,7 @@ static const struct instable distable[16][16] = {
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 /* [B,4] */	{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
-/* [B,8] */	{"19mov",TERM,IR64,1},	{"20mov",TERM,IR64,1},
+/* [B,8] */	{"19mov",TERM,IR64,1},	{"mov",TERM,IR64,1,0,(char *)"@1 = @2"},
 		{"21mov",TERM,IR64,1},	{"22mov",TERM,IR64,1},
 /* [B,C] */	{"23mov",TERM,IR64,1},	{"24mov",TERM,IR64,1},
 		{"25mov",TERM,IR64,1},	{"26mov",TERM,IR64,1} },
@@ -1528,7 +1534,7 @@ static const struct instable distable[16][16] = {
 		{"ret",TERM,RET,0},	{"ret",TERM,GO_ON,0},
 /* [C,4] */	{"les",TERM,MR,0,INVALID_64},
 					{"lds",TERM,MR,0,INVALID_64},
-		{"movb",TERM,IMw,0},	{"27mov",TERM,IMw,1},
+		{"movb",TERM,IMw,0},	{"mov",TERM,IMw,1,0,(char *)"@1 = @2"},
 /* [C,8] */	{"enter",TERM,ENTER,0},	{"leave",TERM,GO_ON,0},
 		{"lret",TERM,RET,0},	{"lret",TERM,GO_ON,0},
 /* [C,C] */	{"int",TERM,INT3,0},	{"int",TERM,Ib,0},
@@ -1626,9 +1632,9 @@ static const struct instable distable[16][16] = {
 //}
 
 /* yeah */
-static const struct hooReg *get_regStruct( int reg, int wbit, int data16, int rex ) {
+static const struct HooReg *get_regStruct( int reg, int wbit, int data16, int rex ) {
 	
-	const struct hooReg *regStruct;
+	const struct HooReg *regStruct;
 	if (rex != 0) {
 		regStruct = &REG32_Struct[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
 	} else if (data16) {
@@ -1640,9 +1646,9 @@ static const struct hooReg *get_regStruct( int reg, int wbit, int data16, int re
 }
 
 /* yeah */
-static const struct hooReg *get_r_m_regStruct( int r_m, int wbit, int data16, int rex ) {
+static const struct HooReg *get_r_m_regStruct( int r_m, int wbit, int data16, int rex ) {
 
-	const struct hooReg *regStruct;
+	const struct HooReg *regStruct;
 	if( rex!=0 ) {
 		regStruct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
 	} else if (data16) {
@@ -1751,7 +1757,7 @@ int verbose
     int sse2=FALSE;		/* sse2 instruction using xmmreg's */
     int mmx=FALSE;		/* mmx instruction using mmreg's */
     unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
-	const struct hooReg *reg_struct = NULL;
+	const struct HooReg *reg_struct = NULL;
 	
 	if(left == 0){
 	   printf("(end of section)\n");
@@ -2146,14 +2152,12 @@ int verbose
 					[NSException raise:@"who is here?" format:nil];
 				}
 			} else {
-				[NSException raise:@"who is here?" format:nil];
-				//printf("%s\t", mnemonic);
-				//printf("%s", regNameStringBuf2);
+				printf("%s\t", mnemonic);
+				printf("%s", regNameStringBuf2);
 				//old			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-				//printf("%s\n", reg_name);
+				printf("%s\n", reg_name);
 			}
-			
-			
+
 			addLine( currentFuncPtr, dp, NULL );	// eg. movl 0x04(%ebp),%ebx			
 			return(length);
 
@@ -2166,13 +2170,9 @@ int verbose
 				byte = get_value(sizeof(char), sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			// here
-			// TODO: puts regname in result0
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
 			char *regNameStringBuf[256];
 			replacementPrint_operand( regNameStringBuf, seg, symadd0, symsub0, value0, value0_size, result0, "");
-			
-			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 			
@@ -2180,16 +2180,16 @@ int verbose
 				char *newString = replaceArgsInStr( dp->printStr, reg_name, regNameStringBuf, NULL );
 				printf("%s\n", newString);
 			} else {
-				[NSException raise:@"who is here?" format:nil];
+				printf("%s\t%s,", mnemonic, reg_name);
+				printf("%s\n,", regNameStringBuf );
+				// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			}
-		
-//				printf("%s\t%s,", mnemonic, reg_name);
-//				printf("%s\n,", regNameStringBuf );
-			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			
 			struct InstrArgStruct *testExperimentOnly = calloc(2, sizeof(struct InstrArgStruct) );
 			testExperimentOnly[0].numberOfArgs = 2;
 			testExperimentOnly[0].value = (void *)reg_struct;
+			
+			//TODO: here! fill this in
 			testExperimentOnly[1].value = (void *)reg_struct;
 
 			addLine( currentFuncPtr, dp, testExperimentOnly ); // -- move register to oprand eg. movl	%esp,%ebp		movl %ebx,0x00(%esp)
@@ -3583,7 +3583,12 @@ int verbose
 						*currentFuncPtr = currentFunc;
 					}
 					
-					printf("%s\t%s\n", mnemonic, reg_name );
+					if(dp->printStr){
+						char *newString = replaceArgsInStr( dp->printStr, reg_name, NULL, NULL );
+						printf("%s\n", newString);
+					} else {
+						printf("%s\t%s\n", mnemonic, reg_name );
+					}
 					addLine( currentFuncPtr, dp, NULL );	// eg. pushl %ebp
 					return(length);
 
@@ -3623,7 +3628,6 @@ int verbose
 					reg_struct = get_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 
-			
 					printf("%s\t", mnemonic);
 					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 					printf("%s\n", reg_name);
@@ -3766,7 +3770,7 @@ int verbose
 				case Ib:
 					value0_size = 1;
 			
-					// look up the symbol
+					// look up the symbol - if we find a match this will zero out value0
 					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			
 					char *immediateOperandStringBuf[256];
@@ -3780,8 +3784,16 @@ int verbose
 						printf("%s\n", immediateOperandStringBuf);
 					}
 
-					// TODO: somehow need to pass in the immediate argument
-					addLine( currentFuncPtr, dp, NULL ); // eg. pushl $0x00
+					// We need to pass in the immediate argument
+					struct ImediateValue *imedHolder = calloc(1, sizeof(struct ImediateValue) );
+					strcpy( imedHolder->name, immediateOperandStringBuf );
+					imedHolder->value = value0;
+			
+					struct InstrArgStruct *argStruct1 = calloc(1, sizeof(struct InstrArgStruct) );
+					argStruct1[0].numberOfArgs = 1;
+					argStruct1[0].value = (void *)imedHolder;
+			
+					addLine( currentFuncPtr, dp, argStruct1 ); // eg. pushl $0x00 
 					return(length);
 
 				case ENTER:
@@ -4052,13 +4064,13 @@ const int verbose
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
 				// const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				const struct hooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				*(struct hooReg *)result = *reg_struct;
+				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				*(struct HooReg *)result = *reg_struct;
 				//char *reg_name;
 				//GET_BEST_REG_NAME( reg_name, reg_struct );
 				//strcpy(result, reg_name);
 			} else {
-				const struct hooReg *reg_struct = &REG16_Struct[r_m][wbit];
+				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
 				const char *reg_name; // = REG16[r_m][wbit];
 				GET_BEST_REG_NAME( reg_name, reg_struct );
 				strcpy(result, reg_name);
@@ -4089,7 +4101,7 @@ const int verbose
 						sprintf(result, "(%s)", reg_name);
 					} else {
 						/* Woahh.. This is Fun */
-						// const struct hooReg *reg_struct = &regname16_Struct[mode][r_m];
+						// const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
 						
 						// const char *reg_name; // = regname16[mode][r_m];
 						// GET_BEST_REG_NAME( reg_name, reg_struct );
@@ -4241,13 +4253,13 @@ const int verbose
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
 				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				const struct hooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				// *(struct hooReg *)result = *reg_struct;
+				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				// *(struct HooReg *)result = *reg_struct;
 				char *reg_name;
 				GET_BEST_REG_NAME( reg_name, reg_struct );
 				strcpy(result, reg_name);
 			} else {
-				const struct hooReg *reg_struct = &REG16_Struct[r_m][wbit];
+				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
 				const char *reg_name; // = REG16[r_m][wbit];
 				GET_BEST_REG_NAME( reg_name, reg_struct );
 				strcpy(result, reg_name);
@@ -4278,7 +4290,7 @@ const int verbose
 					sprintf(result, "(%s)", reg_name);
 				} else {
 					/* Woahh.. This is Fun */
-					// const struct hooReg *reg_struct = &regname16_Struct[mode][r_m];
+					// const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
 					
 					// const char *reg_name; // = regname16[mode][r_m];
 					// GET_BEST_REG_NAME( reg_name, reg_struct );

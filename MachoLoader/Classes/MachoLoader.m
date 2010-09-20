@@ -763,7 +763,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 //		printf("%0x ", memPtr);
 		
 		printf("%i ", iterationCounter);
-		if(iterationCounter==0)
+		if(iterationCounter==14)
 			NSLog(@"stop here");
 		iterationCounter++;
 		
