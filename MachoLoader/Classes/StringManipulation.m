@@ -42,7 +42,8 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 			foundArg++;
 			i++;
 			char charNum = inStr[i];
-			NSUInteger argNum = atoi(&charNum);
+			NSUInteger argNum = charNum - '0';
+
 			switch (argNum) {
 				case 1:
 					lengthOfInsertedArgStrings = lengthOfInsertedArgStrings + arg1Len;
@@ -106,8 +107,8 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 			indexOfToken = (NSUInteger)p-(NSUInteger)currentSrc;
 			
 			// which arg goes here? Get the number following the @
-			char argNumChar = ((char *)currentSrc)[indexOfToken+1];
-			NSUInteger argNum = atoi(&argNumChar);
+			char argNumChar1 = ((char *)currentSrc)[indexOfToken+1];
+			int argNum1 = argNumChar1 - '0';
 			
 			//copy the bit before the @
 			strncpy( (void *)currentDst, (void *)currentSrc, indexOfToken );
@@ -115,7 +116,7 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 			currentDst = currentDst+indexOfToken;
 			
 			//add in the replacement
-			switch (argNum) {
+			switch (argNum1) {
 				case 1:
 					strncpy( (void *)currentDst, arg1, arg1Len );
 					currentDst = currentDst+arg1Len;
@@ -129,7 +130,8 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 					currentDst = currentDst+arg3Len;
 					break;					
 				default:
-					[NSException raise:@"Uknown arg index for replacement" format:nil];
+					// [NSException raise:@"Uknown arg index for replacement" format:@"%i", argNum];
+					NSLog(@"something got mangled? %i", argNum1);
 					break;
 			}
 		}

@@ -1082,11 +1082,11 @@ static const struct instable op0F[16][16] = {
 		{"cmovle",TERM,MRw,1},	{"cmovg",TERM,MRw,1} },
 /*  [50]  */ {  {"movmsk",TERM,SSE2,0},	{"sqrt",TERM,SSE2,0},
 		{"rsqrt",TERM,SSE2,0},	{"rcp",TERM,SSE2,0},
-/*  [54]  */	{"and",TERM,SSE2,0},	{"andn",TERM,SSE2,0},
+/*  [54]  */	{"1and",TERM,SSE2,0},	{"andn",TERM,SSE2,0},
 		{"or",TERM,SSE2,0},	{"xor",TERM,SSE2,0},
 /*  [58]  */	{"1add",TERM,SSE2,0},	{"mul",TERM,SSE2,0},
 		{"cvt",TERM,SSE2,0},	{"cvt",TERM,SSE2,0},
-/*  [5C]  */	{"sub",TERM,SSE2,0},	{"min",TERM,SSE2,0},
+/*  [5C]  */	{"1sub",TERM,SSE2,0},	{"min",TERM,SSE2,0},
 		{"div",TERM,SSE2,0},	{"max",TERM,SSE2,0} },
 /*  [60]  */ {  {"punpcklbw",TERM,SSE2,0},{"punpcklwd",TERM,SSE2,0},
 		{"punpckldq",TERM,SSE2,0},{"packsswb",TERM,SSE2,0},
@@ -1187,7 +1187,7 @@ static const struct instable op80[8] = {
 static const struct instable op81[8] = {
 /*  [0]  */	{"2add",TERM,IMlw,1},	{"or",TERM,IMw,1},
 		{"adc",TERM,IMlw,1},	{"sbb",TERM,IMlw,1},
-/*  [4]  */	{"and",TERM,IMw,1},	{"sub",TERM,IMlw,1},
+/*  [4]  */	{"2and",TERM,IMw,1},	{"2sub",TERM,IMlw,1},
 		{"xor",TERM,IMw,1},	{"cmp",TERM,IMlw,1},
 };
 
@@ -1205,9 +1205,9 @@ static const struct instable op82[8] = {
  * Decode table for 0x83 opcodes.
  */
 static const struct instable op83[8] = {
-/*  [0]  */	{"add",TERM,IMlw,1, 0, (char *)"@1 = @1 + @2"},	{"or",TERM,IMlw,1},
+/*  [0]  */	{"1add",TERM,IMlw,1, 0, (char *)"@2 = @2 + @1"},	{"or",TERM,IMlw,1},
 		{"adc",TERM,IMlw,1},	{"sbb",TERM,IMlw,1},
-/*  [4]  */	{"and",TERM,IMlw,1},	{"sub",TERM,IMlw,1},
+/*  [4]  */	{"3and",TERM,IMlw,1,0,(char *)"@2 = @2 & @1"},	{"sub",TERM,IMlw,1,0,(char *)"@2 = @2 - @1"},
 		{"xor",TERM,IMlw,1},	{"cmp",TERM,IMlw,1},
 };
 
@@ -1423,7 +1423,7 @@ static const struct instable opFP5[8] = {
  * empty.
  */
 static const struct instable distable[16][16] = {
-/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1,0,(char *)"@1 = @1 + @2"},
+/* [0,0] */  {  {"addb",TERM,RMw,0},	{"add",TERM,RMw,1,0,(char *)"@2 = @2 + @1"},
 		{"addb",TERM,MRw,0},	{"5add",TERM,MRw,1},
 /* [0,4] */	{"addb",TERM,IA,0},	{"6add",TERM,IA,1},
 		{"3push",TERM,SEG,0x03,INVALID_64},
@@ -1443,14 +1443,14 @@ static const struct instable distable[16][16] = {
 /* [1,C] */	{"sbbb",TERM,IA,0},	{"sbb",TERM,IA,1},
 		{"6push",TERM,SEG,0x03,INVALID_64},
 					{"pop",TERM,SEG,0x03,INVALID_64} },
-/* [2,0] */  {  {"andb",TERM,RMw,0},	{"and",TERM,RMw,1},
-		{"andb",TERM,MRw,0},	{"and",TERM,MRw,1},
-/* [2,4] */	{"andb",TERM,IA,0},	{"and",TERM,IA,1},
+/* [2,0] */  {  {"andb",TERM,RMw,0},	{"4and",TERM,RMw,1},
+		{"andb",TERM,MRw,0},	{"5and",TERM,MRw,1},
+/* [2,4] */	{"andb",TERM,IA,0},	{"6and",TERM,IA,1},
 		{"%es:",TERM,OVERRIDE,0},
 					{"daa",TERM,GO_ON,0,INVALID_64},
-/* [2,8] */	{"subb",TERM,RMw,0},	{"sub",TERM,RMw,1},
-		{"subb",TERM,MRw,0},	{"sub",TERM,MRw,1},
-/* [2,C] */	{"subb",TERM,IA,0},	{"sub",TERM,IA,1},
+/* [2,8] */	{"subb",TERM,RMw,0},	{"4sub",TERM,RMw,1},
+		{"subb",TERM,MRw,0},	{"5sub",TERM,MRw,1},
+/* [2,C] */	{"subb",TERM,IA,0},	{"6sub",TERM,IA,1},
 		{"%cs:",TERM,OVERRIDE,0},
 					{"das",TERM,GO_ON,0,INVALID_64} },
 /* [3,0] */  {  {"xorb",TERM,RMw,0},	{"xor",TERM,RMw,1},
@@ -1502,9 +1502,9 @@ static const struct instable distable[16][16] = {
 		{"",op82,TERM,0},	{"",op83,TERM,0},
 /* [8,4] */	{"testb",TERM,MRw,0},	{"test",TERM,MRw,1},
 		{"xchgb",TERM,MRw,0},	{"xchg",TERM,MRw,1},
-/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1,0,(char *)"@1 = @2" },
-		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1,0,(char *)"@1 = @2"},
-/* [8,C] */	{"15mov",TERM,SM,1},	{"lea",TERM,MR,1},
+/* [8,8] */	{"movb",TERM,RMw,0},	{"mov",TERM,RMw,1,0,(char *)"@2 = @1" },
+		{"movb",TERM,MRw,0},	{"mov",TERM,MRw,1,0,(char *)"@2 = @1"},
+/* [8,C] */	{"15mov",TERM,SM,1},	{"lea",TERM,MR,1,0,(char *)"addr @2 = @1"},
 		{"16mov",TERM,MS,1},	{"pop",TERM,M,0x03} },
 /* [9,0] */  {  {"nop",TERM,GO_ON,0},	{"xchg",TERM,RA,1},
 		{"xchg",TERM,RA,1},	{"xchg",TERM,RA,1},
@@ -1514,8 +1514,8 @@ static const struct instable distable[16][16] = {
 		{"lcall",TERM,SO,0},	{"wait/",TERM,PREFIX,0},
 /* [9,C] */	{"pushf",TERM,GO_ON,1},	{"popf",TERM,GO_ON,1},
 		{"sahf",TERM,GO_ON,0},	{"lahf",TERM,GO_ON,0} },
-/* [A,0] */  {  {"movb",TERM,OA,0},	{"1mov",TERM,OA,1,0,(char *)"@1 = @2"},
-		{"movb",TERM,AO,0},	{"mov",TERM,AO,1,0,(char *)"@1 = @2"},
+/* [A,0] */  {  {"movb",TERM,OA,0},	{"1mov",TERM,OA,1,0,(char *)"@2 = @1"},
+		{"movb",TERM,AO,0},	{"mov",TERM,AO,1,0,(char *)"@2 = @1"},
 /* [A,4] */	{"movsb",TERM,SD,0},	{"movs",TERM,SD,1},
 		{"cmpsb",TERM,SD,0},	{"cmps",TERM,SD,1},
 /* [A,8] */	{"testb",TERM,IA,0},	{"test",TERM,IA,1},
@@ -1526,7 +1526,7 @@ static const struct instable distable[16][16] = {
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 /* [B,4] */	{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
 		{"movb",TERM,IR,0},	{"movb",TERM,IR,0},
-/* [B,8] */	{"19mov",TERM,IR64,1},	{"mov",TERM,IR64,1,0,(char *)"@1 = @2"},
+/* [B,8] */	{"19mov",TERM,IR64,1},	{"mov",TERM,IR64,1,0,(char *)"@2 = @1"},
 		{"21mov",TERM,IR64,1},	{"22mov",TERM,IR64,1},
 /* [B,C] */	{"23mov",TERM,IR64,1},	{"24mov",TERM,IR64,1},
 		{"25mov",TERM,IR64,1},	{"26mov",TERM,IR64,1} },
@@ -1534,7 +1534,7 @@ static const struct instable distable[16][16] = {
 		{"ret",TERM,RET,0},	{"ret",TERM,GO_ON,0},
 /* [C,4] */	{"les",TERM,MR,0,INVALID_64},
 					{"lds",TERM,MR,0,INVALID_64},
-		{"movb",TERM,IMw,0},	{"mov",TERM,IMw,1,0,(char *)"@1 = @2"},
+		{"movb",TERM,IMw,0},	{"mov",TERM,IMw,1,0,(char *)"@2 = @1"},
 /* [C,8] */	{"enter",TERM,ENTER,0},	{"leave",TERM,GO_ON,0},
 		{"lret",TERM,RET,0},	{"lret",TERM,GO_ON,0},
 /* [C,C] */	{"int",TERM,INT3,0},	{"int",TERM,Ib,0},
@@ -2048,6 +2048,9 @@ int verbose
 	    }
 	}
 
+	char *operandString1[256];
+	char *operandString2[256];
+	
 	/*
 	 * Each instruction has a particular instruction syntax format
 	 * stored in the disassembly tables.  The assignment of formats
@@ -2138,23 +2141,21 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			char *regNameStringBuf2[256];
-			replacementPrint_operand( regNameStringBuf2, seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
 			if(!strcmp(dp->name, "mov")){
 				if(dp->printStr){
-					char *newString = replaceArgsInStr( dp->printStr, regNameStringBuf2, reg_name, NULL );
+					char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 					printf("%s\n", newString);
 				} else {
 					[NSException raise:@"who is here?" format:nil];
 				}
 			} else {
 				printf("%s\t", mnemonic);
-				printf("%s", regNameStringBuf2);
-				//old			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+				printf("%s", operandString1);
 				printf("%s\n", reg_name);
 			}
 
@@ -2171,17 +2172,16 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
-			char *regNameStringBuf[256];
-			replacementPrint_operand( regNameStringBuf, seg, symadd0, symsub0, value0, value0_size, result0, "");
+			replacementPrint_operand( operandString2, seg, symadd0, symsub0, value0, value0_size, result0, "");
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 			
 			if(dp->printStr){
-				char *newString = replaceArgsInStr( dp->printStr, reg_name, regNameStringBuf, NULL );
+				char *newString = replaceArgsInStr( dp->printStr, reg_name, operandString2, NULL );
 				printf("%s\n", newString);
 			} else {
 				printf("%s\t%s,", mnemonic, reg_name);
-				printf("%s\n,", regNameStringBuf );
+				printf("%s\n,", operandString2 );
 				// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			}
 			
@@ -3268,10 +3268,20 @@ int verbose
 					/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
 					value0_size = OPSIZE(data16, opcode2 == 1, 0);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+			
+					// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",")
+					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+			
+					// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+					replacementPrint_operand( (char *)operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
+			
+					if(dp->printStr){
+						char *newString = replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
+						printf("%s\n", newString);
+					} else {
+						printf("%s %s %s\n", mnemonic, operandString1, operandString2 );
+					}
+			
 					addLine( currentFuncPtr, dp, NULL ); //			eg. andl $0xf0,%esp    subl $0x10,%esp
 					return(length);
 
@@ -3321,9 +3331,17 @@ int verbose
 					//reg_name = get_r_m_name(reg, wbit, data16, rex);
 					reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					printf("%s\n", reg_name);
+					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+			
+					if(dp->printStr){
+						char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+						printf("%s\n", newString);
+					} else {
+						printf("%s\t$%s %s\n", mnemonic, operandString1, reg_name);
+						// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+						// printf("%s\n", reg_name);
+					}			
+
 					addLine( currentFuncPtr, dp, NULL ); // eg. movl	$0x00b9ee00,%ecx
 					return(length);
 
@@ -3362,9 +3380,16 @@ int verbose
 					// reg_name = get_reg_name(0, wbit, data16, rex);
 					reg_struct = get_regStruct(0, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-			
-					printf("%s\t%s,", mnemonic, reg_name);
-					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
+
+					if(dp->printStr){
+						char *newString = replaceArgsInStr( dp->printStr, reg_name, reg_name, NULL );
+						printf("%s\n", newString);
+					} else {
+						printf("%s\t%s, %s\n", mnemonic, reg_name, operandString1);
+						// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+					}
+
 					addLine( currentFuncPtr, dp, NULL ); //			eg movl	%eax,0x00f2300c
 					return(length);
 
@@ -3575,6 +3600,7 @@ int verbose
 
 					BOOL isNewFunc = !strcmp(dp->name, "push") && !strcmp(reg_struct->name,"%ebp");
 					if (isNewFunc) {
+						printf("\n\n");
 						struct hooleyFuction *currentFunc = *currentFuncPtr;
 						struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction *) );
 						newFunc->prev = currentFunc;
@@ -3628,9 +3654,18 @@ int verbose
 					reg_struct = get_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", reg_name);
+					// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");			
+					replacementPrint_operand( (char *)operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
+
+					if(dp->printStr){
+						char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+						printf("%s\n", newString);
+					} else {
+						printf("%s\t", mnemonic);
+						printf("%s\t", operandString1);						
+						printf("%s\n", reg_name);
+					}
+			
 					addLine( currentFuncPtr, dp, NULL ); //			eg. leal 0x08(%ebp),%ecx
 					return(length);
 
@@ -3773,20 +3808,19 @@ int verbose
 					// look up the symbol - if we find a match this will zero out value0
 					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			
-					char *immediateOperandStringBuf[256];
-					replacementPrint_operand( (char *)immediateOperandStringBuf, "", symadd0, symsub0, imm0, value0_size, "", "");
+					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, immediateOperandStringBuf, NULL, NULL );
+						char *newString = replaceArgsInStr( dp->printStr, operandString1, NULL, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t$", mnemonic);
-						printf("%s\n", immediateOperandStringBuf);
+						printf("%s\n", operandString1);
 					}
 
 					// We need to pass in the immediate argument
 					struct ImediateValue *imedHolder = calloc(1, sizeof(struct ImediateValue) );
-					strcpy( imedHolder->name, immediateOperandStringBuf );
+					strcpy( imedHolder->name, operandString1 );
 					imedHolder->value = value0;
 			
 					struct InstrArgStruct *argStruct1 = calloc(1, sizeof(struct InstrArgStruct) );
