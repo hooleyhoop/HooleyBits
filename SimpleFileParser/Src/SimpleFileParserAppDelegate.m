@@ -23,6 +23,20 @@ execve(path, args, NSPlatform_environ());
 
 look at instructions folling calll for returned results eax
 
+
+this is useful
+http://www.powerbasic.com/support/help/pbcc/addressing_and_pointers.htm
+
+Basically
+…you have put the address of a variable into the EAX register.  When you take the next step and put that address into a variable of its own, you will have a POINTER to the address:
+
+LEA EAX, MyVar
+MOV lpMyVar, EAX
+
+> lpMyVar = &MyVar		// lea followed by mov is getting an address
+
+
+
 //
 //  SimpleFileParserAppDelegate.m
 //  SimpleFileParser
