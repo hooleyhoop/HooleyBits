@@ -3492,6 +3492,8 @@ int verbose
 			/* immediate to memory or register operand */
 			case IMlw:
 					wbit = WBIT(opcode2);
+			-- this shit is fucked up, this could be a reg or a symbol, we don't really know
+			-- fill structures dont look up symbols
 					GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 
 					/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
