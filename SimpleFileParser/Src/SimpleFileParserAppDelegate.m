@@ -36,6 +36,10 @@ MOV lpMyVar, EAX
 > lpMyVar = &MyVar		// lea followed by mov is getting an address
 
 
+take a look at what this disassembler can do
+http://www.hex-rays.com/compare.shtml
+
+
 
 //
 //  SimpleFileParserAppDelegate.m

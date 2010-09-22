@@ -31,6 +31,7 @@
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
+		73D9BCA3124A590900989317 /* InstructionBitfieldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */; };
 		73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
@@ -99,6 +100,7 @@
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
+		73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionBitfieldTests.m; path = Tests/InstructionBitfieldTests.m; sourceTree = "<group>"; };
 		73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrettyStringFindReplace.m; path = Tests/PrettyStringFindReplace.m; sourceTree = "<group>"; };
 		73DBEAD912476D1A0024B450 /* StringManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringManipulation.h; path = Classes/StringManipulation.h; sourceTree = "<group>"; };
 		73DBEADA12476D1A0024B450 /* StringManipulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringManipulation.m; path = Classes/StringManipulation.m; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				731702DE1232910200EE9ED6 /* IntHashTests.m */,
 				73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */,
 				73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */,
+				73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
 				73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */,
 				73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */,
+				73D9BCA3124A590900989317 /* InstructionBitfieldTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

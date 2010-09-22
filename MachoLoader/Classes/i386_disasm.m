@@ -95,6 +95,14 @@ struct instable {
 	int flags;
 	const struct instable *arch64;
 	char *printStr;
+	
+#define ISJUMP 1		// ie. does this change the execution flow
+#define ISBRANCH 2		// ie. does this conditionally change the execution flow
+#define ISCOMPARE 4
+#define NOTUSED 8	
+	// notused isCompare isBranch isJump
+	// ie
+	uint16 typeBitField;
 };
 #define	TERM	0	/* used to indicate that the 'indirect' field of the */
 			/* 'instable' terminates - no pointer.	*/
@@ -2315,7 +2323,7 @@ int verbose
 			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 
 			if(dp->printStr){
-				char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+				char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 				printf("%s\n", newString);
 			} else {
 				printf("%s\t%s %s\n", mnemonic, operandString1, reg_name );
@@ -2366,7 +2374,7 @@ int verbose
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
 			if(dp->printStr){
-				char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+				char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 				printf("%s\n", newString);
 			} else {
 				printf("%s\t%s , %s\n", mnemonic, operandString1, reg_name);
@@ -2398,7 +2406,7 @@ int verbose
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 			
 			if(dp->printStr){
-				char *newString = replaceArgsInStr( dp->printStr, reg_name, operandString2, NULL );
+				char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, operandString2, NULL );
 				printf("%s\n", newString);
 			} else {
 				printf("%s\t%s,", mnemonic, reg_name);
@@ -3497,7 +3505,7 @@ int verbose
 					replacementPrint_operand( (char *)operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
 			
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s %s %s\n", mnemonic, operandString1, operandString2 );
@@ -3526,7 +3534,7 @@ int verbose
 					replacementPrint_operand( operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
 
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t$%s, %s\n", mnemonic, operandString1, operandString2 );
@@ -3568,7 +3576,7 @@ int verbose
 					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t$%s %s\n", mnemonic, operandString1, reg_name);
@@ -3598,7 +3606,7 @@ int verbose
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t%s %s\n", mnemonic, operandString1, reg_name);						
@@ -3625,7 +3633,7 @@ int verbose
 					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
 
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, reg_name, reg_name, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, reg_name, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t%s, %s\n", mnemonic, reg_name, operandString1);
@@ -3852,7 +3860,7 @@ int verbose
 					}
 					
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, reg_name, NULL, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, NULL, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t%s\n", mnemonic, reg_name );
@@ -3900,7 +3908,7 @@ int verbose
 					replacementPrint_operand( (char *)operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t", mnemonic);
@@ -3978,16 +3986,22 @@ int verbose
 			case D:
 					value0_size = OPSIZE(data16, LONGOPERAND, 0);
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");
-					//putback	    if(verbose){
-					indirect_symbol_name = guess_indirect_symbol(value0, ncmds, sizeofcmds, load_commands, indirect_symbols, nindirect_symbols, symbols, symbols64,nsymbols, strings,strings_size);
-					if(indirect_symbol_name != NULL) {
-						printf("\t; symbol stub for: %s", indirect_symbol_name);
+			
+					if( dp->typeBitField & ISJUMP ) {
+		//jump statement found here						<#statements#>
+					} else if ( dp->typeBitField & ISBRANCH ) {
+		//						<#statements#>
+					} else {
+// TEMPORARILY DISABLED TO SEE IF ALL JUMPS FALL INTO THIS CATEGORY, THEY DONT						
+//						printf("%s\t", mnemonic);
+//						print_operand(seg, symadd0, symsub0, value0, value0_size, "", "");
+//						indirect_symbol_name = guess_indirect_symbol(value0, ncmds, sizeofcmds, load_commands, indirect_symbols, nindirect_symbols, symbols, symbols64,nsymbols, strings,strings_size);
+//						if(indirect_symbol_name != NULL) {
+//							printf("\t; symbol stub for: %s", indirect_symbol_name);
+//						}
+//						printf("\n");
 					}
-					//putback		}
 					addLine( currentFuncPtr, dp, NULL ); // eg. calll 0x00002aea
-					printf("\n");
 					return(length);
 
 			/* indirect to memory or register operand */
@@ -4030,9 +4044,18 @@ int verbose
 			case BD:
 					value0_size = sizeof(char);
 					DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
-					addLine( currentFuncPtr, dp, NULL ); //			eg jne	0x00002b1a
+					if( dp->typeBitField & ISJUMP ) {
+//jump statement found here						<#statements#>
+					} else if ( dp->typeBitField & ISBRANCH ) {
+//						<#statements#>
+					} else {
+// TEMPORARILY DISABLED TO SEE IF ALL JUMPS FALL INTO THIS CATEGORY, THEY DONT
+//						printf("%s\t", mnemonic);
+//						print_operand(seg, symadd0, symsub0, value0, sizeof(int32_t), "", "\n");
+					}
+
+
+					addLine( currentFuncPtr, dp, NULL );  // eg jne	0x00002b1a
 					return(length);
 
 			/* single 32/16 bit immediate operand */
@@ -4052,8 +4075,9 @@ int verbose
 			
 					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
+					NSCAssert( dp->typeBitField==0, @"add this everywhere! trying to find jumps and branches" );
 					if(dp->printStr){
-						char *newString = replaceArgsInStr( dp->printStr, operandString1, NULL, NULL );
+						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, NULL, NULL );
 						printf("%s\n", newString);
 					} else {
 						printf("%s\t$", mnemonic);
@@ -4062,7 +4086,7 @@ int verbose
 
 					// We need to pass in the immediate argument
 					struct ImediateValue *imedHolder = calloc(1, sizeof(struct ImediateValue) );
-					strcpy( imedHolder->name, operandString1 );
+					strcpy( imedHolder->name, (char *)operandString1 );
 					imedHolder->value = value0;
 			
 					struct InstrArgStruct *argStruct1 = calloc(1, sizeof(struct InstrArgStruct) );
