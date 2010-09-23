@@ -468,28 +468,36 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 enum argType {
 	REGISTER_ARG = 0,
-	IMMEDIATE_ARG = 1
+	IMMEDIATE_ARG = 1,
+	INDIRECT_ARG = 2,
+	BONKERSREG_ARG = 3	
 };
 
 struct HooAbstractDataType {
 	const enum argType isa;
-	char name[MAX_MNEMONIC];
-	char prettyName[24];	
 };
 
 struct HooReg {
-	const enum argType isa;
-	char name[MAX_MNEMONIC];
-	char prettyName[40];	
+	const enum argType	isa;
+	char				name[MAX_MNEMONIC];
+	char				prettyName[40];	
 };
 
 struct ImediateValue {
-	const enum argType isa;	
-	char name[MAX_MNEMONIC];
-	char prettyName[24];
-	NSUInteger value;
+	const enum argType	isa;	
+	NSUInteger			value;
 };
 
+struct IndirectVal {
+	enum argType		isa;
+	const struct HooReg	*segmentRegister;
+	NSUInteger			displacement;
+	struct HooReg		*baseRegister;
+	struct HooReg		*indexRegister;
+	char				scale;
+};
+
+#define NEW_INDIRECT( x,segReg,displace,baseReg,indexReg,scaleSize) x=calloc(1, sizeof(struct IndirectVal)); x->isa=INDIRECT_ARG; x->segmentRegister=segReg; x->displacement=displace; x->baseRegister=baseReg; x->indexRegister=indexReg; x->scale=scaleSize;
 
 static const struct HooReg REG16_Struct[8][2] = {
 	{ {0,"%al","%accumulator"},		{0,"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
@@ -573,9 +581,9 @@ static const char * const regname16[4][8] = {
 /*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
 };
 static const struct HooReg regname16_Struct[4][8] = {
-{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},	{0,"%bx","%base"}	},
-{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp",""}, {0,"%bx","%base"}	},
-{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp",""}, {0,"%bx","%base"}	},
+{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},							{0,"%bx","%base"}	},
+{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}	},
+{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}	},
 { {0,"%ax","%accumulator"}, {0,"%cx","%count"}, {0,"%dx","%data"}, {0,"%bx","%base"}, {0,"%sp","%stackPointer_top"}, {0,"%bp","%stackPointer_base"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}	}
 };
  
@@ -638,6 +646,36 @@ static const char * const indexname[8] = {
     ",%edi"
 };
 
+static const struct HooReg indexname_Struct[8] = {
+    {0,"%eax","%accumulator"},
+    {0,"%ecx","%count"},
+    {0,"%edx","%data"},
+    {0,"%ebx","%base"},
+    {0,"",""},
+    {0,"%ebp","%stackPointer_base"},
+    {0,"%esi","%source_index"},
+    {0,"%edi","%destination_index"}
+};
+
+static const struct HooReg indexname64_Struct[16] = {
+    {0,"%rax","%accumulator"},
+	{0,"%rcx","%count"},
+    {0,"%rdx","%data"},
+    {0,"%rbx","%base"},
+	{0,"",""},
+    {0,"%rbp","%stackPointer_base"},
+    {0,"%rsi","%source_index"},
+    {0,"%rdi","%destination_index"},
+	{0,"%r8","%reg8"},
+	{0,"%r9","%reg9"},
+	{0,"%r10","%reg10"},
+	{0,"%r11","%reg11"},
+	{0,"%r12","%reg12"},
+	{0,"%r13","%reg13"},
+	{0,"%r14","%reg14"},
+	{0,"%r15","%reg15"}
+};
+
 static const char * const indexname64[16] = {
     ",%rax",
     ",%rcx",
@@ -661,14 +699,14 @@ static const char * const indexname64[16] = {
  * Segment registers are selected by a two or three bit field.
  */
 static const char * const SEGREG[8] = {
-/* 000 */	"%es",
-/* 001 */	"%cs",
-/* 010 */	"%ss",
-/* 011 */	"%ds",
-/* 100 */	"%fs",
-/* 101 */	"%gs",
-/* 110 */	"%?6",
-/* 111 */	"%?7",
+/* 000 */	"%es",	//TODO: data segment register (string operation destination segment)
+/* 001 */	"%cs",	//TODO: code segment register
+/* 010 */	"%ss",	//TODO: stack segment register
+/* 011 */	"%ds",	//TODO: data segment register
+/* 100 */	"%fs",	//TODO: data segment register
+/* 101 */	"%gs",	//TODO: data segment register
+/* 110 */	"%?6",	//TODO:
+/* 111 */	"%?7",	//TODO:
 };
 
 /*
@@ -3519,19 +3557,27 @@ int verbose
 			/* immediate to memory or register operand */
 			case IMlw:
 					wbit = WBIT(opcode2);
-//TODO: -- this shit is fucked up, this could be a reg or a symbol, we don't really know
-//TODO:	-- fill structures dont look up symbols
+
+					// TODO: Unlike GET_OPERAND i am not putting any result in result0 so be careful further down
 					struct HooAbstractDataType *strctPtr = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-					switch(strctPtr->isa) {
-						case REGISTER_ARG:
-							NSLog(@"woohoo! found a register");
-							break;
-						case IMMEDIATE_ARG:
-							NSLog(@"woohoo! found an immediate");
-							break;
-						default:
-							NSLog(@"Unknown HooAbstractDataType");
-							break;
+					
+					if(strctPtr){
+						switch(strctPtr->isa) {
+							case REGISTER_ARG:
+								NSLog(@"woohoo! found a register");
+								break;
+							case IMMEDIATE_ARG:
+								NSLog(@"woohoo! found an immediate");
+								break;
+							case INDIRECT_ARG:
+								NSLog(@"woohoo! found an INDIRECT_ARG. Wonder what it has inside?");							
+								break;
+							default:
+								NSLog(@"Unknown HooAbstractDataType");
+								break;
+						}
+					} else {
+						//TODO: we returned 0
 					}
 			
 					/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
@@ -3686,10 +3732,9 @@ int verbose
 			/* memory or register operand to segment register */
 			case MS:
 					if(got_modrm_byte == FALSE){
-						hooleyDebug();
-//NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
-//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
+						got_modrm_byte = TRUE;
+						byte = get_value(sizeof(char), sect, &length, &left);
+						modrm_byte(&mode, &reg, &r_m, byte);
 					}
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -4126,8 +4171,8 @@ int verbose
 
 					// We need to pass in the immediate argument
 					struct ImediateValue *imedHolder = calloc(1, sizeof(struct ImediateValue) );
-					strcpy( imedHolder->name, (char *)operandString1 );
-					imedHolder->value = value0;
+//Putback					strcpy( imedHolder->name, (char *)operandString1 );
+//Putback					imedHolder->value = value0;
 			
 					struct InstrArgStruct *argStruct1 = calloc(1, sizeof(struct InstrArgStruct) );
 					argStruct1[0].numberOfArgs = 1;
@@ -4302,9 +4347,9 @@ static NSUInteger replacement_get_operand(
 						const int verbose
 						)
 {
-    int s_i_b;		/* flag presence of scale-index-byte */
+    int s_i_b;				/* flag presence of scale-index-byte */
     unsigned char byte;		/* the scale-index-byte */
-    uint32_t ss;		/* scale-factor from scale-index-byte */
+    uint32_t ss;			/* scale-factor from scale-index-byte */
     uint32_t index; 		/* index register number from scale-index-byte*/
     uint32_t base;  		/* base register number from scale-index-byte */
 	uint32_t sect_offset;
@@ -4334,14 +4379,14 @@ static NSUInteger replacement_get_operand(
 	if(*value_size != 0){
 		sect_offset = addr + *length - sect_addr;
 	    *value = get_value(*value_size, sect, length, left);
-		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
-		if(*symadd != NULL){
-			*value = offset;
-		} else {
-			*symadd = GUESS_SYMBOL(*value);
-			if(*symadd != NULL)
-				*value = 0;
-		}
+//putback		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+//putback		if(*symadd != NULL){
+//putback			*value = offset;
+//putback		} else {
+//putback			*symadd = GUESS_SYMBOL(*value);
+//putback			if(*symadd != NULL)
+//putback				*value = 0;
+//putback		}
 	}
 	
 	if(s_i_b == TRUE){
@@ -4354,11 +4399,18 @@ static NSUInteger replacement_get_operand(
 				 * also 4 then the operand is just a displacement.
 				 */
 				if(mode == 0 && base == 5 && index == 4){
-					result = "";
+					// result = "";
+					return 0;
 				} else {
 					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
-					const char *todo = indexname64[index + (REX_X(rex) << 3)];
-					sprintf(result, "(%s%s)", reg_struct, todo );
+					if (reg_struct->isa==BONKERSREG_ARG) {
+						printf("%s\n", reg_struct->prettyName );
+					}
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					struct IndirectVal *indirStrct;
+					NEW_INDIRECT( indirStrct, 0, 0, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, 1);
+					return (NSUInteger)indirStrct;
+//					sprintf(result, "(%s%s)", reg_struct, todo );
 				}
 			}
 			else {
@@ -4367,16 +4419,25 @@ static NSUInteger replacement_get_operand(
 				 * there is no base register.
 				 */
 				if(mode == 0 && base == 5){
-					const char *todo = indexname64[index + (REX_X(rex) << 3)];
-					sprintf( result, "(%s,%s)", todo, scale_factor[ss] );
+					// TODO: these have the comma in the args
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					struct IndirectVal *indirStrct;
+					NEW_INDIRECT( indirStrct, 0, 0, 0, (struct HooReg *)indexReg, (scale_factor[ss]) );
+					return (NSUInteger)indirStrct;
+//					sprintf( result, "(%s,%s)", todo, scale_factor[ss] );
 				} else {
 					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
-					const char *todo = indexname64[index + (REX_X(rex) << 3)];
-					sprintf(result, "(%s%s,%s)", reg_struct, todo, scale_factor[ss] );
+					if (reg_struct->isa==BONKERSREG_ARG) {
+						printf("%s\n", reg_struct->prettyName );
+					}					
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					struct IndirectVal *indirStrct;
+					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
+					return (NSUInteger)indirStrct;
+					// sprintf(result, "(%s%s,%s)", reg_struct, todo, scale_factor[ss] );
 				}
 			}
-	    }
-	    else {
+	    } else {
 			/* If the scale factor is 1, don't display it. */
 			if(ss == 0){
 				/*
@@ -4385,18 +4446,34 @@ static NSUInteger replacement_get_operand(
 				 * displacement.
 				 */
 				if(mode == 0 && base == 5 && index == 4){
-					result = "";
+					// result = "";
+					return 0;
 				} else {
 					const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-					char *reg_name;
-					GET_BEST_REG_NAME( reg_name, reg_struct );
-					sprintf(result, "(%s%s)", reg_name, indexname[index]);
+					if (reg_struct->isa==BONKERSREG_ARG) {
+						printf("%s\n", reg_struct->prettyName );
+					}
+					const struct HooReg *indexReg = indexname_Struct[index];
+					struct IndirectVal *indirStrct;
+					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,1);
+					return (NSUInteger)indirStrct;
+					
+					// char *reg_name;
+					// GET_BEST_REG_NAME( reg_name, reg_struct );
+					// sprintf(result, "(%s%s)", reg_name, indexname[index]);
 				}
 			} else {
 				const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-				char *reg_name;
-				GET_BEST_REG_NAME( reg_name, reg_struct );
-				sprintf(result, "(%s%s,%s)", reg_name, indexname[index], scale_factor[ss]);
+				if (reg_struct->isa==BONKERSREG_ARG) {
+					printf("%s\n", reg_struct->prettyName );
+				}
+				const struct HooReg *indexReg = indexname_Struct[index];				
+				struct IndirectVal *indirStrct;
+				NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
+				return (NSUInteger)indirStrct;
+				// char *reg_name;
+				// GET_BEST_REG_NAME( reg_name, reg_struct );
+				// sprintf(result, "(%s%s,%s)", reg_name, indexname[index], scale_factor[ss]);
 			}
 	    }
 	} else { /* no s-i-b */
@@ -4409,6 +4486,9 @@ static NSUInteger replacement_get_operand(
 				/* The presence of a REX byte overrides 66h. */
 				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
 				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				if (reg_struct->isa==BONKERSREG_ARG) {
+					printf("%s\n", reg_struct->prettyName );
+				}				
 				return (NSUInteger)reg_struct;
 				// *(struct HooReg *)result = *reg_struct;
 				// char *reg_name;
@@ -4416,9 +4496,14 @@ static NSUInteger replacement_get_operand(
 				// strcpy(result, reg_name);
 			} else {
 				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
-				const char *reg_name; // = REG16[r_m][wbit];
-				GET_BEST_REG_NAME( reg_name, reg_struct );
-				strcpy(result, reg_name);
+				if (reg_struct->isa==BONKERSREG_ARG) {
+					printf("%s\n", reg_struct->prettyName );
+				}				
+				return (NSUInteger)reg_struct;
+
+				// const char *reg_name; // = REG16[r_m][wbit];
+				// GET_BEST_REG_NAME( reg_name, reg_struct );
+				// strcpy(result, reg_name);
 			}
 	    } else { /* Modes 00, 01, or 10 */
 			if(r_m == EBP && mode == 0){ /* displacement only */
@@ -4432,7 +4517,8 @@ static NSUInteger replacement_get_operand(
 					 */
 					sprintf(result, "(%%rip)");
 				} else {
-					//eh?				*result = '\0';
+					//eh? *result = '\0';
+					return 0;
 				}
 			} else {
 				/* Modes 00, 01, or 10, not displacement only, no s-i-b */
@@ -4443,26 +4529,50 @@ static NSUInteger replacement_get_operand(
 						 * down to 32-bit, not 16-bit.
 						 */
 						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
+						if (reg_struct->isa==BONKERSREG_ARG) {
+							printf("%s\n", reg_struct->prettyName );
+						}						
 						char *reg_name;
 						GET_BEST_REG_NAME( reg_name, reg_struct );
 						sprintf(result, "(%s)", reg_name);
 					} else {
-						/* Woahh.. This is Fun */
 						const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
-						char *reg_name;
-						GET_BEST_REG_NAME( reg_name, reg_struct );
-						sprintf(result, "(%s)", reg_name );
+						if (reg_struct->isa==BONKERSREG_ARG) {
+							printf("%s\n", reg_struct->prettyName );
+						}						
+						struct IndirectVal *indirStrct;
+						NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,0,1);
+						return (NSUInteger)indirStrct;
+						
+//						char *reg_name;
+//						GET_BEST_REG_NAME( reg_name, reg_struct );
+//						sprintf(result, "(%s)", reg_name );
 					}
 				} else {
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
 						const struct HooReg *reg_struct = &regname64_Struct[mode][r_m + (REX_B(rex) << 3)];
-						sprintf(result, "(%s)", 1 );
+						if (reg_struct->isa==BONKERSREG_ARG) {
+							printf("%s\n", reg_struct->prettyName );
+						}						
+						struct IndirectVal *indirStrct;
+						NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,0,1);
+						return (NSUInteger)indirStrct;
+					
+						// sprintf(result, "(%s)", 1 );
 					} else {
-						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];		
-						char *reg_name;
-						look! it is is brackets! in brackets! what do we do now shit face?
-						GET_BEST_REG_NAME( reg_name, reg_struct );
-						sprintf(result, "(%s)", reg_name);
+						
+						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
+						if (reg_struct->isa==BONKERSREG_ARG) {
+							printf("%s\n", reg_struct->prettyName );
+						}						
+						struct IndirectVal *indirStrct;
+						NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,0,1);
+						return (NSUInteger)indirStrct;
+
+						// char *reg_name;
+						// GET_BEST_REG_NAME( reg_name, reg_struct );
+						// sprintf(result, "(%s)", reg_name);
+						
 					}
 				}
 			}
@@ -4640,7 +4750,7 @@ const int verbose
 					sprintf(result, "(%s)", reg_name);
 				} else {
 					/* Woahh.. This is Fun */
-					// const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
+					//const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
 					
 					// const char *reg_name; // = regname16[mode][r_m];
 					// GET_BEST_REG_NAME( reg_name, reg_struct );
