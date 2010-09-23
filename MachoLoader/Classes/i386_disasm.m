@@ -55,6 +55,9 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <mach-o/reloc.h>
 #import "MachoLoader.h"
 #import "InstrArgStruct.h"
+// #import "ExperimentalFrankenStructs.h"
+#import "StringManipulation.h"
+
 //#include "stuff/symbol.h"
 //#include "stuff/bytesex.h"
 //#include "otool.h"
@@ -123,7 +126,7 @@ void hooleyDebug() {
 	NSLog(@"woohoo");
 }
 
-static void replacement_get_operand(
+static NSUInteger replacement_get_operand(
 const char **symadd,
 const char **symsub,
 uint32_t *value,
@@ -280,9 +283,9 @@ static uint64_t get_value( const uint32_t size, const char *sect, uint32_t *leng
 static void modrm_byte( uint32_t *mode, uint32_t *reg, uint32_t *r_m, unsigned char byte);
 
 #define GET_BEST_REG_NAME( reg_name, reg_struct ) \
-reg_name = reg_struct->prettyName;  \
+reg_name = (char *)reg_struct->prettyName;  \
 if( !strcmp( reg_name, "unknown") ) \
-reg_name = reg_struct->name; \
+reg_name = (char *)reg_struct->name; \
 
 #define REPLACEMENT_GET_OPERAND(symadd, symsub, value, value_size, result) \
 replacement_get_operand((symadd), (symsub), (value), (value_size), (result), \
@@ -463,45 +466,59 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 ///* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
 //};
 
-struct HooReg {
+enum argType {
+	REGISTER_ARG = 0,
+	IMMEDIATE_ARG = 1
+};
+
+struct HooAbstractDataType {
+	const enum argType isa;
 	char name[MAX_MNEMONIC];
 	char prettyName[24];	
 };
 
-struct ImediateValue {
+struct HooReg {
+	const enum argType isa;
 	char name[MAX_MNEMONIC];
-	char prettyName[24];
-	int value;
+	char prettyName[40];	
 };
 
+struct ImediateValue {
+	const enum argType isa;	
+	char name[MAX_MNEMONIC];
+	char prettyName[24];
+	NSUInteger value;
+};
+
+
 static const struct HooReg REG16_Struct[8][2] = {
-	{ {"%al","%accumulator"},	{"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
-	{ {"%cl","%count"},			{"%cx","%count"} },
-	{ {"%dl","%data"},			{"%dx","%data"} },
-	{ {"%bl","%base"},			{"%bx","%base"} },
-	{ {"%ah","%accumulator"},	{"%sp","%stackPointer_top"} },
-	{ {"%ch","%count"},			{"%bp","%stackPointer_base"} },
-	{ {"%dh","%data"},			{"%si","%source_index"} },
-	{ {"%bh","%base"},			{"%di","%destination_index"} }
+	{ {0,"%al","%accumulator"},		{0,"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
+	{ {0,"%cl","%count"},			{0,"%cx","%count"} },
+	{ {0,"%dl","%data"},			{0,"%dx","%data"} },
+	{ {0,"%bl","%base"},			{0,"%bx","%base"} },
+	{ {0,"%ah","%accumulator"},		{0,"%sp","%stackPointer_top"} },
+	{ {0,"%ch","%count"},			{0,"%bp","%stackPointer_base"} },
+	{ {0,"%dh","%data"},			{0,"%si","%source_index"} },
+	{ {0,"%bh","%base"},			{0,"%di","%destination_index"} }
 };
 
 static const struct HooReg REG32_Struct[16][3] = {
-	{ {"%al","%accumulator"},	{"%eax","%accumulator"},		{"%rax","%accumulator"} },
-	{ {"%cl","%count"},			{"%ecx","%count"},				{"%rcx","%count"} },
-	{ {"%dl","%data"},			{"%edx","%data"},				{"%rdx","%data"} },
-	{ {"%bl","%base"},			{"%ebx","%base"},				{"%rbx","%base"} },
-	{ {"%ah","%accumulator"},	{"%esp","%stackPointer_top"},	{"%rsp","%stackPointer_top"} },
-	{ {"%ch","%count"},			{"%ebp","%stackPointer_base"},	{"%rbp","%stackPointer_base"} },
-	{ {"%dh","%data"},			{"%esi","%source_index"},		{"%rsi","%source_index"} },
-	{ {"%bh","%base"},			{"%edi","%destination_index"},	{"%rdi","%destination_index"} },
-	{ {"%r8b","%reg8"},			{"%r8d","%reg8"},				{"%r8","%reg8"} },
-	{ {"%r9b","%reg9"},			{"%r9d","%reg9"},				{"%r9","%reg9"} },
-	{ {"%r10b","%reg10"},		{"%r10d","%reg10"},				{"%r10","%reg10"} },
-	{ {"%r11b","%reg11"},		{"%r11d","%reg11"},				{"%r11","%reg11"} },
-	{ {"%r12b","%reg12"},		{"%r12d","%reg12"},				{"%r12","%reg12"} },
-	{ {"%r13b","%reg13"},		{"%r13d","%reg13"},				{"%r13","%reg13"} },
-	{ {"%r14b","%reg14"},		{"%r14d","%reg14"},				{"%r14","%reg14"} },
-	{ {"%r15b","%reg15"},		{"%r15d","%reg15"},				{"%r15","%reg15"} }
+	{ {0,"%al","%accumulator"},	{0,"%eax","%accumulator"},		{0,"%rax","%accumulator"} },
+	{ {0,"%cl","%count"},		{0,"%ecx","%count"},			{0,"%rcx","%count"} },
+	{ {0,"%dl","%data"},		{0,"%edx","%data"},				{0,"%rdx","%data"} },
+	{ {0,"%bl","%base"},		{0,"%ebx","%base"},				{0,"%rbx","%base"} },
+	{ {0,"%ah","%accumulator"},	{0,"%esp","%stackPointer_top"},	{0,"%rsp","%stackPointer_top"} },
+	{ {0,"%ch","%count"},		{0,"%ebp","%stackPointer_base"},{0,"%rbp","%stackPointer_base"} },
+	{ {0,"%dh","%data"},		{0,"%esi","%source_index"},		{0,"%rsi","%source_index"} },
+	{ {0,"%bh","%base"},		{0,"%edi","%destination_index"},{0,"%rdi","%destination_index"} },
+	{ {0,"%r8b","%reg8"},		{0,"%r8d","%reg8"},				{0,"%r8","%reg8"} },
+	{ {0,"%r9b","%reg9"},		{0,"%r9d","%reg9"},				{0,"%r9","%reg9"} },
+	{ {0,"%r10b","%reg10"},		{0,"%r10d","%reg10"},			{0,"%r10","%reg10"} },
+	{ {0,"%r11b","%reg11"},		{0,"%r11d","%reg11"},			{0,"%r11","%reg11"} },
+	{ {0,"%r12b","%reg12"},		{0,"%r12d","%reg12"},			{0,"%r12","%reg12"} },
+	{ {0,"%r13b","%reg13"},		{0,"%r13d","%reg13"},			{0,"%r13","%reg13"} },
+	{ {0,"%r14b","%reg14"},		{0,"%r14d","%reg14"},			{0,"%r14","%reg14"} },
+	{ {0,"%r15b","%reg15"},		{0,"%r15d","%reg15"},			{0,"%r15","%reg15"} }
 };
 
 
@@ -547,21 +564,19 @@ static const char dispsize32 [8][4] = {
  * for the different addressing modes.  Indexed first by mode, then by register
  * number.
  */
-//static const char * const regname16[4][8] = {
-///*reg  000        001        010        011        100    101   110     111 */
-///*mod*/
-///*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
-///*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-///*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-///*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
-//};
-static const struct HooReg regname16_Struct[4][8] = {
+static const char * const regname16[4][8] = {
 /*reg  000        001        010        011        100    101   110     111 */
 /*mod*/
 /*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
 /*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
 /*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
 /*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
+};
+static const struct HooReg regname16_Struct[4][8] = {
+{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},	{0,"%bx","%base"}	},
+{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp",""}, {0,"%bx","%base"}	},
+{ {0,"%bx,%si","%base, %source_index"}, {0,"%bx,%di","%base, %destination_index"}, {0,"%bp,%si","%stackPointer_base, %source_index"}, {0,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp",""}, {0,"%bx","%base"}	},
+{ {0,"%ax","%accumulator"}, {0,"%cx","%count"}, {0,"%dx","%data"}, {0,"%bx","%base"}, {0,"%sp","%stackPointer_top"}, {0,"%bp","%stackPointer_base"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}	}
 };
  
 /*
@@ -576,6 +591,12 @@ static const char * const regname32[4][8] = {
 /*10 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
 /*11 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"}
 };
+static const struct HooReg regname32_Struct[4][8] = {
+{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"",""},						{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
+{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
+{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
+{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	}
+};
 
 /*
  * When data16 has not been specified, fields, to determine the addressing mode,
@@ -588,6 +609,12 @@ static const char * const regname64[4][16] = {
 /*01 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
 /*10 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
 /*11 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"}
+};
+static const struct HooReg regname64_Struct[4][16] = {
+{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
+{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
+{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
+{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},	{0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	}
 };
 
 /*
@@ -2285,7 +2312,7 @@ int verbose
 			reg_struct = get_regStruct((opcode5 & 0x7), 1, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
-			printf("%s\t%s\n", mnemonic, reg_name);
+//Putback			printf("%s\t%s\n", mnemonic, reg_name);
 			addLine( currentFuncPtr, dp, NULL ); // eg bswap	%eax			
 			return(length);
 
@@ -2300,8 +2327,8 @@ int verbose
 			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
-			printf("%s\t%s,", mnemonic, reg_name);
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback			printf("%s\t%s,", mnemonic, reg_name);
+//Putback			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			return(length);
 
 		/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
@@ -2320,13 +2347,13 @@ int verbose
 			wbit = WBIT(opcode5);
 			data16 = 1;
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
+//Putback			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 
 			if(dp->printStr){
-				char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
-				printf("%s\n", newString);
+				const char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)reg_name, NULL );
+//Putback				printf("%s\n", newString);
 			} else {
-				printf("%s\t%s %s\n", mnemonic, operandString1, reg_name );
+//Putback				printf("%s\t%s %s\n", mnemonic, operandString1, reg_name );
 				// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 				// printf("%s\n", reg_name);
 			}
@@ -2351,10 +2378,10 @@ int verbose
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
-			printf("%s\t$", mnemonic);
-			print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
-			printf("%s\n", reg_name);
+//Putback			printf("%s\t$", mnemonic);
+//Putback			print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+//Putback			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, ",");
+//Putback			printf("%s\n", reg_name);
 			addLine( currentFuncPtr, dp, NULL ); //		eg imull	$0x44,%edx,%eax	
 			return(length);
 
@@ -2368,16 +2395,16 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
+//Putback			replacementPrint_operand( operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 			// reg_name = get_reg_name(reg, wbit, data16, rex);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 
 			if(dp->printStr){
-				char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
-				printf("%s\n", newString);
+				char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)reg_name, NULL );
+//Putback				printf("%s\n", newString);
 			} else {
-				printf("%s\t%s , %s\n", mnemonic, operandString1, reg_name);
+//Putback				printf("%s\t%s , %s\n", mnemonic, operandString1, reg_name);
 				// printf("%s", operandString1);
 				// printf("%s\n", reg_name);
 				if(!strcmp(dp->name, "testaaaaa")){
@@ -2401,16 +2428,16 @@ int verbose
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
-			replacementPrint_operand( operandString2, seg, symadd0, symsub0, value0, value0_size, result0, "");
+//Putback			replacementPrint_operand( operandString2, seg, symadd0, symsub0, value0, value0_size, result0, "");
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			GET_BEST_REG_NAME( reg_name, reg_struct );
 			
 			if(dp->printStr){
-				char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, operandString2, NULL );
-				printf("%s\n", newString);
+				char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)reg_name, (char *)operandString2, NULL );
+//Putback				printf("%s\n", newString);
 			} else {
-				printf("%s\t%s,", mnemonic, reg_name);
-				printf("%s\n,", operandString2 );
+//Putback				printf("%s\t%s,", mnemonic, reg_name);
+//Putback				printf("%s\n,", operandString2 );
 				// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			}
 			
@@ -2438,10 +2465,10 @@ int verbose
 				case 0x7e: /* movq & movd */
 					if(prefix_byte == 0x66){
 						/* movd from xmm to r/m32 */
-						printf("%sd\t%%xmm%u,", mnemonic, xmm_reg(reg, rex));
+//Putback						printf("%sd\t%%xmm%u,", mnemonic, xmm_reg(reg, rex));
 						wbit = LONGOPERAND;
 						GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback						print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 
 					} else if(prefix_byte == 0xf0){
 						hooleyDebug();
@@ -2489,9 +2516,9 @@ int verbose
 						hooleyDebug();
 //NEVER						printf("%supd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						printf("%ssd\t", mnemonic);
+//Putback						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3) {
-						printf("%sss\t", mnemonic);
+//Putback						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */ {
 						hooleyDebug();
 //NEVER						printf("%sups\t", mnemonic);
@@ -2504,13 +2531,13 @@ int verbose
 				case 0x2b: /* movntpd & movntsd */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						printf("%spd\t", mnemonic);
+//Putback						printf("%spd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						printf("%ssd\t", mnemonic);
+//Putback						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-						printf("%sss\t", mnemonic);
+//Putback						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */{
-						printf("%sps\t", mnemonic);
+//Putback						printf("%sps\t", mnemonic);
 					}
 					break;
 				case 0xd6: /* movq */
@@ -2555,9 +2582,9 @@ int verbose
 //NEVER					}
 //NEVER					break;
 			}
-			printf("%s,", result0);
+//Putback			printf("%s,", result0);
 			GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+//Putback			print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 			addLine( currentFuncPtr, dp, NULL ); //				eg movsd	%xmm0,0x20(%edx,%ecx)
 			return(length);
 
@@ -2642,13 +2669,13 @@ int verbose
 				case 0x5f: /* maxpd, maxsd, maxss & maxps */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						printf("%spd\t", mnemonic);
+//Putback						printf("%spd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						printf("%ssd\t", mnemonic);
+//Putback						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-						printf("%sss\t", mnemonic);
+//Putback						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */{
-						printf("%sps\t", mnemonic);
+//Putback						printf("%sps\t", mnemonic);
 					}
 					break;
 				case 0x12: /*   movlpd, movlps & movhlps */
@@ -2717,11 +2744,11 @@ int verbose
 						hooleyDebug();
 //NEVER						printf("%supd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						printf("%ssd\t", mnemonic);
+//Putback						printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-						printf("%sss\t", mnemonic);
+//Putback						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */{
-						printf("%sups\t", mnemonic);
+//Putback						printf("%sups\t", mnemonic);
 					}
 					break;
 				case 0x2a: /* cvtpi2pd, cvtsi2sd, cvtsi2ss & cvtpi2ps */
@@ -2731,10 +2758,10 @@ int verbose
 //NEVER						printf("%spi2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						wbit = LONGOPERAND;
-						printf("%ssi2sd\t", mnemonic);
+//Putback						printf("%ssi2sd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
 						wbit = LONGOPERAND;
-						printf("%ssi2ss\t", mnemonic);
+//Putback						printf("%ssi2ss\t", mnemonic);
 					} else { /* no prefix_byte */
 						hooleyDebug();
 //NEVER						mmx = TRUE;
@@ -2749,7 +2776,7 @@ int verbose
 //NEVER						sprintf(result1, "%%mm%u", reg);
 					} else if(prefix_byte==0xf2){
 						sse2 = TRUE;
-						printf("%stsd2si\t", mnemonic);
+//Putback						printf("%stsd2si\t", mnemonic);
 						// reg_name = get_reg_name(reg, 1, data16, rex);
 						reg_struct = get_regStruct(reg, 1, data16, rex);
 						GET_BEST_REG_NAME( reg_name, reg_struct );
@@ -2757,7 +2784,7 @@ int verbose
 			
 					} else if( prefix_byte==0xf3 ){
 						sse2 = TRUE;
-						printf("%stss2si\t", mnemonic);
+//Putback						printf("%stss2si\t", mnemonic);
 						// reg_name = get_reg_name(reg, 1, data16, rex);
 						reg_struct = get_regStruct(reg, 1, data16, rex);
 						GET_BEST_REG_NAME( reg_name, reg_struct );
@@ -2800,9 +2827,9 @@ int verbose
 				case 0x2f: /*  comisd &  comiss */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						printf("%ssd\t", mnemonic);
+//Putback						printf("%ssd\t", mnemonic);
 					} else /* no prefix_byte */{
-						printf("%sss\t", mnemonic);
+//Putback						printf("%sss\t", mnemonic);
 					}
 					break;
 				case 0xe0: /* pavgb */
@@ -2810,7 +2837,7 @@ int verbose
 					if(prefix_byte == 0x66){
 						hooleyDebug();
 //NEVER						sse2 = TRUE;
-						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", mnemonic);
 					} else { /* no prefix_byte */
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
@@ -2821,10 +2848,10 @@ int verbose
 				case 0xe6: /* cvttpd2dq, cvtdq2pd & cvtpd2dq */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						printf("%stpd2dq\t", mnemonic);
+//Putback						printf("%stpd2dq\t", mnemonic);
 					}
 					if(prefix_byte == 0xf3){
-						printf("%sdq2pd\t", mnemonic);
+//Putback						printf("%sdq2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						hooleyDebug();
 //NEVER						printf("%spd2dq\t", mnemonic);
@@ -2833,13 +2860,13 @@ int verbose
 				case 0x5a: /* cvtpd2ps, cvtsd2ss, cvtss2sd & cvtps2pd */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						printf("%spd2ps\t", mnemonic);
+//Putback						printf("%spd2ps\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						printf("%ssd2ss\t", mnemonic);
+//Putback						printf("%ssd2ss\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-						printf("%sss2sd\t", mnemonic);
+//Putback						printf("%sss2sd\t", mnemonic);
 					} else /* no prefix_byte */ {
-						printf("%sps2pd\t", mnemonic);
+//Putback						printf("%sps2pd\t", mnemonic);
 					}
 					break;
 				case 0x5b: /* cvtdq2ps, cvttps2dq & cvtps2dq */
@@ -2848,7 +2875,7 @@ int verbose
 						hooleyDebug();
 //NEVER						printf("%sps2dq\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-						printf("%stps2dq\t", mnemonic);
+//Putback						printf("%stps2dq\t", mnemonic);
 					} else /* no prefix_byte */{
 						hooleyDebug();
 //NEVER						printf("%sdq2ps\t", mnemonic);
@@ -2901,11 +2928,11 @@ int verbose
 				case 0xfd: /* paddw */
 				case 0xfe: /* paddd */
 					if(prefix_byte == 0x66){
-						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", mnemonic);
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						sprintf(result1, "%%mm%u", reg);
-						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
 					break;
@@ -2947,7 +2974,7 @@ int verbose
 					break;
 				case 0x6e: /* movd */
 					if(prefix_byte == 0x66){
-						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					} else { /* no prefix_byte */
 						sprintf(result1, "%%mm%u", reg);
@@ -3027,8 +3054,8 @@ int verbose
 			} // end switch
 
 			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-			printf("%s\n", result1);
+//Putback			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//Putback			printf("%s\n", result1);
 			addLine( currentFuncPtr, dp, NULL ); //   eg movsd	(%eax),%xmm0			
 			return(length);
 
@@ -3256,17 +3283,17 @@ int verbose
 								hooleyDebug();
 //NEVER								printf("%spd\t$0x%x,", mnemonic, byte);
 							} else if(prefix_byte == 0xf2) {
-								printf("%ssd\t$0x%x,", mnemonic, byte);
+//Putback								printf("%ssd\t$0x%x,", mnemonic, byte);
 							} else if(prefix_byte == 0xf3) {
-								printf("%sss\t$0x%x,", mnemonic, byte);
+//Putback								printf("%sss\t$0x%x,", mnemonic, byte);
 							} else {/* no prefix_byte */
 								hooleyDebug();
 //NEVER								printf("%sps\t$0x%x,", mnemonic, byte);
 							}
 							break;
 					}
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%%xmm%u\n", xmm_reg(reg, rex));
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//Putback					printf("%%xmm%u\n", xmm_reg(reg, rex));
 					return(length);
 
 			/* SSE2 instructions with 8 bit immediate and only 1 reg */
@@ -3317,7 +3344,7 @@ int verbose
 									hooleyDebug();
 //NEVER									printf("%srad\t$0x%x,", mnemonic, byte);
 								}else if(reg == 0x6){
-									printf("%slld\t$0x%x,", mnemonic, byte);
+//Putback									printf("%slld\t$0x%x,", mnemonic, byte);
 								}
 							} else { /* no prefix_byte */
 								if(reg == 0x2){
@@ -3330,14 +3357,14 @@ int verbose
 									hooleyDebug();
 //NEVER									printf("%slld\t$0x%x,", mnemonic, byte);
 								}
-								printf("%%mm%u\n", r_m);
+//Putback								printf("%%mm%u\n", r_m);
 								return(length);
 							}
 							break;
 						case 0x73: /* pslldq & psrldq, psrlq & psllq */
 							if(prefix_byte == 0x66){
 								if(reg == 0x7){
-									printf("%slldq\t$0x%x,", mnemonic, byte);
+//Putback									printf("%slldq\t$0x%x,", mnemonic, byte);
 								}else if(reg == 0x3){
 									hooleyDebug();
 //NEVER									printf("%srldq\t$0x%x,", mnemonic, byte);
@@ -3345,7 +3372,7 @@ int verbose
 									hooleyDebug();
 //NEVER									printf("%srlq\t$0x%x,", mnemonic, byte);
 								}else if(reg == 0x6){
-									printf("%sllq\t$0x%x,", mnemonic, byte);
+//Putback									printf("%sllq\t$0x%x,", mnemonic, byte);
 								}
 							} else { /* no prefix_byte */
 								hooleyDebug();
@@ -3361,15 +3388,15 @@ int verbose
 							}
 								break;
 						}
-						printf("%%xmm%u\n", xmm_rm(r_m, rex));
+//Putback						printf("%%xmm%u\n", xmm_rm(r_m, rex));
 						return(length);
 
 			/* 3DNow instructions */
 			case AMD3DNOW:
-					printf("%s\t", mnemonic);
+//Putback					printf("%s\t", mnemonic);
 					sprintf(result1, "%%mm%u", reg);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", result1);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//Putback					printf("%s\n", result1);
 					return(length);
 
 				/* prefetch instructions */
@@ -3465,10 +3492,10 @@ int verbose
 					reg_struct = get_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 			
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					printf("%s,", reg_name);
-					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+//Putback					printf("%s,", reg_name);
+//Putback					print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 					return(length);
 
 			/* Double shift. With no immediate operand, specifies using %cl. */
@@ -3484,33 +3511,44 @@ int verbose
 					reg_struct = get_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 			
-					printf("%s\t%%cl,%s,", mnemonic, reg_name);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t%%cl,%s,", mnemonic, reg_name);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); // eg shldl	%cl,%eax,%esi			
 					return(length);
 
 			/* immediate to memory or register operand */
 			case IMlw:
 					wbit = WBIT(opcode2);
-			-- this shit is fucked up, this could be a reg or a symbol, we don't really know
-			-- fill structures dont look up symbols
-					GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-
+//TODO: -- this shit is fucked up, this could be a reg or a symbol, we don't really know
+//TODO:	-- fill structures dont look up symbols
+					struct HooAbstractDataType *strctPtr = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+					switch(strctPtr->isa) {
+						case REGISTER_ARG:
+							NSLog(@"woohoo! found a register");
+							break;
+						case IMMEDIATE_ARG:
+							NSLog(@"woohoo! found an immediate");
+							break;
+						default:
+							NSLog(@"Unknown HooAbstractDataType");
+							break;
+					}
+			
 					/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
 					value0_size = OPSIZE(data16, opcode2 == 1, 0);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			
 					// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",")
-					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
-					replacementPrint_operand( (char *)operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
+//Putback					replacementPrint_operand( (char *)operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
 			
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)operandString2, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s %s %s\n", mnemonic, operandString1, operandString2 );
+//Putback						printf("%s %s %s\n", mnemonic, operandString1, operandString2 );
 						if(!strcmp(dp->name, "aaaaaaaa")) {
 						} else {
 							NSLog(@"unknown operand");
@@ -3532,14 +3570,14 @@ int verbose
 					value0_size = OPSIZE(data16, wbit, 0);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 
-					replacementPrint_operand( operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
-					replacementPrint_operand( operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
+//Putback					replacementPrint_operand( operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
 
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, operandString2, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)operandString2, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t$%s, %s\n", mnemonic, operandString1, operandString2 );
+//Putback						printf("%s\t$%s, %s\n", mnemonic, operandString1, operandString2 );
 						// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 						// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 					}
@@ -3557,9 +3595,9 @@ int verbose
 					// reg_name = get_r_m_name(reg, wbit, data16, rex);
 					reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					printf("%s\n", reg_name);
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+//Putback					printf("%s\n", reg_name);
 			
 					addLine( currentFuncPtr, dp, NULL ); //			eg movb	$0x00,%al
 					return(length);
@@ -3575,13 +3613,13 @@ int verbose
 					//reg_name = get_r_m_name(reg, wbit, data16, rex);
 					reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)reg_name, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t$%s %s\n", mnemonic, operandString1, reg_name);
+//Putback						printf("%s\t$%s %s\n", mnemonic, operandString1, reg_name);
 						// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
 						// printf("%s\n", reg_name);
 					}			
@@ -3599,7 +3637,7 @@ int verbose
 						value0_size = OPSIZE(addr16, LONGOPERAND, 0);
 					}
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
 			
 					// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",");
 					wbit = WBIT(opcode2);
@@ -3608,10 +3646,10 @@ int verbose
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)reg_name, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t%s %s\n", mnemonic, operandString1, reg_name);						
+//Putback						printf("%s\t%s %s\n", mnemonic, operandString1, reg_name);						
 						// printf("%s\n", operandString1);
 						// printf("%s\n", reg_name);
 					}
@@ -3632,13 +3670,13 @@ int verbose
 					// reg_name = get_reg_name(0, wbit, data16, rex);
 					reg_struct = get_regStruct(0, wbit, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( operandString1, seg, symadd0, symsub0, imm0, value0_size, "", "");
 
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, reg_name, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)reg_name, (char *)reg_name, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t%s, %s\n", mnemonic, reg_name, operandString1);
+//Putback						printf("%s\t%s, %s\n", mnemonic, reg_name, operandString1);
 						// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 					}
 
@@ -3655,9 +3693,9 @@ int verbose
 					}
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-					printf("%s\n", SEGREG[reg]);
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+//Putback					printf("%s\n", SEGREG[reg]);
 					return(length);
 
 			/* segment register to memory or register operand	*/
@@ -3683,8 +3721,8 @@ int verbose
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					/* When vbit is set, register is an operand, otherwise just $0x1 */
 					reg_name = vbit ? "%cl," : "" ;
-					printf("%s\t%s", mnemonic, reg_name);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t%s", mnemonic, reg_name);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); //		eg sarl	%eax			
 					return(length);
 
@@ -3698,10 +3736,10 @@ int verbose
 					IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 					/* When vbit is set, register is an operand, otherwise just $0x1 */
 					reg_name = vbit ? "%cl," : "" ;
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
-					printf("%s", reg_name);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
+//Putback					printf("%s", reg_name);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); //				eg shll	$0x02,%ebx
 					return(length);
 
@@ -3720,8 +3758,8 @@ int verbose
 			case Mw:
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					return(length);
 
 			/* single memory or register operand but don't use 'l' suffix */
@@ -3779,8 +3817,8 @@ int verbose
 					}
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); //				eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 					return(length);
 
@@ -3793,8 +3831,8 @@ int verbose
 					}
 					wbit = BYTEOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); //				eg setbe	%al
 					return(length);
 
@@ -3862,10 +3900,10 @@ int verbose
 					}
 					
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, reg_name, NULL, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)reg_name, NULL, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t%s\n", mnemonic, reg_name );
+//Putback						printf("%s\t%s\n", mnemonic, reg_name );
 					}
 					addLine( currentFuncPtr, dp, NULL );	// eg. pushl %ebp
 					return(length);
@@ -3877,20 +3915,20 @@ int verbose
 					// reg_name = get_reg_name(reg, LONGOPERAND, data16, rex);
 					reg_struct = get_regStruct(reg, LONGOPERAND, data16, rex);
 					GET_BEST_REG_NAME( reg_name, reg_struct );
-					printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
+//Putback					printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
 					return(length);
 
 			/* single segment register operand, with reg in bits 3-4 of op code */
 			case SEG:
 				reg = byte >> 3 & 0x3; /* segment register */
-				printf("%s\t%s\n", mnemonic, SEGREG[reg]);
+//Putback				printf("%s\t%s\n", mnemonic, SEGREG[reg]);
 				return(length);
 
 			/* single segment register operand, with register in	*/
 			/* bits 3-5 of op code					*/
 			case LSEG:
 				reg = byte >> 3 & 0x7; /* long seg reg from opcode */
-				printf("%s\t%s\n", mnemonic, SEGREG[reg]);
+//Putback				printf("%s\t%s\n", mnemonic, SEGREG[reg]);
 				return(length);
 
 			/* memory or register operand to register */
@@ -3907,15 +3945,15 @@ int verbose
 					GET_BEST_REG_NAME( reg_name, reg_struct );
 
 					// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");			
-					replacementPrint_operand( (char *)operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
+//Putback					replacementPrint_operand( (char *)operandString1, seg, symadd0, symsub0, value0, value0_size, result0, "");
 
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, reg_name, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, (char *)reg_name, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t", mnemonic);
-						printf("%s\t", operandString1);						
-						printf("%s\n", reg_name);
+//Putback						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", operandString1);						
+//Putback						printf("%s\n", reg_name);
 					}
 			
 					addLine( currentFuncPtr, dp, NULL ); //			eg. leal 0x08(%ebp),%ecx
@@ -3930,9 +3968,9 @@ int verbose
 						case 4: reg_name = "%eax"; break;
 					}
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
-					printf("%s\n", reg_name);
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",");
+//Putback					printf("%s\n", reg_name);
 					addLine( currentFuncPtr, dp, NULL );				 //eg cmpb	$0x2f,%al
 					return(length);
 
@@ -3940,8 +3978,8 @@ int verbose
 			case MA:
 					wbit = WBIT(opcode2);
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); // eg mull	%ecx
 					return(length);
 
@@ -3951,7 +3989,7 @@ int verbose
 						hooleyDebug();
 //NEVER						printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
 					} else {
-						printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, seg);
+//Putback						printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, seg);
 					}
 					return(length);
 
@@ -3966,7 +4004,7 @@ int verbose
 //NEVER						hooleyDebug();
 //NEVER						printf("%s\t%s,%s(%%di)\n", mnemonic, reg_name, seg);
 					} else {
-						printf("%s\t%s,%s(%%edi)\n", mnemonic, reg_name, seg);
+//Putback						printf("%s\t%s,%s(%%edi)\n", mnemonic, reg_name, seg);
 					}
 					return(length);
 
@@ -3980,7 +4018,7 @@ int verbose
 						hooleyDebug();
 //NEVER						printf("%s\t%s(%%si),%s\n", mnemonic, seg, reg_name);
 					}else{
-						printf("%s\t%s(%%esi),%s\n", mnemonic, seg, reg_name);
+//Putback						printf("%s\t%s(%%esi),%s\n", mnemonic, seg, reg_name);
 					}
 					return(length);
 
@@ -4011,11 +4049,11 @@ int verbose
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 					if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
-						printf("%s\t*", mnemonic);
+//Putback						printf("%s\t*", mnemonic);
 					} else {
-						printf("%s\t", mnemonic);
+//Putback						printf("%s\t", mnemonic);
 					}
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					addLine( currentFuncPtr, dp, NULL ); // eg jmp	*%ecx
 					return(length);
 
@@ -4023,8 +4061,8 @@ int verbose
 			case INMl:
 					wbit = LONGOPERAND;
 					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-					printf("%s\t", mnemonic);
-					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+//Putback					printf("%s\t", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 					return(length);
 
 			/*
@@ -4037,9 +4075,9 @@ int verbose
 					IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
 					value0_size = sizeof(short);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
-					print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
+//Putback					print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
 					return(length);
 
 			/* jmp/call. single operand, 8 bit displacement */
@@ -4064,8 +4102,8 @@ int verbose
 			case I:
 				value0_size = OPSIZE(data16, LONGOPERAND, 0);
 				IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-				printf("%s\t$", mnemonic);
-				print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+//Putback				printf("%s\t$", mnemonic);
+//Putback				print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
 				return(length);
 
 				/* single 8 bit immediate operand */
@@ -4075,15 +4113,15 @@ int verbose
 					// look up the symbol - if we find a match this will zero out value0
 					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			
-					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+//Putback					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					NSCAssert( dp->typeBitField==0, @"add this everywhere! trying to find jumps and branches" );
 					if(dp->printStr){
-						char *newString = (char *)replaceArgsInStr( dp->printStr, operandString1, NULL, NULL );
-						printf("%s\n", newString);
+						char *newString = (char *)replaceArgsInStr( dp->printStr, (char *)operandString1, NULL, NULL );
+//Putback						printf("%s\n", newString);
 					} else {
-						printf("%s\t$", mnemonic);
-						printf("%s\n", operandString1);
+//Putback						printf("%s\t$", mnemonic);
+//Putback						printf("%s\n", operandString1);
 					}
 
 					// We need to pass in the immediate argument
@@ -4113,8 +4151,8 @@ int verbose
 				case RET:
 					value0_size = sizeof(short);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t$", mnemonic);
-					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
+//Putback					printf("%s\t$", mnemonic);
+//Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", "\n");
 					addLine( currentFuncPtr, dp, NULL ); //  eg ret	$0x0004			
 					return(length);
 
@@ -4140,23 +4178,23 @@ int verbose
 				case Po:
 					value0_size = sizeof(char);
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-					printf("%s\t%%eax,$", mnemonic);
-					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
+//Putback					printf("%s\t%%eax,$", mnemonic);
+//Putback					print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 					return(length);
 
 				/* single operand, dx register (variable port instruction) */
 				case V:
-					printf("%s\t%s(%%dx)\n", mnemonic, seg);
+//Putback					printf("%s\t%s(%%dx)\n", mnemonic, seg);
 					return(length);
 
 				/* single operand, dx register (variable (input) port instruction) */
 				case Vi:
-					printf("%s\t%s%%dx,%%eax\n", mnemonic, seg);
+//Putback					printf("%s\t%s%%dx,%%eax\n", mnemonic, seg);
 					return(length);
 
 				/* single operand, dx register (variable (output) port instruction)*/
 				case Vo:
-					printf("%s\t%s%%eax,%%dx\n", mnemonic, seg);
+//Putback					printf("%s\t%s%%eax,%%dx\n", mnemonic, seg);
 					return(length);
 
 				/* The int instruction, which has two forms: int 3 (breakpoint) or  */
@@ -4165,42 +4203,42 @@ int verbose
 				/* like an operand, it is implied by the opcode. It must be converted */
 				/* to the correct base and output. */
 				case INT3:
-					printf("%s\t$0x3\n", mnemonic);
+//Putback					printf("%s\t$0x3\n", mnemonic);
 					return(length);
 
 				/* just an opcode and an unused byte that must be discarded */
 				case U:
 					byte = get_value(sizeof(char), sect, &length, &left);
-					printf("%s\n", mnemonic);
+//Putback					printf("%s\n", mnemonic);
 					return(length);
 
 				case CBW:
 					if(data16 == TRUE){
-						printf("cbtw\n");
+//Putback						printf("cbtw\n");
 					}else{
-						printf("cwtl\n");
+//Putback						printf("cwtl\n");
 					}
 //NEVER					return(length);
 
 				case CWD:
 					if(data16 == TRUE){
-						printf("cwtd\n");
+//Putback						printf("cwtd\n");
 					}else{
-						printf("cltd\n");
+//Putback						printf("cltd\n");
 					}
 					return(length);
 
 				/* no disassembly, the mnemonic was all there was so go on */
 				case GO_ON:
 					if( strcmp(dp->name, "nop" )) {
-						printf("%s\n", mnemonic);
+//Putback						printf("%s\n", mnemonic);
 						addLine( currentFuncPtr, dp, NULL ); // eg. hlt
 					}
 					return(length);
 
 				/* float reg */
 				case F:
-					printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
+//Putback					printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
 					return(length);
 
 				/* float reg to float reg, with ret bit present */
@@ -4208,10 +4246,10 @@ int verbose
 					/* return result bit for 287 instructions */
 					if(((opcode2 >> 2) & 0x1) == 0x1 && opcode2 != 0xf) {
 						hooleyDebug();
-						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
+//Putback						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
 					} else {
 						hooleyDebug();
-						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
+//Putback						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
 					}
 					return(length);
 
@@ -4222,50 +4260,48 @@ int verbose
 			case PREFIX:
 			case UNKNOWN:
 			default:
-					printf(".byte 0x%02x", 0xff & sect[0]);
+//Putback					printf(".byte 0x%02x", 0xff & sect[0]);
 					for(i = 1; i < length; i++) {
-						printf(", 0x%02x", 0xff & sect[i]);
+//Putback						printf(", 0x%02x", 0xff & sect[i]);
 					}
-					printf(" #bad opcode\n");
+//Putback					printf(" #bad opcode\n");
 					return(length);
 	} /* end switch */
 }
 
-/*
- * get_operand() is used to return the symbolic operand for an operand that is
- * encoded with a mod r/m byte.
- */
-static void replacemnet_get_operand(
-const char **symadd,
-const char **symsub,
-uint32_t *value,
-uint32_t *value_size,
-void *result,
-const cpu_type_t cputype,
-const uint32_t mode,
-const uint32_t r_m,
-const uint32_t wbit,
-const int data16,
-const int addr16,
-const int sse2,
-const int mmx,
-const unsigned int rex,
-const char *sect,
-uint32_t sect_addr,
-uint32_t *length,
-uint32_t *left,
-const uint32_t addr,
-const struct relocation_info *sorted_relocs,
-const uint32_t nsorted_relocs,
-const struct nlist *symbols,
-const struct nlist_64 *symbols64,
-const uint32_t nsymbols,
-const char *strings,
-const uint32_t strings_size,
-const struct symbol *sorted_symbols,
-const uint32_t nsorted_symbols,
-const int verbose
-){
+
+static NSUInteger replacement_get_operand(
+						const char **symadd,
+						const char **symsub,
+						uint32_t *value,
+						uint32_t *value_size,
+						void *result,
+						const cpu_type_t cputype,
+						const uint32_t mode,
+						const uint32_t r_m,
+						const uint32_t wbit,
+						const int data16,
+						const int addr16,
+						const int sse2,
+						const int mmx,
+						const unsigned int rex,
+						const char *sect,
+						uint32_t sect_addr,
+						uint32_t *length,
+						uint32_t *left,
+						const uint32_t addr,
+						const struct relocation_info *sorted_relocs,
+						const uint32_t nsorted_relocs,
+						const struct nlist *symbols,
+						const struct nlist_64 *symbols64,
+						const uint32_t nsymbols,
+						const char *strings,
+						const uint32_t strings_size,
+						const struct symbol *sorted_symbols,
+						const uint32_t nsorted_symbols,
+						const int verbose
+						)
+{
     int s_i_b;		/* flag presence of scale-index-byte */
     unsigned char byte;		/* the scale-index-byte */
     uint32_t ss;		/* scale-factor from scale-index-byte */
@@ -4301,8 +4337,7 @@ const int verbose
 		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
 		if(*symadd != NULL){
 			*value = offset;
-		}
-		else {
+		} else {
 			*symadd = GUESS_SYMBOL(*value);
 			if(*symadd != NULL)
 				*value = 0;
@@ -4320,9 +4355,10 @@ const int verbose
 				 */
 				if(mode == 0 && base == 5 && index == 4){
 					result = "";
-				}
-				else {
-					sprintf(result, "(%s%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)]);
+				} else {
+					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
+					const char *todo = indexname64[index + (REX_X(rex) << 3)];
+					sprintf(result, "(%s%s)", reg_struct, todo );
 				}
 			}
 			else {
@@ -4331,10 +4367,12 @@ const int verbose
 				 * there is no base register.
 				 */
 				if(mode == 0 && base == 5){
-					sprintf(result, "(%s,%s)", indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
-				}
-				else {
-					sprintf(result, "(%s%s,%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+					const char *todo = indexname64[index + (REX_X(rex) << 3)];
+					sprintf( result, "(%s,%s)", todo, scale_factor[ss] );
+				} else {
+					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
+					const char *todo = indexname64[index + (REX_X(rex) << 3)];
+					sprintf(result, "(%s%s,%s)", reg_struct, todo, scale_factor[ss] );
 				}
 			}
 	    }
@@ -4349,12 +4387,16 @@ const int verbose
 				if(mode == 0 && base == 5 && index == 4){
 					result = "";
 				} else {
-					const char *regname = regname32[mode][base];
-					sprintf(result, "(%s%s)", regname, indexname[index]);
+					const struct HooReg *reg_struct = &regname32_Struct[mode][base];
+					char *reg_name;
+					GET_BEST_REG_NAME( reg_name, reg_struct );
+					sprintf(result, "(%s%s)", reg_name, indexname[index]);
 				}
 			} else {
-				const char *regname = regname32[mode][base];				
-				sprintf(result, "(%s%s,%s)", regname, indexname[index], scale_factor[ss]);
+				const struct HooReg *reg_struct = &regname32_Struct[mode][base];
+				char *reg_name;
+				GET_BEST_REG_NAME( reg_name, reg_struct );
+				sprintf(result, "(%s%s,%s)", reg_name, indexname[index], scale_factor[ss]);
 			}
 	    }
 	} else { /* no s-i-b */
@@ -4365,12 +4407,13 @@ const int verbose
 				sprintf(result, "%%mm%u", r_m);
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
-				// const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
 				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				*(struct HooReg *)result = *reg_struct;
-				//char *reg_name;
-				//GET_BEST_REG_NAME( reg_name, reg_struct );
-				//strcpy(result, reg_name);
+				return (NSUInteger)reg_struct;
+				// *(struct HooReg *)result = *reg_struct;
+				// char *reg_name;
+				// GET_BEST_REG_NAME( reg_name, reg_struct );
+				// strcpy(result, reg_name);
 			} else {
 				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
 				const char *reg_name; // = REG16[r_m][wbit];
@@ -4389,7 +4432,7 @@ const int verbose
 					 */
 					sprintf(result, "(%%rip)");
 				} else {
-					//eh				*result = '\0';
+					//eh?				*result = '\0';
 				}
 			} else {
 				/* Modes 00, 01, or 10, not displacement only, no s-i-b */
@@ -4399,29 +4442,34 @@ const int verbose
 						 *  In 64-bit mode, the address size prefix drops us
 						 * down to 32-bit, not 16-bit.
 						 */
-						const char *reg_name = regname32[mode][r_m];					
+						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
+						char *reg_name;
+						GET_BEST_REG_NAME( reg_name, reg_struct );
 						sprintf(result, "(%s)", reg_name);
 					} else {
 						/* Woahh.. This is Fun */
-						// const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
-						
-						// const char *reg_name; // = regname16[mode][r_m];
-						// GET_BEST_REG_NAME( reg_name, reg_struct );
-						// TODO: This returns 2 registers, like this… (reg1,reg2)
-						sprintf(result, "(%s)", "%bp,%si" );
+						const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
+						char *reg_name;
+						GET_BEST_REG_NAME( reg_name, reg_struct );
+						sprintf(result, "(%s)", reg_name );
 					}
 				} else {
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
-						sprintf(result, "(%s)", regname64[mode][r_m + (REX_B(rex) << 3)]);
+						const struct HooReg *reg_struct = &regname64_Struct[mode][r_m + (REX_B(rex) << 3)];
+						sprintf(result, "(%s)", 1 );
 					} else {
-						const char *regname = regname32[mode][r_m];					
-						sprintf(result, "(%s)", regname);
+						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];		
+						char *reg_name;
+						look! it is is brackets! in brackets! what do we do now shit face?
+						GET_BEST_REG_NAME( reg_name, reg_struct );
+						sprintf(result, "(%s)", reg_name);
 					}
 				}
 			}
 	    }
 	}
 }
+
 
 static void get_operand(
 const char **symadd,
@@ -4490,8 +4538,7 @@ const int verbose
 		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
 		if(*symadd != NULL){
 			*value = offset;
-		}
-		else {
+		} else {
 			*symadd = GUESS_SYMBOL(*value);
 			if(*symadd != NULL)
 				*value = 0;
@@ -4509,25 +4556,26 @@ const int verbose
 		     */
 		    if(mode == 0 && base == 5 && index == 4){
 				result = "";
+		    } else {
+				const char *reg_name = regname64[mode][base + (REX_B(rex) << 3)];
+				const char *todo = indexname64[index + (REX_X(rex) << 3)];
+				sprintf(result, "(%s%s)", reg_name, todo );
 		    }
-		    else {
-				sprintf(result, "(%s%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)]);
-		    }
-		}
-		else {
+		} else {
 		    /*
 		     * If mode is 0 and base is 5 (regardless of the rex bit)
 		     * there is no base register.
 		     */
 		    if(mode == 0 && base == 5){
-				sprintf(result, "(%s,%s)", indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
-		    }
-		    else {
-				sprintf(result, "(%s%s,%s)", regname64[mode][base + (REX_B(rex) << 3)], indexname64[index + (REX_X(rex) << 3)], scale_factor[ss]);
+				const char *todo = indexname64[index + (REX_X(rex) << 3)];
+				sprintf(result, "(%s,%s)", todo, scale_factor[ss]);
+		    } else {
+				const char *reg_name = regname64[mode][base + (REX_B(rex) << 3)];
+				const char *todo = indexname64[index + (REX_X(rex) << 3)];
+				sprintf(result, "(%s%s,%s)", reg_name, todo, scale_factor[ss] );
 		    }
 		}
-	    }
-	    else {
+	    } else {
 			/* If the scale factor is 1, don't display it. */
 			if(ss == 0){
 				/*
@@ -4601,7 +4649,8 @@ const int verbose
 				}
 		    } else {
 				if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
-					sprintf(result, "(%s)", regname64[mode][r_m + (REX_B(rex) << 3)]);
+					const char *reg_name = regname64[mode][r_m + (REX_B(rex) << 3)];
+					sprintf(result, "(%s)", reg_name );
 				} else {
 					const char *regname = regname32[mode][r_m];					
 					sprintf(result, "(%s)", regname);
@@ -4818,22 +4867,19 @@ for(i = 0; i < nrelocs; i++){
 	}
 	if(sreloc->r_type != GENERIC_RELOC_SECTDIFF &&
 	   sreloc->r_type != GENERIC_RELOC_LOCAL_SECTDIFF){
-	    fprintf(stderr, "Unknown relocation r_type for entry "
-		    "%u\n", i);
+	    fprintf(stderr, "Unknown relocation r_type for entry %u\n", i);
 	    continue;
 	}
 	if(i + 1 < nrelocs){
 	    pair = (struct scattered_relocation_info *)(relocs + i + 1);
 	    if(pair->r_scattered == 0 ||
 	       pair->r_type != GENERIC_RELOC_PAIR){
-		fprintf(stderr, "No GENERIC_RELOC_PAIR relocation "
-			"entry after entry %u\n", i);
+		fprintf(stderr, "No GENERIC_RELOC_PAIR relocation entry after entry %u\n", i);
 		continue;
 	    }
 	}
 	else {
-	    fprintf(stderr, "No GENERIC_RELOC_PAIR relocation entry "
-		    "after entry %u\n", i);
+	    fprintf(stderr, "No GENERIC_RELOC_PAIR relocation entry after entry %u\n", i);
 	    continue;
 	}
 	i++; /* skip the pair reloc */
@@ -4842,13 +4888,11 @@ for(i = 0; i < nrelocs; i++){
 	    add = guess_symbol(sreloc->r_value, sorted_symbols, nsorted_symbols, verbose);
 		sub = guess_symbol(pair->r_value, sorted_symbols, nsorted_symbols, verbose);
 		    if(add == NULL){
-			sprintf(add_buffer, "0x%x",
-				(unsigned int)sreloc->r_value);
+			sprintf(add_buffer, "0x%x", (unsigned int)sreloc->r_value);
 			add = add_buffer;
 		    }
 		    if(sub == NULL){
-			sprintf(sub_buffer, "0x%x",
-				(unsigned int)pair->r_value);
+			sprintf(sub_buffer, "0x%x", (unsigned int)pair->r_value);
 			sub = sub_buffer;
 		    }
 		    *symadd = add;

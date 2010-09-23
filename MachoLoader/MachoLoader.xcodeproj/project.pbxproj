@@ -35,6 +35,8 @@
 		73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
+		73E5BFC4124B6763009712C6 /* ExperimentalFrankenStructs.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFC3124B6763009712C6 /* ExperimentalFrankenStructs.m */; };
+		73E5BFD4124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -104,6 +106,9 @@
 		73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrettyStringFindReplace.m; path = Tests/PrettyStringFindReplace.m; sourceTree = "<group>"; };
 		73DBEAD912476D1A0024B450 /* StringManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringManipulation.h; path = Classes/StringManipulation.h; sourceTree = "<group>"; };
 		73DBEADA12476D1A0024B450 /* StringManipulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringManipulation.m; path = Classes/StringManipulation.m; sourceTree = "<group>"; };
+		73E5BFC2124B6763009712C6 /* ExperimentalFrankenStructs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperimentalFrankenStructs.h; path = Classes/ExperimentalFrankenStructs.h; sourceTree = "<group>"; };
+		73E5BFC3124B6763009712C6 /* ExperimentalFrankenStructs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperimentalFrankenStructs.m; path = Classes/ExperimentalFrankenStructs.m; sourceTree = "<group>"; };
+		73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperimentalFrankenStructsTetsts.m; path = Tests/ExperimentalFrankenStructsTetsts.m; sourceTree = "<group>"; };
 		73E761E7121C28C900A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Classes/Section.h; sourceTree = "<group>"; };
 		73E761E8121C28C900A4190C /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Classes/Section.m; sourceTree = "<group>"; };
 		73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMemoryBlock.h; path = Classes/SHMemoryBlock.h; sourceTree = "<group>"; };
@@ -254,6 +259,8 @@
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
 				7363ABC81236649E00018772 /* i386_disasm.h */,
 				730830B012392CA7007F8247 /* i386_disasm.m */,
+				73E5BFC2124B6763009712C6 /* ExperimentalFrankenStructs.h */,
+				73E5BFC3124B6763009712C6 /* ExperimentalFrankenStructs.m */,
 				73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */,
 				73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */,
 				73685DA11244D34F00DDEE60 /* InstrArgStruct.h */,
@@ -316,6 +323,7 @@
 				73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */,
 				73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */,
 				73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */,
+				73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -485,6 +493,8 @@
 				73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */,
 				73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */,
 				73D9BCA3124A590900989317 /* InstructionBitfieldTests.m in Sources */,
+				73E5BFC4124B6763009712C6 /* ExperimentalFrankenStructs.m in Sources */,
+				73E5BFD4124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
