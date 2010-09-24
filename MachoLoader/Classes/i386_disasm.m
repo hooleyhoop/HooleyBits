@@ -483,6 +483,14 @@ struct HooReg {
 	char				prettyName[40];	
 };
 
+struct BonkersHooReg {
+	const enum argType	isa;
+	char				name1[MAX_MNEMONIC];
+	char				name2[MAX_MNEMONIC];
+	char				prettyName1[40];	
+	char				prettyName2[40];	
+};
+
 struct ImediateValue {
 	const enum argType	isa;	
 	NSUInteger			value;
@@ -580,11 +588,41 @@ static const char * const regname16[4][8] = {
 /*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
 /*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
 };
+
+const struct HooReg base1 = {0,"%bx","%base"};
+const struct HooReg sourceIndex1 = {0,"%si","%source_index"};
+
+
 static const struct HooReg regname16_Struct[4][8] = {
-{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},							{0,"%bx","%base"}	},
-{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}	},
-{ {BONKERSREG_ARG,"%bx,%si","%base, %source_index"}, {BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, {BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, {BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}	},
-{ {0,"%ax","%accumulator"}, {0,"%cx","%count"}, {0,"%dx","%data"}, {0,"%bx","%base"}, {0,"%sp","%stackPointer_top"}, {0,"%bp","%stackPointer_base"}, {0,"%si","%source_index"}, {0,"%di","%destination_index"}	}
+{
+		{BONKERSREG_ARG,"%bx,%si","%base,%source_index"},
+		{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, 
+		{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, 
+		{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
+		{0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},
+		{0,"%bx","%base"}	},
+	{	{BONKERSREG_ARG,"%bx,%si","%base, %source_index"},
+		{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"},
+		{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"},
+		{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
+		{0,"%si","%source_index"}, {0,"%di","%destination_index"},
+		{0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}
+	},
+{	{BONKERSREG_ARG,"%bx,%si","%base, %source_index"},
+	{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"},
+	{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"},
+	{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
+	{0,"%si","%source_index"}, {0,"%di","%destination_index"},
+	{0,"%bp","%stackPointer_base"},
+	{0,"%bx","%base"}	},
+{	{0,"%ax","%accumulator"},
+	{0,"%cx","%count"},
+	{0,"%dx","%data"},
+	{0,"%bx","%base"},
+	{0,"%sp","%stackPointer_top"},
+	{0,"%bp","%stackPointer_base"},
+	{0,"%si","%source_index"},
+	{0,"%di","%destination_index"}	}
 };
  
 /*
@@ -2012,7 +2050,8 @@ cpu_type_t cputype,
 struct load_command *load_commands,
 uint32_t ncmds,
 uint32_t sizeofcmds,
-int verbose
+int verbose,
+int iterationCounter						  
 )
 {
     char mnemonic[MAX_MNEMONIC+2]; /* one extra for suffix */
@@ -3585,7 +3624,8 @@ int verbose
 					IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			
 					// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",")
-//Putback					replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
+					here - instead of print operand, make sure the immediate value is in an immediate struct 
+					// replacementPrint_operand( (char *)operandString1, "", symadd0, symsub0, imm0, value0_size, "", "");
 			
 					// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 //Putback					replacementPrint_operand( (char *)operandString2, seg, symadd1, symsub1, value1, value1_size, result1, "");
@@ -4406,7 +4446,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, 0, 0, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, 1);
 					return (NSUInteger)indirStrct;
@@ -4420,7 +4460,7 @@ static NSUInteger replacement_get_operand(
 				 */
 				if(mode == 0 && base == 5){
 					// TODO: these have the comma in the args
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, 0, 0, 0, (struct HooReg *)indexReg, (scale_factor[ss]) );
 					return (NSUInteger)indirStrct;
@@ -4430,7 +4470,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}					
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
 					return (NSUInteger)indirStrct;
@@ -4453,7 +4493,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}
-					const struct HooReg *indexReg = indexname_Struct[index];
+					const struct HooReg *indexReg = &indexname_Struct[index];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,1);
 					return (NSUInteger)indirStrct;
@@ -4467,7 +4507,7 @@ static NSUInteger replacement_get_operand(
 				if (reg_struct->isa==BONKERSREG_ARG) {
 					printf("%s\n", reg_struct->prettyName );
 				}
-				const struct HooReg *indexReg = indexname_Struct[index];				
+				const struct HooReg *indexReg = &indexname_Struct[index];				
 				struct IndirectVal *indirStrct;
 				NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
 				return (NSUInteger)indirStrct;
@@ -4838,14 +4878,14 @@ static void immediate(
 
 	uint32_t sect_offset = addr + *length - sect_addr;
 	*value = get_value(value_size, sect, length, left);
-	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
-	if(*symadd == NULL){
-		*symadd = GUESS_SYMBOL(*value);
-		if(*symadd != NULL)
-			*value = 0;
-	} else if(*symsub != NULL){
-		*value = offset;
-	}
+//putback	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
+//putback	if(*symadd == NULL){
+//putback		*symadd = GUESS_SYMBOL(*value);
+//putback		if(*symadd != NULL)
+//putback			*value = 0;
+//putback	} else if(*symsub != NULL){
+//putback		*value = offset;
+//putback	}
 }
 
 /*

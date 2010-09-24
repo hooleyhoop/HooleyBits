@@ -761,8 +761,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		*/
 		
 //		printf("%0x ", memPtr);
+//		printf("%i\t\t", iterationCounter);
 		
-		printf("%i\t\t", iterationCounter);
 		if(iterationCounter==100000)
 			NSLog(@"stop here");
 		iterationCounter++;
@@ -788,7 +788,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 							 _startOfLoadCommandsPtr,
 							 _ncmds,
 							 _sizeofcmds,
-							 1 );
+							 1, iterationCounter 
+							 );
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;

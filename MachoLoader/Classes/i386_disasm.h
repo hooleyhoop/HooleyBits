@@ -49,5 +49,7 @@ extern uint32_t i386_disassemble(
     struct load_command *load_commands,
     uint32_t ncmds,
     uint32_t sizeofcmds,
-    int verbose
+    int verbose,
+	int iterationCounter						  
+
 );
