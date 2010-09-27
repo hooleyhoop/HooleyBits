@@ -10,6 +10,8 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		730219640F864C5000906D18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 730219630F864C5000906D18 /* AppDelegate.m */; };
 		730830B112392CA7007F8247 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
+		7315FE88124DF9140088A8F6 /* StaticInitializSpeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */; };
+		7315FE89124DF9340088A8F6 /* ExperimentalFrankenStructsTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */; };
 		731701A0123286BF00EE9ED6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		731702BB1232903700EE9ED6 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 731702BA1232903700EE9ED6 /* libstdc++.dylib */; };
 		731702C01232906900EE9ED6 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 731702BA1232903700EE9ED6 /* libstdc++.dylib */; };
@@ -25,18 +27,16 @@
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
+		7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
 		73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
-		73D9BCA3124A590900989317 /* InstructionBitfieldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */; };
-		73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73E5BFC4124B6763009712C6 /* ExperimentalFrankenStructs.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFC3124B6763009712C6 /* ExperimentalFrankenStructs.m */; };
-		73E5BFD4124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E761EA121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -59,6 +59,7 @@
 		730219630F864C5000906D18 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		730830B012392CA7007F8247 /* i386_disasm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = i386_disasm.m; path = Classes/i386_disasm.m; sourceTree = "<group>"; };
 		7310FD1512095D5C00AE9F6B /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticInitializSpeedTests.m; path = Tests/StaticInitializSpeedTests.m; sourceTree = "<group>"; };
 		731702BA1232903700EE9ED6 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = SDKROOT; };
 		731702D7123290EF00EE9ED6 /* IntHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntHash.h; path = Classes/IntHash.h; sourceTree = "<group>"; };
 		731702D8123290EF00EE9ED6 /* IntHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntHash.m; path = Classes/IntHash.m; sourceTree = "<group>"; };
@@ -92,6 +93,8 @@
 		734B66DB1226900A002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = Classes/IntKeyDictionary.m; sourceTree = "<group>"; };
 		734B677812269AD6002C0B0F /* DemangleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemangleTests.m; path = Tests/DemangleTests.m; sourceTree = "<group>"; };
 		7363ABC81236649E00018772 /* i386_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i386_disasm.h; path = Classes/i386_disasm.h; sourceTree = "<group>"; };
+		7363BDBF124E318500F080E7 /* GenericTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTimer.h; path = ../SimpleFileParser/Src/GenericTimer.h; sourceTree = SOURCE_ROOT; };
+		7363BDC0124E318500F080E7 /* GenericTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTimer.m; path = ../SimpleFileParser/Src/GenericTimer.m; sourceTree = SOURCE_ROOT; };
 		73685DA11244D34F00DDEE60 /* InstrArgStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstrArgStruct.h; path = Classes/InstrArgStruct.h; sourceTree = "<group>"; };
 		73685DA21244D34F00DDEE60 /* InstrArgStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstrArgStruct.m; path = Classes/InstrArgStruct.m; sourceTree = "<group>"; };
 		73794F181223F903001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = Classes/SymbolicInfo.h; sourceTree = "<group>"; };
@@ -324,6 +327,9 @@
 				73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */,
 				73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */,
 				73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */,
+				7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */,
+				7363BDBF124E318500F080E7 /* GenericTimer.h */,
+				7363BDC0124E318500F080E7 /* GenericTimer.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -490,11 +496,11 @@
 				731701A0123286BF00EE9ED6 /* Hex.m in Sources */,
 				731702D9123290EF00EE9ED6 /* IntHash.m in Sources */,
 				73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
-				73DBE9C9124755050024B450 /* PrettyStringFindReplace.m in Sources */,
 				73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */,
-				73D9BCA3124A590900989317 /* InstructionBitfieldTests.m in Sources */,
 				73E5BFC4124B6763009712C6 /* ExperimentalFrankenStructs.m in Sources */,
-				73E5BFD4124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m in Sources */,
+				7315FE88124DF9140088A8F6 /* StaticInitializSpeedTests.m in Sources */,
+				7315FE89124DF9340088A8F6 /* ExperimentalFrankenStructsTetsts.m in Sources */,
+				7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

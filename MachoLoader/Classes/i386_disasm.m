@@ -4406,7 +4406,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, 0, 0, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, 1);
 					return (NSUInteger)indirStrct;
@@ -4420,7 +4420,7 @@ static NSUInteger replacement_get_operand(
 				 */
 				if(mode == 0 && base == 5){
 					// TODO: these have the comma in the args
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, 0, 0, 0, (struct HooReg *)indexReg, (scale_factor[ss]) );
 					return (NSUInteger)indirStrct;
@@ -4430,7 +4430,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}					
-					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
 					return (NSUInteger)indirStrct;
@@ -4453,7 +4453,7 @@ static NSUInteger replacement_get_operand(
 					if (reg_struct->isa==BONKERSREG_ARG) {
 						printf("%s\n", reg_struct->prettyName );
 					}
-					const struct HooReg *indexReg = indexname_Struct[index];
+					const struct HooReg *indexReg = &indexname_Struct[index];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,1);
 					return (NSUInteger)indirStrct;
@@ -4467,7 +4467,7 @@ static NSUInteger replacement_get_operand(
 				if (reg_struct->isa==BONKERSREG_ARG) {
 					printf("%s\n", reg_struct->prettyName );
 				}
-				const struct HooReg *indexReg = indexname_Struct[index];				
+				const struct HooReg *indexReg = &indexname_Struct[index];				
 				struct IndirectVal *indirStrct;
 				NEW_INDIRECT( indirStrct,0,0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg,scale_factor[ss]);
 				return (NSUInteger)indirStrct;
