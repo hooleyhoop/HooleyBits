@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,11 +18,13 @@
 		7310796C11BA9E7C00AC22EF /* MyWorkerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7373D38711BA72910088C623 /* MyWorkerClass.m */; };
 		733FEB2A11B816FE0084B484 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733FEB2911B816FE0084B484 /* QuartzCore.framework */; };
 		73A3FEA211AEA92100F14A1A /* IPhoneFFT.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A3FEA111AEA92100F14A1A /* IPhoneFFT.m */; };
-		73B23C6111BB9FD800BD3CAA /* fft4g.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B23C5D11BB9FD800BD3CAA /* fft4g.c */; };
-		73B23C6211BB9FD800BD3CAA /* OouraFFT.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B23C6011BB9FD800BD3CAA /* OouraFFT.m */; };
 		73D80E2011B7A14700A9F418 /* AudioSessionStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D80E1F11B7A14700A9F418 /* AudioSessionStuff.m */; };
 		73DF588311AEAB3C0090EC26 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73DF588211AEAB3C0090EC26 /* AudioToolbox.framework */; };
 		73DF5A0E11AEC2370090EC26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73DF5A0D11AEC2370090EC26 /* AVFoundation.framework */; };
+		73E196711250C4BF005B7C35 /* GraphicEqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E196701250C4BF005B7C35 /* GraphicEqView.m */; };
+		73E4EAC1125092AB00CFFCE0 /* OouraFFT.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E4EAC0125092AB00CFFCE0 /* OouraFFT.m */; };
+		73E4EB7E125092FF00CFFCE0 /* fft4g.c in Sources */ = {isa = PBXBuildFile; fileRef = 73E4EB7D125092FF00CFFCE0 /* fft4g.c */; };
+		73E4EBA01250960900CFFCE0 /* NSPortMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E4EB9F1250960900CFFCE0 /* NSPortMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +39,6 @@
 		28D7ACF60DDB3853001CB0EB /* iPhoneFFTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneFFTViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* iPhoneFFTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneFFTViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* iPhoneFFT_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneFFT_Prefix.pch; sourceTree = "<group>"; };
 		7331C29811BA4FE7000273B0 /* RunLoopSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunLoopSource.h; sourceTree = "<group>"; };
 		7331C29911BA4FE7000273B0 /* RunLoopSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunLoopSource.m; sourceTree = "<group>"; };
 		7331C2A911BA6024000273B0 /* RunLoopContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunLoopContext.h; sourceTree = "<group>"; };
@@ -47,15 +48,18 @@
 		7373D38711BA72910088C623 /* MyWorkerClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWorkerClass.m; sourceTree = "<group>"; };
 		73A3FEA011AEA92100F14A1A /* IPhoneFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneFFT.h; sourceTree = "<group>"; };
 		73A3FEA111AEA92100F14A1A /* IPhoneFFT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhoneFFT.m; sourceTree = "<group>"; };
-		73B23C5D11BB9FD800BD3CAA /* fft4g.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fft4g.c; path = "../../../Source/alexbw-iPhoneFFT-1910d07/fft4g.c"; sourceTree = SOURCE_ROOT; };
-		73B23C5E11BB9FD800BD3CAA /* fft4g.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fft4g.h; path = "../../../Source/alexbw-iPhoneFFT-1910d07/fft4g.h"; sourceTree = SOURCE_ROOT; };
-		73B23C5F11BB9FD800BD3CAA /* OouraFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OouraFFT.h; path = "../../../Source/alexbw-iPhoneFFT-1910d07/OouraFFT.h"; sourceTree = SOURCE_ROOT; };
-		73B23C6011BB9FD800BD3CAA /* OouraFFT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OouraFFT.m; path = "../../../Source/alexbw-iPhoneFFT-1910d07/OouraFFT.m"; sourceTree = SOURCE_ROOT; };
 		73D80E1E11B7A14600A9F418 /* AudioSessionStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioSessionStuff.h; sourceTree = "<group>"; };
 		73D80E1F11B7A14700A9F418 /* AudioSessionStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioSessionStuff.m; sourceTree = "<group>"; };
 		73DF588211AEAB3C0090EC26 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		73DF5A0D11AEC2370090EC26 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		8D1107310486CEB800E47090 /* iPhoneFFT-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPhoneFFT-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		73E1966F1250C4BF005B7C35 /* GraphicEqView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicEqView.h; sourceTree = "<group>"; };
+		73E196701250C4BF005B7C35 /* GraphicEqView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphicEqView.m; sourceTree = "<group>"; };
+		73E4EABF125092AB00CFFCE0 /* OouraFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OouraFFT.h; sourceTree = "<group>"; };
+		73E4EAC0125092AB00CFFCE0 /* OouraFFT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OouraFFT.m; sourceTree = "<group>"; };
+		73E4EB7C125092FF00CFFCE0 /* fft4g.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft4g.h; sourceTree = "<group>"; };
+		73E4EB7D125092FF00CFFCE0 /* fft4g.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fft4g.c; sourceTree = "<group>"; };
+		73E4EB9E1250960900CFFCE0 /* NSPortMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPortMessage.h; sourceTree = "<group>"; };
+		73E4EB9F1250960900CFFCE0 /* NSPortMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPortMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				7331C2AC11BA603F000273B0 /* RunLoop */,
 				28D7ACF60DDB3853001CB0EB /* iPhoneFFTViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* iPhoneFFTViewController.m */,
+				73E1966F1250C4BF005B7C35 /* GraphicEqView.h */,
+				73E196701250C4BF005B7C35 /* GraphicEqView.m */,
 				73A3FE9D11AEA90C00F14A1A /* CoreAudio */,
 			);
 			path = Classes;
@@ -107,7 +113,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				733FEB2911B816FE0084B484 /* QuartzCore.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -115,7 +120,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* iPhoneFFT_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -124,9 +128,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2899E5210DE3E06400AC0155 /* iPhoneFFTViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				8D1107310486CEB800E47090 /* iPhoneFFT-Info.plist */,
+				2899E5210DE3E06400AC0155 /* iPhoneFFTViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				733FEB2911B816FE0084B484 /* QuartzCore.framework */,
 				73DF5A0D11AEC2370090EC26 /* AVFoundation.framework */,
 				73DF588211AEAB3C0090EC26 /* AudioToolbox.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -161,6 +165,8 @@
 			children = (
 				73A3FEA011AEA92100F14A1A /* IPhoneFFT.h */,
 				73A3FEA111AEA92100F14A1A /* IPhoneFFT.m */,
+				73E4EB9E1250960900CFFCE0 /* NSPortMessage.h */,
+				73E4EB9F1250960900CFFCE0 /* NSPortMessage.m */,
 			);
 			name = CoreAudio;
 			sourceTree = "<group>";
@@ -168,10 +174,10 @@
 		73B23C6411BB9FDC00BD3CAA /* FFT */ = {
 			isa = PBXGroup;
 			children = (
-				73B23C5D11BB9FD800BD3CAA /* fft4g.c */,
-				73B23C5E11BB9FD800BD3CAA /* fft4g.h */,
-				73B23C5F11BB9FD800BD3CAA /* OouraFFT.h */,
-				73B23C6011BB9FD800BD3CAA /* OouraFFT.m */,
+				73E4EB7C125092FF00CFFCE0 /* fft4g.h */,
+				73E4EB7D125092FF00CFFCE0 /* fft4g.c */,
+				73E4EABF125092AB00CFFCE0 /* OouraFFT.h */,
+				73E4EAC0125092AB00CFFCE0 /* OouraFFT.m */,
 			);
 			name = FFT;
 			sourceTree = "<group>";
@@ -202,8 +208,15 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPhoneFFT" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -236,8 +249,10 @@
 				73A3FEA211AEA92100F14A1A /* IPhoneFFT.m in Sources */,
 				73D80E2011B7A14700A9F418 /* AudioSessionStuff.m in Sources */,
 				7310796C11BA9E7C00AC22EF /* MyWorkerClass.m in Sources */,
-				73B23C6111BB9FD800BD3CAA /* fft4g.c in Sources */,
-				73B23C6211BB9FD800BD3CAA /* OouraFFT.m in Sources */,
+				73E4EAC1125092AB00CFFCE0 /* OouraFFT.m in Sources */,
+				73E4EB7E125092FF00CFFCE0 /* fft4g.c in Sources */,
+				73E4EBA01250960900CFFCE0 /* NSPortMessage.m in Sources */,
+				73E196711250C4BF005B7C35 /* GraphicEqView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,11 +291,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};
@@ -289,12 +306,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Release;
 		};

@@ -10,6 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MyWorkerClass.h"
 #include <libkern/OSAtomic.h>
+#import "OouraFFT.h"
+#import "NSPortMessage.h"
 
 #define RequireNoErr(error)	do { if( (error) != noErr ) [NSException raise:@"CoreAudio ERROR" format:@"%i", error]; } while (false)
 
@@ -62,7 +64,7 @@
 
 - (void)beginRecording {
 
-	_myFFT = [OouraFFT initForSignalsOfLength:1024 numberOfWindows:10];
+	_myFFT = [[OouraFFT alloc] initForSignalsOfLength:1024 andNumWindows:10];
 	
 	// single way
 //	[self setUpInputRemoteIO];
@@ -140,7 +142,14 @@
 			
 				// 4. ... then finally, plot the signal with your own function
 				// doSomethingWithTheFrequencyData(myFFT.spectrumData)
-			
+				UInt32 half = 1024 >> 1;
+				for (UInt32 i=0; i< half; i++){
+					float freq = ((Float32)(i)/(Float32)1024)*44100.00;
+					float data = 20. * log10f( (2.*_myFFT.spectrumData[i]) );
+					if(data!=0)
+						NSLog(@"freq %f\t - amp: %f", freq, data );
+				}
+				NSLog(@"ooh");
 				// Repeat steps 2-4 for any new data you acquire
 			
 //	OouraFFT.spectrumData contains the frequencies in the signal you plopped into OouraFFT.inputData, then computed by 
@@ -151,12 +160,9 @@
 //
 //	So, for 0 < i < OouraFFT.numFrequencies,
 //	spectrumData[i] holds data for (i*samplingRate)/(2*numFrequencies)
-//
-//	Why is the highest frequency computed equal to half the sampling rate? This frequency is called the "Nyquist Rate", and 
-//	frankly, I don't think I can explain it very well. Check out the Wikipedia article for some more info.
 			}
 
-			//-- set more data not needed
+			//-- set more data needed
 			OSAtomicDecrement32(&_hasData);
 		}
 		
@@ -191,19 +197,30 @@
         // Do one chunk of a larger body of work here.
         // Change the value of the moreWorkToDo Boolean when done.
 		float *mockAudioData = malloc(sizeof(float)*1024);
+		double phase =0;
+		double freq = 1000 * 2. * 3.14159265359 / 44100;
+
+		// generate a wave between -1.0f and 1.0f
+		for (NSUInteger i=0; i<1024; i++) {
+			float wave = sin(phase);			// generate sine wave
+			phase = phase + freq;				// increment phase
+			mockAudioData[i] = wave;
+			// NSLog(@"%f", wave);
+		}
 		
-			// -- if more data is needed..
-			if(_hasData==0) {
-				//-- copy audio data to shared memory
-				NSLog(@"Writing new memory");
-				// 2. Then fill up an array with data with your own function
-				fillUpInputSignalWithMyData( _myFFT.inputData );
-				
-				//-- set more data not needed
-				OSAtomicIncrement32(&_hasData);
-			} else {
-				NSLog(@"__");
-			}
+		// -- if more data is needed..
+		if(_hasData==0) {
+			//-- copy audio data to shared memory
+			NSLog(@"Writing new memory");
+
+			// 2. Then fill up an array with data with your own function
+			memcpy(_myFFT.inputData, mockAudioData, 1024);
+
+			//-- set more data not needed
+			OSAtomicIncrement32(&_hasData);
+		} else {
+			NSLog(@"__");
+		}
 
 				
 		free(mockAudioData);
@@ -213,6 +230,7 @@
 		
         // Check to see if an input source handler changed the exitNow value.
         exitNow = [[threadDict valueForKey:@"ThreadShouldExitNow"] boolValue];
+		sleep(0.03);
     }
 	[pool release];
 }

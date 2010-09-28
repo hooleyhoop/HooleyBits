@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -87,6 +87,9 @@
 		73CDCCD51182044200091BE5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCCD41182044200091BE5 /* ApplicationServices.framework */; };
 		73CDCD9E1182044A00091BE5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CDCCD41182044200091BE5 /* ApplicationServices.framework */; };
 		73D4A78610DFC77E0091B586 /* vecLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D4A78510DFC77E0091B586 /* vecLib.framework */; };
+		73E19DF41250F73B005B7C35 /* CompareOouraFFTResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E19DF31250F73B005B7C35 /* CompareOouraFFTResults.m */; };
+		73E1A72712510A67005B7C35 /* rad2fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 73E1A72312510A67005B7C35 /* rad2fft.c */; };
+		73E1A72812510A67005B7C35 /* SpectrumAnalysis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73E1A72512510A67005B7C35 /* SpectrumAnalysis.cpp */; };
 		73F7F9441180A87200DD6DB2 /* AudioFileParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325301F1180497E000932A8 /* AudioFileParserTests.m */; };
 		73F7F98F1180AF4000DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
 		73F7F99B1180B3BF00DD6DB2 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F98E1180AF4000DD6DB2 /* AppController.m */; };
@@ -94,6 +97,93 @@
 		73F7F9CD1180B88300DD6DB2 /* SpectrumResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F7F9C81180B7CD00DD6DB2 /* SpectrumResults.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73E19DB81250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738C7C770C5CDC180096EF9D /* SHShared.framework */;
+			remoteInfo = SHShared;
+		};
+		73E19DBA1250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732360B80C5E75BD0039CC7F /* SHSharedTests.octest */;
+			remoteInfo = SHSharedTests;
+		};
+		73E19DBC1250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC00F70F4037DF00FA9887 /* libSHShared_static.a */;
+			remoteInfo = SHShared_static;
+		};
+		73E19DBE1250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73AC016B0F4039D100FA9887 /* libSHShared_iphone.a */;
+			remoteInfo = SHShared_iphone;
+		};
+		73E19DC01250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EBA10A1FC4E0097E2A2 /* SHSharedUI.framework */;
+			remoteInfo = SHSharedUI;
+		};
+		73E19DC21250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73FF8EC710A1FC680097E2A2 /* SHSharedUITests.octest */;
+			remoteInfo = SHSharedUITests;
+		};
+		73E19DC41250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73D6ED9510C7C5BC0072DC88 /* SHTestUtilities.framework */;
+			remoteInfo = SHTestUtilities;
+		};
+		73E19DC61250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73CC082911368A3700B53CA9 /* TestUtilitiesTests.octest */;
+			remoteInfo = TestUtilitiesTests;
+		};
+		73E19DC81250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73B051B81168EEF70054CE44 /* GUIFiddler */;
+			remoteInfo = GUIFiddler;
+		};
+		73E19DCA1250F586005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 732E93681189AFEA00DD3435 /* PerformanceTests.octest */;
+			remoteInfo = PerformanceTests;
+		};
+		73E19DCC1250F590005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738C7C760C5CDC170096EF9D /* SHShared */;
+			remoteInfo = SHShared;
+		};
+		73E19DCE1250F590005B7C35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88 /* SHTestUtilities */;
+			remoteInfo = SHTestUtilities;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -200,6 +290,12 @@
 		73CDCCD41182044200091BE5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		73D20D2111789F0400F1E41A /* AudioQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueTests.m; path = Tests/AudioQueueTests.m; sourceTree = "<group>"; };
 		73D4A78510DFC77E0091B586 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
+		73E19D941250F585005B7C35 /* SHShared.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHShared.xcodeproj; path = ../../Blake/SHShared/SHShared.xcodeproj; sourceTree = SOURCE_ROOT; };
+		73E19DF31250F73B005B7C35 /* CompareOouraFFTResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompareOouraFFTResults.m; path = Tests/CompareOouraFFTResults.m; sourceTree = "<group>"; };
+		73E1A72312510A67005B7C35 /* rad2fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rad2fft.c; sourceTree = "<group>"; };
+		73E1A72412510A67005B7C35 /* rad2fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rad2fft.h; sourceTree = "<group>"; };
+		73E1A72512510A67005B7C35 /* SpectrumAnalysis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpectrumAnalysis.cpp; sourceTree = "<group>"; };
+		73E1A72612510A67005B7C35 /* SpectrumAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpectrumAnalysis.h; sourceTree = "<group>"; };
 		73F7F98D1180AF4000DD6DB2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = src/AppController.h; sourceTree = "<group>"; };
 		73F7F98E1180AF4000DD6DB2 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = src/AppController.m; sourceTree = "<group>"; };
 		73F7F9C71180B7CD00DD6DB2 /* SpectrumResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectrumResults.h; path = src/SpectrumResults.h; sourceTree = "<group>"; };
@@ -315,6 +411,7 @@
 		29B97314FDCFA39411CA2CEA /* AudioFileParser */ = {
 			isa = PBXGroup;
 			children = (
+				73E19D941250F585005B7C35 /* SHShared.xcodeproj */,
 				730960AC10E26948008B4C08 /* Config */,
 				7309600F10E26748008B4C08 /* Tests */,
 				7366459D10E134850049510B /* beat_detect.pde.txt */,
@@ -367,6 +464,8 @@
 				7325301F1180497E000932A8 /* AudioFileParserTests.m */,
 				73CDC86D11819B8E00091BE5 /* SpectrumResultsTests.m */,
 				73CDCCC91181FFB700091BE5 /* SpectralImageTests.m */,
+				73E19DF31250F73B005B7C35 /* CompareOouraFFTResults.m */,
+				73E1A7041251042C005B7C35 /* FFT */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -487,6 +586,34 @@
 			name = bridge;
 			sourceTree = "<group>";
 		};
+		73E19D951250F585005B7C35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73E19DB91250F586005B7C35 /* SHShared.framework */,
+				73E19DBB1250F586005B7C35 /* SHSharedTests.octest */,
+				73E19DBD1250F586005B7C35 /* libSHShared_static.a */,
+				73E19DBF1250F586005B7C35 /* libSHShared_iphone.a */,
+				73E19DC11250F586005B7C35 /* SHSharedUI.framework */,
+				73E19DC31250F586005B7C35 /* SHSharedUITests.octest */,
+				73E19DC51250F586005B7C35 /* SHTestUtilities.framework */,
+				73E19DC71250F586005B7C35 /* TestUtilitiesTests.octest */,
+				73E19DC91250F586005B7C35 /* GUIFiddler */,
+				73E19DCB1250F586005B7C35 /* PerformanceTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73E1A7041251042C005B7C35 /* FFT */ = {
+			isa = PBXGroup;
+			children = (
+				73E1A72312510A67005B7C35 /* rad2fft.c */,
+				73E1A72412510A67005B7C35 /* rad2fft.h */,
+				73E1A72512510A67005B7C35 /* SpectrumAnalysis.cpp */,
+				73E1A72612510A67005B7C35 /* SpectrumAnalysis.h */,
+			);
+			name = FFT;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -502,6 +629,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				73E19DCD1250F590005B7C35 /* PBXTargetDependency */,
+				73E19DCF1250F590005B7C35 /* PBXTargetDependency */,
 			);
 			name = AudioFileParserTests;
 			productName = AudioFileParserTests;
@@ -532,10 +661,23 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AudioFileParser" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* AudioFileParser */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 73E19D951250F585005B7C35 /* Products */;
+					ProjectRef = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* AudioFileParser */,
@@ -543,6 +685,79 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		73E19DB91250F586005B7C35 /* SHShared.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHShared.framework;
+			remoteRef = 73E19DB81250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DBB1250F586005B7C35 /* SHSharedTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedTests.octest;
+			remoteRef = 73E19DBA1250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DBD1250F586005B7C35 /* libSHShared_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_static.a;
+			remoteRef = 73E19DBC1250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DBF1250F586005B7C35 /* libSHShared_iphone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHShared_iphone.a;
+			remoteRef = 73E19DBE1250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DC11250F586005B7C35 /* SHSharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHSharedUI.framework;
+			remoteRef = 73E19DC01250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DC31250F586005B7C35 /* SHSharedUITests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHSharedUITests.octest;
+			remoteRef = 73E19DC21250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DC51250F586005B7C35 /* SHTestUtilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHTestUtilities.framework;
+			remoteRef = 73E19DC41250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DC71250F586005B7C35 /* TestUtilitiesTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestUtilitiesTests.octest;
+			remoteRef = 73E19DC61250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DC91250F586005B7C35 /* GUIFiddler */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = GUIFiddler;
+			remoteRef = 73E19DC81250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73E19DCB1250F586005B7C35 /* PerformanceTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PerformanceTests.octest;
+			remoteRef = 73E19DCA1250F586005B7C35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		73095FEC10E266E6008B4C08 /* Resources */ = {
@@ -617,6 +832,9 @@
 				73CDC8D11181A31200091BE5 /* HooSpectralProcessorTests.m in Sources */,
 				73CDCCBA1181FE9F00091BE5 /* SpectralImage.m in Sources */,
 				73CDCCCA1181FFB700091BE5 /* SpectralImageTests.m in Sources */,
+				73E19DF41250F73B005B7C35 /* CompareOouraFFTResults.m in Sources */,
+				73E1A72712510A67005B7C35 /* rad2fft.c in Sources */,
+				73E1A72812510A67005B7C35 /* SpectrumAnalysis.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +876,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		73E19DCD1250F590005B7C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHShared;
+			targetProxy = 73E19DCC1250F590005B7C35 /* PBXContainerItemProxy */;
+		};
+		73E19DCF1250F590005B7C35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHTestUtilities;
+			targetProxy = 73E19DCE1250F590005B7C35 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -682,6 +913,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 730960B710E26948008B4C08 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Code/Frameworks,
@@ -777,7 +1009,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -790,7 +1021,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};

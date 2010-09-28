@@ -10,7 +10,7 @@
 
 @class OouraFFT;
 
-@interface IPhoneFFT : NSObject <NSPortDelegate> {
+@interface IPhoneFFT : NSObject { // <NSPortDelegate>
 
 	//without graph
 	AudioUnit		_inputRemoteIOUnit;
@@ -22,8 +22,8 @@
 
 	// Background thread
 	NSPort			*_distantPort;
-	int32_t		_hasData;
-	OouraFFT		*_myFFT
+	int32_t			_hasData;
+	OouraFFT		*_myFFT;
 }
 
 - (void)beginRecording;

@@ -7,6 +7,7 @@
 //
 
 #import "MyWorkerClass.h"
+#import "NSPortMessage.h"
 
 #define kCheckinMessage 100
 

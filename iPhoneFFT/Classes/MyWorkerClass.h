@@ -7,7 +7,7 @@
 //
 
 
-@interface MyWorkerClass : NSObject <NSPortDelegate> {
+@interface MyWorkerClass : NSObject  { // <NSPortDelegate>
 
 	NSPort		*_remotePort;
 }

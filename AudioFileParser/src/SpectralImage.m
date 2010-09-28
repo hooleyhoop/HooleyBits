@@ -20,8 +20,9 @@
 		// what do we know about specList? 	DSPSplitComplex mDSPSplitComplex[1];
 
 		/*  values are between -2048 - +2048. scale it by  2n. */
-		num = num + 2048
-		num = num * (MAXFLOAT/4096)
+//TODO: i think we are here!
+//		num = num + 2048
+//		num = num * (MAXFLOAT/4096)
 
 	}
 	return self;

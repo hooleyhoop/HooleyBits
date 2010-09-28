@@ -120,7 +120,7 @@ void SHCASpectralProcessor::HanningWindow()
 
 void SHCASpectralProcessor::SineWindow()
 {
-	double w = pi / (double)(mFFTSize - 1);
+	double w = M_PI / (double)(mFFTSize - 1);
 	for (UInt32 i = 0; i < mFFTSize; ++i)
 	{
 		mWindow[i] = sin(w * (double)i);

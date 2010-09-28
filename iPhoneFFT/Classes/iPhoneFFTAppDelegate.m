@@ -20,8 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-	CALayer *a;
-
+	[window addSubview:viewController.view];
+    [window makeKeyAndVisible];
+	
 	// Turn off the idle timer, since this app doesn't rely on constant touch input
 	// application.idleTimerDisabled = YES;
 
@@ -41,9 +42,5 @@
     [window release];
     [super dealloc];
 }
-
-have a timer that gets myFFT.spectrumData
-
-and draw It
 
 @end

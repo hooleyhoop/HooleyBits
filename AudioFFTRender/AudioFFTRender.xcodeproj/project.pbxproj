@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -294,8 +294,15 @@
 		C4E6187E095A3C800012CA3F /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "AudioFFTRender" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = C4E6187C095A3C800012CA3F;
 			productRefGroup = C4E6188C095A3C800012CA3F /* Products */;
 			projectDirPath = "";
@@ -458,6 +465,7 @@
 					../../../Resources,
 				);
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};

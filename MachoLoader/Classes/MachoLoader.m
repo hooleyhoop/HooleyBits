@@ -425,7 +425,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			symbolInfo.sectionName = [NSString stringWithCString:sect_ind[i].sectname encoding:NSUTF8StringEncoding];
 			
 			if(cputype & CPU_ARCH_ABI64) {
-				symbolInfo.address = sect_ind[i].addr + j * stride;
+				symbolInfo.address = (NSUInteger)sect_ind[i].addr + j * stride;
 				// printf("0x%016llx ", sect_ind[i].addr + j * stride);
 			} else {
 				symbolInfo.address = (uint32_t)(sect_ind[i].addr + j * stride);
@@ -719,7 +719,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		if(n_strx > 0 && n_strx < _strings_size)
 			p = _strtable + n_strx;
 		else
-			p = "symbol with bad string index";
+			p = (char *)"symbol with bad string index";
 		if(n_type & ~(N_TYPE|N_EXT|N_PEXT))
 			continue;
 		n_type = n_type & N_TYPE;
@@ -763,7 +763,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 //		printf("%0x ", memPtr);
 //		printf("%i\t\t", iterationCounter);
 		
-		if(iterationCounter==100000)
+		if(iterationCounter==23)
 			NSLog(@"stop here");
 		iterationCounter++;
 		
