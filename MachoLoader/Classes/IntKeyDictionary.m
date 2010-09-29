@@ -31,11 +31,11 @@
 	[super dealloc];
 }
 
-- (void)addObject:(NSObject *)ob1 forIntKey:(NSUInteger)key {
+- (void)addObject:(NSObject *)ob1 forIntKey:(uint64)key {
 	CFDictionaryAddValue( _symbolLookup, &key, ob1 );
 }
 
-- (NSObject *)objectForIntKey:(NSUInteger)key {
+- (NSObject *)objectForIntKey:(uint64)key {
 	return (NSObject *)CFDictionaryGetValue( _symbolLookup, (const void *)&key );
 }
 

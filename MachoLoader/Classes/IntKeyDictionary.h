@@ -12,7 +12,7 @@
 	CFMutableDictionaryRef _symbolLookup;
 }
 
-- (void)addObject:(NSObject *)ob1 forIntKey:(NSUInteger)key;
-- (NSObject *)objectForIntKey:(NSUInteger)key;
+- (void)addObject:(NSObject *)ob1 forIntKey:(uint64)key;
+- (NSObject *)objectForIntKey:(uint64)key;
 
 @end

@@ -59,7 +59,7 @@
 	[_memoryBlockStore insertObject:memBlock atIndex:ind];
 }
 
-- (SHMemoryBlock *)blockForAddress:(NSUInteger)memAddr {
+- (SHMemoryBlock *)blockForAddress:(uint64)memAddr {
 
 	NSUInteger low = 0;
 	NSUInteger high  = [_memoryBlockStore count];
@@ -89,7 +89,7 @@
 	return nil;
 }
 
-- (NSUInteger)lastAddress {
+- (uint64)lastAddress {
 	return [[_memoryBlockStore lastObject] lastAddress];
 }
 

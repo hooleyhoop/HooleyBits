@@ -30,7 +30,7 @@ extern uint32_t i386_disassemble(
 
 	struct hooleyFuction **currentFuncPtr,
     char *sect,
-    uint32_t left,
+    uint64 left,
     uint64_t addr,
     uint64_t sect_addr,
 //    enum byte_sex object_byte_sex,
@@ -49,7 +49,7 @@ extern uint32_t i386_disassemble(
     struct load_command *load_commands,
     uint32_t ncmds,
     uint32_t sizeofcmds,
-    int verbose,
-	int iterationCounter						  
+    NSUInteger verbose,
+	NSUInteger iterationCounter						  
 
 );

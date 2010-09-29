@@ -42,19 +42,19 @@
 	[containerSeg insertSection:sec];
 }
 
-- (Section *)sectionForAddress:(NSUInteger)memAddr {
+- (Section *)sectionForAddress:(uint64)memAddr {
 
 	Segment *containerSeg = [self segmentForAddress:memAddr];
 	Section *sec = [containerSeg sectionForAddress:memAddr];
 	return sec;
 }
 
-- (Segment *)segmentForAddress:(NSUInteger)memAddr {
+- (Segment *)segmentForAddress:(uint64)memAddr {
 
 	return (Segment *)[_segmentStore blockForAddress:memAddr];
 }
 
-- (NSUInteger)lastAddress {
+- (uint64)lastAddress {
 	return [_segmentStore lastAddress];
 }
 @end

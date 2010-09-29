@@ -134,12 +134,28 @@ void Radix2IntCplxFFT(Int32Cplx* ioCplxData, int size, const PackedInt16Cplx* tw
 {
 	int span, twiddle, strides;
 
+	// debug
+	for(int i=0; i<size; i++){
+		Int32Cplx hmm = ioCplxData[i];
+		printf("%i %i \n", hmm.real, hmm.imag );
+	}	
+	
+	Int32Cplx testData[4] = { 1,2,3,4,5,6 }; // 1 2 5 6 3 4 0 0
+	BitReverseReorder( testData, 4 );
+	
 	/* Reorder input data in bit reversed order */
-	BitReverseReorder(ioCplxData, size);
+//	BitReverseReorder(ioCplxData, size);
 
 	span = 1;
 	twiddle = 1;
 	strides = twiddleFactorsStrides*size / 2;
+	
+	// debug
+	for(int i=0; i<size; i++){
+		Int32Cplx hmm = ioCplxData[i];
+		printf("%i %i \n", hmm.real, hmm.imag );
+	}
+	
 	
 	do {
 		Int32Cplx x0, x1;

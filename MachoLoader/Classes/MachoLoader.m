@@ -181,8 +181,8 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 		
 	for( uint32_t i=0; i<sect_size; i++ )
 	{
-		NSUInteger cStringAddress = (NSUInteger)(sect_addr + i);
-		printf("%08x  ", cStringAddress );
+		uint64 cStringAddress = (uint64)(sect_addr + i);
+		printf("%qx  ", cStringAddress );
 
 	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
 			print_cstring_char(sect[i]);
@@ -203,7 +203,7 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 
 	for( uint32_t i=0; i<sect_size; i++ )
 	{
-		NSUInteger cStringAddress = (NSUInteger)(sect_addr + i);
+		uint64 cStringAddress = (uint64)(sect_addr + i);
 		// printf("%08x  ", cStringAddress );
 
 		memset ( aCstring, 0, length );
@@ -425,7 +425,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			symbolInfo.sectionName = [NSString stringWithCString:sect_ind[i].sectname encoding:NSUTF8StringEncoding];
 			
 			if(cputype & CPU_ARCH_ABI64) {
-				symbolInfo.address = (NSUInteger)sect_ind[i].addr + j * stride;
+				symbolInfo.address = (uint64)sect_ind[i].addr + j * stride;
 				// printf("0x%016llx ", sect_ind[i].addr + j * stride);
 			} else {
 				symbolInfo.address = (uint32_t)(sect_ind[i].addr + j * stride);
@@ -457,7 +457,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 				continue;
 			}
-			NSUInteger symbolIndex = indirect_symbols[j+n];
+			uint64 symbolIndex = indirect_symbols[j+n];
 			
 //			printf("%5u ", indirect_symbols[j + n]);
 			//			if(verbose){
@@ -569,7 +569,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_filePath = [aPath retain];
 
 		_loadCommandsArray = [[NSMutableArray array] retain];
-		addresses_ = [[NSMutableDictionary alloc] init];
+		_addresses_ = [[NSMutableDictionary alloc] init];
 		_memoryMap = [[MemoryMap alloc] init];
 		_uncodedMemoryMap = [[MemoryMap alloc] init];
 		
@@ -588,7 +588,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	[_filePath release];
 	[_memoryMap release];
 	[_uncodedMemoryMap release];
-	[addresses_ release];
+	[_addresses_ release];
 	[_indirectSymbolLookup release];
 	[_cStringLookup release];
 	[_libraries release];
@@ -744,12 +744,11 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	
 	struct hooleyFuction *currentFunction = _headFunction;
 
-	NSUInteger j=0;
+	uint64 j=0;
 	NSUInteger iterationCounter = 0;
 	for( NSUInteger i=0; i<_textSectSize; )
 	{
-		
-		NSUInteger bytesLeft = _textSectSize-i;
+		uint64 bytesLeft = _textSectSize-i;
 		
 		print_label((uint64_t)memPtr, 1, sorted_symbols, nsorted_symbols);
 
@@ -763,7 +762,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 //		printf("%0x ", memPtr);
 //		printf("%i\t\t", iterationCounter);
 		
-		if(iterationCounter==23)
+		if( iterationCounter==1118 )
 			NSLog(@"stop here");
 		iterationCounter++;
 		
@@ -797,7 +796,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	}	
 }
 
-- (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr {
+- (SymbolicInfo *)symbolicInfoForAddress:(uint64)memAddr {
 
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];
@@ -853,7 +852,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			// Initialised constant variables ALSO switch statement jump table
 			
-			NSInteger aMemPtrToSomething = [_temporaryExperiment intForIntKey:memAddr];
+			uint64 aMemPtrToSomething = [_temporaryExperiment intForIntKey:memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -864,7 +863,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			int32_t a4ByteLiteral = 0;
 			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
 			
-			NSLog(@"oh well this doesnt work then %0x %0x %@", (uint)a4ByteLiteralAddress, (uint)memAddr, [self CStringForAddress:(NSUInteger)a4ByteLiteralAddress] );
+			NSLog(@"oh well this doesnt work then %0x %0x %@", (uint)a4ByteLiteralAddress, (uint)memAddr, [self CStringForAddress:(uint64)a4ByteLiteralAddress] );
 
 			// [NSException raise:@"what the fuck" format:@""];
 
@@ -873,7 +872,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			// 4 byte literals
 			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
-			NSUInteger newSectSize = sec.length;
+			uint64 newSectSize = sec.length;
 			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
 		
@@ -902,7 +901,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 
 			UInt8 *memPtr = (UInt8 *)sec.startAddr;
 			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
-			NSUInteger newSectSize = sec.length;
+			uint64 newSectSize = sec.length;
 			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
 			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
 			double a4ByteLiteralDouble;
@@ -931,7 +930,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	else if( [[seg name] isEqualToString:@"__OBJC"] ) {
 		
 		if( [[sec name] isEqualToString:@"__cls_refs"] ) {
-			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -943,7 +942,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__class"] ) {
-			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -955,7 +954,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__message_refs"] ) {
-			NSInteger aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -1065,19 +1064,19 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 }
 
 // record positions of file sections
-- (void)addSegment:(NSString *)title memAddress:(NSUInteger)offset length:(uint32_t)size {
+- (void)addSegment:(NSString *)title memAddress:(uint64_t)offset length:(uint64_t)size {
 	
 	Segment *newSeg = [Segment name:title start:offset length:size];
 	[_memoryMap insertSegment:newSeg];
 }
 
-- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(NSUInteger)offset length:(uint32_t)size filePtr:(NSUInteger)filePtr {
+- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(uint64)offset length:(uint64)size filePtr:(uint64)filePtr {
 
 	Section *newSec = [Section name:title segment:segTitle start:offset length:size fileAddr:filePtr];
 	[_memoryMap insertSection:newSec];
 }
 
-- (void)readHeaderFlags:(uint32_t)flags {
+- (void)readHeaderFlags:(uint64)flags {
 	
 	if( flags & MH_NOUNDEFS ){
 		// MH_NOUNDEFS—The object file contained no undefined references when it was built.
@@ -1203,8 +1202,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 
 - (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table {
 	
-	uint32_t lastStartAddress_=0;
-	uint32_t n_stringIndex = list->n_un.n_strx;
+	uint64 lastStartAddress_=0;
+	uint64 n_stringIndex = list->n_un.n_strx;
 	BOOL result = NO;
 
 //	if(n_type & N_STAB){
@@ -1223,7 +1222,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	// TODO - use this TWOLEVEL STUFF
 	if( (((list->n_type & N_TYPE)==N_UNDF && list->n_value == 0) || (list->n_type & N_TYPE) == N_PBUD)) // ((mh_flags & MH_TWOLEVEL)==MH_TWOLEVEL) && 
 	{
-		uint32_t library_ordinal = GET_LIBRARY_ORDINAL(list->n_desc);
+		uint64 library_ordinal = GET_LIBRARY_ORDINAL(list->n_desc);
 		if(library_ordinal != 0)
 		{
 			if( library_ordinal==EXECUTABLE_ORDINAL)
@@ -1254,7 +1253,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			// an N_FUN from section 0 may follow the initial N_FUN
 			// giving us function length information
 			NSNumber *key = [NSNumber numberWithUnsignedLong:(unsigned long)lastStartAddress_];
-			NSMutableDictionary *dict = [addresses_ objectForKey:key];
+			NSMutableDictionary *dict = [_addresses_ objectForKey:key];
 			
 //			assert(dict);
 			
@@ -1341,29 +1340,29 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	return [_libraries objectAtIndex:libraryIndex-1];
 }
 
-- (void)addCstring:(NSString *)aCstring forAddress:(NSUInteger)cStringAddress {
+- (void)addCstring:(NSString *)aCstring forAddress:(uint64)cStringAddress {
 
 	[_cStringLookup addObject:aCstring forIntKey:cStringAddress];
 }
 
-- (NSString *)CStringForAddress:(NSUInteger)addr {
+- (NSString *)CStringForAddress:(uint64)addr {
 
 	return (NSString *)[_cStringLookup objectForIntKey:addr];
 }
 
 //- (void)addUnDecodedBlock:(char *)sect_pointer size:(uint32_t)len withName:(NSString *)nm {
 //	
-//	Segment *newSeg = [Segment name:nm start:(NSUInteger)sect_pointer length:len];
+//	Segment *newSeg = [Segment name:nm start:(uint64)sect_pointer length:len];
 //	[_uncodedMemoryMap insertSegment:newSeg];
 //}
 
-//- (BOOL)scanUnDecodedBlocks:(NSUInteger)test {
+//- (BOOL)scanUnDecodedBlocks:(uint64)test {
 //	
 //	NSMutableArray *allSegs = _uncodedMemoryMap->_segmentStore->_memoryBlockStore;
 //	for(Segment *eachSeg in allSegs){
 //		UInt8 *sect_pointer = (UInt8 *)eachSeg.startAddr;
 //		UInt8 *locPtr = (UInt8 *)eachSeg.startAddr;
-//		NSUInteger newSectSize = eachSeg.length;
+//		uint64 newSectSize = eachSeg.length;
 //		while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
 //			UInt16 val1 = *((UInt16 *)locPtr);
 //			locPtr = locPtr + (sizeof val1)/2;
@@ -1390,7 +1389,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ) {
 
 			char *segname;
-			NSUInteger vmaddr, vmsize, nsects;
+			uint64_t vmaddr, vmsize, nsects;
 			
 			// Defines a segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
 			if( cmd->cmd==LC_SEGMENT ) {
@@ -1432,7 +1431,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			
 			for( NSUInteger i=0; i<nsects; i++ )
 			{
-				NSUInteger memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
+				uint64 memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection)
 				{
 //					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
@@ -1444,13 +1443,13 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
 
-					struct relocation_info *sect_relocs = (struct relocation_info *)(_codeAddr + newSec_ptr->reloff);
+					struct relocation_info *sect_relocs = (struct relocation_info *)((char *)_codeAddr + newSec_ptr->reloff);
 					uint32_t sect_nrelocs = newSec_ptr->nreloc;
 					uint32_t sect_addr = newSec_ptr->addr;
 					uint32_t sect_flags = newSec_ptr->flags;
 					
 					uint32_t section_type = sect_flags & SECTION_TYPE;
-					NSUInteger stride=0;
+					uint64 stride=0;
 					if(section_type == S_SYMBOL_STUBS){
 						stride = newSec_ptr->reserved2;
 					} else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS) {
@@ -1460,8 +1459,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							stride = 4;
 					}
 					if(stride!=0){
-						NSUInteger count = newSec_ptr->size / stride;
-						NSUInteger n = newSec_ptr->reserved1;
+						uint64 count = newSec_ptr->size / stride;
+						uint64 n = newSec_ptr->reserved1;
 
 //						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
 						for( NSUInteger j=0; j<count && n+j<_nindirect_symbols; j++ )
@@ -1470,7 +1469,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						}
 					}
 					
-					uint32_t newSectSize = newSec_ptr->size;
+					NSUInteger newSectSize = newSec_ptr->size;
 //					void *newSectAddr = NULL;
 
 					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
@@ -1481,7 +1480,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
 					
-					[self addSection:secName seg:segmentName start:sect_addr length:newSectSize filePtr:(NSUInteger)sect_pointer];
+					[self addSection:secName 
+								 seg:segmentName 
+							   start:sect_addr 
+							  length:newSectSize 
+							 filePtr:(uint64)sect_pointer];
 					
 //					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
 //					if (err==0) {
@@ -1943,8 +1946,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			uint32_t stroff	= symtab->stroff;	// An integer containing the byte offset from the start of the image to the location of the string table.
 			_strings_size	= symtab->strsize;	// An integer indicating the size (in bytes) of the string table.
 
-			_symtable_ptr = (struct nlist *)(symoff + _codeAddr);
-			_strtable = (char *)(stroff + _codeAddr);
+			_symtable_ptr = (struct nlist *)(symoff + (char *)_codeAddr);
+			_strtable = (char *)(stroff + (char *)_codeAddr);
 
 			for( NSInteger i=0; i<_nsymbols; i++ )
 			{
@@ -2094,7 +2097,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog(@"-- Number of entries in table of contents %i", dsymtab->ntoc);
 			
 			// should this be offset from file? guess so
-			struct dylib_table_of_contents *tocs_ptr = (struct dylib_table_of_contents *)(_codeAddr + dsymtab->tocoff);
+			struct dylib_table_of_contents *tocs_ptr = (struct dylib_table_of_contents *)((char *)_codeAddr + dsymtab->tocoff);
             for( int i=0; i<dsymtab->ntoc; i++){
 				uint32_t si = tocs_ptr[i].symbol_index;
 				uint32_t mi = tocs_ptr[i].module_index;
@@ -2114,7 +2117,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			//uint32_t nmodtab;	/* number of module table entries */
 //			NSLog(@"-- Number of module table entries %i", dsymtab->nmodtab);
 			if(dsymtab->nmodtab>0){
-				struct dylib_reference *libRefer1 = (struct dylib_reference *)(_codeAddr + dsymtab->modtaboff);
+				struct dylib_reference *libRefer1 = (struct dylib_reference *)((char *)_codeAddr + dsymtab->modtaboff);
 				for( int i=0; i<dsymtab->nmodtab; i++){
 	//				uint32_t indirectSymbol = libRefer1[i];
 	//				NSLog(@"DO THIS! IndirectSymbol %i", indirectSymbol);
@@ -2134,7 +2137,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			//uint32_t nextrefsyms;	/* number of referenced symbol table entries */
 //			NSLog(@"-- Number of referenced symbol table entries %i", dsymtab->nextrefsyms);
 			if(dsymtab->nextrefsyms>0){
-				struct dylib_reference *libRefer2 = (struct dylib_reference *)(_codeAddr + dsymtab->extrefsymoff);
+				struct dylib_reference *libRefer2 = (struct dylib_reference *)((char *)_codeAddr + dsymtab->extrefsymoff);
 				for( int i=0; i<dsymtab->nextrefsyms; i++){
 //					NSLog(@"DO THIS!");
 				}
@@ -2157,7 +2160,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 			if( _nindirect_symbols>0 )
 			{
-				_indirectSymbolTable = (uint32_t *)(_codeAddr + dsymtab->indirectsymoff);
+				_indirectSymbolTable = (uint32_t *)((char *)_codeAddr + dsymtab->indirectsymoff);
 				for( NSUInteger i=0; i<_nindirect_symbols; i++ ){
 					uint32_t indirectSymbol = _indirectSymbolTable[i];
 					
@@ -2204,7 +2207,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// uint32_t nextrel;	/* number of external relocation entries */
 //			NSLog(@"-- Number of external relocation entries %i", dsymtab->nextrel);
 			if(dsymtab->nextrel>0){
-				struct relocation_info *ext_relocs = (struct relocation_info *)(_codeAddr + dsymtab->extreloff);
+				struct relocation_info *ext_relocs = (struct relocation_info *)((char *)_codeAddr + dsymtab->extreloff);
 				int32_t addressOfSymbol = ext_relocs->r_address;
 //				NSLog(@"Relocate symbol %i", addressOfSymbol);
 			}
@@ -2218,7 +2221,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// uint32_t nlocrel;	/* number of local relocation entries */			
 //			NSLog(@"-- Number of of local relocation entries %i", dsymtab->nlocrel);
 			if(dsymtab->nlocrel>0){
-				struct relocation_info *loc_relocs = (struct relocation_info *)(_codeAddr + dsymtab->locreloff);
+				struct relocation_info *loc_relocs = (struct relocation_info *)((char *)_codeAddr + dsymtab->locreloff);
 				int32_t addressOfSymbol = loc_relocs->r_address;
 //				NSLog(@"Relocate symbol %i", addressOfSymbol);
 			}
@@ -2506,7 +2509,7 @@ const char * guess_indirect_symbol(
 {
  //   enum byte_sex host_byte_sex;
 //    enum bool swapped;
-    uint32_t i, j, section_type, index, stride;
+    uint64 i, j, section_type, index, stride;
     const struct load_command *lc;
     struct load_command l;
     struct segment_command sg;

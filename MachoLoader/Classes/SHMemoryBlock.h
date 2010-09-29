@@ -9,21 +9,21 @@
 
 @interface SHMemoryBlock : NSObject {
 
-	NSUInteger		_startAddr;
-	NSUInteger		_length;
+	uint64			_startAddr;
+	uint64			_length;
 	NSString		*_name;
 }
 
 @property (readonly) NSString	*name;
-@property (readonly) NSUInteger startAddr;
-@property (readonly) NSUInteger length;
+@property (readonly) uint64 startAddr;
+@property (readonly) uint64 length;
 
-- (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
+- (id)initWithName:(NSString *)name start:(uint64)memAddr length:(uint64)len;
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg;
-- (NSComparisonResult)compareStartAddressToAddress:(NSUInteger)otherAddress;
+- (NSComparisonResult)compareStartAddressToAddress:(uint64)otherAddress;
 
-- (NSUInteger)lastAddress;
+- (uint64)lastAddress;
 
 
 @end

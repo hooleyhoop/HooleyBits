@@ -15,11 +15,11 @@
 	MemoryBlockStore	*_sectionStore;
 }
 
-+ (id)name:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
++ (id)name:(NSString *)name start:(uint64)memAddr length:(uint64)len;
 
-- (id)initWithName:(NSString *)name start:(NSUInteger)memAddr length:(NSUInteger)len;
+- (id)initWithName:(NSString *)name start:(uint64)memAddr length:(uint64)len;
 
 - (void)insertSection:(Section *)sec;
-- (Section *)sectionForAddress:(NSUInteger)memAddr;
+- (Section *)sectionForAddress:(uint64)memAddr;
 
 @end

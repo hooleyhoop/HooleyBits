@@ -56,13 +56,23 @@ Copyright (C) 2009 Apple Inc. All Rights Reserved.
 extern "C" {
 #endif
 
+#include "rad2fft.h"
+
+
+	
 /*
  * Forward declarations
  */
 struct SPECTRUM_ANALYSIS;
 typedef struct SPECTRUM_ANALYSIS* H_SPECTRUM_ANALYSIS;
 
-	
+	struct SPECTRUM_ANALYSIS
+	{
+		int32_t size;
+		int16_t* weightingWindow;
+		Int32Cplx* fftBuffer;
+		PackedInt16Cplx* twiddleFactors;
+	};
 /* 
  * Create a SpectrumAnalysis object. The block size argument must be a power of 2
  */

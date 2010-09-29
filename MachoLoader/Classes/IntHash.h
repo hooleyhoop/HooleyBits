@@ -12,8 +12,8 @@
 	CFMutableDictionaryRef _intLookup;
 }
 
-- (void)addInt:(NSInteger)intVal forIntKey:(NSInteger)intKey;
+- (void)addInt:(int64_t)intVal forIntKey:(int64_t)intKey;
 
--  (NSInteger)intForIntKey:(NSInteger)intKey;
+-  (int64_t)intForIntKey:(int64_t)intKey;
 
 @end

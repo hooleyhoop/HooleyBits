@@ -51,7 +51,6 @@ Copyright (C) 2009 Apple Inc. All Rights Reserved.
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "rad2fft.h"
 #include "SpectrumAnalysis.h"
 
 #define Scale(e) powf(2.0,e)
@@ -134,16 +133,6 @@ inline int32_t SquareMag(int32_t re, int32_t im) { return (re>>16)*(re>>16)+(im>
 #endif
 
 
-struct SPECTRUM_ANALYSIS
-{
-	int32_t size;
-	int16_t* weightingWindow;
-	Int32Cplx* fftBuffer;
-	PackedInt16Cplx* twiddleFactors;
-};
-
-
-
 H_SPECTRUM_ANALYSIS SpectrumAnalysisCreate(int32_t size)
 {
 	H_SPECTRUM_ANALYSIS p = (SPECTRUM_ANALYSIS*)malloc(sizeof(SPECTRUM_ANALYSIS));
@@ -188,48 +177,55 @@ void SpectrumAnalysisProcess(H_SPECTRUM_ANALYSIS p, const int32_t* inTimeSig, in
 	if(p)
 	{
 		// Apply weigthing window
-		for(uint i = 0; i < p->size; i += 2)
+		for( uint i = 0; i < p->size; i += 2 )
 		{
 			int32_t dualCoef = *((int32_t*)(p->weightingWindow + i));
 			p->fftBuffer[i].real   = mul32_16b(inTimeSig[i] << 7, dualCoef) << 1;
 			p->fftBuffer[i].imag   = 0;
 			p->fftBuffer[i+1].real = mul32_16t(inTimeSig[i+1] << 7, dualCoef) << 1;
 			p->fftBuffer[i+1].imag = 0;
+			printf("%i %i  %i %i \n", p->fftBuffer[i].real, p->fftBuffer[i].imag, p->fftBuffer[i+1].real, p->fftBuffer[i+1].imag );
 		}
 
-		Radix2IntCplxFFT(p->fftBuffer, p->size, p->twiddleFactors, 1);
-		
-		if(in_dB)
-		{			
-			// Calculate magnitude spectrum in dB
-			for(uint i = 0; i < p->size/2; ++i)
-			{
-				// squared magnitude
-				int32_t squaredMag = SquareMag(p->fftBuffer[i].real, p->fftBuffer[i].imag);
-				
-				// Avoid log(0)
-				if(squaredMag)
-				{
-					// squared mag -> log2
-					squaredMag = log2Int(squaredMag<<1) + kAdjust0dBLevel;
-				}
-				else
-				{
-					squaredMag = kAdjust0dBLevel;
-				}
-
-				// log2 -> 10*log10 conversion (Q5.26 x Q2.13)
-				outMagSpectrum[i] = mul32_16b(squaredMag, kLog2ToLog10ScaleFactor) << 1;
-			}
-		}
-		else
+		Radix2IntCplxFFT( p->fftBuffer, p->size, p->twiddleFactors, 1 );
+		for( uint i = 0; i < p->size/2; ++i )
 		{
-			// Calculate squared magnitude spectrum
-			for(uint i = 0; i < p->size/2; ++i)
-			{
-				// squared magnitude
-				outMagSpectrum[i] = SquareMag(p->fftBuffer[i].real, p->fftBuffer[i].imag);
-			}
+			int32_t v1 = p->fftBuffer[i].real;
+			int32_t v2 = p->fftBuffer[i].imag;
+			printf("%i %i \n", v1, v2 );
 		}
+		
+//		if(in_dB)
+//		{			
+//			// Calculate magnitude spectrum in dB
+//			for(uint i = 0; i < p->size/2; ++i)
+//			{
+//				// squared magnitude
+//				int32_t squaredMag = SquareMag(p->fftBuffer[i].real, p->fftBuffer[i].imag);
+//				
+//				// Avoid log(0)
+//				if(squaredMag)
+//				{
+//					// squared mag -> log2
+//					squaredMag = log2Int(squaredMag<<1) + kAdjust0dBLevel;
+//				}
+//				else
+//				{
+//					squaredMag = kAdjust0dBLevel;
+//				}
+//
+//				// log2 -> 10*log10 conversion (Q5.26 x Q2.13)
+//				outMagSpectrum[i] = mul32_16b(squaredMag, kLog2ToLog10ScaleFactor) << 1;
+//			}
+//		}
+//		else
+//		{
+//			// Calculate squared magnitude spectrum
+//			for(uint i = 0; i < p->size/2; ++i)
+//			{
+//				// squared magnitude
+//				outMagSpectrum[i] = SquareMag(p->fftBuffer[i].real, p->fftBuffer[i].imag);
+//			}
+//		}
 	}
 }

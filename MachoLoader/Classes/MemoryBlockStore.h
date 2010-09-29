@@ -15,8 +15,8 @@
 }
 
 - (void)insertMemoryBlock:(SHMemoryBlock *)memBlock;
-- (SHMemoryBlock *)blockForAddress:(NSUInteger)memAddr;
+- (SHMemoryBlock *)blockForAddress:(uint64)memAddr;
 
-- (NSUInteger)lastAddress;
+- (uint64)lastAddress;
 
 @end

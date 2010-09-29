@@ -31,14 +31,15 @@
 	[super dealloc];
 }
 
-- (void)addInt:(NSInteger)intVal forIntKey:(NSInteger)intKey {
+- (void)addInt:(int64_t)intVal forIntKey:(int64_t)intKey {
+
 	CFDictionaryAddValue( _intLookup, &intKey, &intVal );
 }
 
--  (NSInteger)intForIntKey:(NSInteger)intKey {
+-  (int64_t)intForIntKey:(int64_t)intKey {
 
-	NSInteger result = INT32_MAX;
-	NSInteger *resultPtr = (NSInteger *)CFDictionaryGetValue( _intLookup, (const void *)&intKey );
+	int64_t result = INT32_MAX;
+	int64_t *resultPtr = (int64_t *)CFDictionaryGetValue( _intLookup, (const void *)&intKey );
 	if(resultPtr!=NULL)
 		result = *resultPtr;
 	return result;	

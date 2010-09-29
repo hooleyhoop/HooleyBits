@@ -51,7 +51,7 @@ struct hooleyFuction {
 	size_t						_codeSize;
 	cpu_type_t					_cputype;
 	
-	NSMutableDictionary			*addresses_;    // Addresses and symbols (STRONG)
+	NSMutableDictionary			*_addresses_;    // Addresses and symbols (STRONG)
 	
 	// Symbol table
 	struct nlist				*_symtable_ptr;
@@ -90,13 +90,13 @@ struct hooleyFuction {
 
 - (void)readFile;
 
-- (SymbolicInfo *)symbolicInfoForAddress:(NSUInteger)memAddr;
+- (SymbolicInfo *)symbolicInfoForAddress:(uint64)memAddr;
 
 - (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table;
 
 - (NSString *)lookupLibrary:(NSUInteger)libraryIndex;
-- (void)addCstring:(NSString *)aCstring forAddress:(NSUInteger)cStringAddress;
-- (NSString *)CStringForAddress:(NSUInteger)addr;
+- (void)addCstring:(NSString *)aCstring forAddress:(uint64)cStringAddress;
+- (NSString *)CStringForAddress:(uint64)addr;
 
 const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in) */
 			 const struct symbol *sorted_symbols,

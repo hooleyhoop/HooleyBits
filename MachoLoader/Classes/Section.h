@@ -10,13 +10,13 @@
 @interface Section : SHMemoryBlock {
 
 	NSString		*_segName;
-	NSUInteger		_sect_pointer;
+	uint64		_sect_pointer;
 }
 
 @property (readonly) NSString	*segmentName;
-@property (readonly) NSUInteger	sect_pointer;
+@property (readonly) uint64	sect_pointer;
 
-+ (id)name:(NSString *)secName segment:(NSString *)segName start:(NSUInteger)memAddr length:(NSUInteger)len fileAddr:(NSUInteger)fa;
-- (id)initWithName:(NSString *)name segment:(NSString *)segName start:(NSUInteger)memAddr length:(NSUInteger)len fileAddr:(NSUInteger)fa;
++ (id)name:(NSString *)secName segment:(NSString *)segName start:(uint64)memAddr length:(uint64)len fileAddr:(uint64)fa;
+- (id)initWithName:(NSString *)name segment:(NSString *)segName start:(uint64)memAddr length:(uint64)len fileAddr:(uint64)fa;
 
 @end

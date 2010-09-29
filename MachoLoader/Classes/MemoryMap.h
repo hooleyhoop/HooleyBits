@@ -15,11 +15,11 @@
 }
 
 - (void)insertSegment:(Segment *)seg;
-- (Segment *)segmentForAddress:(NSUInteger)memAddr;
+- (Segment *)segmentForAddress:(uint64)memAddr;
 
 - (void)insertSection:(Section *)sec;
-- (Section *)sectionForAddress:(NSUInteger)memAddr;
+- (Section *)sectionForAddress:(uint64)memAddr;
 
-- (NSUInteger)lastAddress;
+- (uint64)lastAddress;
 
 @end

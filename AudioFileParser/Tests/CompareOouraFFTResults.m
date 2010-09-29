@@ -8,6 +8,8 @@
 
 #import <vecLib/vecLib.h>
 #include "SpectrumAnalysis.h"
+#include "rad2fft.h"
+#include <math.h>
 
 
 @interface CompareOouraFFTResults : SenTestCase {
@@ -35,7 +37,7 @@
 
 	Float32 *testInData = (Float32 *)calloc( fftSize, sizeof( Float32 ) );	
 	float phase =0;
-	float freq = 1000 * 2. * 3.14159265359 / 44100;
+	float freq = 10000 * 2. * 3.14159265359 / 44100;
 	
 	for( UInt32 i=0; i<fftSize; i++ ) {
 		float wave = sinf(phase);			// generate sine wave
@@ -63,40 +65,59 @@
 	// complexData->imagp[0] = 0;
 	
 /* Do it the OouraFFT way */
-	H_SPECTRUM_ANALYSIS mSpectrumAnalysis = SpectrumAnalysisCreate(1024);
+	struct SPECTRUM_ANALYSIS *mSpectrumAnalysis = SpectrumAnalysisCreate(1024);
 	UInt32 mAudioBufferSize = 1024 * sizeof(int32_t);
-	int32_t *mAudioBuffer = (int32_t*)malloc(mAudioBufferSize);
+	int32_t *mAudioBuffer = (int32_t*)malloc(4096);
 	int32_t* outFFTData = (int32_t*)malloc(mAudioBufferSize);
 
 	for( UInt32 i=0; i<fftSize; i++ ) {
 		// I think there may be a pi adjustment needed here
-		mAudioBuffer[i] = FloatToFixed((CGFloat)(testInData[i]*127.0f));
+		mAudioBuffer[i] = (int)FloatToFixed((CGFloat)(testInData[i]*127.0f));
 	}
 	SpectrumAnalysisProcess(mSpectrumAnalysis, mAudioBuffer, outFFTData, true);		
-	
-	
+	//			for(uint i = 0; i < p->size/2; ++i)
+	//			{
+	// (p->fftBuffer[i].real, p->fftBuffer[i].imag
+ // }
+
 /* Now lets compare some results */	
 	for (UInt32 i=0; i<fftSizeOver2; i++ ) {
-//		int ooVal1 = outFFTData[i];
-//		int ooVal2 = outFFTData[i*2+1];
 
-		float hmm1 = FixedToFloat(outFFTData[(int)i]);
-		float hmm2 = FixedToFloat(outFFTData[(int)i + 1]);
+		UInt32 twoddle1 = mSpectrumAnalysis->fftBuffer[i].real;
+		UInt32 twoddle2 = mSpectrumAnalysis->fftBuffer[i].imag;
 		
-		float fft_l = (outFFTData[(int)i] & 0xFF000000) >> 24;
-		float fft_r = (outFFTData[(int)i + 1] & 0xFF000000) >> 24;
-		float fft_l_fl = (CGFloat)(fft_l + 80) / 64.;
-		float fft_r_fl = (CGFloat)(fft_r + 80) / 64.;
-		double fftIdx_i;
-		float fftIdx_f = modf(i, &fftIdx_i);
+	CGFloat hmm1 = (twoddle1 & 0xFF000000) >> 24;
+	CGFloat hmm2 = (twoddle2 & 0xFF000000) >> 24;
+	CGFloat hmm1f = (CGFloat)(hmm1 + 80) / 64.;
+	CGFloat hmm2f = (CGFloat)(hmm2 + 80) / 64.;
+		
+		CGFloat fuckThis1 = (CGFloat)FixedToFloat(twoddle1);
+		CGFloat fuckThis2 = (CGFloat)FixedToFloat(twoddle2);
 
-		float interpVal = fft_l_fl * (1. - i) + fft_r_fl * i;
+//		CGFloat yFract = (CGFloat)i / (CGFloat)(fftSizeOver2 - 1);
+//		CGFloat fftIdx = yFract * ((CGFloat)fftSizeOver2);
+//		
+//		double fftIdx_i, fftIdx_f;
+//		fftIdx_f = modf(fftIdx, &fftIdx_i);
+//		
+//		CGFloat fft_l = (outFFTData[i] & 0xFF000000) >> 24;
+//		CGFloat fft_r = (outFFTData[i + 1] & 0xFF000000) >> 24;
+		
+//		CGFloat fft_l_fl = (CGFloat)(fft_l + 80) / 64.;
+//		CGFloat fft_r_fl = (CGFloat)(fft_r + 80) / 64.;
+//		CGFloat interpVal = fft_l_fl * (1. - fftIdx_f) + fft_r_fl * fftIdx_f;
+//		interpVal = interpVal *120;
+		
+//		double fftIdx_i;
+//		float fftIdx_f = modf(i, &fftIdx_i);
+
+//		float interpVal = fft_l_fl * (1. - i) + fft_r_fl * i;
 	// 	interpVal = CLAMP(0., interpVal, 1.);
 		
 		float libVc1 = complexData->realp[i];
 		float libVc2 = complexData->imagp[i];
 
-		NSLog(@"%f -  %f %f", hmm1, libVc1, libVc2 );
+		NSLog(@"%f %f -  %f %f", fuckThis1, fuckThis2, libVc1, libVc2 );
 	}
 }
 
