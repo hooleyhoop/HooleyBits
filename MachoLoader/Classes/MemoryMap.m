@@ -37,7 +37,7 @@
 	
 	Segment *containerSeg = [self segmentForAddress:sec.startAddr];
 	if( [sec.segmentName isEqualToString:containerSeg.name]==NO )
-		[NSException raise:@"Fucked up somewhere" format:@""];
+		[NSException raise:@"Fucked up somewhere" format:@"Fucked up somewhere"];
 	
 	[containerSeg insertSection:sec];
 }

@@ -2028,7 +2028,7 @@ static const struct HooReg *segRegPtrForName( char *segRegName ) {
 		return &data_seg_reg2;
 	}
 	
-	[NSException raise:@"Unknown segreg" format:nil];
+	[NSException raise:@"Unknown segreg" format:@"Unknown segreg"];
 	return NULL;
 }
 
@@ -2688,7 +2688,7 @@ NSUInteger iterationCounter
 			if(aStack.size==2){
 				FILLARGS2( aStack.data[0], aStack.data[1] );
 			} else {
-				[NSException raise:@"what?" format:nil];
+				[NSException raise:@"what?" format:@"what?"];
 			}
 			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
@@ -3851,20 +3851,20 @@ NSUInteger iterationCounter
 
 		/* segment register to memory or register operand	*/
 		case SM:
-			hooleyDebug();
-//NEVER					if(got_modrm_byte == FALSE){
-//NEVER						hooleyDebug();
-//NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
-//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
-//NEVER					}
-//NEVER					wbit = LONGOPERAND;
-//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			if(got_modrm_byte == FALSE){
+				got_modrm_byte = TRUE;
+				byte = get_value(sizeof(char), sect, &length, &left);
+				modrm_byte(&mode, &reg, &r_m, byte);
+			}
+			wbit = LONGOPERAND;
+			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);			
 			segReg = (struct HooReg *)&SEGREG[reg];
-			
-//NEVER					printf("%s\t%s,", mnemonic, SEGREG[reg]);
-//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
+			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			FILLARGS2( segReg, abstractStrctPtr1 );			
+			addLine( addr, currentFuncPtr, dp, allArgs );			
+			return(length);
 
 		/* rotate or shift instrutions, which may shift by 1 or */
 		/* consult the cl register, depending on the 'v' bit	*/
@@ -3899,7 +3899,7 @@ NSUInteger iterationCounter
 			/* When vbit is set, register is an operand, otherwise just $0x1 */
 			if(vbit) {
 				// reg_name = vbit ? "%cl," : "" ;
-				[NSException raise:@"what?" format:nil];
+				[NSException raise:@"what?" format:@"what?"];
 				// FILLARGS3(value0Immed, countReg, value0);				
 			} else {
 				FILLARGS2(value0Immed, abstractStrctPtr1);
@@ -4285,17 +4285,19 @@ NSUInteger iterationCounter
 					return(length);
 
 		case ENTER:
-					hooleyDebug();
-//NEVER					value0_size = sizeof(short);
-//NEVER					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
-//NEVER					NEW_IMMEDIATE( value0Immed, imm0 );
-//NEVER					value1_size = sizeof(char);
-//NEVER					REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
-//NEVER					NEW_IMMEDIATE( value1Immed, imm1 );
-//NEVER					printf("%s\t$", mnemonic);
-//NEVER					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
-//NEVER					print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
-//NEVER					return(length);
+			// wooo exotic!
+			value0_size = sizeof(short);
+			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			NEW_IMMEDIATE( value0Immed, imm0 );
+			value1_size = sizeof(char);
+			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
+			NEW_IMMEDIATE( value1Immed, imm1 );
+			// printf("%s\t$", mnemonic);
+			// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
+			// print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
+			FILLARGS2( value0Immed, value1Immed );						
+			addLine( addr, currentFuncPtr, dp, allArgs );			
+			return(length);
 
 		/* 16-bit immediate operand */
 		case RET:
@@ -4304,7 +4306,6 @@ NSUInteger iterationCounter
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg ret	$0x0004	
 			FILLARGS1( value0Immed );			
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 		
 			return(length);
 
@@ -4685,7 +4686,7 @@ static NSUInteger replacement_get_operand(
 					} else {
 						const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
 						if (reg_struct->isah==BONKERSREG_ARG) {
-							!here!
+							// !here!
 							printf("%s\n", reg_struct->prettyName );
 						}						
 						struct IndirectVal *indirStrct;

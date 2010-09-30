@@ -15,7 +15,8 @@
 
 //	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
 //	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-	NSString *pathToApp = @"/Applications/CrossOver.app/Contents/MacOS/CrossOver";
+//	NSString *pathToApp = @"/Applications/CrossOver.app/Contents/MacOS/CrossOver";
+	NSString *pathToApp = @"/Applications/SIGMA Photo Pro.app/Contents/MacOS/SIGMA Photo Pro";
 	
 	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	[ml readFile];

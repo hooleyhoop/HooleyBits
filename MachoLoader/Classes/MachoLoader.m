@@ -16,6 +16,7 @@
 #import "MemoryBlockStore.h"
 // Standard C includes.
 #import <stdio.h>
+
 #import <stdlib.h>
 #import <fcntl.h>
 #import <unistd.h>
@@ -193,13 +194,14 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 	}
 }
 
+#define MAXSTRINGLENGTH 2048*10
 
 // -- see cctools-782 otool ofile_print.c
 - (void)save_cstring_section:(const char *)sect :(const uint32_t)sect_size :(const uint32_t)sect_addr {
 	
-	char aCstring[1024];
+	char aCstring[MAXSTRINGLENGTH];
 
-	memset ( aCstring, 0, 1024*sizeof(char) );
+	memset ( aCstring, 0, MAXSTRINGLENGTH*sizeof(char) );
 	uint32_t length = 0;
 
 	for( uint32_t i=0; i<sect_size; i++ )
@@ -211,18 +213,18 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 		length = 0;
 		
 	    for( ; i<sect_size && sect[i]!='\0'; i++ ){
-//			print_cstring_char(sect[i]);
+			print_cstring_char(sect[i]);
 			aCstring[length] = sect[i];
 			length++;
-			NSAssert(length<1024, @"overflowed string buffer.");
+			NSAssert(length<MAXSTRINGLENGTH, @"overflowed string buffer.");
 		}
 		NSString *strVal = [NSString stringWithCString:aCstring encoding:NSUTF8StringEncoding];
 		if(strVal==nil)
 			strVal = @"";
 		[self addCstring:strVal forAddress:cStringAddress];
 		
-//	    if(i<sect_size && sect[i]=='\0' )
-//			printf("\n");
+	    if(i<sect_size && sect[i]=='\0' )
+			printf("\n");
 	}
 }
 
@@ -419,7 +421,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //		printf(" name\n");
 		//	    else
 		//			printf("\n");
-		
+		char *demangledOutput = malloc(1024); //[256];
+
 	    for( j=0; j<count && n+j<nindirect_symbols; j++ )
 		{
 			SymbolicInfo *symbolInfo = [[[SymbolicInfo alloc] init] autorelease];
@@ -524,10 +527,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			
 					int demangledStat;
 			
-			// TODO: leaking! crashes if i dont
-					char *demangledOutput = malloc(256); //[256];
+					// TODO: leaking! crashes if i dont
 					size_t demangledLength;
-			
+					memset ( demangledOutput, 0, 1024 );
+
 					char *demangledName = __cxa_demangle( (const char *)symbolString, 
 														 demangledOutput,
 														 &demangledLength, 
@@ -539,14 +542,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 							// TODO: we may want to record the fact that it is c++
 							break;
 						case -1:
-							[NSException raise:@"Memory Error" format:@""];
+							[NSException raise:@"Memory Error" format:@"Memory Error"];
 							break;
 						case -2:
 							symbolInfo.stringValue = [NSString stringWithCString:symbolString encoding:NSUTF8StringEncoding];
-							free(demangledOutput);
 							break;
 						case -3:
-							[NSException raise:@"invalid argument" format:@""];
+							[NSException raise:@"invalid argument" format:@"invalid argument"];
 							break;
 						default:
 							break;
@@ -559,6 +561,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			//			else
 			//				printf("\n");
 	    }
+		free(demangledOutput);
 	    n += count;
 	}
 }
@@ -849,7 +852,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			// yeah do this
 
 		} else if( [[sec name] isEqualToString:@"__StaticInit"] ) {
-			[NSException raise:@"what the fuck" format:@""];
+			[NSException raise:@"what the fuck" format:@"what the fuck"];
 
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			// Initialised constant variables ALSO switch statement jump table
@@ -867,7 +870,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			
 			NSLog(@"oh well this doesnt work then %0x %0x %@", (uint)a4ByteLiteralAddress, (uint)memAddr, [self CStringForAddress:(uint64)a4ByteLiteralAddress] );
 
-			// [NSException raise:@"what the fuck" format:@""];
+			// [NSException raise:@"what the fuck" format:@"what the fuck"];
 
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
 
@@ -923,7 +926,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			// pushl $0x00001000 
 //			NSLog(@"Text Null %0x", memAddr); // 1000, 17e4, 17e0, 2000, 1fff, 1818, 104d, 1fb1, 1f5e
 		} else {
-			[NSException raise:@"Unknown request" format:@"%@", [sec name]];
+			[NSException raise:@"Unknown request" format:@"Unknown request - %@", [sec name]];
 		}
 	
 	} 
@@ -1043,7 +1046,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	if( [[seg name] isEqualToString:@"__PAGEZERO"] ) {
 
 	} else {
-		[NSException raise:@"Unknown request" format:@"%@ %@", [seg name], [sec name]];
+		[NSException raise:@"Unknown request" format:@"Unknown request - %@ %@", [seg name], [sec name]];
 	}
 
 	 
@@ -1697,7 +1700,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							//TODO: Otool disassembles this section
 							NSLog(@"DREADED THUNK SECTION");
 						} else {
-							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
 			
 					/* __DATA SEGMENT */
@@ -1747,8 +1750,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// otool -s __DATA __const -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver
 						} else if ( strcmp(thisSectionName, "__const")==0 ) {
 							
+							// otool -s __DATA __const_coal -v -V "/Applications/SIGMA Photo Pro.app/Contents/MacOS/SIGMA Photo Pro"
+						} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
+							
 						} else {
-							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
 						
 					/* __OBJC SEGMENT */
@@ -1951,8 +1957,13 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// otool -s __OBJC __cstring_object__OBJC -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver																																									
 						} else if ( strcmp(thisSectionName, "__cstring_object__OBJC")==0 ) {
 							// really nothing here?
+				
+							// otool -s __OBJC __protocol -v -V "/Applications/SIGMA Photo Pro.app/Contents/MacOS/SIGMA Photo Pro"																																															
+						} else if ( strcmp(thisSectionName, "__protocol")==0 ) {
+						
+							
 						} else {
-							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
 						
 					/* __IMPORT SEGMENT */
@@ -1968,7 +1979,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// It seems that these are in the other sections as well.
 							
 						} else {
-							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
 				
 					} else {
@@ -2381,7 +2392,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	// path to this app
 	_allFile = [[NSData dataWithContentsOfFile:aPath] retain];
 	if(!_allFile)
-		[NSException raise:@"App Not Found" format:@"%@", aPath];
+		[NSException raise:@"App Not Found" format:@"App Not Found - %@", aPath];
 
 	_codeAddr = [_allFile bytes];
 	_codeSize = [_allFile length];
@@ -2468,7 +2479,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 		_sizeofcmds = machHeader->sizeofcmds;
 
 	} else {
-		[NSException raise:@"Unknown Format" format:@""];
+		[NSException raise:@"Unknown Format" format:@"Unknown Format"];
 	}
 	_cputype = universalMachHeader->cputype;
 	if( _cputype==CPU_TYPE_POWERPC )

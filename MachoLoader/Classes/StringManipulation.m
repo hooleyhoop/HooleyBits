@@ -58,7 +58,7 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 					foundArg3 = YES;
 					break;					
 				default:
-					[NSException raise:@"Uknown arg index for replacement" format:nil];					
+					[NSException raise:@"Uknown arg index for replacement" format:@"Uknown arg index for replacement"];					
 					break;
 			}
 		}
@@ -67,21 +67,21 @@ char *replaceArgsInStr( char *inStr, char *arg1, char *arg2, char *arg3 ) {
 	switch (numberOfArgs) {
 		case 1:
 			if( foundArg1==NO || foundArg2==YES || foundArg3==YES ) {
-				[NSException raise:@"Fucked up the number of args or something" format:nil];					
+				[NSException raise:@"Fucked up the number of args or something" format:@"Fucked up the number of args or something"];					
 			}
 			break;
 		case 2:
 			if( foundArg1==NO || foundArg2==NO || foundArg3==YES ) {
-				[NSException raise:@"Fucked up the number of args or something" format:nil];					
+				[NSException raise:@"Fucked up the number of args or something" format:@"Fucked up the number of args or something"];					
 			}
 			break;
 		case 3:
 			if( foundArg1==NO || foundArg2==NO || foundArg3==NO ) {
-				[NSException raise:@"Fucked up the number of args or something" format:nil];					
+				[NSException raise:@"Fucked up the number of args or something" format:@"Fucked up the number of args or something"];					
 			}
 			break;			
 		default:
-			[NSException raise:@"Uknown arg index for replacement" format:nil];								
+			[NSException raise:@"Uknown arg index for replacement" format:@"Uknown arg index for replacement"];								
 			break;
 	}
 	
