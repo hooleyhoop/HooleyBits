@@ -30,9 +30,9 @@ struct LinkdClass_struct {
 
 @implementation StaticInitializSpeedTests
 
-- (NSObject)blah {
-	return nil;
-}
+//- (NSObject)blah {
+//	return nil;
+//}
 
 - (void)testHighLevelWay {
 	

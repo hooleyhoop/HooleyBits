@@ -10,6 +10,9 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		730219640F864C5000906D18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 730219630F864C5000906D18 /* AppDelegate.m */; };
 		730830B112392CA7007F8247 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
+		730DB3C312549EBC00203ED8 /* ArgStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 730DB3C212549EBC00203ED8 /* ArgStack.c */; };
+		730DB3C412549EBC00203ED8 /* ArgStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 730DB3C212549EBC00203ED8 /* ArgStack.c */; };
+		730DB3CB12549ED800203ED8 /* ArgStackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DB3CA12549ED800203ED8 /* ArgStackTests.m */; };
 		7315FE88124DF9140088A8F6 /* StaticInitializSpeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */; };
 		7315FE89124DF9340088A8F6 /* ExperimentalFrankenStructsTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */; };
 		731701A0123286BF00EE9ED6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
@@ -58,6 +61,9 @@
 		730219620F864C5000906D18 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		730219630F864C5000906D18 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		730830B012392CA7007F8247 /* i386_disasm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = i386_disasm.m; path = Classes/i386_disasm.m; sourceTree = "<group>"; };
+		730DB3C112549EBC00203ED8 /* ArgStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArgStack.h; path = Classes/ArgStack.h; sourceTree = "<group>"; };
+		730DB3C212549EBC00203ED8 /* ArgStack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ArgStack.c; path = Classes/ArgStack.c; sourceTree = "<group>"; };
+		730DB3CA12549ED800203ED8 /* ArgStackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgStackTests.m; path = Tests/ArgStackTests.m; sourceTree = "<group>"; };
 		7310FD1512095D5C00AE9F6B /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticInitializSpeedTests.m; path = Tests/StaticInitializSpeedTests.m; sourceTree = "<group>"; };
 		731702BA1232903700EE9ED6 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -268,6 +274,8 @@
 				73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */,
 				73685DA11244D34F00DDEE60 /* InstrArgStruct.h */,
 				73685DA21244D34F00DDEE60 /* InstrArgStruct.m */,
+				730DB3C112549EBC00203ED8 /* ArgStack.h */,
+				730DB3C212549EBC00203ED8 /* ArgStack.c */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -330,6 +338,7 @@
 				7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */,
 				7363BDBF124E318500F080E7 /* GenericTimer.h */,
 				7363BDC0124E318500F080E7 /* GenericTimer.m */,
+				730DB3CA12549ED800203ED8 /* ArgStackTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -507,6 +517,8 @@
 				7315FE88124DF9140088A8F6 /* StaticInitializSpeedTests.m in Sources */,
 				7315FE89124DF9340088A8F6 /* ExperimentalFrankenStructsTetsts.m in Sources */,
 				7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */,
+				730DB3C312549EBC00203ED8 /* ArgStack.c in Sources */,
+				730DB3CB12549ED800203ED8 /* ArgStackTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +543,7 @@
 				730830B112392CA7007F8247 /* i386_disasm.m in Sources */,
 				73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
 				73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */,
+				730DB3C412549EBC00203ED8 /* ArgStack.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

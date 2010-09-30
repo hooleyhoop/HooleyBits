@@ -52,8 +52,11 @@
 	// sanity check
 	if( ind<[_memoryBlockStore count] ){
 		SHMemoryBlock *existingObjectAtThatIndex = [_memoryBlockStore objectAtIndex:ind];
-		if( [memBlock lastAddress]<[existingObjectAtThatIndex startAddr]==NO )
-			[NSException raise:@"Addresses have colided" format:@""];
+		uint64 newLastAddress = [memBlock lastAddress];
+		uint64 currentStartAddress = [existingObjectAtThatIndex startAddr];
+		
+		if( newLastAddress >= currentStartAddress )
+			[NSException raise:@"Addresses have colided" format:@"Addresses have colided %@ - %@ %i > %i", memBlock.name, existingObjectAtThatIndex.name, newLastAddress, currentStartAddress];
 	}
 	
 	[_memoryBlockStore insertObject:memBlock atIndex:ind];

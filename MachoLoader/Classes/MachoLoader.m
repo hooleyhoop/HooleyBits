@@ -195,24 +195,26 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 
 
 // -- see cctools-782 otool ofile_print.c
-- (void)save_cstring_section:(char *)sect :(uint32_t)sect_size :(uint32_t)sect_addr {
+- (void)save_cstring_section:(const char *)sect :(const uint32_t)sect_size :(const uint32_t)sect_addr {
 	
-	char aCstring[256];
-	memset ( aCstring, 0, 256 );
+	char aCstring[1024];
+
+	memset ( aCstring, 0, 1024*sizeof(char) );
 	uint32_t length = 0;
 
 	for( uint32_t i=0; i<sect_size; i++ )
 	{
 		uint64 cStringAddress = (uint64)(sect_addr + i);
 		// printf("%08x  ", cStringAddress );
-
+		// clear the previous string
 		memset ( aCstring, 0, length );
 		length = 0;
 		
-	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
+	    for( ; i<sect_size && sect[i]!='\0'; i++ ){
 //			print_cstring_char(sect[i]);
 			aCstring[length] = sect[i];
 			length++;
+			NSAssert(length<1024, @"overflowed string buffer.");
 		}
 		NSString *strVal = [NSString stringWithCString:aCstring encoding:NSUTF8StringEncoding];
 		if(strVal==nil)
@@ -1479,6 +1481,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
 //					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
+					if(newSectSize==0)
+						continue;
 					
 					[self addSection:secName 
 								 seg:segmentName 
@@ -1493,442 +1497,484 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //						memcpy(newSectAddr, sect_pointer, newSectSize);
 //					}
 					
-
-					// TEXT Segment sections
-					if ( strcmp(thisSectionName, "__text")==0 ) {
-						
-						if(_cputype!=CPU_TYPE_I386) 
-							[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
-
-						_text_sect_pointer = (UInt8 *)sect_pointer;
-						_text_sect_addr = (UInt8 *)sect_addr;
-						_text_relocs = sect_relocs;
-						_text_nsorted_relocs = sect_nrelocs;
-						_textSectSize = newSectSize;
-
-					// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
-					} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
-						[self save_cstring_section:sect_pointer :newSectSize :sect_addr];
-
-					// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
-					//	memAddr bc870c
-					} else if ( strcmp(thisSectionName, "__const")==0 ) {
-
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-							UInt32 val1 = *((UInt32 *)locPtr);
-							locPtr = locPtr + sizeof val1;
-							
-							// reusing _cls_refsLookup out of lazyness
-							[_temporaryExperiment addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
-							
-							memPtr = memPtr + sizeof val1;
-						}
-						
-						// 00006d90	00 00 f0 41 cd cc 4c 3f 33 33 33 3f 00 00 00 00 
-						// 00006da0	00 00 80 3f 00 00 20 41 00 00 48 43 00 00 04 42 
-						// 00006db0	00 00 10 41 00 00 a0 40 00 00 00 00 00 00 00 00 
-						// 00006dc0	00 00 00 00 00 00 e0 41 00 00 00 00 00 00 00 00
-					
-					// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
-					} else if ( strcmp(thisSectionName, "__symbol_stub")==0 ) {
-						
-						// This Follows the form (ie our val1 needs disassembling)
-						//00006dd0	jmp	*0x0000703c
-						//00006dd6	jmp	*0x00007040
-
-						// This needs to be UInt8 so we can advance by a specific number of bytes?
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-		
-							UInt16 val1 = *((UInt16 *)locPtr);
-							locPtr = locPtr + sizeof val1;
-							
-							UInt32 val2 = *((UInt32 *)locPtr);
-							locPtr = locPtr + sizeof val2;
-
-//							NSLog(@"%x %x %x", memPtr, val1, val2 );
-							memPtr = memPtr + sizeof val1 + sizeof val2;
-						}
-
-					// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
-					} else if ( strcmp(thisSectionName, "__stub_helper")==0 ) {
-																	
-//						[self addUnDecodedBlock:sect_pointer size:newSectSize withName:@"__stub_helper"];
-//						NSUInteger test = 0x0000701c;
-//						BOOL wasFound = [self scanUnDecodedBlocks:test];
-//						NSAssert(wasFound, @"scan failed");
-
-						//00006e48	cmpl	$0x00,0x0000701c
-						//00006e4f	jne	0x00006e5e
-						//00006e51	movl	%eax,0x04(%esp)
-						//00006e55	popl	%eax
-						//00006e56	xchgl	(%esp),%eax
-						//00006e59	jmpl	0x100002ac8
-						//00006e5e	addl	$0x04,%esp
-						//00006e61	pushl	$0x00007020
-						//00006e66	jmp	*0x0000701c
-						//00006e6c	pushl	$0x000000a3
-						//00006e71	pushl	$0x0000705c
-						//00006e76	jmpl	0x100006e48
-						//00006e7b	nop
-						//00006e7c	pushl	$0x00000097
-						//00006e81	pushl	$0x00007058
-						//00006e86	jmpl	0x100006e48
-						//00006e8b	nop
-						//00006e8c	pushl	$0x0000007f
-						//00006e91	pushl	$0x00007054
-						//00006e96	jmpl	0x100006e48
-						//00006e9b	nop
-						//00006e9c	pushl	$0x000000ba
-						//00006ea1	pushl	$0x00007060
-						//00006ea6	jmpl	0x100006e48
-						//00006eab	nop
-						//00006eac	pushl	$0x000000cd
-						//00006eb1	pushl	$0x00007064
-						//00006eb6	jmpl	0x100006e48
-						//00006ebb	nop
-						//00006ebc	pushl	$0x000000db
-						//00006ec1	pushl	$0x00007068
-						//00006ec6	jmpl	0x100006e48
-						//00006ecb	nop
-						//00006ecc	pushl	$0x000000e9
-						//00006ed1	pushl	$0x0000706c
-						//00006ed6	jmpl	0x100006e48
-						//00006edb	nop
-						//00006edc	pushl	$0x00000109
-						//00006ee1	pushl	$0x00007070
-						//00006ee6	jmpl	0x100006e48
-						//00006eeb	nop
-						//00006eec	pushl	$0x0000011d
-						//00006ef1	pushl	$0x00007074
-						//00006ef6	jmpl	0x100006e48
-						//00006efb	nop
-						//00006efc	pushl	$0x00000136
-						//00006f01	pushl	$0x00007078
-						//00006f06	jmpl	0x100006e48
-						//00006f0b	nop
-						//00006f0c	pushl	$0x00000150
-						//00006f11	pushl	$0x0000707c
-						//00006f16	jmpl	0x100006e48
-						//00006f1b	nop
-						//00006f1c	pushl	$0x0000015e
-						//00006f21	pushl	$0x00007080
-						//00006f26	jmpl	0x100006e48
-						//00006f2b	nop
-						//00006f2c	pushl	$0x0000016e
-						//00006f31	pushl	$0x00007084
-						//00006f36	jmpl	0x100006e48
-						//00006f3b	nop
-						//00006f3c	pushl	$0x0000017d
-						//00006f41	pushl	$0x00007088
-						//00006f46	jmpl	0x100006e48
-						//00006f4b	nop
-						//00006f4c	pushl	$0x0000006d
-						//00006f51	pushl	$0x00007050
-						//00006f56	jmpl	0x100006e48
-						//00006f5b	nop
-						//00006f5c	pushl	$0x00000059
-						//00006f61	pushl	$0x0000704c
-						//00006f66	jmpl	0x100006e48
-						//00006f6b	nop
-						//00006f6c	pushl	$0x0000003f
-						//00006f71	pushl	$0x00007048
-						//00006f76	jmpl	0x100006e48
-						//00006f7b	nop
-						//00006f7c	pushl	$0x00000026
-						//00006f81	pushl	$0x00007044
-						//00006f86	jmpl	0x100006e48
-						//00006f8b	nop
-						//00006f8c	pushl	$0x00000019
-						//00006f91	pushl	$0x00007040
-						//00006f96	jmpl	0x100006e48
-						//00006f9b	nop
-						//00006f9c	pushl	$0x00000000
-						//00006fa1	pushl	$0x0000703c
-						//00006fa6	jmpl	0x100006e48
-						//00006fab	nop
-						
-						// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__literal4")==0 ) {
-						// 00ba9ce8  0x47800000 (6.5536000000000000e+04)
-						// 00ba9cec  0x42c80000 (1.0000000000000000e+02)
-						// 00ba9cf0  0x437f0000 (2.5500000000000000e+02)
-						// 00ba9cf4  0x410db22d (8.8559999465942383e+00)
-						// 00ba9cf8  0x4461d2b0 (9.0329199218750000e+02)						
-						
-						// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
-					} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
-//						NSLog(@"eh");
-						// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__StaticInit")==0 ) {
-//						NSLog(@"eh");
+					/* __TEXT SEGMENT */
+					if ( strcmp(segname, "__TEXT")==0 ) {
 				
-						// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__eh_frame")==0 ) {
-						// dubug info? Todo with exceptions
+						if ( strcmp(thisSectionName, "__text")==0 ) {
+							
+							if(_cputype!=CPU_TYPE_I386) 
+								[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
+							
+							_text_sect_pointer = (UInt8 *)sect_pointer;
+							_text_sect_addr = (UInt8 *)sect_addr;
+							_text_relocs = sect_relocs;
+							_text_nsorted_relocs = sect_nrelocs;
+							_textSectSize = newSectSize;
+							
+							// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+						} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
+							[self save_cstring_section:sect_pointer :newSectSize :sect_addr];
+							
+							// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+							//	memAddr bc870c
+						} else if ( strcmp(thisSectionName, "__const")==0 ) {
+
+							UInt8 *locPtr = (UInt8 *)sect_pointer;
+							UInt8 *memPtr = (UInt8 *)sect_addr;
+							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+								UInt32 val1 = *((UInt32 *)locPtr);
+								locPtr = locPtr + sizeof val1;
+
+								// reusing _cls_refsLookup out of lazyness
+								[_temporaryExperiment addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+
+								memPtr = memPtr + sizeof val1;
+							}
+							NSLog(@"end of __const");
+							// 00006d90	00 00 f0 41 cd cc 4c 3f 33 33 33 3f 00 00 00 00 
+							// 00006da0	00 00 80 3f 00 00 20 41 00 00 48 43 00 00 04 42 
+							// 00006db0	00 00 10 41 00 00 a0 40 00 00 00 00 00 00 00 00 
+							// 00006dc0	00 00 00 00 00 00 e0 41 00 00 00 00 00 00 00 00
+
+							// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
+						} else if ( strcmp(thisSectionName, "__symbol_stub")==0 ) {
+
+							// This Follows the form (ie our val1 needs disassembling)
+							//00006dd0	jmp	*0x0000703c
+							//00006dd6	jmp	*0x00007040
+
+							// This needs to be UInt8 so we can advance by a specific number of bytes?
+							UInt8 *locPtr = (UInt8 *)sect_pointer;
+							UInt8 *memPtr = (UInt8 *)sect_addr;
+
+							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+								
+								UInt16 val1 = *((UInt16 *)locPtr);
+								locPtr = locPtr + sizeof val1;
+								
+								UInt32 val2 = *((UInt32 *)locPtr);
+								locPtr = locPtr + sizeof val2;
+								
+								//							NSLog(@"%x %x %x", memPtr, val1, val2 );
+								memPtr = memPtr + sizeof val1 + sizeof val2;
+							}
+							
+							// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+						} else if ( strcmp(thisSectionName, "__stub_helper")==0 ) {
+							
+							//						[self addUnDecodedBlock:sect_pointer size:newSectSize withName:@"__stub_helper"];
+							//						NSUInteger test = 0x0000701c;
+							//						BOOL wasFound = [self scanUnDecodedBlocks:test];
+							//						NSAssert(wasFound, @"scan failed");
+							
+							//00006e48	cmpl	$0x00,0x0000701c
+							//00006e4f	jne	0x00006e5e
+							//00006e51	movl	%eax,0x04(%esp)
+							//00006e55	popl	%eax
+							//00006e56	xchgl	(%esp),%eax
+							//00006e59	jmpl	0x100002ac8
+							//00006e5e	addl	$0x04,%esp
+							//00006e61	pushl	$0x00007020
+							//00006e66	jmp	*0x0000701c
+							//00006e6c	pushl	$0x000000a3
+							//00006e71	pushl	$0x0000705c
+							//00006e76	jmpl	0x100006e48
+							//00006e7b	nop
+							//00006e7c	pushl	$0x00000097
+							//00006e81	pushl	$0x00007058
+							//00006e86	jmpl	0x100006e48
+							//00006e8b	nop
+							//00006e8c	pushl	$0x0000007f
+							//00006e91	pushl	$0x00007054
+							//00006e96	jmpl	0x100006e48
+							//00006e9b	nop
+							//00006e9c	pushl	$0x000000ba
+							//00006ea1	pushl	$0x00007060
+							//00006ea6	jmpl	0x100006e48
+							//00006eab	nop
+							//00006eac	pushl	$0x000000cd
+							//00006eb1	pushl	$0x00007064
+							//00006eb6	jmpl	0x100006e48
+							//00006ebb	nop
+							//00006ebc	pushl	$0x000000db
+							//00006ec1	pushl	$0x00007068
+							//00006ec6	jmpl	0x100006e48
+							//00006ecb	nop
+							//00006ecc	pushl	$0x000000e9
+							//00006ed1	pushl	$0x0000706c
+							//00006ed6	jmpl	0x100006e48
+							//00006edb	nop
+							//00006edc	pushl	$0x00000109
+							//00006ee1	pushl	$0x00007070
+							//00006ee6	jmpl	0x100006e48
+							//00006eeb	nop
+							//00006eec	pushl	$0x0000011d
+							//00006ef1	pushl	$0x00007074
+							//00006ef6	jmpl	0x100006e48
+							//00006efb	nop
+							//00006efc	pushl	$0x00000136
+							//00006f01	pushl	$0x00007078
+							//00006f06	jmpl	0x100006e48
+							//00006f0b	nop
+							//00006f0c	pushl	$0x00000150
+							//00006f11	pushl	$0x0000707c
+							//00006f16	jmpl	0x100006e48
+							//00006f1b	nop
+							//00006f1c	pushl	$0x0000015e
+							//00006f21	pushl	$0x00007080
+							//00006f26	jmpl	0x100006e48
+							//00006f2b	nop
+							//00006f2c	pushl	$0x0000016e
+							//00006f31	pushl	$0x00007084
+							//00006f36	jmpl	0x100006e48
+							//00006f3b	nop
+							//00006f3c	pushl	$0x0000017d
+							//00006f41	pushl	$0x00007088
+							//00006f46	jmpl	0x100006e48
+							//00006f4b	nop
+							//00006f4c	pushl	$0x0000006d
+							//00006f51	pushl	$0x00007050
+							//00006f56	jmpl	0x100006e48
+							//00006f5b	nop
+							//00006f5c	pushl	$0x00000059
+							//00006f61	pushl	$0x0000704c
+							//00006f66	jmpl	0x100006e48
+							//00006f6b	nop
+							//00006f6c	pushl	$0x0000003f
+							//00006f71	pushl	$0x00007048
+							//00006f76	jmpl	0x100006e48
+							//00006f7b	nop
+							//00006f7c	pushl	$0x00000026
+							//00006f81	pushl	$0x00007044
+							//00006f86	jmpl	0x100006e48
+							//00006f8b	nop
+							//00006f8c	pushl	$0x00000019
+							//00006f91	pushl	$0x00007040
+							//00006f96	jmpl	0x100006e48
+							//00006f9b	nop
+							//00006f9c	pushl	$0x00000000
+							//00006fa1	pushl	$0x0000703c
+							//00006fa6	jmpl	0x100006e48
+							//00006fab	nop
+							
+							// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__literal4")==0 ) {
+							// 00ba9ce8  0x47800000 (6.5536000000000000e+04)
+							// 00ba9cec  0x42c80000 (1.0000000000000000e+02)
+							// 00ba9cf0  0x437f0000 (2.5500000000000000e+02)
+							// 00ba9cf4  0x410db22d (8.8559999465942383e+00)
+							// 00ba9cf8  0x4461d2b0 (9.0329199218750000e+02)						
+							
+							// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
+						} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
+							//						NSLog(@"eh");
+							// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__StaticInit")==0 ) {
+							//						NSLog(@"eh");
+							
+							// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__eh_frame")==0 ) {
+							// dubug info? Todo with exceptions
+							
+							// otool -s __TEXT __const_coal /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
+							
+						} else if ( strcmp(thisSectionName, "__unwind_info")==0 ) {
+							//						NSLog(@"eh");
+							//00006fb0	01 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 
+							//00006fc0	00 00 00 00 1c 00 00 00 02 00 00 00 00 00 00 00 
+							//00006fd0	34 00 00 00 34 00 00 00 f9 5f 00 00 00 00 00 00 
+							//00006fe0	34 00 00 00 03 00 00 00 0c 00 01 00 10 00 01 00 
+							//00006ff0	00 00 00 00 00 00 00 00 
+							
+							// otool -s __TEXT __textcoal_nt -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver						
+						} else if ( strcmp(thisSectionName, "__textcoal_nt")==0 ) {
+							//TODO: Otool disassembles this section
+							NSLog(@"DREADED THUNK SECTION");
+							
+							// otool -s __TEXT __coalesced_text -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver												
+						} else if ( strcmp(thisSectionName, "__coalesced_text")==0 ) {
+							//TODO: Otool disassembles this section
+							NSLog(@"DREADED THUNK SECTION");
+						} else {
+							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+						}
 			
-						// otool -s __TEXT __const_coal /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
-						
-					} else if ( strcmp(thisSectionName, "__unwind_info")==0 ) {
-//						NSLog(@"eh");
-						//00006fb0	01 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 
-						//00006fc0	00 00 00 00 1c 00 00 00 02 00 00 00 00 00 00 00 
-						//00006fd0	34 00 00 00 34 00 00 00 f9 5f 00 00 00 00 00 00 
-						//00006fe0	34 00 00 00 03 00 00 00 0c 00 01 00 10 00 01 00 
-						//00006ff0	00 00 00 00 00 00 00 00 
-						
-					// DATA Segment sections
-					// otool -s __DATA __dyld -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
-					} else if ( strcmp(thisSectionName, "__dyld")==0 ) {
-						// 00007000	00 10 e0 8f 08 10 e0 8f 00 10 00 00 48 75 00 00 
-						// 00007010	44 75 00 00 40 75 00 00 3c 75 00 00 
+					/* __DATA SEGMENT */
+					} else if ( strcmp(segname, "__DATA")==0 ) {
 
-					// otool -s __DATA __nl_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__nl_symbol_ptr")==0 ) {
-						// 0000701c	00 00 00 00 00 00 00 00 49 64 00 00 00 00 00 00 
-						// 0000702c	00 00 00 00 00 00 00 00 50 75 00 00 00 00 00 00 
+						// otool -s __DATA __dyld -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+						if ( strcmp(thisSectionName, "__dyld")==0 ) {
+							// 00007000	00 10 e0 8f 08 10 e0 8f 00 10 00 00 48 75 00 00 
+							// 00007010	44 75 00 00 40 75 00 00 3c 75 00 00 
+							
+							// otool -s __DATA __nl_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__nl_symbol_ptr")==0 ) {
+							// 0000701c	00 00 00 00 00 00 00 00 49 64 00 00 00 00 00 00 
+							// 0000702c	00 00 00 00 00 00 00 00 50 75 00 00 00 00 00 00 
+							
+							// otool -s __DATA __la_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__la_symbol_ptr")==0 ) {
+							
+							// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__cfstring")==0 ) {
+							[self print_cfstring_section:sect_pointer :newSectSize :sect_addr];
+							
+							// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__data")==0 ) {
+							
+							// otool -s __DATA __bss -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__bss")==0 ) {
+							
+							// otool -s __DATA __datacoal_nt /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__datacoal_nt")==0 ) {
+							
+							// otool -s __DATA __mod_init_func /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__mod_init_func")==0 ) {
+							
+							// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
+							
+							// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
+							
+							// otool -s __DATA __common /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+						} else if ( strcmp(thisSectionName, "__common")==0 ) {
+							
+							// otool -s __DATA __program_vars /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						} else if ( strcmp(thisSectionName, "__program_vars")==0 ) {
+							
+							// otool -s __DATA __const -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver
+						} else if ( strcmp(thisSectionName, "__const")==0 ) {
+							
+						} else {
+							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+						}
 						
-					// otool -s __DATA __la_symbol_ptr -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__la_symbol_ptr")==0 ) {
+					/* __OBJC SEGMENT */
+					} else if ( strcmp(segname, "__OBJC")==0 ) {
+
+						// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						if ( strcmp(thisSectionName, "__message_refs")==0 ) {
+							
+							UInt8 *locPtr = (UInt8 *)sect_pointer;
+							UInt8 *memPtr = (UInt8 *)sect_addr;
+							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+								UInt32 val1 = *((UInt32 *)locPtr);
+								locPtr = locPtr + sizeof val1;
+								
+								// reusing _cls_refsLookup out of lazyness
+								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								
+								memPtr = memPtr + sizeof val1;
+							}
+							//00008000  __TEXT:__cstring:addObject:
+							//00008004  __TEXT:__cstring:numberWithUnsignedInteger:
+							//00008008  __TEXT:__cstring:setTotalBoundsWithSize:label:
+							//0000800c  __TEXT:__cstring:bytes
+							//00008010  __TEXT:__cstring:dataWithContentsOfFile:
+							//00008014  __TEXT:__cstring:countByEnumeratingWithState:objects:count:
+							//00008018  __TEXT:__cstring:processSymbolItem:stringTable:
+							//0000801c  __TEXT:__cstring:raise:format:
+							//00008020  __TEXT:__cstring:addRegionAtOffset:withSize:label:
+							//00008024  __TEXT:__cstring:stringWithFormat:
+							//00008028  __TEXT:__cstring:sharedMapView
+							//0000802c  __TEXT:__cstring:stringWithCString:length:
+							//00008030  __TEXT:__cstring:unsignedIntValue
+							//00008034  __TEXT:__cstring:addFunction:line:address:section:
+							//00008038  __TEXT:__cstring:substringToIndex:
+							//0000803c  __TEXT:__cstring:rangeOfString:options:
+							//00008040  __TEXT:__cstring:length
+							//00008044  __TEXT:__cstring:unsignedLongValue
+							//00008048  __TEXT:__cstring:numberWithUnsignedLongLong:
+							//0000804c  __TEXT:__cstring:pathExtension
+							//00008050  __TEXT:__cstring:stringWithUTF8String:
+							//00008054  __TEXT:__cstring:objectForKey:
+							//00008058  __TEXT:__cstring:numberWithUnsignedLong:
+							//0000805c  __TEXT:__cstring:dataWithBytes:length:
+							//00008060  __TEXT:__cstring:parseLoadCommands
+							//00008064  __TEXT:__cstring:alloc
+							//00008068  __TEXT:__cstring:doIt:
+							//0000806c  __TEXT:__cstring:retain
+							//00008070  __TEXT:__cstring:array
+							//00008074  __TEXT:__cstring:init
+							//00008078  __TEXT:__cstring:frame
+							//0000807c  __TEXT:__cstring:bezierPathWithRect:
+							//00008080  __TEXT:__cstring:addSubview:
+							//00008084  __TEXT:__cstring:setFont:
+							//00008088  __TEXT:__cstring:labelFontOfSize:
+							//0000808c  __TEXT:__cstring:setSelectable:
+							//00008090  __TEXT:__cstring:setDrawsBackground:
+							//00008094  __TEXT:__cstring:setBordered:
+							//00008098  __TEXT:__cstring:setBezeled:
+							//0000809c  __TEXT:__cstring:setBackgroundColor:
+							//000080a0  __TEXT:__cstring:clearColor
+							//000080a4  __TEXT:__cstring:setStringValue:
+							//000080a8  __TEXT:__cstring:autorelease
+							//000080ac  __TEXT:__cstring:count
+							//000080b0  __TEXT:__cstring:fill
+							//000080b4  __TEXT:__cstring:set
+							//000080b8  __TEXT:__cstring:colorWithDeviceRed:green:blue:alpha:
+							//000080bc  __TEXT:__cstring:initWithFrame:
+							//000080c0  __TEXT:__cstring:initWithPath:
+							//000080c4  __TEXT:__cstring:executablePath
+							//000080c8  __TEXT:__cstring:mainBundle
+							//000080cc  __TEXT:__cstring:release
+							//000080d0  __TEXT:__cstring:stringWithString:
+							//000080d4  __TEXT:__cstring:appendFormat:
+							//000080d8  __TEXT:__cstring:initWithData:
+							//000080dc  __TEXT:__cstring:dataWithHexString:
+							//000080e0  __TEXT:__cstring:dataWithData:
+							//000080e4  __TEXT:__cstring:mutableBytes
+							//000080e8  __TEXT:__cstring:dataWithLength:
+							//000080ec  __TEXT:__cstring:cStringUsingEncoding:
+							
+							// otool -s __OBJC __cls_refs -v /Applications/6-386.app/Contents/MacOS/6-386						
+						} else if ( strcmp(thisSectionName, "__cls_refs")==0 ) {
+							
+							UInt8 *locPtr = (UInt8 *)sect_pointer;
+							UInt8 *memPtr = (UInt8 *)sect_addr;
+							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+								UInt32 val1 = *((UInt32 *)locPtr);
+								locPtr = locPtr + sizeof val1;
+								// NSLog(@"%0x %0x", memPtr, val1 );
+								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								
+								memPtr = memPtr + sizeof val1;
+							}
+							//000080f0  __TEXT:__cstring:NSMutableArray
+							//000080f4  __TEXT:__cstring:NSMutableDictionary
+							//000080f8  __TEXT:__cstring:NSData
+							//000080fc  __TEXT:__cstring:NSNumber
+							//00008100  __TEXT:__cstring:NSString
+							//00008104  __TEXT:__cstring:FileMapView
+							//00008108  __TEXT:__cstring:NSException
+							//0000810c  __TEXT:__cstring:NSColor
+							//00008110  __TEXT:__cstring:NSTextField
+							//00008114  __TEXT:__cstring:NSFont
+							//00008118  __TEXT:__cstring:NSBezierPath
+							//0000811c  __TEXT:__cstring:NSBundle
+							//00008120  __TEXT:__cstring:MachoLoader
+							//00008124  __TEXT:__cstring:NSMutableData
+							//00008128  __TEXT:__cstring:NSMutableString
+							
+							// otool -s __OBJC __property -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader											
+						} else if ( strcmp(thisSectionName, "__property")==0 ) {
+							
+							// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
+						} else if ( strcmp(thisSectionName, "__class")==0 ) {
+							
+							UInt8 *locPtr = (UInt8 *)sect_pointer;
+							UInt8 *memPtr = (UInt8 *)sect_addr;
+							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+								UInt32 val1 = *((UInt32 *)locPtr);
+								locPtr = locPtr + sizeof val1;
+								
+								// reusing _cls_refsLookup out of lazyness
+								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								
+								memPtr = memPtr + sizeof val1;
+							}						
+							//0000812c	bc 81 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
+							//0000813c	01 00 00 00 1c 00 00 00 e8 82 00 00 4c 82 00 00 
+							//0000814c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+							//0000815c	ec 81 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
+							//0000816c	01 00 00 00 5c 00 00 00 34 83 00 00 90 82 00 00 
+							//0000817c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+							//0000818c	1c 82 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
+							//0000819c	01 00 00 00 04 00 00 00 00 00 00 00 d4 82 00 00 
+							//000081ac	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+							
+							// otool -s __OBJC __meta_class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
+						} else if ( strcmp(thisSectionName, "__meta_class")==0 ) {
+							//000081bc	53 68 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
+							//000081cc	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
+							//000081dc	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+							//000081ec	53 68 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
+							//000081fc	02 00 00 00 30 00 00 00 00 00 00 00 dc 83 00 00 
+							//0000820c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+							//0000821c	53 68 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
+							//0000822c	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
+							//0000823c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+							
+							// otool -s __OBJC __inst_meth -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
+						} else if ( strcmp(thisSectionName, "__inst_meth")==0 ) {
+							//0000824c	00 00 00 00 05 00 00 00 91 67 00 00 97 67 00 00 
+							//0000825c	e1 45 00 00 a1 67 00 00 b3 67 00 00 f3 30 00 00 
+							//0000826c	ba 67 00 00 d9 67 00 00 ae 2d 00 00 fa 67 00 00 
+							//0000827c	1c 68 00 00 02 2d 00 00 2f 68 00 00 3d 68 00 00 
+							//0000828c	0c 2b 00 00 00 00 00 00 05 00 00 00 b2 6a 00 00 
+							//0000829c	bc 6a 00 00 68 58 00 00 f7 68 00 00 c3 6a 00 00 
+							//000082ac	17 53 00 00 82 68 00 00 d3 6a 00 00 c3 52 00 00 
+							//000082bc	e0 6a 00 00 ea 6a 00 00 27 51 00 00 16 6b 00 00 
+							//000082cc	25 6b 00 00 66 50 00 00 00 00 00 00 01 00 00 00 
+							//000082dc	6b 6c 00 00 97 67 00 00 7b 58 00 00
+							
+							// otool -s __OBJC __instance_vars -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																		
+						} else if ( strcmp(thisSectionName, "__instance_vars")==0 ) {
+							//000082e8	06 00 00 00 fc 66 00 00 0a 67 00 00 04 00 00 00 
+							//000082f8	1c 67 00 00 25 67 00 00 08 00 00 00 28 67 00 00 
+							//00008308	31 67 00 00 0c 00 00 00 33 67 00 00 3e 67 00 00 
+							//00008318	10 00 00 00 55 67 00 00 62 67 00 00 14 00 00 00 
+							//00008328	86 67 00 00 8f 67 00 00 18 00 00 00 03 00 00 00 
+							//00008338	8f 6a 00 00 0a 67 00 00 50 00 00 00 98 6a 00 00 
+							//00008348	9e 6a 00 00 54 00 00 00 a0 6a 00 00 31 67 00 00 
+							//00008358	58 00 00 00 
+							
+							// otool -s __OBJC __module_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
+						} else if ( strcmp(thisSectionName, "__module_info")==0 ) {
+							
+							// otool -s __OBJC __symbols -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
+						} else if ( strcmp(thisSectionName, "__symbols")==0 ) {
+							
+							// otool -s __OBJC __cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																													
+						} else if ( strcmp(thisSectionName, "__cls_meth")==0 ) {
+							
+							// otool -s __OBJC __cat_cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																			
+						} else if ( strcmp(thisSectionName, "__cat_cls_meth")==0 ) {
+							
+							// otool -s __OBJC __cat_inst_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+						} else if ( strcmp(thisSectionName, "__cat_inst_meth")==0 ) {
+							
+							// otool -s __OBJC __category -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+						} else if ( strcmp(thisSectionName, "__category")==0 ) {
+							
+							// otool -s __OBJC __image_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+						} else if ( strcmp(thisSectionName, "__image_info")==0 ) {
+							
+							// otool -s __OBJC __class_ext -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
+						} else if ( strcmp(thisSectionName, "__class_ext")==0 ) {
+							
+							// otool -s __OBJC __string_object -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver																																									
+						} else if ( strcmp(thisSectionName, "__string_object")==0 ) {
+							
+							// otool -s __OBJC __cstring_object__OBJC -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver																																									
+						} else if ( strcmp(thisSectionName, "__cstring_object__OBJC")==0 ) {
+							// really nothing here?
+						} else {
+							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+						}
 						
-					// otool -s __DATA __cfstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__cfstring")==0 ) {
-						[self print_cfstring_section:sect_pointer :newSectSize :sect_addr];
+					/* __IMPORT SEGMENT */
+					} else if ( strcmp(segname, "__IMPORT")==0 ) {
+
+						// otool -s __IMPORT __pointers /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
+						if ( strcmp(thisSectionName, "__pointers")==0 ) {
+							
+						// otool -s __IMPORT __jump_table -v -V /Applications/6-386.app/Contents/MacOS/Sibelius\ 6						
+						} else if ( strcmp(thisSectionName, "__jump_table")==0 ) {	
+							// The jump table is somehow re-written at run time by the dyld
+							
+							// It seems that these are in the other sections as well.
+							
+						} else {
+							[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+						}
 				
-					// otool -s __DATA __data -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__data")==0 ) {
-
-					// otool -s __DATA __bss -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__bss")==0 ) {
-
-					// otool -s __DATA __datacoal_nt /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__datacoal_nt")==0 ) {
-
-					// otool -s __DATA __mod_init_func /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__mod_init_func")==0 ) {
-					
-					// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
-					
-					// otool -s __DATA __gcc_except_tab__DATA /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__gcc_except_tab__DATA")==0 ) {
-						
-					// otool -s __DATA __common /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
-					} else if ( strcmp(thisSectionName, "__common")==0 ) {
-
-					// otool -s __DATA __program_vars /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
-					} else if ( strcmp(thisSectionName, "__program_vars")==0 ) {
-
-					// OBJC Segment sections
-					// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__message_refs")==0 ) {
-						
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-							UInt32 val1 = *((UInt32 *)locPtr);
-							locPtr = locPtr + sizeof val1;
-							
-							// reusing _cls_refsLookup out of lazyness
-							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
-							
-							memPtr = memPtr + sizeof val1;
-						}
-						//00008000  __TEXT:__cstring:addObject:
-						//00008004  __TEXT:__cstring:numberWithUnsignedInteger:
-						//00008008  __TEXT:__cstring:setTotalBoundsWithSize:label:
-						//0000800c  __TEXT:__cstring:bytes
-						//00008010  __TEXT:__cstring:dataWithContentsOfFile:
-						//00008014  __TEXT:__cstring:countByEnumeratingWithState:objects:count:
-						//00008018  __TEXT:__cstring:processSymbolItem:stringTable:
-						//0000801c  __TEXT:__cstring:raise:format:
-						//00008020  __TEXT:__cstring:addRegionAtOffset:withSize:label:
-						//00008024  __TEXT:__cstring:stringWithFormat:
-						//00008028  __TEXT:__cstring:sharedMapView
-						//0000802c  __TEXT:__cstring:stringWithCString:length:
-						//00008030  __TEXT:__cstring:unsignedIntValue
-						//00008034  __TEXT:__cstring:addFunction:line:address:section:
-						//00008038  __TEXT:__cstring:substringToIndex:
-						//0000803c  __TEXT:__cstring:rangeOfString:options:
-						//00008040  __TEXT:__cstring:length
-						//00008044  __TEXT:__cstring:unsignedLongValue
-						//00008048  __TEXT:__cstring:numberWithUnsignedLongLong:
-						//0000804c  __TEXT:__cstring:pathExtension
-						//00008050  __TEXT:__cstring:stringWithUTF8String:
-						//00008054  __TEXT:__cstring:objectForKey:
-						//00008058  __TEXT:__cstring:numberWithUnsignedLong:
-						//0000805c  __TEXT:__cstring:dataWithBytes:length:
-						//00008060  __TEXT:__cstring:parseLoadCommands
-						//00008064  __TEXT:__cstring:alloc
-						//00008068  __TEXT:__cstring:doIt:
-						//0000806c  __TEXT:__cstring:retain
-						//00008070  __TEXT:__cstring:array
-						//00008074  __TEXT:__cstring:init
-						//00008078  __TEXT:__cstring:frame
-						//0000807c  __TEXT:__cstring:bezierPathWithRect:
-						//00008080  __TEXT:__cstring:addSubview:
-						//00008084  __TEXT:__cstring:setFont:
-						//00008088  __TEXT:__cstring:labelFontOfSize:
-						//0000808c  __TEXT:__cstring:setSelectable:
-						//00008090  __TEXT:__cstring:setDrawsBackground:
-						//00008094  __TEXT:__cstring:setBordered:
-						//00008098  __TEXT:__cstring:setBezeled:
-						//0000809c  __TEXT:__cstring:setBackgroundColor:
-						//000080a0  __TEXT:__cstring:clearColor
-						//000080a4  __TEXT:__cstring:setStringValue:
-						//000080a8  __TEXT:__cstring:autorelease
-						//000080ac  __TEXT:__cstring:count
-						//000080b0  __TEXT:__cstring:fill
-						//000080b4  __TEXT:__cstring:set
-						//000080b8  __TEXT:__cstring:colorWithDeviceRed:green:blue:alpha:
-						//000080bc  __TEXT:__cstring:initWithFrame:
-						//000080c0  __TEXT:__cstring:initWithPath:
-						//000080c4  __TEXT:__cstring:executablePath
-						//000080c8  __TEXT:__cstring:mainBundle
-						//000080cc  __TEXT:__cstring:release
-						//000080d0  __TEXT:__cstring:stringWithString:
-						//000080d4  __TEXT:__cstring:appendFormat:
-						//000080d8  __TEXT:__cstring:initWithData:
-						//000080dc  __TEXT:__cstring:dataWithHexString:
-						//000080e0  __TEXT:__cstring:dataWithData:
-						//000080e4  __TEXT:__cstring:mutableBytes
-						//000080e8  __TEXT:__cstring:dataWithLength:
-						//000080ec  __TEXT:__cstring:cStringUsingEncoding:
-						
-					// otool -s __OBJC __cls_refs -v /Applications/6-386.app/Contents/MacOS/6-386						
-					} else if ( strcmp(thisSectionName, "__cls_refs")==0 ) {
-
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-							UInt32 val1 = *((UInt32 *)locPtr);
-							locPtr = locPtr + sizeof val1;
-							// NSLog(@"%0x %0x", memPtr, val1 );
-							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
-
-							memPtr = memPtr + sizeof val1;
-						}
-						//000080f0  __TEXT:__cstring:NSMutableArray
-						//000080f4  __TEXT:__cstring:NSMutableDictionary
-						//000080f8  __TEXT:__cstring:NSData
-						//000080fc  __TEXT:__cstring:NSNumber
-						//00008100  __TEXT:__cstring:NSString
-						//00008104  __TEXT:__cstring:FileMapView
-						//00008108  __TEXT:__cstring:NSException
-						//0000810c  __TEXT:__cstring:NSColor
-						//00008110  __TEXT:__cstring:NSTextField
-						//00008114  __TEXT:__cstring:NSFont
-						//00008118  __TEXT:__cstring:NSBezierPath
-						//0000811c  __TEXT:__cstring:NSBundle
-						//00008120  __TEXT:__cstring:MachoLoader
-						//00008124  __TEXT:__cstring:NSMutableData
-						//00008128  __TEXT:__cstring:NSMutableString
-
-					// otool -s __OBJC __property -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader											
-					} else if ( strcmp(thisSectionName, "__property")==0 ) {
-
-					// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
-					} else if ( strcmp(thisSectionName, "__class")==0 ) {
-						
-						UInt8 *locPtr = (UInt8 *)sect_pointer;
-						UInt8 *memPtr = (UInt8 *)sect_addr;
-						while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-							UInt32 val1 = *((UInt32 *)locPtr);
-							locPtr = locPtr + sizeof val1;
-							
-							// reusing _cls_refsLookup out of lazyness
-							[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
-							
-							memPtr = memPtr + sizeof val1;
-						}						
-						//0000812c	bc 81 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
-						//0000813c	01 00 00 00 1c 00 00 00 e8 82 00 00 4c 82 00 00 
-						//0000814c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-						//0000815c	ec 81 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
-						//0000816c	01 00 00 00 5c 00 00 00 34 83 00 00 90 82 00 00 
-						//0000817c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-						//0000818c	1c 82 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
-						//0000819c	01 00 00 00 04 00 00 00 00 00 00 00 d4 82 00 00 
-						//000081ac	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-
-					// otool -s __OBJC __meta_class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
-					} else if ( strcmp(thisSectionName, "__meta_class")==0 ) {
-						//000081bc	53 68 00 00 53 68 00 00 47 68 00 00 00 00 00 00 
-						//000081cc	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
-						//000081dc	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-						//000081ec	53 68 00 00 51 6b 00 00 77 6a 00 00 00 00 00 00 
-						//000081fc	02 00 00 00 30 00 00 00 00 00 00 00 dc 83 00 00 
-						//0000820c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-						//0000821c	53 68 00 00 53 68 00 00 8a 6c 00 00 00 00 00 00 
-						//0000822c	02 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 
-						//0000823c	00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-
-					// otool -s __OBJC __inst_meth -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader												
-					} else if ( strcmp(thisSectionName, "__inst_meth")==0 ) {
-						//0000824c	00 00 00 00 05 00 00 00 91 67 00 00 97 67 00 00 
-						//0000825c	e1 45 00 00 a1 67 00 00 b3 67 00 00 f3 30 00 00 
-						//0000826c	ba 67 00 00 d9 67 00 00 ae 2d 00 00 fa 67 00 00 
-						//0000827c	1c 68 00 00 02 2d 00 00 2f 68 00 00 3d 68 00 00 
-						//0000828c	0c 2b 00 00 00 00 00 00 05 00 00 00 b2 6a 00 00 
-						//0000829c	bc 6a 00 00 68 58 00 00 f7 68 00 00 c3 6a 00 00 
-						//000082ac	17 53 00 00 82 68 00 00 d3 6a 00 00 c3 52 00 00 
-						//000082bc	e0 6a 00 00 ea 6a 00 00 27 51 00 00 16 6b 00 00 
-						//000082cc	25 6b 00 00 66 50 00 00 00 00 00 00 01 00 00 00 
-						//000082dc	6b 6c 00 00 97 67 00 00 7b 58 00 00
-
-					// otool -s __OBJC __instance_vars -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																		
-					} else if ( strcmp(thisSectionName, "__instance_vars")==0 ) {
-						//000082e8	06 00 00 00 fc 66 00 00 0a 67 00 00 04 00 00 00 
-						//000082f8	1c 67 00 00 25 67 00 00 08 00 00 00 28 67 00 00 
-						//00008308	31 67 00 00 0c 00 00 00 33 67 00 00 3e 67 00 00 
-						//00008318	10 00 00 00 55 67 00 00 62 67 00 00 14 00 00 00 
-						//00008328	86 67 00 00 8f 67 00 00 18 00 00 00 03 00 00 00 
-						//00008338	8f 6a 00 00 0a 67 00 00 50 00 00 00 98 6a 00 00 
-						//00008348	9e 6a 00 00 54 00 00 00 a0 6a 00 00 31 67 00 00 
-						//00008358	58 00 00 00 
-
-					// otool -s __OBJC __module_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
-					} else if ( strcmp(thisSectionName, "__module_info")==0 ) {
-
-					// otool -s __OBJC __symbols -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																								
-					} else if ( strcmp(thisSectionName, "__symbols")==0 ) {
-
-					// otool -s __OBJC __cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																													
-					} else if ( strcmp(thisSectionName, "__cls_meth")==0 ) {
-
-					// otool -s __OBJC __cat_cls_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																			
-					} else if ( strcmp(thisSectionName, "__cat_cls_meth")==0 ) {
-
-					// otool -s __OBJC __cat_inst_meth -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
-					} else if ( strcmp(thisSectionName, "__cat_inst_meth")==0 ) {
-
-					// otool -s __OBJC __category -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
-					} else if ( strcmp(thisSectionName, "__category")==0 ) {
-
-					// otool -s __OBJC __image_info -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
-					} else if ( strcmp(thisSectionName, "__image_info")==0 ) {
-
-					// otool -s __OBJC __class_ext -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader																																									
-					} else if ( strcmp(thisSectionName, "__class_ext")==0 ) {
-						
-					// otool -s __IMPORT __pointers /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser						
-					} else if ( strcmp(thisSectionName, "__pointers")==0 ) {
-
-					// otool -s __IMPORT __jump_table -v -V /Applications/6-386.app/Contents/MacOS/Sibelius\ 6						
-					} else if ( strcmp(thisSectionName, "__jump_table")==0 ) {	
-						// The jump table is somehow re-written at run time by the dyld
-						
-						// It seems that these are in the other sections as well.
-
 					} else {
-						[NSException raise:@"Unkown section in this segment" format:@"%s - %s", containingSegmentName, thisSectionName];
+						[NSException raise:@"Uknown Segment" format:@"Unknown Segment %s", segname];
 					}
-//					NSLog(@"why not stop for a while and see what we copied?");
+							
 				}
 				newSec_ptr = newSec_ptr+1;
 			}
