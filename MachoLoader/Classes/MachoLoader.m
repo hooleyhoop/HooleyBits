@@ -535,6 +535,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 			char *demangledName = NULL;
 			@try {
+				NSLog(@"attempting to demangle %s", symbolString);
 					demangledName = __cxa_demangle( (const char *)symbolString, 
 														 demangledOutput,
 														 &demangledLength, 
@@ -2431,8 +2432,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog(@"which one?");
 //		} else if(cmd->cmd==LC_SEGMENT_SPLIT_INFO){
 //			NSLog(@"which one?");
-//		} else if(cmd->cmd==LC_REEXPORT_DYLIB){
-//			NSLog(@"which one?");
+		} else if(cmd->cmd==LC_REEXPORT_DYLIB){
+			NSLog(@"which one?");
 //		} else if(cmd->cmd==LC_LAZY_LOAD_DYLIB){
 //			NSLog(@"which one?");
 //		} else if(cmd->cmd==LC_ENCRYPTION_INFO){

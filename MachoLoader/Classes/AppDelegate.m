@@ -16,7 +16,9 @@
 
 //	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
 //	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-	NSString *pathToApp = @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin"; 
+//	NSString *pathToApp = @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin";
+	NSString *pathToApp = @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini";
+	
 //	NSString *pathToOtoolOutput = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	
 //	DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:pathToOtoolOutput];

@@ -17,6 +17,24 @@
 
 extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, size_t* __length, int* __status);
 
+- (void)testBreakingCase {
+	
+	char *demangledOutput = malloc(1024); //[256];
+	
+	int demangledStat;	
+	size_t demangledLength;
+	memset ( demangledOutput, 0, 1024 );
+
+	char *symbolString = "PMFlattenPageFormat";
+	char *demangledName = NULL;
+	demangledName = __cxa_demangle( (const char *)symbolString, 
+								   demangledOutput,
+								   &demangledLength, 
+								   &demangledStat );
+	
+	free(demangledOutput);
+}
+
 - (void)testDemangleSomeShit {
 	
 //	__ZNSs9push_backEc
