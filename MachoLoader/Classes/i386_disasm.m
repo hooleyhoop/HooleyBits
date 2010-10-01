@@ -188,17 +188,17 @@ static NSUInteger replacement_get_operand(
 										  NSUInteger *value_size,
 										  void *result,
 										  const cpu_type_t cputype,
-										  const uint32_t mode,
-										  const uint32_t r_m,
-										  const uint32_t wbit,
-										  const int data16,
-										  const int addr16,
-										  const int sse2,
-										  const int mmx,
+										  const NSUInteger mode,
+										  const NSUInteger r_m,
+										  const NSUInteger wbit,
+										  const NSUInteger data16,
+										  const NSUInteger addr16,
+										  const NSUInteger sse2,
+										  const NSUInteger mmx,
 										  const unsigned int rex,
 										  const char *sect,
 										  uint64 sect_addr,
-										  uint32_t *length,
+										  NSUInteger *length,
 										  uint64 *left,
 										  const uint64 addr,
 										  const struct relocation_info *sorted_relocs,
@@ -210,7 +210,7 @@ static NSUInteger replacement_get_operand(
 										  const NSUInteger strings_size,
 										  const struct symbol *sorted_symbols,
 										  const NSUInteger nsorted_symbols,
-										  const int verbose, 
+										  const NSUInteger verbose, 
 										  struct HooReg *segReg );
 
 //static void get_operand(
@@ -287,7 +287,7 @@ static void replacement_immediate(
 					  const NSUInteger strings_size,
 					  const struct symbol *sorted_symbols,
 					  const NSUInteger nsorted_symbols,
-					  const int verbose
+					  const NSUInteger verbose
 					  );
 
 
@@ -298,12 +298,12 @@ static void displacement(
     const NSUInteger value_size,
     const char *sect,
     uint64_t sect_addr,
-    uint32_t *length,
+    NSUInteger *length,
     uint64 *left,
     const cpu_type_t cputype,
     const uint64_t addr,
     const struct relocation_info *sorted_relocs,
-    const uint32_t nsorted_relocs,
+    const NSUInteger nsorted_relocs,
     const struct nlist *symbols,
     const struct nlist_64 *symbols64,
     const NSUInteger nsymbols,
@@ -311,7 +311,7 @@ static void displacement(
     const NSUInteger strings_size,
     const struct symbol *sorted_symbols,
     const NSUInteger nsorted_symbols,
-    const int verbose);
+    const NSUInteger verbose);
 
 //static void get_symbol(
 //    const char **symadd,
@@ -335,7 +335,7 @@ static void displacement(
 //static void print_operand( const char *seg, const char *symadd, const char *symsub, uint64_t value, NSUInteger value_size, const char *result, const char *tail);
 //static void replacementPrint_operand( char *outPutBuffer, struct HooReg *segReg, const char *symadd, const char *symsub, uint64_t value, NSUInteger value_size, const char *result, const char *tail);
 static uint64_t get_value( const NSUInteger size, const char *sect, NSUInteger *length, uint64 *left);
-static void modrm_byte( uint32_t *mode, uint32_t *reg, uint32_t *r_m, unsigned char byte);
+static void modrm_byte( NSUInteger *mode, NSUInteger *reg, NSUInteger *r_m, unsigned char byte);
 
 #define GET_BEST_REG_NAME( reg_name, reg_struct ) \
 reg_name = (char *)reg_struct->prettyName;  \
@@ -2032,7 +2032,7 @@ static const struct HooReg *segRegPtrForName( char *segRegName ) {
 	return NULL;
 }
 
-static const struct HooReg *get_regStruct( int reg, int wbit, int data16, int rex ) {
+static const struct HooReg *get_regStruct( NSUInteger reg, NSUInteger wbit, NSUInteger data16, NSUInteger rex ) {
 	
 	const struct HooReg *regStruct;
 	if (rex != 0) {
@@ -2046,7 +2046,7 @@ static const struct HooReg *get_regStruct( int reg, int wbit, int data16, int re
 }
 
 /* yeah */
-static const struct HooReg *get_r_m_regStruct( int r_m, int wbit, int data16, int rex ) {
+static const struct HooReg *get_r_m_regStruct( NSUInteger r_m, NSUInteger wbit, NSUInteger data16, NSUInteger rex ) {
 
 	const struct HooReg *regStruct;
 	if( rex!=0 ) {
@@ -2074,12 +2074,12 @@ static const struct HooReg *get_r_m_regStruct( int r_m, int wbit, int data16, in
 //}
 
 // Returns the xmm register number referenced by reg and rex.
-static unsigned int xmm_reg(int reg, int rex) {
+static NSUInteger xmm_reg(NSUInteger reg, NSUInteger rex) {
 	return (reg + (REX_R(rex) << 3));
 }
 
 // Returns the xmm register number referenced by r_m and rex.
-static unsigned int xmm_rm(int r_m, int rex) {
+static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
@@ -2087,7 +2087,7 @@ void addLine( uint64_t memAddress, struct hooleyFuction **currentFuncPtr, const 
 	
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
-	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine *) );
+	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
 	newLine->instr = dp;
 	
 	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
@@ -2165,7 +2165,7 @@ struct instable *customInstruction( const char *instrName, const char *prettyStr
 /*
   * i386_disassemble()
  */
-uint32_t i386_disassemble(
+NSUInteger i386_disassemble(
 struct hooleyFuction **currentFuncPtr,
 char *sect,
 uint64 left,
@@ -2173,7 +2173,7 @@ uint64_t addr,
 uint64_t sect_addr,
 //enum byte_sex object_byte_sex,
 struct relocation_info *sorted_relocs,
-uint32_t nsorted_relocs,
+NSUInteger nsorted_relocs,
 struct nlist *symbols,
 struct nlist_64 *symbols64,
 NSUInteger nsymbols,
@@ -2182,11 +2182,11 @@ NSUInteger nsorted_symbols,
 char *strings,
 NSUInteger strings_size,
 uint32_t *indirect_symbols,
-int32_t nindirect_symbols,
+NSUInteger nindirect_symbols,
 cpu_type_t cputype,
 struct load_command *load_commands,
-uint32_t ncmds,
-uint32_t sizeofcmds,
+NSUInteger ncmds,
+NSUInteger sizeofcmds,
 NSUInteger verbose,
 NSUInteger iterationCounter						  
 )
@@ -2205,20 +2205,20 @@ NSUInteger iterationCounter
 
 	const char *indirect_symbol_name=NULL;
 
-    uint32_t i=0, length=0;
+    NSUInteger i=0, length=0;
     unsigned char byte=0;
     unsigned char opcode_suffix=0;
     /* nibbles (4 bits) of the opcode */
-    unsigned opcode1=0, opcode2=0, opcode3=0, opcode4=0, opcode5=0, prefix_byte=0;
+    NSUInteger opcode1=0, opcode2=0, opcode3=0, opcode4=0, opcode5=0, prefix_byte=0;
     const struct instable *dp=NULL, *prefix_dp=NULL;
-    uint32_t wbit=0, vbit=0;
+    NSUInteger wbit=0, vbit=0;
     int got_modrm_byte=0;
-    uint32_t mode=0, reg=0, r_m=0;
+    NSUInteger mode=0, reg=0, r_m=0;
     const char *reg_name = NULL;
-    int data16=FALSE;		/* 16- or 32-bit data */
-    int addr16=FALSE;		/* 16- or 32-bit addressing */
-    int sse2=FALSE;		/* sse2 instruction using xmmreg's */
-    int mmx=FALSE;		/* mmx instruction using mmreg's */
+    NSUInteger data16=FALSE;		/* 16- or 32-bit data */
+    NSUInteger addr16=FALSE;		/* 16- or 32-bit addressing */
+    NSUInteger sse2=FALSE;		/* sse2 instruction using xmmreg's */
+    NSUInteger mmx=FALSE;		/* mmx instruction using mmreg's */
     unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
 	const struct HooReg *reg_struct=NULL;
 	
@@ -2240,9 +2240,9 @@ NSUInteger iterationCounter
 	prefix_byte = 0;
 	for(;;)
 	{
-	    byte = get_value(sizeof(char), sect, &length, &left);
-	    opcode1 = byte >> 4 & 0xf;
-	    opcode2 = byte & 0xf;
+	    byte = get_value(sizeof(char), sect, &length, &left);	// 0x14adc272, 0, 0xb9bb8b	=== //0xff 
+	    opcode1 = byte >> 4 & 0xf;									//0xf
+	    opcode2 = byte & 0xf;										//0xf
 
 	    dp = &distable[opcode1][opcode2];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL){
@@ -2432,7 +2432,7 @@ NSUInteger iterationCounter
 	    if(got_modrm_byte == FALSE){
 			got_modrm_byte = TRUE;
 			byte = get_value(sizeof(char), sect, &length, &left);
-			modrm_byte(&mode, (uint32_t *)&opcode3, &r_m, byte);
+			modrm_byte(&mode, (NSUInteger *)&opcode3, &r_m, byte);
 	    }
 	    /*
 	     * decode 287 instructions (D8-DF) from opcodeN
@@ -2504,6 +2504,7 @@ NSUInteger iterationCounter
 	    }
 	    if(dp->adr_mode == BD)
 		{
+			// gohere
 			if(segReg){
 				if(strcmp(segReg->name, "%cs:") == 0){
 					hooleyDebug();
@@ -2526,7 +2527,7 @@ NSUInteger iterationCounter
 	struct InstrArgStruct *allArgs;
 	struct ImediateValue *value0Immed, *value1Immed;
 	struct DisplacementValue *displaceStructPtr;
-	int regNum;
+	NSUInteger regNum;
 	
 	/*
 	 * Each instruction has a particular instruction syntax format
@@ -2552,6 +2553,7 @@ NSUInteger iterationCounter
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 
 			//Putback			printf("%s\t%s,", mnemonic, reg_name);
@@ -2574,7 +2576,7 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// eg movzbl	(%edx),%eax	
 			FILLARGS2( abstractStrctPtr1, reg_struct );
-			printf("%i\t\t", iterationCounter);			
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -2595,7 +2597,7 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg imull $0x44,%edx,%eax
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
-			printf("%i\t\t", iterationCounter);			
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 
 			return(length);
 
@@ -2612,7 +2614,7 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg. movl 0x04(%ebp),%ebx
 			FILLARGS2( abstractStrctPtr1,reg_struct );
-			printf("%i\t\t", iterationCounter);
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -2630,7 +2632,7 @@ NSUInteger iterationCounter
 			
 			 // -- move register to oprand eg. movl	%esp,%ebp		movl %ebx,0x00(%esp)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -2690,7 +2692,7 @@ NSUInteger iterationCounter
 			} else {
 				[NSException raise:@"what?" format:@"what?"];
 			}
-			printf("%i\t\t", iterationCounter);			
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
 
@@ -2760,7 +2762,7 @@ NSUInteger iterationCounter
 						printf("%sdqu\t", mnemonic);
 					} else {
 						hooleyDebug();
-						sprintf(result0, "%%mm%u", reg);
+						sprintf(result0, "%%mm%lu", (unsigned long)reg);
 						printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -2782,7 +2784,6 @@ NSUInteger iterationCounter
 			
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3134,7 +3135,7 @@ NSUInteger iterationCounter
 						printf("%s\t", mnemonic);
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%u", reg);
+						sprintf(result1, "%%mm%lu", (unsigned long)reg);
 //Putback						printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3154,7 +3155,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 						printf("%sdqu\t", mnemonic);
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%u", reg);
+						sprintf(result1, "%%mm%lu", (unsigned long)reg);
 						printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3176,7 +3177,7 @@ NSUInteger iterationCounter
 						printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%u", reg);
+						sprintf(result1, "%%mm%lu", (unsigned long)reg);
 						printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					}
@@ -3259,6 +3260,7 @@ NSUInteger iterationCounter
 			
 			// eg movsd	(%eax),%xmm0
 			FILLARGS2( abstractStrctPtr1, reg_struct );
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -3507,7 +3509,6 @@ NSUInteger iterationCounter
 			regNum = xmm_reg(reg, rex);
 			reg_struct = &xmmReg_Struct[regNum]; //%xmm0
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3611,14 +3612,13 @@ NSUInteger iterationCounter
 			// printf("%%xmm%u\n", reg_struct );
 			// eg psllq $0x1f,%xmm2
 			FILLARGS2( value0Immed, reg_struct );
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
 
 		/* 3DNow instructions */
 		case AMD3DNOW:
 //Putback					printf("%s\t", mnemonic);
-					sprintf(result1, "%%mm%u", reg);
+					sprintf(result1, "%%mm%lu", (unsigned long)reg);
 //Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 //Putback					printf("%s\n", result1);
 					return(length);
@@ -3715,7 +3715,6 @@ NSUInteger iterationCounter
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			FILLARGS3( value0Immed, reg_struct, abstractStrctPtr1 );			
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3732,7 +3731,6 @@ NSUInteger iterationCounter
 			// cl is &countReg
 			// eg shldl	%cl,%eax,%esi
 			FILLARGS3( &countReg, reg_struct, abstractStrctPtr1 );			
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3742,12 +3740,11 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 
 			/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
-			value0_size = OPSIZE(data16, opcode2 == 1, 0);
+			value0_size = OPSIZE(data16, opcode2==1, 0);
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg. andl $0xf0,%esp    subl $0x10,%esp
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3765,7 +3762,6 @@ NSUInteger iterationCounter
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg movl	$0x00021730, 0x04(%edx)
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);						
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3779,7 +3775,6 @@ NSUInteger iterationCounter
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 			// eg movb	$0x00,%al
 			FILLARGS2( value0Immed, reg_struct );
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3793,7 +3788,6 @@ NSUInteger iterationCounter
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);		
 			 // eg. movl	$0x00b9ee00,%ecx
 			FILLARGS2( value0Immed, reg_struct );
-			printf("%i\t\t", iterationCounter);						
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3812,7 +3806,6 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	0x0123d000,%eax
 			FILLARGS2( value0Immed, reg_struct );
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -3831,7 +3824,6 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	%eax,0x00f2300c
 			FILLARGS2( reg_struct, value0Immed );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3882,7 +3874,6 @@ NSUInteger iterationCounter
 			}
 			// eg sarl	%eax
 			// shll		%cl,%edx
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );	
 			return(length);
 
@@ -3905,7 +3896,6 @@ NSUInteger iterationCounter
 				FILLARGS2(value0Immed, abstractStrctPtr1);
 			}
 			// eg shll	$0x02,%eb
-			printf("%i\t\t", iterationCounter);					
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3926,7 +3916,6 @@ NSUInteger iterationCounter
 			wbit = WBIT(opcode2);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			FILLARGS1( abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
 
@@ -3988,7 +3977,6 @@ NSUInteger iterationCounter
 
 			// eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 			FILLARGS1( abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4003,7 +3991,6 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// eg setbe	%al
 			FILLARGS1( abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4058,9 +4045,9 @@ NSUInteger iterationCounter
 			BOOL isNewFunc = !strcmp(dp->name, "push") && !strcmp(reg_struct->name,"%ebp");
 			if (isNewFunc) {
 				/* NEW FUNCTION */
-				// Not entirely sure this is a sufficient text for a new function
+				// Not entirely sure this is a sufficient test for a new function
 				struct hooleyFuction *currentFunc = *currentFuncPtr;
-				struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction *) );
+				struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction) );
 				newFunc->prev = currentFunc;
 				currentFunc->next = newFunc;
 				currentFunc = newFunc;
@@ -4068,7 +4055,6 @@ NSUInteger iterationCounter
 			}
 			// eg. pushl %ebp
 			FILLARGS1(reg_struct);
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4116,7 +4102,6 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			//	eg. leal 0x08(%ebp),%ecx
 			FILLARGS2(abstractStrctPtr1, reg_struct);
-			printf("%i\t\t", iterationCounter);
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4135,7 +4120,6 @@ NSUInteger iterationCounter
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			//eg cmpb	$0x2f,%al
 			FILLARGS2( value0Immed, reg_struct );
-			printf("%i\t\t", iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4145,7 +4129,6 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// eg mull	%ecx
 			FILLARGS1( abstractStrctPtr1 );
-			printf("%i\t\t", iterationCounter);										
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4161,7 +4144,7 @@ NSUInteger iterationCounter
 				NEW_INDIRECT( indirect2, segReg, 0, (struct HooReg *)&destination_indexReg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
-				printf("%i\t\t", iterationCounter);							
+				printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 				addLine( addr, currentFuncPtr, dp, allArgs );
 			}
 			return(length);
@@ -4205,7 +4188,7 @@ NSUInteger iterationCounter
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
-			printf("%i\t\t", iterationCounter);			
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 
 			return(length);
 
@@ -4253,11 +4236,13 @@ NSUInteger iterationCounter
 
 		/* jmp/call. single operand, 8 bit displacement */
 		case BD:
+			// gohere			
 			value0_size = sizeof(char);
 			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg jne	0x00002b1a
 			FILLARGS1( displaceStructPtr );
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4267,7 +4252,7 @@ NSUInteger iterationCounter
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			FILLARGS1( value0Immed );
-			printf("%i\t\t", iterationCounter);
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			// eg pushl  $0x00001000
 			return(length);
@@ -4280,7 +4265,7 @@ NSUInteger iterationCounter
 
 			// eg. pushl $0x00 
 			FILLARGS1( value0Immed );
-			printf("%i\t\t", iterationCounter);
+			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 					return(length);
 
@@ -4462,17 +4447,17 @@ static NSUInteger replacement_get_operand(
 						NSUInteger *value_size,
 						void *result,
 						const cpu_type_t cputype,
-						const uint32_t mode,
-						const uint32_t r_m,
-						const uint32_t wbit,
-						const int data16,
-						const int addr16,
-						const int sse2,
-						const int mmx,
+						const NSUInteger mode,
+						const NSUInteger r_m,
+						const NSUInteger wbit,
+						const NSUInteger data16,
+						const NSUInteger addr16,
+						const NSUInteger sse2,
+						const NSUInteger mmx,
 						const unsigned int rex,
 						const char *sect,
 						uint64 sect_addr,
-						uint32_t *length,
+						NSUInteger *length,
 						uint64 *left,
 						const uint64 addr,
 						const struct relocation_info *sorted_relocs,
@@ -4484,7 +4469,7 @@ static NSUInteger replacement_get_operand(
 						const NSUInteger strings_size,
 						const struct symbol *sorted_symbols,
 						const NSUInteger nsorted_symbols,
-						const int verbose,
+						const NSUInteger verbose,
 						struct HooReg *segReg
 						)
 {
@@ -4505,7 +4490,7 @@ static NSUInteger replacement_get_operand(
 	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
 	    s_i_b = TRUE;
 	    byte = get_value(sizeof(char), sect, length, left);
-	    modrm_byte(&ss, &index, &base, byte);
+	    modrm_byte((NSUInteger *)&ss, (NSUInteger *)&index, (NSUInteger *)&base, byte);
 	} else {
 	    s_i_b = FALSE;
 	}
@@ -4621,13 +4606,13 @@ static NSUInteger replacement_get_operand(
 	} else { /* no s-i-b */
 	    if(mode == REG_ONLY){
 			if(sse2 == TRUE) {
-				int regNum = xmm_rm(r_m, rex);
+				NSUInteger regNum = xmm_rm(r_m, rex);
 				const struct HooReg *reg_struct = &xmmReg_Struct[regNum]; //%xmm0
 				// sprintf(result, "%%xmm%u", );
 				return (NSUInteger)reg_struct;
 
 			} else if(mmx == TRUE) {
-				sprintf(result, "%%mm%u", r_m);
+				sprintf(result, "%%mm%ld", (unsigned long)r_m);
 				
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
@@ -4978,7 +4963,7 @@ static void replacement_immediate(
 	const NSUInteger strings_size,
 	const struct symbol *sorted_symbols,
 	const NSUInteger nsorted_symbols,
-	const int verbose
+	const NSUInteger verbose
 ) {
 
 	uint64_t offset;
@@ -5007,13 +4992,13 @@ const NSUInteger value_size,
 
 const char *sect,
 uint64_t sect_addr,
-uint32_t *length,
+NSUInteger *length,
 uint64 *left,
 
 const cpu_type_t cputype,
 const uint64_t addr,
 const struct relocation_info *sorted_relocs,
-const uint32_t nsorted_relocs,
+const NSUInteger nsorted_relocs,
 const struct nlist *symbols,
 const struct nlist_64 *symbols64,
 const NSUInteger nsymbols,
@@ -5022,7 +5007,7 @@ const NSUInteger strings_size,
 
 const struct symbol *sorted_symbols,
 const NSUInteger nsorted_symbols,
-const int verbose)
+const NSUInteger verbose)
 {
     uint64 sect_offset;
 	uint64_t offset;
@@ -5261,20 +5246,18 @@ const char *sect,		/* pointer to the raw data of the section (in) */
 NSUInteger *length,		/* number of bytes taken from the sect (in/out) */
 uint64 *left)			/* number of bytes left in sect after length (in/out) */
 {
-    uint32_t i;
-    uint64_t value;
     unsigned char byte;
 
-	if(left == 0)
+	if(left==0)
 	    return(0);
 
-	value = 0;
-	for(i = 0; i < size; i++) {
+	uint64_t value = 0;
+	for( NSUInteger i=0; i<size; i++) {
 	    byte = 0;
 	    if(*left > 0){
-		byte = sect[*length];
-		(*length)++;
-		(*left)--;
+			byte = sect[*length];
+			(*length)++;
+			(*left)--;
 	    }
 	    value |= (uint64_t)byte << (8*i);
 	}
@@ -5285,9 +5268,9 @@ uint64 *left)			/* number of bytes left in sect after length (in/out) */
  * modrm_byte() breaks a byte out into its mode, reg and r/m bits.
  */
 static void modrm_byte(
-uint32_t *mode,
-uint32_t *reg,
-uint32_t *r_m,
+NSUInteger *mode,
+NSUInteger *reg,
+NSUInteger *r_m,
 unsigned char byte)
 {
 	*r_m = byte & 0x7; /* r/m field from the byte */

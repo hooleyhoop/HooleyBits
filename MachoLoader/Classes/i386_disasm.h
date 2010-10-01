@@ -26,7 +26,7 @@
 //#import <stuff/bool.h>
 //#include "stuff/symbol.h"
 
-extern uint32_t i386_disassemble(
+extern NSUInteger i386_disassemble(
 
 	struct hooleyFuction **currentFuncPtr,
     char *sect,
@@ -35,20 +35,20 @@ extern uint32_t i386_disassemble(
     uint64_t sect_addr,
 //    enum byte_sex object_byte_sex,
     struct relocation_info *sorted_relocs,
-    uint32_t nsorted_relocs,
+    NSUInteger nsorted_relocs,
     struct nlist *symbols,
     struct nlist_64 *symbols64,
-    uint32_t nsymbols,
+    NSUInteger nsymbols,
     struct symbol *sorted_symbols,
-    uint32_t nsorted_symbols,
+    NSUInteger nsorted_symbols,
     char *strings,
-    uint32_t strings_size,
+    NSUInteger strings_size,
     uint32_t *indirect_symbols,
-    uint32_t nindirect_symbols,
+    NSUInteger nindirect_symbols,
 	cpu_type_t cputype,
     struct load_command *load_commands,
-    uint32_t ncmds,
-    uint32_t sizeofcmds,
+    NSUInteger ncmds,
+    NSUInteger sizeofcmds,
     NSUInteger verbose,
 	NSUInteger iterationCounter						  
 

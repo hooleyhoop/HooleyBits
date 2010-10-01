@@ -91,7 +91,7 @@ nil] retain];
 	// file /Applications/Foo.app
 
 	// strip the app to desired architectire
-	// lipo remove ppc /Applications/Foo.app -output /Applications/Foo.app_thin
+	// sudo lipo -remove ppc /Applications/Foo.app -output /Applications/Foo.app_thin
 	// ditto --rsrc --arch i386 /Applications/Foo.app /Application/Foo-i386.app
 
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];

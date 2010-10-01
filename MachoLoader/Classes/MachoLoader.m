@@ -122,7 +122,7 @@ static void print_cstring_char( char c ) {
 }
 
 // -- see cctools-782 otool ofile_print.c
-- (void)print_cfstring_section:(char *)sect :(uint32_t)sect_size :(uint32_t)sect_addr {
+- (void)print_cfstring_section:(char *)sect :(uint64_t)sect_size :(uint64_t)sect_addr {
 
 	UInt8 *locPtr = (UInt8 *)sect;
 	UInt8 *memPtr = (UInt8 *)sect_addr;
@@ -197,7 +197,7 @@ void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) 
 #define MAXSTRINGLENGTH 2048*10
 
 // -- see cctools-782 otool ofile_print.c
-- (void)save_cstring_section:(const char *)sect :(const uint32_t)sect_size :(const uint32_t)sect_addr {
+- (void)save_cstring_section:(const char *)sect :(const uint64_t)sect_size :(const uint64_t)sect_addr {
 	
 	char aCstring[MAXSTRINGLENGTH];
 
@@ -232,15 +232,15 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 /*
  * Print the indirect symbol table.
  */
-- (void)print_indirect_symbols:(struct load_command *)load_commands :(uint32_t)ncmds :(uint32_t)sizeofcmds :(cpu_type_t)cputype
-							//					   enum byte_sex load_commands_byte_sex,
+- (void)print_indirect_symbols:(struct load_command *)load_commands :(NSUInteger)ncmds :(NSUInteger)sizeofcmds :(cpu_type_t)cputype
+							// enum byte_sex load_commands_byte_sex,
 							:(uint32_t *)indirect_symbols
-							:(uint32_t)nindirect_symbols
+							:(NSUInteger)nindirect_symbols
 							:(struct nlist *)symbols
 							:(struct nlist_64 *)symbols64
-							:(uint32_t)nsymbols
+							:(NSUInteger)nsymbols
 							:(char *)strings
-							:(uint32_t)strings_size //,
+							:(NSUInteger)strings_size //,
 							//					   enum bool verbose
 
 {
@@ -287,7 +287,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	    big_load_end += l.cmdsize;
 	    if(big_load_end > sizeofcmds)
 			printf("load command %u extends past end of load commands\n", i);
-	    left = sizeofcmds - ((char *)lc - (char *)load_commands);
+	    left = (uint32)(sizeofcmds-((char *)lc-(char *)load_commands));
 		
 	    switch(l.cmd)
 		{
@@ -310,9 +310,9 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
 				memset((char *)(sect_ind + (nsects - sg.nsects)), '\0', sizeof(struct section_indirect_info) * sg.nsects);
 				p = (char *)lc + sizeof(struct segment_command);
-				for(j = 0 ; j < sg.nsects ; j++)
+				for( j=0; j<sg.nsects; j++ )
 				{
-					left = sizeofcmds - (p - (char *)load_commands);
+					left = (uint32)(sizeofcmds-(p - (char *)load_commands));
 					size = left < sizeof(struct section) ?
 					left : sizeof(struct section);
 					memcpy((char *)&s, p, size);
@@ -352,7 +352,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				p = (char *)lc + sizeof(struct segment_command_64);
 				for( j=0 ; j<sg64.nsects; j++ )
 				{
-					left = sizeofcmds - (p - (char *)load_commands);
+					left = (uint32)(sizeofcmds - (p - (char *)load_commands));
 					size = left < sizeof(struct section_64) ? left : sizeof(struct section_64);
 					memcpy((char *)&s64, p, size);
 					//					if(swapped)
@@ -471,7 +471,9 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //			else {
 				if( symbols!= NULL ) {
 					
-					struct nlist symb = symbols[indirect_symbols[j+n]];
+					NSUInteger indirSym = indirect_symbols[j+n];
+					NSAssert(indirSym<nsymbols, @"indirect_symbol table appears to be garbage!");
+					struct nlist symb = symbols[indirSym];
 					
 					n_stringIndex = symb.n_un.n_strx;
 					uint32_t n_value = symb.n_value;				/* value of this symbol (or stab offset) */
@@ -531,10 +533,15 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					size_t demangledLength;
 					memset ( demangledOutput, 0, 1024 );
 
-					char *demangledName = __cxa_demangle( (const char *)symbolString, 
+			char *demangledName = NULL;
+			@try {
+					demangledName = __cxa_demangle( (const char *)symbolString, 
 														 demangledOutput,
 														 &demangledLength, 
 														 &demangledStat );
+			} @catch(id theException) {
+				
+			}
 					switch (demangledStat) {
 						case 0:
 							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
@@ -567,7 +574,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 }
 
 
-- (id)initWithPath:(NSString *)aPath {
+- (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch {
+
 
 	self = [super init];
 	if(self) {
@@ -584,12 +592,15 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_temporaryExperiment		= [[IntHash alloc] init];
 
 		_libraries = [[NSMutableArray alloc] init];
+		
+		_dc = [ch retain];
 	}
 	return self;
 }
 
 - (void)dealloc {
 		
+	[_dc release];
 	[_filePath release];
 	[_memoryMap release];
 	[_uncodedMemoryMap release];
@@ -687,8 +698,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 								:_cputype
 								:(uint32_t *)_indirectSymbolTable
 								:_nindirect_symbols
-								:_symtable_ptr
-								:_UNUSED_symbols64
+								:_symtable_ptr32
+								:_symtable_ptr64
 								:_nsymbols
 								:_strtable
 								:_strings_size];
@@ -711,15 +722,14 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		char *p;
 		unsigned long len;
 		
-		if(_symtable_ptr != NULL){
-			n_strx = _symtable_ptr[i].n_un.n_strx;
-			n_type = _symtable_ptr[i].n_type;
-			n_value = _symtable_ptr[i].n_value;
-		}
-		else{
-			n_strx = _UNUSED_symbols64[i].n_un.n_strx;
-			n_type = _UNUSED_symbols64[i].n_type;
-			n_value = _UNUSED_symbols64[i].n_value;
+		if(_symtable_ptr32 != NULL){
+			n_strx = _symtable_ptr32[i].n_un.n_strx;
+			n_type = _symtable_ptr32[i].n_type;
+			n_value = _symtable_ptr32[i].n_value;
+		} else{
+			n_strx = _symtable_ptr64[i].n_un.n_strx;
+			n_type = _symtable_ptr64[i].n_type;
+			n_value = _symtable_ptr64[i].n_value;
 		}
 		if(n_strx > 0 && n_strx < _strings_size)
 			p = _strtable + n_strx;
@@ -767,9 +777,11 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 //		printf("%0x ", memPtr);
 //		printf("%i\t\t", iterationCounter);
 		
-		if( iterationCounter==1118 )
+		if( iterationCounter==602 )
 			NSLog(@"stop here");
 		iterationCounter++;
+		
+	//	debugLine = [_dc nextLine];
 		
 		j = i386_disassemble( 
 							 &currentFunction,
@@ -779,8 +791,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 							(uint64_t)_text_sect_addr,
 							 text_sorted_relocs,
 							 _text_nsorted_relocs,
-							 _symtable_ptr,
-							 _UNUSED_symbols64,
+							 _symtable_ptr32,
+							 _symtable_ptr64,
 							 _nsymbols,										 
 							 sorted_symbols, 
 							 nsorted_symbols,
@@ -794,6 +806,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 							 _sizeofcmds,
 							 1, iterationCounter 
 							 );
+		NSLog(@"ambitious Returned %qu", j);
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;
@@ -1429,34 +1442,55 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// each segment is divided into sections.  eg __PAGEZERO segment takes up no space on disk but has space in memory
 			
 			// If there are sections - The sections follow the segment
-	//		struct section_64 // TODO: 64
-		
-            struct section *sects = (struct section *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
-			struct section *newSec_ptr = sects;
+			struct section_64 *sectionPtr = (struct section_64 *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
 			
+			// This ptr might be a structure we malloc, Not guaranteed to actually pt to memory in the file (sectionPtr is for that)
+			struct section_64 *newSec_ptr64 = sectionPtr;
+			// verified nsects for 32 and 64 bit
+			
+			// iterate sections
 			for( NSUInteger i=0; i<nsects; i++ )
 			{
-				uint64 memoryAddressOfSection = newSec_ptr->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
+				if(_cputype & CPU_ARCH_ABI64) {
+				} else {
+					// newSec_ptr64 is really a 32Bit section, lets make a real 64bit and copy in the fields
+					struct section *_32itSection = (struct section *)newSec_ptr64;
+					newSec_ptr64 = calloc(1, sizeof(struct section_64));
+					strcpy(newSec_ptr64->sectname, _32itSection->sectname);
+					strcpy(newSec_ptr64->segname, _32itSection->segname);
+					newSec_ptr64->addr=_32itSection->addr;
+					newSec_ptr64->size=_32itSection->size;
+					newSec_ptr64->offset=_32itSection->offset;
+					newSec_ptr64->align=_32itSection->align;
+					newSec_ptr64->reloff=_32itSection->reloff;
+					newSec_ptr64->nreloc=_32itSection->nreloc;
+					newSec_ptr64->flags=_32itSection->flags;
+					newSec_ptr64->reserved1=_32itSection->reserved1;
+					newSec_ptr64->reserved2=_32itSection->reserved1;
+				}
+				// verified for 32 and 64 bit
+				uint64 memoryAddressOfSection = newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
+
 				if(memoryAddressOfSection)
 				{
 //					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
-					char *containingSegmentName = newSec_ptr->segname;
-					char *thisSectionName = newSec_ptr->sectname;
+					char *containingSegmentName = newSec_ptr64->segname;
+					char *thisSectionName = newSec_ptr64->sectname;
 
 //					NSLog(@"segment2 name %s", containingSegmentName );
 //					NSLog(@"section2 name %s", thisSectionName );
 
-					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
-
-					struct relocation_info *sect_relocs = (struct relocation_info *)((char *)_codeAddr + newSec_ptr->reloff);
-					uint32_t sect_nrelocs = newSec_ptr->nreloc;
-					uint32_t sect_addr = newSec_ptr->addr;
-					uint32_t sect_flags = newSec_ptr->flags;
+					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr64->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
+					
+					struct relocation_info *sect_relocs = (struct relocation_info *)((char *)_codeAddr + newSec_ptr64->reloff);
+					uint32_t sect_nrelocs = newSec_ptr64->nreloc;
+					uint64_t sect_addr = newSec_ptr64->addr;
+					uint32_t sect_flags = newSec_ptr64->flags;
 					
 					uint32_t section_type = sect_flags & SECTION_TYPE;
 					uint64 stride=0;
 					if(section_type == S_SYMBOL_STUBS){
-						stride = newSec_ptr->reserved2;
+						stride = newSec_ptr64->reserved2;
 					} else if(section_type == S_LAZY_SYMBOL_POINTERS || section_type == S_NON_LAZY_SYMBOL_POINTERS || section_type == S_LAZY_DYLIB_SYMBOL_POINTERS) {
 						if(_cputype & CPU_ARCH_ABI64)
 							stride = 8;
@@ -1464,8 +1498,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							stride = 4;
 					}
 					if(stride!=0){
-						uint64 count = newSec_ptr->size / stride;
-						uint64 n = newSec_ptr->reserved1;
+						uint64 count = newSec_ptr64->size / stride;
+						uint64 n = newSec_ptr64->reserved1;
 
 //						NSLog(@"Indirect symbols for (%.16s,%.16s) %u entries", containingSegmentName, thisSectionName, count);
 						for( NSUInteger j=0; j<count && n+j<_nindirect_symbols; j++ )
@@ -1474,7 +1508,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						}
 					}
 					
-					NSUInteger newSectSize = newSec_ptr->size;
+					uint64_t newSectSize = newSec_ptr64->size;
 //					void *newSectAddr = NULL;
 
 					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
@@ -1699,6 +1733,10 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						} else if ( strcmp(thisSectionName, "__coalesced_text")==0 ) {
 							//TODO: Otool disassembles this section
 							NSLog(@"DREADED THUNK SECTION");
+							
+							// otool -s __TEXT __gcc_except_tab__TEXT -v -V /Applications/iTunes.app/Contents/MacOS/iTunes_thin												
+						} else if ( strcmp(thisSectionName, "__gcc_except_tab__TEXT")==0 ) {
+							// something todo with exceptions
 						} else {
 							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
@@ -1987,9 +2025,21 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 					}
 							
 				}
-				newSec_ptr = newSec_ptr+1;
+				
+				// advance
+				if(_cputype & CPU_ARCH_ABI64) {
+					sectionPtr = sectionPtr+1;
+					newSec_ptr64 = sectionPtr;
+				} else {
+					// advance only the size of a 2 bit section
+					struct section *_32bit = (struct section *)sectionPtr;
+					_32bit=_32bit+1;
+					sectionPtr = (struct section_64 *)_32bit; // this looks wrong but the real section_64 is created at the top of the loop
+					free(newSec_ptr64);
+					newSec_ptr64 = sectionPtr; 
+				}
+
 			}
-			
 			
 		} else if( cmd->cmd==LC_SYMTAB ) {
 			
@@ -2003,31 +2053,32 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			uint32_t stroff	= symtab->stroff;	// An integer containing the byte offset from the start of the image to the location of the string table.
 			_strings_size	= symtab->strsize;	// An integer indicating the size (in bytes) of the string table.
 
-			_symtable_ptr = (struct nlist *)(symoff + (char *)_codeAddr);
+			if(_cputype & CPU_ARCH_ABI64){
+				_symtable_ptr64 = (struct nlist_64 *)(symoff + (char *)_codeAddr);
+			} else {
+				_symtable_ptr32 = (struct nlist *)(symoff + (char *)_codeAddr);
+			}
+			
 			_strtable = (char *)(stroff + (char *)_codeAddr);
 
 			for( NSInteger i=0; i<_nsymbols; i++ )
 			{
-				struct nlist symbol = _symtable_ptr[i];
-				uint32_t n_value = symbol.n_value;	/* value of this symbol (or stab offset) */
+				struct nlist_64 symbol64;
+				if(_cputype & CPU_ARCH_ABI64){
+					symbol64 = _symtable_ptr64[i];
+				} else {
+					struct nlist symbol32 = _symtable_ptr32[i];
+					symbol64.n_un.n_strx = symbol32.n_un.n_strx;
+					symbol64.n_type = symbol32.n_type;
+					symbol64.n_sect = symbol32.n_sect;
+					symbol64.n_desc = symbol32.n_desc;
+					symbol64.n_value = symbol32.n_value;
+				}
+				uint64_t n_value = symbol64.n_value;	/* value of this symbol (or stab offset) */
 				if(n_value){
-					
-					uint32_t stringIndex = (symbol.n_un.n_strx); // SwapLongIfNeeded
-					uint8_t n_type = symbol.n_type;		/* type flag, see below */
-					uint8_t n_sect = symbol.n_sect;		/* section number or NO_SECT */
-					int16_t n_desc = symbol.n_desc;		/* see <mach-o/stab.h> */
-					
-					struct nlist_64 nlist64;
-					nlist64.n_un.n_strx = stringIndex;
-					nlist64.n_type = n_type;
-					nlist64.n_sect = n_sect;
-					nlist64.n_desc = n_desc;
-					nlist64.n_value = (uint64_t)(n_value);
-					
 //					if ([self processSymbolItem:&nlist64 stringTable:_strtable])					
 //					{
 //					}
-					
 				}
 				http://mhda.asiaa.sinica.edu.tw/mhda/apps/nemo-3.2.3-i386-intel9/src/kernel/loadobj/loadobjNEXT.c
 				// see svn checkout http://iphone-dev.googlecode.com/svn/trunk/ iphone-dev-read-only
@@ -2103,13 +2154,29 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog( @"-- Index to local symbols %i", dsymtab->ilocalsym );
 //			NSLog( @"-- Number of local symbols %i", dsymtab->nlocalsym );
 			
-			for( int i=dsymtab->ilocalsym; i<(dsymtab->ilocalsym+dsymtab->nlocalsym); i++)
+			for( NSUInteger i=dsymtab->ilocalsym; i<(dsymtab->ilocalsym+dsymtab->nlocalsym); i++)
 			{
-				struct nlist symbol = _symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
+				struct nlist_64 *symbol64Ptr;
+				if(_cputype & CPU_ARCH_ABI64){
+					struct nlist_64 symbol64 = _symtable_ptr64[i];
+					symbol64Ptr = &symbol64;
+				} else {
+					struct nlist symbol32 = _symtable_ptr32[i];
+					symbol64Ptr = calloc(1, sizeof(struct nlist_64));
+					symbol64Ptr->n_un.n_strx = symbol32.n_un.n_strx;
+					symbol64Ptr->n_type = symbol32.n_type; 
+					symbol64Ptr->n_sect = symbol32.n_sect;
+					symbol64Ptr->n_desc = symbol32.n_desc; 
+					symbol64Ptr->n_value = symbol32.n_value;	
+				}
+				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol64Ptr->n_un.n_strx]];
 				NSString *ext = [src pathExtension];
-				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
+				NSNumber *address = [NSNumber numberWithUnsignedLongLong:symbol64Ptr->n_value];
+
 //				NSLog(@"Local Symbol > %@ - %@", src, address);
+				if(!(_cputype & CPU_ARCH_ABI64)){
+					free(symbol64Ptr);
+				}
 			}
 // This is exactly what i want! http://www.google.com/codesearch/p?hl=en#G0qjcaxpHTc/sedarwin8/darwin/cctools/otool/ofile_print.c&q=ilocalsym%20nlocalsym			
 			
@@ -2117,14 +2184,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// uint32_t nextdefsym;/* number of externally defined symbols */
 //			NSLog(@"-- Index of externally defined symbols %i", dsymtab->iextdefsym);
 //			NSLog(@"-- Number of externally defined symbols %i", dsymtab->nextdefsym);
-			for( int i=dsymtab->iextdefsym; i<(dsymtab->iextdefsym+dsymtab->nextdefsym); i++)
-			{
-				struct nlist symbol = _symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
-				NSString *ext = [src pathExtension];
-				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
+//putback			for( int i=dsymtab->iextdefsym; i<(dsymtab->iextdefsym+dsymtab->nextdefsym); i++)
+//putback			{
+//putback				struct nlist symbol = _symtable_ptr[i];
+//putback				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
+//putback				NSString *ext = [src pathExtension];
+//putback				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
 //				NSLog(@"External Symbol > %@ - %x", src, symbol.n_value);
-			}
+//putback			}
 			
 			// uint32_t iundefsym;	/* index to undefined symbols */
 			//uint32_t nundefsym;	/* number of undefined symbols */
@@ -2132,14 +2199,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog(@"-- Number of externally undefined symbols %i", dsymtab->nundefsym);
 			
 			// TODO: use the indirect symbol table to match this index (i) to an address in the dissasembly 
-			for( int i=dsymtab->iundefsym; i<(dsymtab->iundefsym+dsymtab->nundefsym); i++)
-			{
-				struct nlist symbol = _symtable_ptr[i];
-				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
-				NSString *ext = [src pathExtension];
-				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
+//putback			for( int i=dsymtab->iundefsym; i<(dsymtab->iundefsym+dsymtab->nundefsym); i++)
+//putback			{
+//putback				struct nlist symbol = _symtable_ptr[i];
+//putback				NSString *src = [NSString stringWithUTF8String:&_strtable[symbol.n_un.n_strx]];
+//putback				NSString *ext = [src pathExtension];
+//putback				NSNumber *address = [NSNumber numberWithUnsignedLongLong: symbol.n_value];
 //				NSLog(@"External Undefined Symbol > %@ - %@", src, address);
-			}
+//putback			}
 			
 			/*
 			 * For the for the dynamic binding process to find which module a symbol
@@ -2228,7 +2295,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //					else if( indirectSymbol==INDIRECT_SYMBOL_ABS ) {
 //						NSLog(@"IndirectSymbol %i, INDEX:Absolute", address );
 //					} else {
-//						NSLog(@"IndirectSymbol %x, INDEX:%i", &(_indirectSymbolTable[i]), indirectSymbol);
+//						NSLog(@"IndirectSymbol %x, INDEX:%i", (uint32)(&(_indirectSymbolTable[i])), indirectSymbol);
 //					}
 				}
 			}

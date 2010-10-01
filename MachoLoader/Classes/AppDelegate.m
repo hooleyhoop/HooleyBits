@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MachoLoader.h"
+#import "DisassemblyChecker.h"
 
 @implementation AppDelegate
 
@@ -15,10 +16,12 @@
 
 //	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
 //	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-//	NSString *pathToApp = @"/Applications/CrossOver.app/Contents/MacOS/CrossOver";
-	NSString *pathToApp = @"/Applications/SIGMA Photo Pro.app/Contents/MacOS/SIGMA Photo Pro";
+	NSString *pathToApp = @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin"; 
+//	NSString *pathToOtoolOutput = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	
-	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
+//	DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:pathToOtoolOutput];
+	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp checker:nil];
+	
 	[ml readFile];
 
 	[ml release];

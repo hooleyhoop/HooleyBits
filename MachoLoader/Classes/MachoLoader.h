@@ -14,6 +14,7 @@
 
 @class MemoryMap, SymbolicInfo;
 @class IntKeyDictionary, IntHash;
+@class DisassemblyChecker;
 
 // How to install libiberty
 //> port variants binutils
@@ -54,8 +55,9 @@ struct hooleyFuction {
 	NSMutableDictionary			*_addresses_;    // Addresses and symbols (STRONG)
 	
 	// Symbol table
-	struct nlist				*_symtable_ptr;
-	struct nlist_64				*_UNUSED_symbols64;
+	struct nlist				*_symtable_ptr32;
+	struct nlist_64				*_symtable_ptr64;
+	
 	NSUInteger					_nsymbols;
 	NSUInteger					_strings_size;
 	
@@ -80,13 +82,15 @@ struct hooleyFuction {
 	UInt8						*_text_sect_addr;
 	struct relocation_info		*_text_relocs;
 	uint32_t					_text_nsorted_relocs;
-	NSUInteger					_textSectSize;
+	uint64_t					_textSectSize;
 	
 	// ok - the results of the disasembly
 	struct hooleyFuction		*_headFunction;
+	
+	DisassemblyChecker			*_dc;
 }
 
-- (id)initWithPath:(NSString *)aPath;
+- (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch;
 
 - (void)readFile;
 

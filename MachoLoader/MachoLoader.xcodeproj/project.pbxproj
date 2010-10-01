@@ -37,6 +37,8 @@
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
+		7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
+		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73E5BFC4124B6763009712C6 /* ExperimentalFrankenStructs.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFC3124B6763009712C6 /* ExperimentalFrankenStructs.m */; };
@@ -108,6 +110,8 @@
 		737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionaryTests.m; path = Tests/IntKeyDictionaryTests.m; sourceTree = "<group>"; };
 		737B3DFC12324D38008C67FC /* CFDictCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFDictCallbacks.h; path = Classes/CFDictCallbacks.h; sourceTree = "<group>"; };
 		737B3DFD12324D38008C67FC /* CFDictCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFDictCallbacks.m; path = Classes/CFDictCallbacks.m; sourceTree = "<group>"; };
+		7395BD76125630080046A8FE /* DisassemblyChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisassemblyChecker.h; path = Classes/DisassemblyChecker.h; sourceTree = "<group>"; };
+		7395BD77125630080046A8FE /* DisassemblyChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisassemblyChecker.m; path = Classes/DisassemblyChecker.m; sourceTree = "<group>"; };
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				73685DA21244D34F00DDEE60 /* InstrArgStruct.m */,
 				730DB3C112549EBC00203ED8 /* ArgStack.h */,
 				730DB3C212549EBC00203ED8 /* ArgStack.c */,
+				7395BD76125630080046A8FE /* DisassemblyChecker.h */,
+				7395BD77125630080046A8FE /* DisassemblyChecker.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -518,6 +525,7 @@
 				7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */,
 				730DB3C312549EBC00203ED8 /* ArgStack.c in Sources */,
 				730DB3CB12549ED800203ED8 /* ArgStackTests.m in Sources */,
+				7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +551,7 @@
 				73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */,
 				73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */,
 				730DB3C412549EBC00203ED8 /* ArgStack.c in Sources */,
+				7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,7 +577,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7310FD1812095D5D00AE9F6B /* Debug */ = {
+		7310FD1812095D5D00AE9F6B /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -590,7 +599,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = SimpleApp;
 			};
-			name = Debug;
+			name = Debug32;
 		};
 		7310FD1912095D5D00AE9F6B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -618,7 +627,7 @@
 			};
 			name = Release;
 		};
-		731FAA0512196EAA00D3EE3D /* Debug */ = {
+		731FAA0512196EAA00D3EE3D /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6712196EE500D3EE3D /* Target-TestBundle.xcconfig */;
 			buildSettings = {
@@ -634,7 +643,7 @@
 				);
 				PRODUCT_NAME = MachoLoaderTests;
 			};
-			name = Debug;
+			name = Debug32;
 		};
 		731FAA0612196EAA00D3EE3D /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -672,7 +681,75 @@
 			};
 			name = Release;
 		};
-		C01FCF4B08A954540054247B /* Debug */ = {
+		73EFF3291256344200A85855 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 731FAA5D12196EE500D3EE3D /* Project-Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug64;
+		};
+		73EFF32A1256344200A85855 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
+					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
+				);
+				PRODUCT_NAME = MachoLoader;
+				SDKROOT = "";
+			};
+			name = Debug64;
+		};
+		73EFF32B1256344200A85855 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "SimpleApp-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SimpleApp;
+			};
+			name = Debug64;
+		};
+		73EFF32C1256344200A85855 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 731FAA6712196EE500D3EE3D /* Target-TestBundle.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					/Developer/Library/Frameworks,
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_VERSION = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
+				);
+				PRODUCT_NAME = MachoLoaderTests;
+			};
+			name = Debug64;
+		};
+		C01FCF4B08A954540054247B /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
@@ -687,8 +764,9 @@
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
 				);
 				PRODUCT_NAME = MachoLoader;
+				SDKROOT = "";
 			};
-			name = Debug;
+			name = Debug32;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -719,16 +797,17 @@
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
 				);
 				PRODUCT_NAME = MachoLoader;
+				SDKROOT = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		C01FCF4F08A954540054247B /* Debug */ = {
+		C01FCF4F08A954540054247B /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA5D12196EE500D3EE3D /* Project-Debug.xcconfig */;
 			buildSettings = {
 			};
-			name = Debug;
+			name = Debug32;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -749,7 +828,8 @@
 		7310FD1A12095D5D00AE9F6B /* Build configuration list for PBXNativeTarget "SimpleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7310FD1812095D5D00AE9F6B /* Debug */,
+				7310FD1812095D5D00AE9F6B /* Debug32 */,
+				73EFF32B1256344200A85855 /* Debug64 */,
 				7310FD1912095D5D00AE9F6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -758,7 +838,8 @@
 		731FAA0712196EAA00D3EE3D /* Build configuration list for PBXNativeTarget "MachoLoaderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				731FAA0512196EAA00D3EE3D /* Debug */,
+				731FAA0512196EAA00D3EE3D /* Debug32 */,
+				73EFF32C1256344200A85855 /* Debug64 */,
 				731FAA0612196EAA00D3EE3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -767,7 +848,8 @@
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MachoLoader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4B08A954540054247B /* Debug32 */,
+				73EFF32A1256344200A85855 /* Debug64 */,
 				C01FCF4C08A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -776,7 +858,8 @@
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF4F08A954540054247B /* Debug32 */,
+				73EFF3291256344200A85855 /* Debug64 */,
 				C01FCF5008A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
