@@ -17,7 +17,8 @@
 //	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
 //	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
 //	NSString *pathToApp = @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin";
-	NSString *pathToApp = @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini";
+	NSString *pathToApp = @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64";
+//	NSString *pathToApp = @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini";
 	
 //	NSString *pathToOtoolOutput = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	

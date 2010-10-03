@@ -2246,8 +2246,7 @@ NSUInteger iterationCounter
 
 	    dp = &distable[opcode1][opcode2];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL){
-			hooleyDebug();
-//NEVER			dp = dp->arch64;
+			dp = dp->arch64;
 		}
 	    if(dp->adr_mode == PREFIX){
 			if(prefix_dp != NULL)
@@ -2266,8 +2265,7 @@ NSUInteger iterationCounter
 			segReg = (struct HooReg *)segRegPtrForName(segRegName);
 			prefix_byte = byte;
 	    } else if(dp->adr_mode == REX){
-			hooleyDebug();
-//NEVER			rex = byte;
+			rex = byte;
 			/*
 			 * REX is a prefix, but we don't set prefix_byte here because
 			 * we use that to detect things related to the other prefixes
@@ -2292,8 +2290,7 @@ NSUInteger iterationCounter
 	    opcode5 = byte & 0xf;
 	    dp = &op0F[opcode4][opcode5];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL) {
-			hooleyDebug();
-//NEVER			dp = dp->arch64;
+			dp = dp->arch64;
 		}
 	    if(dp->indirect == op0F38 || dp->indirect == op0F3A)
 		{
@@ -2474,11 +2471,9 @@ NSUInteger iterationCounter
 	 * so we don't have to change the logic for them later.
 	 */
 	if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
-		hooleyDebug();
-//NEVER	    if((dp->flags & IS_POINTER_SIZED) != 0){
-//NEVER			hooleyDebug();
-//NEVER			rex |= 0x8;	/* Set REX.W if it isn't already set */
-//NEVER	    }
+	    if((dp->flags & IS_POINTER_SIZED) != 0){
+			rex |= 0x8;	/* Set REX.W if it isn't already set */
+	    }
 	}
 
 	/* setup the mnemonic with a possible suffix */
@@ -4647,6 +4642,7 @@ static NSUInteger replacement_get_operand(
 					 * section 2.2.1.6 ("RIP-Relative Addressing") of Volume
 					 * 2A of the Intel IA-32 manual.
 					 */
+					-- here
 					sprintf(result, "(%%rip)");
 				} else {
 					struct DisplacementValue *displaceStructPtr;

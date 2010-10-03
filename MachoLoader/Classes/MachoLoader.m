@@ -577,7 +577,6 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 
 - (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch {
 
-
 	self = [super init];
 	if(self) {
 		_filePath = [aPath retain];
@@ -778,7 +777,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 //		printf("%0x ", memPtr);
 //		printf("%i\t\t", iterationCounter);
 		
-		if( iterationCounter==602 )
+		if( iterationCounter==20 )
 			NSLog(@"stop here");
 		iterationCounter++;
 		
@@ -807,7 +806,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 							 _sizeofcmds,
 							 1, iterationCounter 
 							 );
-		NSLog(@"ambitious Returned %qu", j);
+
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;
@@ -1409,7 +1408,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 			char *segname;
 			uint64_t vmaddr, vmsize, nsects;
-			
+			struct section_64 *sectionPtr;
+
 			// Defines a segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
 			if( cmd->cmd==LC_SEGMENT ) {
 				const struct segment_command *seg = (struct segment_command *)cmd;
@@ -1417,6 +1417,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 				vmaddr = seg->vmaddr;
 				vmsize = seg->vmsize;
 				nsects = seg->nsects;
+				sectionPtr = (struct section_64 *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
 				
 			} else if( cmd->cmd==LC_SEGMENT_64 ) {
 				const struct segment_command_64 *seg = (struct segment_command_64 *)cmd;
@@ -1424,10 +1425,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 				vmaddr = seg->vmaddr;
 				vmsize = seg->vmsize;
 				nsects = seg->nsects;
+				sectionPtr = (struct section_64 *)((struct segment_command_64 *)cmd+1);	// hey look - this is a good way to advance past segment				
 			}
 	
 			NSString *segmentName = [NSString stringWithCString:segname encoding:NSUTF8StringEncoding];
-//			NSLog(@"segment name %@", segmentName);
+			NSLog(@"segment name %@", segmentName);
 
 //			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
 //			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
@@ -1441,24 +1443,20 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// __LINKEDIT	-- The LINKEDIT segment holds the symbol table.
 
 			// each segment is divided into sections.  eg __PAGEZERO segment takes up no space on disk but has space in memory
-			
-			// If there are sections - The sections follow the segment
-			struct section_64 *sectionPtr = (struct section_64 *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
-			
 			// This ptr might be a structure we malloc, Not guaranteed to actually pt to memory in the file (sectionPtr is for that)
 			struct section_64 *newSec_ptr64 = sectionPtr;
-			// verified nsects for 32 and 64 bit
-			
+
 			// iterate sections
 			for( NSUInteger i=0; i<nsects; i++ )
 			{
 				if(_cputype & CPU_ARCH_ABI64) {
+					// dont hav to do anthing special here
 				} else {
 					// newSec_ptr64 is really a 32Bit section, lets make a real 64bit and copy in the fields
 					struct section *_32itSection = (struct section *)newSec_ptr64;
 					newSec_ptr64 = calloc(1, sizeof(struct section_64));
-					strcpy(newSec_ptr64->sectname, _32itSection->sectname);
-					strcpy(newSec_ptr64->segname, _32itSection->segname);
+					strcpy( newSec_ptr64->sectname, _32itSection->sectname);
+					strcpy( newSec_ptr64->segname, _32itSection->segname);
 					newSec_ptr64->addr=_32itSection->addr;
 					newSec_ptr64->size=_32itSection->size;
 					newSec_ptr64->offset=_32itSection->offset;
@@ -1469,18 +1467,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 					newSec_ptr64->reserved1=_32itSection->reserved1;
 					newSec_ptr64->reserved2=_32itSection->reserved1;
 				}
-				// verified for 32 and 64 bit
-				uint64 memoryAddressOfSection = newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 
+				char *containingSegmentName = newSec_ptr64->segname;
+				char *thisSectionName = newSec_ptr64->sectname;
+				NSLog(@"segment2 name %s %s", containingSegmentName, thisSectionName );
+
+				uint64 memoryAddressOfSection = newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection)
 				{
-//					NSLog(@"i=%i, numberOfSections=%i", i, nsects);
-					char *containingSegmentName = newSec_ptr64->segname;
-					char *thisSectionName = newSec_ptr64->sectname;
-
-//					NSLog(@"segment2 name %s", containingSegmentName );
-//					NSLog(@"section2 name %s", thisSectionName );
-
 					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr64->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
 					
 					struct relocation_info *sect_relocs = (struct relocation_info *)((char *)_codeAddr + newSec_ptr64->reloff);
@@ -1513,15 +1507,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //					void *newSectAddr = NULL;
 
 					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
-
 					NSString *secName = [NSString stringWithCString:thisSectionName encoding:NSUTF8StringEncoding];
-
 					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
 //					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
-					if(newSectSize==0)
-						continue;
-					
+					if(newSectSize==0){
+						goto advance;
+					}
+				
 					[self addSection:secName 
 								 seg:segmentName 
 							   start:sect_addr 
@@ -1540,8 +1533,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 				
 						if ( strcmp(thisSectionName, "__text")==0 ) {
 							
-							if(_cputype!=CPU_TYPE_I386) 
-								[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
+//why is this a prblem here?							if(_cputype!=CPU_TYPE_I386) 
+//								[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
 							
 							_text_sect_pointer = (UInt8 *)sect_pointer;
 							_text_sect_addr = (UInt8 *)sect_addr;
@@ -1549,12 +1542,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							_text_nsorted_relocs = sect_nrelocs;
 							_textSectSize = newSectSize;
 							
-							// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+						// otool -s __TEXT __cstring -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 						} else if ( strcmp(thisSectionName, "__cstring")==0 ) {
 							[self save_cstring_section:sect_pointer :newSectSize :sect_addr];
 							
-							// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
-							//	memAddr bc870c
+						// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 						} else if ( strcmp(thisSectionName, "__const")==0 ) {
 
 							UInt8 *locPtr = (UInt8 *)sect_pointer;
@@ -1574,7 +1566,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// 00006db0	00 00 10 41 00 00 a0 40 00 00 00 00 00 00 00 00 
 							// 00006dc0	00 00 00 00 00 00 e0 41 00 00 00 00 00 00 00 00
 
-							// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
+						// otool -s __TEXT __symbol_stub -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader	
 						} else if ( strcmp(thisSectionName, "__symbol_stub")==0 ) {
 
 							// This Follows the form (ie our val1 needs disassembling)
@@ -1597,7 +1589,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 								memPtr = memPtr + sizeof val1 + sizeof val2;
 							}
 							
-							// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
+						// otool -s __TEXT __stub_helper -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 						} else if ( strcmp(thisSectionName, "__stub_helper")==0 ) {
 							
 							//						[self addUnDecodedBlock:sect_pointer size:newSectSize withName:@"__stub_helper"];
@@ -1695,7 +1687,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							//00006fa6	jmpl	0x100006e48
 							//00006fab	nop
 							
-							// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						// otool -s __TEXT __literal4 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 						} else if ( strcmp(thisSectionName, "__literal4")==0 ) {
 							// 00ba9ce8  0x47800000 (6.5536000000000000e+04)
 							// 00ba9cec  0x42c80000 (1.0000000000000000e+02)
@@ -1703,18 +1695,18 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// 00ba9cf4  0x410db22d (8.8559999465942383e+00)
 							// 00ba9cf8  0x4461d2b0 (9.0329199218750000e+02)						
 							
-							// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
+						// otool -s __TEXT __literal8 -v -V /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser																																								
 						} else if ( strcmp(thisSectionName, "__literal8")==0 ) {
 							//						NSLog(@"eh");
-							// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						// otool -s __TEXT __StaticInit /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 						} else if ( strcmp(thisSectionName, "__StaticInit")==0 ) {
 							//						NSLog(@"eh");
 							
-							// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						// otool -s __TEXT __eh_frame /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 						} else if ( strcmp(thisSectionName, "__eh_frame")==0 ) {
 							// dubug info? Todo with exceptions
 							
-							// otool -s __TEXT __const_coal /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
+						// otool -s __TEXT __const_coal /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/SimpleFileParser/build/Debug/SimpleFileParser.app/Contents/MacOS/SimpleFileParser
 						} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
 							
 						} else if ( strcmp(thisSectionName, "__unwind_info")==0 ) {
@@ -1725,12 +1717,12 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							//00006fe0	34 00 00 00 03 00 00 00 0c 00 01 00 10 00 01 00 
 							//00006ff0	00 00 00 00 00 00 00 00 
 							
-							// otool -s __TEXT __textcoal_nt -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver						
+						// otool -s __TEXT __textcoal_nt -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver						
 						} else if ( strcmp(thisSectionName, "__textcoal_nt")==0 ) {
 							//TODO: Otool disassembles this section
 							NSLog(@"DREADED THUNK SECTION");
 							
-							// otool -s __TEXT __coalesced_text -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver												
+						// otool -s __TEXT __coalesced_text -v -V /Applications/CrossOver.app/Contents/MacOS/CrossOver												
 						} else if ( strcmp(thisSectionName, "__coalesced_text")==0 ) {
 							//TODO: Otool disassembles this section
 							NSLog(@"DREADED THUNK SECTION");
@@ -1738,6 +1730,10 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// otool -s __TEXT __gcc_except_tab__TEXT -v -V /Applications/iTunes.app/Contents/MacOS/iTunes_thin												
 						} else if ( strcmp(thisSectionName, "__gcc_except_tab__TEXT")==0 ) {
 							// something todo with exceptions
+							
+							// otool -s __TEXT __symbol_stub1 -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"												
+						} else if ( strcmp(thisSectionName, "__symbol_stub1")==0 ) {
+							
 						} else {
 							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
 						}
@@ -1791,6 +1787,30 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							
 							// otool -s __DATA __const_coal -v -V "/Applications/SIGMA Photo Pro.app/Contents/MacOS/SIGMA Photo Pro"
 						} else if ( strcmp(thisSectionName, "__const_coal")==0 ) {
+							
+							// otool -s __DATA __objc_data -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_data")==0 ) {
+							
+							// otool -s __DATA __objc_msgrefs -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_msgrefs")==0 ) {
+
+							// otool -s __DATA __objc_selrefs -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_selrefs")==0 ) {
+
+							// otool -s __DATA __objc_classrefs__DATA -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_classrefs__DATA")==0 ) {
+						
+							// otool -s __DATA __objc_superrefs__DATA -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_superrefs__DATA")==0 ) {
+							
+							// otool -s __DATA __objc_const -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_const")==0 ) {
+							
+							// otool -s __DATA __objc_classlist__DATA -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_classlist__DATA")==0 ) {
+
+							// otool -s __DATA __objc_imageinfo__DATA -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
+						} else if ( strcmp(thisSectionName, "__objc_imageinfo__DATA")==0 ) {							
 							
 						} else {
 							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
@@ -2027,6 +2047,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							
 				}
 				
+			advance:	
 				// advance
 				if(_cputype & CPU_ARCH_ABI64) {
 					sectionPtr = sectionPtr+1;
@@ -2040,7 +2061,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 					newSec_ptr64 = sectionPtr; 
 				}
 
-			}
+			} //end of seg
 			
 		} else if( cmd->cmd==LC_SYMTAB ) {
 			
@@ -2466,11 +2487,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	_codeSize = [_allFile length];
 
 //	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
-	
+
 	/* Is the executable a FAT? */
 	// FAT is always Big Endian - Extract relevant architecture and convert to native
 	if( OSSwapBigToHostInt32(((struct fat_header *)_codeAddr)->magic)==FAT_MAGIC ) {
-		
+
 		struct fat_arch *fatArchArray;
 		struct fat_header *fatHeader = (struct fat_header *)_codeAddr;
 		assert( _codeSize >= sizeof(*fatHeader) );
@@ -2490,39 +2511,47 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			fatArchArray[archIndex].offset     = OSSwapBigToHostInt32(fatArchArray[archIndex].offset);
 			fatArchArray[archIndex].size       = OSSwapBigToHostInt32(fatArchArray[archIndex].size);
 			fatArchArray[archIndex].align      = OSSwapBigToHostInt32(fatArchArray[archIndex].align);
+			
+			const NXArchInfo *foundArch = NXGetArchInfoFromCpuType( fatArchArray[archIndex].cputype,  fatArchArray[archIndex].cpusubtype);
+			printf("Found Arch %s\n", foundArch->description );
 		}
 		
 		// Get the currently running architecture.
 		const NXArchInfo *ourArch = NXGetLocalArchInfo();
 		assert(ourArch != NULL);
-		
+		printf("Our Arch %s\n", ourArch->description );
+
 		// Find the best match within the bundle's list of architectures.
 		struct fat_arch *bestFatArch = NXFindBestFatArch( ourArch->cputype, ourArch->cpusubtype, fatArchArray, fatHeader->nfat_arch );
 		
 		// Create a new buffer with a copy of the best match.
 		if (bestFatArch == NULL) {
 			fprintf(stderr, "There is no appropriate architecture within the fat file.\n");
-		} else {
-			// We don't handle special alignments.  If the code we're going to use needs 
-			// to be more aligned that page aligned, we're in trouble.
-			assert( (1 << bestFatArch->align) <= getpagesize() );
-			
-			// The code we're going to use must actually be within the code buffer, 
-			// otherwise we're really in the weeds.
-			assert(bestFatArch->size <= _codeSize);
-			assert(bestFatArch->offset <= _codeSize);
-			assert( (bestFatArch->size + bestFatArch->offset) <= _codeSize );
-			
-			uint32_t newCodeSize = bestFatArch->size;
-			void *newCodeAddr = NULL;
-			
-			int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newCodeAddr, newCodeSize, true);
-			if (err == 0) {
-				memcpy(newCodeAddr, ((char *) (_codeAddr)) + bestFatArch->offset , newCodeSize);
-			}
-			_codeAddr = newCodeAddr;
-			_codeSize = newCodeSize;
+			if( fatHeader->nfat_arch ==1 )
+				bestFatArch = &fatArchArray[0];
+			else
+				[NSException raise:@"NO ARCH" format:@"CANT FIND AN ARCH TO DISASSEMBLE"];
 		}
+		// We don't handle special alignments.  If the code we're going to use needs 
+		// to be more aligned that page aligned, we're in trouble.
+		assert( (1 << bestFatArch->align) <= getpagesize() );
+		
+		// The code we're going to use must actually be within the code buffer, 
+		// otherwise we're really in the weeds.
+		assert(bestFatArch->size <= _codeSize);
+		assert(bestFatArch->offset <= _codeSize);
+		assert( (bestFatArch->size + bestFatArch->offset) <= _codeSize );
+		
+		uint32_t newCodeSize = bestFatArch->size;
+		void *newCodeAddr = NULL;
+		
+		int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newCodeAddr, newCodeSize, true);
+		if (err == 0) {
+			memcpy(newCodeAddr, ((char *) (_codeAddr)) + bestFatArch->offset , newCodeSize);
+		}
+		_codeAddr = newCodeAddr;
+		_codeSize = newCodeSize;
+
 	}
 	
 	// just the bits common between 32bit and 64bit! Dont even think of doing sizeof
