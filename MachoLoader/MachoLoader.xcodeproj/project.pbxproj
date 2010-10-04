@@ -24,6 +24,7 @@
 		731FAA851219703B00D3EE3D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA841219703B00D3EE3D /* main.m */; };
 		731FAA871219704800D3EE3D /* SimpleApp_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA861219704800D3EE3D /* SimpleApp_main.m */; };
 		731FAACD1219724100D3EE3D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 731FAACC1219724100D3EE3D /* SenTestingKit.framework */; };
+		732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732C5893125A7E2E004EDBBE /* BonkersRegTests.m */; };
 		7332007412197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
@@ -93,6 +94,7 @@
 		731FAA861219704800D3EE3D /* SimpleApp_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleApp_main.m; path = Classes/SimpleApp_main.m; sourceTree = "<group>"; };
 		731FAA9E1219717000D3EE3D /* MemoryMapTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMapTests.m; path = Tests/MemoryMapTests.m; sourceTree = "<group>"; };
 		731FAACC1219724100D3EE3D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		732C5893125A7E2E004EDBBE /* BonkersRegTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BonkersRegTests.m; path = Tests/BonkersRegTests.m; sourceTree = "<group>"; };
 		7332007212197B1E00D80990 /* MemoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryMap.h; path = Classes/MemoryMap.h; sourceTree = "<group>"; };
 		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
 		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				7363BDBF124E318500F080E7 /* GenericTimer.h */,
 				7363BDC0124E318500F080E7 /* GenericTimer.m */,
 				730DB3CA12549ED800203ED8 /* ArgStackTests.m */,
+				732C5893125A7E2E004EDBBE /* BonkersRegTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				730DB3CB12549ED800203ED8 /* ArgStackTests.m in Sources */,
 				7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */,
 				73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */,
+				732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

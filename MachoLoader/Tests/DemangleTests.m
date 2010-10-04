@@ -25,7 +25,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	size_t demangledLength;
 	memset ( demangledOutput, 0, 1024 );
 
-	char *symbolString = "PMFlattenPageFormat";
+	char *symbolString = (char *)"PMFlattenPageFormat";
 	char *demangledName = NULL;
 	demangledName = __cxa_demangle( (const char *)symbolString, 
 								   demangledOutput,

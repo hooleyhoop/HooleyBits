@@ -91,10 +91,10 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 extern struct symbol;
 
 enum argType {
-	REGISTER_ARG = 0,
-	IMMEDIATE_ARG = 1,
-	INDIRECT_ARG = 2,
-	BONKERSREG_ARG = 3,
+	NULL_ARG,
+	REGISTER_ARG,
+	IMMEDIATE_ARG,
+	INDIRECT_ARG,
 	DISPLACEMENT_ARG
 };
 
@@ -540,42 +540,56 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 //};
 
 
-static const struct HooReg acuml = {0,"%al","%accumulator"};
-static const struct HooReg acumx = {0,"%ax","%accumulator"};
-static const struct HooReg acumex = {0,"%eax","%accumulator"};
-static const struct HooReg dataReg = {0,"%%dx","%data"};
-static const struct HooReg countReg = {0,"%cl","%count"};
-static const struct HooReg source_indexReg = {0,"%esi","%source_index"};
-static const struct HooReg destination_indexReg = {0,"%edi","%destination_index"};
+static const struct HooReg acuml =						{REGISTER_ARG,"%al","%accumulator"};
+static const struct HooReg acumx =						{REGISTER_ARG,"%ax","%accumulator"};
+static const struct HooReg acumex =					{REGISTER_ARG,"%eax","%accumulator"};
+static const struct HooReg dataReg =					{REGISTER_ARG,"%%dx","%data"};
+static const struct HooReg countReg =					{REGISTER_ARG,"%cl","%count"};
+static const struct HooReg source_indexReg =			{REGISTER_ARG,"%esi","%source_index"};
+static const struct HooReg destination_indexReg =	{REGISTER_ARG,"%edi","%destination_index"};
+static const struct HooReg base1 =						{REGISTER_ARG,"%bx","%base"};
+static const struct HooReg sourceIndex1 =				{REGISTER_ARG,"%si","%source_index"};
+static const struct HooReg code_seg_reg =				{REGISTER_ARG,"%cs","code_seg_reg"};
+static const struct HooReg data_seg_reg =				{REGISTER_ARG,"%es","string_operation_dest_seg_reg"};
+static const struct HooReg data_seg_reg2 =			{REGISTER_ARG,"%es","data_seg_reg"};
+static const struct HooReg stack_seg_reg =			{REGISTER_ARG,"%ss","stack_seg_reg"};
 
 static const struct HooReg REG16_Struct[8][2] = {
-	{ {0,"%al","%accumulator"},		{0,"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
-	{ {0,"%cl","%count"},			{0,"%cx","%count"} },
-	{ {0,"%dl","%data"},			{0,"%dx","%data"} },
-	{ {0,"%bl","%base"},			{0,"%bx","%base"} },
-	{ {0,"%ah","%accumulator"},		{0,"%sp","%stackPointer_top"} },
-	{ {0,"%ch","%count"},			{0,"%bp","%stackPointer_base"} },
-	{ {0,"%dh","%data"},			{0,"%si","%source_index"} },
-	{ {0,"%bh","%base"},			{0,"%di","%destination_index"} }
+	{ {REGISTER_ARG,"%al","%accumulator"},
+		{REGISTER_ARG,"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
+	{ {REGISTER_ARG,"%cl","%count"},
+		{REGISTER_ARG,"%cx","%count"} },
+	{ {REGISTER_ARG,"%dl","%data"},
+		{REGISTER_ARG,"%dx","%data"} },
+	{ {REGISTER_ARG,"%bl","%base"},
+		{REGISTER_ARG,"%bx","%base"} },
+	{ {REGISTER_ARG,"%ah","%accumulator"},
+		{REGISTER_ARG,"%sp","%stackPointer_top"} },
+	{ {REGISTER_ARG,"%ch","%count"},
+		{REGISTER_ARG,"%bp","%stackPointer_base"} },
+	{ {REGISTER_ARG,"%dh","%data"},
+		{REGISTER_ARG,"%si","%source_index"} },
+	{ {REGISTER_ARG,"%bh","%base"},
+		{REGISTER_ARG,"%di","%destination_index"} }
 };
 
 static const struct HooReg REG32_Struct[16][3] = {
-	{ {0,"%al","%accumulator"},	{0,"%eax","%accumulator"},		{0,"%rax","%accumulator"} },
-	{ {0,"%cl","%count"},		{0,"%ecx","%count"},			{0,"%rcx","%count"} },
-	{ {0,"%dl","%data"},		{0,"%edx","%data"},				{0,"%rdx","%data"} },
-	{ {0,"%bl","%base"},		{0,"%ebx","%base"},				{0,"%rbx","%base"} },
-	{ {0,"%ah","%accumulator"},	{0,"%esp","%stackPointer_top"},	{0,"%rsp","%stackPointer_top"} },
-	{ {0,"%ch","%count"},		{0,"%ebp","%stackPointer_base"},{0,"%rbp","%stackPointer_base"} },
-	{ {0,"%dh","%data"},		{0,"%esi","%source_index"},		{0,"%rsi","%source_index"} },
-	{ {0,"%bh","%base"},		{0,"%edi","%destination_index"},{0,"%rdi","%destination_index"} },
-	{ {0,"%r8b","%reg8"},		{0,"%r8d","%reg8"},				{0,"%r8","%reg8"} },
-	{ {0,"%r9b","%reg9"},		{0,"%r9d","%reg9"},				{0,"%r9","%reg9"} },
-	{ {0,"%r10b","%reg10"},		{0,"%r10d","%reg10"},			{0,"%r10","%reg10"} },
-	{ {0,"%r11b","%reg11"},		{0,"%r11d","%reg11"},			{0,"%r11","%reg11"} },
-	{ {0,"%r12b","%reg12"},		{0,"%r12d","%reg12"},			{0,"%r12","%reg12"} },
-	{ {0,"%r13b","%reg13"},		{0,"%r13d","%reg13"},			{0,"%r13","%reg13"} },
-	{ {0,"%r14b","%reg14"},		{0,"%r14d","%reg14"},			{0,"%r14","%reg14"} },
-	{ {0,"%r15b","%reg15"},		{0,"%r15d","%reg15"},			{0,"%r15","%reg15"} }
+	{ {REGISTER_ARG,"%al","%accumulator"},	{REGISTER_ARG,"%eax","%accumulator"},		{REGISTER_ARG,"%rax","%accumulator"} },
+	{ {REGISTER_ARG,"%cl","%count"},		{REGISTER_ARG,"%ecx","%count"},			{REGISTER_ARG,"%rcx","%count"} },
+	{ {REGISTER_ARG,"%dl","%data"},		{REGISTER_ARG,"%edx","%data"},				{REGISTER_ARG,"%rdx","%data"} },
+	{ {REGISTER_ARG,"%bl","%base"},		{REGISTER_ARG,"%ebx","%base"},				{REGISTER_ARG,"%rbx","%base"} },
+	{ {REGISTER_ARG,"%ah","%accumulator"},	{REGISTER_ARG,"%esp","%stackPointer_top"},	{REGISTER_ARG,"%rsp","%stackPointer_top"} },
+	{ {REGISTER_ARG,"%ch","%count"},		{REGISTER_ARG,"%ebp","%stackPointer_base"},{REGISTER_ARG,"%rbp","%stackPointer_base"} },
+	{ {REGISTER_ARG,"%dh","%data"},		{REGISTER_ARG,"%esi","%source_index"},		{REGISTER_ARG,"%rsi","%source_index"} },
+	{ {REGISTER_ARG,"%bh","%base"},		{REGISTER_ARG,"%edi","%destination_index"},{REGISTER_ARG,"%rdi","%destination_index"} },
+	{ {REGISTER_ARG,"%r8b","%reg8"},		{REGISTER_ARG,"%r8d","%reg8"},				{REGISTER_ARG,"%r8","%reg8"} },
+	{ {REGISTER_ARG,"%r9b","%reg9"},		{REGISTER_ARG,"%r9d","%reg9"},				{REGISTER_ARG,"%r9","%reg9"} },
+	{ {REGISTER_ARG,"%r10b","%reg10"},		{REGISTER_ARG,"%r10d","%reg10"},			{REGISTER_ARG,"%r10","%reg10"} },
+	{ {REGISTER_ARG,"%r11b","%reg11"},		{REGISTER_ARG,"%r11d","%reg11"},			{REGISTER_ARG,"%r11","%reg11"} },
+	{ {REGISTER_ARG,"%r12b","%reg12"},		{REGISTER_ARG,"%r12d","%reg12"},			{REGISTER_ARG,"%r12","%reg12"} },
+	{ {REGISTER_ARG,"%r13b","%reg13"},		{REGISTER_ARG,"%r13d","%reg13"},			{REGISTER_ARG,"%r13","%reg13"} },
+	{ {REGISTER_ARG,"%r14b","%reg14"},		{REGISTER_ARG,"%r14d","%reg14"},			{REGISTER_ARG,"%r14","%reg14"} },
+	{ {REGISTER_ARG,"%r15b","%reg15"},		{REGISTER_ARG,"%r15d","%reg15"},			{REGISTER_ARG,"%r15","%reg15"} }
 };
 
 
@@ -630,40 +644,45 @@ static const char * const regname16[4][8] = {
 /*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
 };
 
-const struct HooReg base1 = {0,"%bx","%base"};
-const struct HooReg sourceIndex1 = {0,"%si","%source_index"};
-
-
-static const struct HooReg regname16_Struct[4][8] = {
-{
-		{BONKERSREG_ARG,"%bx,%si","%base,%source_index"},
-		{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"}, 
-		{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"}, 
-		{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
-		{0,"%si","%source_index"}, {0,"%di","%destination_index"}, {0,"",""},
-		{0,"%bx","%base"}	},
-	{	{BONKERSREG_ARG,"%bx,%si","%base, %source_index"},
-		{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"},
-		{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"},
-		{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
-		{0,"%si","%source_index"}, {0,"%di","%destination_index"},
-		{0,"%bp","%stackPointer_base"},	{0,"%bx","%base"}
+// Return bonkers double reg
+static const struct HooReg regname16_Struct[4][8][2] = {
+	{
+		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%si","%source_index"}},
+		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%di","%destination_index"}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}}, 
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
+		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"",""},							{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}	
 	},
-{	{BONKERSREG_ARG,"%bx,%si","%base, %source_index"},
-	{BONKERSREG_ARG,"%bx,%di","%base, %destination_index"},
-	{BONKERSREG_ARG,"%bp,%si","%stackPointer_base, %source_index"},
-	{BONKERSREG_ARG,"%bp,%di","%stackPointer_base, %destination_index"},
-	{0,"%si","%source_index"}, {0,"%di","%destination_index"},
-	{0,"%bp","%stackPointer_base"},
-	{0,"%bx","%base"}	},
-{	{0,"%ax","%accumulator"},
-	{0,"%cx","%count"},
-	{0,"%dx","%data"},
-	{0,"%bx","%base"},
-	{0,"%sp","%stackPointer_top"},
-	{0,"%bp","%stackPointer_base"},
-	{0,"%si","%source_index"},
-	{0,"%di","%destination_index"}	}
+	{	{{REGISTER_ARG,"%bx,","%base,"},				{REGISTER_ARG,"%si"," %source_index"}},
+		{{REGISTER_ARG,"%bx,","%base,"},				{REGISTER_ARG,"%di"," %destination_index"}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
+		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}
+	},
+		{{{REGISTER_ARG,"%bx","%base"},				{REGISTER_ARG,"%si","%source_index"}},
+		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%di","%destination_index"}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
+		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}
+	},
+	{	{{REGISTER_ARG,"%ax","%accumulator"},			{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%cx","%count"},				{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%dx","%data"},					{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%sp","%stackPointer_top"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
+		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}}
+	}
 };
  
 /*
@@ -679,10 +698,10 @@ static const char * const regname32[4][8] = {
 /*11 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"}
 };
 static const struct HooReg regname32_Struct[4][8] = {
-{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"",""},						{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
-{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
-{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	},
-{ {0,"%eax","%accumulator"}, {0,"%ecx","%count"}, {0,"%edx","%data"}, {0,"%ebx","%base"}, {0,"%esp","%stackPointer_top"}, {0,"%ebp","%stackPointer_base"},	{0,"%esi","%source_index"}, {0,"%edi","%destination_index"}	}
+{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"",""},						{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
+{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
+{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
+{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	}
 };
 
 /*
@@ -698,10 +717,10 @@ static const char * const regname64[4][16] = {
 /*11 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"}
 };
 static const struct HooReg regname64_Struct[4][16] = {
-{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
-{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
-{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},  {0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	},
-{ {0,"%rax","%accumulator"}, {0,"%rcx","%count"}, {0,"%rdx","%data"}, {0,"%rbx","%base"}, {0,"%rsp","%stackPointer_top"}, {0,"%rbp","%stackPointer_base"}, {0,"%rsi","%source_index"}, {0,"%rdi","%destination_index"}, {0,"%r8","%reg8"},  {0,"%r9","%reg9"},	{0,"%r10","%reg10"}, {0,"%r11","%reg11"}, {0,"%r12","%reg12"}, {0,"%r13","%reg13"}, {0,"%r14","%reg14"}, {0,"%r15","%reg15"}	}
+{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
+{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
+{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
+{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},	{REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	}
 };
 
 /*
@@ -721,45 +740,45 @@ static const char * const indexname[8] = {
 };
 
 static const struct HooReg indexname_Struct[8] = {
-    {0,"%eax","%accumulator"},
-    {0,"%ecx","%count"},
-    {0,"%edx","%data"},
-    {0,"%ebx","%base"},
-    {0,"",""},
-    {0,"%ebp","%stackPointer_base"},
-    {0,"%esi","%source_index"},
-    {0,"%edi","%destination_index"}
+    {REGISTER_ARG,"%eax","%accumulator"},
+    {REGISTER_ARG,"%ecx","%count"},
+    {REGISTER_ARG,"%edx","%data"},
+    {REGISTER_ARG,"%ebx","%base"},
+    {REGISTER_ARG,"",""},
+    {REGISTER_ARG,"%ebp","%stackPointer_base"},
+    {REGISTER_ARG,"%esi","%source_index"},
+    {REGISTER_ARG,"%edi","%destination_index"}
 };
 
 static const struct HooReg indexname64_Struct[16] = {
-    {0,"%rax","%accumulator"},
-	{0,"%rcx","%count"},
-    {0,"%rdx","%data"},
-    {0,"%rbx","%base"},
-	{0,"",""},
-    {0,"%rbp","%stackPointer_base"},
-    {0,"%rsi","%source_index"},
-    {0,"%rdi","%destination_index"},
-	{0,"%r8","%reg8"},
-	{0,"%r9","%reg9"},
-	{0,"%r10","%reg10"},
-	{0,"%r11","%reg11"},
-	{0,"%r12","%reg12"},
-	{0,"%r13","%reg13"},
-	{0,"%r14","%reg14"},
-	{0,"%r15","%reg15"}
+	{REGISTER_ARG,"%rax","%accumulator"},
+	{REGISTER_ARG,"%rcx","%count"},
+	{REGISTER_ARG,"%rdx","%data"},
+	{REGISTER_ARG,"%rbx","%base"},
+	{REGISTER_ARG,"",""},
+	{REGISTER_ARG,"%rbp","%stackPointer_base"},
+	{REGISTER_ARG,"%rsi","%source_index"},
+	{REGISTER_ARG,"%rdi","%destination_index"},
+	{REGISTER_ARG,"%r8","%reg8"},
+	{REGISTER_ARG,"%r9","%reg9"},
+	{REGISTER_ARG,"%r10","%reg10"},
+	{REGISTER_ARG,"%r11","%reg11"},
+	{REGISTER_ARG,"%r12","%reg12"},
+	{REGISTER_ARG,"%r13","%reg13"},
+	{REGISTER_ARG,"%r14","%reg14"},
+	{REGISTER_ARG,"%r15","%reg15"}
 };
 
 static const struct HooReg xmmReg_Struct[8] = {
 	// can't think of any useful pretty strings
-{0,"%xmm0","%xmm0"},
-{0,"%xmm1","%xmm1"},
-{0,"%xmm2","%xmm2"},
-{0,"%xmm3","%xmm3"},
-{0,"%xmm4","%xmm4"},
-{0,"%xmm5","%xmm5"},
-{0,"%xmm6","%xmm6"},
-{0,"%xmm7","%xmm7"}
+{REGISTER_ARG,"%xmm0","%xmm0"},
+{REGISTER_ARG,"%xmm1","%xmm1"},
+{REGISTER_ARG,"%xmm2","%xmm2"},
+{REGISTER_ARG,"%xmm3","%xmm3"},
+{REGISTER_ARG,"%xmm4","%xmm4"},
+{REGISTER_ARG,"%xmm5","%xmm5"},
+{REGISTER_ARG,"%xmm6","%xmm6"},
+{REGISTER_ARG,"%xmm7","%xmm7"}
 };
 
 static const char * const indexname64[16] = {
@@ -785,14 +804,14 @@ static const char * const indexname64[16] = {
  * Segment registers are selected by a two or three bit field.
  */
 static const struct HooReg SEGREG[8] = {
-{0,"%es","string_operation_dest_seg_reg"},	// data segment register (string operation destination segment)
-{0,"%cs","code_seg_reg"},					// code segment register
-{0,"%ss","stack_seg_reg"},					// stack segment register
-{0,"%ds","data_seg_reg"},					// data segment register
-{0,"%fs","data_seg_reg"},					// data segment register
-{0,"%gs","data_seg_reg"},					// data segment register
-{0,"%?6","%??Reg"},							// 
-{0,"%?7","%??Reg"},							// 
+{REGISTER_ARG,"%es","string_operation_dest_seg_reg"},	// data segment register (string operation destination segment)
+{REGISTER_ARG,"%cs","code_seg_reg"},					// code segment register
+{REGISTER_ARG,"%ss","stack_seg_reg"},					// stack segment register
+{REGISTER_ARG,"%ds","data_seg_reg"},					// data segment register
+{REGISTER_ARG,"%fs","data_seg_reg"},					// data segment register
+{REGISTER_ARG,"%gs","data_seg_reg"},					// data segment register
+{REGISTER_ARG,"%?6","%??Reg"},							// 
+{REGISTER_ARG,"%?7","%??Reg"},							// 
 };
 
 /*
@@ -2007,10 +2026,6 @@ static const struct instable distable[16][16] = {
 //	return reg_name;
 //}
 
-struct HooReg code_seg_reg = {0,"%cs","code_seg_reg"};
-struct HooReg data_seg_reg = {0,"%es","string_operation_dest_seg_reg"};
-struct HooReg data_seg_reg2 = {0,"%es","data_seg_reg"};
-struct HooReg stack_seg_reg = {0,"%ss","stack_seg_reg"};
 
 static const struct HooReg *segRegPtrForName( char *segRegName ) {
 	
@@ -2150,7 +2165,7 @@ void addLine( uint64_t memAddress, struct hooleyFuction **currentFuncPtr, const 
 			}
 		}
 	}
-	printf( "%s\n", lineToPrint );
+//	printf( "%s\n", lineToPrint );
 }
 
 struct instable *customInstruction( const char *instrName, const char *prettyStr ) {
@@ -2571,7 +2586,7 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// eg movzbl	(%edx),%eax	
 			FILLARGS2( abstractStrctPtr1, reg_struct );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -2592,7 +2607,7 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg imull $0x44,%edx,%eax
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 
 			return(length);
 
@@ -2609,7 +2624,7 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg. movl 0x04(%ebp),%ebx
 			FILLARGS2( abstractStrctPtr1,reg_struct );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -2627,7 +2642,7 @@ NSUInteger iterationCounter
 			
 			 // -- move register to oprand eg. movl	%esp,%ebp		movl %ebx,0x00(%esp)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -2687,7 +2702,7 @@ NSUInteger iterationCounter
 			} else {
 				[NSException raise:@"what?" format:@"what?"];
 			}
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
 
@@ -2715,8 +2730,7 @@ NSUInteger iterationCounter
 					} else if(prefix_byte == 0xf3) {
 						printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */ {
-						hooleyDebug();
-//NEVER						printf("%sups\t", mnemonic);
+						printf("%sups\t", mnemonic);
 					}
 					break;
 
@@ -3255,7 +3269,7 @@ NSUInteger iterationCounter
 			
 			// eg movsd	(%eax),%xmm0
 			FILLARGS2( abstractStrctPtr1, reg_struct );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
 
@@ -4139,7 +4153,7 @@ NSUInteger iterationCounter
 				NEW_INDIRECT( indirect2, segReg, 0, (struct HooReg *)&destination_indexReg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
-				printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//				printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 				addLine( addr, currentFuncPtr, dp, allArgs );
 			}
 			return(length);
@@ -4183,7 +4197,7 @@ NSUInteger iterationCounter
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 
 			return(length);
 
@@ -4223,7 +4237,6 @@ NSUInteger iterationCounter
 					value0_size = sizeof(short);
 					REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 					NEW_IMMEDIATE( value0Immed, imm0 );
-			
 //Putback					printf("%s\t$", mnemonic);
 //Putback					print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
 //Putback					print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
@@ -4237,7 +4250,7 @@ NSUInteger iterationCounter
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg jne	0x00002b1a
 			FILLARGS1( displaceStructPtr );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -4247,7 +4260,7 @@ NSUInteger iterationCounter
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			FILLARGS1( value0Immed );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			// eg pushl  $0x00001000
 			return(length);
@@ -4260,9 +4273,9 @@ NSUInteger iterationCounter
 
 			// eg. pushl $0x00 
 			FILLARGS1( value0Immed );
-			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
-					return(length);
+			return(length);
 
 		case ENTER:
 			// wooo exotic!
@@ -4410,11 +4423,9 @@ NSUInteger iterationCounter
 		case FF:
 					/* return result bit for 287 instructions */
 					if(((opcode2 >> 2) & 0x1) == 0x1 && opcode2 != 0xf) {
-						hooleyDebug();
-//Putback						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
+						printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
 					} else {
-						hooleyDebug();
-//Putback						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
+						printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
 					}
 					return(length);
 
@@ -4523,11 +4534,7 @@ static NSUInteger replacement_get_operand(
 					// result = "";
 					return 0;
 				} else {
-					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
-					if (reg_struct->isah==BONKERSREG_ARG) {
-						printf("%s\n", reg_struct->prettyName );
-					}
-					
+					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];					
 					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, 0, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[0] );
@@ -4553,9 +4560,6 @@ static NSUInteger replacement_get_operand(
 //					sprintf( result, "(%s,%s)", todo, scale_factor[ss] );
 				} else {
 					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
-					if (reg_struct->isah==BONKERSREG_ARG) {
-						printf("%s\n", reg_struct->prettyName );
-					}					
 					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, 0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg, scale_factor[ss]);
@@ -4576,9 +4580,6 @@ static NSUInteger replacement_get_operand(
 					return 0;
 				} else {
 					const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-					if (reg_struct->isah==BONKERSREG_ARG) {
-						printf("%s\n", reg_struct->prettyName );
-					}
 					const struct HooReg *indexReg = &indexname_Struct[index];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[0] );
@@ -4586,9 +4587,6 @@ static NSUInteger replacement_get_operand(
 				}
 			} else {
 				const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-				if (reg_struct->isah==BONKERSREG_ARG) {
-					printf("%s\n", reg_struct->prettyName );
-				}
 				const struct HooReg *indexReg = &indexname_Struct[index];				
 				struct IndirectVal *indirStrct;
 				NEW_INDIRECT( indirStrct, segReg, 0, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[ss]);
@@ -4612,20 +4610,11 @@ static NSUInteger replacement_get_operand(
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
 				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				if (reg_struct->isah==BONKERSREG_ARG) {
-					printf("%s\n", reg_struct->prettyName );
-				}				
+				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];				
 				return (NSUInteger)reg_struct;
-				// *(struct HooReg *)result = *reg_struct;
-				// char *reg_name;
-				// GET_BEST_REG_NAME( reg_name, reg_struct );
-				// strcpy(result, reg_name);
+	
 			} else {
 				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
-				if (reg_struct->isah==BONKERSREG_ARG) {
-					printf("%s\n", reg_struct->prettyName );
-				}				
 				return (NSUInteger)reg_struct;
 
 				// const char *reg_name; // = REG16[r_m][wbit];
@@ -4642,7 +4631,7 @@ static NSUInteger replacement_get_operand(
 					 * section 2.2.1.6 ("RIP-Relative Addressing") of Volume
 					 * 2A of the Intel IA-32 manual.
 					 */
-					-- here
+//TODO: here in 64bit mode					-- here
 					sprintf(result, "(%%rip)");
 				} else {
 					struct DisplacementValue *displaceStructPtr;
@@ -4658,28 +4647,23 @@ static NSUInteger replacement_get_operand(
 						 * down to 32-bit, not 16-bit.
 						 */
 						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
-						if (reg_struct->isah==BONKERSREG_ARG) {
-							printf("%s\n", reg_struct->prettyName );
-						}						
 						char *reg_name;
 						GET_BEST_REG_NAME( reg_name, reg_struct );
 						sprintf(result, "(%s)", reg_name);
 					} else {
-						const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
-						if (reg_struct->isah==BONKERSREG_ARG) {
-							// !here!
-							printf("%s\n", reg_struct->prettyName );
+						struct HooReg *reg_structPair = regname16_Struct[mode][r_m];
+						struct HooReg *reg_struct = &(reg_structPair[0]);
+						struct HooReg *reg_struct2 = &(reg_structPair[1]);
+						if (reg_struct2->isah==NULL_ARG) {
+							reg_struct2 = 0;
 						}						
 						struct IndirectVal *indirStrct;
-						NEW_INDIRECT( indirStrct, segReg,0, (struct HooReg *)reg_struct,0, scale_factor[0] );
+						NEW_INDIRECT( indirStrct, segReg,0, (struct HooReg *)reg_struct, reg_struct2, scale_factor[0] );
 						return (NSUInteger)indirStrct;
 					}
 				} else {
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
-						const struct HooReg *reg_struct = &regname64_Struct[mode][r_m + (REX_B(rex) << 3)];
-						if (reg_struct->isah==BONKERSREG_ARG) {
-							printf("%s\n", reg_struct->prettyName );
-						}						
+						const struct HooReg *reg_struct = &regname64_Struct[mode][r_m + (REX_B(rex) << 3)];				
 						struct IndirectVal *indirStrct;
 						NEW_INDIRECT( indirStrct, segReg,0,(struct HooReg *)reg_struct,0, scale_factor[0] );
 						return (NSUInteger)indirStrct;
@@ -4687,10 +4671,7 @@ static NSUInteger replacement_get_operand(
 						// sprintf(result, "(%s)", 1 );
 					} else {
 						
-						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
-						if (reg_struct->isah==BONKERSREG_ARG) {
-							printf("%s\n", reg_struct->prettyName );
-						}						
+						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];					
 						struct IndirectVal *indirStrct;
 						NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct,0, scale_factor[0] );
 						return (NSUInteger)indirStrct;
@@ -4879,7 +4860,7 @@ static NSUInteger replacement_get_operand(
 //				} else {
 //					/* Woahh.. This is Fun */
 //					//const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
-//					
+//					// BONKERS ARG ALERT!
 //					// const char *reg_name; // = regname16[mode][r_m];
 //					// GET_BEST_REG_NAME( reg_name, reg_struct );
 //					// TODO: This returns 2 registers, like this… (reg1,reg2)
