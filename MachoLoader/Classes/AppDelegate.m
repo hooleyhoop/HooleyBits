@@ -14,21 +14,22 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-//	NSString *pathToApp = [[NSBundle mainBundle] executablePath];
-NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
-//	NSString *pathToApp = @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin";
-//	NSString *pathToApp = @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64";
-//	NSString *pathToApp = @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini";
-	
-//	NSString *pathToOtoolOutput = @"/Applications/6-386.app/Contents/MacOS/6-386";
-	
-//	DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:pathToOtoolOutput];
-	MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp checker:nil];
-	
-	[ml readFile];
+	NSArray *paths = [NSArray arrayWithObjects:
+					  [[NSBundle mainBundle] executablePath],
+					  @"/Applications/6-386.app/Contents/MacOS/6-386",
+					  @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin",
+					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
+					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
+					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
+					  nil];
 
-	[ml release];
-//	NSString *section = [ml sectionForMemAddress:0];
+	for( NSString *each in paths ) {
+		if([[NSFileManager defaultManager] fileExistsAtPath:each]) {
+			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each checker:nil];
+			[ml readFile];
+			[ml release];
+		}
+	}
 
 }
 

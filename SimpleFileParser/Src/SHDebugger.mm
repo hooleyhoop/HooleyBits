@@ -50,6 +50,14 @@ int	stdoutwrite(void *inFD, const char *buffer, int size) {
 }
 
 
+-- sample from this list 
+
+lldb::SBDebugger debugger = lldb::SBDebugger::Create();
+lldb::SBTarget target = debugger.CreateTarget(fileName);
+lldb::SBProcess process = target.CreateProcess();
+lldb::SBError error = process.Attach(pid):
+print error.GetCString()  --> "invalid state after attach: Exited"
+
 - (void)goforit {
 
 	// std::String blah; // who new that in c++ this gives you an initialized c++ object

@@ -421,7 +421,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //		printf(" name\n");
 		//	    else
 		//			printf("\n");
-		char *demangledOutput = malloc(1024); //[256];
+		char *demangledOutput = calloc(1,1024); //[256];
+		size_t *demangledLength = calloc(1, sizeof(size_t));
 
 	    for( j=0; j<count && n+j<nindirect_symbols; j++ )
 		{
@@ -525,42 +526,39 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					char firstChar = symbolString[0];
 					NSAssert(firstChar=='_', @"Function name seems wrong");
 					// remove first char
-					symbolString++;
+					// symbolString++;
 			
 					int demangledStat;
 			
-					// TODO: leaking! crashes if i dont
-					size_t demangledLength;
 					memset ( demangledOutput, 0, 1024 );
+					*demangledLength = 1024;
+			
+					char *demangledName = NULL;
 
-			char *demangledName = NULL;
-			@try {
-				NSLog(@"attempting to demangle %s", symbolString);
+					NSLog(@"attempting to demangle %s", symbolString);
 					demangledName = __cxa_demangle( (const char *)symbolString, 
-														 demangledOutput,
-														 &demangledLength, 
-														 &demangledStat );
-			} @catch(id theException) {
-				
-			}
-					switch (demangledStat) {
-						case 0:
-							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
-							//free(demangledName);
-							// TODO: we may want to record the fact that it is c++
-							break;
-						case -1:
-							[NSException raise:@"Memory Error" format:@"Memory Error"];
-							break;
-						case -2:
-							symbolInfo.stringValue = [NSString stringWithCString:symbolString encoding:NSUTF8StringEncoding];
-							break;
-						case -3:
-							[NSException raise:@"invalid argument" format:@"invalid argument"];
-							break;
-						default:
-							break;
-					}
+																 demangledOutput,
+																 demangledLength, 
+																 &demangledStat );
+		
+//					switch (demangledStat) {
+//						case 0:
+//							symbolInfo.stringValue = [NSString stringWithCString:demangledName encoding:NSUTF8StringEncoding];
+//							//free(demangledName);
+//							// TODO: we may want to record the fact that it is c++
+//							break;
+//						case -1:
+//							[NSException raise:@"Memory Error" format:@"Memory Error"];
+//							break;
+//						case -2:
+//							symbolInfo.stringValue = [NSString stringWithCString:symbolString encoding:NSUTF8StringEncoding];
+//							break;
+//						case -3:
+//							[NSException raise:@"invalid argument" format:@"invalid argument"];
+//							break;
+//						default:
+//							break;
+//					}
 					[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
 //				}
 	
@@ -570,6 +568,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			//				printf("\n");
 	    }
 		free(demangledOutput);
+		free(demangledLength);
 	    n += count;
 	}
 }
@@ -761,6 +760,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 
 	uint64 j=0;
 	NSUInteger iterationCounter = 0;
+//	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
+
 	for( NSUInteger i=0; i<_textSectSize; )
 	{
 		uint64 bytesLeft = _textSectSize-i;
@@ -811,7 +812,9 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		memPtr = memPtr + j;
 		i += j;
 		
-	}	
+	}
+//	[readTimer close];  // 4.6 secs
+	NSLog(@"disasemble complete");
 }
 
 - (SymbolicInfo *)symbolicInfoForAddress:(uint64)memAddr {
@@ -1811,6 +1814,9 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 							// otool -s __DATA __objc_imageinfo__DATA -v -V "/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64"
 						} else if ( strcmp(thisSectionName, "__objc_imageinfo__DATA")==0 ) {							
+							
+							// otool -s __DATA __objc_imageinfo__DATA -v -V "/Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug64/MachoLoader.app/Contents/MacOS/MachoLoader"							
+						} else if ( strcmp(thisSectionName, "__objc_catlist")==0 ) {							
 							
 						} else {
 							[NSException raise:@"Unkown section in this segment" format:@"Unkown section in this segment %s - %s", containingSegmentName, thisSectionName];
