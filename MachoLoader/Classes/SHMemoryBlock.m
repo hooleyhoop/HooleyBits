@@ -15,7 +15,7 @@
 @synthesize startAddr=_startAddr;
 @synthesize length=_length;
 
-- (id)initWithName:(NSString *)name start:(uint64)memAddr length:(uint64)len {
+- (id)initWithName:(NSString *)name start:(char *)memAddr length:(uint64)len {
 	
 	self = [super init];
 	if(self){
@@ -34,11 +34,11 @@
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg {
 	
-	uint64 otherAddress = seg.startAddr;
+	char *otherAddress = seg.startAddr;
 	return [self compareStartAddressToAddress:otherAddress];
 }
 
-- (NSComparisonResult)compareStartAddressToAddress:(uint64)otherAddress {
+- (NSComparisonResult)compareStartAddressToAddress:(char *)otherAddress {
 	
 	if( otherAddress>_startAddr )
 		return (NSComparisonResult)NSOrderedAscending;
@@ -47,7 +47,7 @@
 	return (NSComparisonResult)NSOrderedSame;
 }
 
-- (uint64)lastAddress {
+- (char *)lastAddress {
 	return _startAddr+_length-1;
 }
 

@@ -47,10 +47,17 @@
 
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
+
+
+// I need to read this!
+// http://www.treblig.org/articles/64bits.html
+// cast to (char *) instead of int
+// regex for a cast \([a-z0-9\s_*]+\)
+#define __cast__ 
 @interface MachoLoader (PrivateMethods) 
 - (void)doIt:(NSString *)aPath;
 - (void)parseLoadCommands;
-- (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section;
+- (void)addFunction:(NSString *)name line:(int)line address:(char *)address section:(int)section;
 
 @end
 
@@ -122,10 +129,10 @@ static void print_cstring_char( char c ) {
 }
 
 // -- see cctools-782 otool ofile_print.c
-- (void)print_cfstring_section:(char *)sect :(uint64_t)sect_size :(uint64_t)sect_addr {
+- (void)print_cfstring_section:(char *)sect :(uint64_t)sect_size :(char *)sect_addr {
 
-	UInt8 *locPtr = (UInt8 *)sect;
-	UInt8 *memPtr = (UInt8 *)sect_addr;
+	char *locPtr = sect;
+	char *memPtr = sect_addr;
 	
 //	while( (locPtr)<(((UInt8 *)sect)+sect_size) ) {
 //		
@@ -178,36 +185,39 @@ static void print_cstring_char( char c ) {
 
 }
 
-void print_cstring_section(char *sect, uint32_t sect_size, uint32_t sect_addr ) {
-		
-	for( uint32_t i=0; i<sect_size; i++ )
-	{
-		uint64 cStringAddress = (uint64)(sect_addr + i);
-		printf("%qx  ", cStringAddress );
-
-	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
-			print_cstring_char(sect[i]);
-		}
-		
-		if(i<sect_size && sect[i]=='\0' )
-			printf("\n");
-	}
-}
+//void print_cstring_section( char *sect, uint32_t sect_size, char *sect_addr ) {
+//		
+//	for( uint32_t i=0; i<sect_size; i++ )
+//	{
+//		uint64 cStringAddress = (uint64)(sect_addr+i);
+//		char * cStringAddress2 = sect_addr+i;
+//		printf("%qx  ", cStringAddress );
+//		printf("%p  ", cStringAddress2 );
+//		
+//	    for( ; i<sect_size && sect[i] !='\0'; i++ ){
+//			print_cstring_char(sect[i]);
+//		}
+//		
+//		if(i<sect_size && sect[i]=='\0' )
+//			printf("\n");
+//	}
+//}
 
 #define MAXSTRINGLENGTH 2048*10
 
 // -- see cctools-782 otool ofile_print.c
-- (void)save_cstring_section:(const char *)sect :(const uint64_t)sect_size :(const uint64_t)sect_addr {
+- (void)save_cstring_section:(const char *)sect :(const uint64_t)sect_size :(const char *)sect_addr {
 	
 	char aCstring[MAXSTRINGLENGTH];
 
-	memset ( aCstring, 0, MAXSTRINGLENGTH*sizeof(char) );
+	memset ( aCstring, 0, MAXSTRINGLENGTH );
 	uint32_t length = 0;
 
 	for( uint32_t i=0; i<sect_size; i++ )
 	{
-		uint64 cStringAddress = (uint64)(sect_addr + i);
-		// printf("%08x  ", cStringAddress );
+		const char *cStringAddress = sect_addr+i;
+		// printf("%p  ", cStringAddress );
+	
 		// clear the previous string
 		memset ( aCstring, 0, length );
 		length = 0;
@@ -246,7 +256,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 {
 	//    enum byte_sex host_byte_sex;
 	//    enum bool swapped;
-    uint32_t i, j, k, left, size, nsects, n, count, stride, section_type;
+    NSUInteger k, left, size, nsects, n, count, stride, section_type;
     uint64_t bigsize, big_load_end;
     char *p;
     struct load_command *lc, l;
@@ -258,7 +268,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		char segname[16];
 		char sectname[16];
 		uint64_t size;
-		uint64_t addr;
+		char *addr;
 		uint32_t reserved1;
 		uint32_t reserved2;
 		uint32_t flags;
@@ -277,18 +287,18 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	nsects = 0;
 	lc = load_commands;
 	big_load_end = 0;
-	for( i=0; i<ncmds; i++ )
+	for( NSUInteger i=0; i<ncmds; i++ )
 	{
-	    memcpy((char *)&l, (char *)lc, sizeof(struct load_command));
+	    memcpy( &l, (char *)lc, sizeof(struct load_command) );
 		//	    if(swapped)
 		//			swap_load_command(&l, host_byte_sex);
 	    if(l.cmdsize % sizeof(int32_t) != 0)
-			printf("load command %u size not a multiple of sizeof(int32_t)\n", i);
+			printf("load command %lu size not a multiple of sizeof(int32_t)\n", i);
 	    big_load_end += l.cmdsize;
 	    if(big_load_end > sizeofcmds)
-			printf("load command %u extends past end of load commands\n", i);
-	    left = (uint32)(sizeofcmds-((char *)lc-(char *)load_commands));
-		
+			printf("load command %lu extends past end of load commands\n", i);
+	    left = sizeofcmds-((char *)lc-(char *)load_commands);
+ 
 	    switch(l.cmd)
 		{
 			case LC_SEGMENT:
@@ -296,37 +306,36 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				size = left < sizeof(struct segment_command) ?
 				left : sizeof(struct segment_command);
 				left -= size;
-				memcpy((char *)&sg, (char *)lc, size);
+				memcpy( &sg, (char *)lc, size );
 				//				if(swapped)
 				//					swap_segment_command(&sg, host_byte_sex);
 				bigsize = sg.nsects;
 				bigsize *= sizeof(struct section);
 				bigsize += size;
 				if(bigsize > sg.cmdsize){
-					printf("number of sections in load command %u extends past end of load commands\n", i);
-					sg.nsects = (sg.cmdsize-size) / sizeof(struct section);
+					printf("number of sections in load command %lu extends past end of load commands\n", i);
+					sg.nsects = (uint32_t)((sg.cmdsize-size) / sizeof(struct section));
 				}
 				nsects += sg.nsects;
 				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
 				memset((char *)(sect_ind + (nsects - sg.nsects)), '\0', sizeof(struct section_indirect_info) * sg.nsects);
 				p = (char *)lc + sizeof(struct segment_command);
-				for( j=0; j<sg.nsects; j++ )
+				for( NSUInteger j=0; j<sg.nsects; j++ )
 				{
-					left = (uint32)(sizeofcmds-(p - (char *)load_commands));
+					left = __cast__(uint32)(sizeofcmds-(p - (char *)load_commands));
 					size = left < sizeof(struct section) ?
 					left : sizeof(struct section);
-					memcpy((char *)&s, p, size);
+					memcpy( &s, p, size );
 					//					if(swapped)
 					//						swap_section(&s, 1, host_byte_sex);
 					
-					if(p + sizeof(struct section) >
-					   (char *)load_commands + sizeofcmds)
+					if(p + sizeof(struct section) > (char *)load_commands + sizeofcmds)
 						break;
 					p += size;
-					memcpy(sect_ind[k].segname, s.segname, 16);
-					memcpy(sect_ind[k].sectname, s.sectname, 16);
+					memcpy( sect_ind[k].segname, s.segname, 16 );
+					memcpy( sect_ind[k].sectname, s.sectname, 16 );
 					sect_ind[k].size = s.size;
-					sect_ind[k].addr = s.addr;
+					sect_ind[k].addr = (char *)s.addr;
 					sect_ind[k].reserved1 = s.reserved1;
 					sect_ind[k].reserved2 = s.reserved2;
 					sect_ind[k].flags = s.flags;
@@ -336,25 +345,25 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			case LC_SEGMENT_64:
 				memset((char *)&sg64, '\0', sizeof(struct segment_command_64));
 				size = left < sizeof(struct segment_command_64) ? left : sizeof(struct segment_command_64);
-				memcpy((char *)&sg64, (char *)lc, size);
+				memcpy( &sg64, (char *)lc, size );
 				//				if(swapped)
 				//					swap_segment_command_64(&sg64, host_byte_sex);
 				bigsize = sg64.nsects;
 				bigsize *= sizeof(struct section_64);
 				bigsize += size;
 				if(bigsize > sg64.cmdsize){
-					printf("number of sections in load command %u extends past end of load commands\n", i);
-					sg64.nsects = (sg64.cmdsize-size) / sizeof(struct section_64);
+					printf("number of sections in load command %lu extends past end of load commands\n", i);
+					sg64.nsects = (uint32_t)((sg64.cmdsize-size) / sizeof(struct section_64));
 				}
 				nsects += sg64.nsects;
 				sect_ind = reallocate(sect_ind, nsects * sizeof(struct section_indirect_info));
 				memset((char *)(sect_ind + (nsects - sg64.nsects)), '\0', sizeof(struct section_indirect_info) * sg64.nsects);
 				p = (char *)lc + sizeof(struct segment_command_64);
-				for( j=0 ; j<sg64.nsects; j++ )
+				for( NSUInteger j=0 ; j<sg64.nsects; j++ )
 				{
-					left = (uint32)(sizeofcmds - (p - (char *)load_commands));
+					left = __cast__(uint32)(sizeofcmds - (p - (char *)load_commands));
 					size = left < sizeof(struct section_64) ? left : sizeof(struct section_64);
-					memcpy((char *)&s64, p, size);
+					memcpy( &s64, p, size );
 					//					if(swapped)
 					//						swap_section_64(&s64, 1, host_byte_sex);
 					
@@ -362,10 +371,10 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					   (char *)load_commands + sizeofcmds)
 						break;
 					p += size;
-					memcpy(sect_ind[k].segname, s64.segname, 16);
-					memcpy(sect_ind[k].sectname, s64.sectname, 16);
+					memcpy( sect_ind[k].segname, s64.segname, 16);
+					memcpy( sect_ind[k].sectname, s64.sectname, 16);
 					sect_ind[k].size = s64.size;
-					sect_ind[k].addr = s64.addr;
+					sect_ind[k].addr = (char *)s64.addr;
 					sect_ind[k].reserved1 = s64.reserved1;
 					sect_ind[k].reserved2 = s64.reserved2;
 					sect_ind[k].flags = s64.flags;
@@ -374,7 +383,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				break;
 	    }
 	    if(l.cmdsize == 0){
-			printf("load command %u size zero (can't advance to other load commands)\n", i);
+			printf("load command %lu size zero (can't advance to other load commands)\n", i);
 			break;
 	    }
 	    lc = (struct load_command *)((char *)lc + l.cmdsize);
@@ -384,7 +393,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	if((char *)load_commands + sizeofcmds != (char *)lc)
 	    printf("Inconsistent sizeofcmds\n");
 	
-	for( i=0; i<nsects; i++ )
+	for( NSUInteger i=0; i<nsects; i++ )
 	{
 	    section_type = sect_ind[i].flags & SECTION_TYPE;
 	    if(section_type == S_SYMBOL_STUBS)
@@ -405,7 +414,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	    else
 			continue;
 		
-	    count = (uint32_t)sect_ind[i].size / stride;
+	    count = __cast__(uint32_t)sect_ind[i].size / stride;
 //	    printf("Indirect symbols for (%.16s,%.16s) %u entries", sect_ind[i].segname, sect_ind[i].sectname, count);
 		
 	    n = sect_ind[i].reserved1;
@@ -424,17 +433,17 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		char *demangledOutput = calloc(1,1024); //[256];
 		size_t *demangledLength = calloc(1, sizeof(size_t));
 
-	    for( j=0; j<count && n+j<nindirect_symbols; j++ )
+	    for( NSUInteger j=0; j<count && n+j<nindirect_symbols; j++ )
 		{
 			SymbolicInfo *symbolInfo = [[[SymbolicInfo alloc] init] autorelease];
 			symbolInfo.segmentName = [NSString stringWithCString:sect_ind[i].segname encoding:NSUTF8StringEncoding];
 			symbolInfo.sectionName = [NSString stringWithCString:sect_ind[i].sectname encoding:NSUTF8StringEncoding];
 			
 			if(cputype & CPU_ARCH_ABI64) {
-				symbolInfo.address = (uint64)sect_ind[i].addr + j * stride;
+				symbolInfo.address = sect_ind[i].addr + j * stride;
 				// printf("0x%016llx ", sect_ind[i].addr + j * stride);
 			} else {
-				symbolInfo.address = (uint32_t)(sect_ind[i].addr + j * stride);
+				symbolInfo.address = sect_ind[i].addr + j * stride;
 				// printf("0x%08x ",(uint32_t)(sect_ind[i].addr + j * stride));
 			}
 			
@@ -620,7 +629,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 static int rel_compare( struct relocation_info *rel1, struct relocation_info *rel2) {
 	
     struct scattered_relocation_info *srel;
-    unsigned long r_address1, r_address2;
+    uint32_t r_address1, r_address2;
 	
 	if((rel1->r_address & R_SCATTERED) != 0){
 	    srel = (struct scattered_relocation_info *)rel1;
@@ -663,24 +672,23 @@ static int sym_compare( struct symbol *sym1, struct symbol *sym2) {
  *
  * The colon and the newline are printed if colon_and_newline is TRUE.
  */
-void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_symbols, uint32_t nsorted_symbols) {
+void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbols, uint32_t nsorted_symbols ) {
     int32_t high, low, mid;
 	
 	low = 0;
 	high = nsorted_symbols - 1;
 	mid = (high - low) / 2;
 	while(high >= low){
-	    if(sorted_symbols[mid].n_value == addr){
+	    if( sorted_symbols[mid].n_value==addr ){
 			printf("%s", sorted_symbols[mid].name);
 			if(colon_and_newline == TRUE)
 				printf(":\n");
 			return;
 	    }
-	    if(sorted_symbols[mid].n_value > addr){
+	    if( sorted_symbols[mid].n_value > addr ){
 			high = mid - 1;
 			mid = (high + low) / 2;
-	    }
-	    else{
+	    } else{
 			low = mid + 1;
 			mid = (high + low) / 2;
 	    }
@@ -695,7 +703,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 								:_ncmds 
 								:_sizeofcmds 
 								:_cputype
-								:(uint32_t *)_indirectSymbolTable
+								:__cast__(uint32_t *)_indirectSymbolTable
 								:_nindirect_symbols
 								:_symtable_ptr32
 								:_symtable_ptr64
@@ -704,13 +712,13 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 								:_strings_size];
 		
 	// Do text
-	UInt8 *locPtr = (UInt8 *)_text_sect_pointer;
-	UInt8 *memPtr = (UInt8 *)_text_sect_addr;
+	char *locPtr = _text_sect_pointer;
+	char *memPtr = _text_sect_addr;
 	
 	struct symbol *sorted_symbols = allocate(_nsymbols * sizeof(struct symbol));
 	struct relocation_info	*text_sorted_relocs = allocate(_text_nsorted_relocs * sizeof(struct relocation_info));
-	memcpy(text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
-	qsort(text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
+	memcpy( text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
+	qsort( text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
 
 	uint32_t nsorted_symbols = 0;
 	for( NSUInteger i=0; i<_nsymbols; i++ )
@@ -719,7 +727,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		uint8_t n_type;
 		uint64_t n_value;
 		char *p;
-		unsigned long len;
+		
+		size_t len;
 		
 		if(_symtable_ptr32 != NULL){
 			n_strx = _symtable_ptr32[i].n_un.n_strx;
@@ -746,7 +755,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 				continue;
 			if(n_type == N_ABS && n_value == 0 && *p == '.')
 				continue;
-			sorted_symbols[nsorted_symbols].n_value = n_value;
+			sorted_symbols[nsorted_symbols].n_value = (char *)n_value;
 			sorted_symbols[nsorted_symbols].name = p;
 			nsorted_symbols++;
 		}
@@ -766,7 +775,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	{
 		uint64 bytesLeft = _textSectSize-i;
 		
-		print_label((uint64_t)memPtr, 1, sorted_symbols, nsorted_symbols);
+		print_label( memPtr, 1, sorted_symbols, nsorted_symbols);
 
 		/* otx setup - try to incorporate into one pass
 		[self gatherLineInfos]; -- marks a line as code or other
@@ -786,10 +795,10 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		
 		j = i386_disassemble( 
 							 &currentFunction,
-							 (char *)locPtr,
-							 bytesLeft,
-							(uint64_t)memPtr,
-							(uint64_t)_text_sect_addr,
+							 locPtr,
+							bytesLeft,
+							memPtr,
+							_text_sect_addr,
 							 text_sorted_relocs,
 							 _text_nsorted_relocs,
 							 _symtable_ptr32,
@@ -799,7 +808,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 							 nsorted_symbols,
 							 _strtable,
 							 _strings_size,
-							 (uint32_t *)_indirectSymbolTable,
+							 __cast__(uint32_t *)_indirectSymbolTable,
 							 _nindirect_symbols,
 							 _cputype,
 							 _startOfLoadCommandsPtr,
@@ -817,7 +826,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	NSLog(@"disasemble complete");
 }
 
-- (SymbolicInfo *)symbolicInfoForAddress:(uint64)memAddr {
+- (SymbolicInfo *)symbolicInfoForAddress:(char *)memAddr {
 
 	Segment *seg = [_memoryMap segmentForAddress:memAddr];
 	Section *sec = [_memoryMap sectionForAddress:memAddr];
@@ -855,7 +864,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	// Read Only
 	else if( [[seg name] isEqualToString:@"__TEXT"] ) {
 		
-		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:memAddr];
+		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:(uint64)memAddr];
 		NSAssert(si==nil, @"didnt know this could be an indirect symbol");
 		
 		if( [[sec name] isEqualToString:@"__eh_frame"] ) {
@@ -873,32 +882,32 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			// Initialised constant variables ALSO switch statement jump table
 			
-			uint64 aMemPtrToSomething = [_temporaryExperiment intForIntKey:memAddr];
+			char *aMemPtrToSomething = (char *)[_temporaryExperiment intForIntKey:(uint64)memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
 			// try copying an int out to see what it is?
-			UInt8 *memPtr = (UInt8 *)sec.startAddr;
-			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
-			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
+			char *memPtr = sec.startAddr;
+			char *locPtr = sec.sect_pointer;
+			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;
 			int32_t a4ByteLiteral = 0;
-			memcpy((char *)&a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
+			memcpy( &a4ByteLiteral, a4ByteLiteralAddress, sizeof(int32_t));
 			
-			NSLog(@"oh well this doesnt work then %0x %0x %@", (uint)a4ByteLiteralAddress, (uint)memAddr, [self CStringForAddress:(uint64)a4ByteLiteralAddress] );
+			NSLog(@"oh well this doesnt work then %p %p %@", a4ByteLiteralAddress, memAddr, [self CStringForAddress:a4ByteLiteralAddress] );
 
 			// [NSException raise:@"what the fuck" format:@"what the fuck"];
 
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
 
 			// 4 byte literals
-			UInt8 *memPtr = (UInt8 *)sec.startAddr;
-			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+			char *memPtr = sec.startAddr;
+			char *locPtr = sec.sect_pointer;
 			uint64 newSectSize = sec.length;
-			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
-			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
+			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;
+			NSAssert( a4ByteLiteralAddress<( sec.sect_pointer+newSectSize ), @"out of bounds");
 		
 			float a4ByteLiteralFloat = 0.0f;
-			memcpy((char *)&a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
+			memcpy( &a4ByteLiteralFloat, a4ByteLiteralAddress, sizeof(float));
 //			NSLog(@"%f", a4ByteLiteralFloat);
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
@@ -920,13 +929,13 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	
 		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
 
-			UInt8 *memPtr = (UInt8 *)sec.startAddr;
-			UInt8 *locPtr = (UInt8 *)sec.sect_pointer;
+			char *memPtr = sec.startAddr;
+			char *locPtr = sec.sect_pointer;
 			uint64 newSectSize = sec.length;
-			UInt8 *a4ByteLiteralAddress = locPtr+((UInt8 *)memAddr-memPtr);
-			NSAssert( a4ByteLiteralAddress<(((UInt8 *)sec.sect_pointer)+newSectSize), @"out of bounds");
+			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;
+			NSAssert( a4ByteLiteralAddress<(sec.sect_pointer+newSectSize), @"out of bounds");
 			double a4ByteLiteralDouble;
-			memcpy((char *)&a4ByteLiteralDouble, a4ByteLiteralAddress, sizeof(double));
+			memcpy( &a4ByteLiteralDouble, a4ByteLiteralAddress, sizeof(double) );
 			si = [[[SymbolicInfo alloc] init] autorelease];
 			si.segmentName = [seg name];
 			si.sectionName = [sec name];
@@ -951,7 +960,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	else if( [[seg name] isEqualToString:@"__OBJC"] ) {
 		
 		if( [[sec name] isEqualToString:@"__cls_refs"] ) {
-			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -963,7 +972,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__class"] ) {
-			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -975,7 +984,7 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__message_refs"] ) {
-			uint64 aMemPtrToSomething = [_cls_refsLookup intForIntKey:memAddr];
+			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -1085,13 +1094,13 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 }
 
 // record positions of file sections
-- (void)addSegment:(NSString *)title memAddress:(uint64_t)offset length:(uint64_t)size {
+- (void)addSegment:(NSString *)title memAddress:(char *)offset length:(uint64_t)size {
 	
 	Segment *newSeg = [Segment name:title start:offset length:size];
 	[_memoryMap insertSegment:newSeg];
 }
 
-- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(uint64)offset length:(uint64)size filePtr:(uint64)filePtr {
+- (void)addSection:(NSString *)title seg:(NSString *)segTitle start:(char *)offset length:(uint64)size filePtr:(char *)filePtr {
 
 	Section *newSec = [Section name:title segment:segTitle start:offset length:size fileAddr:filePtr];
 	[_memoryMap insertSection:newSec];
@@ -1306,7 +1315,8 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 		// symbols to line numbers so we ignore them..
 		// Return YES because this isn't an error, just something we don't
 		// care to handle.
-		if ([address unsignedLongValue] == 0) {
+		
+		if ([address unsignedLongLongValue]==0) {
 			return YES;
 		}
 		// TODO(waylonis):Ensure that we get the full path for the source file
@@ -1361,13 +1371,12 @@ void print_label( uint64_t addr, int colon_and_newline, struct symbol *sorted_sy
 	return [_libraries objectAtIndex:libraryIndex-1];
 }
 
-- (void)addCstring:(NSString *)aCstring forAddress:(uint64)cStringAddress {
+- (void)addCstring:(NSString *)aCstring forAddress:(const char *)cStringAddress {
 
 	[_cStringLookup addObject:aCstring forIntKey:cStringAddress];
 }
 
-- (NSString *)CStringForAddress:(uint64)addr {
-
+- (NSString *)CStringForAddress:(char *)addr {
 	return (NSString *)[_cStringLookup objectForIntKey:addr];
 }
 
@@ -1404,20 +1413,21 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 		if( cmd->cmd==LC_UUID ){
 			// Specifies the 128-bit UUID for an image or its corresponding dSYM file.
-			struct uuid_command *seg = (struct uuid_command *)cmd;
+//			struct uuid_command *seg = (struct uuid_command *)cmd;
 //			NSLog(@"LC_UUID");
 			
 		} else if( cmd->cmd==LC_SEGMENT || cmd->cmd==LC_SEGMENT_64 ) {
 
 			char *segname;
-			uint64_t vmaddr, vmsize, nsects;
+			char *vmaddr;
+			uint64_t vmsize, nsects;
 			struct section_64 *sectionPtr;
 
 			// Defines a segment of this file to be mapped into the address space of the process that loads this file. It also includes all the sections contained by the segment.
 			if( cmd->cmd==LC_SEGMENT ) {
 				const struct segment_command *seg = (struct segment_command *)cmd;
 				segname = (char *)seg->segname;
-				vmaddr = seg->vmaddr;
+				vmaddr = (char *)seg->vmaddr;
 				vmsize = seg->vmsize;
 				nsects = seg->nsects;
 				sectionPtr = (struct section_64 *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
@@ -1425,7 +1435,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			} else if( cmd->cmd==LC_SEGMENT_64 ) {
 				const struct segment_command_64 *seg = (struct segment_command_64 *)cmd;
 				segname = (char *)seg->segname;
-				vmaddr = seg->vmaddr;
+				vmaddr = (char *)seg->vmaddr;
 				vmsize = seg->vmsize;
 				nsects = seg->nsects;
 				sectionPtr = (struct section_64 *)((struct segment_command_64 *)cmd+1);	// hey look - this is a good way to advance past segment				
@@ -1475,14 +1485,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 				char *thisSectionName = newSec_ptr64->sectname;
 				NSLog(@"segment2 name %s %s", containingSegmentName, thisSectionName );
 
-				uint64 memoryAddressOfSection = newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
+				char *memoryAddressOfSection = (char *)newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection)
 				{
-					char *sect_pointer = ((char *)_codeAddr) + newSec_ptr64->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
+					char *sect_pointer = _codeAddr + newSec_ptr64->offset; // ((char *) (_codeAddr)) + bestFatArch->offset
 					
 					struct relocation_info *sect_relocs = (struct relocation_info *)((char *)_codeAddr + newSec_ptr64->reloff);
 					uint32_t sect_nrelocs = newSec_ptr64->nreloc;
-					uint64_t sect_addr = newSec_ptr64->addr;
+					char *sect_addr = (char *)newSec_ptr64->addr;
 					uint32_t sect_flags = newSec_ptr64->flags;
 					
 					uint32_t section_type = sect_flags & SECTION_TYPE;
@@ -1509,9 +1519,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 					uint64_t newSectSize = newSec_ptr64->size;
 //					void *newSectAddr = NULL;
 
-					NSInteger sectionOffset = (NSInteger)((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
+					// char *sectionOffset = ((NSInteger *)sect_pointer)-(NSInteger)((NSInteger *)_codeAddr);
+					// uint64 sectionOffset = sect_pointer-_codeAddr;
+
 					NSString *secName = [NSString stringWithCString:thisSectionName encoding:NSUTF8StringEncoding];
-					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
+//					NSString *label = [NSString stringWithFormat:@"section:%@ %i", secName, newSectSize];
 //					[[FileMapView sharedMapView] addRegionAtOffset:sectionOffset withSize:newSectSize label:label];	
 
 					if(newSectSize==0){
@@ -1522,7 +1534,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 								 seg:segmentName 
 							   start:sect_addr 
 							  length:newSectSize 
-							 filePtr:(uint64)sect_pointer];
+							 filePtr:__cast__(uint64)sect_pointer];
 					
 //					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
 //					if (err==0) {
@@ -1539,8 +1551,9 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //why is this a prblem here?							if(_cputype!=CPU_TYPE_I386) 
 //								[NSException raise:@"come on dude" format:@"you know we only support 32 bit so far"];
 							
-							_text_sect_pointer = (UInt8 *)sect_pointer;
-							_text_sect_addr = (UInt8 *)sect_addr;
+							_text_sect_pointer = sect_pointer;
+							// sect_addr is 64bit, _text_sect_addr is char *. This now only works in 64bit
+							_text_sect_addr = (char *)sect_addr;
 							_text_relocs = sect_relocs;
 							_text_nsorted_relocs = sect_nrelocs;
 							_textSectSize = newSectSize;
@@ -1552,14 +1565,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						// otool -s __TEXT __const -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader
 						} else if ( strcmp(thisSectionName, "__const")==0 ) {
 
-							UInt8 *locPtr = (UInt8 *)sect_pointer;
-							UInt8 *memPtr = (UInt8 *)sect_addr;
-							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-								UInt32 val1 = *((UInt32 *)locPtr);
+							char *locPtr = sect_pointer;
+							char *memPtr = (char *)sect_addr;
+							while( locPtr<(sect_pointer+newSectSize) ) {
+								UInt32 val1 = *(__cast__(UInt32 *)locPtr);
 								locPtr = locPtr + sizeof val1;
 
 								// reusing _cls_refsLookup out of lazyness
-								[_temporaryExperiment addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								[_temporaryExperiment addInt:__cast__(NSInteger)val1 forIntKey:__cast__(NSInteger)memPtr];
 
 								memPtr = memPtr + sizeof val1;
 							}
@@ -1577,15 +1590,15 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							//00006dd6	jmp	*0x00007040
 
 							// This needs to be UInt8 so we can advance by a specific number of bytes?
-							UInt8 *locPtr = (UInt8 *)sect_pointer;
-							UInt8 *memPtr = (UInt8 *)sect_addr;
+							char *locPtr = sect_pointer;
+							char *memPtr = sect_addr;
 
-							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
+							while( locPtr<(sect_pointer+newSectSize) ) {
 								
-								UInt16 val1 = *((UInt16 *)locPtr);
+								UInt16 val1 = *(__cast__(UInt16 *)locPtr);
 								locPtr = locPtr + sizeof val1;
 								
-								UInt32 val2 = *((UInt32 *)locPtr);
+								UInt32 val2 = *(__cast__(UInt32 *)locPtr);
 								locPtr = locPtr + sizeof val2;
 								
 								//							NSLog(@"%x %x %x", memPtr, val1, val2 );
@@ -1828,14 +1841,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 						// otool -s __OBJC __message_refs -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 						if ( strcmp(thisSectionName, "__message_refs")==0 ) {
 							
-							UInt8 *locPtr = (UInt8 *)sect_pointer;
-							UInt8 *memPtr = (UInt8 *)sect_addr;
-							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-								UInt32 val1 = *((UInt32 *)locPtr);
+							char *locPtr = sect_pointer;
+							char *memPtr = sect_addr;
+							while( locPtr<( sect_pointer+newSectSize) ) {
+								UInt32 val1 = *locPtr;
 								locPtr = locPtr + sizeof val1;
 								
 								// reusing _cls_refsLookup out of lazyness
-								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								[_cls_refsLookup addInt:__cast__(NSInteger)val1 forIntKey:(NSInteger)memPtr];
 								
 								memPtr = memPtr + sizeof val1;
 							}
@@ -1903,13 +1916,13 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// otool -s __OBJC __cls_refs -v /Applications/6-386.app/Contents/MacOS/6-386						
 						} else if ( strcmp(thisSectionName, "__cls_refs")==0 ) {
 							
-							UInt8 *locPtr = (UInt8 *)sect_pointer;
-							UInt8 *memPtr = (UInt8 *)sect_addr;
-							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-								UInt32 val1 = *((UInt32 *)locPtr);
+							char *locPtr = sect_pointer;
+							char *memPtr = sect_addr;
+							while( locPtr<(sect_pointer+newSectSize) ) {
+								UInt32 val1 = *locPtr;
 								locPtr = locPtr + sizeof val1;
 								// NSLog(@"%0x %0x", memPtr, val1 );
-								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								[_cls_refsLookup addInt:__cast__(NSInteger)val1 forIntKey:(NSInteger)memPtr];
 								
 								memPtr = memPtr + sizeof val1;
 							}
@@ -1935,14 +1948,14 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 							// otool -s __OBJC __class -v /Users/shooley/Desktop/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug/MachoLoader.app/Contents/MacOS/MachoLoader						
 						} else if ( strcmp(thisSectionName, "__class")==0 ) {
 							
-							UInt8 *locPtr = (UInt8 *)sect_pointer;
-							UInt8 *memPtr = (UInt8 *)sect_addr;
-							while( (locPtr)<(((UInt8 *)sect_pointer)+newSectSize) ) {
-								UInt32 val1 = *((UInt32 *)locPtr);
+							char *locPtr = sect_pointer;
+							char *memPtr = sect_addr;
+							while( locPtr<(sect_pointer+newSectSize) ) {
+								UInt32 val1 = *locPtr;
 								locPtr = locPtr + sizeof val1;
 								
 								// reusing _cls_refsLookup out of lazyness
-								[_cls_refsLookup addInt:(NSInteger)val1 forIntKey:(NSInteger)memPtr];
+								[_cls_refsLookup addInt:__cast__(NSInteger)val1 forIntKey:__cast__(NSInteger)memPtr];
 								
 								memPtr = memPtr + sizeof val1;
 							}						
@@ -2122,6 +2135,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			//					}
 			//					if ((addr >= symtable->n_value) && (diff >= (symtable->n_value - addr)))
 			//					{
+			//	! dont use long
+
 			//						diff = (unsigned long)symtable->n_value - addr;
 			//						nearest = symtable;
 			//					}
@@ -2250,7 +2265,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			
 			// should this be offset from file? guess so
 			struct dylib_table_of_contents *tocs_ptr = (struct dylib_table_of_contents *)((char *)_codeAddr + dsymtab->tocoff);
-            for( int i=0; i<dsymtab->ntoc; i++){
+            for( NSUInteger i=0; i<dsymtab->ntoc; i++ ){
 				uint32_t si = tocs_ptr[i].symbol_index;
 				uint32_t mi = tocs_ptr[i].module_index;
 			}
@@ -2270,7 +2285,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog(@"-- Number of module table entries %i", dsymtab->nmodtab);
 			if(dsymtab->nmodtab>0){
 				struct dylib_reference *libRefer1 = (struct dylib_reference *)((char *)_codeAddr + dsymtab->modtaboff);
-				for( int i=0; i<dsymtab->nmodtab; i++){
+				for( NSUInteger i=0; i<dsymtab->nmodtab; i++){
 	//				uint32_t indirectSymbol = libRefer1[i];
 	//				NSLog(@"DO THIS! IndirectSymbol %i", indirectSymbol);
 				}
@@ -2312,7 +2327,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 			if( _nindirect_symbols>0 )
 			{
-				_indirectSymbolTable = (uint32_t *)((char *)_codeAddr + dsymtab->indirectsymoff);
+				_indirectSymbolTable = _codeAddr + dsymtab->indirectsymoff;
 				for( NSUInteger i=0; i<_nindirect_symbols; i++ ){
 					uint32_t indirectSymbol = _indirectSymbolTable[i];
 					
@@ -2389,50 +2404,50 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			// Defines the name of a dynamic shared library that this file links against.
 			const struct dylib_command* seg = (struct dylib_command*)cmd;
 			struct dylib dylib = seg->dylib;
-			char *install_name = (char*)cmd + dylib.name.offset;
+			char *install_name = (char *)cmd + dylib.name.offset;
 			// also got timestamp, version, compatibility version
 			[self addLibrary: [NSString stringWithCString:install_name encoding:NSUTF8StringEncoding]];
 			
 		} else if(cmd->cmd==LC_ID_DYLIB) {
 			// Specifies the install name of a dynamic shared library.
-			const struct dylib_command* seg = (struct dylib_command*)cmd;
+			const struct dylib_command* seg = (struct dylib_command *)cmd;
 
 //			NSLog(@"LC_ID_DYLIB");
 
 		} else if(cmd->cmd==LC_PREBOUND_DYLIB) {
 			// For a shared library that this executable is linked prebound against, specifies the modules in the shared library that are used.
-			const struct prebound_dylib_command* seg = (struct prebound_dylib_command*)cmd;
+			const struct prebound_dylib_command* seg = (struct prebound_dylib_command *)cmd;
 //			NSLog(@"LC_PREBOUND_DYLIB");
 
 		} else if(cmd->cmd==LC_LOAD_DYLINKER) {
 			// Specifies the dynamic linker that the kernel executes to load this file.
-			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
-			const char* dylibName = (char*)cmd + linkertab->name.offset;
+			const struct dylinker_command* linkertab = (struct dylinker_command *)cmd;
+			const char* dylibName = (char *)cmd + linkertab->name.offset;
 
 //			NSLog(@"LC_LOAD_DYLINKER %s", dylibName );
 
 		} else if(cmd->cmd==LC_ID_DYLINKER) {
 			// Identifies this file as a dynamic linker.
-			const struct dylinker_command* linkertab = (struct dylinker_command*)cmd;
+			const struct dylinker_command* linkertab = (struct dylinker_command *)cmd;
 //			NSLog(@"LC_ID_DYLINKER");
 			
 		} else if( cmd->cmd==LC_ROUTINES || cmd->cmd==LC_ROUTINES_64 ) {
 			// Contains the address of the shared library initialization routine (specified by the linker’s -init option).
 			if( cmd->cmd==LC_ROUTINES ) {
-				const struct routines_command* seg = (struct routines_command*)cmd;
+				const struct routines_command* seg = (struct routines_command *)cmd;
 			} else {
-				const struct routines_command_64* seg = (struct routines_command_64*)cmd;
+				const struct routines_command_64* seg = (struct routines_command_64 *)cmd;
 			}
 			
 		} else if(cmd->cmd==LC_TWOLEVEL_HINTS){
 			// Contains the two-level namespace lookup hint table.
-			const struct twolevel_hints_command* seg = (struct twolevel_hints_command*)cmd;
+			const struct twolevel_hints_command* seg = (struct twolevel_hints_command *)cmd;
 //			NSLog(@"LC_TWOLEVEL_HINTS");
 			
 		} else if(cmd->cmd==LC_SUB_FRAMEWORK){
 			// Identifies this file as the implementation of a subframework of an umbrella framework. The name of the umbrella framework is stored in the string parameter.
 			struct sub_framework_command *subf = (struct sub_framework_command *)cmd;
-			const char* exportThruName = (char*)cmd + subf->umbrella.offset;
+			const char* exportThruName = (char *)cmd + subf->umbrella.offset;
 //			NSLog(@"LC_SUB_FRAMEWORK");
 			
 		} else if(cmd->cmd==LC_SUB_UMBRELLA){
@@ -2474,7 +2489,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			}
 		}
 
-//		const struct load_command* nextCmd3 = (const struct load_command*)((uint32_t)cmd+(uint32_t)cmd->cmdsize);
+//		const struct load_command* nextCmd3 = (const struct load_command *)((uint32_t)cmd+(uint32_t)cmd->cmdsize);
 //		const struct load_command* nextCmd4 = (struct load_command *)cmd+1;
 //		cmd = nextCmd3;
 	}
@@ -2489,7 +2504,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	if(!_allFile)
 		[NSException raise:@"App Not Found" format:@"App Not Found - %@", aPath];
 
-	_codeAddr = [_allFile bytes];
+	_codeAddr = (char *)[_allFile bytes];
 	_codeSize = [_allFile length];
 
 //	[[FileMapView sharedMapView] setTotalBoundsWithSize:_codeSize label:[NSString stringWithFormat:@"total file size %i", _codeSize]];
@@ -2549,11 +2564,11 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 		assert( (bestFatArch->size + bestFatArch->offset) <= _codeSize );
 		
 		uint32_t newCodeSize = bestFatArch->size;
-		void *newCodeAddr = NULL;
+		char *newCodeAddr = NULL;
 		
-		int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newCodeAddr, newCodeSize, true);
+		int err = __cast__(int) vm_allocate(mach_task_self(), (vm_address_t *) &newCodeAddr, newCodeSize, true);
 		if (err == 0) {
-			memcpy(newCodeAddr, ((char *) (_codeAddr)) + bestFatArch->offset , newCodeSize);
+			memcpy( newCodeAddr, ((char *) (_codeAddr)) + bestFatArch->offset , newCodeSize );
 		}
 		_codeAddr = newCodeAddr;
 		_codeSize = newCodeSize;
@@ -2608,8 +2623,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	const struct load_command *cmd = _startOfLoadCommandsPtr;
 	_ncmds = universalMachHeader->ncmds;
 	for( NSUInteger i=0; i<_ncmds; i++ ) {
-		[_loadCommandsArray addObject:[NSNumber numberWithUnsignedInteger:(NSUInteger)cmd]];
-		cmd = (struct load_command *)((uintptr_t)cmd+(uint32_t)cmd->cmdsize);
+		[_loadCommandsArray addObject:[NSNumber numberWithUnsignedInteger:__cast__(NSUInteger)cmd]];
+		cmd = (struct load_command *)(__cast__(uintptr_t)cmd+__cast__(uint32_t)cmd->cmdsize);
 	}
 	
 }
@@ -2620,7 +2635,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
  * It returns the name of symbol or NULL.  It only returns a symbol name if
  *  a symbol with that exact value exists.
  */
-const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in) */
+const char * guess_symbol( const char *value,	/* the value of this symbol (in) */
 			 const struct symbol *sorted_symbols,
 			 const uint32_t nsorted_symbols,
 			 int verbose)
@@ -2685,7 +2700,7 @@ const char * guess_indirect_symbol(
 	lc = load_commands;
 	big_load_end = 0;
 	for( i=0 ; i<ncmds; i++){
-	    memcpy((char *)&l, (char *)lc, sizeof(struct load_command));
+	    memcpy( &l, (char *)lc, sizeof(struct load_command) );
 //	    if(swapped)
 //			swap_load_command(&l, host_byte_sex);
 	    if(l.cmdsize % sizeof(int32_t) != 0)
@@ -2695,12 +2710,12 @@ const char * guess_indirect_symbol(
 			return(NULL);
 	    switch(l.cmd){
 			case LC_SEGMENT:
-				memcpy((char *)&sg, (char *)lc, sizeof(struct segment_command));
+				memcpy( &sg, (char *)lc, sizeof(struct segment_command) );
 //				if(swapped)
 //					swap_segment_command(&sg, host_byte_sex);
 				p = (char *)lc + sizeof(struct segment_command);
 				for(j = 0 ; j < sg.nsects ; j++){
-					memcpy((char *)&s, p, sizeof(struct section));
+					memcpy( &s, p, sizeof(struct section) );
 					p += sizeof(struct section);
 //					if(swapped)
 //						swap_section(&s, 1, host_byte_sex);
@@ -2718,7 +2733,7 @@ const char * guess_indirect_symbol(
 						if(index < nindirect_symbols &&
 						   symbols != NULL && strings != NULL &&
 						   indirect_symbols[index] < nsymbols &&
-						   (uint32_t)symbols[indirect_symbols[index]].
+						   __cast__(uint32_t)symbols[indirect_symbols[index]].
 						   n_un.n_strx < strings_size)
 							return(strings +
 								   symbols[indirect_symbols[index]].n_un.n_strx);
@@ -2728,13 +2743,12 @@ const char * guess_indirect_symbol(
 				}
 				break;
 			case LC_SEGMENT_64:
-				memcpy((char *)&sg64, (char *)lc,
-					   sizeof(struct segment_command_64));
+				memcpy( &sg64, (char *)lc, sizeof(struct segment_command_64) );
 //				if(swapped)
 //					swap_segment_command_64(&sg64, host_byte_sex);
 				p = (char *)lc + sizeof(struct segment_command_64);
 				for(j = 0 ; j < sg64.nsects ; j++){
-					memcpy((char *)&s64, p, sizeof(struct section_64));
+					memcpy( &s64, p, sizeof(struct section_64) );
 					p += sizeof(struct section_64);
 //					if(swapped)
 //						swap_section_64(&s64, 1, host_byte_sex);
@@ -2752,7 +2766,7 @@ const char * guess_indirect_symbol(
 						if(index < nindirect_symbols &&
 						   symbols64 != NULL && strings != NULL &&
 						   indirect_symbols[index] < nsymbols &&
-						   (uint32_t)symbols64[indirect_symbols[index]].
+						   __cast__(uint32_t)symbols64[indirect_symbols[index]].
 						   n_un.n_strx < strings_size)
 							return(strings +
 								   symbols64[indirect_symbols[index]].n_un.n_strx);

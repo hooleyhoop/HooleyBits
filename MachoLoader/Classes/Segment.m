@@ -12,12 +12,12 @@
 
 @implementation Segment
 
-+ (id)name:(NSString *)name start:(uint64)memAddr length:(uint64)len {
++ (id)name:(NSString *)name start:(char *)memAddr length:(uint64)len {
 	
 	return [[[self alloc] initWithName:name start:memAddr length:len] autorelease];
 }
 
-- (id)initWithName:(NSString *)name start:(uint64)memAddr length:(uint64)len {
+- (id)initWithName:(NSString *)name start:(char *)memAddr length:(uint64)len {
 
 	self = [super initWithName:name start:memAddr length:len];
 	if(self){
@@ -34,7 +34,7 @@
 	[_sectionStore insertMemoryBlock:sec];
 }
 
-- (Section *)sectionForAddress:(uint64)memAddr {
+- (Section *)sectionForAddress:(char *)memAddr {
 	return (Section *)[_sectionStore blockForAddress:memAddr];
 }
 

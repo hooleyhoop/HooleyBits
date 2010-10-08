@@ -14,11 +14,11 @@
 @synthesize segmentName=_segName;
 @synthesize sect_pointer=_sect_pointer;
 
-+ (id)name:(NSString *)secName segment:(NSString *)segName start:(uint64)memAddr length:(uint64)len fileAddr:(uint64)fa {
++ (id)name:(NSString *)secName segment:(NSString *)segName start:(char *)memAddr length:(uint64)len fileAddr:(char *)fa {
 	return [[[self alloc] initWithName:secName segment:segName start:memAddr length:len fileAddr:fa] autorelease];
 }
 
-- (id)initWithName:(NSString *)name segment:(NSString *)segName start:(uint64)memAddr length:(uint64)len fileAddr:(uint64)fa {
+- (id)initWithName:(NSString *)name segment:(NSString *)segName start:(char *)memAddr length:(uint64)len fileAddr:(char *)fa {
 	
 	self = [super initWithName:name start:memAddr length:len];
 	if(self){

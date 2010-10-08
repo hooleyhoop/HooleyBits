@@ -12,7 +12,7 @@
 
 	NSString	*_segmentName;
 	NSString	*_sectionName;
-	uint64		_address;
+	char 		*_address;
 	NSString	*_stringValue;
 	NSString	*_libraryName;
 	uint64		_intValue;
@@ -21,7 +21,7 @@
 
 @property (retain) NSString		*segmentName;
 @property (retain) NSString		*sectionName;
-@property (assign) uint64		address;
+@property (assign) char			*address;
 @property (retain) NSString		*stringValue;
 @property (retain) NSString		*libraryName;
 @property (assign) uint64		intValue;

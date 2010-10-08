@@ -15,8 +15,8 @@
 }
 
 - (void)insertMemoryBlock:(SHMemoryBlock *)memBlock;
-- (SHMemoryBlock *)blockForAddress:(uint64)memAddr;
+- (SHMemoryBlock *)blockForAddress:(char *)memAddr;
 
-- (uint64)lastAddress;
+- (char *)lastAddress;
 
 @end

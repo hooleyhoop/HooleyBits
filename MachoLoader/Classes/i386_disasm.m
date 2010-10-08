@@ -2126,7 +2126,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
-void addLine( uint64_t memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
+void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
 	
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
@@ -2145,7 +2145,7 @@ void addLine( uint64_t memAddress, struct hooleyFuction **currentFuncPtr, const 
 	currentFunc->lastLine = newLine;
 	
 	char lineToPrint[256];
-	sprintf( lineToPrint, "%0x\t%s ", (uint)memAddress, dp->name);
+	sprintf( lineToPrint, "%p\t%s ", (uint)memAddress, dp->name);
 	
 	// lets just take a pepp at the arguments
 	if (args) {
@@ -2207,8 +2207,8 @@ NSUInteger i386_disassemble(
 struct hooleyFuction **currentFuncPtr,
 char *sect,
 uint64 left,
-uint64_t addr,
-uint64_t sect_addr,
+char *addr,
+char *sect_addr,
 //enum byte_sex object_byte_sex,
 struct relocation_info *sorted_relocs,
 NSUInteger nsorted_relocs,
@@ -2278,7 +2278,7 @@ NSUInteger iterationCounter
 	prefix_byte = 0;
 	for(;;)
 	{
-	    byte = get_value(sizeof(char), sect, &length, &left);	// 0x14adc272, 0, 0xb9bb8b	=== //0xff 
+	    byte = get_value( 1, sect, &length, &left);	// 0x14adc272, 0, 0xb9bb8b	=== //0xff 
 	    opcode1 = byte >> 4 & 0xf;									//0xf
 	    opcode2 = byte & 0xf;										//0xf
 
@@ -2323,7 +2323,7 @@ NSUInteger iterationCounter
 	 */
 	if( dp->indirect == (const struct instable *)op0F)
 	{
-	    byte = get_value(sizeof(char), sect, &length, &left);
+	    byte = get_value( 1, sect, &length, &left);
 	    opcode4 = byte >> 4 & 0xf;
 	    opcode5 = byte & 0xf;
 	    dp = &op0F[opcode4][opcode5];
@@ -2338,7 +2338,7 @@ NSUInteger iterationCounter
 			* MNI instructions are SSE2ish instructions with an
 			* extra byte.  Do the extra indirection here.
 			*/
-//NEVER			byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER			byte = get_value( 1, sect, &length, &left);
 //NEVER			dp = &dp->indirect[byte];
 	    }
 	    /*
@@ -2373,11 +2373,11 @@ NSUInteger iterationCounter
 	//NEVER		    if(got_modrm_byte == FALSE){
 	//NEVER				hooleyDebug();
 	//NEVER				got_modrm_byte = TRUE;
-	//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+	//NEVER				byte = get_value( 1, sect, &length, &left);
 	//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
 	//NEVER		    }
 	//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-	//NEVER		    opcode_suffix = get_value(sizeof(char), sect, &length, &left);
+	//NEVER		    opcode_suffix = get_value( 1, sect, &length, &left);
 	//NEVER		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
 
 			} else if(dp->indirect == (const struct instable *)op0F01) {
@@ -2386,7 +2386,7 @@ NSUInteger iterationCounter
 	//NEVER		    if(got_modrm_byte == FALSE){
 	//NEVER				hooleyDebug();
 	//NEVER				got_modrm_byte = TRUE;
-	//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+	//NEVER				byte = get_value( 1, sect, &length, &left);
 	//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
 	//NEVER				opcode3 = reg;
 	//NEVER		    }
@@ -2466,7 +2466,7 @@ NSUInteger iterationCounter
 	     */
 	    if(got_modrm_byte == FALSE){
 			got_modrm_byte = TRUE;
-			byte = get_value(sizeof(char), sect, &length, &left);
+			byte = get_value( 1, sect, &length, &left);
 			modrm_byte(&mode, (NSUInteger *)&opcode3, &r_m, byte);
 	    }
 	    /*
@@ -2581,7 +2581,7 @@ NSUInteger iterationCounter
 			wbit = WBIT(opcode5);
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -2599,7 +2599,7 @@ NSUInteger iterationCounter
 			/* Get second operand first so data16 can be destroyed */
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			reg_struct = get_regStruct(reg, LONGOPERAND, data16, rex);
@@ -2616,7 +2616,7 @@ NSUInteger iterationCounter
 		case IMUL:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -2639,7 +2639,7 @@ NSUInteger iterationCounter
 			wbit = WBIT(opcode2);
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -2656,7 +2656,7 @@ NSUInteger iterationCounter
 			wbit = WBIT(opcode2);
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
@@ -2678,7 +2678,7 @@ NSUInteger iterationCounter
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			struct ArgStack aStack;
@@ -2742,7 +2742,7 @@ NSUInteger iterationCounter
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			regNum = xmm_reg(reg, rex);
@@ -2838,7 +2838,7 @@ NSUInteger iterationCounter
 //NEVER			if(got_modrm_byte == FALSE){
 //NEVER				hooleyDebug();
 //NEVER				got_modrm_byte = TRUE;
-//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				byte = get_value( 1, sect, &length, &left);
 //NEVER				modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER			}
 //NEVER			if(prefix_byte == 0x66){
@@ -2866,7 +2866,7 @@ NSUInteger iterationCounter
 //NEVER			if (got_modrm_byte == FALSE) {
 //NEVER				hooleyDebug();
 //NEVER				got_modrm_byte = TRUE;
-//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				byte = get_value( 1, sect, &length, &left);
 //NEVER				modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER			}
 //NEVER			if(prefix_byte == 0x66){
@@ -2881,7 +2881,7 @@ NSUInteger iterationCounter
 
 //NEVER			}
 //NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER			byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER			byte = get_value( 1, sect, &length, &left);
 //NEVER			printf("%s\t$0x%x,", mnemonic, byte);
 //NEVER
 //NEVER			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
@@ -2894,7 +2894,7 @@ NSUInteger iterationCounter
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			// eg // %xmm0
@@ -3259,7 +3259,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						hooleyDebug();
-						sprintf(result1, "%%mm%u", reg);
+						sprintf(result1, "%%mm%lu", reg);
 						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
 
 						// printf("%s\t", mnemonic);
@@ -3349,7 +3349,7 @@ NSUInteger iterationCounter
 //NEVER				if(got_modrm_byte == FALSE){
 //NEVER					hooleyDebug();
 //NEVER					got_modrm_byte = TRUE;
-//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					byte = get_value( 1, sect, &length, &left);
 //NEVER					modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER				}
 //NEVER				printf("%s\t", mnemonic);
@@ -3368,11 +3368,11 @@ NSUInteger iterationCounter
 //NEVER				if(got_modrm_byte == FALSE){
 //NEVER					hooleyDebug();
 //NEVER					got_modrm_byte = TRUE;
-//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					byte = get_value( 1, sect, &length, &left);
 //NEVER					modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER				}
 //NEVER				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER				byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER				byte = get_value( 1, sect, &length, &left);
 //NEVER				printf("%s\t$0x%x,", mnemonic, byte);
 //NEVER				print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 //NEVER				printf("%%xmm%u\n", xmm_reg(reg, rex));
@@ -3387,11 +3387,11 @@ NSUInteger iterationCounter
 //NEVER					if(got_modrm_byte == FALSE){
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					byte = get_value( 1, sect, &length, &left);
 //NEVER					if(dp == &op0F3A[0x16])
 //NEVER					{
 //NEVER						hooleyDebug();
@@ -3421,11 +3421,11 @@ NSUInteger iterationCounter
 //NEVER					if(got_modrm_byte == FALSE){
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					byte = get_value( 1, sect, &length, &left);
 //NEVER					if(dp == &op0F3A[0x22]){
 //NEVER						hooleyDebug();
 //NEVER						if(rex != 0) {
@@ -3450,7 +3450,7 @@ NSUInteger iterationCounter
 //NEVER					if(got_modrm_byte == FALSE){
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					/*
@@ -3477,7 +3477,7 @@ NSUInteger iterationCounter
 //NEVER					if(got_modrm_byte == FALSE){
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -3492,7 +3492,7 @@ NSUInteger iterationCounter
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			/* pshufw */
@@ -3508,7 +3508,7 @@ NSUInteger iterationCounter
 				sse2 = TRUE;
 			}
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			byte = get_value(sizeof(char), sect, &length, &left);
+			byte = get_value( 1, sect, &length, &left);
 			NEW_IMMEDIATE( value0Immed, byte );
 
 			switch(opcode4 << 4 | opcode5)
@@ -3591,10 +3591,10 @@ NSUInteger iterationCounter
 		case SSE2i1:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			byte = get_value(sizeof(char), sect, &length, &left);
+			byte = get_value( 1, sect, &length, &left);
 			NEW_IMMEDIATE( value0Immed, byte );
 
 			switch(opcode4 << 4 | opcode5)
@@ -3620,7 +3620,7 @@ NSUInteger iterationCounter
 									hooleyDebug();
 									printf("%sllw\t$0x%x,", mnemonic, byte);
 								}
-								printf("%%mm%u\n", r_m);
+								printf("%%mm%lu\n", r_m);
 								struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
 								
 								return(length);
@@ -3677,7 +3677,7 @@ NSUInteger iterationCounter
 //NEVER									printf("%sllq\t$0x%x,", mnemonic, byte);
 //NEVER								}
 //NEVER								printf("%%mm%u\n", r_m);
-						struct HooReg *mmReg = &mmReg_Struct[r_m];
+						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
 //NEVER								return(length);
 					}
 					break;
@@ -3707,7 +3707,7 @@ NSUInteger iterationCounter
 //NEVER					if(got_modrm_byte == FALSE){
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					switch(reg)
@@ -3747,7 +3747,7 @@ NSUInteger iterationCounter
 //NEVER					{
 //NEVER						hooleyDebug();
 //NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER						byte = get_value( 1, sect, &length, &left);
 //NEVER						modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					}
 //NEVER					switch(reg)
@@ -3783,12 +3783,12 @@ NSUInteger iterationCounter
 		case DSHIFT:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-			value0_size = sizeof(char);
+			value0_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
@@ -3800,7 +3800,7 @@ NSUInteger iterationCounter
 		case DSHIFTcl:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -3830,7 +3830,7 @@ NSUInteger iterationCounter
 		case IMw:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = WBIT(opcode2);
@@ -3907,7 +3907,7 @@ NSUInteger iterationCounter
 		case MS:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -3921,7 +3921,7 @@ NSUInteger iterationCounter
 		case SM:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -3959,7 +3959,7 @@ NSUInteger iterationCounter
 			vbit = VBIT(opcode2);
 			wbit = WBIT(opcode2);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			value1_size = sizeof(char);
+			value1_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 
@@ -3979,7 +3979,7 @@ NSUInteger iterationCounter
 				hooleyDebug();
 //NEVER					wbit = LONGOPERAND;
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER					value1_size = sizeof(char);
+//NEVER					value1_size = 1;
 //NEVER					REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 	//NEVER			NEW_IMMEDIATE( value0Immed, imm0 );
 //NEVER					printf("%s\t$", mnemonic);
@@ -4030,7 +4030,7 @@ NSUInteger iterationCounter
 //NEVER								if(got_modrm_byte == FALSE){
 //NEVER									hooleyDebug();
 //NEVER									got_modrm_byte = TRUE;
-//NEVER									byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER									byte = get_value(1, sect, &length, &left);
 //NEVER									modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER								}
 //NEVER								if(reg == 6){
@@ -4045,7 +4045,7 @@ NSUInteger iterationCounter
 			}
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -4060,7 +4060,7 @@ NSUInteger iterationCounter
 		case Mb:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = BYTEOPERAND;
@@ -4072,7 +4072,7 @@ NSUInteger iterationCounter
 
 		case SREG: /* special register */
 				hooleyDebug();
-//NEVER					byte = get_value(sizeof(char), sect, &length, &left);
+//NEVER					byte = get_value( 1, sect, &length, &left);
 //NEVER					modrm_byte(&mode, &reg, &r_m, byte);
 //NEVER					vbit = 0;
 //NEVER					switch(opcode5)
@@ -4170,7 +4170,7 @@ NSUInteger iterationCounter
 		case MR:
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
-				byte = get_value(sizeof(char), sect, &length, &left);
+				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
@@ -4321,7 +4321,7 @@ NSUInteger iterationCounter
 		/* jmp/call. single operand, 8 bit displacement */
 		case BD:
 			// gohere			
-			value0_size = sizeof(char);
+			value0_size = 1;
 			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg jne	0x00002b1a
@@ -4358,7 +4358,7 @@ NSUInteger iterationCounter
 			value0_size = sizeof(short);
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
-			value1_size = sizeof(char);
+			value1_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm1, value1_size);
 			NEW_IMMEDIATE( value1Immed, imm1 );
 			// printf("%s\t$", mnemonic);
@@ -4380,7 +4380,7 @@ NSUInteger iterationCounter
 
 		/* single 8 bit port operand */
 		case P:
-			value0_size = sizeof(char);
+			value0_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// printf("%s\t$", mnemonic);
@@ -4391,7 +4391,7 @@ NSUInteger iterationCounter
 
 		/* single 8 bit (input) port operand				*/
 		case Pi:
-			value0_size = sizeof(char);
+			value0_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// printf("%s\t$", mnemonic);
@@ -4404,7 +4404,7 @@ NSUInteger iterationCounter
 		/* single 8 bit (output) port operand				*/
 		case Po:
 		{
-			value0_size = sizeof(char);
+			value0_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg  outb %al,$0x00
@@ -4455,7 +4455,7 @@ NSUInteger iterationCounter
 
 		/* just an opcode and an unused byte that must be discarded */
 		case U:
-			byte = get_value(sizeof(char), sect, &length, &left);
+			byte = get_value( 1, sect, &length, &left);
 			// printf("%s\n", mnemonic);
 			addLine( addr, currentFuncPtr, dp, NULL );			
 			return(length);
@@ -4581,7 +4581,7 @@ static NSUInteger replacement_get_operand(
 	/* check for the presence of the s-i-b byte */
 	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
 	    s_i_b = TRUE;
-	    byte = get_value(sizeof(char), sect, length, left);
+	    byte = get_value( 1, sect, length, left);
 	    modrm_byte((NSUInteger *)&ss, (NSUInteger *)&index, (NSUInteger *)&base, byte);
 	} else {
 	    s_i_b = FALSE;
@@ -4690,7 +4690,7 @@ static NSUInteger replacement_get_operand(
 
 			} else if(mmx == TRUE) {
 				sprintf(result, "%%mm%ld", (unsigned long)r_m);
-				struct HooReg *mmReg = &mmReg_Struct[r_m];
+				struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
 
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
@@ -4829,7 +4829,7 @@ static NSUInteger replacement_get_operand(
 //	/* check for the presence of the s-i-b byte */
 //	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
 //	    s_i_b = TRUE;
-//	    byte = get_value(sizeof(char), sect, length, left);
+//	    byte = get_value( 1, sect, length, left);
 //	    modrm_byte(&ss, &index, &base, byte);
 //	} else {
 //	    s_i_b = FALSE;

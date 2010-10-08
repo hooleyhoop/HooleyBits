@@ -15,11 +15,11 @@
 }
 
 - (void)insertSegment:(Segment *)seg;
-- (Segment *)segmentForAddress:(uint64)memAddr;
+- (Segment *)segmentForAddress:(char *)memAddr;
 
 - (void)insertSection:(Section *)sec;
-- (Section *)sectionForAddress:(uint64)memAddr;
+- (Section *)sectionForAddress:(char *)memAddr;
 
-- (uint64)lastAddress;
+- (char *)lastAddress;
 
 @end

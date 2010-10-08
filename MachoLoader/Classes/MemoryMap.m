@@ -42,19 +42,19 @@
 	[containerSeg insertSection:sec];
 }
 
-- (Section *)sectionForAddress:(uint64)memAddr {
+- (Section *)sectionForAddress:(char *)memAddr {
 
 	Segment *containerSeg = [self segmentForAddress:memAddr];
 	Section *sec = [containerSeg sectionForAddress:memAddr];
 	return sec;
 }
 
-- (Segment *)segmentForAddress:(uint64)memAddr {
+- (Segment *)segmentForAddress:(char *)memAddr {
 
 	return (Segment *)[_segmentStore blockForAddress:memAddr];
 }
 
-- (uint64)lastAddress {
+- (char *)lastAddress {
 	return [_segmentStore lastAddress];
 }
 @end

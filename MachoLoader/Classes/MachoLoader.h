@@ -22,7 +22,7 @@
 struct symbol {
     char *name;
     char *indr_name;
-    uint64_t n_value;
+    char *n_value;
     int is_thumb;
 };
 
@@ -48,7 +48,8 @@ struct hooleyFuction {
 	NSUInteger					_sizeofcmds;
 	NSUInteger					_ncmds;
 	NSMutableArray				*_loadCommandsArray;
-	const void					*_codeAddr;
+	
+	char						*_codeAddr;
 	size_t						_codeSize;
 	cpu_type_t					_cputype;
 	
@@ -65,7 +66,7 @@ struct hooleyFuction {
 	
 	// Indirect Symbol Table
 	NSUInteger					_nindirect_symbols;
-	const uint32_t*				_indirectSymbolTable;
+	char*						_indirectSymbolTable;
 	
 	IntKeyDictionary			*_indirectSymbolLookup, *_cStringLookup;
 	IntHash						*_cls_refsLookup;
@@ -78,11 +79,11 @@ struct hooleyFuction {
 	NSMutableArray				*_libraries;
 	
 	// text section bodge - stuff needed to get the code lifted straight from otool to work
-	UInt8						*_text_sect_pointer;
-	UInt8						*_text_sect_addr;
+	char						*_text_sect_pointer;
+	char						*_text_sect_addr;
 	struct relocation_info		*_text_relocs;
-	uint32_t					_text_nsorted_relocs;
-	uint64_t					_textSectSize;
+	NSUInteger					_text_nsorted_relocs;
+	NSUInteger					_textSectSize;
 	
 	// ok - the results of the disasembly
 	struct hooleyFuction		*_headFunction;
@@ -94,18 +95,19 @@ struct hooleyFuction {
 
 - (void)readFile;
 
-- (SymbolicInfo *)symbolicInfoForAddress:(uint64)memAddr;
+- (SymbolicInfo *)symbolicInfoForAddress:(char *)memAddr;
 
 - (BOOL)processSymbolItem:(struct nlist_64 *)list stringTable:(char *)table;
 
 - (NSString *)lookupLibrary:(NSUInteger)libraryIndex;
-- (void)addCstring:(NSString *)aCstring forAddress:(uint64)cStringAddress;
-- (NSString *)CStringForAddress:(uint64)addr;
+- (void)addCstring:(NSString *)aCstring forAddress:(const char *)cStringAddress;
+- (NSString *)CStringForAddress:(char *)addr;
 
-const char * guess_symbol( const uint64_t value,	/* the value of this symbol (in) */
+const char * guess_symbol( const char *value,	/* the value of this symbol (in) */
 			 const struct symbol *sorted_symbols,
 			 const uint32_t nsorted_symbols,
 			 int verbose);
+
 const char * guess_indirect_symbol(
 								   const uint64_t value,	/* the value of this symbol (in) */
 								   const uint32_t ncmds,
