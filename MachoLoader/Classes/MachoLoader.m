@@ -452,13 +452,13 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				// Doesn't have an index into the string table
 				// printf("LOCAL\n");
 				symbolInfo.stringValue = @"LOCAL";
-				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:(uint64)symbolInfo.address];
 				continue;
 			}
 			if(indirect_symbols[j + n] == (INDIRECT_SYMBOL_LOCAL | INDIRECT_SYMBOL_ABS)){
 				// printf("LOCAL ABSOLUTE\n");
 				symbolInfo.stringValue = @"LOCAL ABSOLUTE";
-				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:(uint64)(symbolInfo.address)];
 				continue;
 			}
 			if(indirect_symbols[j + n] == INDIRECT_SYMBOL_ABS){
@@ -469,7 +469,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				 */ 
 				// printf("ABSOLUTE\n");
 				symbolInfo.stringValue = @"ABSOLUTE";
-				[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
+				[_indirectSymbolLookup addObject:symbolInfo forIntKey:(uint64)(symbolInfo.address)];
 				continue;
 			}
 			uint64 symbolIndex = indirect_symbols[j+n];
@@ -568,7 +568,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 //						default:
 //							break;
 //					}
-					[_indirectSymbolLookup addObject:symbolInfo forIntKey:symbolInfo.address];
+					[_indirectSymbolLookup addObject:symbolInfo forIntKey:(uint64)(symbolInfo.address)];
 //				}
 	
 //			}
@@ -840,8 +840,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		NSAssert( memAddr>[_memoryMap lastAddress], @"value seems to be in a hole");
 		
 		// so what about all the other parts of the macho file? are they loaded into memory?
-		NSAssert( memAddr> _codeSize, @"value is within app");
-
+		NSAssert( (uint64)memAddr > _codeSize, @"value is within app");
 	}
 	
 	// NSLog(@"%@ %@", [seg name], [sec name]);
@@ -849,7 +848,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	// think these are function pointers
 	if( [[seg name] isEqualToString:@"__IMPORT"] ) {
 		
-		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:memAddr];
+		si = (SymbolicInfo *)[_indirectSymbolLookup objectForIntKey:(uint64)memAddr];
 		NSAssert( [[seg name] isEqualToString:[si segmentName]], nil ); 
 		NSAssert( [[sec name] isEqualToString:[si sectionName]], nil );
 		
@@ -1341,7 +1340,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			fn = [fn substringToIndex:range.location];
 		}
 		
-		[self addFunction:fn line:line address:list->n_value section:list->n_sect ];
+		[self addFunction:fn line:line address:(char *)list->n_value section:list->n_sect ];
 		
 		result = YES;
 //	} else if (list->n_type == N_SLINE && list->n_sect == mainSection) {
@@ -1351,7 +1350,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		// Regular symbols or ones that are external
 		NSString *fn = [NSString stringWithUTF8String:&table[n_stringIndex]];
 		
-		[self addFunction:fn line:0 address:list->n_value section:list->n_sect ];
+		[self addFunction:fn line:0 address:(char *)list->n_value section:list->n_sect ];
 		result = YES;
 	}
 	
@@ -1373,11 +1372,11 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 
 - (void)addCstring:(NSString *)aCstring forAddress:(const char *)cStringAddress {
 
-	[_cStringLookup addObject:aCstring forIntKey:cStringAddress];
+	[_cStringLookup addObject:aCstring forIntKey:(uint64)cStringAddress];
 }
 
 - (NSString *)CStringForAddress:(char *)addr {
-	return (NSString *)[_cStringLookup objectForIntKey:addr];
+	return (NSString *)[_cStringLookup objectForIntKey:(uint64)addr];
 }
 
 //- (void)addUnDecodedBlock:(char *)sect_pointer size:(uint32_t)len withName:(NSString *)nm {
@@ -1534,7 +1533,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 								 seg:segmentName 
 							   start:sect_addr 
 							  length:newSectSize 
-							 filePtr:__cast__(uint64)sect_pointer];
+							 filePtr:sect_pointer];
 					
 //					int err = (int) vm_allocate(mach_task_self(), (vm_address_t *) &newSectAddr, newSectSize, true);
 //					if (err==0) {

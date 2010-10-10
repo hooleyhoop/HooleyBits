@@ -197,10 +197,10 @@ static NSUInteger replacement_get_operand(
 										  const NSUInteger mmx,
 										  const unsigned int rex,
 										  const char *sect,
-										  uint64 sect_addr,
+										  char *sect_addr,
 										  NSUInteger *length,
 										  uint64 *left,
-										  const uint64 addr,
+										  char *addr,
 										  const struct relocation_info *sorted_relocs,
 										  const NSUInteger nsorted_relocs,
 										  const struct nlist *symbols,
@@ -273,11 +273,11 @@ static void replacement_immediate(
 					  uint64_t *value,
 					  NSUInteger value_size,
 					  const char *sect,
-					  uint64 sect_addr,
+					  const char *sect_addr,
 					  NSUInteger *length,
 					  uint64 *left,
 					  const cpu_type_t cputype,
-					  const uint64 addr,
+					  const char *addr,
 					  const struct relocation_info *sorted_relocs,
 					  const NSUInteger nsorted_relocs,
 					  const struct nlist *symbols,
@@ -297,11 +297,11 @@ static void displacement(
     uint64 *value,
     const NSUInteger value_size,
     const char *sect,
-    uint64_t sect_addr,
+    const char *sect_addr,
     NSUInteger *length,
     uint64 *left,
     const cpu_type_t cputype,
-    const uint64_t addr,
+    const char *addr,
     const struct relocation_info *sorted_relocs,
     const NSUInteger nsorted_relocs,
     const struct nlist *symbols,
@@ -2127,7 +2127,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 }
 
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
-	
+	return;
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
@@ -2145,7 +2145,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	currentFunc->lastLine = newLine;
 	
 	char lineToPrint[256];
-	sprintf( lineToPrint, "%p\t%s ", (uint)memAddress, dp->name);
+	sprintf( lineToPrint, "%p\t%s ", memAddress, dp->name);
 	
 	// lets just take a pepp at the arguments
 	if (args) {
@@ -2258,8 +2258,10 @@ NSUInteger iterationCounter
     NSUInteger sse2=FALSE;		/* sse2 instruction using xmmreg's */
     NSUInteger mmx=FALSE;		/* mmx instruction using mmreg's */
     unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
-	const struct HooReg *reg_struct=NULL;
 	
+	const struct HooReg *reg_struct=NULL;
+	const struct HooReg *mmreg_struct=NULL;
+
 	if(left == 0){
 	   printf("(end of section)\n");
 	   return(0);
@@ -2624,7 +2626,7 @@ NSUInteger iterationCounter
 
 			/* opcode 0x6B for byte, sign-extended displacement, 0x69 for word(s) */
 			value0_size = OPSIZE(data16, opcode2==0x9, 0);
-			REPLACEMENT_IMMEDIATE( &symadd0, &symsub0, &imm0, value0_size );
+			REPLACEMENT_IMMEDIATE( &symadd0, &symsub0, &imm0, value0_size );			
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg imull $0x44,%edx,%eax
@@ -2675,6 +2677,7 @@ NSUInteger iterationCounter
 
 		/* SSE2 instructions with further prefix decoding dest to memory or memory to dest depending on the opcode */
 		case SSE2tfm:
+		{
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -2736,6 +2739,7 @@ NSUInteger iterationCounter
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
+		}
 
 		/* SSE2 instructions with further prefix decoding dest to memory */
 		case SSE2tm:
@@ -2891,6 +2895,7 @@ NSUInteger iterationCounter
 
 		/* SSE2 instructions with further prefix decoding */
 		case SSE2:
+		{
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -2981,6 +2986,8 @@ NSUInteger iterationCounter
 					hooleyDebug();
 //NEVER					sse2 = TRUE;
 //NEVER					reg_name = get_reg_name(reg, 1, data16, rex);
+					reg_struct = get_regStruct(reg, wbit, data16, rex);
+
 //NEVER					strcpy(result1, reg_name);
 //NEVER					if(prefix_byte == 0x66){
 //NEVER						hooleyDebug();
@@ -2994,33 +3001,30 @@ NSUInteger iterationCounter
 				   /*      movsd & movss */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						hooleyDebug();
-//NEVER						printf("%supd\t", mnemonic);
+						// printf("%supd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-//						printf("%ssd\t", mnemonic);
+						// printf("%ssd\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
-//						printf("%sss\t", mnemonic);
+						// printf("%sss\t", mnemonic);
 					} else /* no prefix_byte */{
-//						printf("%sups\t", mnemonic);
+						// printf("%sups\t", mnemonic);
 					}
 					break;
 				case 0x2a: /* cvtpi2pd, cvtsi2sd, cvtsi2ss & cvtpi2ps */
 					if(prefix_byte == 0x66){
-						hooleyDebug();
-//NEVER						mmx = TRUE;
-//NEVER						printf("%spi2pd\t", mnemonic);
+						mmx = TRUE;
+						// printf("%spi2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
 						wbit = LONGOPERAND;
-//						printf("%ssi2sd\t", mnemonic);
+						// printf("%ssi2sd\t", mnemonic);
 						// -- this is a suffix --
 						
 					} else if(prefix_byte == 0xf3){
 						wbit = LONGOPERAND;
-//						printf("%ssi2ss\t", mnemonic);
+						// printf("%ssi2ss\t", mnemonic);
 					} else { /* no prefix_byte */
-						hooleyDebug();
-//NEVER						mmx = TRUE;
-//NEVER						printf("%spi2ps\t", mnemonic);
+						mmx = TRUE;
+						// printf("%spi2ps\t", mnemonic);
 					}
 					break;
 				case 0x2c: /* cvttpd2pi, cvttsd2si, cvttss2si & cvttps2pi */
@@ -3068,12 +3072,16 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%ssd2si\t", mnemonic);
 //NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+					reg_struct = get_regStruct(reg, wbit, data16, rex);
+
 //NEVER						strcpy(result1, reg_name);
 //NEVER					} else if(prefix_byte == 0xf3){
 //NEVER						hooleyDebug();
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%sss2si\t", mnemonic);
 //NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
+					reg_struct = get_regStruct(reg, wbit, data16, rex);
+
 //NEVER						strcpy(result1, reg_name);
 //NEVER					} else { /* no prefix_byte */
 //NEVER						hooleyDebug();
@@ -3096,9 +3104,8 @@ NSUInteger iterationCounter
 				case 0xe0: /* pavgb */
 				case 0xe3: /* pavgw */
 					if(prefix_byte == 0x66){
-						hooleyDebug();
-//NEVER						sse2 = TRUE;
-//Putback						printf("%s\t", mnemonic);
+						sse2 = TRUE;
+						// printf("%s\t", mnemonic);
 					} else { /* no prefix_byte */
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
@@ -3108,18 +3115,19 @@ NSUInteger iterationCounter
 //NEVER						mmx = TRUE;
 					}
 					break;
+					
 				case 0xe6: /* cvttpd2dq, cvtdq2pd & cvtpd2dq */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-//						printf("%stpd2dq\t", mnemonic);
+						// printf("%stpd2dq\t", mnemonic);
 					}
 					if(prefix_byte == 0xf3){
-//						printf("%sdq2pd\t", mnemonic);
+						// printf("%sdq2pd\t", mnemonic);
 					} else if(prefix_byte == 0xf2){
-						hooleyDebug();
-//NEVER						printf("%spd2dq\t", mnemonic);
+						// printf("%spd2dq\t", mnemonic);
 					}
 					break;
+
 				case 0x5a: /* cvtpd2ps, cvtsd2ss, cvtss2sd & cvtps2pd */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
@@ -3132,11 +3140,11 @@ NSUInteger iterationCounter
 //						printf("%sps2pd\t", mnemonic);
 					}
 					break;
+					
 				case 0x5b: /* cvtdq2ps, cvttps2dq & cvtps2dq */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-						hooleyDebug();
-//NEVER						printf("%sps2dq\t", mnemonic);
+						// printf("%sps2dq\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
 //						printf("%stps2dq\t", mnemonic);
 					} else /* no prefix_byte */{
@@ -3190,13 +3198,12 @@ NSUInteger iterationCounter
 				case 0xfd: /* paddw */
 				case 0xfe: /* paddd */
 					if(prefix_byte == 0x66){
-//						printf("%s\t", mnemonic);
+						// printf("%s\t", mnemonic);
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//Putback						printf("%s\t", mnemonic);
+						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
 					break;
@@ -3215,10 +3222,9 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 //						printf("%sdqu\t", mnemonic);
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//						printf("%sq\t", mnemonic);
+						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						// printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
 					break;
@@ -3226,7 +3232,7 @@ NSUInteger iterationCounter
 					if(prefix_byte == 0xf2){
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
 
 //NEVER						printf("%sdq2q\t", mnemonic);
 //NEVER						sse2 = TRUE;
@@ -3241,10 +3247,9 @@ NSUInteger iterationCounter
 //						printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					} else { /* no prefix_byte */
-						sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//						printf("%s\t", mnemonic);
+						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						// printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					}
 					break;
@@ -3258,31 +3263,32 @@ NSUInteger iterationCounter
 						// printf("%ss\t", mnemonic);
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
-						hooleyDebug();
-						sprintf(result1, "%%mm%lu", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
+						// sprintf(result1, "%%mm%lu", reg);
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
 					break;
 				case 0xd7: /* pmovmskb */
 				{
-					hooleyDebug();
-//NEVER					if(prefix_byte == 0x66){
-//NEVER						hooleyDebug();
-//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
-//NEVER						printf("%s\t%%xmm%u,%s\n", mnemonic, xmm_rm(r_m, rex), reg_name);
-//NEVER						return(length);
-//NEVER					} else { /* no prefix_byte */
-//NEVER						hooleyDebug();
-//NEVER						reg_name = get_reg_name(reg, 1, data16, rex);
-//NEVER						printf("%s\t%%mm%u,%s\n", mnemonic, r_m, reg_name);
-					struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
-
-//NEVER						return(length);
-//NEVER					}
-//NEVER					break;
+					if(prefix_byte == 0x66){
+						reg_struct = get_regStruct(reg, 1, data16, rex);
+						NSUInteger regNum = xmm_rm(r_m, rex);
+						const struct HooReg *reg_struct2 = &xmmReg_Struct[regNum]; //%xmm0
+						FILLARGS2( reg_struct2, reg_struct );
+						addLine( addr, currentFuncPtr, dp, allArgs );		
+						// printf("%s\t%%xmm%u,%s\n", mnemonic, reg_struct2, reg_name);
+						return(length);
+						
+					} else { /* no prefix_byte */
+						reg_struct = get_regStruct(reg, 1, data16, rex);
+						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+						FILLARGS2( mmReg, reg_struct );
+						addLine( addr, currentFuncPtr, dp, allArgs );		
+						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
+						return(length);
+					}
+					break;
 				}
 				case 0xda: /* pminub */
 				case 0xde: /* pmaxub */
@@ -3292,27 +3298,26 @@ NSUInteger iterationCounter
 				case 0xf4: /* pmuludq */
 				case 0xf6: /* psadbw */
 				{
-					hooleyDebug();
-//NEVER					if(prefix_byte == 0x66){
-//NEVER						hooleyDebug();
+					if(prefix_byte == 0x66){
+						hooleyDebug();
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%s\t", mnemonic);
-//NEVER					} else { /* no prefix_byte */
-//NEVER						hooleyDebug();
-//NEVER						sprintf(result1, "%%mm%u", reg);
-					struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//NEVER						printf("%s\t", mnemonic);
-//NEVER						mmx = TRUE;
-//NEVER					}
-//NEVER					break;
-//NEVER				case 0xf0: /* lddqu */
-//NEVER					hooleyDebug();
+					} else { /* no prefix_byte */
+						// sprintf(result1, "%%mm%u", reg);
+						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						// printf("%s\t", mnemonic);
+						mmx = TRUE;
+					}
+					break;
+				}
+				case 0xf0: /* lddqu */
+					hooleyDebug();
 //NEVER					printf("%s\t", mnemonic);
 //NEVER					sse2 = TRUE;
-//NEVER					break;
-//NEVER				case 0xf7: /* maskmovdqu & maskmovq */
-//NEVER					hooleyDebug();
+					break;
+				case 0xf7: /* maskmovdqu & maskmovq */
+				{
+					hooleyDebug();
 //NEVER					sse2 = TRUE;
 //NEVER					if(prefix_byte == 0x66) {
 //NEVER						hooleyDebug();
@@ -3324,10 +3329,15 @@ NSUInteger iterationCounter
 
 //NEVER						return(length);
 //NEVER					}
-//NEVER					break;
+					break;
 				}
+		
 			} // end switch
 
+			-- how do we get these into resul1?
+			mmreg = result1
+			regStruct = ?
+			
 			/* woah - so that was pretty complicated, huh? This needs some checking. Perhaps we would be better pushing the arguments onto our arg stack? */
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			
@@ -3335,10 +3345,11 @@ NSUInteger iterationCounter
 			// i have missed the suffix off the operand. eg - i am printing cvttps2d %xmm0,%xmm0 as cvt  %xmm0 %xmm0 -- which doesn't tell you as 
 			
 			// eg movsd	(%eax),%xmm0
-			FILLARGS2( abstractStrctPtr1, reg_struct );
-//			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
+			FILLARGS2( abstractStrctPtr1, result1 );
+			// printf("%s\n", result1);
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
+		}
 
 		/* SSE4 instructions */
 		case SSE4:
@@ -3466,6 +3477,8 @@ NSUInteger iterationCounter
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 //NEVER					rex = rex_save;
 //NEVER					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
+			reg_struct = get_regStruct(reg, 1 /* wbit */, 0 /* data16 */, rex);
+
 //NEVER					printf("%s\t", mnemonic);
 //NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 //NEVER					printf("%s\n", reg_name);
@@ -3482,6 +3495,8 @@ NSUInteger iterationCounter
 //NEVER					}
 //NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 //NEVER					reg_name = get_reg_name(reg, 1 /* wbit */, 0 /* data16 */, rex);
+			reg_struct = get_regStruct(reg, 1 /* wbit */, 0 /* data16 */, rex);
+
 //NEVER					printf("%s\t", mnemonic);
 //NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 //NEVER					printf("%s\n", reg_name);
@@ -3549,12 +3564,17 @@ NSUInteger iterationCounter
 //NEVER							if(prefix_byte == 0x66){
 //NEVER								hooleyDebug();
 //NEVER								reg_name = get_reg_name(reg, 1, data16, rex);
-//NEVER								printf("%s\t$0x%x,%%xmm%u,%s\n", mnemonic, byte,
-//NEVER								   xmm_rm(r_m, rex), reg_name);
+					reg_struct = get_regStruct(reg, 1, data16, rex);
+					NSUInteger regNum = xmm_rm(r_m, rex);
+					const struct HooReg *reg_struct2 = &xmmReg_Struct[regNum]; //%xmm0
+					
+//NEVER								printf("%s\t$0x%x,%%xmm%u,%s\n", mnemonic, byte, reg_struct2, reg_struct);
 //NEVER								return(length);
 //NEVER							} else { /* no prefix_byte */
 //NEVER								hooleyDebug();
 //NEVER								reg_name = get_reg_name(reg, 1, data16, rex);
+					reg_struct = get_regStruct(reg, 1, data16, rex);
+
 //NEVER								printf("%s\t$0x%x,%%mm%u,%s\n", mnemonic, byte, r_m,reg_name);
 				//	struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
 
@@ -3563,8 +3583,7 @@ NSUInteger iterationCounter
 					break;
 				default:
 					if(prefix_byte == 0x66) {
-						hooleyDebug();
-//NEVER								printf("%spd\t$0x%x,", mnemonic, byte);
+						// printf("%spd\t$0x%x,", mnemonic, byte);
 					} else if(prefix_byte == 0xf2) {
 						// printf("%ssd\t$0x%x,", mnemonic, byte);
 					} else if(prefix_byte == 0xf3) {
@@ -3659,11 +3678,9 @@ NSUInteger iterationCounter
 						if(reg == 0x7){
 							// printf("%slldq\t$0x%x,", mnemonic, byte);
 						}else if(reg == 0x3){
-							hooleyDebug();
-//NEVER									printf("%srldq\t$0x%x,", mnemonic, byte);
+							// printf("%srldq\t$0x%x,", mnemonic, byte);
 						}else if(reg == 0x2){
-							hooleyDebug();
-//NEVER									printf("%srlq\t$0x%x,", mnemonic, byte);
+							// printf("%srlq\t$0x%x,", mnemonic, byte);
 						}else if(reg == 0x6){
 							// printf("%sllq\t$0x%x,", mnemonic, byte);
 						}
@@ -3976,16 +3993,18 @@ NSUInteger iterationCounter
 			return(length);
 
 		case MIb:
-				hooleyDebug();
-//NEVER					wbit = LONGOPERAND;
-//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER					value1_size = 1;
-//NEVER					REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
-	//NEVER			NEW_IMMEDIATE( value0Immed, imm0 );
-//NEVER					printf("%s\t$", mnemonic);
-//NEVER					print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
-//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-					return(length);
+			wbit = LONGOPERAND;
+			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			value1_size = 1;
+			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
+			NEW_IMMEDIATE( value0Immed, imm0 );
+			// printf("%s\t$", mnemonic);
+			// print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
+			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			FILLARGS2( value0Immed, abstractStrctPtr1 );			
+			addLine( addr, currentFuncPtr, dp, allArgs );
+			return(length);
 
 		/* single memory or register operand with 'w' bit present */
 		case Mw:
@@ -4267,7 +4286,7 @@ NSUInteger iterationCounter
 		/* single operand, a 16/32 bit displacement */
 		case D:
 			value0_size = OPSIZE(data16, LONGOPERAND, 0);
-			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
+			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);			
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
@@ -4548,10 +4567,10 @@ static NSUInteger replacement_get_operand(
 						const NSUInteger mmx,
 						const unsigned int rex,
 						const char *sect,
-						uint64 sect_addr,
+						char *sect_addr,
 						NSUInteger *length,
 						uint64 *left,
-						const uint64 addr,
+						char *addr,
 						const struct relocation_info *sorted_relocs,
 						const NSUInteger nsorted_relocs,
 						const struct nlist *symbols,
@@ -4907,6 +4926,8 @@ static NSUInteger replacement_get_operand(
 //	} else { /* no s-i-b */
 //	    if(mode == REG_ONLY){
 //			if(sse2 == TRUE) {
+//				NSUInteger regNum = xmm_rm(r_m, rex);
+//				const struct HooReg *reg_struct = &xmmReg_Struct[regNum]; //%xmm0
 //				sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
 //			} else if(mmx == TRUE) {
 //				sprintf(result, "%%mm%u", r_m);
@@ -5019,11 +5040,11 @@ static void replacement_immediate(
 	uint64_t *value,
 	NSUInteger value_size,
 	const char *sect,
-	uint64 sect_addr,
+	const char *sect_addr,
 	NSUInteger *length,
 	uint64 *left,
 	cpu_type_t cputype,
-	const uint64 addr,
+	const char *addr,
 	const struct relocation_info *sorted_relocs,
 	const NSUInteger nsorted_relocs,
 	const struct nlist *symbols,
@@ -5061,12 +5082,12 @@ uint64 *value,
 const NSUInteger value_size,
 
 const char *sect,
-uint64_t sect_addr,
+const char *sect_addr,
 NSUInteger *length,
 uint64 *left,
 
 const cpu_type_t cputype,
-const uint64_t addr,
+const char *addr,
 const struct relocation_info *sorted_relocs,
 const NSUInteger nsorted_relocs,
 const struct nlist *symbols,
@@ -5079,11 +5100,11 @@ const struct symbol *sorted_symbols,
 const NSUInteger nsorted_symbols,
 const NSUInteger verbose)
 {
-    uint64 sect_offset;
+	uint64 sect_offset;
 	uint64_t offset;
 	uint64_t guess_addr;
 
-	sect_offset = addr + *length - sect_addr;
+	sect_offset = (uint64)addr + *length - (uint64)sect_addr;
 	*value = get_value(value_size, sect, length, left);
 	switch(value_size){
 		case 1:
@@ -5096,7 +5117,7 @@ const NSUInteger verbose)
 			break;
 	}
 	if((cputype & CPU_ARCH_ABI64) != CPU_ARCH_ABI64)
-	    *value += addr + *length;
+	    *value = *value + (uint64)addr + *length;
 
 //	GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
 //	if(*symadd == NULL){
@@ -5114,7 +5135,7 @@ const NSUInteger verbose)
 //			if(*symadd != NULL)
 //				*value = 0;
 //			else
-				*value += addr + *length;
+				*value += (uint64)addr + *length;
 	    }
 //	} else if(*symsub != NULL){
 //	    *value = offset;
