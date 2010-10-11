@@ -2260,7 +2260,6 @@ NSUInteger iterationCounter
     unsigned char rex=0, rex_save=0;/* x86-64 REX prefix */
 	
 	const struct HooReg *reg_struct=NULL;
-	const struct HooReg *mmreg_struct=NULL;
 
 	if(left == 0){
 	   printf("(end of section)\n");
@@ -3202,7 +3201,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3223,7 +3222,7 @@ NSUInteger iterationCounter
 //						printf("%sdqu\t", mnemonic);
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3232,7 +3231,7 @@ NSUInteger iterationCounter
 					if(prefix_byte == 0xf2){
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 
 //NEVER						printf("%sdq2q\t", mnemonic);
 //NEVER						sse2 = TRUE;
@@ -3248,7 +3247,7 @@ NSUInteger iterationCounter
 						wbit = LONGOPERAND;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					}
@@ -3264,7 +3263,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3299,12 +3298,11 @@ NSUInteger iterationCounter
 				case 0xf6: /* psadbw */
 				{
 					if(prefix_byte == 0x66){
-						hooleyDebug();
-//NEVER						sse2 = TRUE;
-//NEVER						printf("%s\t", mnemonic);
+						sse2 = TRUE;
+						// printf("%s\t", mnemonic);
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%u", reg);
-						mmreg = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3333,10 +3331,6 @@ NSUInteger iterationCounter
 				}
 		
 			} // end switch
-
-			-- how do we get these into resul1?
-			mmreg = result1
-			regStruct = ?
 			
 			/* woah - so that was pretty complicated, huh? This needs some checking. Perhaps we would be better pushing the arguments onto our arg stack? */
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -3345,7 +3339,7 @@ NSUInteger iterationCounter
 			// i have missed the suffix off the operand. eg - i am printing cvttps2d %xmm0,%xmm0 as cvt  %xmm0 %xmm0 -- which doesn't tell you as 
 			
 			// eg movsd	(%eax),%xmm0
-			FILLARGS2( abstractStrctPtr1, result1 );
+			FILLARGS2( abstractStrctPtr1, reg_struct );
 			// printf("%s\n", result1);
 			addLine( addr, currentFuncPtr, dp, allArgs );		
 			return(length);
@@ -3512,13 +3506,11 @@ NSUInteger iterationCounter
 			}
 			/* pshufw */
 			if((opcode4 << 4 | opcode5) == 0x70 && prefix_byte == 0) {
-				hooleyDebug();
-//NEVER						mmx = TRUE;
+				mmx = TRUE;
 			}
 			/* pinsrw */
 			else if((opcode4 << 4 | opcode5) == 0xc4) {
-				hooleyDebug();
-//NEVER						wbit = LONGOPERAND;
+				wbit = LONGOPERAND;
 			} else {
 				sse2 = TRUE;
 			}
@@ -3544,20 +3536,19 @@ NSUInteger iterationCounter
 						return(length);
 					}
 					break;
+	
 				case 0xc4: /* pinsrw */
-					hooleyDebug();
-//NEVER							if(prefix_byte == 0x66){
-//NEVER								hooleyDebug();
-//NEVER								printf("%s\t$0x%x,", mnemonic, byte);
-//NEVER							} else { /* no prefix_byte */
-//NEVER								hooleyDebug();
-//NEVER								printf("%s\t$0x%x,", mnemonic, byte);
-//NEVER								print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-//NEVER								printf("%%mm%u\n", reg);
-					struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//NEVER								return(length);
-//NEVER							}
+					if(prefix_byte == 0x66){
+						// printf("%s\t$0x%x,", mnemonic, byte);
+					} else { /* no prefix_byte */
+						// printf("%s\t$0x%x,", mnemonic, byte);
+						// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+						// printf("%%mm%u\n", reg);
+						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
+						addLine( addr, currentFuncPtr, dp, allArgs );
+						return(length);
+					}
 					break;
 				case 0xc5: /* pextrw */
 					hooleyDebug();
@@ -4708,8 +4699,9 @@ static NSUInteger replacement_get_operand(
 				return (NSUInteger)reg_struct;
 
 			} else if(mmx == TRUE) {
-				sprintf(result, "%%mm%ld", (unsigned long)r_m);
+				// sprintf(result, "%%mm%ld", (unsigned long)r_m);
 				struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+				return (NSUInteger)mmReg;
 
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
