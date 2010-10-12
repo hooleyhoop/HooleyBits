@@ -544,7 +544,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 			
 					char *demangledName = NULL;
 
-					NSLog(@"attempting to demangle %s", symbolString);
+					// NSLog(@"attempting to demangle %s", symbolString);
 					demangledName = __cxa_demangle( (const char *)symbolString, 
 																 demangledOutput,
 																 demangledLength, 
@@ -1441,7 +1441,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			}
 	
 			NSString *segmentName = [NSString stringWithCString:segname encoding:NSUTF8StringEncoding];
-			NSLog(@"segment name %@", segmentName);
+			// NSLog(@"segment name %@", segmentName);
 
 //			NSInteger segmentOffset = (NSInteger)((NSInteger *)seg)-(NSInteger)((NSInteger *)_codeAddr);
 //			[[FileMapView sharedMapView] addRegionAtOffset:segmentOffset withSize:seg->cmdsize label:[NSString stringWithFormat:@"LC_SEGMENT:%@ %i", segmentName, seg->cmdsize]];	
@@ -1482,7 +1482,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 
 				char *containingSegmentName = newSec_ptr64->segname;
 				char *thisSectionName = newSec_ptr64->sectname;
-				NSLog(@"segment2 name %s %s", containingSegmentName, thisSectionName );
+				// NSLog(@"segment2 name %s %s", containingSegmentName, thisSectionName );
 
 				char *memoryAddressOfSection = (char *)newSec_ptr64->addr; // In otx dump this is address of first line  :start: +0	--00002704--  7c3a0b78	or r26,r1,r1
 				if(memoryAddressOfSection)

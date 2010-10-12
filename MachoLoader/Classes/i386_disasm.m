@@ -2333,14 +2333,12 @@ NSUInteger iterationCounter
 		}
 	    if(dp->indirect == op0F38 || dp->indirect == op0F3A)
 		{
-			hooleyDebug();
-
 			/*
 			* MNI instructions are SSE2ish instructions with an
 			* extra byte.  Do the extra indirection here.
 			*/
-//NEVER			byte = get_value( 1, sect, &length, &left);
-//NEVER			dp = &dp->indirect[byte];
+			byte = get_value( 1, sect, &length, &left);
+			dp = &dp->indirect[byte];
 	    }
 	    /*
 	     * SSE and SSE2 instructions have 3 bytes of opcode and the
@@ -2383,14 +2381,12 @@ NSUInteger iterationCounter
 
 			} else if(dp->indirect == (const struct instable *)op0F01) {
 
-				hooleyDebug();
-	//NEVER		    if(got_modrm_byte == FALSE){
-	//NEVER				hooleyDebug();
-	//NEVER				got_modrm_byte = TRUE;
-	//NEVER				byte = get_value( 1, sect, &length, &left);
-	//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
-	//NEVER				opcode3 = reg;
-	//NEVER		    }
+			    if(got_modrm_byte == FALSE){
+					got_modrm_byte = TRUE;
+					byte = get_value( 1, sect, &length, &left);
+					modrm_byte(&mode, &reg, &r_m, byte);
+					opcode3 = reg;
+			    }
 				if(byte == 0xc8){
 					hooleyDebug();
 	//NEVER				data16 = FALSE;
@@ -2418,7 +2414,7 @@ NSUInteger iterationCounter
 				 */
 				if(prefix_dp != NULL) {
 					// here! dont ignore this
-					printf("%s", prefix_dp->name);
+					// printf("%s", prefix_dp->name);
 				}
 			}
 		}
@@ -2450,11 +2446,11 @@ NSUInteger iterationCounter
 				byte == 0xac || byte == 0xad || /* lods */
 				byte == 0xaa || byte == 0xab))  /* stos */
 			{
-				printf("rep/");
+				// printf("rep/");
 			} else {
 				// Repz = repeat while count is not equal
 				// TODO: I really need to expand this shit
-				printf("%s", prefix_dp->name);
+				// printf("%s", prefix_dp->name);
 			}
 	    }
 	}
@@ -2480,7 +2476,7 @@ NSUInteger iterationCounter
 				hooleyDebug();
 //NEVER				dp = &opFP5[r_m];
 			} else if(opcode2 == 0xB && mode == 0x3 && opcode3 > 6){
-				printf(".byte 0x%01x%01x, 0x%01x%01x 0x%02x #bad opcode\n", (unsigned int)opcode1, (unsigned int)opcode2, (unsigned int)opcode4, (unsigned int)opcode5, (unsigned int)byte);
+				// printf(".byte 0x%01x%01x, 0x%01x%01x 0x%02x #bad opcode\n", (unsigned int)opcode1, (unsigned int)opcode2, (unsigned int)opcode4, (unsigned int)opcode5, (unsigned int)byte);
 				return(length);
 			}
 			/* instruction form 4 */
@@ -2499,7 +2495,7 @@ NSUInteger iterationCounter
 	}
 
 	if(dp->indirect != TERM){
-	    printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
+	    // printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
 		/* add a bad opcode line ?*/
 	    return(length);
 	}
@@ -2521,19 +2517,19 @@ NSUInteger iterationCounter
 		{
 			if(data16 == TRUE)
 			{
-				sprintf(mnemonic, "%sw", dp->name);
+				// sprintf(mnemonic, "%sw", dp->name);
 			} else {
 				if(dp->adr_mode == Mnol || dp->adr_mode == INM)
 				{
-					sprintf(mnemonic, "%s", dp->name);
+					// sprintf(mnemonic, "%s", dp->name);
 				} else if(REX_W(rex) != 0){
-					sprintf(mnemonic, "%sq", dp->name);
+					// sprintf(mnemonic, "%sq", dp->name);
 				} else {
-					sprintf(mnemonic, "%sl", dp->name);
+					// sprintf(mnemonic, "%sl", dp->name);
 				}
 			}
 	    } else {
-			sprintf(mnemonic, "%s", dp->name);
+			// sprintf(mnemonic, "%s", dp->name);
 	    }
 	    if(dp->adr_mode == BD)
 		{
@@ -2796,22 +2792,22 @@ NSUInteger iterationCounter
 //NEVER						mmx = TRUE;
 //NEVER					}
 //NEVER					break;
+
 				case 0x7f: /* movdqa, movdqu, movq */
 					sse2 = TRUE;
 					if(prefix_byte == 0x66){
-//						printf("%sdqa\t", mnemonic);
+						// printf("%sdqa\t", mnemonic);
 					} else if(prefix_byte == 0xf3){
 						hooleyDebug();
-//						printf("%sdqu\t", mnemonic);
+						// printf("%sdqu\t", mnemonic);
 					} else {
-						hooleyDebug();
-						sprintf(result0, "%%mm%lu", (unsigned long)reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
-
-//						printf("%sq\t", mnemonic);
+						// sprintf(result0, "%%mm%lu", (unsigned long)reg);
+						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						// printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
 					break;
+		
 				case 0xe7: /* movntdq & movntq */
 					hooleyDebug();
 //NEVER					if(prefix_byte == 0x66){
@@ -2827,8 +2823,10 @@ NSUInteger iterationCounter
 //NEVER					}
 //NEVER					break;
 			}
+			// printf("%s,", result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
-			
+			// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
+
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs );
@@ -2836,30 +2834,32 @@ NSUInteger iterationCounter
 
 		/* MNI instructions */
 		case MNI:
-			hooleyDebug();
-//NEVER			data16 = FALSE;
-//NEVER			if(got_modrm_byte == FALSE){
-//NEVER				hooleyDebug();
-//NEVER				got_modrm_byte = TRUE;
-//NEVER				byte = get_value( 1, sect, &length, &left);
-//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
-//NEVER			}
-//NEVER			if(prefix_byte == 0x66){
-//NEVER				hooleyDebug();
-//NEVER				sse2 = TRUE;
-//NEVER				sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
-//NEVER			} else { /* no prefix byte */
-//NEVER				hooleyDebug();
-//NEVER				mmx = TRUE;
-//NEVER				sprintf(result1, "%%mm%u", reg);
-			struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+			data16 = FALSE;
+			if(got_modrm_byte == FALSE){
+				got_modrm_byte = TRUE;
+				byte = get_value( 1, sect, &length, &left);
+				modrm_byte(&mode, &reg, &r_m, byte);
+			}
+			if(prefix_byte == 0x66){
+				sse2 = TRUE;
+				// sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
+				regNum = xmm_reg(reg, rex);
+				reg_struct = &xmmReg_Struct[regNum];
 
-//NEVER			}
-//NEVER			printf("%s\t", mnemonic);
-//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER			print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-//NEVER			printf("%s\n", result1);
-//NEVER			return length;
+			} else { /* no prefix byte */
+				mmx = TRUE;
+				// sprintf(result1, "%%mm%u", reg);
+				reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+
+			}
+			// printf("%s\t", mnemonic);
+			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
+			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			// printf("%s\n", result1);
+			FILLARGS2( abstractStrctPtr1, reg_struct );
+			addLine( addr, currentFuncPtr, dp, allArgs );				
+			return length;
 
 		/* MNI instructions with 8-bit immediate */
 		case MNIi:
@@ -3750,28 +3750,27 @@ NSUInteger iterationCounter
 
 		/* 3DNow! prefetch instructions */
 		case PFCH3DNOW:
-				hooleyDebug();
-//NEVER					if(got_modrm_byte == FALSE)
-//NEVER					{
-//NEVER						hooleyDebug();
-//NEVER						got_modrm_byte = TRUE;
-//NEVER						byte = get_value( 1, sect, &length, &left);
-//NEVER						modrm_byte(&mode, &reg, &r_m, byte);
-//NEVER					}
-//NEVER					switch(reg)
-//NEVER					{
-//NEVER						case 0:
-//NEVER							hooleyDebug();
-//NEVER							printf("%s\t", dp->name);
-//NEVER							break;
-//NEVER						case 1:
-//NEVER							hooleyDebug();
-//NEVER							printf("%sw\t", dp->name);
-//NEVER							break;
-//NEVER					}
-//NEVER					GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-//NEVER					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-//NEVER					return(length);
+			if(got_modrm_byte == FALSE)
+			{
+				got_modrm_byte = TRUE;
+				byte = get_value( 1, sect, &length, &left);
+				modrm_byte(&mode, &reg, &r_m, byte);
+			}
+			switch(reg)
+			{
+				case 0:
+					// printf("%s\t", dp->name);
+					break;
+				case 1:
+					// printf("%sw\t", dp->name);
+					break;
+			}
+			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			FILLARGS1( abstractStrctPtr1 );			
+			addLine( addr, currentFuncPtr, dp, allArgs );			
+			return(length);
 
 		/* sfence & clflush */
 		case SFEN:
@@ -3881,7 +3880,7 @@ NSUInteger iterationCounter
 		case OA:
 			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 				value0_size = OPSIZE(addr16, LONGOPERAND, 1);
-				strcpy(mnemonic, "movabsl");
+				// strcpy(mnemonic, "movabsl");
 			} else {
 				value0_size = OPSIZE(addr16, LONGOPERAND, 0);
 			}
@@ -3898,7 +3897,7 @@ NSUInteger iterationCounter
 		case AO:
 			if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64){
 				value0_size = OPSIZE(addr16, LONGOPERAND, 1);
-				strcpy(mnemonic, "movabsl");
+				// strcpy(mnemonic, "movabsl");
 			} else {
 				value0_size = OPSIZE(addr16, LONGOPERAND, 0);
 			}
@@ -4160,7 +4159,7 @@ NSUInteger iterationCounter
 		case SEG:
 			reg = byte >> 3 & 0x3; /* segment register */
 			segReg = (struct HooReg *)&SEGREG[reg];
-			printf("%s\t%s\n", mnemonic, segReg->name );
+			// printf("%s\t%s\n", mnemonic, segReg->name );
 			// eg pushw	%es
 			FILLARGS1( segReg );
 			addLine( addr, currentFuncPtr, dp, allArgs );
@@ -4171,7 +4170,7 @@ NSUInteger iterationCounter
 		case LSEG:
 			reg = byte >> 3 & 0x7; /* long seg reg from opcode */
 			segReg = (struct HooReg *)&SEGREG[reg];
-			printf("%s\t%s\n", mnemonic, segReg->name);
+			// printf("%s\t%s\n", mnemonic, segReg->name);
 			FILLARGS1( segReg );
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
@@ -4532,11 +4531,11 @@ NSUInteger iterationCounter
 		case PREFIX:
 		case UNKNOWN:
 			default:
-				printf(".byte 0x%02x", 0xff & sect[0]);
-				for(i = 1; i < length; i++) {
-					printf(", 0x%02x", 0xff & sect[i]);
-				}
-				printf(" #bad opcode\n");
+				// printf(".byte 0x%02x", 0xff & sect[0]);
+				// for(i = 1; i < length; i++) {
+				//	printf(", 0x%02x", 0xff & sect[i]);
+				// }
+				// printf(" #bad opcode\n");
 				return(length);
 	} /* end switch */
 }
