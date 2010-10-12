@@ -654,9 +654,9 @@ hooReg_		null_reg =					{NULL_ARG,		"",			"" };
 
 // const struct instable const *zoogafrooga[] = {&op_cwtd, &op_cltd};
 
-hooReg_		*FloatingPointREG[] = { &fp0_reg, &fp1_reg, &fp2_reg, &fp3_reg, &fp4_reg, &fp5_reg, &fp6_reg, &fp7_reg, &fp_reg };
+hooReg_		*FloatingPointREG[9] = { &fp0_reg, &fp1_reg, &fp2_reg, &fp3_reg, &fp4_reg, &fp5_reg, &fp6_reg, &fp7_reg, &fp_reg };
 
-static const struct HooReg REG16_Struct[8][2] = {
+hooReg_		*REG16_Struct[8][2] = {
 	{ &acuml_reg,	&acumx_reg },			// al=low-byte, ah=high-byte, etc
 	{ &count1_reg,	&count2_reg },
 	{ &data2_reg,	&data1_reg },
@@ -667,7 +667,7 @@ static const struct HooReg REG16_Struct[8][2] = {
 	{ &base3_reg,	&destinationIndex2_reg }
 };
 
-static const struct HooReg REG32_Struct[16][3] = {
+hooReg_		*REG32_Struct[16][3] = {
 	{ &acuml_reg,	&acumex_reg,			&acum2_reg },
 	{ &count1_reg,	&count4_reg,			&count5_reg },
 	{ &data2_reg,	&data4_reg,				&data5_reg },
@@ -687,7 +687,7 @@ static const struct HooReg REG32_Struct[16][3] = {
 };
 
 // Return bonkers double reg
-static const struct HooReg regname16_Struct[4][8][2] = {
+hooReg_		*regname16_Struct[4][8][2] = {
 	{
 		{ &base1_reg,				&sourceIndex2_reg},
 		{ &base1_reg,				&destinationIndex2_reg},
@@ -727,25 +727,25 @@ static const struct HooReg regname16_Struct[4][8][2] = {
 	}
 };
 
-static const struct HooReg regname32_Struct[4][8] = {
-	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, empty_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
+hooReg_		*regname32_Struct[4][8] = {
+	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &empty_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
 	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
 	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
 	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	}
 };
 
-static const struct HooReg regname64_Struct[4][16] = {
+hooReg_		*regname64_Struct[4][16] = {
 	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
 	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
 	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
 	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	}
 };
 
-static const struct HooReg indexname_Struct[8] = { &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &empty_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg };
-static const struct HooReg indexname64_Struct[16] = { &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &empty_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg };
-static const struct HooReg xmmReg_Struct[8] = { &xmm0_reg, &xmm1_reg, &xmm2_reg, &xmm3_reg, &xmm4_reg, &xmm5_reg, &xmm6_reg, &xmm7_reg };
-static const struct HooReg mmReg_Struct[8] = { &mm0_reg, &mm1_reg, &mm2_reg, &mm3_reg, &mm4_reg, &mm5_reg, &mm6_reg, &mm7_reg };
-static const struct HooReg SEGREG[8] = { &dataSeg1_reg, &codeSeg_reg, &stackSeg_reg, &dataSeg3_reg, &dataSeg4_reg, &dataSeg5_reg, &unknown1_reg, &unknown2_reg };
+hooReg_		*indexname_Struct[8]		= { &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &empty_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg };
+hooReg_		*indexname64_Struct[16]	= { &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &empty_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg };
+hooReg_		*xmmReg_Struct[8]			= { &xmm0_reg, &xmm1_reg, &xmm2_reg, &xmm3_reg, &xmm4_reg, &xmm5_reg, &xmm6_reg, &xmm7_reg };
+hooReg_		*mmReg_Struct[8]			= { &mm0_reg, &mm1_reg, &mm2_reg, &mm3_reg, &mm4_reg, &mm5_reg, &mm6_reg, &mm7_reg };
+hooReg_		*SEGREG[8]					= { &dataSeg1_reg, &codeSeg_reg, &stackSeg_reg, &dataSeg3_reg, &dataSeg4_reg, &dataSeg5_reg, &unknown1_reg, &unknown2_reg };
 
 
 
@@ -2111,11 +2111,11 @@ static const struct HooReg *get_regStruct( NSUInteger reg, NSUInteger wbit, NSUI
 	
 	const struct HooReg *regStruct;
 	if (rex != 0) {
-		regStruct = &REG32_Struct[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
+		regStruct = REG32_Struct[reg + (REX_R(rex) << 3)][wbit + REX_W(rex)];
 	} else if (data16) {
-		regStruct = &REG16_Struct[reg][wbit];
+		regStruct = REG16_Struct[reg][wbit];
 	} else {
-		regStruct = &REG32_Struct[reg][wbit];
+		regStruct = REG32_Struct[reg][wbit];
 	}
 	return regStruct;
 }
@@ -2125,11 +2125,11 @@ static const struct HooReg *get_r_m_regStruct( NSUInteger r_m, NSUInteger wbit, 
 
 	const struct HooReg *regStruct;
 	if( rex!=0 ) {
-		regStruct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
+		regStruct = REG32_Struct[r_m + (REX_B(rex) << 3)][wbit + REX_W(rex)];
 	} else if (data16) {
-		regStruct = &REG16_Struct[r_m][wbit];
+		regStruct = REG16_Struct[r_m][wbit];
 	} else {
-		regStruct = &REG32_Struct[r_m][wbit];
+		regStruct = REG32_Struct[r_m][wbit];
 	}
 	return regStruct;	
 }
@@ -2160,7 +2160,6 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
 
-	return;
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
@@ -2724,7 +2723,7 @@ NSUInteger iterationCounter
 					if(prefix_byte == 0x66){
 						/* movd from xmm to r/m32 */
 						regNum = xmm_reg(reg, rex);
-						reg_struct = &xmmReg_Struct[regNum];
+						reg_struct = xmmReg_Struct[regNum];
 						argStack_Push( &aStack, (int64_t)reg_struct );
 						// printf("%sd\t%%xmm%u,", mnemonic, reg_struct);
 						wbit = LONGOPERAND;
@@ -2735,7 +2734,7 @@ NSUInteger iterationCounter
 						hooleyDebug();
 //NEVER						/* movq from mm to mm/m64 */
 //NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						mmx = TRUE;
 //NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
@@ -2754,7 +2753,7 @@ NSUInteger iterationCounter
 						hooleyDebug();
 //NEVER						/* movd from mm to r/m32 */
 //NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						wbit = LONGOPERAND;
 //NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
@@ -2781,7 +2780,7 @@ NSUInteger iterationCounter
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			regNum = xmm_reg(reg, rex);
-			reg_struct = &xmmReg_Struct[regNum]; //%xmm0
+			reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			// sprintf(result0, "%%xmm%u", );
 			switch(opcode4 << 4 | opcode5)
 			{
@@ -2838,7 +2837,7 @@ NSUInteger iterationCounter
 						// printf("%sdqu\t", mnemonic);
 					} else {
 						// sprintf(result0, "%%mm%lu", (unsigned long)reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -2852,7 +2851,7 @@ NSUInteger iterationCounter
 //NEVER					} else { /* no prefix_byte */
 //NEVER						hooleyDebug();
 //NEVER						sprintf(result0, "%%mm%u", reg);
-					struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+					struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						printf("%stq\t", mnemonic);
 //NEVER						mmx = TRUE;
@@ -2880,12 +2879,12 @@ NSUInteger iterationCounter
 				sse2 = TRUE;
 				// sprintf(result1, "%%xmm%u", xmm_reg(reg, rex));
 				regNum = xmm_reg(reg, rex);
-				reg_struct = &xmmReg_Struct[regNum];
+				reg_struct = xmmReg_Struct[regNum];
 
 			} else { /* no prefix byte */
 				mmx = TRUE;
 				// sprintf(result1, "%%mm%u", reg);
-				reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+				reg_struct = mmReg_Struct[reg];
 
 			}
 			// printf("%s\t", mnemonic);
@@ -2916,7 +2915,7 @@ NSUInteger iterationCounter
 //NEVER				hooleyDebug();
 //NEVER				mmx = TRUE;
 //NEVER				sprintf(result1, "%%mm%u", reg);
-			struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+			struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER			}
 //NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -2939,7 +2938,7 @@ NSUInteger iterationCounter
 			}
 			// eg // %xmm0
 			regNum = xmm_reg(reg, rex);
-			reg_struct = &xmmReg_Struct[regNum];
+			reg_struct = xmmReg_Struct[regNum];
 			// sprintf(result1, "%%xmm%u", regNum2 );
 			
 			switch(opcode4 << 4 | opcode5)
@@ -3068,7 +3067,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%stpd2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 
 					} else if(prefix_byte==0xf2){
 						sse2 = TRUE;
@@ -3089,7 +3088,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%stps2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 					}
 					break;
 
@@ -3100,7 +3099,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%spd2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-					struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+					struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER					} else if(prefix_byte == 0xf2){
 //NEVER						hooleyDebug();
@@ -3123,7 +3122,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%sps2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-					struct HooReg *mmReg2 = (struct HooReg *)&mmReg_Struct[reg];
+					struct HooReg *mmReg2 = mmReg_Struct[reg];
 
 //NEVER					}
 //NEVER					break;
@@ -3144,7 +3143,7 @@ NSUInteger iterationCounter
 					} else { /* no prefix_byte */
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						printf("%s\t", mnemonic);
 //NEVER						mmx = TRUE;
@@ -3237,7 +3236,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3258,7 +3257,7 @@ NSUInteger iterationCounter
 //						printf("%sdqu\t", mnemonic);
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%sq\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3267,7 +3266,7 @@ NSUInteger iterationCounter
 					if(prefix_byte == 0xf2){
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 
 //NEVER						printf("%sdq2q\t", mnemonic);
 //NEVER						sse2 = TRUE;
@@ -3283,7 +3282,7 @@ NSUInteger iterationCounter
 						wbit = LONGOPERAND;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", (unsigned long)reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						wbit = LONGOPERAND;
 					}
@@ -3299,7 +3298,7 @@ NSUInteger iterationCounter
 						sse2 = TRUE;
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%lu", reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3309,7 +3308,7 @@ NSUInteger iterationCounter
 					if(prefix_byte == 0x66){
 						reg_struct = get_regStruct(reg, 1, data16, rex);
 						NSUInteger regNum = xmm_rm(r_m, rex);
-						const struct HooReg *reg_struct2 = &xmmReg_Struct[regNum]; //%xmm0
+						const struct HooReg *reg_struct2 = xmmReg_Struct[regNum]; //%xmm0
 						FILLARGS2( reg_struct2, reg_struct );
 						addLine( addr, currentFuncPtr, dp, allArgs );		
 						// printf("%s\t%%xmm%u,%s\n", mnemonic, reg_struct2, reg_name);
@@ -3317,7 +3316,7 @@ NSUInteger iterationCounter
 						
 					} else { /* no prefix_byte */
 						reg_struct = get_regStruct(reg, 1, data16, rex);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+						struct HooReg *mmReg = mmReg_Struct[r_m];
 						FILLARGS2( mmReg, reg_struct );
 						addLine( addr, currentFuncPtr, dp, allArgs );		
 						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
@@ -3338,7 +3337,7 @@ NSUInteger iterationCounter
 						// printf("%s\t", mnemonic);
 					} else { /* no prefix_byte */
 						// sprintf(result1, "%%mm%u", reg);
-						reg_struct = (struct HooReg *)&mmReg_Struct[reg];
+						reg_struct = mmReg_Struct[reg];
 						// printf("%s\t", mnemonic);
 						mmx = TRUE;
 					}
@@ -3359,7 +3358,7 @@ NSUInteger iterationCounter
 //NEVER					} else { /* no prefix_byte */
 //NEVER						hooleyDebug();
 //NEVER						printf("%sq\t%%mm%u,%%mm%u\n", mnemonic, r_m, reg);
-					struct HooReg *mmReg2 = (struct HooReg *)&mmReg_Struct[reg];
+					struct HooReg *mmReg2 = mmReg_Struct[reg];
 
 //NEVER						return(length);
 //NEVER					}
@@ -3580,7 +3579,7 @@ NSUInteger iterationCounter
 						// printf("%s\t$0x%x,", mnemonic, byte);
 						// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 						// printf("%%mm%u\n", reg);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+						struct HooReg *mmReg = mmReg_Struct[reg];
 						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
 						addLine( addr, currentFuncPtr, dp, allArgs );
 						return(length);
@@ -3593,7 +3592,7 @@ NSUInteger iterationCounter
 //NEVER								reg_name = get_reg_name(reg, 1, data16, rex);
 					reg_struct = get_regStruct(reg, 1, data16, rex);
 					NSUInteger regNum = xmm_rm(r_m, rex);
-					const struct HooReg *reg_struct2 = &xmmReg_Struct[regNum]; //%xmm0
+					const struct HooReg *reg_struct2 = xmmReg_Struct[regNum]; //%xmm0
 					
 //NEVER								printf("%s\t$0x%x,%%xmm%u,%s\n", mnemonic, byte, reg_struct2, reg_struct);
 //NEVER								return(length);
@@ -3603,7 +3602,7 @@ NSUInteger iterationCounter
 					reg_struct = get_regStruct(reg, 1, data16, rex);
 
 //NEVER								printf("%s\t$0x%x,%%mm%u,%s\n", mnemonic, byte, r_m,reg_name);
-				//	struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[reg];
+				//	struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER								return(length);
 //NEVER							}
@@ -3628,7 +3627,7 @@ NSUInteger iterationCounter
 			// printf("%%xmm%u\n", xmm_reg(reg, rex));
 			
 			regNum = xmm_reg(reg, rex);
-			reg_struct = &xmmReg_Struct[regNum]; //%xmm0
+			reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
@@ -3667,7 +3666,7 @@ NSUInteger iterationCounter
 									printf("%sllw\t$0x%x,", mnemonic, byte);
 								}
 								printf("%%mm%lu\n", r_m);
-								struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+								struct HooReg *mmReg = mmReg_Struct[r_m];
 								
 								return(length);
 							}
@@ -3721,14 +3720,14 @@ NSUInteger iterationCounter
 //NEVER									printf("%sllq\t$0x%x,", mnemonic, byte);
 //NEVER								}
 //NEVER								printf("%%mm%u\n", r_m);
-						struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+						struct HooReg *mmReg = mmReg_Struct[r_m];
 //NEVER								return(length);
 					}
 					break;
 			}
 			
 			regNum = xmm_rm(r_m, rex);
-			const struct HooReg *reg_struct = &xmmReg_Struct[regNum]; //%xmm0
+			const struct HooReg *reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			// printf("%%xmm%u\n", reg_struct );
 			// eg psllq $0x1f,%xmm2
 			FILLARGS2( value0Immed, reg_struct );
@@ -3955,7 +3954,7 @@ NSUInteger iterationCounter
 			}
 			wbit = LONGOPERAND;
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			segReg = (struct HooReg *)&SEGREG[reg];
+			segReg = SEGREG[reg];
 			FILLARGS2( abstractStrctPtr1, segReg );			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
@@ -3970,7 +3969,7 @@ NSUInteger iterationCounter
 			wbit = LONGOPERAND;
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);			
-			segReg = (struct HooReg *)&SEGREG[reg];
+			segReg = SEGREG[reg];
 			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( segReg, abstractStrctPtr1 );			
@@ -4194,7 +4193,7 @@ NSUInteger iterationCounter
 		/* single segment register operand, with reg in bits 3-4 of op code */
 		case SEG:
 			reg = byte >> 3 & 0x3; /* segment register */
-			segReg = (struct HooReg *)&SEGREG[reg];
+			segReg = SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name );
 			// eg pushw	%es
 			FILLARGS1( segReg );
@@ -4205,7 +4204,7 @@ NSUInteger iterationCounter
 		/* bits 3-5 of op code					*/
 		case LSEG:
 			reg = byte >> 3 & 0x7; /* long seg reg from opcode */
-			segReg = (struct HooReg *)&SEGREG[reg];
+			segReg = SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name);
 			FILLARGS1( segReg );
 			addLine( addr, currentFuncPtr, dp, allArgs );
@@ -4665,8 +4664,8 @@ static NSUInteger replacement_get_operand(
 					// result = "";
 					return 0;
 				} else {
-					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];					
-					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *reg_struct = regname64_Struct[mode][base + (REX_B(rex) << 3)];					
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[0] );
 					return (NSUInteger)indirStrct;
@@ -4681,15 +4680,15 @@ static NSUInteger replacement_get_operand(
 				if(mode == 0 && base == 5){
 										
 					// It is not clear if it was the reg or the index reg in the original source
-					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT(  indirStrct, segReg, 0, 0, (struct HooReg *)indexReg, scale_factor[ss] );
 					return (NSUInteger)indirStrct;
 //					sprintf( result, "(%s,%s)", todo, scale_factor[ss] );
 			
 				} else {
-					const struct HooReg *reg_struct = &regname64_Struct[mode][base + (REX_B(rex) << 3)];
-					const struct HooReg *indexReg = &indexname64_Struct[index + (REX_X(rex) << 3)];
+					const struct HooReg *reg_struct = regname64_Struct[mode][base + (REX_B(rex) << 3)];
+					const struct HooReg *indexReg = indexname64_Struct[index + (REX_X(rex) << 3)];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, 0,(struct HooReg *)reg_struct,(struct HooReg *)indexReg, scale_factor[ss]);
 					return (NSUInteger)indirStrct;
@@ -4708,15 +4707,15 @@ static NSUInteger replacement_get_operand(
 					// result = "";
 					return 0;
 				} else {
-					const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-					const struct HooReg *indexReg = &indexname_Struct[index];
+					const struct HooReg *reg_struct = regname32_Struct[mode][base];
+					const struct HooReg *indexReg = indexname_Struct[index];
 					struct IndirectVal *indirStrct;
 					NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[0] );
 					return (NSUInteger)indirStrct;
 				}
 			} else {
-				const struct HooReg *reg_struct = &regname32_Struct[mode][base];
-				const struct HooReg *indexReg = &indexname_Struct[index];				
+				const struct HooReg *reg_struct = regname32_Struct[mode][base];
+				const struct HooReg *indexReg = indexname_Struct[index];				
 				struct IndirectVal *indirStrct;
 				NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, (struct HooReg *)indexReg, scale_factor[ss]);
 				return (NSUInteger)indirStrct;
@@ -4729,23 +4728,23 @@ static NSUInteger replacement_get_operand(
 	    if(mode == REG_ONLY){
 			if(sse2 == TRUE) {
 				NSUInteger regNum = xmm_rm(r_m, rex);
-				const struct HooReg *reg_struct = &xmmReg_Struct[regNum]; //%xmm0
+				const struct HooReg *reg_struct = xmmReg_Struct[regNum]; //%xmm0
 				// sprintf(result, "%%xmm%u", );
 				return (NSUInteger)reg_struct;
 
 			} else if(mmx == TRUE) {
 				// sprintf(result, "%%mm%ld", (unsigned long)r_m);
-				struct HooReg *mmReg = (struct HooReg *)&mmReg_Struct[r_m];
+				struct HooReg *mmReg = mmReg_Struct[r_m];
 				return (NSUInteger)mmReg;
 
 			} else if (data16 == FALSE || rex != 0) {
 				/* The presence of a REX byte overrides 66h. */
 				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];				
+				const struct HooReg *reg_struct = REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];				
 				return (NSUInteger)reg_struct;
 	
 			} else {
-				const struct HooReg *reg_struct = &REG16_Struct[r_m][wbit];
+				const struct HooReg *reg_struct = REG16_Struct[r_m][wbit];
 				return (NSUInteger)reg_struct;
 
 				// const char *reg_name; // = REG16[r_m][wbit];
@@ -4783,12 +4782,12 @@ static NSUInteger replacement_get_operand(
 						 *  In 64-bit mode, the address size prefix drops us
 						 * down to 32-bit, not 16-bit.
 						 */
-						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];
+						const struct HooReg *reg_struct = regname32_Struct[mode][r_m];
 						char *reg_name;
 						GET_BEST_REG_NAME( reg_name, reg_struct );
 						sprintf(result, "(%s)", reg_name);
 					} else {
-						struct HooReg *reg_structPair = (struct HooReg *)regname16_Struct[mode][r_m];
+						struct HooReg *reg_structPair = regname16_Struct[mode][r_m];
 						struct HooReg *reg_struct = &(reg_structPair[0]);
 						struct HooReg *reg_struct2 = &(reg_structPair[1]);
 						if (reg_struct2->isah==NULL_ARG) {
@@ -4800,7 +4799,7 @@ static NSUInteger replacement_get_operand(
 					}
 				} else {
 					if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) {
-						const struct HooReg *reg_struct = &regname64_Struct[mode][r_m + (REX_B(rex) << 3)];				
+						const struct HooReg *reg_struct = regname64_Struct[mode][r_m + (REX_B(rex) << 3)];				
 						struct IndirectVal *indirStrct;
 						NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, 0, scale_factor[0] );
 						return (NSUInteger)indirStrct;
@@ -4808,7 +4807,7 @@ static NSUInteger replacement_get_operand(
 						// sprintf(result, "(%s)", 1 );
 					} else {
 						
-						const struct HooReg *reg_struct = &regname32_Struct[mode][r_m];					
+						const struct HooReg *reg_struct = regname32_Struct[mode][r_m];					
 						struct IndirectVal *indirStrct;
 						NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, 0, scale_factor[0] );
 						return (NSUInteger)indirStrct;
@@ -4954,7 +4953,7 @@ static NSUInteger replacement_get_operand(
 //	    if(mode == REG_ONLY){
 //			if(sse2 == TRUE) {
 //				NSUInteger regNum = xmm_rm(r_m, rex);
-//				const struct HooReg *reg_struct = &xmmReg_Struct[regNum]; //%xmm0
+//				const struct HooReg *reg_struct = xmmReg_Struct[regNum]; //%xmm0
 //				sprintf(result, "%%xmm%u", xmm_rm(r_m, rex));
 //			} else if(mmx == TRUE) {
 //				sprintf(result, "%%mm%u", r_m);
@@ -4963,7 +4962,7 @@ static NSUInteger replacement_get_operand(
 //			} else if (data16 == FALSE || rex != 0) {
 //				/* The presence of a REX byte overrides 66h. */
 //				//const char *regname = REG32[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
-//				const struct HooReg *reg_struct = &REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
+//				const struct HooReg *reg_struct = REG32_Struct[r_m + (REX_B(rex) << 3)][wbit +  REX_W(rex)];
 //				// *(struct HooReg *)result = *reg_struct;
 //				char *reg_name;
 //				GET_BEST_REG_NAME( reg_name, reg_struct );
@@ -5000,7 +4999,7 @@ static NSUInteger replacement_get_operand(
 //					sprintf(result, "(%s)", reg_name);
 //				} else {
 //					/* Woahh.. This is Fun */
-//					//const struct HooReg *reg_struct = &regname16_Struct[mode][r_m];
+//					//const struct HooReg *reg_struct = regname16_Struct[mode][r_m];
 //					// BONKERS ARG ALERT!
 //					// const char *reg_name; // = regname16[mode][r_m];
 //					// GET_BEST_REG_NAME( reg_name, reg_struct );
