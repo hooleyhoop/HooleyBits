@@ -10,6 +10,7 @@
 #import "Line.h"
 #import <CHDataStructures/CHRedBlackTree.h>
 
+// gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
 double sys_getrealtime(void) {
 	
     static struct timeval then;

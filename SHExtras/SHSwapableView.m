@@ -98,6 +98,9 @@
 // ===========================================================
 //  - timedRedraw:
 // ===========================================================
+
+// gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
+
 - (void) timedRedraw
 {
     static double lastDrawTime = 0.0;

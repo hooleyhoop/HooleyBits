@@ -90,6 +90,9 @@ that didn't really belong anywhere. */
 
 /* get "real time" in seconds; take the
 first time we get called as a reference time of zero. */
+
+// gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
+
 double sys_getrealtime(void)    
 {
     static struct timeval then;

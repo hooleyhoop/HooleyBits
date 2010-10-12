@@ -9,10 +9,13 @@
 #import "AppDelegate.h"
 #import "MachoLoader.h"
 #import "DisassemblyChecker.h"
+#import "GenericTimer.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	NSArray *paths = [NSArray arrayWithObjects:
 					  [[NSBundle mainBundle] executablePath],
@@ -30,6 +33,8 @@
 			[ml release];
 		}
 	}
+
+	[readTimer close];  // 4.6 secs
 
 }
 

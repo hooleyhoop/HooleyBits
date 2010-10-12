@@ -539,76 +539,261 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 ///* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
 //};
 
+#pragma mark -
+#pragma mark Registers
 
-static const struct HooReg acuml =						{REGISTER_ARG,"%al","%accumulator"};
-static const struct HooReg acumx =						{REGISTER_ARG,"%ax","%accumulator"};
-static const struct HooReg acumex =						{REGISTER_ARG,"%eax","%accumulator"};
-static const struct HooReg dataReg =					{REGISTER_ARG,"%%dx","%data"};
-static const struct HooReg countReg =					{REGISTER_ARG,"%cl","%count"};
+#define hooReg_ static const struct HooReg const
 
-static const struct HooReg source_indexReg =			{REGISTER_ARG,"%esi","%source_index"};
-static const struct HooReg sourceIndex1 =				{REGISTER_ARG,"%si","%source_index"};
+hooReg_		acuml_reg =					{REGISTER_ARG, "%al",		"%accumulator" };
+hooReg_		acumx_reg =					{REGISTER_ARG, "%ax",		"%accumulator" };
+hooReg_		acumex_reg =				{REGISTER_ARG, "%eax",		"%accumulator" };
+hooReg_		acum1_reg =					{REGISTER_ARG, "%ah",		"%accumulator" };
+hooReg_		acum2_reg =					{REGISTER_ARG, "%rax",		"%accumulator" };
 
-static const struct HooReg destination_indexReg =		{REGISTER_ARG,"%edi","%destination_index"};
-static const struct HooReg destination_indexReg1 =		{REGISTER_ARG,"%di","%destination_index"};
-static const struct HooReg base1 =						{REGISTER_ARG,"%bx","%base"};
-static const struct HooReg code_seg_reg =				{REGISTER_ARG,"%cs","code_seg_reg"};
-static const struct HooReg data_seg_reg =				{REGISTER_ARG,"%es","string_operation_dest_seg_reg"};
-static const struct HooReg data_seg_reg2 =				{REGISTER_ARG,"%es","data_seg_reg"};
-static const struct HooReg stack_seg_reg =				{REGISTER_ARG,"%ss","stack_seg_reg"};
-static const struct HooReg rip_reg =					{REGISTER_ARG,"%rip","the_infamous_rip_reg"};
+hooReg_		data1_reg =					{REGISTER_ARG, "%dx",		"%data" };
+hooReg_		data2_reg =					{REGISTER_ARG, "%dl",		"%data" };
+hooReg_		data3_reg =					{REGISTER_ARG, "%dh",		"%data" };
+hooReg_		data4_reg =					{REGISTER_ARG, "%edx",		"%data" };
+hooReg_		data5_reg =					{REGISTER_ARG, "%rdx",		"%data" };
 
-static const struct HooReg FloatingPointREG[9] = {
-	{REGISTER_ARG,"%st(0)","%floatReg0"},
-	{REGISTER_ARG,"%st(1)","%floatReg1"},
-	{REGISTER_ARG,"%st(2)","%floatReg2"},
-	{REGISTER_ARG,"%st(3)","%floatReg3"},
-	{REGISTER_ARG,"%st(4)","%floatReg4"},
-	{REGISTER_ARG,"%st(5)","%floatReg5"},
-	{REGISTER_ARG,"%st(6)","%floatReg6"},
-	{REGISTER_ARG,"%st(7)","%floatReg7"},
-	{REGISTER_ARG,"%st","%floatReg"}
-};
+hooReg_		count1_reg =				{REGISTER_ARG, "%cl",		"%count" };
+hooReg_		count2_reg =				{REGISTER_ARG, "%cx",		"%count" };
+hooReg_		count3_reg =				{REGISTER_ARG, "%ch",		"%count" };
+hooReg_		count4_reg =				{REGISTER_ARG, "%ecx",		"%count" };
+hooReg_		count5_reg =				{REGISTER_ARG, "%rcx",		"%count" };
+
+hooReg_		sourceIndex1_reg =			{REGISTER_ARG, "%esi",		"%source_index" };
+hooReg_		sourceIndex2_reg =			{REGISTER_ARG, "%si",		"%source_index" };
+hooReg_		sourceIndex3_reg =			{REGISTER_ARG, "%rsi",		"%source_index" };
+
+hooReg_		destinationIndex1_reg =		{REGISTER_ARG, "%edi",		"%destination_index" };
+hooReg_		destinationIndex2_reg =		{REGISTER_ARG, "%di",		"%destination_index" };
+hooReg_		destinationIndex3_reg =		{REGISTER_ARG, "%rdi",		"%destination_index" };
+
+hooReg_		base1_reg =					{REGISTER_ARG, "%bx",		"%base" };
+hooReg_		base2_reg =					{REGISTER_ARG, "%bl",		"%base"};
+hooReg_		base3_reg =					{REGISTER_ARG, "%bh",		"%base"};
+hooReg_		base4_reg =					{REGISTER_ARG, "%ebx",		"%base" };
+hooReg_		base5_reg =					{REGISTER_ARG, "%rbx",		"%base" };
+
+hooReg_		codeSeg_reg =				{REGISTER_ARG, "%cs",		"code_seg_reg" };
+hooReg_		stackSeg_reg =				{REGISTER_ARG, "%ss",		"stack_seg_reg" };
+hooReg_		rip_reg =					{REGISTER_ARG, "%rip",		"the_infamous_rip_reg" };
+
+hooReg_		dataSeg1_reg =				{REGISTER_ARG, "%es",		"string_operation_dest_seg_reg" };
+hooReg_		dataSeg2_reg =				{REGISTER_ARG, "%es",		"data_seg_reg" };
+hooReg_		dataSeg3_reg =				{REGISTER_ARG, "%ds",		"data_seg_reg" };
+hooReg_		dataSeg4_reg =				{REGISTER_ARG, "%fs",		"data_seg_reg" };
+hooReg_		dataSeg5_reg =				{REGISTER_ARG, "%gs",		"data_seg_reg" };
+hooReg_		unknown1_reg =				{REGISTER_ARG, "%?6",		"%??Reg" };
+hooReg_		unknown2_reg =				{REGISTER_ARG, "%?7",		"%??Reg" };
+
+hooReg_		spt1_reg =					{REGISTER_ARG, "%sp",		"%stackPointer_top" };
+hooReg_		spt2_reg =					{REGISTER_ARG, "%esp",		"%stackPointer_top" };
+hooReg_		spt3_reg =					{REGISTER_ARG, "%rsp",		"%stackPointer_top" };
+
+hooReg_		spb1_reg =					{REGISTER_ARG, "%bp",		"%stackPointer_base" };
+hooReg_		spb2_reg =					{REGISTER_ARG, "%ebp",		"%stackPointer_base"};
+hooReg_		spb3_reg =					{REGISTER_ARG, "%rbp",		"%stackPointer_base" };
+
+hooReg_		fp0_reg =					{REGISTER_ARG, "%st(0)",	"%floatReg0" };
+hooReg_		fp1_reg =					{REGISTER_ARG, "%st(1)",	"%floatReg1" };
+hooReg_		fp2_reg =					{REGISTER_ARG, "%st(2)",	"%floatReg2" };
+hooReg_		fp3_reg =					{REGISTER_ARG, "%st(3)",	"%floatReg3" };
+hooReg_		fp4_reg =					{REGISTER_ARG, "%st(4)",	"%floatReg4" };
+hooReg_		fp5_reg =					{REGISTER_ARG, "%st(5)",	"%floatReg5" };
+hooReg_		fp6_reg =					{REGISTER_ARG, "%st(6)",	"%floatReg6" };
+hooReg_		fp7_reg =					{REGISTER_ARG, "%st(7)",	"%floatReg7" };
+hooReg_		fp_reg =					{REGISTER_ARG, "%st",		"%floatReg" };
+
+hooReg_		r08_1_reg =					{REGISTER_ARG, "%r8b",		"%reg8" };
+hooReg_		r08_2_reg =					{REGISTER_ARG, "%r8d",		"%reg8" };
+hooReg_		r08_3_reg =					{REGISTER_ARG, "%r8",		"%reg8" };
+hooReg_		r09_1_reg =					{REGISTER_ARG, "%r9b",		"%reg9" };
+hooReg_		r09_2_reg =					{REGISTER_ARG, "%r9d",		"%reg9" };
+hooReg_		r09_3_reg =					{REGISTER_ARG, "%r9",		"%reg9" };
+hooReg_		r10_1_reg =					{REGISTER_ARG, "%r10b",		"%reg10" };
+hooReg_		r10_2_reg =					{REGISTER_ARG, "%r10d",		"%reg10" };
+hooReg_		r10_3_reg =					{REGISTER_ARG, "%r10",		"%reg10" };
+hooReg_		r11_1_reg =					{REGISTER_ARG, "%r11b",		"%reg11" };
+hooReg_		r11_2_reg =					{REGISTER_ARG, "%r11d",		"%reg11" };
+hooReg_		r11_3_reg =					{REGISTER_ARG, "%r11",		"%reg11" };
+hooReg_		r12_1_reg =					{REGISTER_ARG, "%r12b",		"%reg12" };
+hooReg_		r12_2_reg =					{REGISTER_ARG, "%r12d",		"%reg12" };
+hooReg_		r12_3_reg =					{REGISTER_ARG, "%r12",		"%reg12" };
+hooReg_		r13_1_reg =					{REGISTER_ARG, "%r13b",		"%reg13" };
+hooReg_		r13_2_reg =					{REGISTER_ARG, "%r13d",		"%reg13" };
+hooReg_		r13_3_reg =					{REGISTER_ARG, "%r13",		"%reg13" };
+hooReg_		r14_1_reg =					{REGISTER_ARG, "%r14b",		"%reg14" };
+hooReg_		r14_2_reg =					{REGISTER_ARG, "%r14d",		"%reg14" };
+hooReg_		r14_3_reg =					{REGISTER_ARG, "%r14",		"%reg14" };
+hooReg_		r15_1_reg =					{REGISTER_ARG, "%r15b",		"%reg15" };
+hooReg_		r15_2_reg =					{REGISTER_ARG, "%r15d",		"%reg15" };
+hooReg_		r15_3_reg =					{REGISTER_ARG, "%r15",		"%reg15" };
+
+hooReg_		xmm0_reg =					{REGISTER_ARG, "%xmm0",		"%xmm0" };
+hooReg_		xmm1_reg =					{REGISTER_ARG, "%xmm1",		"%xmm1" };
+hooReg_		xmm2_reg =					{REGISTER_ARG, "%xmm2",		"%xmm2" };
+hooReg_		xmm3_reg =					{REGISTER_ARG, "%xmm3",		"%xmm3" };
+hooReg_		xmm4_reg =					{REGISTER_ARG, "%xmm4",		"%xmm4" };
+hooReg_		xmm5_reg =					{REGISTER_ARG, "%xmm5",		"%xmm5" };
+hooReg_		xmm6_reg =					{REGISTER_ARG, "%xmm6",		"%xmm6" };
+hooReg_		xmm7_reg =					{REGISTER_ARG, "%xmm7",		"%xmm7" };
+
+hooReg_		mm0_reg =					{REGISTER_ARG, "%mm0",		"%mm0" };
+hooReg_		mm1_reg =					{REGISTER_ARG, "%mm1",		"%mm1" };
+hooReg_		mm2_reg =					{REGISTER_ARG, "%mm2",		"%mm2" };
+hooReg_		mm3_reg =					{REGISTER_ARG, "%mm3",		"%mm3" };
+hooReg_		mm4_reg =					{REGISTER_ARG, "%mm4",		"%mm4" };
+hooReg_		mm5_reg =					{REGISTER_ARG, "%mm5",		"%mm5" };
+hooReg_		mm6_reg =					{REGISTER_ARG, "%mm6",		"%mm6" };
+hooReg_		mm7_reg =					{REGISTER_ARG, "%mm7",		"%mm7" };
+
+hooReg_		empty_reg =					{REGISTER_ARG, "",			"" };
+hooReg_		null_reg =					{NULL_ARG,		"",			"" };
+
+// const struct instable const *zoogafrooga[] = {&op_cwtd, &op_cltd};
+
+hooReg_		*FloatingPointREG[] = { &fp0_reg, &fp1_reg, &fp2_reg, &fp3_reg, &fp4_reg, &fp5_reg, &fp6_reg, &fp7_reg, &fp_reg };
 
 static const struct HooReg REG16_Struct[8][2] = {
-	{ {REGISTER_ARG,"%al","%accumulator"},
-		{REGISTER_ARG,"%ax","%accumulator"} }, // al=low-byte, ah=high-byte, etc
-	{ {REGISTER_ARG,"%cl","%count"},
-		{REGISTER_ARG,"%cx","%count"} },
-	{ {REGISTER_ARG,"%dl","%data"},
-		{REGISTER_ARG,"%dx","%data"} },
-	{ {REGISTER_ARG,"%bl","%base"},
-		{REGISTER_ARG,"%bx","%base"} },
-	{ {REGISTER_ARG,"%ah","%accumulator"},
-		{REGISTER_ARG,"%sp","%stackPointer_top"} },
-	{ {REGISTER_ARG,"%ch","%count"},
-		{REGISTER_ARG,"%bp","%stackPointer_base"} },
-	{ {REGISTER_ARG,"%dh","%data"},
-		{REGISTER_ARG,"%si","%source_index"} },
-	{ {REGISTER_ARG,"%bh","%base"},
-		{REGISTER_ARG,"%di","%destination_index"} }
+	{ &acuml_reg,	&acumx_reg },			// al=low-byte, ah=high-byte, etc
+	{ &count1_reg,	&count2_reg },
+	{ &data2_reg,	&data1_reg },
+	{ &base2_reg,	&base1_reg },
+	{ &acum1_reg,	&spt1_reg },
+	{ &count3_reg,	&spb1_reg },
+	{ &data3_reg,	&sourceIndex2_reg },
+	{ &base3_reg,	&destinationIndex2_reg }
 };
 
 static const struct HooReg REG32_Struct[16][3] = {
-	{ {REGISTER_ARG,"%al","%accumulator"},	{REGISTER_ARG,"%eax","%accumulator"},		{REGISTER_ARG,"%rax","%accumulator"} },
-	{ {REGISTER_ARG,"%cl","%count"},		{REGISTER_ARG,"%ecx","%count"},			{REGISTER_ARG,"%rcx","%count"} },
-	{ {REGISTER_ARG,"%dl","%data"},		{REGISTER_ARG,"%edx","%data"},				{REGISTER_ARG,"%rdx","%data"} },
-	{ {REGISTER_ARG,"%bl","%base"},		{REGISTER_ARG,"%ebx","%base"},				{REGISTER_ARG,"%rbx","%base"} },
-	{ {REGISTER_ARG,"%ah","%accumulator"},	{REGISTER_ARG,"%esp","%stackPointer_top"},	{REGISTER_ARG,"%rsp","%stackPointer_top"} },
-	{ {REGISTER_ARG,"%ch","%count"},		{REGISTER_ARG,"%ebp","%stackPointer_base"},{REGISTER_ARG,"%rbp","%stackPointer_base"} },
-	{ {REGISTER_ARG,"%dh","%data"},		{REGISTER_ARG,"%esi","%source_index"},		{REGISTER_ARG,"%rsi","%source_index"} },
-	{ {REGISTER_ARG,"%bh","%base"},		{REGISTER_ARG,"%edi","%destination_index"},{REGISTER_ARG,"%rdi","%destination_index"} },
-	{ {REGISTER_ARG,"%r8b","%reg8"},		{REGISTER_ARG,"%r8d","%reg8"},				{REGISTER_ARG,"%r8","%reg8"} },
-	{ {REGISTER_ARG,"%r9b","%reg9"},		{REGISTER_ARG,"%r9d","%reg9"},				{REGISTER_ARG,"%r9","%reg9"} },
-	{ {REGISTER_ARG,"%r10b","%reg10"},		{REGISTER_ARG,"%r10d","%reg10"},			{REGISTER_ARG,"%r10","%reg10"} },
-	{ {REGISTER_ARG,"%r11b","%reg11"},		{REGISTER_ARG,"%r11d","%reg11"},			{REGISTER_ARG,"%r11","%reg11"} },
-	{ {REGISTER_ARG,"%r12b","%reg12"},		{REGISTER_ARG,"%r12d","%reg12"},			{REGISTER_ARG,"%r12","%reg12"} },
-	{ {REGISTER_ARG,"%r13b","%reg13"},		{REGISTER_ARG,"%r13d","%reg13"},			{REGISTER_ARG,"%r13","%reg13"} },
-	{ {REGISTER_ARG,"%r14b","%reg14"},		{REGISTER_ARG,"%r14d","%reg14"},			{REGISTER_ARG,"%r14","%reg14"} },
-	{ {REGISTER_ARG,"%r15b","%reg15"},		{REGISTER_ARG,"%r15d","%reg15"},			{REGISTER_ARG,"%r15","%reg15"} }
+	{ &acuml_reg,	&acumex_reg,			&acum2_reg },
+	{ &count1_reg,	&count4_reg,			&count5_reg },
+	{ &data2_reg,	&data4_reg,				&data5_reg },
+	{ &base2_reg,	&base4_reg,				&base5_reg },
+	{ &acum1_reg,	&spt2_reg,				&spt3_reg },
+	{ &count3_reg,	&spb2_reg,				&spb3_reg },
+	{ &data3_reg,	&sourceIndex1_reg,		&sourceIndex3_reg },
+	{ &base3_reg,	&destinationIndex1_reg,	&destinationIndex3_reg },
+	{ &r08_1_reg,	&r08_2_reg,				&r08_3_reg },
+	{ &r09_1_reg,	&r09_2_reg,				&r09_3_reg },
+	{ &r10_1_reg,	&r10_2_reg,				&r10_3_reg },
+	{ &r11_1_reg,	&r11_2_reg,				&r11_3_reg },
+	{ &r12_1_reg,	&r12_2_reg,				&r12_3_reg },
+	{ &r13_1_reg,	&r13_2_reg,				&r13_3_reg },
+	{ &r14_1_reg,	&r14_2_reg,				&r14_3_reg },
+	{ &r15_1_reg,	&r15_2_reg,				&r15_3_reg }
 };
 
+// Return bonkers double reg
+static const struct HooReg regname16_Struct[4][8][2] = {
+	{
+		{ &base1_reg,				&sourceIndex2_reg},
+		{ &base1_reg,				&destinationIndex2_reg},
+		{ &spb1_reg,				&sourceIndex2_reg}, 
+		{ &spb1_reg,				&destinationIndex2_reg},
+		{ &sourceIndex2_reg,		&null_reg},
+		{ &destinationIndex2_reg,	&null_reg},
+		{ &empty_reg,				&null_reg},
+		{ &base1_reg,				&null_reg}	
+	},
+	{	{ &base1_reg,				&sourceIndex2_reg },
+		{ &base1_reg,				&destinationIndex2_reg },
+		{ &spb1_reg,				&sourceIndex2_reg},
+		{ &spb1_reg,				&destinationIndex2_reg},
+		{ &sourceIndex2_reg,		&null_reg},
+		{ &destinationIndex2_reg,	&null_reg},
+		{ &spb1_reg,				&null_reg},
+		{ &base1_reg,				&null_reg}
+	},
+	{	{ &base1_reg,				&sourceIndex2_reg},
+		{ &base1_reg,				&destinationIndex2_reg},
+		{ &spb1_reg,				&sourceIndex2_reg},
+		{ &spb1_reg,				&destinationIndex2_reg},
+		{ &sourceIndex2_reg,		&null_reg},
+		{ &destinationIndex2_reg,	&null_reg},
+		{ &spb1_reg,				&null_reg},
+		{ &base1_reg,				&null_reg}
+	},
+	{	{ &acumx_reg,				&null_reg},
+		{ &count2_reg,				&null_reg},
+		{ &data1_reg,				&null_reg},
+		{ &base1_reg,				&null_reg},
+		{ &spt1_reg,				&null_reg},
+		{ &spb1_reg,				&null_reg},
+		{ &sourceIndex2_reg,		&null_reg},
+		{ &destinationIndex2_reg,	&null_reg}
+	}
+};
 
+static const struct HooReg regname32_Struct[4][8] = {
+	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, empty_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
+	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
+	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	},
+	{ &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &spt2_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg	}
+};
+
+static const struct HooReg regname64_Struct[4][16] = {
+	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
+	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
+	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	},
+	{ &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &spt3_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg	}
+};
+
+static const struct HooReg indexname_Struct[8] = { &acumex_reg, &count4_reg, &data4_reg, &base4_reg, &empty_reg, &spb2_reg, &sourceIndex1_reg, &destinationIndex1_reg };
+static const struct HooReg indexname64_Struct[16] = { &acum2_reg, &count5_reg, &data5_reg, &base5_reg, &empty_reg, &spb3_reg, &sourceIndex3_reg, &destinationIndex3_reg, &r08_3_reg, &r09_3_reg, &r10_3_reg, &r11_3_reg, &r12_3_reg, &r13_3_reg, &r14_3_reg, &r15_3_reg };
+static const struct HooReg xmmReg_Struct[8] = { &xmm0_reg, &xmm1_reg, &xmm2_reg, &xmm3_reg, &xmm4_reg, &xmm5_reg, &xmm6_reg, &xmm7_reg };
+static const struct HooReg mmReg_Struct[8] = { &mm0_reg, &mm1_reg, &mm2_reg, &mm3_reg, &mm4_reg, &mm5_reg, &mm6_reg, &mm7_reg };
+static const struct HooReg SEGREG[8] = { &dataSeg1_reg, &codeSeg_reg, &stackSeg_reg, &dataSeg3_reg, &dataSeg4_reg, &dataSeg5_reg, &unknown1_reg, &unknown2_reg };
+
+
+
+/*
+ * When data16 has not been specified, fields, to determine the addressing mode,
+ * and will also provide strings for printing.
+ */
+//static const char * const regname32[4][8] = {
+///*reg   000     001     010     011     100     101    110     111 */
+///*mod*/
+///*00 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "",     "%esi", "%edi"},
+///*01 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
+///*10 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
+///*11 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"}
+//};
+
+/*
+ * When data16 has not been specified, fields, to determine the addressing mode,
+ * and will also provide strings for printing.
+ */
+//static const char * const regname64[4][16] = {
+///*reg   0000    0001    0010    0011    0100    0101    0110    0111    1000    1001    1010    1011    1100    1101    1110    1111 */
+///*mod*/
+///*00 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
+///*01 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
+///*10 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
+///*11 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"}
+//};
+
+
+/*
+ * When data16 has been specified, the following array specifies the registers
+ * for the different addressing modes.  Indexed first by mode, then by register
+ * number.
+ */
+//static const char * const regname16[4][8] = {
+///*reg  000        001        010        011        100    101   110     111 */
+///*mod*/
+///*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
+///*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
+///*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
+///*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
+//};
+
+/*
+ * If r/m==100 then the following byte (the s-i-b byte) must be decoded
+ */
+static const int const scale_factor[4] = { 1, 2, 4, 8 };
 
 /*
  * In 16-bit mode:
@@ -616,16 +801,16 @@ static const struct HooReg REG32_Struct[16][3] = {
  * fields, to determine the size of the displacement in each mode.
  */
 static const char dispsize16 [8][4] = {
-/* mod		00	01	10	11 */
-/* r/m */
-/* 000 */	{0,	1,	2,	0},
-/* 001 */	{0,	1,	2,	0},
-/* 010 */	{0,	1,	2,	0},
-/* 011 */	{0,	1,	2,	0},
-/* 100 */	{0,	1,	2,	0},
-/* 101 */	{0,	1,	2,	0},
-/* 110 */	{2,	1,	2,	0},
-/* 111 */	{0,	1,	2,	0}
+	/* mod		00	01	10	11 */
+	/* r/m */
+	/* 000 */	{0,	1,	2,	0},
+	/* 001 */	{0,	1,	2,	0},
+	/* 010 */	{0,	1,	2,	0},
+	/* 011 */	{0,	1,	2,	0},
+	/* 100 */	{0,	1,	2,	0},
+	/* 101 */	{0,	1,	2,	0},
+	/* 110 */	{2,	1,	2,	0},
+	/* 111 */	{0,	1,	2,	0}
 };
 
 /*
@@ -634,230 +819,69 @@ static const char dispsize16 [8][4] = {
  * fields, to determine the size of the displacement in this mode.
  */
 static const char dispsize32 [8][4] = {
-/* mod		00	01	10	11 */
-/* r/m */
-/* 000 */	{0,	1,	4,	0},
-/* 001 */	{0,	1,	4,	0},
-/* 010 */	{0,	1,	4,	0},
-/* 011 */	{0,	1,	4,	0},
-/* 100 */	{0,	1,	4,	0},
-/* 101 */	{4,	1,	4,	0},
-/* 110 */	{0,	1,	4,	0},
-/* 111 */	{0,	1,	4,	0}
+	/* mod		00	01	10	11 */
+	/* r/m */
+	/* 000 */	{0,	1,	4,	0},
+	/* 001 */	{0,	1,	4,	0},
+	/* 010 */	{0,	1,	4,	0},
+	/* 011 */	{0,	1,	4,	0},
+	/* 100 */	{0,	1,	4,	0},
+	/* 101 */	{4,	1,	4,	0},
+	/* 110 */	{0,	1,	4,	0},
+	/* 111 */	{0,	1,	4,	0}
 };
 
-/*
- * When data16 has been specified, the following array specifies the registers
- * for the different addressing modes.  Indexed first by mode, then by register
- * number.
- */
-static const char * const regname16[4][8] = {
-/*reg  000        001        010        011        100    101   110     111 */
-/*mod*/
-/*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
-/*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-/*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-/*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
-};
 
-// Return bonkers double reg
-static const struct HooReg regname16_Struct[4][8][2] = {
-	{
-		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%si","%source_index"}},
-		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%di","%destination_index"}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}}, 
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
-		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"",""},							{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}	
-	},
-	{	{{REGISTER_ARG,"%bx,","%base,"},				{REGISTER_ARG,"%si"," %source_index"}},
-		{{REGISTER_ARG,"%bx,","%base,"},				{REGISTER_ARG,"%di"," %destination_index"}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
-		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}
-	},
-		{{{REGISTER_ARG,"%bx","%base"},				{REGISTER_ARG,"%si","%source_index"}},
-		{{REGISTER_ARG,"%bx","%base"},					{REGISTER_ARG,"%di","%destination_index"}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%si","%source_index"}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{REGISTER_ARG,"%di","%destination_index"}},
-		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}}
-	},
-	{	{{REGISTER_ARG,"%ax","%accumulator"},			{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%cx","%count"},				{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%dx","%data"},					{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bx","%base"},					{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%sp","%stackPointer_top"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%bp","%stackPointer_base"},	{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%si","%source_index"},		{NULL_ARG,"",""}},
-		{{REGISTER_ARG,"%di","%destination_index"},	{NULL_ARG,"",""}}
-	}
-};
- 
-/*
- * When data16 has not been specified, fields, to determine the addressing mode,
- * and will also provide strings for printing.
- */
-static const char * const regname32[4][8] = {
-/*reg   000     001     010     011     100     101    110     111 */
-/*mod*/
-/*00 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "",     "%esi", "%edi"},
-/*01 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
-/*10 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
-/*11 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"}
-};
-static const struct HooReg regname32_Struct[4][8] = {
-{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"",""},						{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
-{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
-{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	},
-{ {REGISTER_ARG,"%eax","%accumulator"}, {REGISTER_ARG,"%ecx","%count"}, {REGISTER_ARG,"%edx","%data"}, {REGISTER_ARG,"%ebx","%base"}, {REGISTER_ARG,"%esp","%stackPointer_top"}, {REGISTER_ARG,"%ebp","%stackPointer_base"},	{REGISTER_ARG,"%esi","%source_index"}, {REGISTER_ARG,"%edi","%destination_index"}	}
-};
+//static const char * const indexname[8] = {
+//    ",%eax",
+//    ",%ecx",
+//    ",%edx",
+//    ",%ebx",
+//    "",
+//    ",%ebp",
+//    ",%esi",
+//    ",%edi"
+//};
 
-/*
- * When data16 has not been specified, fields, to determine the addressing mode,
- * and will also provide strings for printing.
- */
-static const char * const regname64[4][16] = {
-/*reg   0000    0001    0010    0011    0100    0101    0110    0111    1000    1001    1010    1011    1100    1101    1110    1111 */
-/*mod*/
-/*00 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-/*01 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-/*10 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-/*11 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"}
-};
-static const struct HooReg regname64_Struct[4][16] = {
-{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
-{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
-{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},  {REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	},
-{ {REGISTER_ARG,"%rax","%accumulator"}, {REGISTER_ARG,"%rcx","%count"}, {REGISTER_ARG,"%rdx","%data"}, {REGISTER_ARG,"%rbx","%base"}, {REGISTER_ARG,"%rsp","%stackPointer_top"}, {REGISTER_ARG,"%rbp","%stackPointer_base"}, {REGISTER_ARG,"%rsi","%source_index"}, {REGISTER_ARG,"%rdi","%destination_index"}, {REGISTER_ARG,"%r8","%reg8"},  {REGISTER_ARG,"%r9","%reg9"},	{REGISTER_ARG,"%r10","%reg10"}, {REGISTER_ARG,"%r11","%reg11"}, {REGISTER_ARG,"%r12","%reg12"}, {REGISTER_ARG,"%r13","%reg13"}, {REGISTER_ARG,"%r14","%reg14"}, {REGISTER_ARG,"%r15","%reg15"}	}
-};
+//static const char * const indexname64[16] = {
+//    ",%rax",
+//    ",%rcx",
+//    ",%rdx",
+//    ",%rbx",
+//    "",
+//    ",%rbp",
+//    ",%rsi",
+//    ",%rdi",
+//	",%r8",
+//	",%r9",
+//	",%r10",
+//	",%r11",
+//	",%r12",
+//	",%r13",
+//	",%r14",
+//	",%r15"
+//};
 
-/*
- * If r/m==100 then the following byte (the s-i-b byte) must be decoded
- */
-static const int const scale_factor[4] = { 1, 2, 4, 8 };
-
-static const char * const indexname[8] = {
-    ",%eax",
-    ",%ecx",
-    ",%edx",
-    ",%ebx",
-    "",
-    ",%ebp",
-    ",%esi",
-    ",%edi"
-};
-
-static const struct HooReg indexname_Struct[8] = {
-    {REGISTER_ARG,"%eax","%accumulator"},
-    {REGISTER_ARG,"%ecx","%count"},
-    {REGISTER_ARG,"%edx","%data"},
-    {REGISTER_ARG,"%ebx","%base"},
-    {REGISTER_ARG,"",""},
-    {REGISTER_ARG,"%ebp","%stackPointer_base"},
-    {REGISTER_ARG,"%esi","%source_index"},
-    {REGISTER_ARG,"%edi","%destination_index"}
-};
-
-static const struct HooReg indexname64_Struct[16] = {
-	{REGISTER_ARG,"%rax","%accumulator"},
-	{REGISTER_ARG,"%rcx","%count"},
-	{REGISTER_ARG,"%rdx","%data"},
-	{REGISTER_ARG,"%rbx","%base"},
-	{REGISTER_ARG,"",""},
-	{REGISTER_ARG,"%rbp","%stackPointer_base"},
-	{REGISTER_ARG,"%rsi","%source_index"},
-	{REGISTER_ARG,"%rdi","%destination_index"},
-	{REGISTER_ARG,"%r8","%reg8"},
-	{REGISTER_ARG,"%r9","%reg9"},
-	{REGISTER_ARG,"%r10","%reg10"},
-	{REGISTER_ARG,"%r11","%reg11"},
-	{REGISTER_ARG,"%r12","%reg12"},
-	{REGISTER_ARG,"%r13","%reg13"},
-	{REGISTER_ARG,"%r14","%reg14"},
-	{REGISTER_ARG,"%r15","%reg15"}
-};
-
-static const struct HooReg xmmReg_Struct[8] = {
-// can't think of any useful pretty strings
-{REGISTER_ARG,"%xmm0","%xmm0"},
-{REGISTER_ARG,"%xmm1","%xmm1"},
-{REGISTER_ARG,"%xmm2","%xmm2"},
-{REGISTER_ARG,"%xmm3","%xmm3"},
-{REGISTER_ARG,"%xmm4","%xmm4"},
-{REGISTER_ARG,"%xmm5","%xmm5"},
-{REGISTER_ARG,"%xmm6","%xmm6"},
-{REGISTER_ARG,"%xmm7","%xmm7"}
-};
-
-static const struct HooReg mmReg_Struct[8] = {
-	// can't think of any useful pretty strings
-	{REGISTER_ARG,"%mm0","%mm0"},
-	{REGISTER_ARG,"%mm1","%mm1"},
-	{REGISTER_ARG,"%mm2","%mm2"},
-	{REGISTER_ARG,"%mm3","%mm3"},
-	{REGISTER_ARG,"%mm4","%mm4"},
-	{REGISTER_ARG,"%mm5","%mm5"},
-	{REGISTER_ARG,"%mm6","%mm6"},
-	{REGISTER_ARG,"%mm7","%mm7"}
-};
-
-static const char * const indexname64[16] = {
-    ",%rax",
-    ",%rcx",
-    ",%rdx",
-    ",%rbx",
-    "",
-    ",%rbp",
-    ",%rsi",
-    ",%rdi",
-	",%r8",
-	",%r9",
-	",%r10",
-	",%r11",
-	",%r12",
-	",%r13",
-	",%r14",
-	",%r15"
-};
-
-/*
- * Segment registers are selected by a two or three bit field.
- */
-static const struct HooReg SEGREG[8] = {
-{REGISTER_ARG,"%es","string_operation_dest_seg_reg"},	// data segment register (string operation destination segment)
-{REGISTER_ARG,"%cs","code_seg_reg"},					// code segment register
-{REGISTER_ARG,"%ss","stack_seg_reg"},					// stack segment register
-{REGISTER_ARG,"%ds","data_seg_reg"},					// data segment register
-{REGISTER_ARG,"%fs","data_seg_reg"},					// data segment register
-{REGISTER_ARG,"%gs","data_seg_reg"},					// data segment register
-{REGISTER_ARG,"%?6","%??Reg"},							// 
-{REGISTER_ARG,"%?7","%??Reg"},							// 
-};
 
 /*
  * Special Registers
  */
-static const char * const DEBUGREG[] = {
-	"%db0", "%db1", "%db2", "%db3", "%db4", "%db5", "%db6", "%db7",
-	"%db8", "%db9", "%db10", "%db11", "%db12", "%db13", "%db14", "%db15"
-};
+//static const char * const DEBUGREG[] = {
+//	"%db0", "%db1", "%db2", "%db3", "%db4", "%db5", "%db6", "%db7",
+//	"%db8", "%db9", "%db10", "%db11", "%db12", "%db13", "%db14", "%db15"
+//};
+//
+//static const char * const CONTROLREG[] = {
+//	"%cr0", "%cr1", "%cr2", "%cr3", "%cr4", "%cr5", "%cr6", "%cr7",
+//	"%cr8", "%cr9", "%cr10", "%cr11", "%cr12", "%cr13", "%cr14", "%cr15"
+//};
+//
+//static const char * const TESTREG[8] = {
+//    "%tr0", "%tr1", "%tr2", "%tr3", "%tr4", "%tr5", "%tr6", "%tr7"
+//};
 
-static const char * const CONTROLREG[] = {
-	"%cr0", "%cr1", "%cr2", "%cr3", "%cr4", "%cr5", "%cr6", "%cr7",
-	"%cr8", "%cr9", "%cr10", "%cr11", "%cr12", "%cr13", "%cr14", "%cr15"
-};
-
-static const char * const TESTREG[8] = {
-    "%tr0", "%tr1", "%tr2", "%tr3", "%tr4", "%tr5", "%tr6", "%tr7"
-};
+#pragma mark -
+#pragma mark Instructions
 
 /*
  * Decode table for 0x0F00 opcodes
@@ -992,20 +1016,28 @@ static const struct instable op0F3A[112] = {
 	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
 };
 
-static const struct instable op_monitor = {"monitor",TERM,GO_ON,0};
-static const struct instable op_mwait   = {"mwait",TERM,GO_ON,0};
+#define hooInstruction_ static const struct instable const
+
+// const char *varname;		-- values in varname are constant, ie varname[0] = 'a'; will warn
+// char const *varname;		-- actual pointer "varname" is constant so varname = &somebuf; will warn
+// here we use both
+
+hooInstruction_		op_monitor	= {"monitor",TERM,GO_ON,0};
+hooInstruction_		op_mwait	= {"mwait",TERM,GO_ON,0};
 
 /* These opcode tables entries are only used for the 64-bit architecture */
-static const struct instable op_swapgs = {"swapgs",TERM,GO_ON,0};
-static const struct instable op_syscall = {"syscall",TERM,GO_ON,0};
-static const struct instable op_sysret = {"sysret",TERM,GO_ON,0};
-static const struct instable opREX = {"",TERM,REX,0};
-static const struct instable op_movsl = {"movsl",TERM,MOVZ,1};
+hooInstruction_		op_swapgs	= {"swapgs",TERM,GO_ON,0};
+hooInstruction_		op_syscall	= {"syscall",TERM,GO_ON,0};
+hooInstruction_		op_sysret	= {"sysret",TERM,GO_ON,0};
+hooInstruction_		opREX		= {"",TERM,REX,0};
+hooInstruction_		op_movsl	= {"movsl",TERM,MOVZ,1};
+hooInstruction_		op_cbtw		= {"cbtw",0,0,0,0,(char *)"%ax = %al"};		// sign-extend byte in `%al' to word in `%ax'
+hooInstruction_		op_cwtl		= {"cwtl",0,0,0,0,(char *)"%eax = %ax"};		// sign-extend word in `%ax' to long in `%eax'
+hooInstruction_		op_cwtd		= {"cwtd",0,0,0,0,(char *)"%dx:%ax = %ax"};	// sign-extend word in `%ax' to long in `%dx:%ax'
+hooInstruction_		op_cltd		= {"cltd",0,0,0,0,(char *)"%edx:%eax = %eax"}; // sign-extend dword in `%eax' to quad in `%edx:%eax'
 
-static const struct instable op_cbtw = {"cbtw",0,0,0,0,(char *)"%ax = %al"};		// sign-extend byte in `%al' to word in `%ax'
-static const struct instable op_cwtl = {"cwtl",0,0,0,0,(char *)"%eax = %ax"};		// sign-extend word in `%ax' to long in `%eax'
-static const struct instable op_cwtd = {"cwtd",0,0,0,0,(char *)"%dx:%ax = %ax"};	// sign-extend word in `%ax' to long in `%dx:%ax'
-static const struct instable op_cltd = {"cltd",0,0,0,0,(char *)"%edx:%eax = %eax"}; // sign-extend dword in `%eax' to quad in `%edx:%eax'
+
+const struct instable const *zoogafrooga[] = {&op_cwtd, &op_cltd};
 
 /*
  * Decode table for 0x0F0F opcodes
@@ -2058,17 +2090,17 @@ static const struct instable distable[16][16] = {
 static const struct HooReg *segRegPtrForName( char *segRegName ) {
 	
 	if( !strcmp(segRegName, "%cs:") ){
-		return &code_seg_reg;
+		return &codeSeg_reg;
 	} else if( !strcmp(segRegName, "%es:") ){
-		return &data_seg_reg;
+		return &dataSeg1_reg;
 	} else if( !strcmp(segRegName, "%ss:") ){
-		return &stack_seg_reg;
+		return &stackSeg_reg;
 	} else if( !strcmp(segRegName, "%ds:") ){
-		return &data_seg_reg2;
+		return &dataSeg2_reg;
 	} else if( !strcmp(segRegName, "%fs:") ){
-		return &data_seg_reg2;
+		return &dataSeg2_reg;
 	} else if( !strcmp(segRegName, "%gs:") ){
-		return &data_seg_reg2;
+		return &dataSeg2_reg;
 	}
 	
 	[NSException raise:@"Unknown segreg" format:@"Unknown segreg"];
@@ -2127,6 +2159,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 }
 
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
+
 	return;
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
@@ -2270,6 +2303,9 @@ NSUInteger iterationCounter
 	memset(result0, '\0', sizeof(result0));
 	memset(result1, '\0', sizeof(result1));
 
+	const struct instable const *reg111111_struct = zoogafrooga[0];
+	const struct instable const *reg222222_struct = zoogafrooga[1];
+	
 	/*
 	 * As long as there is a prefix, the default segment register,
 	 * addressing-mode, or data-mode in the instruction will be overridden.
@@ -3813,9 +3849,9 @@ NSUInteger iterationCounter
 			wbit = LONGOPERAND;
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
-			// cl is &countReg
+			// cl is &count1_reg
 			// eg shldl	%cl,%eax,%esi
-			FILLARGS3( &countReg, reg_struct, abstractStrctPtr1 );			
+			FILLARGS3( &count1_reg, reg_struct, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs );
 			return(length);
 
@@ -3950,7 +3986,7 @@ NSUInteger iterationCounter
 			/* When vbit is set, register is an operand, otherwise just $0x1 */
 			if(vbit){
 				// reg_name = vbit ? "%cl," : "" ;
-				FILLARGS2( &countReg, abstractStrctPtr1 );
+				FILLARGS2( &count1_reg, abstractStrctPtr1 );
 			} else {
 				// reg_name = vbit ? "%cl," : "" ;
 				FILLARGS1(abstractStrctPtr1);
@@ -3974,7 +4010,7 @@ NSUInteger iterationCounter
 			if(vbit) {
 				// reg_name = vbit ? "%cl," : "" ;
 				[NSException raise:@"what?" format:@"what?"];
-				// FILLARGS3(value0Immed, countReg, value0);				
+				// FILLARGS3(value0Immed, count1_reg, value0);				
 			} else {
 				FILLARGS2(value0Immed, abstractStrctPtr1);
 			}
@@ -4150,7 +4186,7 @@ NSUInteger iterationCounter
 			reg = REGNO(opcode2);
 			reg_struct = get_regStruct(reg, LONGOPERAND, data16, rex);
 			// printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
-			const struct HooReg *secondReg = data16 ? &acumx : &acumex;
+			const struct HooReg *secondReg = data16 ? &acumx_reg : &acumex_reg;
 			FILLARGS2( reg_struct, secondReg );
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
@@ -4195,11 +4231,11 @@ NSUInteger iterationCounter
 			value0_size = OPSIZE(data16, WBIT(opcode2), 0);
 			switch(value0_size) {
 				case 1:
-					reg_struct = &acuml;
+					reg_struct = &acuml_reg;
 				case 2:
-					reg_struct = &acumx;
+					reg_struct = &acumx_reg;
 				case 4:
-					reg_struct = &acumex;
+					reg_struct = &acumex_reg;
 			}
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
@@ -4225,8 +4261,8 @@ NSUInteger iterationCounter
 			} else {
 				//TODO: this is in the repz loop
 				struct IndirectVal *indirect1, *indirect2;
-				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&source_indexReg, 0, scale_factor[0] );
-				NEW_INDIRECT( indirect2, segReg, 0, (struct HooReg *)&destination_indexReg, 0, scale_factor[0] );
+				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex1_reg, 0, scale_factor[0] );
+				NEW_INDIRECT( indirect2, segReg, 0, (struct HooReg *)&destinationIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
 //				printf("line>%lu\t\t", (unsigned long)iterationCounter);			
@@ -4243,10 +4279,10 @@ NSUInteger iterationCounter
 			struct HooReg *indexReg;		
 			if(addr16 == TRUE) {
 				// printf("%s\t%s,%s(%%di)\n", mnemonic, reg_name, seg);
-				indexReg = (struct HooReg *)&destination_indexReg1;
+				indexReg = (struct HooReg *)&destinationIndex2_reg;
 			} else {
 				// printf("%s\t%s,%s(%%edi)\n", mnemonic, reg_name, seg);
-				indexReg = (struct HooReg *)&destination_indexReg;
+				indexReg = (struct HooReg *)&destinationIndex1_reg;
 			}
 			struct IndirectVal *indirect1;			
 			NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)indexReg, 0, scale_factor[0] );
@@ -4267,7 +4303,7 @@ NSUInteger iterationCounter
 				// printf("%s\t%s(%%esi),%s\n", mnemonic, seg, reg_name);
 				struct IndirectVal *indirect1;
 				// lodsl (%esi),%eax
-				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&source_indexReg, 0, scale_factor[0] );
+				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, reg_struct );
 				addLine( addr, currentFuncPtr, dp, allArgs );
 			}
@@ -4406,7 +4442,7 @@ NSUInteger iterationCounter
 			// printf("%s\t$", mnemonic);
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
 			// eg inl $0x05,%eax
-			FILLARGS2( value0Immed, &acumex );			
+			FILLARGS2( value0Immed, &acumex_reg );			
 			addLine( addr, currentFuncPtr, dp, allArgs  );			
 			return(length);
 
@@ -4417,7 +4453,7 @@ NSUInteger iterationCounter
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg  outb %al,$0x00
-			FILLARGS2( &acumex, value0Immed );
+			FILLARGS2( &acumex_reg, value0Immed );
 			addLine( addr, currentFuncPtr, dp, allArgs  );		
 			return(length);
 		}
@@ -4432,9 +4468,9 @@ NSUInteger iterationCounter
 			// printf("%s\t%s%%dx,%%eax\n", mnemonic, seg);
 			// eg inl %dx,%eax
 			if(segReg) {
-				FILLARGS3( segReg, &dataReg, &acumex );
+				FILLARGS3( segReg, &data1_reg, &acumex_reg );
 			} else {
-				FILLARGS2( &dataReg, &acumex );
+				FILLARGS2( &data1_reg, &acumex_reg );
 			}
 			addLine( addr, currentFuncPtr, dp, allArgs  );		
 			return(length);
@@ -4445,9 +4481,9 @@ NSUInteger iterationCounter
 			// printf("%s\t%s%%eax,%%dx\n", mnemonic, segReg->name);
 			// eg outb %al,%dx
 			if(segReg) {
-				FILLARGS3( segReg, &acumex, &dataReg );
+				FILLARGS3( segReg, &acumex_reg, &data1_reg );
 			} else {
-				FILLARGS2( &acumex, &dataReg );
+				FILLARGS2( &acumex_reg, &data1_reg );
 			}			
 			addLine( addr, currentFuncPtr, dp, allArgs  );		
 			return(length);
@@ -4507,17 +4543,17 @@ NSUInteger iterationCounter
 		/* float reg to float reg, with ret bit present */
 		case FF:
 		{
-			struct HooReg *reg_struct2;
+			const struct HooReg *reg_struct2;
 			/* return result bit for 287 instructions */
 			if(((opcode2 >> 2) & 0x1) == 0x1 && opcode2 != 0xf) {
 				// fsubrp	%st,%st(1)
-				reg_struct = (struct HooReg *)&FloatingPointREG[0];
-				reg_struct2 = (struct HooReg *)&FloatingPointREG[r_m];
+				reg_struct = FloatingPointREG[0];
+				reg_struct2 = FloatingPointREG[r_m];
 				//printf("%s\t%%st,%%st(%1.1u)\n", mnemonic, r_m);
 			} else {
 				// fucomip	%st(1),%st
-				reg_struct = (struct HooReg *)&FloatingPointREG[r_m];
-				reg_struct2 = (struct HooReg *)&FloatingPointREG[0];
+				reg_struct = FloatingPointREG[r_m];
+				reg_struct2 = FloatingPointREG[0];
 				// printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
 			}
 			FILLARGS2( reg_struct, reg_struct2 );
