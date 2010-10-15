@@ -51,6 +51,8 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <stdint.h>
 
 #import "ArgStack.h"
+#import "Instructions.h"
+#import "Registers.h"
 
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
@@ -66,7 +68,6 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //#include "ofile_print.h"
 //#include "i386_disasm.h"
 
-#define MAX_MNEMONIC	11	/* Maximum number of chars per mnemonic, plus a byte for '\0' */
 #define MAX_RESULT	24	/* Maximum number of char in a register */
 				/*  result expression "(%ebx,%ecx,8)" */
 
@@ -90,31 +91,8 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 extern struct symbol;
 
-enum argType {
-	NULL_ARG,
-	REGISTER_ARG,
-	IMMEDIATE_ARG,
-	INDIRECT_ARG,
-	DISPLACEMENT_ARG
-};
 
-struct HooAbstractDataType {
-	enum argType isah;
-};
 
-struct HooReg {
-	enum argType		isah;
-	char				name[MAX_MNEMONIC];
-	char				prettyName[40];	
-};
-
-//struct BonkersHooReg {
-//	enum argType		isah;
-//	char				name1[MAX_MNEMONIC];
-//	char				name2[MAX_MNEMONIC];
-//	char				prettyName1[40];	
-//	char				prettyName2[40];	
-//};
 
 struct ImediateValue {
 	enum argType		isah;	
@@ -128,12 +106,12 @@ struct DisplacementValue {
 
 // always refers to a memory location
 struct IndirectVal {
-	enum argType		isah;
-	const struct HooReg	*segmentRegister;
-	uint64				displacement;
-	struct HooReg		*baseRegister;
-	struct HooReg		*indexRegister;
-	NSUInteger			scale;
+	enum argType			isah;
+	const struct HooReg		*segmentRegister;
+	uint64					displacement;
+	const struct HooReg		*baseRegister;
+	const struct HooReg		*indexRegister;
+	NSUInteger				scale;
 };
 
 #define NEW_INDIRECT( x,segReg,displace,baseReg,indexReg,scaleSize) x=calloc(1, sizeof(struct IndirectVal)); x->isah=INDIRECT_ARG; x->segmentRegister=segReg; x->displacement=displace; x->baseRegister=baseReg; x->indexRegister=indexReg; x->scale=scaleSize;
@@ -142,36 +120,6 @@ struct IndirectVal {
 
 #define NEW_DISPLACEMENT( displaceStructPtr, intVal ) displaceStructPtr = calloc(1, sizeof(struct DisplacementValue)); displaceStructPtr->isah=DISPLACEMENT_ARG; displaceStructPtr->value=intVal;
 
-
-/*
- * This is the structure that is used for storing all the op code information.
- */
-struct instable {
-	char name[MAX_MNEMONIC];
-	const struct instable *indirect;
-	unsigned adr_mode;
-	int flags;
-	const struct instable *arch64;
-	char *printStr;
-	
-#define ISJUMP 1		// ie. does this change the execution flow
-#define ISBRANCH 2		// ie. does this conditionally change the execution flow
-#define ISCOMPARE 4
-#define NOTUSED 8	
-	// notused isCompare isBranch isJump
-	// ie
-	uint16 typeBitField;
-};
-#define	TERM	0	/* used to indicate that the 'indirect' field of the */
-			/* 'instable' terminates - no pointer.	*/
-#define	INVALID	{"",TERM,UNKNOWN,0}
-/*
- * These are defined this way to make the initializations in the tables simpler
- * and more readable for differences between 32-bit and 64-bit architectures.
- */
-#define	INVALID_32 "",TERM,UNKNOWN,0
-static const struct instable op_invalid_64 = {"",TERM,/* UNKNOWN */0,0};
-#define INVALID_64 (&op_invalid_64)
 
 /* Flags */
 #define HAS_SUFFIX			0x1	/* For instructions which may have a 'w', 'l', or 'q' suffix */
@@ -213,60 +161,6 @@ static NSUInteger replacement_get_operand(
 										  const NSUInteger verbose, 
 										  struct HooReg *segReg );
 
-//static void get_operand(
-//const char **symadd,
-//const char **symsub,
-//uint64 *value,
-//NSUInteger *value_size,
-//void *result,
-//const cpu_type_t cputype,
-//const uint32_t mode,
-//const uint32_t r_m,
-//const uint32_t wbit,
-//const int data16,
-//const int addr16,
-//const int sse2,
-//const int mmx,
-//const unsigned int rex,
-//const char *sect,
-//uint32_t sect_addr,
-//uint32_t *length,
-//uint64 *left,
-//const uint32_t addr,
-//const struct relocation_info *sorted_relocs,
-//const uint32_t nsorted_relocs,
-//const struct nlist *symbols,
-//const struct nlist_64 *symbols64,
-//const NSUInteger nsymbols,
-//const char *strings,
-//const NSUInteger strings_size,
-//const struct symbol *sorted_symbols,
-//const NSUInteger nsorted_symbols,
-//const int verbose
-//);
-
-//static void immediate(
-//	const char **symadd,
-//	const char **symsub,
-//	uint64_t *value,
-//	uint32_t value_size,
-//	const char *sect,
-//	uint32_t sect_addr,
-//	uint32_t *length,
-//	uint32_t *left,
-//	const cpu_type_t cputype,
-//	const uint32_t addr,
-//	const struct relocation_info *sorted_relocs,
-//	const uint32_t nsorted_relocs,
-//	const struct nlist *symbols,
-//	const struct nlist_64 *symbols64,
-//	const NSUInteger nsymbols,
-//	const char *strings,
-//	const NSUInteger strings_size,
-//	const struct symbol *sorted_symbols,
-//	const NSUInteger nsorted_symbols,
-//	const int verbose
-//);
 static void replacement_immediate(
 					  const char **symadd,
 					  const char **symsub,
@@ -312,24 +206,6 @@ static void displacement(
     const struct symbol *sorted_symbols,
     const NSUInteger nsorted_symbols,
     const NSUInteger verbose);
-
-//static void get_symbol(
-//    const char **symadd,
-//    const char **symsub,
-//    uint64_t *offset,
-//    const cpu_type_t cputype,
-//    const uint32_t sect_offset,
-//    const uint64_t value,
-//    const struct relocation_info *relocs,
-//    const uint32_t nrelocs,
-//    const struct nlist *symbols,
-//    const struct nlist_64 *symbols64,
-//    const NSUInteger nsymbols,
-//    const char *strings,
-//    const NSUInteger strings_size,
-//    const struct symbol *sorted_symbols,
-//    const NSUInteger nsorted_symbols,
-//    const int verbose);
 
 
 //static void print_operand( const char *seg, const char *symadd, const char *symsub, uint64_t value, NSUInteger value_size, const char *result, const char *tail);
@@ -380,11 +256,6 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 		     nsorted_relocs, symbols, symbols64, nsymbols, strings, \
 		     strings_size, sorted_symbols, nsorted_symbols, verbose)
 
-//#define IMMEDIATE(symadd, symsub, value, value_size) \
-//immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
-//&length, &left, cputype, addr, sorted_relocs, \
-//nsorted_relocs, symbols, symbols64, nsymbols, strings, \
-//strings_size, sorted_symbols, nsorted_symbols, verbose)
 
 #define REPLACEMENT_IMMEDIATE(symadd, symsub, value, value_size) \
 replacement_immediate((symadd), (symsub), (value), (value_size), sect, sect_addr, \
@@ -403,256 +274,11 @@ strings_size, sorted_symbols, nsorted_symbols, verbose)
 #define GUESS_SYMBOL(value) \
 	guess_symbol((value), sorted_symbols, nsorted_symbols, verbose)
 
-/*
- * These are the instruction formats as they appear in the disassembly tables.
- * Here they are given numerical values for use in the actual disassembly of
- * an instruction.
- */
-#define UNKNOWN	0
-#define MRw	2
-#define IMlw	3
-#define IMw	4
-#define IR	5
-#define OA	6
-#define AO	7
-#define MS	8
-#define SM	9
-#define Mv	10
-#define Mw	11
-#define M	12
-#define R	13
-#define RA	14
-#define SEG	15
-#define MR	16
-#define IA	17
-#define MA	18
-#define SD	19
-#define AD	20
-#define SA	21
-#define D	22
-#define INM	23
-#define SO	24
-#define BD	25
-#define I	26
-#define P	27
-#define V	28
-#define DSHIFT	29 /* for double shift that has an 8-bit immediate */
-#define U	30
-#define OVERRIDE 31
-#define GO_ON	32
-#define O	33	/* for call	*/
-#define JTAB	34	/* jump table (not used at NeXT) */
-#define IMUL	35	/* for 186 iimul instr  */
-#define CBW 36 /* so that data16 can be evaluated for cbw and its variants */
-#define MvI	37	/* for 186 logicals */
-#define ENTER	38	/* for 186 enter instr  */
-#define RMw	39	/* for 286 arpl instr */
-#define Ib	40	/* for push immediate byte */
-#define F	41	/* for 287 instructions */
-#define FF	42	/* for 287 instructions */
-#define DM	43	/* 16-bit data */
-#define AM	44	/* 16-bit addr */
-#define LSEG	45	/* for 3-bit seg reg encoding */
-#define MIb	46	/* for 386 logicals */
-#define SREG	47	/* for 386 special registers */
-#define PREFIX	48	/* an instruction prefix like REP, LOCK */
-#define INT3	49	/* The int 3 instruction, which has a fake operand */
-#define DSHIFTcl 50	/* for double shift that implicitly uses %cl */
-#define CWD	51	/* so that data16 can be evaluated for cwd and vars */
-#define RET	52	/* single immediate 16-bit operand */
-#define MOVZ	53	/* for movs and movz, with different size operands */
-#define XINST	54	/* for cmpxchg and xadd */
-#define BSWAP	55	/* for bswap */
-#define Pi	56
-#define Po	57
-#define Vi	58
-#define Vo	59
-#define Mb	60
-#define INMl	61
-#define SSE2	62	/* SSE2 instruction with possible 3rd opcode byte */
-#define SSE2i	63	/* SSE2 instruction with 8-bit immediate */
-#define SSE2i1	64	/* SSE2 with one operand and 8-bit immediate */
-#define SSE2tm	65	/* SSE2 with dest to memory */
-#define SSE2tfm	66	/* SSE2 with dest to memory or memory to dest */
-#define PFCH	67	/* prefetch instructions */
-#define SFEN	68	/* sfence & clflush */
-#define Mnol	69	/* no 'l' suffix, fildl, fistpl */
-#define AMD3DNOW       70  /* 3DNow! instruction (SSE2 format with a suffix) */
-#define PFCH3DNOW      71  /* 3DNow! prefetch instruction */
-#define REX	72		/* 64-bit REX prefix */
-#define IR64 73		/* IR with a 64-bit immediate if REX.W is set */
-#define MNI 74		/* MNI instruction, differentiated by 2nd and 3rd opcode bytes */
-#define MNIi 75		/* MNI instruction with 8-bit immediate, differentiated by 2nd and 3rd opcode bytes */
-#define SSE4	76	/* SSE4 instruction with 3rd & 4th opcode bytes */
-#define SSE4i	77	/* SSE4 instruction with 8-bit immediate */
-#define SSE4itm	78	/* SSE4 with dest to memory and 8-bit immediate */
-#define SSE4ifm	79	/* SSE4 with src from memory and 8-bit immediate */
-#define SSE4MRw	80	/* SSE4.2 memory or register operand to register */
-#define SSE4CRC	81	/* SSE4.2 crc memory or register operand to register */
-#define SSE4CRCb	82	/* SSE4.2 crc byte memory or register operand to register */
 
-/*
- * In 16-bit addressing mode:
- * Register operands may be indicated by a distinguished field.
- * An '8' bit register is selected if the 'w' bit is equal to 0,
- * and a '16' bit register is selected if the 'w' bit is equal to
- * 1 and also if there is no 'w' bit.
- */
-//static const char * const REG16[8][2] = {
-///* w bit		0		1		*/
-///* reg bits */
-///* 000	*/		{"%al",		"%ax"},
-///* 001  */		{"%cl",		"%cx"},
-///* 010  */		{"%dl",		"%dx"},
-///* 011	*/		{"%bl",		"%bx"},
-///* 100	*/		{"%ah",		"%sp"},
-///* 101	*/		{"%ch",		"%bp"},
-///* 110	*/		{"%dh",		"%si"},
-///* 111	*/		{"%bh",		"%di"}
-//};
-
-/*
- * In 32-bit or 64-bit addressing mode:
- * Register operands may be indicated by a distinguished field.
- * An '8' bit register is selected if the 'w' bit is equal to 0,
- * and a '32' bit register is selected if the 'w' bit is equal to
- * 1 and also if there is no 'w' bit.
- */
-//static const char * const REG32[16][3] = {
-///* w bit		0				1			1 + REX.W	*/
-///* reg bits */
-///* 0000	*/		{"%al",			"%eax",			"%rax"},
-///* 0001  */		{"%cl",			"%ecx",			"%rcx"},
-///* 0010  */		{"%dl",			"%edx",			"%rdx"},
-///* 0011	*/		{"%bl",			"%ebx",			"%rbx"},
-///* 0100	*/		{"%ah",			"%esp",			"%rsp"},
-///* 0101	*/		{"%ch",			"%ebp",			"%rbp"},
-///* 0110	*/		{"%dh",			"%esi",			"%rsi"},
-///* 0111	*/		{"%bh",			"%edi",			"%rdi"},
-///* 1000	*/		{"%r8b",		"%r8d",			"%r8"},
-///* 1001 */		{"%r9b",		"%r9d",			"%r9"},
-///* 1010 */		{"%r10b",		"%r10d",		"%r10"},
-///* 1011	*/		{"%r11b",		"%r11d",		"%r11"},
-///* 1100	*/		{"%r12b",		"%r12d",		"%r12"},
-///* 1101	*/		{"%r13b",		"%r13d",		"%r13"},
-///* 1110	*/		{"%r14b",		"%r14d",		"%r14"},
-///* 1111	*/		{"%r15b",		"%r15d",		"%r15"}
-//};
 
 #pragma mark -
 #pragma mark Registers
 
-#define hooReg_ static const struct HooReg const
-
-hooReg_		acuml_reg =					{REGISTER_ARG, "%al",		"%accumulator" };
-hooReg_		acumx_reg =					{REGISTER_ARG, "%ax",		"%accumulator" };
-hooReg_		acumex_reg =				{REGISTER_ARG, "%eax",		"%accumulator" };
-hooReg_		acum1_reg =					{REGISTER_ARG, "%ah",		"%accumulator" };
-hooReg_		acum2_reg =					{REGISTER_ARG, "%rax",		"%accumulator" };
-
-hooReg_		data1_reg =					{REGISTER_ARG, "%dx",		"%data" };
-hooReg_		data2_reg =					{REGISTER_ARG, "%dl",		"%data" };
-hooReg_		data3_reg =					{REGISTER_ARG, "%dh",		"%data" };
-hooReg_		data4_reg =					{REGISTER_ARG, "%edx",		"%data" };
-hooReg_		data5_reg =					{REGISTER_ARG, "%rdx",		"%data" };
-
-hooReg_		count1_reg =				{REGISTER_ARG, "%cl",		"%count" };
-hooReg_		count2_reg =				{REGISTER_ARG, "%cx",		"%count" };
-hooReg_		count3_reg =				{REGISTER_ARG, "%ch",		"%count" };
-hooReg_		count4_reg =				{REGISTER_ARG, "%ecx",		"%count" };
-hooReg_		count5_reg =				{REGISTER_ARG, "%rcx",		"%count" };
-
-hooReg_		sourceIndex1_reg =			{REGISTER_ARG, "%esi",		"%source_index" };
-hooReg_		sourceIndex2_reg =			{REGISTER_ARG, "%si",		"%source_index" };
-hooReg_		sourceIndex3_reg =			{REGISTER_ARG, "%rsi",		"%source_index" };
-
-hooReg_		destinationIndex1_reg =		{REGISTER_ARG, "%edi",		"%destination_index" };
-hooReg_		destinationIndex2_reg =		{REGISTER_ARG, "%di",		"%destination_index" };
-hooReg_		destinationIndex3_reg =		{REGISTER_ARG, "%rdi",		"%destination_index" };
-
-hooReg_		base1_reg =					{REGISTER_ARG, "%bx",		"%base" };
-hooReg_		base2_reg =					{REGISTER_ARG, "%bl",		"%base"};
-hooReg_		base3_reg =					{REGISTER_ARG, "%bh",		"%base"};
-hooReg_		base4_reg =					{REGISTER_ARG, "%ebx",		"%base" };
-hooReg_		base5_reg =					{REGISTER_ARG, "%rbx",		"%base" };
-
-hooReg_		codeSeg_reg =				{REGISTER_ARG, "%cs",		"code_seg_reg" };
-hooReg_		stackSeg_reg =				{REGISTER_ARG, "%ss",		"stack_seg_reg" };
-hooReg_		rip_reg =					{REGISTER_ARG, "%rip",		"the_infamous_rip_reg" };
-
-hooReg_		dataSeg1_reg =				{REGISTER_ARG, "%es",		"string_operation_dest_seg_reg" };
-hooReg_		dataSeg2_reg =				{REGISTER_ARG, "%es",		"data_seg_reg" };
-hooReg_		dataSeg3_reg =				{REGISTER_ARG, "%ds",		"data_seg_reg" };
-hooReg_		dataSeg4_reg =				{REGISTER_ARG, "%fs",		"data_seg_reg" };
-hooReg_		dataSeg5_reg =				{REGISTER_ARG, "%gs",		"data_seg_reg" };
-hooReg_		unknown1_reg =				{REGISTER_ARG, "%?6",		"%??Reg" };
-hooReg_		unknown2_reg =				{REGISTER_ARG, "%?7",		"%??Reg" };
-
-hooReg_		spt1_reg =					{REGISTER_ARG, "%sp",		"%stackPointer_top" };
-hooReg_		spt2_reg =					{REGISTER_ARG, "%esp",		"%stackPointer_top" };
-hooReg_		spt3_reg =					{REGISTER_ARG, "%rsp",		"%stackPointer_top" };
-
-hooReg_		spb1_reg =					{REGISTER_ARG, "%bp",		"%stackPointer_base" };
-hooReg_		spb2_reg =					{REGISTER_ARG, "%ebp",		"%stackPointer_base"};
-hooReg_		spb3_reg =					{REGISTER_ARG, "%rbp",		"%stackPointer_base" };
-
-hooReg_		fp0_reg =					{REGISTER_ARG, "%st(0)",	"%floatReg0" };
-hooReg_		fp1_reg =					{REGISTER_ARG, "%st(1)",	"%floatReg1" };
-hooReg_		fp2_reg =					{REGISTER_ARG, "%st(2)",	"%floatReg2" };
-hooReg_		fp3_reg =					{REGISTER_ARG, "%st(3)",	"%floatReg3" };
-hooReg_		fp4_reg =					{REGISTER_ARG, "%st(4)",	"%floatReg4" };
-hooReg_		fp5_reg =					{REGISTER_ARG, "%st(5)",	"%floatReg5" };
-hooReg_		fp6_reg =					{REGISTER_ARG, "%st(6)",	"%floatReg6" };
-hooReg_		fp7_reg =					{REGISTER_ARG, "%st(7)",	"%floatReg7" };
-hooReg_		fp_reg =					{REGISTER_ARG, "%st",		"%floatReg" };
-
-hooReg_		r08_1_reg =					{REGISTER_ARG, "%r8b",		"%reg8" };
-hooReg_		r08_2_reg =					{REGISTER_ARG, "%r8d",		"%reg8" };
-hooReg_		r08_3_reg =					{REGISTER_ARG, "%r8",		"%reg8" };
-hooReg_		r09_1_reg =					{REGISTER_ARG, "%r9b",		"%reg9" };
-hooReg_		r09_2_reg =					{REGISTER_ARG, "%r9d",		"%reg9" };
-hooReg_		r09_3_reg =					{REGISTER_ARG, "%r9",		"%reg9" };
-hooReg_		r10_1_reg =					{REGISTER_ARG, "%r10b",		"%reg10" };
-hooReg_		r10_2_reg =					{REGISTER_ARG, "%r10d",		"%reg10" };
-hooReg_		r10_3_reg =					{REGISTER_ARG, "%r10",		"%reg10" };
-hooReg_		r11_1_reg =					{REGISTER_ARG, "%r11b",		"%reg11" };
-hooReg_		r11_2_reg =					{REGISTER_ARG, "%r11d",		"%reg11" };
-hooReg_		r11_3_reg =					{REGISTER_ARG, "%r11",		"%reg11" };
-hooReg_		r12_1_reg =					{REGISTER_ARG, "%r12b",		"%reg12" };
-hooReg_		r12_2_reg =					{REGISTER_ARG, "%r12d",		"%reg12" };
-hooReg_		r12_3_reg =					{REGISTER_ARG, "%r12",		"%reg12" };
-hooReg_		r13_1_reg =					{REGISTER_ARG, "%r13b",		"%reg13" };
-hooReg_		r13_2_reg =					{REGISTER_ARG, "%r13d",		"%reg13" };
-hooReg_		r13_3_reg =					{REGISTER_ARG, "%r13",		"%reg13" };
-hooReg_		r14_1_reg =					{REGISTER_ARG, "%r14b",		"%reg14" };
-hooReg_		r14_2_reg =					{REGISTER_ARG, "%r14d",		"%reg14" };
-hooReg_		r14_3_reg =					{REGISTER_ARG, "%r14",		"%reg14" };
-hooReg_		r15_1_reg =					{REGISTER_ARG, "%r15b",		"%reg15" };
-hooReg_		r15_2_reg =					{REGISTER_ARG, "%r15d",		"%reg15" };
-hooReg_		r15_3_reg =					{REGISTER_ARG, "%r15",		"%reg15" };
-
-hooReg_		xmm0_reg =					{REGISTER_ARG, "%xmm0",		"%xmm0" };
-hooReg_		xmm1_reg =					{REGISTER_ARG, "%xmm1",		"%xmm1" };
-hooReg_		xmm2_reg =					{REGISTER_ARG, "%xmm2",		"%xmm2" };
-hooReg_		xmm3_reg =					{REGISTER_ARG, "%xmm3",		"%xmm3" };
-hooReg_		xmm4_reg =					{REGISTER_ARG, "%xmm4",		"%xmm4" };
-hooReg_		xmm5_reg =					{REGISTER_ARG, "%xmm5",		"%xmm5" };
-hooReg_		xmm6_reg =					{REGISTER_ARG, "%xmm6",		"%xmm6" };
-hooReg_		xmm7_reg =					{REGISTER_ARG, "%xmm7",		"%xmm7" };
-
-hooReg_		mm0_reg =					{REGISTER_ARG, "%mm0",		"%mm0" };
-hooReg_		mm1_reg =					{REGISTER_ARG, "%mm1",		"%mm1" };
-hooReg_		mm2_reg =					{REGISTER_ARG, "%mm2",		"%mm2" };
-hooReg_		mm3_reg =					{REGISTER_ARG, "%mm3",		"%mm3" };
-hooReg_		mm4_reg =					{REGISTER_ARG, "%mm4",		"%mm4" };
-hooReg_		mm5_reg =					{REGISTER_ARG, "%mm5",		"%mm5" };
-hooReg_		mm6_reg =					{REGISTER_ARG, "%mm6",		"%mm6" };
-hooReg_		mm7_reg =					{REGISTER_ARG, "%mm7",		"%mm7" };
-
-hooReg_		empty_reg =					{REGISTER_ARG, "",			"" };
-hooReg_		null_reg =					{NULL_ARG,		"",			"" };
-
-// const struct instable const *zoogafrooga[] = {&op_cwtd, &op_cltd};
 
 hooReg_		*FloatingPointREG[9] = { &fp0_reg, &fp1_reg, &fp2_reg, &fp3_reg, &fp4_reg, &fp5_reg, &fp6_reg, &fp7_reg, &fp_reg };
 
@@ -748,48 +374,6 @@ hooReg_		*mmReg_Struct[8]			= { &mm0_reg, &mm1_reg, &mm2_reg, &mm3_reg, &mm4_reg
 hooReg_		*SEGREG[8]					= { &dataSeg1_reg, &codeSeg_reg, &stackSeg_reg, &dataSeg3_reg, &dataSeg4_reg, &dataSeg5_reg, &unknown1_reg, &unknown2_reg };
 
 
-
-/*
- * When data16 has not been specified, fields, to determine the addressing mode,
- * and will also provide strings for printing.
- */
-//static const char * const regname32[4][8] = {
-///*reg   000     001     010     011     100     101    110     111 */
-///*mod*/
-///*00 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "",     "%esi", "%edi"},
-///*01 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
-///*10 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"},
-///*11 */{"%eax", "%ecx", "%edx", "%ebx", "%esp", "%ebp", "%esi", "%edi"}
-//};
-
-/*
- * When data16 has not been specified, fields, to determine the addressing mode,
- * and will also provide strings for printing.
- */
-//static const char * const regname64[4][16] = {
-///*reg   0000    0001    0010    0011    0100    0101    0110    0111    1000    1001    1010    1011    1100    1101    1110    1111 */
-///*mod*/
-///*00 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-///*01 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-///*10 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"},
-///*11 */{"%rax", "%rcx", "%rdx", "%rbx", "%rsp", "%rbp", "%rsi", "%rdi", "%r8",  "%r9",  "%r10", "%r11", "%r12", "%r13", "%r14", "%r15"}
-//};
-
-
-/*
- * When data16 has been specified, the following array specifies the registers
- * for the different addressing modes.  Indexed first by mode, then by register
- * number.
- */
-//static const char * const regname16[4][8] = {
-///*reg  000        001        010        011        100    101   110     111 */
-///*mod*/
-///*00*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "",    "%bx"},
-///*01*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-///*10*/{"%bx,%si", "%bx,%di", "%bp,%si", "%bp,%di", "%si", "%di", "%bp", "%bx"},
-///*11*/{"%ax",     "%cx",     "%dx",     "%bx",     "%sp", "%bp", "%si", "%di"}
-//};
-
 /*
  * If r/m==100 then the following byte (the s-i-b byte) must be decoded
  */
@@ -832,1204 +416,12 @@ static const char dispsize32 [8][4] = {
 };
 
 
-//static const char * const indexname[8] = {
-//    ",%eax",
-//    ",%ecx",
-//    ",%edx",
-//    ",%ebx",
-//    "",
-//    ",%ebp",
-//    ",%esi",
-//    ",%edi"
-//};
-
-//static const char * const indexname64[16] = {
-//    ",%rax",
-//    ",%rcx",
-//    ",%rdx",
-//    ",%rbx",
-//    "",
-//    ",%rbp",
-//    ",%rsi",
-//    ",%rdi",
-//	",%r8",
-//	",%r9",
-//	",%r10",
-//	",%r11",
-//	",%r12",
-//	",%r13",
-//	",%r14",
-//	",%r15"
-//};
-
-
-/*
- * Special Registers
- */
-//static const char * const DEBUGREG[] = {
-//	"%db0", "%db1", "%db2", "%db3", "%db4", "%db5", "%db6", "%db7",
-//	"%db8", "%db9", "%db10", "%db11", "%db12", "%db13", "%db14", "%db15"
-//};
-//
-//static const char * const CONTROLREG[] = {
-//	"%cr0", "%cr1", "%cr2", "%cr3", "%cr4", "%cr5", "%cr6", "%cr7",
-//	"%cr8", "%cr9", "%cr10", "%cr11", "%cr12", "%cr13", "%cr14", "%cr15"
-//};
-//
-//static const char * const TESTREG[8] = {
-//    "%tr0", "%tr1", "%tr2", "%tr3", "%tr4", "%tr5", "%tr6", "%tr7"
-//};
 
 #pragma mark -
 #pragma mark Instructions
 
-/*
- * Decode table for 0x0F00 opcodes
- */
-static const struct instable op0F00[8] = {
-	{"sldt",TERM,M,1},
-	{"str",TERM,M,1},
-	{"lldt",TERM,M,1},
-	{"ltr",TERM,M,1},
-	{"verr",TERM,M,1},
-	{"verw",TERM,M,1},
-	INVALID, INVALID,
-};
 
 
-/*
- * Decode table for 0x0F01 opcodes
- */
-static const struct instable op0F01[8] = {
-	{"sgdt",TERM,M,1},
-	{"sidt",TERM,M,1},
-	{"lgdt",TERM,M,1},
-	{"lidt",TERM,M,1},
-	{"smsw",TERM,M,1},
-	INVALID,
-	{"lmsw",TERM,M,1},
-	{"invlpg",TERM,M,1},
-};
-
-/*
- * Decode table for 0x0F38 opcodes
- */
-static const struct instable op0F38[256] = {
-	{"pshufb",TERM,MNI,0},
-	{"phaddw",TERM,MNI,0},
-	{"phaddd",TERM,MNI,0},
-	{"phaddsw",TERM,MNI,0},
-	{"pmaddubsw",TERM,MNI,0},
-	{"phsubw",TERM,MNI,0},
-	{"phsubd",TERM,MNI,0},
-	{"phsubsw",TERM,MNI,0},
-	{"psignb",TERM,MNI,0},
-	{"psignw",TERM,MNI,0},
-	{"psignd",TERM,MNI,0},
-	{"pmulhrsw",TERM,MNI,0},
-	INVALID, INVALID, INVALID, INVALID,
-	{"pblendvb",TERM,SSE4,0},
-	INVALID, INVALID, INVALID,
-	{"blendvps",TERM,SSE4,0},
-	{"blendvpd",TERM,SSE4,0},
-	INVALID,
-	{"ptest",TERM,SSE4,0},
-	INVALID, INVALID, INVALID, INVALID,
-	{"pabsb",TERM,MNI,0},
-	{"pabsw",TERM,MNI,0},
-	{"pabsd",TERM,MNI,0},
-	INVALID,
-	{"pmovsxbw",TERM,SSE4,0},
-	{"pmovsxbd",TERM,SSE4,0},
-	{"pmovsxbq",TERM,SSE4,0},
-	{"pmovsxwd",TERM,SSE4,0},
-	{"pmovsxwq",TERM,SSE4,0},
-	{"pmovsxdq",TERM,SSE4,0},
-	INVALID, INVALID,
-	{"pmuldq",TERM,SSE4,0},
-	{"pcmpeqq",TERM,SSE4,0},
-	{"movntdqa",TERM,SSE4,0},
-	{"packusdw",TERM,SSE4,0},
-	INVALID, INVALID, INVALID, INVALID,
-	{"pmovzxbw",TERM,SSE4,0},
-	{"pmovzxbd",TERM,SSE4,0},
-	{"pmovzxbq",TERM,SSE4,0},
-	{"pmovzxwd",TERM,SSE4,0},
-	{"pmovzxwq",TERM,SSE4,0},
-	{"pmovzxdq",TERM,SSE4,0},
-	INVALID,
-	{"pcmpgtq",TERM,SSE4,0},
-	{"pminsb",TERM,SSE4,0},
-	{"pminsd",TERM,SSE4,0},
-	{"pminuw",TERM,SSE4,0},
-	{"pminud",TERM,SSE4,0},
-	{"pmaxsb",TERM,SSE4,0},
-	{"pmaxsd",TERM,SSE4,0},
-	{"pmaxuw",TERM,SSE4,0},
-	{"pmaxud",TERM,SSE4,0},
-	{"pmulld",TERM,SSE4,0},
-	{"phminposuw",TERM,SSE4,0},
-	INVALID, INVALID, INVALID, INVALID,	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"crc32b",TERM,SSE4CRCb,0},
-	{"crc32",TERM,SSE4CRC,1},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-};
-
-/*
- * Decode table for 0x0F3A opcodes
- */
-static const struct instable op0F3A[112] = {
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"roundps",TERM,SSE4i,0},
-	{"roundpd",TERM,SSE4i,0},
- 	{"roundss",TERM,SSE4i,0},
-	{"roundsd",TERM,SSE4i,0},
-	{"blendps",TERM,SSE4i,0},
-	{"blendpd",TERM,SSE4i,0},
- 	{"pblendw",TERM,SSE4i,0},
-	{"palignr",TERM,MNIi,0},
-	INVALID, INVALID, INVALID, INVALID,
-	{"pextrb",TERM,SSE4itm,0},
-	{"pextrw",TERM,SSE4itm,0},
- 	{"pextr",TERM,SSE4itm,0},
-	{"extractps",TERM,SSE4itm,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"pinsrb",TERM,SSE4ifm,0},
-	{"insertps",TERM,SSE4i,0},
- 	{"pinsr",TERM,SSE4ifm,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"dpps",TERM,SSE4i,0},
-	{"dppd",TERM,SSE4i,0},
-	{"mpsadbw",TERM,SSE4i,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"pcmpestrm",TERM,SSE4i,0},
-	{"pcmpestri",TERM,SSE4i,0},
- 	{"pcmpistrm",TERM,SSE4i,0},
-	{"pcmpistri",TERM,SSE4i,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-};
-
-#define hooInstruction_ static const struct instable const
-
-// const char *varname;		-- values in varname are constant, ie varname[0] = 'a'; will warn
-// char const *varname;		-- actual pointer "varname" is constant so varname = &somebuf; will warn
-// here we use both
-
-hooInstruction_		op_monitor	= {"monitor",TERM,GO_ON,0};
-hooInstruction_		op_mwait	= {"mwait",TERM,GO_ON,0};
-
-/* These opcode tables entries are only used for the 64-bit architecture */
-hooInstruction_		op_swapgs	= {"swapgs",TERM,GO_ON,0};
-hooInstruction_		op_syscall	= {"syscall",TERM,GO_ON,0};
-hooInstruction_		op_sysret	= {"sysret",TERM,GO_ON,0};
-hooInstruction_		opREX		= {"",TERM,REX,0};
-hooInstruction_		op_movsl	= {"movsl",TERM,MOVZ,1};
-hooInstruction_		op_cbtw		= {"cbtw",0,0,0,0,(char *)"%ax = %al"};		// sign-extend byte in `%al' to word in `%ax'
-hooInstruction_		op_cwtl		= {"cwtl",0,0,0,0,(char *)"%eax = %ax"};		// sign-extend word in `%ax' to long in `%eax'
-hooInstruction_		op_cwtd		= {"cwtd",0,0,0,0,(char *)"%dx:%ax = %ax"};	// sign-extend word in `%ax' to long in `%dx:%ax'
-hooInstruction_		op_cltd		= {"cltd",0,0,0,0,(char *)"%edx:%eax = %eax"}; // sign-extend dword in `%eax' to quad in `%edx:%eax'
-
-
-const struct instable const *zoogafrooga[] = {&op_cwtd, &op_cltd};
-
-/*
- * Decode table for 0x0F0F opcodes
- * Unlike the other decode tables, this one maps suffixes.
- */
-static const struct instable op0F0F[16][16] = {
-{	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"pi2fw",TERM,AMD3DNOW,0},
-	{"pi2fd",TERM,AMD3DNOW,0},
-	INVALID, INVALID }, { INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"pf2iw",TERM,AMD3DNOW,0},
-	{"pf2id",TERM,AMD3DNOW,0},
-	INVALID, INVALID }, { INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"pfnacc",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pfpnacc",TERM,AMD3DNOW,0},
-	INVALID }, {
-	{"pfcmpge",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID, {
-	"pfmin",TERM,AMD3DNOW,0},
-	INVALID,
-	{"pfrcp",TERM,AMD3DNOW,0},
-	{"pfrsqrt",TERM,AMD3DNOW,0},
-	INVALID, INVALID,
-	{"pfsub",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pfadd",TERM,AMD3DNOW,0},
-	INVALID },
-	{{"pfcmpgt",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pfmax",TERM,AMD3DNOW,0},
-	INVALID,
-	{"pfrcpit1",TERM,AMD3DNOW,0},
-	{"pfrsqit1",TERM,AMD3DNOW,0},
-	INVALID, INVALID,
-	{"pfsubr",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pfacc",TERM,AMD3DNOW,0},
-	INVALID },
-	{ {"pfcmpeq",TERM,AMD3DNOW,0},
-	INVALID, INVALID,	INVALID,
-	{"pfmul",TERM,AMD3DNOW,0},
-	INVALID,
-	{"pfrcpit2",TERM,AMD3DNOW,0},
-	{"pmulhrw",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pswapd",TERM,AMD3DNOW,0},
-	INVALID, INVALID, INVALID,
-	{"pavgusb",TERM,AMD3DNOW,0} },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-	{ INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID },
-};
-
-/*
- * Decode table for 0x0FBA opcodes
- */
-static const struct instable op0FBA[8] = {
-	INVALID, INVALID, INVALID, INVALID,
-	{"bt",TERM,MIb,1},
-	{"bts",TERM,MIb,1},
-	{"btr",TERM,MIb,1},
-	{"btc",TERM,MIb,1},
-};
-
-/*
- * Decode table for 0x0FAE opcodes
- */
-static const struct instable op0FAE[8] = {
-	{"fxsave",TERM,M,1},
-	{"fxrstor",TERM,M,1},
-	{"ldmxcsr",TERM,M,1},
-	{"stmxcsr",TERM,M,1},
-	INVALID,
-	{"lfence",TERM,GO_ON,0},
-	{"mfence",TERM,GO_ON,0},
-	{"clflush",TERM,SFEN,1},
-};
-
-/*
- * Decode table for 0x0F opcodes
- */
-static const struct instable op0F[16][16] = {
-{	{"",op0F00,TERM,0},
-	{"",op0F01,TERM,0},
-	{"lar",TERM,MR,0},
-	{"lsl",TERM,MR,0},
-	INVALID,
-	{INVALID_32,&op_syscall},
-	{"clts",TERM,GO_ON,0},
-	{INVALID_32,&op_sysret},
-	{"invd",TERM,GO_ON,0},
-	{"wbinvd",TERM,GO_ON,0},
-	INVALID,
-	{"ud2",TERM,GO_ON,0},
-	INVALID,
-	{"prefetch",TERM,PFCH3DNOW,1},
-	{"femms",TERM,GO_ON,0},
-	{"",(const struct instable *)op0F0F,TERM,0} },
- {  {"mov",TERM,SSE2,0,0,							(char *)"@2 = @1"},
-	{"mov",TERM,SSE2tm,0,0,							(char *)"@2 = @1"},
-	{"mov",TERM,SSE2,0,0,							(char *)"@2 = @1"},
-	{"movl",TERM,SSE2tm,0,0,						(char *)"@2 = @1"},
-	{"unpckl",TERM,SSE2,0},
-	{"unpckh",TERM,SSE2,0},
-	{"mov",TERM,SSE2,0,0,							(char *)"@2 = @1"},
-	{"movh",TERM,SSE2tm,0},
-	{"prefetch",TERM,PFCH,1},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-	{"nop",TERM,M,1} },
-{	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	INVALID,
-	{"mov",TERM,SREG,0x03,0,						(char *)"@2 = @1"},
-	INVALID,
-	{"mova",TERM,SSE2,0},
-	{"mova",TERM,SSE2tm,0},
-	{"cvt",TERM,SSE2,0},
-	{"movnt",TERM,SSE2tm,0},
-	{"cvt",TERM,SSE2,0},
-	{"cvt",TERM,SSE2,0} ,
-	{"ucomi",TERM,SSE2,0},
-	{"comi",TERM,SSE2,0} },
- {  {"wrmsr",TERM,GO_ON,0},
-	{"rdtsc",TERM,GO_ON,0},
-	{"rdmsr",TERM,GO_ON,0},
-	{"rdpmc",TERM,GO_ON,0},
-	{"sysenter",TERM,GO_ON,0},
-	{"sysexit",TERM,GO_ON,0},
-	INVALID, INVALID,
-	{"",op0F38,TERM,0},
-	INVALID,
-	{"",op0F3A,TERM,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID },
-	{{"cmovo",TERM,MRw,1},
-	{"cmovno",TERM,MRw,1},
-	{"cmovb",TERM,MRw,1},
-	{"cmovae",TERM,MRw,1},
-	{"cmove",TERM,MRw,1},
-	{"cmovne",TERM,MRw,1},
-	{"cmovbe",TERM,MRw,1},
-	{"cmova",TERM,MRw,1},
-	{"cmovs",TERM,MRw,1},
-	{"cmovns",TERM,MRw,1},
-	{"cmovp",TERM,MRw,1},
-	{"cmovnp",TERM,MRw,1},
-	{"cmovl",TERM,MRw,1},
-	{"cmovge",TERM,MRw,1},
-	{"cmovle",TERM,MRw,1},
-	{"cmovg",TERM,MRw,1} },
-	{{"movmsk",TERM,SSE2,0},
-	{"sqrt",TERM,SSE2,0},
-	{"rsqrt",TERM,SSE2,0},
-	{"rcp",TERM,SSE2,0},
-	{"and",TERM,SSE2,0,0,		(char *)"@2 = @2 & @1"},
-	{"andn",TERM,SSE2,0},
-	{"or",TERM,SSE2,0,0,		(char *)"@2 = @2 OR @1"},
-	{"xor",TERM,SSE2,0,0,		(char *)"@2 = @2 XOR @1"},
-	{"add",TERM,SSE2,0,0,		(char *)"@2 = @2 + @1"},
-	{"mul",TERM,SSE2,0},
-	{"cvt",TERM,SSE2,0},
-	{"cvt",TERM,SSE2,0},
-	{"sub",TERM,SSE2,0,0,		(char *)"@2 = @2 - @1"},
-	{"min",TERM,SSE2,0},
-	{"div",TERM,SSE2,0},
-	{"max",TERM,SSE2,0} },
-{
-	{"punpcklbw",TERM,SSE2,0},
-	{"punpcklwd",TERM,SSE2,0},
-	{"punpckldq",TERM,SSE2,0},
-	{"packsswb",TERM,SSE2,0},
-	{"pcmpgtb",TERM,SSE2,0},
-	{"pcmpgtw",TERM,SSE2,0},
-	{"pcmpgtd",TERM,SSE2,0},
-	{"packuswb",TERM,SSE2,0},
-	{"punpckhbw",TERM,SSE2,0},
-	{"punpckhwd",TERM,SSE2,0},
-	{"punpckhdq",TERM,SSE2,0},
-	{"packssdw",TERM,SSE2,0},
-	{"punpckl",TERM,SSE2,0},
-	{"punpckh",TERM,SSE2,0},
-	{"movd",TERM,SSE2,0},
-	{"mov",TERM,SSE2,0,0,				(char *)"@2 = @1"} },
-{	{"pshu",TERM,SSE2i,0},
-	{"ps",TERM,SSE2i1,0},
-	{"ps",TERM,SSE2i1,0},
-	{"ps",TERM,SSE2i1,0},
-	{"pcmpeqb",TERM,SSE2,0},
-	{"pcmpeqw",TERM,SSE2,0},
-	{"pcmpeqd",TERM,SSE2,0},
-	{"emms",TERM,GO_ON,0},
-	{"vmread",TERM,RMw,0},
-	{"vmwrite",TERM,MRw,0},
-	INVALID, INVALID,
-	{"haddp",TERM,SSE2,0},
-	{"hsubp",TERM,SSE2,0},
-	{"mov",TERM,SSE2tfm,0,0,			(char *)"@2 = @1"},
-	{"mov",TERM,SSE2tm,0,0,				(char *)"@2 = @1"} },
-{	{"jo",TERM,D,0x03},
-	{"jno",TERM,D,0x03},
-	{"jb",TERM,D,0x03},
-	{"jae",TERM,D,0x03},
-	{"je",TERM,D,0x03},
-	{"jne",TERM,D,0x03},
-	{"jbe",TERM,D,0x03},
-	{"ja",TERM,D,0x03},
-	{"js",TERM,D,0x03},
-	{"jns",TERM,D,0x03},
-	{"jp",TERM,D,0x03},
-	{"jnp",TERM,D,0x03},
-	{"jl",TERM,D,0x03},
-	{"jge",TERM,D,0x03},
-	{"jle",TERM,D,0x03},
-	{"jg",TERM,D,0x03} },
- {  {"seto",TERM,Mb,0},
-	{"setno",TERM,Mb,0},
-	{"setb",TERM,Mb,0},
-	{"setae",TERM,Mb,0},
-	{"sete",TERM,Mb,0},
-	{"setne",TERM,Mb,0},
-	{"setbe",TERM,Mb,0},
-	{"seta",TERM,Mb,0},
-	{"sets",TERM,Mb,0},
-	{"setns",TERM,Mb,0},
-	{"setp",TERM,Mb,0},
-	{"setnp",TERM,Mb,0},
-	{"setl",TERM,Mb,0},
-	{"setge",TERM,Mb,0},
-	{"setle",TERM,Mb,0},
-	{"setg",TERM,Mb,0} },
- {  
-	{"_push",TERM,LSEG,0x03},
-	{"pop",TERM,LSEG,0x03,0,	(char *)"stackPop( @1 )"},
-	{"cpuid",TERM,GO_ON,0},
-	{"bt",TERM,RMw,1},
-	{"shld",TERM,DSHIFT,1},
-	{"shld",TERM,DSHIFTcl,1},
-	INVALID, INVALID,
-	{"push",TERM,LSEG,0x03,0,	(char *)"stackPush( @1 )"},
-	{"pop",TERM,LSEG,0x03,0,	(char *)"stackPop( @1 )"},
-	{"rsm",TERM,GO_ON,0, INVALID_64},
-	{"bts",TERM,RMw,1},
-	{"shrd",TERM,DSHIFT,1},
-	{"shrd",TERM,DSHIFTcl,1},
-	{"",op0FAE,TERM,0},
-	{"imul",TERM,MRw,1} },
- {  {"cmpxchgb",TERM,XINST,0},
-	{"cmpxchg",TERM,XINST,1},
-	{"lss",TERM,MR,0},
-	{"btr",TERM,RMw,1},
-	{"lfs",TERM,MR,0},
-	{"lgs",TERM,MR,0},
-	{"movzb",TERM,MOVZ,1,0,			(char *)"@2 = @1"},
-	{"movzwl",TERM,MOVZ,0,0,		(char *)"@2 = @1"},
-	{"popcnt",TERM,SSE4MRw,0},
-	INVALID,
-	{"",op0FBA,TERM,0},
-	{"btc",TERM,RMw,1},
-	{"bsf",TERM,MRw,1},
-	{"bsr",TERM,MRw,1},
-	{"movsb",TERM,MOVZ,1,0,			(char *)"@2 = @1"},
-	{"movswl",TERM,MOVZ,0,0,		(char *)"@2 = @1"} },
-{	{"xaddb",TERM,XINST,0},
-	{"xadd",TERM,XINST,1},
-	{"cmp",TERM,SSE2i,0,0,			(char *)"compare( @1, @2 )"},
-	{"movnti",TERM,RMw,0},
-	{"pinsrw",TERM,SSE2i,0},
-	{"pextrw",TERM,SSE2i,0},
-	{"shuf",TERM,SSE2i,0},
-	{"cmpxchg8b",TERM,M,1},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0},
-	{"bswap",TERM,BSWAP,0} },
- {  {"addsubp",TERM,SSE2,0},
-	{"psrlw",TERM,SSE2,0},
-	{"psrld",TERM,SSE2,0},
-	{"psrlq",TERM,SSE2,0},
-	{"paddq",TERM,SSE2,0},
-	{"pmullw",TERM,SSE2,0},
-	{"mov",TERM,SSE2tm,0,0,			(char *)"@2 = @1"},
-	{"pmovmskb",TERM,SSE2,0},
-	{"psubusb",TERM,SSE2,0},
-	{"psubusw",TERM,SSE2,0},
-	{"pminub",TERM,SSE2,0},
-	{"pand",TERM,SSE2,0},
-	{"paddusb",TERM,SSE2,0},
-	{"paddusw",TERM,SSE2,0},
-	{"pmaxub",TERM,SSE2,0},
-	{"pandn",TERM,SSE2,0} },
-{	{"pavgb",TERM,SSE2,0},
-	{"psraw",TERM,SSE2,0},
-	{"psrad",TERM,SSE2,0},
-	{"pavgw",TERM,SSE2,0},
-	{"pmulhuw",TERM,SSE2,0},
-	{"pmulhw",TERM,SSE2,0},
-	{"cvt",TERM,SSE2,0},
-	{"movn",TERM,SSE2tm,0},
-	{"psubsb",TERM,SSE2,0},
-	{"psubsw",TERM,SSE2,0},
-	{"pminsw",TERM,SSE2,0},
-	{"por",TERM,SSE2,0},
-	{"paddsb",TERM,SSE2,0},
-	{"paddsw",TERM,SSE2,0},
-	{"pmaxsw",TERM,SSE2,0},
-	{"pxor",TERM,SSE2,0} },
-{	{"lddqu",TERM,SSE2,0},
-	{"psllw",TERM,SSE2,0},
-	{"pslld",TERM,SSE2,0},
-	{"psllq",TERM,SSE2,0},
-	{"pmuludq",TERM,SSE2,0},
-	{"pmaddwd",TERM,SSE2,0},
-	{"psadbw",TERM,SSE2,0},
-	{"maskmov",TERM,SSE2,0},
-	{"psubb",TERM,SSE2,0},
-	{"psubw",TERM,SSE2,0},
-	{"psubd",TERM,SSE2,0},
-	{"psubq",TERM,SSE2,0},
-	{"paddb",TERM,SSE2,0},
-	{"paddw",TERM,SSE2,0},
-	{"paddd",TERM,SSE2,0},	INVALID },
-};
-
-/*
- * Decode table for 0x80 opcodes
- */
-static const struct instable op80[8] = {
-	{"addb",TERM,IMlw,0,0,			(char *)"@2 = @2 + @1"},
-	{"orb",TERM,IMw,0,0,			(char *)"@2 = @2 OR @1"},
-	{"adcb",TERM,IMlw,0},
-	{"sbbb",TERM,IMlw,0},
-	{"andb",TERM,IMw,0,0,			(char *)"@2 = @2 & @1"},
-	{"subb",TERM,IMlw,0},
-	{"xorb",TERM,IMw,0,0,			(char *)"@2 = @2 XOR @1"},
-	{"cmpb",TERM,IMlw,0,0,			(char *)"compare( @1, @2 )"},
-};
-
-/*
- * Decode table for 0x81 opcodes.
- */
-static const struct instable op81[8] = {
-	{"add",TERM,IMlw,1,0,		(char *)"@2 = @2 + @1"},
-	{"or",TERM,IMw,1,0,			(char *)"@2 = @2 OR @1"},
-	{"adc",TERM,IMlw,1},
-	{"sbb",TERM,IMlw,1},
-	{"and",TERM,IMw,1,0,		(char *)"@2 = @2 & @1"},
-	{"sub",TERM,IMlw,1,0,		(char *)"@2 = @2 - @1"},
-	{"xor",TERM,IMw,1,0,		(char *)"@2 = @2 XOR @1"},
-	{"cmp",TERM,IMlw,1,0,		(char *)"compare( @1, @2 )"},
-};
-
-/*
- * Decode table for 0x82 opcodes.
- */
-static const struct instable op82[8] = {
-	{"addb",TERM,IMlw,0,0,		(char *)"@2 = @2 + @1"},
-	INVALID,
-	{"adcb",TERM,IMlw,0},
-	{"sbbb",TERM,IMlw,0},
-	INVALID,
-	{"subb",TERM,IMlw,0},
-	INVALID,
-	{"cmpb",TERM,IMlw,0},
-};
-
-/*
- * Decode table for 0x83 opcodes.
- */
-static const struct instable op83[8] = {
-	{"add",TERM,IMlw,1, 0,	(char *)"@2 = @2 + @1"},
-	{"or",TERM,IMlw,1,0,	(char *)"@2 = @2 OR @1"},
-	{"adc",TERM,IMlw,1},
-	{"sbb",TERM,IMlw,1},
-	{"and",TERM,IMlw,1,0,	(char *)"@2 = @2 & @1"},
-	{"sub",TERM,IMlw,1,0,	(char *)"@2 = @2 - @1"},
-	{"xor",TERM,IMlw,1,0,	(char *)"@2 = @2 XOR @1"},
-	{"cmp",TERM,IMlw,1,0,	(char *)"compare( @1, @2 )"},
-};
-
-/*
- * Decode table for 0xC0 opcodes.
- */
-static const struct instable opC0[8] = {
-	{"rolb",TERM,MvI,0},
-	{"rorb",TERM,MvI,0},
-	{"rclb",TERM,MvI,0},
-	{"rcrb",TERM,MvI,0},
-	{"shlb",TERM,MvI,0},
-	{"shrb",TERM,MvI,0},
-	INVALID,
-	{"sarb",TERM,MvI,0},
-};
-
-/*
- * Decode table for 0xD0 opcodes.
- */
-static const struct instable opD0[8] = {
-	{"rolb",TERM,Mv,0},
-	{"rorb",TERM,Mv,0},
-	{"rclb",TERM,Mv,0},
-	{"rcrb",TERM,Mv,0},
-	{"shlb",TERM,Mv,0},
-	{"shrb",TERM,Mv,0},
-	INVALID,
-	{"sarb",TERM,Mv,0},
-};
-
-/*
- * Decode table for 0xC1 opcodes.
- * 186 instruction set
- */
-static const struct instable opC1[8] = {
-	{"rol",TERM,MvI,1},
-	{"ror",TERM,MvI,1},
-	{"rcl",TERM,MvI,1},
-	{"rcr",TERM,MvI,1},
-	{"shl",TERM,MvI,1},
-	{"shr",TERM,MvI,1},
-	INVALID,
-	{"sar",TERM,MvI,1},
-};
-
-/*
- * Decode table for 0xD1 opcodes.
- */
-static const struct instable opD1[8] = {
-	{"rol",TERM,Mv,1},
-	{"ror",TERM,Mv,1},
-	{"rcl",TERM,Mv,1},
-	{"rcr",TERM,Mv,1},
-	{"shl",TERM,Mv,1},
-	{"shr",TERM,Mv,1},
-	INVALID,
-	{"sar",TERM,Mv,1},
-};
-
-/*
- * Decode table for 0xD2 opcodes.
- */
-static const struct instable opD2[8] = {
-	{"rolb",TERM,Mv,0},
-	{"rorb",TERM,Mv,0},
-	{"rclb",TERM,Mv,0},
-	{"rcrb",TERM,Mv,0},
-	{"shlb",TERM,Mv,0},
-	{"shrb",TERM,Mv,0},
-	INVALID,
-	{"sarb",TERM,Mv,0},
-};
-
-/*
- * Decode table for 0xD3 opcodes.
- */
-static const struct instable opD3[8] = {
-	{"rol",TERM,Mv,1},
-	{"ror",TERM,Mv,1},
-	{"rcl",TERM,Mv,1},
-	{"rcr",TERM,Mv,1},
-	{"shl",TERM,Mv,1},
-	{"shr",TERM,Mv,1},
-	INVALID,
-	{"sar",TERM,Mv,1},
-};
-
-/*
- * Decode table for 0xF6 opcodes.
- */
-static const struct instable opF6[8] = {
-	{"testb",TERM,IMw,0,0,		(char *)"test( @1, @2 )"},
-	INVALID,
-	{"notb",TERM,Mw,0},
-	{"negb",TERM,Mw,0},
-	{"mulb",TERM,MA,0},
-	{"imulb",TERM,MA,0},
-	{"divb",TERM,MA,0},
-	{"idivb",TERM,MA,0},
-};
-
-/*
- * Decode table for 0xF7 opcodes.
- */
-static const struct instable opF7[8] = {
-	{"test",TERM,IMw,1,0,		(char *)"test( @1, @2 )"},
-	INVALID,
-	{"not",TERM,Mw,1},
-	{"neg",TERM,Mw,1},
-	{"mul",TERM,MA,1},
-	{"imul",TERM,MA,1},
-	{"div",TERM,MA,1},
-	{"idiv",TERM,MA,1},
-};
-
-/*
- * Decode table for 0xFE opcodes.
- */
-static const struct instable opFE[8] = {
-	{"incb",TERM,Mw,0},
-	{"decb",TERM,Mw,0},
-	INVALID, INVALID, INVALID, INVALID, INVALID, INVALID,
-};
-
-/*
- * Decode table for 0xFF opcodes.
- */
-static const struct instable opFF[8] = {
-	{"inc",TERM,Mw,1,0,		(char *)"@1 = @1 + 1"},
-	{"dec",TERM,Mw,1,0,		(char *)"@1 = @1 - 1"},
-	{"call",TERM,INM,1},
-	{"lcall",TERM,INMl,1},
-	{"jmp",TERM,INM,1},
-	{"ljmp",TERM,INMl,1},
-	{"push",TERM,M,0x030,0,	(char *)"stackPush( @1 )"},
-	INVALID,
-};
-
-/* for 287 instructions, which are a mess to decode */
-static const struct instable opFP1n2[8][8] = {
-/* bit pattern:	1101 1xxx MODxx xR/M */
- {	{"fadds",TERM,M,0},
-	{"fmuls",TERM,M,0},
-	{"fcoms",TERM,M,0},
-	{"fcomps",TERM,M,0},
-	{"fsubs",TERM,M,0},
-	{"fsubrs",TERM,M,0},
-	{"fdivs",TERM,M,0},
-	{"fdivrs",TERM,M,0} },
- {	{"flds",TERM,M,0},
-	INVALID,
-	{"fsts",TERM,M,0},
-	{"fstps",TERM,M,0},
-	{"fldenv",TERM,M,1},
-	{"fldcw",TERM,M,1},
-	{"fnstenv",TERM,M,1},
-	{"fnstcw",TERM,M,1} },
- {	{"fiaddl",TERM,M,0},
-	{"fimull",TERM,M,0},
-	{"ficoml",TERM,M,0},
-	{"ficompl",TERM,M,0},
-	{"fisubl",TERM,M,0},
-	{"fisubrl",TERM,M,0},
-	{"fidivl",TERM,M,0},
-	{"fidivrl",TERM,M,0} },
-{	{"fildl",TERM,Mnol,0},
-	{"fisttpl",TERM,M,0},
-	{"fistl",TERM,M,0},
-	{"fistpl",TERM,Mnol,0},
-	INVALID,
-	{"fldt",TERM,M,0},
-	INVALID,
-	{"fstpt",TERM,M,0} },
- {	{"faddl",TERM,M,0},
-	{"fmull",TERM,M,0},
-	{"fcoml",TERM,M,0},
-	{"fcompl",TERM,M,0},
-	{"fsubl",TERM,M,0},
-	{"fsubrl",TERM,M,0},
-	{"fdivl",TERM,M,0},
-	{"fdivrl",TERM,M,0} },
- {	{"fldl",TERM,M,0},
-	{"fisttpll",TERM,M,0},
-	{"fstl",TERM,M,0},
-	{"fstpl",TERM,M,0},
-	{"frstor",TERM,M,1},
-	INVALID,
-	{"fnsave",TERM,M,1},
-	{"fnstsw",TERM,M,1} },
- {	{"fiadds",TERM,M,0},
-	{"fimuls",TERM,M,0},
-	{"ficoms",TERM,M,0},
-	{"ficomps",TERM,M,0},
-	{"fisubs",TERM,M,0},
-	{"fisubrs",TERM,M,0},
-	{"fidivs",TERM,M,0},
-	{"fidivrs",TERM,M,0} },
- {	{"filds",TERM,M,0},
-	{"fisttps",TERM,M,0},
-	{"fists",TERM,M,0},
-	{"fistps",TERM,M,0},
-	{"fbld",TERM,M,0},
-	{"fildq",TERM,M,0},
-	{"fbstp",TERM,M,0},
-	{"fistpq",TERM,M,0} },
-};
-
-static const struct instable opFP3[8][8] = {
-/* bit  pattern:	1101 1xxx 11xx xREG */
- {	{"fadd",TERM,FF,0},
-	{"fmul",TERM,FF,0},
-	{"fcom",TERM,F,0},
-	{"fcomp",TERM,F,0},
-	{"fsub",TERM,FF,0},
-	{"fsubr",TERM,FF,0},
-	{"fdiv",TERM,FF,0},
-	{"fdivr",TERM,FF,0} },
- {	{"fld",TERM,F,0},
-	{"fxch",TERM,F,0},
-	{"fnop",TERM,GO_ON,0},
-	{"fstp",TERM,F,0},
-	INVALID, INVALID, INVALID, INVALID },
- {	{"fcmovb",TERM,FF,0},
-	{"fcmove",TERM,FF,0},
-	{"fcmovbe",TERM,FF,0},
-	{"fcmovu",TERM,FF,0},
-	INVALID,
-	{"fucompp",TERM,GO_ON,0},
-	INVALID, INVALID },
- {	{"fcmovnb",TERM,FF,0},
-	{"fcmovne",TERM,FF,0},
-	{"fcmovnbe",TERM,FF,0},
-	{"fcmovnu",TERM,FF,0},
-	INVALID,
-	{"fucomi",TERM,FF,0},
-	{"fcomi",TERM,FF,0},
-	INVALID },
-{	{"fadd",TERM,FF,0},
-	{"fmul",TERM,FF,0},
-	{"fcom",TERM,F,0},
-	{"fcomp",TERM,F,0},
-	{"fsub",TERM,FF,0},
-	{"fsubr",TERM,FF,0},
-	{"fdiv",TERM,FF,0},
-	{"fdivr",TERM,FF,0} },
- {	{"ffree",TERM,F,0},
-	{"fxch",TERM,F,0},
-	{"fst",TERM,F,0},
-	{"fstp",TERM,F,0},
-	{"fucom",TERM,F,0},
-	{"fucomp",TERM,F,0},
-	INVALID, INVALID },
- {	{"faddp",TERM,FF,0},
-	{"fmulp",TERM,FF,0},
-	{"fcomp",TERM,F,0},
-	{"fcompp",TERM,GO_ON,0},
-	{"fsubp",TERM,FF,0},
-	{"fsubrp",TERM,FF,0},
-	{"fdivp",TERM,FF,0},
-	{"fdivrp",TERM,FF,0} },
-{	{"ffree",TERM,F,0},
-	{"fxch",TERM,F,0},
-	{"fstp",TERM,F,0},
-	{"fstp",TERM,F,0},
-	{"fnstsw",TERM,M,1},
-	{"fucomip",TERM,FF,0},
-	{"fcomip",TERM,FF,0},
-	INVALID },
-};
-
-static const struct instable opFP4[4][8] = {
-/* bit pattern:	1101 1001 111x xxxx */
- {	{"fchs",TERM,GO_ON,0},
-	{"fabs",TERM,GO_ON,0},
-	INVALID, INVALID,
-	{"ftst",TERM,GO_ON,0},
-	{"fxam",TERM,GO_ON,0},
-	INVALID, INVALID },
- {	{"fld1",TERM,GO_ON,0},
-	{"fldl2t",TERM,GO_ON,0},
-	{"fldl2e",TERM,GO_ON,0},
-	{"fldpi",TERM,GO_ON,0},
-	{"fldlg2",TERM,GO_ON,0},
-	{"fldln2",TERM,GO_ON,0},
-	{"fldz",TERM,GO_ON,0},
-	INVALID },
- {	{"f2xm1",TERM,GO_ON,0},
-	{"fyl2x",TERM,GO_ON,0},
-	{"fptan",TERM,GO_ON,0},
-	{"fpatan",TERM,GO_ON,0},
-	{"fxtract",TERM,GO_ON,0},
-	{"fprem1",TERM,GO_ON,0},
-	{"fdecstp",TERM,GO_ON,0},
-	{"fincstp",TERM,GO_ON,0} },
-{	{"fprem",TERM,GO_ON,0},
-	{"fyl2xp1",TERM,GO_ON,0},
-	{"fsqrt",TERM,GO_ON,0},
-	{"fsincos",TERM,GO_ON,0},
-	{"frndint",TERM,GO_ON,0},
-	{"fscale",TERM,GO_ON,0},
-	{"fsin",TERM,GO_ON,0},
-	{"fcos",TERM,GO_ON,0} },
-};
-
-static const struct instable opFP5[8] = {
-/* bit pattern:	1101 1011 1110 0xxx */
-	INVALID, INVALID,
-	{"fnclex",TERM,GO_ON,0},
-	{"fninit",TERM,GO_ON,0},
-	{"fsetpm",TERM,GO_ON,0},
-	INVALID, INVALID, INVALID,
-};
-
-// static means only visible in this file
-
-/*
- * Main decode table for the op codes.  The first two nibbles
- * will be used as an index into the table.  If there is a
- * a need to further decode an instruction, the array to be
- * referenced is indicated with the other two entries being
- * empty.
- */
-static const struct instable distable[16][16] = {
-{
-	{"addb",TERM,RMw,0,0,				(char *)"@2 = @2 + @1"},
-	{"add",TERM,RMw,1,0,				(char *)"@2 = @2 + @1"},
-	{"addb",TERM,MRw,0,0,				(char *)"@2 = @2 + @1"},
-	{"add",TERM,MRw,1,0,				(char *)"@2 = @2 + @1"},
-	{"addb",TERM,IA,0,0,				(char *)"@2 = @2 + @1"},
-	{"add",TERM,IA,1,0,					(char *)"@2 = @2 + @1"},
-	{"push",TERM,SEG,0x03,INVALID_64,	(char *)"stackPush( @1 )"},
-	{"pop",TERM,SEG,0x03,INVALID_64,	(char *)"stackPop( @1 )"},
-	{"orb",TERM,RMw,0,0,				(char *)"@2 = @2 OR @1"},
-	{"or",TERM,RMw,1,0,					(char *)"@2 = @2 OR @1"},
-	{"orb",TERM,MRw,0,0,				(char *)"@2 = @2 OR @1"},
-	{"or",TERM,MRw,1,0,					(char *)"@2 = @2 OR @1"},
-	{"orb",TERM,IA,0,0,					(char *)"@2 = @2 OR @1"},
-	{"or",TERM,IA,1,0,					(char *)"@2 = @2 OR @1"},
-	{"push",TERM,SEG,0x03,INVALID_64,	(char *)"stackPush( @1 )"},
-    {"",(const struct instable *)op0F,TERM,0}
-},
-{	{"adcb",TERM,RMw,0},
-	{"adc",TERM,RMw,1},
-	{"adcb",TERM,MRw,0},
-	{"adc",TERM,MRw,1},
-	{"adcb",TERM,IA,0},
-	{"adc",TERM,IA,1},
-	{"push",TERM,SEG,0x03,INVALID_64,	(char *)"stackPush( @1 )"},
-	{"pop",TERM,SEG,0x03,INVALID_64,	(char *)"stackPop( @1 )"},
-	{"sbbb",TERM,RMw,0},
-	{"sbb",TERM,RMw,1},
-	{"sbbb",TERM,MRw,0},
-	{"sbb",TERM,MRw,1},
-	{"sbbb",TERM,IA,0},
-	{"sbb",TERM,IA,1},
-	{"push",TERM,SEG,0x03,INVALID_64,	(char *)"stackPush( @1 )"},
-	{"pop",TERM,SEG,0x03,INVALID_64,	(char *)"stackPop( @1 )"}
-},
-{	{"andb",TERM,RMw,0,0,				(char *)"@2 = @2 & @1"},
-	{"and",TERM,RMw,1,0,				(char *)"@2 = @2 & @1"},
-	{"andb",TERM,MRw,0,0,				(char *)"@2 = @2 & @1"},
-	{"and",TERM,MRw,1,0,				(char *)"@2 = @2 & @1"},
-	{"andb",TERM,IA,0,0,				(char *)"@2 = @2 & @1"},
-	{"and",TERM,IA,1,0,					(char *)"@2 = @2 & @1"},
-	{"%es:",TERM,OVERRIDE,0},
-	{"daa",TERM,GO_ON,0,INVALID_64},
-	{"subb",TERM,RMw,0},
-	{"sub",TERM,RMw,1,0,				(char *)"@2 = @2 - @1"},
-	{"subb",TERM,MRw,0},
-	{"sub",TERM,MRw,1,0,				(char *)"@2 = @2 - @1"},
-	{"subb",TERM,IA,0},
-	{"sub",TERM,IA,1,0,					(char *)"@2 = @2 - @1"},
-	{"%cs:",TERM,OVERRIDE,0},
-	{"das",TERM,GO_ON,0,INVALID_64}
-},
-{	{"xorb",TERM,RMw,0,0,				(char *)"@2 = @2 XOR @1"},
-	{"xor",TERM,RMw,1,0,				(char *)"@2 = @2 XOR @1"},
-	{"xorb",TERM,MRw,0,0,				(char *)"@2 = @2 XOR @1"},
-	{"xor",TERM,MRw,1,0,				(char *)"@2 = @2 XOR @1"},
-	{"xorb",TERM,IA,0,0,				(char *)"@2 = @2 XOR @1"},
-	{"xor",TERM,IA,1,0,					(char *)"@2 = @2 XOR @1"},
-	{"%ss:",TERM,OVERRIDE,0},
-	{"aaa",TERM,GO_ON,0,INVALID_64},
-	{"cmpb",TERM,RMw,0},
-	{"cmp",TERM,RMw,1,0,				(char *)"compare( @1, @2 )"},
-	{"cmpb",TERM,MRw,0},
-	{"cmp",TERM,MRw,1,0,				(char *)"compare( @1, @2 )"},
-	{"cmpb",TERM,IA,0},
-	{"cmp",TERM,IA,1,0,					(char *)"compare( @1, @2 )"},
-	{"%ds:",TERM,OVERRIDE,0},
-	{"aas",TERM,GO_ON,0,INVALID_64}
-},
-{	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"inc",TERM,R,1,&opREX,	(char *)"@1 = @1 + 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"},
-	{"dec",TERM,R,1,&opREX,	(char *)"@1 = @1 - 1"}
-},
-{	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"push",TERM,R,0x03,0,	(char *)"stackPush( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"},
-	{"pop",TERM,R,0x03,0,	(char *)"stackPop( @1 )"}
-},
-{	{"pusha",TERM,GO_ON,1,INVALID_64},
-	{"popa",TERM,GO_ON,1,INVALID_64},
-	{"bound",TERM,MR,1,INVALID_64},
-	{"arpl",TERM,RMw,0,&op_movsl},
-	{"%fs:",TERM,OVERRIDE,0},
-	{"%gs:",TERM,OVERRIDE,0},
-	{"data16",TERM,DM,0},
-	{"addr16",TERM,AM,0},
-	{"push",TERM,I,0x03,0,	(char *)"stackPush( @1 )"},
-	{"imul",TERM,IMUL,1},
-	{"push",TERM,Ib,0x03,0,	(char *)"stackPush( @1 )"},
-	{"imul",TERM,IMUL,1},
-	{"insb",TERM,GO_ON,0},
-	{"ins",TERM,GO_ON,1},
-	{"outsb",TERM,GO_ON,0},
-	{"outs",TERM,GO_ON,1}
-},
-{	{"jo",TERM,BD,0},
-	{"jno",TERM,BD,0},
-	{"jb",TERM,BD,0},
-	{"jae",TERM,BD,0},
-	{"je",TERM,BD,0},
-	{"jne",TERM,BD,0},
-	{"jbe",TERM,BD,0},
-	{"ja",TERM,BD,0},
-	{"js",TERM,BD,0},
-	{"jns",TERM,BD,0},
-	{"jp",TERM,BD,0},
-	{"jnp",TERM,BD,0},
-	{"jl",TERM,BD,0},
-	{"jge",TERM,BD,0},
-	{"jle",TERM,BD,0},
-	{"jg",TERM,BD,0}
-},
-{	{"",op80,TERM,0},
-	{"",op81,TERM,0},
-	{"",op82,TERM,0},
-	{"",op83,TERM,0},
-	{"testb",TERM,MRw,0,0,		(char *)"test( @1, @2 )"},
-	{"test",TERM,MRw,1,0,		(char *)"test( @1, @2 )"},
-	{"xchgb",TERM,MRw,0},
-	{"xchg",TERM,MRw,1},
-	{"movb",TERM,RMw,0,0,		(char *)"@2 = @1"},
-	{"mov",TERM,RMw,1,0,		(char *)"@2 = @1" },
-	{"movb",TERM,MRw,0,0,		(char *)"@2 = @1" },
-	{"mov",TERM,MRw,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,SM,1,0,			(char *)"@2 = @1"},
-	{"lea",TERM,MR,1,0,			(char *)"addr @2 = @1"},
-	{"mov",TERM,MS,1,0,			(char *)"@2 = @1"},
-	{"pop",TERM,M,0x03,0,		(char *)"stackPop( @1 )"}
-},
-{	{"nop",TERM,GO_ON,0},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"xchg",TERM,RA,1},
-	{"",TERM,CBW,0},
-	{"",TERM,CWD,0},
-	{"lcall",TERM,SO,0},
-	{"wait/",TERM,PREFIX,0},
-	{"pushf",TERM,GO_ON,1},
-	{"popf",TERM,GO_ON,1},
-	{"sahf",TERM,GO_ON,0},
-	{"lahf",TERM,GO_ON,0}
-},
-{	{"movb",TERM,OA,0,0,		(char *)"@2 = @1"},
-	{"mov",TERM,OA,1,0,			(char *)"@2 = @1"},
-	{"movb",TERM,AO,0,0,		(char *)"@2 = @1"},
-	{"mov",TERM,AO,1,0,			(char *)"@2 = @1"},
-	{"movsb",TERM,SD,0},
-	{"movs",TERM,SD,1},
-	{"cmpsb",TERM,SD,0},
-	{"cmps",TERM,SD,1},
-	{"testb",TERM,IA,0,0,		(char *)"test( @1, @2 )"},
-	{"test",TERM,IA,1,0,		(char *)"test( @1, @2 )"},
-	{"stosb",TERM,AD,0},
-	{"stos",TERM,AD,1},
-	{"lodsb",TERM,SA,0},
-	{"lods",TERM,SA,1},
-	{"scasb",TERM,AD,0},
-	{"scas",TERM,AD,1}
-},
-{	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"movb",TERM,IR,0,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IR64,1,0,		(char *)"@2 = @1"},
-},
-{	{"",opC0,TERM,0},
-	{"",opC1,TERM,0},
-	{"ret",TERM,RET,0},
-	{"ret",TERM,GO_ON,0},
-	{"les",TERM,MR,0,INVALID_64},
-	{"lds",TERM,MR,0,INVALID_64},
-	{"movb",TERM,IMw,0,0,		(char *)"@2 = @1"},
-	{"mov",TERM,IMw,1,0,		(char *)"@2 = @1"},
-	{"enter",TERM,ENTER,0},
-	{"leave",TERM,GO_ON,0},
-	{"lret",TERM,RET,0},
-	{"lret",TERM,GO_ON,0},
-	{"int",TERM,INT3,0},
-	{"int",TERM,Ib,0},
-	{"into",TERM,GO_ON,0,INVALID_64},
-	{"iret",TERM,GO_ON,0}
-},
-{	{"",opD0,TERM,0},
-	{"",opD1,TERM,0},
-	{"",opD2,TERM,0},
-	{"",opD3,TERM,0},
-	{"aam",TERM,U,0,INVALID_64},
-	{"aad",TERM,U,0,INVALID_64},
-	{"falc",TERM,GO_ON,0},
-	{"xlat",TERM,GO_ON,0},
-/* 287 instructions.  Note that although the indirect field		*/
-/* indicates opFP1n2 for further decoding, this is not necessarily	*/
-/* the case since the opFP arrays are not partitioned according to key1	*/
-/* and key2.  opFP1n2 is given only to indicate that we haven't		*/
-/* finished decoding the instruction.					*/
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0},
-	{"",(const struct instable *)opFP1n2,TERM,0}
-},
-{  {"loopnz",TERM,BD,0},
-	{"loopz",TERM,BD,0},
-	{"loop",TERM,BD,0},
-	{"jcxz",TERM,BD,0},
-	{"inb",TERM,Pi,0},
-	{"in",TERM,Pi,1},
-	{"outb",TERM,Po,0},
-	{"out",TERM,Po,1},
-	{"call",TERM,D,0x03},
-	{"jmp",TERM,D,0x03},
-	{"ljmp",TERM,SO,0},
-	{"jmp",TERM,BD,0},
-	{"inb",TERM,Vi,0},
-	{"in",TERM,Vi,1},
-	{"outb",TERM,Vo,0},
-	{"out",TERM,Vo,1}
-},
-	{ {"lock/",TERM,PREFIX,0},
-	INVALID,
-	{"repnz/",TERM,PREFIX,0},
-	{"repz/",TERM,PREFIX,0},
-	{"hlt",TERM,GO_ON,0},
-	{"cmc",TERM,GO_ON,0},
-	{"",opF6,TERM,0},
-	{"",opF7,TERM,0},
-	{"clc",TERM,GO_ON,0},
-	{"stc",TERM,GO_ON,0},
-	{"cli",TERM,GO_ON,0},
-	{"sti",TERM,GO_ON,0},
-	{"cld",TERM,GO_ON,0},
-	{"std",TERM,GO_ON,0},
-	{"",opFE,TERM,0},
-	{"",opFF,TERM,0} },
-};
 
 //struct instable const *distableEntry( int opcode1, int opcode2 ) {
 //
@@ -2206,8 +598,8 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				case INDIRECT_ARG:
 					indirectArg = (struct IndirectVal *)abstractArgi;
 					segReg = indirectArg->segmentRegister ? (char *)indirectArg->segmentRegister->prettyName : (char *)"_";
-					char *baseReg = indirectArg->baseRegister ? indirectArg->baseRegister->prettyName : "";
-					char *indexReg = indirectArg->indexRegister ? indirectArg->indexRegister->prettyName : "_";
+					char const *baseReg = indirectArg->baseRegister ? indirectArg->baseRegister->prettyName : "";
+					char const *indexReg = indirectArg->indexRegister ? indirectArg->indexRegister->prettyName : "_";
 					sprintf( lineToPrint+strlen(lineToPrint), " %s:%qi(%s,%s,%qi)", segReg, (uint64)indirectArg->displacement, baseReg, indexReg, (uint64)indirectArg->scale );
 					break;
 				case DISPLACEMENT_ARG:
@@ -2223,14 +615,14 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	printf( "%s\n", lineToPrint );
 }
 
-struct instable *customInstruction( const char *instrName, const char *prettyStr ) {
-	
-	struct instable *customInstruction = calloc(1, sizeof(struct instable));
-	strcpy( customInstruction->name, instrName );
-	customInstruction->printStr = calloc(1,strlen(prettyStr)+1);
-	strcpy( customInstruction->printStr, prettyStr );
-	return customInstruction;
-}
+//struct instable *customInstruction( const char *instrName, const char *prettyStr ) {
+//	
+//	struct instable *customInstruction = calloc(1, sizeof(struct instable));
+//	strcpy( customInstruction->name, instrName );
+//	customInstruction->printStr = calloc(1,strlen(prettyStr)+1);
+//	strcpy( customInstruction->printStr, prettyStr );
+//	return customInstruction;
+//}
 
 /*
   * i386_disassemble()
@@ -2301,9 +693,6 @@ NSUInteger iterationCounter
 	memset(mnemonic, '\0', sizeof(mnemonic));
 	memset(result0, '\0', sizeof(result0));
 	memset(result1, '\0', sizeof(result1));
-
-	const struct instable const *reg111111_struct = zoogafrooga[0];
-	const struct instable const *reg222222_struct = zoogafrooga[1];
 	
 	/*
 	 * As long as there is a prefix, the default segment register,
@@ -2734,7 +1123,7 @@ NSUInteger iterationCounter
 						hooleyDebug();
 //NEVER						/* movq from mm to mm/m64 */
 //NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						mmx = TRUE;
 //NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
@@ -2753,7 +1142,7 @@ NSUInteger iterationCounter
 						hooleyDebug();
 //NEVER						/* movd from mm to r/m32 */
 //NEVER						printf("%sd\t%%mm%u,", mnemonic, reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						wbit = LONGOPERAND;
 //NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
@@ -2851,7 +1240,7 @@ NSUInteger iterationCounter
 //NEVER					} else { /* no prefix_byte */
 //NEVER						hooleyDebug();
 //NEVER						sprintf(result0, "%%mm%u", reg);
-					struct HooReg *mmReg = mmReg_Struct[reg];
+					const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						printf("%stq\t", mnemonic);
 //NEVER						mmx = TRUE;
@@ -2915,7 +1304,7 @@ NSUInteger iterationCounter
 //NEVER				hooleyDebug();
 //NEVER				mmx = TRUE;
 //NEVER				sprintf(result1, "%%mm%u", reg);
-			struct HooReg *mmReg = mmReg_Struct[reg];
+			const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER			}
 //NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
@@ -3067,7 +1456,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%stpd2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 
 					} else if(prefix_byte==0xf2){
 						sse2 = TRUE;
@@ -3088,7 +1477,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%stps2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 					}
 					break;
 
@@ -3099,7 +1488,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%spd2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-					struct HooReg *mmReg = mmReg_Struct[reg];
+					const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER					} else if(prefix_byte == 0xf2){
 //NEVER						hooleyDebug();
@@ -3122,7 +1511,7 @@ NSUInteger iterationCounter
 //NEVER						sse2 = TRUE;
 //NEVER						printf("%sps2pi\t", mnemonic);
 //NEVER						sprintf(result1, "%%mm%u", reg);
-					struct HooReg *mmReg2 = mmReg_Struct[reg];
+					const struct HooReg *mmReg2 = mmReg_Struct[reg];
 
 //NEVER					}
 //NEVER					break;
@@ -3143,7 +1532,7 @@ NSUInteger iterationCounter
 					} else { /* no prefix_byte */
 						hooleyDebug();
 //NEVER						sprintf(result1, "%%mm%u", reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 
 //NEVER						printf("%s\t", mnemonic);
 //NEVER						mmx = TRUE;
@@ -3316,7 +1705,7 @@ NSUInteger iterationCounter
 						
 					} else { /* no prefix_byte */
 						reg_struct = get_regStruct(reg, 1, data16, rex);
-						struct HooReg *mmReg = mmReg_Struct[r_m];
+						const struct HooReg *mmReg = mmReg_Struct[r_m];
 						FILLARGS2( mmReg, reg_struct );
 						addLine( addr, currentFuncPtr, dp, allArgs );		
 						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
@@ -3358,7 +1747,7 @@ NSUInteger iterationCounter
 //NEVER					} else { /* no prefix_byte */
 //NEVER						hooleyDebug();
 //NEVER						printf("%sq\t%%mm%u,%%mm%u\n", mnemonic, r_m, reg);
-					struct HooReg *mmReg2 = mmReg_Struct[reg];
+					const struct HooReg *mmReg2 = mmReg_Struct[reg];
 
 //NEVER						return(length);
 //NEVER					}
@@ -3579,7 +1968,7 @@ NSUInteger iterationCounter
 						// printf("%s\t$0x%x,", mnemonic, byte);
 						// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 						// printf("%%mm%u\n", reg);
-						struct HooReg *mmReg = mmReg_Struct[reg];
+						const struct HooReg *mmReg = mmReg_Struct[reg];
 						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
 						addLine( addr, currentFuncPtr, dp, allArgs );
 						return(length);
@@ -3666,7 +2055,7 @@ NSUInteger iterationCounter
 									printf("%sllw\t$0x%x,", mnemonic, byte);
 								}
 								printf("%%mm%lu\n", r_m);
-								struct HooReg *mmReg = mmReg_Struct[r_m];
+								const struct HooReg *mmReg = mmReg_Struct[r_m];
 								
 								return(length);
 							}
@@ -3694,7 +2083,7 @@ NSUInteger iterationCounter
 //NEVER									printf("%slld\t$0x%x,", mnemonic, byte);
 						}
 //Putback								printf("%%mm%u\n", r_m);
-						const struct HooReg *reg_struct = &mmReg_Struct[r_m];
+						const struct HooReg *reg_struct = mmReg_Struct[r_m];
 
 						return(length);
 					}
@@ -3720,7 +2109,7 @@ NSUInteger iterationCounter
 //NEVER									printf("%sllq\t$0x%x,", mnemonic, byte);
 //NEVER								}
 //NEVER								printf("%%mm%u\n", r_m);
-						struct HooReg *mmReg = mmReg_Struct[r_m];
+						const struct HooReg *mmReg = mmReg_Struct[r_m];
 //NEVER								return(length);
 					}
 					break;
@@ -3954,7 +2343,7 @@ NSUInteger iterationCounter
 			}
 			wbit = LONGOPERAND;
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			segReg = SEGREG[reg];
+			segReg = (struct HooReg *)SEGREG[reg];
 			FILLARGS2( abstractStrctPtr1, segReg );			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
 			return(length);
@@ -3969,7 +2358,7 @@ NSUInteger iterationCounter
 			wbit = LONGOPERAND;
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);			
-			segReg = SEGREG[reg];
+			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( segReg, abstractStrctPtr1 );			
@@ -4193,7 +2582,7 @@ NSUInteger iterationCounter
 		/* single segment register operand, with reg in bits 3-4 of op code */
 		case SEG:
 			reg = byte >> 3 & 0x3; /* segment register */
-			segReg = SEGREG[reg];
+			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name );
 			// eg pushw	%es
 			FILLARGS1( segReg );
@@ -4204,7 +2593,7 @@ NSUInteger iterationCounter
 		/* bits 3-5 of op code					*/
 		case LSEG:
 			reg = byte >> 3 & 0x7; /* long seg reg from opcode */
-			segReg = SEGREG[reg];
+			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name);
 			FILLARGS1( segReg );
 			addLine( addr, currentFuncPtr, dp, allArgs );
@@ -4494,7 +2883,7 @@ NSUInteger iterationCounter
 		/* to the correct base and output. */
 		case INT3:
 			// printf("%s\t$0x3\n", mnemonic);
-			addLine( addr, currentFuncPtr, customInstruction( "int3", "--debug_breakpoint_interrupt()" ), NULL );
+			addLine( addr, currentFuncPtr, &int3_instr, NULL );
 			return(length);
 
 		/* just an opcode and an unused byte that must be discarded */
@@ -4536,7 +2925,7 @@ NSUInteger iterationCounter
 		case F:
 		{
 			// printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
-			addLine( addr, currentFuncPtr, customInstruction( "fstp", "floatingPointStack.pop()" ), NULL );
+			addLine( addr, currentFuncPtr, &fstp1_instr, NULL );
 			return(length);
 		}
 		/* float reg to float reg, with ret bit present */
@@ -4734,7 +3123,7 @@ static NSUInteger replacement_get_operand(
 
 			} else if(mmx == TRUE) {
 				// sprintf(result, "%%mm%ld", (unsigned long)r_m);
-				struct HooReg *mmReg = mmReg_Struct[r_m];
+				const struct HooReg *mmReg = mmReg_Struct[r_m];
 				return (NSUInteger)mmReg;
 
 			} else if (data16 == FALSE || rex != 0) {
@@ -4786,15 +3175,15 @@ static NSUInteger replacement_get_operand(
 						char *reg_name;
 						GET_BEST_REG_NAME( reg_name, reg_struct );
 						sprintf(result, "(%s)", reg_name);
+	
 					} else {
-						struct HooReg *reg_structPair = regname16_Struct[mode][r_m];
-						struct HooReg *reg_struct = &(reg_structPair[0]);
-						struct HooReg *reg_struct2 = &(reg_structPair[1]);
+						const struct HooReg *reg_struct1 = regname16_Struct[mode][r_m][0];
+						const struct HooReg *reg_struct2 = regname16_Struct[mode][r_m][1];
 						if (reg_struct2->isah==NULL_ARG) {
 							reg_struct2 = 0;
 						}						
 						struct IndirectVal *indirStrct;
-						NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, reg_struct2, scale_factor[0] );
+						NEW_INDIRECT( indirStrct, segReg, *value, reg_struct1, reg_struct2, scale_factor[0] );
 						return (NSUInteger)indirStrct;
 					}
 				} else {

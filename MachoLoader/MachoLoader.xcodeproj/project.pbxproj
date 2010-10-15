@@ -119,6 +119,8 @@
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
+		73D6C1431267114000746DE2 /* Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registers.h; path = Classes/Registers.h; sourceTree = "<group>"; };
+		73D6C1471267115800746DE2 /* Instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instructions.h; path = Classes/Instructions.h; sourceTree = "<group>"; };
 		73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionBitfieldTests.m; path = Tests/InstructionBitfieldTests.m; sourceTree = "<group>"; };
 		73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrettyStringFindReplace.m; path = Tests/PrettyStringFindReplace.m; sourceTree = "<group>"; };
 		73DBEAD912476D1A0024B450 /* StringManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringManipulation.h; path = Classes/StringManipulation.h; sourceTree = "<group>"; };
@@ -274,6 +276,8 @@
 				7302196A0F864C6E00906D18 /* Infrastructure */,
 				73EDD9230F863E4700E09434 /* MachoLoader.h */,
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
+				73D6C1431267114000746DE2 /* Registers.h */,
+				73D6C1471267115800746DE2 /* Instructions.h */,
 				7363ABC81236649E00018772 /* i386_disasm.h */,
 				730830B012392CA7007F8247 /* i386_disasm.m */,
 				73E5BFC2124B6763009712C6 /* ExperimentalFrankenStructs.h */,
@@ -438,6 +442,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
