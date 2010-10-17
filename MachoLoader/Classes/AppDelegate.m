@@ -34,7 +34,7 @@
 		}
 	}
 
-	[readTimer close];  // 4.6 secs
+	[readTimer close];  // 7.1 secs -- 6.7 secs  // 6.2
 
 }
 

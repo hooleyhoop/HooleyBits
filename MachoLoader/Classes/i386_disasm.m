@@ -551,7 +551,8 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 }
 
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args ) {
-
+	
+	return;
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
@@ -707,7 +708,7 @@ NSUInteger iterationCounter
 	    opcode1 = byte >> 4 & 0xf;									//0xf
 	    opcode2 = byte & 0xf;										//0xf
 
-	    dp = &distable[opcode1][opcode2];
+	    dp = distable[opcode1][opcode2];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL){
 			dp = dp->arch64;
 		}
@@ -746,23 +747,24 @@ NSUInteger iterationCounter
 	 * Some 386 instructions have 2 bytes of opcode before the mod_r/m
 	 * byte so we need to perform a table indirection.
 	 */
-	if( dp->indirect == (const struct instable *)op0F)
+	if( dp->indirect==op0F )
 	{
 	    byte = get_value( 1, sect, &length, &left);
 	    opcode4 = byte >> 4 & 0xf;
 	    opcode5 = byte & 0xf;
-	    dp = &op0F[opcode4][opcode5];
+	    dp = op0F[opcode4][opcode5];
 	    if((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64 && dp->arch64 != NULL) {
 			dp = dp->arch64;
 		}
-	    if(dp->indirect == op0F38 || dp->indirect == op0F3A)
+	    if( (char *)(dp->indirect)==(char *)op0F38 || (char *)(dp->indirect)==(char *)op0F3A )
 		{
 			/*
 			* MNI instructions are SSE2ish instructions with an
 			* extra byte.  Do the extra indirection here.
 			*/
 			byte = get_value( 1, sect, &length, &left);
-			dp = &dp->indirect[byte];
+			struct instable *(*instrTable) = (void *)dp->indirect;
+			dp = instrTable[byte];
 	    }
 	    /*
 	     * SSE and SSE2 instructions have 3 bytes of opcode and the
@@ -788,7 +790,7 @@ NSUInteger iterationCounter
 			 * 3DNow! instructions have 2 bytes of opcode followed by their
 			 * operands and then an instruction-specific suffix byte.
 			 */
-			if(dp->indirect == (const struct instable *)op0F0F)
+			if(dp->indirect == op0F0F)
 			{
 				hooleyDebug();
 	//NEVER		    data16 = FALSE;
@@ -803,7 +805,7 @@ NSUInteger iterationCounter
 	//NEVER		    opcode_suffix = get_value( 1, sect, &length, &left);
 	//NEVER		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
 
-			} else if(dp->indirect == (const struct instable *)op0F01) {
+			} else if( dp->indirect==op0F01 ) {
 
 			    if(got_modrm_byte == FALSE){
 					got_modrm_byte = TRUE;
@@ -879,7 +881,7 @@ NSUInteger iterationCounter
 	    }
 	}
 
-	if(dp->indirect != TERM){
+	if( dp->indirect!=TERM ){
 
 	    /*
 	     * This must have been an opcode for which several instructions
@@ -901,27 +903,29 @@ NSUInteger iterationCounter
 //NEVER				dp = &opFP5[r_m];
 			} else if(opcode2 == 0xB && mode == 0x3 && opcode3 > 6){
 				// printf(".byte 0x%01x%01x, 0x%01x%01x 0x%02x #bad opcode\n", (unsigned int)opcode1, (unsigned int)opcode2, (unsigned int)opcode4, (unsigned int)opcode5, (unsigned int)byte);
-				return(length);
+				return length;
 			}
 			/* instruction form 4 */
 			else if(opcode2 == 0x9 && mode == 0x3 && opcode3 >= 4) {
-				dp = &opFP4[opcode3-4][r_m];
+				dp = opFP4[opcode3-4][r_m];
 			/* instruction form 3 */
 			} else if(mode == 0x3) {
-				dp = &opFP3[opcode2-8][opcode3];
+				dp = opFP3[opcode2-8][opcode3];
 			} else { /* instruction form 1 and 2 */
-				dp = &opFP1n2[opcode2-8][opcode3];
+				dp = opFP1n2[opcode2-8][opcode3];
 			}
 	    } else {
-			dp = dp->indirect + opcode3;
+			struct instable *(*instrTable) = (void *)dp->indirect;
+			// dp = dp->indirect + opcode3;
+			dp = instrTable[opcode3];
 		}
 		/* now dp points the proper subdecode table entry */
 	}
 
-	if(dp->indirect != TERM){
+	if( dp->indirect!=TERM){
 	    // printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
 		/* add a bad opcode line ?*/
-	    return(length);
+	    return length ;
 	}
 
 	/*
@@ -996,7 +1000,7 @@ NSUInteger iterationCounter
 			// eg bswap	%eax
 			FILLARGS1( reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );			
-			return(length);
+			return length;
 
 		case XINST:
 			wbit = WBIT(opcode5);
@@ -1011,7 +1015,7 @@ NSUInteger iterationCounter
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs );			
-			return(length);
+			return length;
 
 		/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
 		/* movzbl movzbw (0x0FB6) or mobzwl (0x0FB7) */
@@ -1031,7 +1035,7 @@ NSUInteger iterationCounter
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
-			return(length);
+			return length;
 
 		/* imul instruction, with either 8-bit or longer immediate */
 		case IMUL:
@@ -1052,7 +1056,7 @@ NSUInteger iterationCounter
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs ); 
-			return(length);
+			return length;
 
 		/* memory or register operand to register, with 'w' bit	*/
 		case MRw:
@@ -1069,7 +1073,7 @@ NSUInteger iterationCounter
 			FILLARGS2( abstractStrctPtr1,reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );		
-			return(length);
+			return length;
 
 		/* register to memory or register operand, with 'w' bit	*/
 		/* arpl happens to fit here also because it is odd */
@@ -1092,7 +1096,7 @@ NSUInteger iterationCounter
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* SSE2 instructions with further prefix decoding dest to memory or memory to dest depending on the opcode */
 		case SSE2tfm:
@@ -1157,7 +1161,7 @@ NSUInteger iterationCounter
 			}
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
-			return(length);
+			return length;
 		}
 
 		/* SSE2 instructions with further prefix decoding dest to memory */
@@ -1254,7 +1258,7 @@ NSUInteger iterationCounter
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* MNI instructions */
 		case MNI:
@@ -1701,7 +1705,7 @@ NSUInteger iterationCounter
 						FILLARGS2( reg_struct2, reg_struct );
 						addLine( addr, currentFuncPtr, dp, allArgs );		
 						// printf("%s\t%%xmm%u,%s\n", mnemonic, reg_struct2, reg_name);
-						return(length);
+						return length;
 						
 					} else { /* no prefix_byte */
 						reg_struct = get_regStruct(reg, 1, data16, rex);
@@ -1709,7 +1713,7 @@ NSUInteger iterationCounter
 						FILLARGS2( mmReg, reg_struct );
 						addLine( addr, currentFuncPtr, dp, allArgs );		
 						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
-						return(length);
+						return length;
 					}
 					break;
 				}
@@ -1766,7 +1770,7 @@ NSUInteger iterationCounter
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 			// printf("%s\n", result1);
 			addLine( addr, currentFuncPtr, dp, allArgs );		
-			return(length);
+			return length;
 		}
 
 		/* SSE4 instructions */
@@ -1957,7 +1961,7 @@ NSUInteger iterationCounter
 						// printf("%%mm%u\n", reg);
 						FILLARGS3( value0Immed, abstractStrctPtr1, &mmReg_Struct[reg] );
 						addLine( addr, currentFuncPtr, dp, allArgs );
-						return(length);
+						return length;
 					}
 					break;
 	
@@ -1971,7 +1975,7 @@ NSUInteger iterationCounter
 						const struct HooReg *mmReg = mmReg_Struct[reg];
 						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
 						addLine( addr, currentFuncPtr, dp, allArgs );
-						return(length);
+						return length;
 					}
 					break;
 				case 0xc5: /* pextrw */
@@ -2019,7 +2023,7 @@ NSUInteger iterationCounter
 			reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* SSE2 instructions with 8 bit immediate and only 1 reg */
 		case SSE2i1:
@@ -2057,7 +2061,7 @@ NSUInteger iterationCounter
 								printf("%%mm%lu\n", r_m);
 								const struct HooReg *mmReg = mmReg_Struct[r_m];
 								
-								return(length);
+								return length;
 							}
 					break;
 				case 0x72: /* psrld, pslld & psrad */
@@ -2085,7 +2089,7 @@ NSUInteger iterationCounter
 //Putback								printf("%%mm%u\n", r_m);
 						const struct HooReg *reg_struct = mmReg_Struct[r_m];
 
-						return(length);
+						return length;
 					}
 					break;
 				case 0x73: /* pslldq & psrldq, psrlq & psllq */
@@ -2110,7 +2114,7 @@ NSUInteger iterationCounter
 //NEVER								}
 //NEVER								printf("%%mm%u\n", r_m);
 						const struct HooReg *mmReg = mmReg_Struct[r_m];
-//NEVER								return(length);
+//NEVER								return length;
 					}
 					break;
 			}
@@ -2121,7 +2125,7 @@ NSUInteger iterationCounter
 			// eg psllq $0x1f,%xmm2
 			FILLARGS2( value0Immed, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );			
-			return(length);
+			return length;
 
 		/* 3DNow instructions */
 		case AMD3DNOW:
@@ -2131,7 +2135,7 @@ NSUInteger iterationCounter
 
 //Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 //Putback					printf("%s\n", result1);
-					return(length);
+					return length;
 
 		/* prefetch instructions */
 		case PFCH:
@@ -2194,7 +2198,7 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			FILLARGS1( abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs );			
-			return(length);
+			return length;
 
 		/* sfence & clflush */
 		case SFEN:
@@ -2225,7 +2229,7 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			FILLARGS3( value0Immed, reg_struct, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* Double shift. With no immediate operand, specifies using %cl. */
 		case DSHIFTcl:
@@ -2241,7 +2245,7 @@ NSUInteger iterationCounter
 			// eg shldl	%cl,%eax,%esi
 			FILLARGS3( &count1_reg, reg_struct, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* immediate to memory or register operand */
 		case IMlw:
@@ -2255,7 +2259,7 @@ NSUInteger iterationCounter
 			// eg. andl $0xf0,%esp    subl $0x10,%esp
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* immediate to memory or register operand with the 'w' bit present */
 		case IMw:
@@ -2272,7 +2276,7 @@ NSUInteger iterationCounter
 			// eg movl	$0x00021730, 0x04(%edx)
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* immediate to register with register in low 3 bits of op code */
 		case IR:
@@ -2285,7 +2289,7 @@ NSUInteger iterationCounter
 			// eg movb	$0x00,%al
 			FILLARGS2( value0Immed, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* immediate to register with register in low 3 bits of op code, possibly with a 64-bit immediate */
 		case IR64:
@@ -2298,7 +2302,7 @@ NSUInteger iterationCounter
 			 // eg. movl	$0x00b9ee00,%ecx
 			FILLARGS2( value0Immed, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* memory operand to accumulator */
 		case OA:
@@ -2315,7 +2319,7 @@ NSUInteger iterationCounter
 			// eg movl	0x0123d000,%eax
 			FILLARGS2( value0Immed, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs );		
-			return(length);
+			return length;
 
 		/* accumulator to memory operand */
 		case AO:
@@ -2332,7 +2336,7 @@ NSUInteger iterationCounter
 			// eg movl	%eax,0x00f2300c
 			FILLARGS2( reg_struct, value0Immed );
 			addLine( addr, currentFuncPtr, dp, allArgs );
-			return(length);
+			return length;
 
 		/* memory or register operand to segment register */
 		case MS:
