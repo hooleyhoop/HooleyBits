@@ -1,43 +1,43 @@
-woah! In the 32bit abi every function has this signiture
-
-pushl		  %ebp				Pushes the value of the stack frame pointer (EBP) onto the stack.
-movl		  %esp,%ebp		Sets the stack frame pointer to the value of the stack pointer (ESP)
-pushl		  %edi				Pushes the values of the registers that must be preserved (EDI, ESI, and EBX) onto the stack.
-pushl		  %esi
-pushl		  %ebx
-subl		  $0x3c,%esp		Allocates space in the stack frame for local storage.
-
-... 
-
-addl		  $0x3c,%esp		Deallocates the space used for local storage in the stack.
-popl		  %ebx				Restores the preserved registers (EDI, ESI, EBX, EBP) by popping the values saved on the stack by the prolog
-popl		  %esi
-popl		  %edi
-leave		
-ret								Returns
-
-
-try a system call and see if it uses calll - NO, it uses callq
-
-execve(path, args, NSPlatform_environ());
-
-look at instructions folling calll for returned results eax
-
-
-this is useful
-http://www.powerbasic.com/support/help/pbcc/addressing_and_pointers.htm
-
-Basically
-…you have put the address of a variable into the EAX register.  When you take the next step and put that address into a variable of its own, you will have a POINTER to the address:
-
-LEA EAX, MyVar
-MOV lpMyVar, EAX
-
-> lpMyVar = &MyVar		// lea followed by mov is getting an address
-
-
-take a look at what this disassembler can do
-http://www.hex-rays.com/compare.shtml
+//woah! In the 32bit abi every function has this signiture
+//
+//pushl		  %ebp				Pushes the value of the stack frame pointer (EBP) onto the stack.
+//movl		  %esp,%ebp		Sets the stack frame pointer to the value of the stack pointer (ESP)
+//pushl		  %edi				Pushes the values of the registers that must be preserved (EDI, ESI, and EBX) onto the stack.
+//pushl		  %esi
+//pushl		  %ebx
+//subl		  $0x3c,%esp		Allocates space in the stack frame for local storage.
+//
+//... 
+//
+//addl		  $0x3c,%esp		Deallocates the space used for local storage in the stack.
+//popl		  %ebx				Restores the preserved registers (EDI, ESI, EBX, EBP) by popping the values saved on the stack by the prolog
+//popl		  %esi
+//popl		  %edi
+//leave		
+//ret								Returns
+//
+//
+//try a system call and see if it uses calll - NO, it uses callq
+//
+//execve(path, args, NSPlatform_environ());
+//
+//look at instructions folling calll for returned results eax
+//
+//
+//this is useful
+//http://www.powerbasic.com/support/help/pbcc/addressing_and_pointers.htm
+//
+//Basically
+//…you have put the address of a variable into the EAX register.  When you take the next step and put that address into a variable of its own, you will have a POINTER to the address:
+//
+//LEA EAX, MyVar
+//MOV lpMyVar, EAX
+//
+//> lpMyVar = &MyVar		// lea followed by mov is getting an address
+//
+//
+//take a look at what this disassembler can do
+//http://www.hex-rays.com/compare.shtml
 
 
 
@@ -96,38 +96,39 @@ nil] retain];
 
 	[[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
 	
-	InstructionLookup *instructionLookup = [[InstructionLookup alloc] init];
-	RegisterLookup *registerLookup = [[RegisterLookup alloc] init];
+//nononono	InstructionLookup *instructionLookup = [[InstructionLookup alloc] init];
+//nononono	RegisterLookup *registerLookup = [[RegisterLookup alloc] init];
 	
-	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-	NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-		[instructionLookup parseYAML];
-	}];
+//nononono	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//nononono	NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+//nononono		[instructionLookup parseYAML];
+//nononono	}];
 	//you can add more blocks
-	[operation addExecutionBlock:^{
-		[registerLookup parseYAML];
-	}];
-	[queue addOperation:operation];
+//nononono	[operation addExecutionBlock:^{
+//nononono		[registerLookup parseYAML];
+//nononono	}];
+//nononono	[queue addOperation:operation];
 
 	NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
 	_ml = [[MachoLoader alloc] initWithPath:pathToApp];
 	[_ml readFile];
-	[HexLookup prepareWith:_ml];
 	
-	[queue waitUntilAllOperationsAreFinished];
-	[queue release];
+//nononono	[HexLookup prepareWith:_ml];
+	
+//nononono	[queue waitUntilAllOperationsAreFinished];
+//nononono	[queue release];
 		
 	// Read the output of otool
-	NSError *outError;
-	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
-	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
-	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
+//nononono	NSError *outError;
+//nononono	NSString *pathToInputFile = [@"~/Desktop/testData_huge.txt" stringByExpandingTildeInPath];
+//nononono	NSURL *absoluteURL = [NSURL fileURLWithPath:pathToInputFile isDirectory:NO];
+//nononono	NSString *fileString = [NSString stringWithContentsOfURL:absoluteURL encoding:NSMacOSRomanStringEncoding error:&outError];
 
-	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString 
-															   :[InstructionHash cachedInstructionHashWithLookup:instructionLookup]
-															   :_ml];
+//nononono	_dissasembled = [[AppDisassembly alloc] initWithOtoolOutput:fileString 
+//nononono															   :[InstructionHash cachedInstructionHashWithLookup:instructionLookup]
+//nononono															   :_ml];
 
-	[_dissasembled ripIt];
+//nononono	[_dissasembled ripIt];
 	
 //	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 //	[readTimer close]; // 19 seconds just to iterate over each line (no processing)

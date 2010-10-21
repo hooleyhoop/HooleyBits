@@ -102,6 +102,10 @@
 		73CF20B911D8CA8700347BBD /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CF20B811D8CA8700347BBD /* config.h */; };
 		73E41EE412140F1F0076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
 		73E41EE512140F200076BD88 /* InstructionHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E41EE312140F1F0076BD88 /* InstructionHash.m */; };
+		73E4760B126C40220018B3B8 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E4760A126C40220018B3B8 /* i386_disasm.m */; };
+		73E4760C126C40220018B3B8 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E4760A126C40220018B3B8 /* i386_disasm.m */; };
+		73E47611126C402D0018B3B8 /* ArgStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 73E47610126C402D0018B3B8 /* ArgStack.c */; };
+		73E47612126C402D0018B3B8 /* ArgStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 73E47610126C402D0018B3B8 /* ArgStack.c */; };
 		73E76322121C350300A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76320121C350300A4190C /* MemoryBlockStore.m */; };
 		73E763E8121C370F00A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E763E7121C370F00A4190C /* Section.m */; };
 		73EA4A551223B9CE00AF902F /* Instruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B2F4F611C7C41500F0C9E6 /* Instruction.m */; };
@@ -212,13 +216,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
 			remoteInfo = SHShared;
-		};
-		73A50E8E12141C41006BE47B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 73387AE811D222AA0017D971;
-			remoteInfo = yaml;
 		};
 		73BE90A511D0BDC3003C87B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -394,6 +391,12 @@
 		73E41EE212140F1F0076BD88 /* InstructionHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstructionHash.h; path = Src/InstructionHash.h; sourceTree = "<group>"; };
 		73E41EE312140F1F0076BD88 /* InstructionHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionHash.m; path = Src/InstructionHash.m; sourceTree = "<group>"; };
 		73E41EEB12140F670076BD88 /* InstructionHashTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionHashTests.m; path = Tests/InstructionHashTests.m; sourceTree = "<group>"; };
+		73E47607126C40220018B3B8 /* Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registers.h; path = ../MachoLoader/Classes/Registers.h; sourceTree = SOURCE_ROOT; };
+		73E47608126C40220018B3B8 /* Instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instructions.h; path = ../MachoLoader/Classes/Instructions.h; sourceTree = SOURCE_ROOT; };
+		73E47609126C40220018B3B8 /* i386_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i386_disasm.h; path = ../MachoLoader/Classes/i386_disasm.h; sourceTree = SOURCE_ROOT; };
+		73E4760A126C40220018B3B8 /* i386_disasm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = i386_disasm.m; path = ../MachoLoader/Classes/i386_disasm.m; sourceTree = SOURCE_ROOT; };
+		73E4760F126C402D0018B3B8 /* ArgStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArgStack.h; path = ../MachoLoader/Classes/ArgStack.h; sourceTree = SOURCE_ROOT; };
+		73E47610126C402D0018B3B8 /* ArgStack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ArgStack.c; path = ../MachoLoader/Classes/ArgStack.c; sourceTree = SOURCE_ROOT; };
 		73E7631F121C350300A4190C /* MemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlockStore.h; path = ../MachoLoader/Classes/MemoryBlockStore.h; sourceTree = SOURCE_ROOT; };
 		73E76320121C350300A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = ../MachoLoader/Classes/MemoryBlockStore.m; sourceTree = SOURCE_ROOT; };
 		73E763E6121C370F00A4190C /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = ../MachoLoader/Classes/Section.h; sourceTree = SOURCE_ROOT; };
@@ -819,6 +822,12 @@
 				73E76320121C350300A4190C /* MemoryBlockStore.m */,
 				7340BF47120585B900437881 /* MachoLoader.h */,
 				7340BF48120585B900437881 /* MachoLoader.m */,
+				73E47607126C40220018B3B8 /* Registers.h */,
+				73E47608126C40220018B3B8 /* Instructions.h */,
+				73E47609126C40220018B3B8 /* i386_disasm.h */,
+				73E4760A126C40220018B3B8 /* i386_disasm.m */,
+				73E4760F126C402D0018B3B8 /* ArgStack.h */,
+				73E47610126C402D0018B3B8 /* ArgStack.c */,
 				73A1EF7112199161004CAC63 /* FileMapView.h */,
 				73A1EF7212199161004CAC63 /* FileMapView.m */,
 				73A1EF751219916B004CAC63 /* Segment.h */,
@@ -944,7 +953,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73A50E8F12141C41006BE47B /* PBXTargetDependency */,
 			);
 			name = SimpleFileParser;
 			productInstallPath = "$(HOME)/Applications";
@@ -959,6 +967,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SimpleFileParser" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -1170,6 +1179,8 @@
 				73563756122FA4A1009288CA /* CodeBlockStoreTests.m in Sources */,
 				7317036012329F0800EE9ED6 /* CFDictCallbacks.m in Sources */,
 				7317036C1232A5FC00EE9ED6 /* IntHash.m in Sources */,
+				73E4760B126C40220018B3B8 /* i386_disasm.m in Sources */,
+				73E47611126C402D0018B3B8 /* ArgStack.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,6 +1243,8 @@
 				7373715A122A779F00E05751 /* YAMLParser.m in Sources */,
 				7317036112329F0800EE9ED6 /* CFDictCallbacks.m in Sources */,
 				7317036D1232A5FC00EE9ED6 /* IntHash.m in Sources */,
+				73E4760C126C40220018B3B8 /* i386_disasm.m in Sources */,
+				73E47612126C402D0018B3B8 /* ArgStack.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,11 +1260,6 @@
 			isa = PBXTargetDependency;
 			name = SHShared;
 			targetProxy = 73A0F7F011DCA439008DD4E2 /* PBXContainerItemProxy */;
-		};
-		73A50E8F12141C41006BE47B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 73387AE811D222AA0017D971 /* yaml */;
-			targetProxy = 73A50E8E12141C41006BE47B /* PBXContainerItemProxy */;
 		};
 		73CF1F2911D8C5BA00347BBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

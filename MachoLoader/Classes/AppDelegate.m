@@ -10,6 +10,9 @@
 #import "MachoLoader.h"
 #import "DisassemblyChecker.h"
 #import "GenericTimer.h"
+#import "FunctionEnumerator.h"
+#import "DissasemblyProcessor.h"
+
 
 @implementation AppDelegate
 
@@ -26,10 +29,17 @@
 					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
 					  nil];
 
-	for( NSString *each in paths ) {
-		if([[NSFileManager defaultManager] fileExistsAtPath:each]) {
+	for( NSString *each in paths )
+	{
+		if([[NSFileManager defaultManager] fileExistsAtPath:each])
+		{
 			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each checker:nil];
 			[ml readFile];
+			
+			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];
+			[dProcessor processApp];
+			[dProcessor release];
+		
 			[ml release];
 		}
 	}

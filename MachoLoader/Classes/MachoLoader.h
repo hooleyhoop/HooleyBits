@@ -28,15 +28,21 @@ struct symbol {
 
 struct hooleyCodeLine {
 	struct hooleyCodeLine *prev;
-	struct hooleyCodeLine *next;	
+	struct hooleyCodeLine *next;
+	char *address;
 	const struct instable *instr;
 };
 
 struct hooleyFuction {
+	NSUInteger index;
 	struct hooleyFuction *prev;
 	struct hooleyFuction *next;
 	struct hooleyCodeLine *firstLine;	
 	struct hooleyCodeLine *lastLine;
+};
+struct hooleyAllFuctions {
+	struct hooleyFuction *firstFunction;
+	struct hooleyFuction *lastFunction;
 };
 
 @interface MachoLoader : NSObject {
@@ -86,10 +92,12 @@ struct hooleyFuction {
 	NSUInteger					_textSectSize;
 	
 	// ok - the results of the disasembly
-	struct hooleyFuction		*_headFunction;
+	struct hooleyAllFuctions	*_allFunctions;
 	
 	DisassemblyChecker			*_dc;
 }
+
+- (id)functionEnumerator;
 
 - (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch;
 

@@ -45,6 +45,8 @@
 #import "StringManipulation.h"
 #import "i386_disasm.h"
 
+#import "FunctionEnumerator.h"
+
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
 
@@ -582,6 +584,12 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	}
 }
 
+- (id)functionEnumerator {
+	
+	FunctionEnumerator *fn = [[[FunctionEnumerator alloc] initWithAllFunctions:_allFunctions] autorelease];
+//	_headFunction
+	return fn;
+}
 
 - (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch {
 
@@ -763,10 +771,11 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	qsort(sorted_symbols, nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
 
 	// otx decompiles other sections as well? __coalesced_text __textcoal_nt - they dont seem to be present here
-	_headFunction = calloc( 1, sizeof(struct hooleyFuction));
+	_allFunctions = calloc( 1, sizeof(struct hooleyAllFuctions));
+	_allFunctions->firstFunction = calloc( 1, sizeof(struct hooleyFuction));
 	
-	struct hooleyFuction *currentFunction = _headFunction;
-
+	struct hooleyFuction *currentFunction = _allFunctions->firstFunction;
+	
 	uint64 j=0;
 	NSUInteger iterationCounter = 0;
 //	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
@@ -823,6 +832,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		
 	}
 //	[readTimer close];  // 4.6 secs
+	
+	_allFunctions->lastFunction = currentFunction;
 	NSLog(@"disasemble complete");
 }
 
