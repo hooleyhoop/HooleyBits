@@ -550,7 +550,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
-#define NOISY 0
+#define NOISY 1
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
 	
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
@@ -796,17 +796,23 @@ NSUInteger iterationCounter
 			 */
 			if( dp->indirect==(void *)op0F0F )
 			{
-			    data16 = FALSE;
-			    mmx = TRUE;
-			    if(got_modrm_byte == FALSE){
-					hooleyDebug();
-	//NEVER				got_modrm_byte = TRUE;
-	//NEVER				byte = get_value( 1, sect, &length, &left);
-	//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
-	//NEVER		    }
-				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			    opcode_suffix = get_value( 1, sect, &length, &left);
-			    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
+				data16 = FALSE;
+				mmx = TRUE;
+				if(got_modrm_byte == FALSE){
+					got_modrm_byte = TRUE;
+					byte = get_value( 1, sect, &length, &left);
+					modrm_byte(&mode, &reg, &r_m, byte);
+				}
+				// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+//HERE! what the fuck?				
+				struct HooAbstractDataType * abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+				opcode_suffix = get_value( 1, sect, &length, &left );
+				int tag1 = opcode_suffix >> 4;
+				int tag2 = opcode_suffix & 0x0F;
+		//here		dp = &op0F0F[tag1][tag2];
+				
+				dp = (void *)op0F0F[tag1][tag2];
+//here				printf("i did know what i was doing %s", test->name );
 
 			} else if( dp->indirect==(void *)op0F01 ) {
 
@@ -942,9 +948,9 @@ NSUInteger iterationCounter
 	}
 
 	/* setup the mnemonic with a possible suffix */
-	if(dp->adr_mode != CBW && dp->adr_mode != CWD){
+	if( dp->adr_mode != CBW && dp->adr_mode != CWD ){
 
-	    if((dp->flags & HAS_SUFFIX) != 0)
+	    if( (dp->flags & HAS_SUFFIX) !=0 )
 		{
 			if(data16 == TRUE)
 			{
@@ -996,7 +1002,7 @@ NSUInteger iterationCounter
 	 * are explained as they are encountered in the following
 	 * switch construct.
 	 */
-	switch( dp -> adr_mode )
+	switch( dp->adr_mode )
 	{
 		case BSWAP:
 			reg_struct = get_regStruct((opcode5 & 0x7), 1, data16, rex);
@@ -2824,7 +2830,7 @@ NSUInteger iterationCounter
 		/* single 8 bit port operand */
 		case P:
 			value0_size = 1;
-			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
+			REPLACEMENT_IMMEDIATE( &symadd0, &symsub0, &imm0, value0_size );
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// printf("%s\t$", mnemonic);
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");

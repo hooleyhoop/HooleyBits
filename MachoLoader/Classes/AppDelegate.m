@@ -21,12 +21,12 @@
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	NSArray *paths = [NSArray arrayWithObjects:
-					  [[NSBundle mainBundle] executablePath],
-					  @"/Applications/6-386.app/Contents/MacOS/6-386",
+//					  [[NSBundle mainBundle] executablePath],
+//					  @"/Applications/6-386.app/Contents/MacOS/6-386",
 					  @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin",
-					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
-					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
-					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
+//					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
+//					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
+//					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
 					  nil];
 
 	for( NSString *each in paths )

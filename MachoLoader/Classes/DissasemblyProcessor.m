@@ -35,7 +35,7 @@
 	
 	static int counter = 0;
 
-    FILE* outFile = NULL;
+    FILE *outFile = NULL;
 	NSString *outPath = [[NSString stringWithFormat:@"~/testoutput_%i.txt", counter++] stringByExpandingTildeInPath];
 	outFile = fopen( [outPath UTF8String], "w");
     SInt32  fileNum = fileno(outFile);
