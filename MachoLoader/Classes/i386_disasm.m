@@ -796,18 +796,17 @@ NSUInteger iterationCounter
 			 */
 			if( dp->indirect==(void *)op0F0F )
 			{
-				hooleyDebug();
-	//NEVER		    data16 = FALSE;
-	//NEVER		    mmx = TRUE;
-	//NEVER		    if(got_modrm_byte == FALSE){
-	//NEVER				hooleyDebug();
+			    data16 = FALSE;
+			    mmx = TRUE;
+			    if(got_modrm_byte == FALSE){
+					hooleyDebug();
 	//NEVER				got_modrm_byte = TRUE;
 	//NEVER				byte = get_value( 1, sect, &length, &left);
 	//NEVER				modrm_byte(&mode, &reg, &r_m, byte);
 	//NEVER		    }
-	//NEVER			GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-	//NEVER		    opcode_suffix = get_value( 1, sect, &length, &left);
-	//NEVER		    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
+				GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			    opcode_suffix = get_value( 1, sect, &length, &left);
+			    dp = &op0F0F[opcode_suffix >> 4][opcode_suffix & 0x0F];
 
 			} else if( dp->indirect==(void *)op0F01 ) {
 
@@ -2652,16 +2651,19 @@ NSUInteger iterationCounter
 		/* si register to di register */
 		case SD:
 			if(addr16 == TRUE) {
-				here
-				printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
+				struct IndirectVal *indirect1, *indirect2;
+				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex2_reg, 0, scale_factor[0] );
+				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex2_reg, 0, scale_factor[0] );
+				FILLARGS2( indirect1, indirect2 );
+				addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+				// printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
 			} else {
 				//TODO: this is in the repz loop
 				struct IndirectVal *indirect1, *indirect2;
 				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex1_reg, 0, scale_factor[0] );
-				NEW_INDIRECT( indirect2, segReg, 0, (struct HooReg *)&destinationIndex1_reg, 0, scale_factor[0] );
+				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
-//				printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 				addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			}
 			return(length);
