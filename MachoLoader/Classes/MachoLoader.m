@@ -59,7 +59,7 @@
 @interface MachoLoader (PrivateMethods) 
 - (void)doIt:(NSString *)aPath;
 - (void)parseLoadCommands;
-- (void)addFunction:(NSString *)name line:(int)line address:(char *)address section:(int)section;
+- (void)addFunction:(NSString *)name line:(int)line address:(uint64_t)address section:(int)section;
 
 @end
 
@@ -294,7 +294,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	    memcpy( &l, (char *)lc, sizeof(struct load_command) );
 		//	    if(swapped)
 		//			swap_load_command(&l, host_byte_sex);
-	    if(l.cmdsize % sizeof(int32_t) != 0)
+		NSUInteger theSize = sizeof(int32_t);
+	    if( l.cmdsize % theSize !=0 )
 			printf("load command %lu size not a multiple of sizeof(int32_t)\n", i);
 	    big_load_end += l.cmdsize;
 	    if(big_load_end > sizeofcmds)
@@ -337,7 +338,8 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 					memcpy( sect_ind[k].segname, s.segname, 16 );
 					memcpy( sect_ind[k].sectname, s.sectname, 16 );
 					sect_ind[k].size = s.size;
-					sect_ind[k].addr = (char *)s.addr;
+					NSUInteger tempTest1 = s.addr;
+					sect_ind[k].addr = (char *)tempTest1;
 					sect_ind[k].reserved1 = s.reserved1;
 					sect_ind[k].reserved2 = s.reserved2;
 					sect_ind[k].flags = s.flags;
@@ -795,13 +797,26 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		
 //		printf("%0x ", memPtr);
 //		printf("%i\t\t", iterationCounter);
+//		116734 on gcc 
+//		906390 clang
 		
-		if( iterationCounter==20 )
+		if( iterationCounter==1863 )
 			NSLog(@"stop here");
+		if( iterationCounter==116734 ) // Clang= 0x0x71743 GCC= 0x71540
+			NSLog(@"stop here");
+		if( iterationCounter==906390 )
+			NSLog(@"stop here");
+		
+		// This is where GCC goes wrong
+		if( memPtr==0x799b )
+			NSLog(@"we get j==7 back in clang, == j==3 in GCC, it should be seven");
 		iterationCounter++;
 		
 	//	debugLine = [_dc nextLine];
-		
+		printf("%p", memPtr);
+		// read j bytes from locPtr
+	
+	
 		j = i386_disassemble( 
 							 &currentFunction,
 							 locPtr,
@@ -826,6 +841,13 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 							 1, iterationCounter 
 							 );
 
+		uint64_t value = 0;
+		for( NSUInteger i=0; i<j; i++) {
+			unsigned char byte = locPtr[i];
+			value |= (uint64_t)byte << (8*i);
+		}
+		printf("\t\t%0x\n", value );
+		
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;
@@ -1350,8 +1372,12 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			// The function has a ":" followed by some stuff, so strip it off
 			fn = [fn substringToIndex:range.location];
 		}
-		
-		[self addFunction:fn line:line address:(char *)list->n_value section:list->n_sect ];
+		uint64_t tempVal = list->n_value;
+		uint32 nsect = list->n_sect;
+		[self addFunction:fn 
+					 line:line 
+				  address:tempVal 
+				  section:nsect];
 		
 		result = YES;
 //	} else if (list->n_type == N_SLINE && list->n_sect == mainSection) {
@@ -1360,8 +1386,11 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	} else if (((list->n_type & N_TYPE) == N_SECT) && !(list->n_type & N_STAB)) {
 		// Regular symbols or ones that are external
 		NSString *fn = [NSString stringWithUTF8String:&table[n_stringIndex]];
-		
-		[self addFunction:fn line:0 address:(char *)list->n_value section:list->n_sect ];
+		uint64_t tempVal = list->n_value;
+		[self addFunction:fn 
+					 line:0 
+				  address:tempVal
+				  section:list->n_sect ];
 		result = YES;
 	}
 	
@@ -1437,7 +1466,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			if( cmd->cmd==LC_SEGMENT ) {
 				const struct segment_command *seg = (struct segment_command *)cmd;
 				segname = (char *)seg->segname;
-				vmaddr = (char *)seg->vmaddr;
+				NSUInteger tempTest2 = seg->vmaddr;
+				vmaddr = (char *)tempTest2;
 				vmsize = seg->vmsize;
 				nsects = seg->nsects;
 				sectionPtr = (struct section_64 *)((struct segment_command *)cmd+1);	// hey look - this is a good way to advance past segment
@@ -2112,7 +2142,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 			
 			_strtable = (char *)(stroff + (char *)_codeAddr);
 
-			for( NSInteger i=0; i<_nsymbols; i++ )
+			for( NSUInteger i=0; i<_nsymbols; i++ )
 			{
 				struct nlist_64 symbol64;
 				if(_cputype & CPU_ARCH_ABI64){
@@ -2131,7 +2161,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //					{
 //					}
 				}
-				http://mhda.asiaa.sinica.edu.tw/mhda/apps/nemo-3.2.3-i386-intel9/src/kernel/loadobj/loadobjNEXT.c
+//				http://mhda.asiaa.sinica.edu.tw/mhda/apps/nemo-3.2.3-i386-intel9/src/kernel/loadobj/loadobjNEXT.c
 				// see svn checkout http://iphone-dev.googlecode.com/svn/trunk/ iphone-dev-read-only
 
 			/* Ignore the following kinds of Symbols */
@@ -2315,7 +2345,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 //			NSLog(@"-- Number of referenced symbol table entries %i", dsymtab->nextrefsyms);
 			if(dsymtab->nextrefsyms>0){
 				struct dylib_reference *libRefer2 = (struct dylib_reference *)((char *)_codeAddr + dsymtab->extrefsymoff);
-				for( int i=0; i<dsymtab->nextrefsyms; i++){
+				for( NSUInteger i=0; i<dsymtab->nextrefsyms; i++){
 //					NSLog(@"DO THIS!");
 				}
 			}
@@ -2713,7 +2743,8 @@ const char * guess_indirect_symbol(
 	    memcpy( &l, (char *)lc, sizeof(struct load_command) );
 //	    if(swapped)
 //			swap_load_command(&l, host_byte_sex);
-	    if(l.cmdsize % sizeof(int32_t) != 0)
+		NSUInteger theSize = sizeof(int32_t);
+	    if( l.cmdsize % theSize !=0 )
 			return(NULL);
 	    big_load_end += l.cmdsize;
 	    if(big_load_end > sizeofcmds)

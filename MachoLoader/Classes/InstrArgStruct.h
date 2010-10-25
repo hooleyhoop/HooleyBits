@@ -7,7 +7,7 @@
 //
 
 struct InstrArgStruct {
-	int numberOfArgs;
+	NSUInteger numberOfArgs;
 	void *value;
 };
 

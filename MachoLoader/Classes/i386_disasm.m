@@ -211,7 +211,7 @@ static void displacement(
 //static void print_operand( const char *seg, const char *symadd, const char *symsub, uint64_t value, NSUInteger value_size, const char *result, const char *tail);
 //static void replacementPrint_operand( char *outPutBuffer, struct HooReg *segReg, const char *symadd, const char *symsub, uint64_t value, NSUInteger value_size, const char *result, const char *tail);
 static uint64_t get_value( const NSUInteger size, const char *sect, NSUInteger *length, uint64 *left);
-static void modrm_byte( NSUInteger *mode, NSUInteger *reg, NSUInteger *r_m, unsigned char byte);
+static void modrm_byte( uint32_t *mode, uint32_t *reg, uint32_t *r_m, unsigned char byte);
 
 #define GET_BEST_REG_NAME( reg_name, reg_struct ) \
 reg_name = (char *)reg_struct->prettyName;  \
@@ -552,7 +552,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 
 #define NOISY 1
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
-	
+	return;
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
@@ -578,7 +578,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		// lets just take a peep at the arguments
 		if (args) {
 
-			for(NSUInteger i=0;i<args->numberOfArgs;i++){
+			for( NSUInteger i=0; i<args->numberOfArgs; i++ ){
 				struct InstrArgStruct argi = args[i];
 				struct HooAbstractDataType *abstractArgi = argi.value;
 
@@ -676,11 +676,11 @@ NSUInteger iterationCounter
     unsigned char byte=0;
     unsigned char opcode_suffix=0;
     /* nibbles (4 bits) of the opcode */
-    NSUInteger opcode1=0, opcode2=0, opcode3=0, opcode4=0, opcode5=0, prefix_byte=0;
+    uint32_t opcode1=0, opcode2=0, opcode3=0, opcode4=0, opcode5=0, prefix_byte=0;
     const struct instable *dp=NULL, *prefix_dp=NULL;
     NSUInteger wbit=0, vbit=0;
     int got_modrm_byte=0;
-    NSUInteger mode=0, reg=0, r_m=0;
+    uint32_t mode=0, reg=0, r_m=0;
     const char *reg_name = NULL;
     NSUInteger data16=FALSE;		/* 16- or 32-bit data */
     NSUInteger addr16=FALSE;		/* 16- or 32-bit addressing */
@@ -717,7 +717,7 @@ NSUInteger iterationCounter
 			dp = dp->arch64;
 		}
 	    if(dp->adr_mode == PREFIX){
-			if(prefix_dp != NULL)
+			if( prefix_dp!=NULL )
 				printf("%s", dp->name);
 			prefix_dp = dp;
 			prefix_byte = byte;
@@ -801,7 +801,7 @@ NSUInteger iterationCounter
 				if(got_modrm_byte == FALSE){
 					got_modrm_byte = TRUE;
 					byte = get_value( 1, sect, &length, &left);
-					modrm_byte(&mode, &reg, &r_m, byte);
+					modrm_byte( &mode, &reg, &r_m, byte );
 				}
 				// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 //HERE! what the fuck?				
@@ -899,7 +899,7 @@ NSUInteger iterationCounter
 	    if(got_modrm_byte == FALSE){
 			got_modrm_byte = TRUE;
 			byte = get_value( 1, sect, &length, &left);
-			modrm_byte(&mode, (NSUInteger *)&opcode3, &r_m, byte);
+			modrm_byte( &mode, &opcode3, &r_m, byte );
 	    }
 	    /*
 	     * decode 287 instructions (D8-DF) from opcodeN
@@ -2619,7 +2619,7 @@ NSUInteger iterationCounter
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			wbit = LONGOPERAND;
+			wbit = LONGOPERAND; //1 clang gcc
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			//	eg. leal 0x08(%ebp),%ecx
@@ -2730,12 +2730,13 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			
 			if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
-//Putback						printf("%s\t*", mnemonic);
+				// printf("%s\t*", mnemonic);
 			} else {
-//Putback						printf("%s\t", mnemonic);
+				// printf("%s\t", mnemonic);
 			}
+//what the fuck is this shit?
 //Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-			// eg jmp	*%ecx
+			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)
 			addLine( addr, currentFuncPtr, dp, NULL, NOISY ); 
 			return(length);
 
@@ -2771,6 +2772,7 @@ NSUInteger iterationCounter
 		case BD:
 			// gohere			
 			value0_size = 1;
+			//TODO: THIS IS FUCKED
 			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg jne	0x00002b1a
@@ -3028,22 +3030,26 @@ static NSUInteger replacement_get_operand(
 	//	*result = '\0';
 	
 	/* check for the presence of the s-i-b byte */
-	if(r_m == ESP && mode != REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
+	if( r_m==ESP && mode!=REG_ONLY && (((cputype & CPU_ARCH_ABI64) == CPU_ARCH_ABI64) || addr16 == FALSE)){
+		//clang + GCC
 	    s_i_b = TRUE;
-	    byte = get_value( 1, sect, length, left);
-	    modrm_byte((NSUInteger *)&ss, (NSUInteger *)&index, (NSUInteger *)&base, byte);
+	    byte = get_value( 1, sect, length, left); //0x10d61e99b, 0x7fff5fbfe0f8, 0x7fff5fbfdea8
+	    modrm_byte( &ss, &index, &base, byte ); // 2, 2, 5, in clang this resets byte to 0
 	} else {
 	    s_i_b = FALSE;
 	}
 	if(addr16) {
 	    *value_size = dispsize16[r_m][mode];
 	}else{
+		//gcc + clang
 	    *value_size = dispsize32[r_m][mode];
 	}
-	if(s_i_b == TRUE && mode == 0 && base == EBP)
+	if( s_i_b==TRUE && mode==0 && base==EBP ) //clang base==5
+		//clang
 	    *value_size = sizeof(int32_t);
 	
 	if(*value_size != 0){
+		//clang
 		sect_offset = addr + *length - sect_addr;
 	    *value = get_value(*value_size, sect, length, left);
 //putback		GET_SYMBOL(symadd, symsub, &offset, sect_offset, *value);
@@ -3119,6 +3125,7 @@ static NSUInteger replacement_get_operand(
 					return (NSUInteger)indirStrct;
 				}
 			} else {
+				//clang
 				const struct HooReg *reg_struct = regname32_Struct[mode][base];
 				const struct HooReg *indexReg = indexname_Struct[index];				
 				struct IndirectVal *indirStrct;
@@ -3211,7 +3218,7 @@ static NSUInteger replacement_get_operand(
 					
 						// sprintf(result, "(%s)", 1 );
 					} else {
-						
+						//gcc
 						const struct HooReg *reg_struct = regname32_Struct[mode][r_m];					
 						struct IndirectVal *indirStrct;
 						NEW_INDIRECT( indirStrct, segReg, *value, (struct HooReg *)reg_struct, 0, scale_factor[0] );
@@ -3790,12 +3797,15 @@ uint64 *left)			/* number of bytes left in sect after length (in/out) */
  * modrm_byte() breaks a byte out into its mode, reg and r/m bits.
  */
 static void modrm_byte(
-NSUInteger *mode,
-NSUInteger *reg,
-NSUInteger *r_m,
+uint32_t *mode,
+uint32_t *reg,
+uint32_t *r_m,
 unsigned char byte)
 {
-	*r_m = byte & 0x7; /* r/m field from the byte */
-	*reg = byte >> 3 & 0x7; /* register field from the byte */
-	*mode = byte >> 6 & 0x3; /* mode field from the byte */
+	uint32_t rmTemp = byte & 0x7; /* r/m field from the byte */
+	uint32_t regTemp = byte >> 3 & 0x7; /* register field from the byte */
+	uint32_t modeTemp = byte >> 6 & 0x3; /* mode field from the byte */
+	*r_m = rmTemp;
+	*reg = regTemp;
+	*mode = modeTemp;
 }
