@@ -808,12 +808,12 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			NSLog(@"stop here");
 		
 		// This is where GCC goes wrong
-		if( memPtr==0x799b )
+		if( memPtr==(char *)0x799b )
 			NSLog(@"we get j==7 back in clang, == j==3 in GCC, it should be seven");
 		iterationCounter++;
 		
 	//	debugLine = [_dc nextLine];
-		printf("%p", memPtr);
+	//	printf("%p", memPtr);
 		// read j bytes from locPtr
 	
 	
@@ -841,12 +841,12 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 							 1, iterationCounter 
 							 );
 
-		uint64_t value = 0;
-		for( NSUInteger i=0; i<j; i++) {
-			unsigned char byte = locPtr[i];
-			value |= (uint64_t)byte << (8*i);
-		}
-		printf("\t\t%0x\n", value );
+//		uint64_t value = 0;
+//		for( NSUInteger i=0; i<j; i++) {
+//			unsigned char byte = locPtr[i];
+//			value |= (uint64_t)byte << (8*i);
+//		}
+//		printf("\t\t%0x\n", value );
 		
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
@@ -914,7 +914,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		} else if( [[sec name] isEqualToString:@"__const"] ) {
 			// Initialised constant variables ALSO switch statement jump table
 			
-			char *aMemPtrToSomething = (char *)[_temporaryExperiment intForIntKey:(uint64)memAddr];
+			int64_t temp = [_temporaryExperiment intForIntKey:(uint64)memAddr];
+			char *aMemPtrToSomething = (char *)temp;
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -992,7 +993,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	else if( [[seg name] isEqualToString:@"__OBJC"] ) {
 		
 		if( [[sec name] isEqualToString:@"__cls_refs"] ) {
-			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
+			uint64 temp = [_cls_refsLookup intForIntKey:(uint64)memAddr];
+			char *aMemPtrToSomething = (char *)temp;
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -1004,7 +1006,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__class"] ) {
-			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
+			uint64 temp = [_cls_refsLookup intForIntKey:(uint64)memAddr];
+			char *aMemPtrToSomething = (char *)temp;
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			
@@ -1016,7 +1019,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			return si;
 		}
 		else if( [[sec name] isEqualToString:@"__message_refs"] ) {
-			char *aMemPtrToSomething = (char *)[_cls_refsLookup intForIntKey:(uint64)memAddr];
+			uint64 temp = [_cls_refsLookup intForIntKey:(uint64)memAddr];
+			char *aMemPtrToSomething = (char *)temp;
 			NSString *stringTableEntry = [self CStringForAddress:aMemPtrToSomething];
 			NSAssert( stringTableEntry, @"what?");
 			

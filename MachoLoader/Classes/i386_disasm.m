@@ -89,10 +89,6 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #define EBP 5
 #define ESP 4
 
-extern struct symbol;
-
-
-
 
 struct ImediateValue {
 	enum argType		isah;	
@@ -125,7 +121,7 @@ struct IndirectVal {
 #define HAS_SUFFIX			0x1	/* For instructions which may have a 'w', 'l', or 'q' suffix */
 #define IS_POINTER_SIZED	0x2	/* For instructions which implicitly have operands which are sizeof(void *) */
 
-void hooleyDebug() {
+void hooleyDebug( void ) {
 	NSLog(@"woohoo");
 }
 
@@ -552,7 +548,7 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 
 #define NOISY 1
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
-	return;
+
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
 
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
@@ -805,7 +801,8 @@ NSUInteger iterationCounter
 				}
 				// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 //HERE! what the fuck?				
-				struct HooAbstractDataType * abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+				NSUInteger temp = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+				struct HooAbstractDataType * abstractStrctPtr1 = (struct HooAbstractDataType *)temp;
 				opcode_suffix = get_value( 1, sect, &length, &left );
 				int tag1 = opcode_suffix >> 4;
 				int tag2 = opcode_suffix & 0x0F;
@@ -1018,7 +1015,8 @@ NSUInteger iterationCounter
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			uint64 temp = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)temp;
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// printf("%s\t%s,", mnemonic, reg_name);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
@@ -2066,7 +2064,7 @@ NSUInteger iterationCounter
 									hooleyDebug();
 									printf("%sllw\t$0x%x,", mnemonic, byte);
 								}
-								printf("%%mm%lu\n", r_m);
+								printf("%%mm%u\n", r_m);
 								const struct HooReg *mmReg = mmReg_Struct[r_m];
 								
 								return length;
