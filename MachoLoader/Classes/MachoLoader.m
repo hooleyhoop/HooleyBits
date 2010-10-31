@@ -853,6 +853,11 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		i += j;
 		
 	}
+	
+	- sort the labels into order
+	- iterate thru the lines attching the labels
+	postProcess()
+	
 //	[readTimer close];  // 4.6 secs
 	
 	_allFunctions->lastFunction = currentFunction;
@@ -1452,7 +1457,8 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	
 	for( NSNumber *segmentAddress_Number in _loadCommandsArray )
 	{		
-		const struct load_command *cmd = (struct load_command *)[segmentAddress_Number unsignedIntegerValue];
+		NSUInteger needThis = [segmentAddress_Number unsignedIntegerValue];
+		const struct load_command *cmd = (struct load_command *)needThis;
 
 		if( cmd->cmd==LC_UUID ){
 			// Specifies the 128-bit UUID for an image or its corresponding dSYM file.

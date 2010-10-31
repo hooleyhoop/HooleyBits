@@ -33,13 +33,21 @@ struct hooleyCodeLine {
 	const struct instable *instr;
 };
 
+struct label {
+	struct label *prev;
+	struct label *next;
+	char *address;
+};
+
 struct hooleyFuction {
 	NSUInteger index;
 	struct hooleyFuction *prev;
 	struct hooleyFuction *next;
 	struct hooleyCodeLine *firstLine;	
 	struct hooleyCodeLine *lastLine;
+	struct label *labels;
 };
+
 struct hooleyAllFuctions {
 	struct hooleyFuction *firstFunction;
 	struct hooleyFuction *lastFunction;

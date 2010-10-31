@@ -546,7 +546,9 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
-#define NOISY 1
+#define NOISY 0
+#define NOISY2 0
+
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
 
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
@@ -566,6 +568,21 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	}
 	currentFunc->lastLine = newLine;
 	
+	// lets try to add Labels
+	if( dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP ) {
+		struct label *newLabel = calloc( 1, sizeof(struct label) );
+		
+		//TODO: replace the argument with the label
+		
+		if(currentFunc->labels){
+			newLabel->prev = currentFunc->labels;
+			currentFunc->labels->next = newLabel;
+			currentFunc->labels = newLabel;
+		} else {
+			currentFunc->labels = newLabel;
+		}
+	}
+
 	if(noisy)
 	{
 		char lineToPrint[256];
@@ -1028,6 +1045,7 @@ NSUInteger iterationCounter
 		/* movzbl movzbw (0x0FB6) or mobzwl (0x0FB7) */
 		/* wbit lives in 2nd byte, note that operands are different sized */
 		case MOVZ:
+		{
 			/* Get second operand first so data16 can be destroyed */
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -1037,22 +1055,26 @@ NSUInteger iterationCounter
 			reg_struct = get_regStruct(reg, LONGOPERAND, data16, rex);
 			wbit = WBIT(opcode5);
 			data16 = 1;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg movzbl	(%edx),%eax	
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
 			return length;
+		}
 
 		/* imul instruction, with either 8-bit or longer immediate */
 		case IMUL:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 
 			/* opcode 0x6B for byte, sign-extended displacement, 0x69 for word(s) */
 			value0_size = OPSIZE(data16, opcode2==0x9, 0);
@@ -1062,36 +1084,42 @@ NSUInteger iterationCounter
 			// eg imull $0x44,%edx,%eax
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY ); 
+			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 ); 
 			return length;
+		}
 
 		/* memory or register operand to register, with 'w' bit	*/
 		case MRw:
 		case SSE4MRw:
+		{
 			wbit = WBIT(opcode2);
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// eg. movl 0x04(%ebp),%ebx
 			FILLARGS2( abstractStrctPtr1,reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
 			return length;
+		}
 
 		/* register to memory or register operand, with 'w' bit	*/
 		/* arpl happens to fit here also because it is odd */
 		case RMw:
+		{
 			wbit = WBIT(opcode2);
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, &result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			
 			// TODO:
 			// -- woah dude, woah. This returns (%rip) in result and 0x1848 in value0
@@ -1104,6 +1132,7 @@ NSUInteger iterationCounter
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* SSE2 instructions with further prefix decoding dest to memory or memory to dest depending on the opcode */
 		case SSE2tfm:
@@ -1120,6 +1149,7 @@ NSUInteger iterationCounter
 			switch(opcode4 << 4 | opcode5)
 			{
 				case 0x7e: /* movq & movd */
+				{
 					if(prefix_byte == 0x66){
 						/* movd from xmm to r/m32 */
 						regNum = xmm_reg(reg, rex);
@@ -1127,7 +1157,8 @@ NSUInteger iterationCounter
 						argStack_Push( &aStack, (int64_t)reg_struct );
 						// printf("%sd\t%%xmm%u,", mnemonic, reg_struct);
 						wbit = LONGOPERAND;
-						abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+						NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+						abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 						argStack_Push( &aStack, (int64_t)abstractStrctPtr1 );
 
 					} else if(prefix_byte == 0xf0){
@@ -1159,6 +1190,7 @@ NSUInteger iterationCounter
 //NEVER						GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
 //NEVER						print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 					}
+				}
 			}
 			
 			if(aStack.size==2){
@@ -1173,6 +1205,7 @@ NSUInteger iterationCounter
 
 		/* SSE2 instructions with further prefix decoding dest to memory */
 		case SSE2tm:
+		{
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -1244,6 +1277,7 @@ NSUInteger iterationCounter
 					break;
 		
 				case 0xe7: /* movntdq & movntq */
+				{
 					hooleyDebug();
 //NEVER					if(prefix_byte == 0x66){
 //NEVER						hooleyDebug();
@@ -1257,18 +1291,22 @@ NSUInteger iterationCounter
 //NEVER						mmx = TRUE;
 //NEVER					}
 //NEVER					break;
+				}
 			}
 			// printf("%s,", result0);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// print_operand(seg, symadd1, symsub1, value1, value1_size, result1, "\n");
 
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* MNI instructions */
 		case MNI:
+		{
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -1290,12 +1328,14 @@ NSUInteger iterationCounter
 			// printf("%s\t", mnemonic);
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// printf("%s\n", result1);
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );				
 			return length;
-
+		}
+	
 		/* MNI instructions with 8-bit immediate */
 		case MNIi:
 		{
@@ -1767,7 +1807,8 @@ NSUInteger iterationCounter
 			} // end switch
 			
 			/* woah - so that was pretty complicated, huh? This needs some checking. Perhaps we would be better pushing the arguments onto our arg stack? */
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			
 			// -- soo i dont have an operand and i dont have result1 register
 			// i have missed the suffix off the operand. eg - i am printing cvttps2d %xmm0,%xmm0 as cvt  %xmm0 %xmm0 -- which doesn't tell you as 
@@ -1932,6 +1973,7 @@ NSUInteger iterationCounter
 
 		/* SSE2 instructions with 8 bit immediate with further prefix decoding*/
 		case SSE2i:
+		{
 			data16 = FALSE;
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
@@ -1948,7 +1990,8 @@ NSUInteger iterationCounter
 			} else {
 				sse2 = TRUE;
 			}
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			byte = get_value( 1, sect, &length, &left);
 			NEW_IMMEDIATE( value0Immed, byte );
 
@@ -2030,6 +2073,7 @@ NSUInteger iterationCounter
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* SSE2 instructions with 8 bit immediate and only 1 reg */
 		case SSE2i1:
@@ -2184,6 +2228,7 @@ NSUInteger iterationCounter
 
 		/* 3DNow! prefetch instructions */
 		case PFCH3DNOW:
+		{
 			if(got_modrm_byte == FALSE)
 			{
 				got_modrm_byte = TRUE;
@@ -2201,10 +2246,12 @@ NSUInteger iterationCounter
 			}
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
 			return length;
+		}
 
 		/* sfence & clflush */
 		case SFEN:
@@ -2222,13 +2269,15 @@ NSUInteger iterationCounter
 
 		/* Double shift. Has immediate operand specifying the shift. */
 		case DSHIFT:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			value0_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
@@ -2236,27 +2285,33 @@ NSUInteger iterationCounter
 			FILLARGS3( value0Immed, reg_struct, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* Double shift. With no immediate operand, specifies using %cl. */
 		case DSHIFTcl:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			// cl is &count1_reg
 			// eg shldl	%cl,%eax,%esi
 			FILLARGS3( &count1_reg, reg_struct, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* immediate to memory or register operand */
 		case IMlw:
+		{
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 
 			/* A long immediate is expected for opcode 0x81, not 0x80 & 0x83 */
 			value0_size = OPSIZE(data16, opcode2==1, 0);
@@ -2266,16 +2321,19 @@ NSUInteger iterationCounter
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* immediate to memory or register operand with the 'w' bit present */
 		case IMw:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd1, &symsub1, &value1, &value1_size, result1);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			value0_size = OPSIZE(data16, wbit, 0);
 			REPLACEMENT_IMMEDIATE(&symadd0, &symsub0, &imm0, value0_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
@@ -2283,6 +2341,7 @@ NSUInteger iterationCounter
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return length;
+		}
 
 		/* immediate to register with register in low 3 bits of op code */
 		case IR:
@@ -2346,20 +2405,24 @@ NSUInteger iterationCounter
 
 		/* memory or register operand to segment register */
 		case MS:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			segReg = (struct HooReg *)SEGREG[reg];
 			FILLARGS2( abstractStrctPtr1, segReg );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
 			return(length);
+		}
 
 		/* segment register to memory or register operand	*/
 		case SM:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
@@ -2367,20 +2430,24 @@ NSUInteger iterationCounter
 			}
 			wbit = LONGOPERAND;
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);			
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;		
 			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( segReg, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
 			return(length);
+		}
 
 		/* rotate or shift instrutions, which may shift by 1 or */
 		/* consult the cl register, depending on the 'v' bit	*/
 		case Mv:
+		{
 			vbit = VBIT(opcode2);
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			/* When vbit is set, register is an operand, otherwise just $0x1 */
 			if(vbit){
 				// reg_name = vbit ? "%cl," : "" ;
@@ -2393,13 +2460,16 @@ NSUInteger iterationCounter
 			// shll		%cl,%edx
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );	
 			return(length);
+		}
 
 		/* immediate rotate or shift instrutions, which may or */
 		/* may not consult the cl register, depending on the 'v' bit */
 		case MvI:
+		{
 			vbit = VBIT(opcode2);
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			value1_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
@@ -2415,11 +2485,14 @@ NSUInteger iterationCounter
 			// eg shll	$0x02,%eb
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		case MIb:
+		{
 			wbit = LONGOPERAND;
 			// GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			value1_size = 1;
 			REPLACEMENT_IMMEDIATE(&symadd1, &symsub1, &imm0, value1_size);
 			NEW_IMMEDIATE( value0Immed, imm0 );
@@ -2429,19 +2502,24 @@ NSUInteger iterationCounter
 			FILLARGS2( value0Immed, abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		/* single memory or register operand with 'w' bit present */
 		case Mw:
+		{
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
 			return(length);
+		}
 
 		/* single memory or register operand but don't use 'l' suffix */
 		case Mnol:
 		/* single memory or register operand */
 		case M:
+		{
 			switch(byte)
 			{
 				case 0xc1:
@@ -2492,26 +2570,31 @@ NSUInteger iterationCounter
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 
 			// eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 			FILLARGS1( abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
-
+		}
+	
 		/* single memory or register operand */
 		case Mb:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = BYTEOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg setbe	%al
 			FILLARGS1( abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		case SREG: /* special register */
 				hooleyDebug();
@@ -2612,18 +2695,21 @@ NSUInteger iterationCounter
 
 		/* memory or register operand to register */
 		case MR:
+		{
 			if(got_modrm_byte == FALSE){
 				got_modrm_byte = TRUE;
 				byte = get_value( 1, sect, &length, &left);
 				modrm_byte(&mode, &reg, &r_m, byte);
 			}
 			wbit = LONGOPERAND; //1 clang gcc
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			//	eg. leal 0x08(%ebp),%ecx
 			FILLARGS2(abstractStrctPtr1, reg_struct);
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		/* immediate operand to accumulator */
 		case IA:
@@ -2645,12 +2731,15 @@ NSUInteger iterationCounter
 
 		/* memory or register operand to accumulator */
 		case MA:
+		{
 			wbit = WBIT(opcode2);
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg mull	%ecx
 			FILLARGS1( abstractStrctPtr1 );
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		/* si register to di register */
 		case SD:
@@ -2719,13 +2808,15 @@ NSUInteger iterationCounter
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY ); 
+			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 ); 
 			return(length);
 
 		/* indirect to memory or register operand */
 		case INM:
+		{
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			
 			if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
 				// printf("%s\t*", mnemonic);
@@ -2737,15 +2828,19 @@ NSUInteger iterationCounter
 			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)
 			addLine( addr, currentFuncPtr, dp, NULL, NOISY ); 
 			return(length);
+		}
 
 		/* indirect to memory or register operand (for lcall and ljmp) */
 		case INMl:
+		{
 			wbit = LONGOPERAND;
-			abstractStrctPtr1 = (struct HooAbstractDataType *)REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
+			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg ljmpl *%ebx				// TODO: missing the asterisk?
 			FILLARGS1( abstractStrctPtr1 );			
 			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
 			return(length);
+		}
 
 		/*
 		* For long jumps and long calls -- a new code segment
@@ -2776,7 +2871,7 @@ NSUInteger iterationCounter
 			// eg jne	0x00002b1a
 			FILLARGS1( displaceStructPtr );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 );
 			return(length);
 
 		/* single 32/16 bit immediate operand */

@@ -514,59 +514,59 @@ hooInstruction_ into_instr = {"into",TERM,GO_ON,0,INVALID_64,"",0};
 hooInstruction_ invd_instr = {"invd",TERM,GO_ON,0,0,"",0};
 hooInstruction_ iret_instr = {"iret",TERM,GO_ON,0,0,"",0};
 
-hooInstruction_ ja_instr1 = {"ja",TERM,BD,0,0,"",0};
-hooInstruction_ ja_instr2 = {"ja",TERM,D,0x03,0,"",0};
+hooInstruction_ ja_instr1 = {"ja",TERM,BD,0,0,"jump short if above",ISBRANCH};
+hooInstruction_ ja_instr2 = {"ja",TERM,D,0x03,0,"jump short if above",ISBRANCH};
 
-hooInstruction_ jae_instr1 = {"jae",TERM,BD,0,0,"",0};
-hooInstruction_ jae_instr2 = {"jae",TERM,D,0x03,0,"",0};
+hooInstruction_ jae_instr1 = {"jae",TERM,BD,0,0,"jump short if above or equal",ISBRANCH};
+hooInstruction_ jae_instr2 = {"jae",TERM,D,0x03,0,"jump short if above or equal",ISBRANCH};
 
-hooInstruction_ jb_instr1 = {"jb",TERM,BD,0,0,"",0};
-hooInstruction_ jb_instr2 = {"jb",TERM,D,0x03,0,"",0};
+hooInstruction_ jb_instr1 = {"jb",TERM,BD,0,0,"jump short if below",ISBRANCH};
+hooInstruction_ jb_instr2 = {"jb",TERM,D,0x03,0,"jump short if below",ISBRANCH};
 
-hooInstruction_ jbe_instr1 = {"jbe",TERM,BD,0,0,"",0};
-hooInstruction_ jbe_instr2 = {"jbe",TERM,D,0x03,0,"",0};
+hooInstruction_ jbe_instr1 = {"jbe",TERM,BD,0,0,"jump short if below or equal",ISBRANCH};
+hooInstruction_ jbe_instr2 = {"jbe",TERM,D,0x03,0,"jump short if below or equal",ISBRANCH};
 
-hooInstruction_ jcxz_instr = {"jcxz",TERM,BD,0,0,"",0};
+hooInstruction_ jcxz_instr = {"jcxz",TERM,BD,0,0,"jump short if CX register is 0",ISBRANCH};
 
-hooInstruction_ je_instr1 = {"je",TERM,BD,0,0,"",0};
-hooInstruction_ je_instr2 = {"je",TERM,D,0x03,0,"",0};
+hooInstruction_ je_instr1 = {"je",TERM,BD,0,0,"jump short if equal",ISBRANCH};
+hooInstruction_ je_instr2 = {"je",TERM,D,0x03,0,"jump short if equal",ISBRANCH};
 
-hooInstruction_ jg_instr1 = {"jg",TERM,BD,0,0,"",0};
-hooInstruction_ jg_instr2 = {"jg",TERM,D,0x03,0,"",0};
+hooInstruction_ jg_instr1 = {"jg",TERM,BD,0,0,"jump short if greater",ISBRANCH};
+hooInstruction_ jg_instr2 = {"jg",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jge_instr1 = {"jge",TERM,BD,0,0,"",0};
-hooInstruction_ jge_instr2 = {"jge",TERM,D,0x03,0,"",0};
+hooInstruction_ jge_instr1 = {"jge",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jge_instr2 = {"jge",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jl_instr1 = {"jl",TERM,BD,0,0,"",0};
-hooInstruction_ jl_instr2 = {"jl",TERM,D,0x03,0,"",0};
+hooInstruction_ jl_instr1 = {"jl",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jl_instr2 = {"jl",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jle_instr1 = {"jle",TERM,BD,0,0,"",0};
-hooInstruction_ jle_instr2 = {"jle",TERM,D,0x03,0,"",0};
+hooInstruction_ jle_instr1 = {"jle",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jle_instr2 = {"jle",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jmp_instr1 = {"jmp",TERM,BD,0,0,"",0};
-hooInstruction_ jmp_instr2 = {"jmp",TERM,D,0x03,0,"",0};
-hooInstruction_ jmp_instr3 = {"jmp",TERM,INM,1,0,"",0};
+hooInstruction_ jmp_instr1 = {"jmp",TERM,BD,0,0,"goto @1",ISJUMP};
+hooInstruction_ jmp_instr2 = {"jmp",TERM,D,0x03,0,"goto @1",ISJUMP};
+hooInstruction_ jmp_instr3 = {"jmp",TERM,INM,1,0,"goto @1",ISJUMP};
 
-hooInstruction_ jne_instr1 = {"jne",TERM,BD,0,0,"",0};
-hooInstruction_ jne_instr2 = {"jne",TERM,D,0x03,0,"",0};
+hooInstruction_ jne_instr1 = {"jne",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jne_instr2 = {"jne",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jno_instr1 = {"jno",TERM,BD,0,0,"",0};
-hooInstruction_ jno_instr2 = {"jno",TERM,D,0x03,0,"",0};
+hooInstruction_ jno_instr1 = {"jno",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jno_instr2 = {"jno",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jnp_instr1 = {"jnp",TERM,BD,0,0,"",0};
-hooInstruction_ jnp_instr2 = {"jnp",TERM,D,0x03,0,"",0};
+hooInstruction_ jnp_instr1 = {"jnp",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jnp_instr2 = {"jnp",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jns_instr1 = {"jns",TERM,BD,0,0,"",0};
-hooInstruction_ jns_instr2 = {"jns",TERM,D,0x03,0,"",0};
+hooInstruction_ jns_instr1 = {"jns",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jns_instr2 = {"jns",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jo_instr1 = {"jo",TERM,BD,0,0,"",0};
-hooInstruction_ jo_instr2 = {"jo",TERM,D,0x03,0,"",0};
+hooInstruction_ jo_instr1 = {"jo",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jo_instr2 = {"jo",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ jp_instr1 = {"jp",TERM,BD,0,0,"",0};
-hooInstruction_ jp_instr2 = {"jp",TERM,D,0x03,0,"",0};
+hooInstruction_ jp_instr1 = {"jp",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ jp_instr2 = {"jp",TERM,D,0x03,0,"",ISBRANCH};
 
-hooInstruction_ js_instr1 = {"js",TERM,BD,0,0,"",0};
-hooInstruction_ js_instr2 = {"js",TERM,D,0x03,0,"",0};
+hooInstruction_ js_instr1 = {"js",TERM,BD,0,0,"",ISBRANCH};
+hooInstruction_ js_instr2 = {"js",TERM,D,0x03,0,"",ISBRANCH};
 
 hooInstruction_ lahf_instr = {"lahf",TERM,GO_ON,0,0,"",0};
 hooInstruction_ lar_instr = {"lar",TERM,MR,0,0,"",0};
@@ -584,8 +584,8 @@ hooInstruction_ lfence_instr = {"lfence",TERM,GO_ON,0,0,"",0};
 hooInstruction_ lfs_instr = {"lfs",TERM,MR,0,0,"",0};
 hooInstruction_ lgs_instr = {"lgs",TERM,MR,0,0,"",0};
 
-hooInstruction_ ljmp_instr1 = {"ljmp",TERM,INMl,1,0,"",0};
-hooInstruction_ ljmp_instr2 = {"ljmp",TERM,SO,0,0,"",0};
+hooInstruction_ ljmp_instr1 = {"ljmp",TERM,INMl,1,0,"",ISJUMP};
+hooInstruction_ ljmp_instr2 = {"ljmp",TERM,SO,0,0,"",ISJUMP};
 
 hooInstruction_ lods_instr = {"lods",TERM,SA,1,0,"",0};
 hooInstruction_ lodsb_instr = {"lodsb",TERM,SA,0,0,"",0};
@@ -1191,8 +1191,8 @@ hooInstruction_ op0F38_instr = {"",(void *)op0F38,TERM,0,0,"crazy indirect shit"
 hooInstruction_ op0FAE_instr = {"",(void *)op0FAE,TERM,0,0,"crazy indirect shit",0};
 hooInstruction_ op0FBA_instr = {"",(void *)op0FBA,TERM,0,0,"crazy indirect shit",0};
 
-hooInstruction_ whatKindOfVoodooIsThis1_instr = {INVALID_32, &op_syscall};
-hooInstruction_ whatKindOfVoodooIsThis2_instr = {INVALID_32,&op_sysret};
+hooInstruction_ whatKindOfVoodooIsThis1_instr = {INVALID_32, &op_syscall,0,0};
+hooInstruction_ whatKindOfVoodooIsThis2_instr = {INVALID_32, &op_sysret,0,0};
 
 hooInstruction_ op0F0F_instr = {"",(void *)op0F0F,TERM,0,0,"crazy indirect shit",0};
 

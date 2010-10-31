@@ -45,8 +45,22 @@
 	struct hooleyFuction *aFunc = [_functionEnumerator firstFunction];
 	for( NSUInteger i=0; i<[_functionEnumerator count]; i++ )
 	{
-		struct hooleyCodeLine *line = aFunc->firstLine;	
+		if( aFunc->firstLine==0 ){
+			NSLog(@"function wityh no lines?????");
+			aFunc = [_functionEnumerator nextFunction];			
+			continue;
+		}
 		
+		// enumerte labels
+		if( aFunc->labels ) {
+			struct label *label = aFunc->labels;
+			do {
+				sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );				
+			} while( label = label->prev );				
+		}
+		
+		// enumerate lines
+		struct hooleyCodeLine *line = aFunc->firstLine;
 		do {
 			
 			sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );
