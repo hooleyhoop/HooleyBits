@@ -54,6 +54,7 @@
 		73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B677812269AD6002C0B0F /* DemangleTests.m */; };
+		73F73F301288941900293F6B /* InnerFunctionBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
@@ -142,6 +143,7 @@
 		73E76252121C304C00A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = Classes/MemoryBlockStore.m; sourceTree = "<group>"; };
 		73EDD9230F863E4700E09434 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = Classes/MachoLoader.h; sourceTree = "<group>"; };
 		73EDD9240F863E4700E09434 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = Classes/MachoLoader.m; sourceTree = "<group>"; };
+		73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InnerFunctionBlockTests.m; path = Tests/InnerFunctionBlockTests.m; sourceTree = "<group>"; };
 		73FF6B240FD6AB8B00A8136A /* Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hex.m; path = Classes/Hex.m; sourceTree = "<group>"; };
 		73FF6B250FD6AB8B00A8136A /* Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hex.h; path = Classes/Hex.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MachoLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachoLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -364,6 +366,7 @@
 				7363BDC0124E318500F080E7 /* GenericTimer.m */,
 				730DB3CA12549ED800203ED8 /* ArgStackTests.m */,
 				732C5893125A7E2E004EDBBE /* BonkersRegTests.m */,
+				73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */,
 				73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */,
 				732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */,
+				73F73F301288941900293F6B /* InnerFunctionBlockTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -109,7 +109,8 @@ static const struct TestReg2 *areg2Array2[5] = { &reg1, &reg2, &reg3, &reg4, &re
 	int f2 = innerElement->innerReg->f1;
 	STAssertTrue( f2==3, @"%i", f2 );
 	
-	if( (char *)(areg2Array2[4]->innerReg) != reg1 ){
+	char *innerVal = (char *)(areg2Array2[4]->innerReg);
+	if( innerVal != (char *)areg2Array ){
 		STFail(@"Doh");
 	}
 }

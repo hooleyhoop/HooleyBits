@@ -63,6 +63,8 @@
 		struct hooleyCodeLine *line = aFunc->firstLine;
 		do {
 			
+			-- get inputs and outputs from line
+	
 			sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );
 			int result = syscall( SYS_write, fileNum, outLine, strlen(outLine) );
 			
@@ -84,6 +86,11 @@
 
 - (void)processApp {
 
+	-- each function needs to be sorted into inner blocks
+	
+	-- process each inner block
+	
+	-- this is just a test
 	[self printLinesToFile];
 	
 }
