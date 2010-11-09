@@ -42,6 +42,7 @@
 		7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
+		73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
 		73CD29FA126457220034E7D9 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
@@ -54,7 +55,6 @@
 		73E76254121C304C00A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B677812269AD6002C0B0F /* DemangleTests.m */; };
-		73F73F301288941900293F6B /* InnerFunctionBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
@@ -126,6 +126,7 @@
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
+		73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicDIYOOTests.m; path = Tests/BasicDIYOOTests.m; sourceTree = "<group>"; };
 		73D6C1431267114000746DE2 /* Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registers.h; path = Classes/Registers.h; sourceTree = "<group>"; };
 		73D6C1471267115800746DE2 /* Instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instructions.h; path = Classes/Instructions.h; sourceTree = "<group>"; };
 		73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionBitfieldTests.m; path = Tests/InstructionBitfieldTests.m; sourceTree = "<group>"; };
@@ -367,6 +368,7 @@
 				730DB3CA12549ED800203ED8 /* ArgStackTests.m */,
 				732C5893125A7E2E004EDBBE /* BonkersRegTests.m */,
 				73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */,
+				73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -550,7 +552,7 @@
 				7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */,
 				73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */,
 				732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */,
-				73F73F301288941900293F6B /* InnerFunctionBlockTests.m in Sources */,
+				73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

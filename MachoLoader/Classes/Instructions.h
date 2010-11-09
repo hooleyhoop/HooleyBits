@@ -101,6 +101,15 @@
 
 #define MAX_MNEMONIC	11	/* Maximum number of chars per mnemonic, plus a byte for '\0' */
 
+/* Hooley DIY oo */
+float Plus    (float a, float b) { return a+b; }
+float Minus   (float a, float b) { return a-b; }
+float SortArgs   (float a, float b) { return a-b; }
+
+struct DIYClass class1 = { "steven", Plus };
+struct DIYClass class2 = { "david", Minus };
+struct DIYClass class3 = { "david", SortArgs };
+
 /*
  * This is the structure that is used for storing all the op code information.
  */
@@ -119,6 +128,9 @@ struct instable {
 	// notused isCompare isBranch isJump
 	// ie
 	uint16 typeBitField;
+	
+	// link to the functions we need here
+	struct DIYClass *class;
 };
 
 #define hooInstruction_ static const struct instable const
