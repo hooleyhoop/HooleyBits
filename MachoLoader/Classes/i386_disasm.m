@@ -908,6 +908,7 @@ NSUInteger iterationCounter
 				byte == 0xaa || byte == 0xab))  /* stos */
 			{
 				// printf("rep/");
+				NSLog(@"TODO: add rep/");
 			} else {
 				// Repz = repeat while count is not equal
 				// TODO: I really need to expand this shit
