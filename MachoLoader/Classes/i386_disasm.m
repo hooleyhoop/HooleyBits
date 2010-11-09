@@ -2831,10 +2831,12 @@ NSUInteger iterationCounter
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			
 			if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
+				// TODO: How do we accomodate this little fella?
 				// printf("%s\t*", mnemonic);
 			} else {
 				// printf("%s\t", mnemonic);
 			}
+//TODO: !!!			
 //what the fuck is this shit?
 //Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)

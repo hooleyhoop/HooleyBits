@@ -31,6 +31,9 @@ float uselessFunction( float a, float b );
 // Predefined Class declarations
 struct HooClass			___________;
 struct HooClass			_________i1;
+struct HooClass			______i1_o1;
 struct HooClass			______i1_o2;
 struct HooClass			______i1_i2;
 struct HooClass			___i2_i1_o2;
+struct HooClass			i2_i1_o2_o1;
+struct HooClass			___i2_i1_o3;

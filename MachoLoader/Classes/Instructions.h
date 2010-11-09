@@ -293,36 +293,38 @@ hooInstruction_		clflush_instr	= { &_________i1, "clflush",TERM,SFEN,1,0,"",0};
 hooInstruction_		cli_instr		= { &_________i1, "cli",TERM,GO_ON,0,0,"",0};
 hooInstruction_		clts_instr		= { &_________i1, "clts",TERM,GO_ON,0,0,"",0};
 hooInstruction_		cmc_instr		= { &_________i1, "cmc",TERM,GO_ON,0,0,"",0};
-hooInstruction_		cmova_instr		= { &_________i1, "cmova",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovae_instr	= { &_________i1, "cmovae",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovb_instr		= { &_________i1, "cmovb",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovbe_instr	= { &_________i1, "cmovbe",TERM,MRw,1,0,"",0};
-hooInstruction_		cmove_instr		= { &_________i1, "cmove",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovg_instr		= { &_________i1, "cmovg",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovge_instr	= { &_________i1, "cmovge",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovl_instr		= { &_________i1, "cmovl",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovle_instr	= { &_________i1, "cmovle",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovne_instr	= { &_________i1, "cmovne",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovno_instr	= { &_________i1, "cmovno",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovnp_instr	= { &_________i1, "cmovnp",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovns_instr	= { &_________i1, "cmovns",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovp_instr		= { &_________i1, "cmovp",TERM,MRw,1,0,"",0};
-hooInstruction_		cmovs_instr		= { &_________i1, "cmovs",TERM,MRw,1,0,"",0};
 
-hooInstruction_		cmp_instr1		= { &_________i1, "cmp",TERM,IA,1,0,"compare( @1, @2 )",0};
-hooInstruction_		cmp_instr2		= { &_________i1, "cmp",TERM,IMlw,1,0,"compare( @1, @2 )",0};
-hooInstruction_		cmp_instr3		= { &_________i1, "cmp",TERM,MRw,1,0,"compare( @1, @2 )",0};
-hooInstruction_		cmp_instr4		= { &_________i1, "cmp",TERM,RMw,1,0,"compare( @1, @2 )",0};
-hooInstruction_		cmp_instr5		= { &_________i1, "cmp",TERM,SSE2i,0,0,"compare( @1, @2 )",0};
+hooInstruction_		cmova_instr		= { &______i1_o2, "cmova",TERM,MRw,1,0,		"conditional @2 = @1",0}; // INPUT IS FLAGS
+hooInstruction_		cmovae_instr	= { &______i1_o2, "cmovae",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovb_instr		= { &______i1_o2, "cmovb",TERM,MRw,1,0,		"conditional @2 = @1",0};
+hooInstruction_		cmovbe_instr	= { &______i1_o2, "cmovbe",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmove_instr		= { &______i1_o2, "cmove",TERM,MRw,1,0,		"conditional @2 = @1",0};
+hooInstruction_		cmovg_instr		= { &______i1_o2, "cmovg",TERM,MRw,1,0,		"conditional @2 = @1",0};
+hooInstruction_		cmovge_instr	= { &______i1_o2, "cmovge",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovl_instr		= { &______i1_o2, "cmovl",TERM,MRw,1,0,		"conditional @2 = @1",0};
+hooInstruction_		cmovle_instr	= { &______i1_o2, "cmovle",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovne_instr	= { &______i1_o2, "cmovne",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovno_instr	= { &______i1_o2, "cmovno",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovnp_instr	= { &______i1_o2, "cmovnp",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovns_instr	= { &______i1_o2, "cmovns",TERM,MRw,1,0,	"conditional @2 = @1",0};
+hooInstruction_		cmovp_instr		= { &______i1_o2, "cmovp",TERM,MRw,1,0,		"conditional @2 = @1",0};
+hooInstruction_		cmovs_instr		= { &______i1_o2, "cmovs",TERM,MRw,1,0,		"conditional @2 = @1",0};
 
-hooInstruction_		cmpb_instr1		= { &_________i1, "cmpb",TERM,IA,0,0,"",0};
-hooInstruction_		cmpb_instr2		= { &_________i1, "cmpb",TERM,IMlw,0,0,"compare( @1, @2 )",0};
-hooInstruction_		cmpb_instr3		= { &_________i1, "cmpb",TERM,IMlw,0,0,"",0};
-hooInstruction_		cmpb_instr4		= { &_________i1, "cmpb",TERM,MRw,0,0,"",0};
-hooInstruction_		cmpb_instr5		= { &_________i1, "cmpb",TERM,RMw,0,0,"",0};
+hooInstruction_		cmp_instr1		= { &______i1_i2, "cmp",TERM,IA,1,0,		"compare( @1, @2 )", ISCOMPARE }; // output is flags
+hooInstruction_		cmp_instr2		= { &______i1_i2, "cmp",TERM,IMlw,1,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmp_instr3		= { &______i1_i2, "cmp",TERM,MRw,1,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmp_instr4		= { &______i1_i2, "cmp",TERM,RMw,1,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmp_instr5		= { &______i1_i2, "cmp",TERM,SSE2i,0,0,		"compare( @1, @2 )", ISCOMPARE };
 
-hooInstruction_		cmps_instr		= { &_________i1, "cmps",TERM,SD,1,0,"",0};
-hooInstruction_		cmpsb_instr		= { &_________i1, "cmpsb",TERM,SD,0,0,"",0};
+hooInstruction_		cmpb_instr1		= { &______i1_i2, "cmpb",TERM,IA,0,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmpb_instr2		= { &______i1_i2, "cmpb",TERM,IMlw,0,0,		"compare( @1, @2 )", ISCOMPARE }; // output is flags
+hooInstruction_		cmpb_instr3		= { &______i1_i2, "cmpb",TERM,IMlw,0,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmpb_instr4		= { &______i1_i2, "cmpb",TERM,MRw,0,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmpb_instr5		= { &______i1_i2, "cmpb",TERM,RMw,0,0,		"compare( @1, @2 )", ISCOMPARE };
+
+hooInstruction_		cmps_instr		= { &______i1_i2, "cmps",TERM,SD,1,0,		"compare( @1, @2 )", ISCOMPARE };
+hooInstruction_		cmpsb_instr		= { &______i1_i2, "cmpsb",TERM,SD,0,0,		"compare( @1, @2 )", ISCOMPARE };
+
 hooInstruction_		cmpxchg_instr	= { &_________i1, "cmpxchg",TERM,XINST,1,0,"",0};
 hooInstruction_		cmpxchg8b_instr	= { &_________i1, "cmpxchg8b",TERM,M,1,0,"",0};
 hooInstruction_		cmpxchgb_instr	= { &_________i1, "cmpxchgb",TERM,XINST,0,0,"",0};
@@ -339,14 +341,14 @@ hooInstruction_		dec_instr2		= { &_________i1, "dec",TERM,R,1, &opREX, "@1 = @1 
 
 hooInstruction_		decb_instr		= { &_________i1, "decb",TERM,Mw,0,0,"",0};
 
-hooInstruction_		div_instr1		= { &_________i1, "div",TERM,MA,1,0,"",0};
-hooInstruction_		div_instr2		= { &_________i1, "div",TERM,SSE2,0,0,"",0};
+hooInstruction_		div_instr1		= { &_________i1, "div_1",TERM,MA,1,0,"",0};
+hooInstruction_		div_instr2		= { &___i2_i1_o2, "div_2",TERM,SSE2,0,0,"@2 = @2 / @1",0};
 
 hooInstruction_		divb_instr		= { &_________i1, "divb",TERM,MA,0,0,"",0};
 hooInstruction_		dppd_instr		= { &_________i1, "dppd",TERM,SSE4i,0,0,"",0};
 hooInstruction_		dpps_instr		= { &_________i1, "dpps",TERM,SSE4i,0,0,"",0};
 hooInstruction_		emms_instr		= { &_________i1, "emms",TERM,GO_ON,0,0,"",0};
-hooInstruction_		enter_instr		= { &_________i1, "enter",TERM,ENTER,0,0,"",0};
+hooInstruction_		enter_instr		= { &______i1_i2, "enter",TERM,ENTER,0,0,"",0};
 hooInstruction_		extractps_instr	= { &_________i1, "extractps",TERM,SSE4itm,0,0,"",0};
 hooInstruction_		f2xm1_instr		= { &_________i1, "f2xm1",TERM,GO_ON,0,0,"",0};
 hooInstruction_		fabs_instr		= { &_________i1, "fabs",TERM,GO_ON,0,0,"",0};
@@ -490,16 +492,15 @@ hooInstruction_		fxsave_instr	= { &_________i1, "fxsave",TERM,M,1,0,"",0};
 hooInstruction_		fxtract_instr	= { &_________i1, "fxtract",TERM,GO_ON,0,0,"",0};
 hooInstruction_		fyl2x_instr		= { &_________i1, "fyl2x",TERM,GO_ON,0,0,"",0};
 hooInstruction_		fyl2xp1_instr	= { &_________i1, "fyl2xp1",TERM,GO_ON,0,0,"",0};
-hooInstruction_		haddp_instr		= { &_________i1, "haddp",TERM,SSE2,0,0,"",0};
-hooInstruction_		hlt_instr		= { &_________i1, "hlt",TERM,GO_ON,0,0,"",0};
+hooInstruction_		haddp_instr		= { &___i2_i1_o2, "haddp",TERM,SSE2,0,0,			"double @2 = @1 + @2",0};
+hooInstruction_		hlt_instr		= { &___________, "hlt",TERM,GO_ON,0,0,"",0};
 hooInstruction_		hsubp_instr		= { &_________i1, "hsubp",TERM,SSE2,0,0,"",0};
 hooInstruction_		idiv_instr		= { &_________i1, "idiv",TERM,MA,1,0,"",0};
 hooInstruction_		idivb_instr		= { &_________i1, "idivb",TERM,MA,0,0,"",0};
-hooInstruction_		imul_instr		= { &_________i1, "imul",TERM,IMUL,1,0,"",0};
 
-hooInstruction_		imul_instr1		= { &_________i1, "imul",TERM,MA,1,0,"",0};
-hooInstruction_		imul_instr2		= { &_________i1, "imul",TERM,MRw,1,0,"",0};
-
+hooInstruction_		imul_instr		= { &___i2_i1_o3, "imul_1",TERM,IMUL,1,0,			"@3 = @2 * @1",0};
+hooInstruction_		imul_instr1		= { &_________i1, "imul_2",TERM,MA,1,0,"",0};
+hooInstruction_		imul_instr2		= { &_________i1, "imul_3",TERM,MRw,1,0,"",0};
 hooInstruction_		imulb_instr		= { &_________i1, "imulb",TERM,MA,0,0,"",0};
 
 hooInstruction_		in_instr1		= { &_________i1, "in",TERM,Pi,1,0,"",0};
@@ -508,8 +509,8 @@ hooInstruction_		in_instr2		= { &_________i1, "in",TERM,Vi,1,0,"",0};
 hooInstruction_		inb_instr1		= { &_________i1, "inb",TERM,Pi,0,0,"",0};
 hooInstruction_		inb_instr2		= { &_________i1, "inb",TERM,Vi,0,0,"",0};
 
-hooInstruction_		inc_instr1		= { &_________i1, "inc",TERM,Mw,1,0,"@1 = @1 + 1",0};
-hooInstruction_		inc_instr2		= { &_________i1, "inc",TERM,R,1,&opREX,"@1 = @1 + 1",0};
+hooInstruction_		inc_instr1		= { &_________i1, "inc",TERM,Mw,1,0,				"@1 = @1 + 1",0};
+hooInstruction_		inc_instr2		= { &_________i1, "inc",TERM,R,1,&opREX,			"@1 = @1 + 1",0};
 
 hooInstruction_		incb_instr		= { &_________i1, "incb",TERM,Mw,0,0,"",0};
 hooInstruction_		ins_instr		= { &_________i1, "ins",TERM,GO_ON,1,0,"",0};
@@ -586,7 +587,7 @@ hooInstruction_		lcall_instr2	= { &_________i1, "lcall",TERM,SO,0,0,"",0};
 hooInstruction_		lddqu_instr		= { &_________i1, "lddqu",TERM,SSE2,0,0,"",0};
 hooInstruction_		ldmxcsr_instr	= { &_________i1, "ldmxcsr",TERM,M,1,0,"",0};
 hooInstruction_		lds_instr		= { &_________i1, "lds",TERM,MR,0,INVALID_64,"",0};
-hooInstruction_		lea_instr		= { &_________i1, "lea",TERM,MR,1,0,"addr @2 = @1",0};
+hooInstruction_		lea_instr		= { &______i1_o2, "lea",TERM,MR,1,0,"addr @2 = @1",0};
 hooInstruction_		leave_instr		= { &___________, "leave",TERM,GO_ON,0,0,"",0};
 hooInstruction_		les_instr		= { &_________i1, "les",TERM,MR,0,INVALID_64,"",0};
 hooInstruction_		lfence_instr	= { &_________i1, "lfence",TERM,GO_ON,0,0,"",0};
@@ -612,49 +613,50 @@ hooInstruction_		max_instr		= { &_________i1, "max",TERM,SSE2,0,0,"",0};
 hooInstruction_		mfence_instr	= { &_________i1, "mfence",TERM,GO_ON,0,0,"",0};
 hooInstruction_		min_instr		= { &_________i1, "min",TERM,SSE2,0,0,"",0};
 
-hooInstruction_		mov_instr1		= { &______i1_o2, "mov",TERM,AO,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr2		= { &______i1_o2, "mov",TERM,IMw,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr3		= { &______i1_o2, "mov",TERM,IR64,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr4		= { &______i1_o2, "mov",TERM,MRw,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr5		= { &______i1_o2, "mov",TERM,MS,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr6		= { &______i1_o2, "mov",TERM,OA,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr7		= { &______i1_o2, "mov",TERM,RMw,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr8		= { &______i1_o2, "mov",TERM,SM,1,0,"@2 = @1",0};
-hooInstruction_		mov_instr9		= { &______i1_o2, "mov",TERM,SREG,0x03,0,"@2 = @1",0};
-hooInstruction_		mov_instr10		= { &______i1_o2, "mov",TERM,SSE2,0,0,"@2 = @1",0};
-hooInstruction_		mov_instr11		= { &______i1_o2, "mov",TERM,SSE2tfm,0,0,"@2 = @1",0};
-hooInstruction_		mov_instr12		= { &______i1_o2, "mov",TERM,SSE2tm,0,0,"@2 = @1",0};
+hooInstruction_		mov_instr1		= { &______i1_o2, "mov",TERM,AO,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr2		= { &______i1_o2, "mov",TERM,IMw,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr3		= { &______i1_o2, "mov",TERM,IR64,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr4		= { &______i1_o2, "mov",TERM,MRw,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr5		= { &______i1_o2, "mov",TERM,MS,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr6		= { &______i1_o2, "mov",TERM,OA,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr7		= { &______i1_o2, "mov",TERM,RMw,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr8		= { &______i1_o2, "mov",TERM,SM,1,0,		"@2 = @1",0};
+hooInstruction_		mov_instr9		= { &______i1_o2, "mov",TERM,SREG,0x03,0,	"@2 = @1",0};
+hooInstruction_		mov_instr10		= { &______i1_o2, "mov",TERM,SSE2,0,0,		"@2 = @1",0};
+hooInstruction_		mov_instr11		= { &______i1_o2, "mov",TERM,SSE2tfm,0,0,	"@2 = @1",0};
+hooInstruction_		mov_instr12		= { &______i1_o2, "mov",TERM,SSE2tm,0,0,	"@2 = @1",0};
 
-hooInstruction_		mova_instr1		= { &_________i1, "mova",TERM,SSE2,0,0,"",0};
-hooInstruction_		mova_instr2		= { &_________i1, "mova",TERM,SSE2tm,0,0,"",0};
+hooInstruction_		mova_instr1		= { &______i1_o2, "mova",TERM,SSE2,0,0,		"@2 = @1",0};
+hooInstruction_		mova_instr2		= { &______i1_o2, "mova",TERM,SSE2tm,0,0,	"@2 = @1",0};
 
-hooInstruction_		movb_instr1		= { &______i1_o2, "movb",TERM,AO,0,0,"@2 = @1",0};
-hooInstruction_		movb_instr2		= { &______i1_o2, "movb",TERM,IMw,0,0,"@2 = @1",0};
-hooInstruction_		movb_instr3		= { &______i1_o2, "movb",TERM,IR,0,0,"@2 = @1",0};
-hooInstruction_		movb_instr4		= { &______i1_o2, "movb",TERM,MRw,0,0,"@2 = @1",0};
-hooInstruction_		movb_instr5		= { &______i1_o2, "movb",TERM,OA,0,0,"@2 = @1",0};
-hooInstruction_		movb_instr6		= { &______i1_o2, "movb",TERM,RMw,0,0,"@2 = @1",0};
+hooInstruction_		movb_instr1		= { &______i1_o2, "movb",TERM,AO,0,0,		"@2 = @1",0};
+hooInstruction_		movb_instr2		= { &______i1_o2, "movb",TERM,IMw,0,0,		"@2 = @1",0};
+hooInstruction_		movb_instr3		= { &______i1_o2, "movb",TERM,IR,0,0,		"@2 = @1",0};
+hooInstruction_		movb_instr4		= { &______i1_o2, "movb",TERM,MRw,0,0,		"@2 = @1",0};
+hooInstruction_		movb_instr5		= { &______i1_o2, "movb",TERM,OA,0,0,		"@2 = @1",0};
+hooInstruction_		movb_instr6		= { &______i1_o2, "movb",TERM,RMw,0,0,		"@2 = @1",0};
 
-hooInstruction_		movd_instr		= { &_________i1, "movd",TERM,SSE2,0,0,"",0};
-hooInstruction_		movh_instr		= { &_________i1, "movh",TERM,SSE2tm,0,0,"",0};
-hooInstruction_		movl_instr		= { &______i1_o2, "movl",TERM,SSE2tm,0,0,"@2 = @1",0};
-hooInstruction_		movn_instr		= { &_________i1, "movn",TERM,SSE2tm,0,0,"",0};
-hooInstruction_		movnt_instr		= { &_________i1, "movnt",TERM,SSE2tm,0,0,"",0};
-hooInstruction_		movnti_instr	= { &_________i1, "movnti",TERM,RMw,0,0,"",0};
-hooInstruction_		movs_instr		= { &_________i1, "movs",TERM,SD,1,0,"",0};
+hooInstruction_		movd_instr		= { &______i1_o2, "movd",TERM,SSE2,0,0,		"@2 = @1",0};
+hooInstruction_		movh_instr		= { &______i1_o2, "movh",TERM,SSE2tm,0,0,	"@2 = @1",0};
+hooInstruction_		movl_instr		= { &______i1_o2, "movl",TERM,SSE2tm,0,0,	"@2 = @1",0};
+hooInstruction_		movn_instr		= { &______i1_o2, "movn",TERM,SSE2tm,0,0,	"@2 = @1",0};
+hooInstruction_		movnt_instr		= { &______i1_o2, "movnt",TERM,SSE2tm,0,0,	"@2 = @1",0};
+hooInstruction_		movnti_instr	= { &______i1_o2, "movnti",TERM,RMw,0,0,	"@2 = @1",0};
+hooInstruction_		movs_instr		= { &______i1_o2, "movs",TERM,SD,1,0,		"@2 = @1",0};
 
-hooInstruction_		movsb_instr1	= { &______i1_o2, "movsb",TERM,MOVZ,1,0,"@2 = @1",0};
-hooInstruction_		movsb_instr2	= { &_________i1, "movsb",TERM,SD,0,0,"",0};
+hooInstruction_		movsb_instr1	= { &______i1_o2, "movsb",TERM,MOVZ,1,0,	"@2 = @1",0};
+hooInstruction_		movsb_instr2	= { &______i1_o2, "movsb",TERM,SD,0,0,		"@2 = @1",0};
 
-hooInstruction_		movswl_instr	= { &______i1_o2, "movswl",TERM,MOVZ,0,0,"@2 = @1",0};
-hooInstruction_		movzb_instr		= { &______i1_o2, "movzb",TERM,MOVZ,1,0,"@2 = @1",0};
-hooInstruction_		movzwl_instr	= { &______i1_o2, "movzwl",TERM,MOVZ,0,0,"@2 = @1",0};
-hooInstruction_		mpsadbw_instr	= { &_________i1, "mpsadbw",TERM,SSE4i,0,0,"",0};
+hooInstruction_		movswl_instr	= { &______i1_o2, "movswl",TERM,MOVZ,0,0,	"@2 = @1",0};
+hooInstruction_		movzb_instr		= { &______i1_o2, "movzb",TERM,MOVZ,1,0,	"@2 = @1",0};
+hooInstruction_		movzwl_instr	= { &______i1_o2, "movzwl",TERM,MOVZ,0,0,	"@2 = @1",0};
 
-hooInstruction_		mul_instr1		= { &_________i1, "mul",TERM,MA,1,0,"",0};
-hooInstruction_		mul_instr2		= { &_________i1, "mul",TERM,SSE2,0,0,"",0};
+hooInstruction_		mpsadbw_instr	= { &_________i1, "mpsadbw",TERM,SSE4i,0,0,	"",0};
 
-hooInstruction_		mulb_instr		= { &_________i1, "mulb",TERM,MA,0,0,"",0};
+hooInstruction_		mul_instr1		= { &_________i1, "mul_1",TERM,MA,1,0,		"? = ? * @1",0};
+hooInstruction_		mul_instr2		= { &___i2_i1_o2, "mul_2",TERM,SSE2,0,0,	"@2 = @2 * @1",0};
+hooInstruction_		mulb_instr		= { &___i2_i1_o2, "mulb",TERM,MA,0,0,		"@2 = @2 * @1",0};
+
 hooInstruction_		neg_instr		= { &_________i1, "neg",TERM,Mw,1,0,"",0};
 hooInstruction_		negb_instr		= { &_________i1, "negb",TERM,Mw,0,0,"",0};
 
@@ -785,21 +787,22 @@ hooInstruction_		psubusb_instr	= { &_________i1, "psubusb",TERM,SSE2,0,0,"",0};
 hooInstruction_		psubusw_instr	= { &_________i1, "psubusw",TERM,SSE2,0,0,"",0};
 hooInstruction_		psubw_instr		= { &_________i1, "psubw",TERM,SSE2,0,0,"",0};
 hooInstruction_		pswapd_instr	= { &_________i1, "pswapd",TERM,AMD3DNOW,0,0,"",0};
-hooInstruction_		punpckh_instr	= { &_________i1, "punpckh",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpckhbw_instr	= { &_________i1, "punpckhbw",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpckhdq_instr	= { &_________i1, "punpckhdq",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpckhwd_instr	= { &_________i1, "punpckhwd",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpckl_instr	= { &_________i1, "punpckl",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpcklbw_instr	= { &_________i1, "punpcklbw",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpckldq_instr	= { &_________i1, "punpckldq",TERM,SSE2,0,0,"",0};
-hooInstruction_		punpcklwd_instr	= { &_________i1, "punpcklwd",TERM,SSE2,0,0,"",0};
 
-hooInstruction_		push_instr1		= { &_________i1, "push",TERM,I,0x03,0,"stackPush( @1 )",0};
-hooInstruction_		push_instr2		= { &_________i1, "push",TERM,Ib,0x03,0,"stackPush( @1 )",0};
-hooInstruction_		push_instr3		= { &_________i1, "push",TERM,LSEG,0x03,0,"stackPush( @1 )",0};
-hooInstruction_		push_instr4		= { &_________i1, "push",TERM,M,0x030,0,"stackPush( @1 )",0};
-hooInstruction_		push_instr5		= { &_________i1, "push",TERM,R,0x03,0,"stackPush( @1 )",0};
-hooInstruction_		push_instr6		= { &_________i1, "push",TERM,SEG,0x03,INVALID_64,"stackPush( @1 )",0};
+hooInstruction_		punpckh_instr	= { &___i2_i1_o2, "punpckh",TERM,SSE2,0,0,			"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpckhbw_instr	= { &___i2_i1_o2, "punpckhbw",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpckhdq_instr	= { &___i2_i1_o2, "punpckhdq",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpckhwd_instr	= { &___i2_i1_o2, "punpckhwd",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpckl_instr	= { &___i2_i1_o2, "punpckl",TERM,SSE2,0,0,			"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpcklbw_instr	= { &___i2_i1_o2, "punpcklbw",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpckldq_instr	= { &___i2_i1_o2, "punpckldq",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+hooInstruction_		punpcklwd_instr	= { &___i2_i1_o2, "punpcklwd",TERM,SSE2,0,0,		"@2 = interleave( @1, @2 )",0};
+
+hooInstruction_		push_instr1		= { &_________i1, "push",TERM,I,0x03,0,				"stackPush( @1 )",0};
+hooInstruction_		push_instr2		= { &_________i1, "push",TERM,Ib,0x03,0,			"stackPush( @1 )",0};
+hooInstruction_		push_instr3		= { &_________i1, "push",TERM,LSEG,0x03,0,			"stackPush( @1 )",0};
+hooInstruction_		push_instr4		= { &_________i1, "push",TERM,M,0x030,0,			"stackPush( @1 )",0};
+hooInstruction_		push_instr5		= { &_________i1, "push",TERM,R,0x03,0,				"stackPush( @1 )",0};
+hooInstruction_		push_instr6		= { &_________i1, "push",TERM,SEG,0x03,INVALID_64,	"stackPush( @1 )",0};
 
 hooInstruction_		pusha_instr		= { &_________i1, "pusha",TERM,GO_ON,1,INVALID_64,"",0};
 hooInstruction_		pushf_instr		= { &_________i1, "pushf",TERM,GO_ON,1,0,"",0};
@@ -828,17 +831,18 @@ hooInstruction_		repz_prefix		= { &_________i1, "repz/",TERM,PREFIX,0,0,"",0};
 hooInstruction_		ret_instr1		= { &___________, "ret",TERM,GO_ON,0,0,"",0};
 hooInstruction_		ret_instr2		= { &_________i1, "ret",TERM,RET,0,0,"",0};
 
-hooInstruction_		rol_instr1		= { &_________i1, "rol",TERM,Mv,1,0,"",0};
-hooInstruction_		rol_instr2		= { &_________i1, "rol",TERM,MvI,1,0,"",0};
+																-- this is sometimes 1 operand, sometimes 2
+hooInstruction_		rol_instr1		= { &______i1_o1, "rol_1",TERM,Mv,1,0,			"@1 = @1.rotateLeftBy( ? )",0};
+hooInstruction_		rol_instr2		= { &___i2_i1_o2, "rol_2",TERM,MvI,1,0,			"@2 = @2.rotateLeftBy( @1 )",0};
 
-hooInstruction_		rolb_instr1		= { &_________i1, "rolb",TERM,Mv,0,0,"",0};
-hooInstruction_		rolb_instr2		= { &_________i1, "rolb",TERM,MvI,0,0,"",0};
+hooInstruction_		rolb_instr1		= { &___i2_i1_o2, "rolb",TERM,Mv,0,0,			"@2 = @2.rotateLeftBy( @1 )",0};
+hooInstruction_		rolb_instr2		= { &___i2_i1_o2, "rolb",TERM,MvI,0,0,			"@2 = @2.rotateLeftBy( @1 )",0};
 
-hooInstruction_		ror_instr1		= { &_________i1, "ror",TERM,Mv,1,0,"",0};
-hooInstruction_		ror_instr2		= { &_________i1, "ror",TERM,MvI,1,0,"",0};
+hooInstruction_		ror_instr1		= { &___i2_i1_o2, "ror",TERM,Mv,1,0,			"@2 = @2.rotateRightBy( @1 )",0};
+hooInstruction_		ror_instr2		= { &___i2_i1_o2, "ror",TERM,MvI,1,0,			"@2 = @2.rotateRightBy( @1 )",0};
 
-hooInstruction_		rorb_instr1		= { &_________i1, "rorb",TERM,Mv,0,0,"",0};
-hooInstruction_		rorb_instr2		= { &_________i1, "rorb",TERM,MvI,0,0,"",0};
+hooInstruction_		rorb_instr1		= { &___i2_i1_o2, "rorb",TERM,Mv,0,0,			"@2 = @2.rotateRightBy( @1 )",0};
+hooInstruction_		rorb_instr2		= { &___i2_i1_o2, "rorb",TERM,MvI,0,0,			"@2 = @2.rotateRightBy( @1 )",0};
 
 hooInstruction_		roundpd_instr	= { &_________i1, "roundpd",TERM,SSE4i,0,0,"",0};
 hooInstruction_		roundps_instr	= { &_________i1, "roundps",TERM,SSE4i,0,0,"",0};
@@ -848,8 +852,8 @@ hooInstruction_		rsm_instr		= { &_________i1, "rsm",TERM,GO_ON,0,INVALID_64,"",0
 hooInstruction_		rsqrt_instr		= { &_________i1, "rsqrt",TERM,SSE2,0,0,"",0};
 hooInstruction_		sahf_instr		= { &_________i1, "sahf",TERM,GO_ON,0,0,"",0};
 
-hooInstruction_		sar_instr1		= { &_________i1, "sar",TERM,Mv,1,0,"",0};
-hooInstruction_		sar_instr2		= { &_________i1, "sar",TERM,MvI,1,0,"",0};
+hooInstruction_		sar_instr1		= { &_________i1, "sar_1",TERM,Mv,1,0,"",0};
+hooInstruction_		sar_instr2		= { &___i2_i1_o2, "sar_2",TERM,MvI,1,0,			"@2 >> @1",0};
 
 hooInstruction_		sarb_instr1		= { &_________i1, "sarb",TERM,Mv,0,0,"",0};
 hooInstruction_		sarb_instr2		= { &_________i1, "sarb",TERM,MvI,0,0,"",0};
@@ -883,16 +887,16 @@ hooInstruction_		seto_instr		= { &_________i1, "seto",TERM,Mb,0,0,"",0};
 hooInstruction_		setp_instr		= { &_________i1, "setp",TERM,Mb,0,0,"",0};
 hooInstruction_		sets_instr		= { &_________i1, "sets",TERM,Mb,0,0,"",0};
 
-hooInstruction_		shl_instr1		= { &_________i1, "shl",TERM,Mv,1,0,"",0};
-hooInstruction_		shl_instr2		= { &_________i1, "shl",TERM,MvI,1,0,"",0};
+hooInstruction_		shl_instr1		= { &___i2_i1_o2, "shl_1",TERM,Mv,1,0,			"@2 << @1",0};
+hooInstruction_		shl_instr2		= { &___i2_i1_o2, "shl_2",TERM,MvI,1,0,			"@2 << @1",0};
 
 hooInstruction_		shlb_instr1		= { &_________i1, "shlb",TERM,Mv,0,0,"",0};
 hooInstruction_		shlb_instr2		= { &_________i1, "shlb",TERM,MvI,0,0,"",0};
 hooInstruction_		shld_instr3		= { &_________i1, "shld",TERM,DSHIFT,1,0,"",0};
 hooInstruction_		shld_instr4		= { &_________i1, "shld",TERM,DSHIFTcl,1,0,"",0};
 
-hooInstruction_		shr_instr1		= { &_________i1, "shr",TERM,Mv,1,0,"",0};
-hooInstruction_		shr_instr2		= { &_________i1, "shr",TERM,MvI,1,0,"",0};
+hooInstruction_		shr_instr1		= { &___i2_i1_o2, "shr",TERM,Mv,1,0,			"@2 >> @1",0};
+hooInstruction_		shr_instr2		= { &___i2_i1_o2, "shr",TERM,MvI,1,0,			"@2 >> @1",0};
 
 hooInstruction_		shrb_instr1		= { &_________i1, "shrb",TERM,Mv,0,0,"",0};
 hooInstruction_		shrb_instr2		= { &_________i1, "shrb",TERM,MvI,0,0,"",0};
@@ -923,15 +927,16 @@ hooInstruction_		subb_instr4		= { &_________i1, "subb",TERM,RMw,0,0,"",0};
 hooInstruction_		sysenter_instr	= { &_________i1, "sysenter",TERM,GO_ON,0,0,"",0};
 hooInstruction_		sysexit_instr	= { &_________i1, "sysexit",TERM,GO_ON,0,0,"",0};
 
-hooInstruction_		test_instr1		= { &______i1_i2, "test",TERM,IA,1,0,"test( @1, @2 )",0};
-hooInstruction_		test_instr2		= { &______i1_i2, "test",TERM,IMw,1,0,"test( @1, @2 )",0};
-hooInstruction_		test_instr3		= { &______i1_i2, "test",TERM,MRw,1,0,"test( @1, @2 )",0};
+hooInstruction_		test_instr1		= { &______i1_i2, "test",TERM,IA,1,0,		"test( @1, @2 )",0}; // output is flags
+hooInstruction_		test_instr2		= { &______i1_i2, "test",TERM,IMw,1,0,		"test( @1, @2 )",0};
+hooInstruction_		test_instr3		= { &______i1_i2, "test",TERM,MRw,1,0,		"test( @1, @2 )",0};
 
-hooInstruction_		testb_instr1	= { &______i1_i2, "testb",TERM,IA,0,0,"test( @1, @2 )",0};
-hooInstruction_		testb_instr2	= { &______i1_i2, "testb",TERM,IMw,0,0,"test( @1, @2 )",0};
-hooInstruction_		testb_instr3	= { &______i1_i2, "testb",TERM,MRw,0,0,"test( @1, @2 )",0};
+hooInstruction_		testb_instr1	= { &______i1_i2, "testb",TERM,IA,0,0,		"test( @1, @2 )",0};
+hooInstruction_		testb_instr2	= { &______i1_i2, "testb",TERM,IMw,0,0,		"test( @1, @2 )",0};
+hooInstruction_		testb_instr3	= { &______i1_i2, "testb",TERM,MRw,0,0,		"test( @1, @2 )",0};
 
-hooInstruction_		ucomi_instr		= { &_________i1, "ucomi",TERM,SSE2,0,0,"",0};
+hooInstruction_		ucomi_instr		= { &______i1_i2, "ucomi",TERM,SSE2,0,0,	"compare( @1, @2 )",0};	// output is flags
+
 hooInstruction_		ud2_instr		= { &_________i1, "ud2",TERM,GO_ON,0,0,"",0};
 hooInstruction_		unpckh_instr	= { &_________i1, "unpckh",TERM,SSE2,0,0,"",0};
 hooInstruction_		unpckl_instr	= { &_________i1, "unpckl",TERM,SSE2,0,0,"",0};
@@ -943,10 +948,10 @@ hooInstruction_		wrmsr_instr		= { &_________i1, "wrmsr",TERM,GO_ON,0,0,"",0};
 hooInstruction_		xadd_instr		= { &_________i1, "xadd",TERM,XINST,1,0,"",0};
 hooInstruction_		xaddb_instr		= { &_________i1, "xaddb",TERM,XINST,0,0,"",0};
 
-hooInstruction_		xchg_instr1		= { &_________i1, "xchg",TERM,MRw,1,0,"",0};
-hooInstruction_		xchg_instr2		= { &_________i1, "xchg",TERM,RA,1,0,"",0};
+hooInstruction_		xchg_instr1		= { &i2_i1_o2_o1, "xchg_1",TERM,MRw,1,0,	"swap( @1, @2 )",0};
+hooInstruction_		xchg_instr2		= { &i2_i1_o2_o1, "xchg_2",TERM,RA,1,0,		"swap( @1, @2 )",0};
+hooInstruction_		xchgb_instr		= { &i2_i1_o2_o1, "xchgb",TERM,MRw,0,0,		"swap( @1, @2 )",0};
 
-hooInstruction_		xchgb_instr		= { &_________i1, "xchgb",TERM,MRw,0,0,"",0};
 hooInstruction_		xlat_instr		= { &_________i1, "xlat",TERM,GO_ON,0,0,"",0};
 
 hooInstruction_		xor_instr1		= { &___i2_i1_o2, "xor",TERM,IA,1,0,"@2 = @2 XOR @1",0};
