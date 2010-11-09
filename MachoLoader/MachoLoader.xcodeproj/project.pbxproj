@@ -31,6 +31,8 @@
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
+		734E804B1289523100D5FC99 /* HooClass.c in Sources */ = {isa = PBXBuildFile; fileRef = 734E804A1289523000D5FC99 /* HooClass.c */; };
+		734E804C1289523100D5FC99 /* HooClass.c in Sources */ = {isa = PBXBuildFile; fileRef = 734E804A1289523000D5FC99 /* HooClass.c */; };
 		7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
 		73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
@@ -107,6 +109,8 @@
 		734B66DA1226900A002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = Classes/IntKeyDictionary.h; sourceTree = "<group>"; };
 		734B66DB1226900A002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = Classes/IntKeyDictionary.m; sourceTree = "<group>"; };
 		734B677812269AD6002C0B0F /* DemangleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemangleTests.m; path = Tests/DemangleTests.m; sourceTree = "<group>"; };
+		734E80491289523000D5FC99 /* HooClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooClass.h; path = Classes/HooClass.h; sourceTree = "<group>"; };
+		734E804A1289523000D5FC99 /* HooClass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = HooClass.c; path = Classes/HooClass.c; sourceTree = "<group>"; };
 		7363ABC81236649E00018772 /* i386_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i386_disasm.h; path = Classes/i386_disasm.h; sourceTree = "<group>"; };
 		7363BDBF124E318500F080E7 /* GenericTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTimer.h; path = ../SimpleFileParser/Src/GenericTimer.h; sourceTree = SOURCE_ROOT; };
 		7363BDC0124E318500F080E7 /* GenericTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTimer.m; path = ../SimpleFileParser/Src/GenericTimer.m; sourceTree = SOURCE_ROOT; };
@@ -289,6 +293,8 @@
 				7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */,
 				73D6C1431267114000746DE2 /* Registers.h */,
 				73D6C1471267115800746DE2 /* Instructions.h */,
+				734E80491289523000D5FC99 /* HooClass.h */,
+				734E804A1289523000D5FC99 /* HooClass.c */,
 				7363ABC81236649E00018772 /* i386_disasm.h */,
 				730830B012392CA7007F8247 /* i386_disasm.m */,
 				73E5BFC2124B6763009712C6 /* ExperimentalFrankenStructs.h */,
@@ -553,6 +559,7 @@
 				73EFF4C212564A4D00A85855 /* DemangleTests.m in Sources */,
 				732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */,
 				73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */,
+				734E804C1289523100D5FC99 /* HooClass.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +589,7 @@
 				73CD29FA126457220034E7D9 /* GenericTimer.m in Sources */,
 				7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */,
 				737BB51812705817007A531E /* DissasemblyProcessor.m in Sources */,
+				734E804B1289523100D5FC99 /* HooClass.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,20 +51,25 @@
 			continue;
 		}
 		
+		//TODO: i dont think the labels are uniwue at this point?
+		
 		// enumerte labels
-		if( aFunc->labels ) {
-			struct label *label = aFunc->labels;
-			do {
-				sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );				
-			} while( label = label->prev );				
-		}
+//		if( aFunc->labels ) {
+//			struct label *label = aFunc->labels;
+//			do {
+//				sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );				
+//			} while( label = label->prev );				
+//		}
 		
 		// enumerate lines
 		struct hooleyCodeLine *line = aFunc->firstLine;
 		do {
 			
-			-- get inputs and outputs from line
-	
+			//TODO:-- get inputs and outputs from line
+			//const struct instable *instr = line->instr;
+			//struct InstrArgStruct *args = line->args
+			//struct ArgMap *argMap = instr->class->argMap;
+			
 			sprintf( outLine, "%p\t%s\n", line->address, line->instr->name );
 			int result = syscall( SYS_write, fileNum, outLine, strlen(outLine) );
 			
@@ -86,11 +91,11 @@
 
 - (void)processApp {
 
-	-- each function needs to be sorted into inner blocks
+	//TODO: -- each function needs to be sorted into inner blocks
 	
-	-- process each inner block
+	//TODO: -- process each inner block
 	
-	-- this is just a test
+	//TODO: -- this is just a test
 	[self printLinesToFile];
 	
 }

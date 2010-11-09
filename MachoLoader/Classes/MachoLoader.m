@@ -854,9 +854,9 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		
 	}
 	
-	- sort the labels into order
-	- iterate thru the lines attching the labels
-	postProcess()
+	//TODO: - sort the labels into order
+	//TODO: - iterate thru the lines attching the labels
+	//postProcess();
 	
 //	[readTimer close];  // 4.6 secs
 	

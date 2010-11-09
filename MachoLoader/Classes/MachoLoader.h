@@ -31,6 +31,7 @@ struct hooleyCodeLine {
 	struct hooleyCodeLine *next;
 	char *address;
 	const struct instable *instr;
+	struct InstrArgStruct *args;
 };
 
 struct label {

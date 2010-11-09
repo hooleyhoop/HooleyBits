@@ -549,6 +549,15 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 #define NOISY 0
 #define NOISY2 0
 
+void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args  ) {
+	
+	int numberOfArgs = args!=NULL ? args->numberOfArgs : 0;
+	int expectedArgs = dp->class->numberOfArgs;
+	if( numberOfArgs!=expectedArgs )
+		// [NSException raise:@"Wrong Number of args" format:@"%i, expected %i for %s", numberOfArgs, expectedArgs, dp->name];
+		NSLog(@"Wrong Number of args - really have %i, expected %i for %s", numberOfArgs, expectedArgs, dp->name);
+}
+
 void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
 
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
@@ -556,6 +565,9 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
 	newLine->address = memAddress;
 	newLine->instr = dp;
+	newLine->args = args;
+	
+	assertNumberOfArgs( dp, args );
 	
 	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
 	if(currentLine) {
