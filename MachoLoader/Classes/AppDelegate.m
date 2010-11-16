@@ -22,8 +22,8 @@
 
 	NSArray *paths = [NSArray arrayWithObjects:
 //					  [[NSBundle mainBundle] executablePath],
-//					  @"/Applications/6-386.app/Contents/MacOS/6-386",
-					  @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin",
+					  @"/Applications/6-386.app/Contents/MacOS/6-386",
+//					  @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin",
 //					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
 //					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
 //					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
@@ -33,7 +33,9 @@
 	{
 		if([[NSFileManager defaultManager] fileExistsAtPath:each])
 		{
-			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each checker:nil];
+			DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:each];
+			
+			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each checker:dc];
 			[ml readFile];
 			
 			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];

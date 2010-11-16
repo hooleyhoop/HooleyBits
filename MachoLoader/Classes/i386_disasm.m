@@ -546,8 +546,8 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
-#define NOISY 0
-#define NOISY2 0
+#define NOISY 1
+#define NOISY2 1
 
 void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args  ) {
 	
@@ -567,7 +567,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	newLine->instr = dp;
 	newLine->args = args;
 	
-	assertNumberOfArgs( dp, args );
+//	assertNumberOfArgs( dp, args );
 	
 	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
 	if(currentLine) {
@@ -2834,14 +2834,11 @@ NSUInteger iterationCounter
 			if((mode == 0 && (r_m == 5 || r_m == 4)) || mode == 1 || mode == 2 || mode == 3) {
 				// TODO: How do we accomodate this little fella?
 				// printf("%s\t*", mnemonic);
-			} else {
-				// printf("%s\t", mnemonic);
 			}
-//TODO: !!!			
-//what the fuck is this shit?
-//Putback					print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
+
+			FILLARGS1( abstractStrctPtr1 );			
 			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)
-			addLine( addr, currentFuncPtr, dp, NULL, NOISY ); 
+			addLine( addr, currentFuncPtr, dp, allArgs, NOISY ); 
 			return(length);
 		}
 

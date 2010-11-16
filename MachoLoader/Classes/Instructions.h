@@ -805,8 +805,8 @@ hooInstruction_		repz_prefix		= { &_________i1, "repz/",TERM,PREFIX,0,0,"",0};
 hooInstruction_		ret_instr1		= { &___________, "ret",TERM,GO_ON,0,0,"",0};
 hooInstruction_		ret_instr2		= { &_________i1, "ret",TERM,RET,0,0,"",0};
 
-									-- this is sometimes 1 operand, sometimes 2
-									-- we must somehow indicate that the 2nd is optional
+									//TODO: here! -- this is sometimes 1 operand, sometimes 2
+									//TODO: -- we must somehow indicate that the 2nd is optional
 hooInstruction_		rol_instr1		= { &______i1_o1, "rol_1",TERM,Mv,1,0,			"@1 = @1.rotateLeftBy( 1 )",0};
 hooInstruction_		rol_instr2		= { &___i2_i1_o2, "rol_2",TERM,MvI,1,0,			"@2 = @2.rotateLeftBy( @1 )",0};
 
