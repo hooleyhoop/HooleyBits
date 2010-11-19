@@ -103,14 +103,16 @@ struct hooleyAllFuctions {
 	// ok - the results of the disasembly
 	struct hooleyAllFuctions	*_allFunctions;
 	
-	DisassemblyChecker			*_dc;
+	@public
+	BOOL						_binaryIsFAT;
 }
 
 - (id)functionEnumerator;
 
-- (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch;
+- (id)initWithPath:(NSString *)aPath;
 
 - (void)readFile;
+- (void)disassemble;
 
 - (SymbolicInfo *)symbolicInfoForAddress:(char *)memAddr;
 

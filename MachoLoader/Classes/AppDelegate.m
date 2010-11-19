@@ -33,10 +33,31 @@
 	{
 		if([[NSFileManager defaultManager] fileExistsAtPath:each])
 		{
-			DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:each];
 			
-			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each checker:dc];
+			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each];
 			[ml readFile];
+			
+			DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:each isFAT:ml->_binaryIsFAT];
+			BOOL success = [dc openOTOOL];
+			if(!success)
+				[NSException raise:@"Failed to open OTOOL" format:@""];
+			
+			// lets just test iterating over it
+			char theCLine[1000];
+			NSUInteger length;
+			while( [dc nextLine:(char *)&theCLine] ) {
+				length = strlen(theCLine);
+				NSLog(@"%s", theCLine);
+			}
+	
+			success = [dc close];
+			if(!success)
+				[NSException raise:@"Failed to close OTOOL" format:@""];
+			
+			// Wooah! otool reader hijacks standard out?
+			NSLog(@"Fin!");
+			
+			[ml disassemble];
 			
 			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];
 			[dProcessor processApp];

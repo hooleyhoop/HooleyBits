@@ -593,7 +593,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	return fn;
 }
 
-- (id)initWithPath:(NSString *)aPath checker:(DisassemblyChecker *)ch {
+- (id)initWithPath:(NSString *)aPath {
 
 	self = [super init];
 	if(self) {
@@ -610,15 +610,12 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 		_temporaryExperiment		= [[IntHash alloc] init];
 
 		_libraries = [[NSMutableArray alloc] init];
-		
-		_dc = [ch retain];
 	}
 	return self;
 }
 
 - (void)dealloc {
 		
-	[_dc release];
 	[_filePath release];
 	[_memoryMap release];
 	[_uncodedMemoryMap release];
@@ -720,7 +717,10 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 								:_nsymbols
 								:_strtable
 								:_strings_size];
-		
+}
+
+- (void)disassemble {
+	
 	// Do text
 	char *locPtr = _text_sect_pointer;
 	char *memPtr = _text_sect_addr;
@@ -729,7 +729,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	struct relocation_info	*text_sorted_relocs = allocate(_text_nsorted_relocs * sizeof(struct relocation_info));
 	memcpy( text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
 	qsort( text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
-
+	
 	uint32_t nsorted_symbols = 0;
 	for( NSUInteger i=0; i<_nsymbols; i++ )
 	{
@@ -780,25 +780,25 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	
 	uint64 j=0;
 	NSUInteger iterationCounter = 0;
-//	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
+	//	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	for( NSUInteger i=0; i<_textSectSize; )
 	{
 		uint64 bytesLeft = _textSectSize-i;
 		
 		print_label( memPtr, 1, sorted_symbols, nsorted_symbols);
-
-		/* otx setup - try to incorporate into one pass
-		[self gatherLineInfos]; -- marks a line as code or other
-		[self findFunctions];	-- mark a line as first line of a function or other - this should be possible on first pass
-		[self gatherFuncInfos];
-		[self gatherFuncInfos];
-		*/
 		
-//		printf("%0x ", memPtr);
-//		printf("%i\t\t", iterationCounter);
-//		116734 on gcc 
-//		906390 clang
+		/* otx setup - try to incorporate into one pass
+		 [self gatherLineInfos]; -- marks a line as code or other
+		 [self findFunctions];	-- mark a line as first line of a function or other - this should be possible on first pass
+		 [self gatherFuncInfos];
+		 [self gatherFuncInfos];
+		 */
+		
+		//		printf("%0x ", memPtr);
+		//		printf("%i\t\t", iterationCounter);
+		//		116734 on gcc 
+		//		906390 clang
 		
 		if( iterationCounter==1863 )
 			NSLog(@"stop here");
@@ -812,17 +812,17 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			NSLog(@"we get j==7 back in clang, == j==3 in GCC, it should be seven");
 		iterationCounter++;
 		
-	//	debugLine = [_dc nextLine];
-	//	printf("%p", memPtr);
+		//	debugLine = [_dc nextLine];
+		//	printf("%p", memPtr);
 		// read j bytes from locPtr
-	
-	
+		
+		
 		j = i386_disassemble( 
 							 &currentFunction,
 							 locPtr,
-							bytesLeft,
-							memPtr,
-							_text_sect_addr,
+							 bytesLeft,
+							 memPtr,
+							 _text_sect_addr,
 							 text_sorted_relocs,
 							 _text_nsorted_relocs,
 							 _symtable_ptr32,
@@ -840,13 +840,13 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 							 _sizeofcmds,
 							 1, iterationCounter 
 							 );
-
-//		uint64_t value = 0;
-//		for( NSUInteger i=0; i<j; i++) {
-//			unsigned char byte = locPtr[i];
-//			value |= (uint64_t)byte << (8*i);
-//		}
-//		printf("\t\t%0x\n", value );
+		
+		//		uint64_t value = 0;
+		//		for( NSUInteger i=0; i<j; i++) {
+		//			unsigned char byte = locPtr[i];
+		//			value |= (uint64_t)byte << (8*i);
+		//		}
+		//		printf("\t\t%0x\n", value );
 		
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
@@ -858,7 +858,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	//TODO: - iterate thru the lines attching the labels
 	//postProcess();
 	
-//	[readTimer close];  // 4.6 secs
+	//	[readTimer close];  // 4.6 secs
 	
 	_allFunctions->lastFunction = currentFunction;
 	NSLog(@"disasemble complete");
@@ -2563,6 +2563,7 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	// FAT is always Big Endian - Extract relevant architecture and convert to native
 	if( OSSwapBigToHostInt32(((struct fat_header *)_codeAddr)->magic)==FAT_MAGIC ) {
 
+		_binaryIsFAT = YES;
 		struct fat_arch *fatArchArray;
 		struct fat_header *fatHeader = (struct fat_header *)_codeAddr;
 		assert( _codeSize >= sizeof(*fatHeader) );

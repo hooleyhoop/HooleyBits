@@ -6,11 +6,21 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
+#define MAX_LINE_LENGTH             10000
 
 
 @interface DisassemblyChecker : NSObject {
 
 	NSString *_filePath;
+	BOOL	_fat;
+	FILE	*_otoolPipe;
 }
+
+- (id)initWithPath:(NSString *)aPath isFAT:(BOOL)fatFlag;
+
+- (BOOL)openOTOOL;
+- (BOOL)close;
+
+- (char *)nextLine:(char *)theCLine;
 
 @end

@@ -9,15 +9,19 @@
 #import "DisassemblyChecker.h"
 #import <sys/param.h>
 
+@interface DisassemblyChecker ()
+- (BOOL)populateLineList:(NSObject **)inList verbosely:(BOOL)inVerbose fromSection:(char *)inSectionName afterLine:(NSObject **)inLine includingPath:(BOOL)inIncludePath;
+- (NSString *)pathForTool:(NSString *)toolName;
+@end
 
 @implementation DisassemblyChecker
 
-- (id)initWithPath:(NSString *)aPath {
+- (id)initWithPath:(NSString *)aPath isFAT:(BOOL)fatFlag {
 	
 	self = [super init];
 	if(self) {
 		_filePath = [aPath retain];
-		[self populateLineLists];
+		_fat = fatFlag;
 	}
 	return self;
 }
@@ -27,10 +31,34 @@
 	[super dealloc];
 }
 
-- (BOOL)populateLineLists {
+- (char *)nextLine:(char *)theCLine {
+	
+	char *result = fgets( theCLine, MAX_LINE_LENGTH, _otoolPipe );
+	NSUInteger length = strlen(theCLine);
+	NSString *justToSee = [NSString stringWithUTF8String:theCLine];
+
+	// Process each line as it comes in piped from otool
+    // while(  )
+    // {
+        //Line*   theNewLine  = calloc(1, sizeof(Line));
+		
+        // theNewLine->length  = strlen(theCLine);
+        // theNewLine->chars   = malloc(theNewLine->length + 1);
+        // strncpy(theNewLine->chars, theCLine, theNewLine->length + 1);
+		
+        // Add the line to the list.
+        // InsertLineAfter(theNewLine, *inLine, inList);
+		
+        // *inLine = theNewLine;
+		
+    // }
+	return result;
+}
+
+- (BOOL)openOTOOL {
 	
 	// Call otool and have the output piped a line at a time
-    [self populateLineList:nil verbosely:YES fromSection:"__text" afterLine:nil includingPath:YES];
+    return [self populateLineList:nil verbosely:YES fromSection:(char *)"__text" afterLine:nil includingPath:YES];
 }
 
 #define MAX_ARCH_STRING_LENGTH      20      // "ppc", "i386" etc.
@@ -38,7 +66,7 @@
 
 // parse OTool output a line at a time
 - (BOOL)populateLineList:(NSObject **)inList verbosely:(BOOL)inVerbose fromSection:(char *)inSectionName afterLine:(NSObject **)inLine includingPath:(BOOL)inIncludePath {
-	
+		
     char cmdString[MAX_UNIBIN_OTOOL_CMD_SIZE] = "";
     NSString* otoolPath = [self pathForTool: @"otool"];
     NSUInteger otoolPathLength = [otoolPath length];
@@ -47,7 +75,7 @@
     size_t archStringLength = strlen(iArchString);
 	
     // otool freaks out when somebody says -arch and it's not a unibin.
-    if(iExeIsFat)
+    if(_fat)
     {
         // Bail if it won't fit.
         if ((otoolPathLength + archStringLength + 7 /* strlen(" -arch ") */) >= MAX_UNIBIN_OTOOL_CMD_SIZE)
@@ -63,36 +91,21 @@
         strncpy(cmdString, [otoolPath UTF8String], otoolPathLength);
     }
 	
-    NSString* oPath = [iOFile path];
+    NSString* oPath = _filePath; //[iOFile path];
     NSString* otoolString = [NSString stringWithFormat:@"%s %s -s __TEXT %s \"%@\"%s", cmdString, (inVerbose) ? "-V" : "-v", inSectionName, oPath, (inIncludePath) ? "" : " | sed '1 d'"];
-    FILE* otoolPipe = popen(UTF8STRING(otoolString), "r");
 	
-    if (!otoolPipe)
-    {
+    _otoolPipe = popen([otoolString UTF8String], "r");
+    if (!_otoolPipe) {
         fprintf(stderr, "otx: unable to open %s otool pipe\n", (inVerbose) ? "verbose" : "plain");
         return NO;
     }
+	return YES;
+}	
+
+- (BOOL)close {
 	
-    char theCLine[MAX_LINE_LENGTH];
-	
-    // Process each line as it comes in piped from otool
-    while( fgets(theCLine, MAX_LINE_LENGTH, otoolPipe) )
-    {
-        //Line*   theNewLine  = calloc(1, sizeof(Line));
-		
-        // theNewLine->length  = strlen(theCLine);
-        // theNewLine->chars   = malloc(theNewLine->length + 1);
-        // strncpy(theNewLine->chars, theCLine, theNewLine->length + 1);
-		
-        // Add the line to the list.
-        // InsertLineAfter(theNewLine, *inLine, inList);
-		
-        // *inLine = theNewLine;
-    }
-	
-    if( pclose(otoolPipe) == -1 )
-    {
-        perror((inVerbose) ? "otx: unable to close verbose otool pipe" : "otx: unable to close plain otool pipe");
+    if( pclose(_otoolPipe) == -1 ) {
+        perror( "otx: unable to close plain otool pipe" );
         return NO;
     }
 	
@@ -110,7 +123,12 @@
 	
     [selectTask setLaunchPath: selectToolPath];
     [selectTask setArguments: args];
+	
     [selectTask setStandardOutput: selectPipe];
+	
+	//The magic line that keeps your log where it belongs
+	[selectTask setStandardInput:[NSPipe pipe]];
+	
     [selectTask launch];
     [selectTask waitUntilExit];
 	
@@ -118,7 +136,7 @@
 	
     if (selectStatus == -1)
         return relToolPath;
-	
+		
     NSData* selectData = [[selectPipe fileHandleForReading] availableData];
     NSString* absToolPath = [[[NSString alloc] initWithBytes:[selectData bytes] length:[selectData length] encoding:NSUTF8StringEncoding] autorelease];
 	
