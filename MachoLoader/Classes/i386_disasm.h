@@ -26,30 +26,38 @@
 //#import <stuff/bool.h>
 //#include "stuff/symbol.h"
 
-extern NSUInteger i386_disassemble(
+@interface i386_disasm : NSObject {
+	
+	DisassemblyChecker	*_disChecker;
+}
 
-	struct hooleyFuction **currentFuncPtr,
-    char *sect,
-    uint64 left,
-    char *addr,
-    char *sect_addr,
-//    enum byte_sex object_byte_sex,
-    struct relocation_info *sorted_relocs,
-    NSUInteger nsorted_relocs,
-    struct nlist *symbols,
-    struct nlist_64 *symbols64,
-    NSUInteger nsymbols,
-    struct symbol *sorted_symbols,
-    NSUInteger nsorted_symbols,
-    char *strings,
-    NSUInteger strings_size,
-    uint32_t *indirect_symbols,
-    NSUInteger nindirect_symbols,
-	cpu_type_t cputype,
-    struct load_command *load_commands,
-    NSUInteger ncmds,
-    NSUInteger sizeofcmds,
-    NSUInteger verbose,
-	NSUInteger iterationCounter						  
+- (id)initWithChecker:(DisassemblyChecker *)dc;
 
-);
+- (NSUInteger)i386_disassemble
+								:(struct hooleyFuction **)currentFuncPtr
+								:(char *)sect
+								:(uint64)left
+								:(char *)addr
+								:(char *)sect_addr
+								//    enum byte_sex object_byte_sex,
+								:(struct relocation_info *)sorted_relocs
+								:(NSUInteger)nsorted_relocs
+								:(struct nlist *)symbols
+								:(struct nlist_64 *)symbols64
+								:(NSUInteger)nsymbols
+								:(struct symbol *)sorted_symbols
+								:(NSUInteger)nsorted_symbols
+								:(char *)strings
+								:(NSUInteger)strings_size
+								:(uint32_t *)indirect_symbols
+								:(NSUInteger)nindirect_symbols
+								:(cpu_type_t)cputype
+								:(struct load_command *)load_commands
+								:(NSUInteger)ncmds
+								:(NSUInteger)sizeofcmds
+								:(NSUInteger)verbose
+								:(NSUInteger)iterationCounter
+								;
+
+@end
+

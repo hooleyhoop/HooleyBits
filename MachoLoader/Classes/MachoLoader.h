@@ -112,7 +112,7 @@ struct hooleyAllFuctions {
 - (id)initWithPath:(NSString *)aPath;
 
 - (void)readFile;
-- (void)disassemble;
+- (void)disassembleWithChecker:(DisassemblyChecker *)dc;
 
 - (SymbolicInfo *)symbolicInfoForAddress:(char *)memAddr;
 

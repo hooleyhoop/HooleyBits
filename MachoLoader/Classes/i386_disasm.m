@@ -68,6 +68,8 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //#include "ofile_print.h"
 //#include "i386_disasm.h"
 
+#import "i386_disasm.h"
+
 #define MAX_RESULT	24	/* Maximum number of char in a register */
 				/*  result expression "(%ebx,%ecx,8)" */
 
@@ -580,6 +582,9 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	}
 	currentFunc->lastLine = newLine;
 	
+//	verify address
+	[_disChecker assertNextAdress:memAddress];
+	 
 	// lets try to add Labels
 	if( dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP ) {
 		struct label *newLabel = calloc( 1, sizeof(struct label) );
@@ -654,34 +659,49 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 //	return customInstruction;
 //}
 
+@implementation i386_disasm
+
+- (id)initWithChecker:(DisassemblyChecker *)dc {
+	
+	self = [super init];
+	if(self){
+		_disChecker = [dc retain];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[_disChecker release];
+	[super dealloc];
+}
+
 /*
   * i386_disassemble()
  */
-NSUInteger i386_disassemble(
-struct hooleyFuction **currentFuncPtr,
-char *sect,
-uint64 left,
-char *addr,
-char *sect_addr,
+- (NSUInteger)i386_disassemble
+:(struct hooleyFuction **)currentFuncPtr
+:(char *)sect
+:(uint64)left
+:(char *)addr
+:(char *)sect_addr
 //enum byte_sex object_byte_sex,
-struct relocation_info *sorted_relocs,
-NSUInteger nsorted_relocs,
-struct nlist *symbols,
-struct nlist_64 *symbols64,
-NSUInteger nsymbols,
-struct symbol *sorted_symbols,
-NSUInteger nsorted_symbols,
-char *strings,
-NSUInteger strings_size,
-uint32_t *indirect_symbols,
-NSUInteger nindirect_symbols,
-cpu_type_t cputype,
-struct load_command *load_commands,
-NSUInteger ncmds,
-NSUInteger sizeofcmds,
-NSUInteger verbose,
-NSUInteger iterationCounter						  
-)
+:(struct relocation_info *)sorted_relocs
+:(NSUInteger)nsorted_relocs
+:(struct nlist *)symbols
+:(struct nlist_64 *)symbols64
+:(NSUInteger)nsymbols
+:(struct symbol *)sorted_symbols
+:(NSUInteger)nsorted_symbols
+:(char *)strings
+:(NSUInteger)strings_size
+:(uint32_t *)indirect_symbols
+:(NSUInteger)nindirect_symbols
+:(cpu_type_t)cputype
+:(struct load_command *)load_commands
+:(NSUInteger)ncmds
+:(NSUInteger)sizeofcmds
+:(NSUInteger)verbose
+:(NSUInteger)iterationCounter
 {
     char mnemonic[MAX_MNEMONIC+2]; /* one extra for suffix */
 //    const char *seg = "";
@@ -3087,6 +3107,7 @@ NSUInteger iterationCounter
 	} /* end switch */
 }
 
+@end
 
 static NSUInteger replacement_get_operand(
 						const char **symadd,

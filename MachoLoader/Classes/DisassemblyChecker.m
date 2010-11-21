@@ -7,6 +7,8 @@
 //
 
 #import "DisassemblyChecker.h"
+#import "DebugCodeLine.h"
+
 #import <sys/param.h>
 
 @interface DisassemblyChecker ()
@@ -31,11 +33,72 @@
 	[super dealloc];
 }
 
+- (void)assertNextAdress:(char *)memAddress {
+	
+}
+
+NSUInteger hexStringToInt( NSString *hexString ) {
+	
+	static unsigned char HEX_LOOKUP[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 
+		6, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 10, 11, 12, 13, 14, 15, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	
+	if ([hexString length] % 2 == 1)  {
+		hexString = [NSString stringWithFormat:@"0%@", hexString]; 
+	}
+	NSUInteger size = [hexString length] / 2;
+	const char * stringBuffer = [hexString cStringUsingEncoding:NSASCIIStringEncoding];
+	char current;
+	NSUInteger result=0;
+	for( NSUInteger i=0; i<size; i++) {
+		current = stringBuffer[i * 2];
+		NSUInteger highBits = HEX_LOOKUP[(int)current] << 4;
+		current = stringBuffer[(i * 2) + 1];
+		NSUInteger lowBits = HEX_LOOKUP[(int)current];
+		result = result<<8 | highBits | lowBits;
+	}
+	return result;
+}
+
+NSArray *worderize( NSString *aLine ) {
+	
+	NSArray *components = [aLine componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSMutableArray *betterComponents = [NSMutableArray array];
+	//	for(NSString *each in components){
+	//		if([each isEqualToString:@""]==NO)
+	//			[betterComponents addObject:each];
+	//	}
+	[components enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+		if([obj isEqualToString:@""])
+			return;
+		[betterComponents addObject:obj];
+	}];
+	return betterComponents;
+}
+
 - (char *)nextLine:(char *)theCLine {
 	
-	char *result = fgets( theCLine, MAX_LINE_LENGTH, _otoolPipe );
-	NSUInteger length = strlen(theCLine);
-	NSString *justToSee = [NSString stringWithUTF8String:theCLine];
+	char *result;
+	
+	while( result=fgets( theCLine, MAX_LINE_LENGTH, _otoolPipe )) {
+		NSString *justToSee = [NSString stringWithUTF8String:theCLine];
+		NSString *strippedline = [justToSee stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		if ([strippedline length]==0) {
+		
+		} else {
+			NSArray *components = worderize( strippedline );
+			NSString *address = [components objectAtIndex:1];
+			NSUInteger addressInt = hexStringToInt(address);
+			DebugCodeLine *newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:nil];
+
+			continue;
+		}
+	}
+
 
 	// Process each line as it comes in piped from otool
     // while(  )

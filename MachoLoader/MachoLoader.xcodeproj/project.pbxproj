@@ -45,6 +45,8 @@
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
 		73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
+		73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
+		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
 		73CD29FA126457220034E7D9 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73DBEADB12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
@@ -131,6 +133,8 @@
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicDIYOOTests.m; path = Tests/BasicDIYOOTests.m; sourceTree = "<group>"; };
+		73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCodeLine.h; path = Classes/DebugCodeLine.h; sourceTree = "<group>"; };
+		73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCodeLine.m; path = Classes/DebugCodeLine.m; sourceTree = "<group>"; };
 		73D6C1431267114000746DE2 /* Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registers.h; path = Classes/Registers.h; sourceTree = "<group>"; };
 		73D6C1471267115800746DE2 /* Instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instructions.h; path = Classes/Instructions.h; sourceTree = "<group>"; };
 		73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionBitfieldTests.m; path = Tests/InstructionBitfieldTests.m; sourceTree = "<group>"; };
@@ -309,6 +313,8 @@
 				7395BD77125630080046A8FE /* DisassemblyChecker.m */,
 				737BB51612705817007A531E /* DissasemblyProcessor.h */,
 				737BB51712705817007A531E /* DissasemblyProcessor.m */,
+				73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */,
+				73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -560,6 +566,7 @@
 				732C5894125A7E2E004EDBBE /* BonkersRegTests.m in Sources */,
 				73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */,
 				734E804C1289523100D5FC99 /* HooClass.c in Sources */,
+				73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +597,7 @@
 				7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */,
 				737BB51812705817007A531E /* DissasemblyProcessor.m in Sources */,
 				734E804B1289523100D5FC99 /* HooClass.c in Sources */,
+				73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -57,12 +57,13 @@
 			// Wooah! otool reader hijacks standard out?
 			NSLog(@"Fin!");
 			
-			[ml disassemble];
+			[ml disassembleWithChecker:dc];
 			
 			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];
 			[dProcessor processApp];
 			[dProcessor release];
 		
+			[dc release];
 			[ml release];
 		}
 	}

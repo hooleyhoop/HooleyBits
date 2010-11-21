@@ -46,6 +46,7 @@
 #import "i386_disasm.h"
 
 #import "FunctionEnumerator.h"
+#import "DisassemblyChecker.h"
 
 // http://developer.apple.com/samplecode/Carbon/idxRuntimeArchitecture-date.html
 
@@ -719,8 +720,10 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 								:_strings_size];
 }
 
-- (void)disassemble {
+- (void)disassembleWithChecker:(DisassemblyChecker *)dc {
 	
+	i386_disasm *dis = [[[i386_disasm alloc] initWithChecker:dc] autorelease];
+
 	// Do text
 	char *locPtr = _text_sect_pointer;
 	char *memPtr = _text_sect_addr;
@@ -817,29 +820,30 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		// read j bytes from locPtr
 		
 		
-		j = i386_disassemble( 
-							 &currentFunction,
-							 locPtr,
-							 bytesLeft,
-							 memPtr,
-							 _text_sect_addr,
-							 text_sorted_relocs,
-							 _text_nsorted_relocs,
-							 _symtable_ptr32,
-							 _symtable_ptr64,
-							 _nsymbols,										 
-							 sorted_symbols, 
-							 nsorted_symbols,
-							 _strtable,
-							 _strings_size,
-							 __cast__(uint32_t *)_indirectSymbolTable,
-							 _nindirect_symbols,
-							 _cputype,
-							 _startOfLoadCommandsPtr,
-							 _ncmds,
-							 _sizeofcmds,
-							 1, iterationCounter 
-							 );
+		j = [dis i386_disassemble
+			 :&currentFunction
+			 :locPtr
+			 :bytesLeft
+			 :memPtr
+			 :_text_sect_addr
+			 :text_sorted_relocs
+			 :_text_nsorted_relocs
+			 :_symtable_ptr32
+			 :_symtable_ptr64
+			 :_nsymbols									 
+			 :sorted_symbols 
+			 :nsorted_symbols
+			 :_strtable
+			 :_strings_size
+			 :__cast__(uint32_t *)_indirectSymbolTable
+			 :_nindirect_symbols
+			 :_cputype
+			 :_startOfLoadCommandsPtr
+			 :_ncmds
+			 :_sizeofcmds
+			 :1
+			 :iterationCounter 
+			 ];
 		
 		//		uint64_t value = 0;
 		//		for( NSUInteger i=0; i<j; i++) {
@@ -861,6 +865,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	//	[readTimer close];  // 4.6 secs
 	
 	_allFunctions->lastFunction = currentFunction;
+
 	NSLog(@"disasemble complete");
 }
 

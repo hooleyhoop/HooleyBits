@@ -21,6 +21,8 @@
 - (BOOL)openOTOOL;
 - (BOOL)close;
 
+- (void)assertNextAdress:(char *)memAddress;
+
 - (char *)nextLine:(char *)theCLine;
 
 @end
