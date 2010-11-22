@@ -22,11 +22,11 @@
 
 	NSArray *paths = [NSArray arrayWithObjects:
 //					  [[NSBundle mainBundle] executablePath],
-					  @"/Applications/6-386.app/Contents/MacOS/6-386",
+//					  @"/Applications/6-386.app/Contents/MacOS/6-386",
 //					  @"/Applications/iTunes.app/Contents/MacOS/iTunes_thin",
-//					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
-//					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
-//					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
+					  @"/Applications/Adobe Lightroom 3.app/Contents/MacOS/Adobe Lightroomx86_64",
+					  @"/Applications/Adobe After Effects CS5/Adobe After Effects CS5.app/Contents/MacOS/After Effects",
+					  @"/Library/Frameworks/Houdini.framework/Versions/11.0.469/Houdini",
 					  nil];
 
 	for( NSString *each in paths )
@@ -41,15 +41,9 @@
 			BOOL success = [dc openOTOOL];
 			if(!success)
 				[NSException raise:@"Failed to open OTOOL" format:@""];
+
+			[ml disassembleWithChecker:dc];
 			
-			// lets just test iterating over it
-			char theCLine[1000];
-			NSUInteger length;
-			while( [dc nextLine:(char *)&theCLine] ) {
-				length = strlen(theCLine);
-				NSLog(@"%s", theCLine);
-			}
-	
 			success = [dc close];
 			if(!success)
 				[NSException raise:@"Failed to close OTOOL" format:@""];
@@ -57,11 +51,9 @@
 			// Wooah! otool reader hijacks standard out?
 			NSLog(@"Fin!");
 			
-			[ml disassembleWithChecker:dc];
-			
-			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];
-			[dProcessor processApp];
-			[dProcessor release];
+//putback later			DissasemblyProcessor *dProcessor = [[DissasemblyProcessor alloc] initWithFunctionEnumerator:[ml functionEnumerator]];
+//putback later			[dProcessor processApp];
+//putback later			[dProcessor release];
 		
 			[dc release];
 			[ml release];

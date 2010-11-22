@@ -1190,8 +1190,7 @@ hooInstruction_		op0F0F_instr		= { &_________i1, "",(void *)op0F0F,TERM,0,0,"cra
  * Decode table for 0x0F opcodes
  */
 hooInstruction_ *op0F[16][16] = {
-{ &op0F00_instr, &op0F01_instr, &lar_instr, &lsl_instr, &invalid_instr, &whatKindOfVoodooIsThis1_instr, &clts_instr, &whatKindOfVoodooIsThis2_instr, &invd_instr, &wbinvd_instr, &invalid_instr, &ud2_instr, &invalid_instr, &prefetch_instr2, &femms_instr,
-&op0F0F_instr },
+{ &op0F00_instr, &op0F01_instr, &lar_instr, &lsl_instr, &invalid_instr, &whatKindOfVoodooIsThis1_instr, &clts_instr, &whatKindOfVoodooIsThis2_instr, &invd_instr, &wbinvd_instr, &invalid_instr, &ud2_instr, &invalid_instr, &prefetch_instr2, &femms_instr, &op0F0F_instr },
 { &mov_instr10, &mov_instr12, &mov_instr10, &movl_instr, &unpckl_instr, &unpckh_instr, &mov_instr10, &movh_instr, &prefetch_instr1, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &nop_instr2 },
 { &mov_instr9, &mov_instr9, &mov_instr9, &mov_instr9, &mov_instr9, &invalid_instr, &mov_instr9, &invalid_instr, &mova_instr1, &mova_instr2, &cvt_instr, &movnt_instr, &cvt_instr, &cvt_instr, &ucomi_instr, &comi_instr },
 { &wrmsr_instr, &rdtsc_instr, &rdmsr_instr, &rdpmc_instr, &sysenter_instr, &sysexit_instr, &invalid_instr, &invalid_instr, &op0F38_instr, &invalid_instr, &op0F3A_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr },
@@ -1199,7 +1198,7 @@ hooInstruction_ *op0F[16][16] = {
 { &movmsk_instr, &sqrt_instr, &rsqrt_instr, &rcp_instr, &and_instr6, &andn_instr, &or_instr6, &xor_instr6, &add_instr5, &mul_instr2, &cvt_instr, &cvt_instr, &sub_instr5, &min_instr, &div_instr2, &max_instr },
 { &punpcklbw_instr, &punpcklwd_instr, &punpckldq_instr, &packsswb_instr, &pcmpgtb_instr, &pcmpgtw_instr, &pcmpgtd_instr, &packuswb_instr, &punpckhbw_instr, &punpckhwd_instr, &punpckhdq_instr, &packssdw_instr, &punpckl_instr, &punpckh_instr, &movd_instr, &mov_instr10 },
 { &pshu_instr, &ps_instr, &ps_instr, &ps_instr, &pcmpeqb_instr, &pcmpeqw_instr, &pcmpeqd_instr, &emms_instr, &vmread_instr, &vmwrite_instr, &invalid_instr, &invalid_instr, &haddp_instr, &hsubp_instr, &mov_instr11, &mov_instr12 },
-{ &jo_instr2, &jno_instr2, &jb_instr2, &jae_instr2, &jae_instr2, &jne_instr2, &jbe_instr1, &ja_instr2, &js_instr2, &jns_instr2, &jp_instr2, &jnp_instr2, &jl_instr2, &jge_instr2, &jle_instr2, &jg_instr2 },
+{ &jo_instr2, &jno_instr2, &jb_instr2, &jae_instr2, &jae_instr2, &jne_instr2, &jbe_instr2, &ja_instr2, &js_instr2, &jns_instr2, &jp_instr2, &jnp_instr2, &jl_instr2, &jge_instr2, &jle_instr2, &jg_instr2 },
 { &seto_instr, &setno_instr, &setb_instr, &setae_instr, &sete_instr, &setne_instr, &setbe_instr, &seta_instr, &sets_instr, &setns_instr, &setp_instr, &setnp_instr, &setl_instr, &setge_instr, &setle_instr, &setg_instr },
 { &_push_instr, &pop_instr, &cpuid_instr, &bt_instr2, &shld_instr3, &shld_instr4, &invalid_instr, &invalid_instr, &push_instr3, &pop_instr, &rsm_instr, &bts_instr2, &shrd_instr1, &shrd_instr2, &op0FAE_instr, &imul_instr2 },
 { &cmpxchgb_instr, &cmpxchg_instr, &lss_instr, &btr_instr2, &lfs_instr, &lgs_instr, &movzb_instr, &movzwl_instr, &popcnt_instr, &invalid_instr, &op0FBA_instr, &btc_instr2, &bsf_instr, &bsr_instr, &movsb_instr1, &movswl_instr },
@@ -1210,7 +1209,8 @@ hooInstruction_ *op0F[16][16] = {
 };
 
 /* These reference the table above so have to go here */
-hooInstruction_		op0F_instr		= { &_________i1, "",(void *)op0F,TERM,0,0,"crazy indirect shit",0};
+// TODO: why does the indirect have an input? im sure it doesnt
+hooInstruction_		op0F_instr		= { &_________i1, "_indirect",(void *)op0F,TERM,0,0,"crazy indirect shit",0};
 
 /* for 287 instructions, which are a mess to decode */
 hooInstruction_ *opFP1n2[8][8] = {
@@ -1261,7 +1261,7 @@ hooInstruction_ *opFP5[8] = {
  * empty.
  */
 hooInstruction_ *distable[16][16] = {
-{ &addb_instr4, &add_instr4, &addb_instr3,&add_instr3, &addb_instr1, &add_instr1, &push_instr6, &pop_instr3, &orb_instr4, &or_instr5, &orb_instr3, &or_instr4, &orb_instr1, &or_instr1, &push_instr6, &op0F_instr },
+{ &addb_instr4, &add_instr4, &addb_instr3, &add_instr3, &addb_instr1, &add_instr1, &push_instr6, &pop_instr3, &orb_instr4, &or_instr5, &orb_instr3, &or_instr4, &orb_instr1, &or_instr1, &push_instr6, &op0F_instr },
 { &adcb_instr4, &adc_instr4, &adcb_instr3, &adc_instr3, &adcb_instr1, &adc_instr1, &push_instr6, &pop_instr3, &sbbb_instr4, &sbb_instr4, &sbbb_instr3, &sbb_instr3, &sbbb_instr1, &sbb_instr1, &push_instr6, &pop_instr3 },
 { &andb_instr4, &and_instr5, &andb_instr3, &and_instr4, &andb_instr1, &and_instr1, &es_instr, &daa_instr, &subb_instr4, &sub_instr4, &subb_instr3, &sub_instr3, &subb_instr1, &sub_instr1, &cs_instr, &das_instr },
 { &xorb_instr4, &xor_instr5, &xorb_instr3, &xor_instr4, &xorb_instr1, &xor_instr1, &ss_instr, &aaa_instr, &cmpb_instr5, &cmp_instr4, &cmpb_instr4, &cmp_instr3, &cmpb_instr1, &cmp_instr1, &ds_instr, &aas_instr },

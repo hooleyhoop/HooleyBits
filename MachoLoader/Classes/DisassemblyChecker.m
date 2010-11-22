@@ -35,6 +35,12 @@
 
 - (void)assertNextAdress:(char *)memAddress {
 	
+	DebugCodeLine *line = [self nextLine:(char *)&_theCLine];
+	if( line && line->_address==(NSUInteger)memAddress) {
+		
+	} else {
+		NSLog(@"Bollocks");
+	}
 }
 
 NSUInteger hexStringToInt( NSString *hexString ) {
@@ -80,42 +86,36 @@ NSArray *worderize( NSString *aLine ) {
 	return betterComponents;
 }
 
-- (char *)nextLine:(char *)theCLine {
+- (DebugCodeLine *)nextLine:(char *)theCLine {
 	
 	char *result;
-	
+	DebugCodeLine *newLine = nil;
+
 	while( result=fgets( theCLine, MAX_LINE_LENGTH, _otoolPipe )) {
 		NSString *justToSee = [NSString stringWithUTF8String:theCLine];
 		NSString *strippedline = [justToSee stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ([strippedline length]==0) {
-		
-		} else {
-			NSArray *components = worderize( strippedline );
-			NSString *address = [components objectAtIndex:1];
-			NSUInteger addressInt = hexStringToInt(address);
-			DebugCodeLine *newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:nil];
 
-			continue;
+		} else {
+			// is it a code line?
+			char char1 = [strippedline characterAtIndex:0];
+			char char2 = [strippedline characterAtIndex:1];
+			if( char1>47 && char1<58 && char2>47 && char2<58 ) {
+
+				NSArray *components = worderize( strippedline );
+				if( [[components objectAtIndex:1] isEqualToString:@"nop"]==NO ){
+					NSString *address = [components objectAtIndex:0];
+					NSUInteger addressInt = hexStringToInt(address);
+					newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:nil];
+					break;
+				} else {
+					NSLog(@"Skipping nop");
+				}
+			}
 		}
 	}
 
-
-	// Process each line as it comes in piped from otool
-    // while(  )
-    // {
-        //Line*   theNewLine  = calloc(1, sizeof(Line));
-		
-        // theNewLine->length  = strlen(theCLine);
-        // theNewLine->chars   = malloc(theNewLine->length + 1);
-        // strncpy(theNewLine->chars, theCLine, theNewLine->length + 1);
-		
-        // Add the line to the list.
-        // InsertLineAfter(theNewLine, *inLine, inList);
-		
-        // *inLine = theNewLine;
-		
-    // }
-	return result;
+	return newLine;
 }
 
 - (BOOL)openOTOOL {

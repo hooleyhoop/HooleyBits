@@ -13,8 +13,21 @@
 
 + (id)lineWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg {
 	
-	DebugCodeLine *cl = [[[DebugCodeLine alloc] init] autorelease];
+	DebugCodeLine *cl = [[[DebugCodeLine alloc] initWithAddress:addressInt] autorelease];
 	return cl;
+}
+
+- (id)initWithAddress:(NSUInteger)addressInt {
+	
+	self = [super init];
+	if(self){
+		_address = addressInt;
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[super dealloc];
 }
 
 @end

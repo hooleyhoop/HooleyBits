@@ -8,12 +8,14 @@
 
 #define MAX_LINE_LENGTH             10000
 
+@class DebugCodeLine;
 
 @interface DisassemblyChecker : NSObject {
 
 	NSString *_filePath;
 	BOOL	_fat;
 	FILE	*_otoolPipe;
+	char	_theCLine[1000];	
 }
 
 - (id)initWithPath:(NSString *)aPath isFAT:(BOOL)fatFlag;
@@ -23,6 +25,6 @@
 
 - (void)assertNextAdress:(char *)memAddress;
 
-- (char *)nextLine:(char *)theCLine;
+- (DebugCodeLine *)nextLine:(char *)theCLine;
 
 @end

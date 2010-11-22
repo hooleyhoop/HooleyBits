@@ -810,9 +810,10 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		if( iterationCounter==906390 )
 			NSLog(@"stop here");
 		
-		// This is where GCC goes wrong
-		if( memPtr==(char *)0x799b )
+		if( memPtr==(char *)0x56e176 )
 			NSLog(@"we get j==7 back in clang, == j==3 in GCC, it should be seven");
+		
+		
 		iterationCounter++;
 		
 		//	debugLine = [_dc nextLine];
@@ -852,6 +853,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		//		}
 		//		printf("\t\t%0x\n", value );
 		
+
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;
@@ -2568,7 +2570,6 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 	// FAT is always Big Endian - Extract relevant architecture and convert to native
 	if( OSSwapBigToHostInt32(((struct fat_header *)_codeAddr)->magic)==FAT_MAGIC ) {
 
-		_binaryIsFAT = YES;
 		struct fat_arch *fatArchArray;
 		struct fat_header *fatHeader = (struct fat_header *)_codeAddr;
 		assert( _codeSize >= sizeof(*fatHeader) );
@@ -2582,6 +2583,9 @@ extern struct instable const *distableEntry( int opcode1, int opcode2 );
 		// Convert each element of the fat arch array to host byte order.
 		
 		fatArchArray = (struct fat_arch *) (fatHeader + 1);
+		if(fatHeader->nfat_arch >1 )
+			_binaryIsFAT = YES;
+
 		for( uint32_t archIndex = 0; archIndex<fatHeader->nfat_arch; archIndex++ ) {
 			fatArchArray[archIndex].cputype    = OSSwapBigToHostInt32(fatArchArray[archIndex].cputype);
 			fatArchArray[archIndex].cpusubtype = OSSwapBigToHostInt32(fatArchArray[archIndex].cpusubtype);

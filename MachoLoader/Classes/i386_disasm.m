@@ -67,6 +67,7 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //#include "otool.h"
 //#include "ofile_print.h"
 //#include "i386_disasm.h"
+#import "DisassemblyChecker.h"
 
 #import "i386_disasm.h"
 
@@ -560,16 +561,46 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		NSLog(@"Wrong Number of args - really have %i, expected %i for %s", (int)numberOfArgs, (int)expectedArgs, dp->name);
 }
 
-void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const struct instable *dp, struct InstrArgStruct *args, int noisy ) {
+//struct instable *customInstruction( const char *instrName, const char *prettyStr ) {
+//	
+//	struct instable *customInstruction = calloc(1, sizeof(struct instable));
+//	strcpy( customInstruction->name, instrName );
+//	customInstruction->printStr = calloc(1,strlen(prettyStr)+1);
+//	strcpy( customInstruction->printStr, prettyStr );
+//	return customInstruction;
+//}
 
+@implementation i386_disasm
+
+
+- (id)initWithChecker:(DisassemblyChecker *)dc {
+	
+	self = [super init];
+	if(self){
+		_disChecker = [dc retain];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[_disChecker release];
+	[super dealloc];
+}
+
+- (void)addLine:(char *)memAddress
+:(struct hooleyFuction **)currentFuncPtr
+:(const struct instable *)dp
+:(struct InstrArgStruct *)args
+:(int)noisy {
+	
 	struct hooleyFuction *currentFunc = *currentFuncPtr;
-
+	
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
 	newLine->address = memAddress;
 	newLine->instr = dp;
 	newLine->args = args;
 	
-//	assertNumberOfArgs( dp, args );
+	//	assertNumberOfArgs( dp, args );
 	
 	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
 	if(currentLine) {
@@ -582,11 +613,11 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 	}
 	currentFunc->lastLine = newLine;
 	
-//	verify address
+	//	verify address
 	[_disChecker assertNextAdress:memAddress];
-	 
+	
 	// lets try to add Labels
-	if( dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP ) {
+	if( dp && (dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP) ) {
 		struct label *newLabel = calloc( 1, sizeof(struct label) );
 		
 		//TODO: replace the argument with the label
@@ -599,19 +630,19 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			currentFunc->labels = newLabel;
 		}
 	}
-
+	
 	if(noisy)
 	{
 		char lineToPrint[256];
-		sprintf( lineToPrint, "%p\t%s ", memAddress, dp->name);
+		sprintf( lineToPrint, "%p\t%s ", memAddress, (dp ? dp->name : "Null") );
 		
 		// lets just take a peep at the arguments
 		if (args) {
-
+			
 			for( NSUInteger i=0; i<args->numberOfArgs; i++ ){
 				struct InstrArgStruct argi = args[i];
 				struct HooAbstractDataType *abstractArgi = argi.value;
-
+				
 				char *segReg;
 				char *baseReg;
 				char *indexReg;
@@ -648,31 +679,6 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		}
 		printf( "%s\n", lineToPrint );
 	}
-}
-
-//struct instable *customInstruction( const char *instrName, const char *prettyStr ) {
-//	
-//	struct instable *customInstruction = calloc(1, sizeof(struct instable));
-//	strcpy( customInstruction->name, instrName );
-//	customInstruction->printStr = calloc(1,strlen(prettyStr)+1);
-//	strcpy( customInstruction->printStr, prettyStr );
-//	return customInstruction;
-//}
-
-@implementation i386_disasm
-
-- (id)initWithChecker:(DisassemblyChecker *)dc {
-	
-	self = [super init];
-	if(self){
-		_disChecker = [dc retain];
-	}
-	return self;
-}
-
-- (void)dealloc {
-	[_disChecker release];
-	[super dealloc];
 }
 
 /*
@@ -978,7 +984,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		/* now dp points the proper subdecode table entry */
 	}
 
-	if( dp->indirect!=TERM){
+	if( dp->indirect!=TERM ){
 	    // printf(".byte 0x%02x #bad opcode\n", (unsigned int)byte);
 		/* add a bad opcode line ?*/
 	    return length ;
@@ -1055,7 +1061,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_regStruct((opcode5 & 0x7), 1, data16, rex);
 			// eg bswap	%eax
 			FILLARGS1( reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return length;
 
 		case XINST:
@@ -1071,7 +1077,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%s\t%s,", mnemonic, reg_name);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return length;
 
 		/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
@@ -1093,7 +1099,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg movzbl	(%edx),%eax	
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -1117,7 +1123,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg imull $0x44,%edx,%eax
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 ); 
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2]; 
 			return length;
 		}
 
@@ -1137,7 +1143,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg. movl 0x04(%ebp),%ebx
 			FILLARGS2( abstractStrctPtr1,reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -1163,7 +1169,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			 // -- move register to oprand eg. movl	%esp,%ebp		movl %ebx,0x00(%esp)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -1232,7 +1238,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				[NSException raise:@"what?" format:@"what?"];
 			}
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return length;
 		}
 
@@ -1333,7 +1339,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -1365,7 +1371,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// printf("%s\n", result1);
 			FILLARGS2( abstractStrctPtr1, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );				
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];				
 			return length;
 		}
 	
@@ -1782,7 +1788,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 						NSUInteger regNum = xmm_rm(r_m, rex);
 						const struct HooReg *reg_struct2 = xmmReg_Struct[regNum]; //%xmm0
 						FILLARGS2( reg_struct2, reg_struct );
-						addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 						// printf("%s\t%%xmm%u,%s\n", mnemonic, reg_struct2, reg_name);
 						return length;
 						
@@ -1790,7 +1796,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 						reg_struct = get_regStruct(reg, 1, data16, rex);
 						const struct HooReg *mmReg = mmReg_Struct[r_m];
 						FILLARGS2( mmReg, reg_struct );
-						addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
 						return length;
 					}
@@ -1849,7 +1855,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg movsd	(%eax),%xmm0
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 			// printf("%s\n", result1);
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -2042,7 +2048,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 						// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 						// printf("%%mm%u\n", reg);
 						FILLARGS3( value0Immed, abstractStrctPtr1, &mmReg_Struct[reg] );
-						addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 						return length;
 					}
 					break;
@@ -2056,7 +2062,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 						// printf("%%mm%u\n", reg);
 						const struct HooReg *mmReg = mmReg_Struct[reg];
 						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
-						addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 						return length;
 					}
 					break;
@@ -2104,7 +2110,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			regNum = xmm_reg(reg, rex);
 			reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2207,7 +2213,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%%xmm%u\n", reg_struct );
 			// eg psllq $0x1f,%xmm2
 			FILLARGS2( value0Immed, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return length;
 
 		/* 3DNow instructions */
@@ -2282,7 +2288,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return length;
 		}
 
@@ -2316,7 +2322,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			FILLARGS3( value0Immed, reg_struct, abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2335,7 +2341,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// cl is &count1_reg
 			// eg shldl	%cl,%eax,%esi
 			FILLARGS3( &count1_reg, reg_struct, abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2352,7 +2358,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg. andl $0xf0,%esp    subl $0x10,%esp
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2372,7 +2378,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg movl	$0x00021730, 0x04(%edx)
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2386,7 +2392,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 			// eg movb	$0x00,%al
 			FILLARGS2( value0Immed, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* immediate to register with register in low 3 bits of op code, possibly with a 64-bit immediate */
@@ -2399,7 +2405,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);		
 			 // eg. movl	$0x00b9ee00,%ecx
 			FILLARGS2( value0Immed, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* memory operand to accumulator */
@@ -2416,7 +2422,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	0x0123d000,%eax
 			FILLARGS2( value0Immed, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return length;
 
 		/* accumulator to memory operand */
@@ -2433,7 +2439,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	%eax,0x00f2300c
 			FILLARGS2( reg_struct, value0Immed );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* memory or register operand to segment register */
@@ -2449,7 +2455,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			segReg = (struct HooReg *)SEGREG[reg];
 			FILLARGS2( abstractStrctPtr1, segReg );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2469,7 +2475,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( segReg, abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2491,7 +2497,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			}
 			// eg sarl	%eax
 			// shll		%cl,%edx
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );	
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];	
 			return(length);
 		}
 
@@ -2516,7 +2522,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				FILLARGS2(value0Immed, abstractStrctPtr1);
 			}
 			// eg shll	$0x02,%eb
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2533,7 +2539,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( value0Immed, abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2544,7 +2550,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2608,7 +2614,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 
 			// eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 			FILLARGS1( abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 	
@@ -2625,7 +2631,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg setbe	%al
 			FILLARGS1( abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2691,7 +2697,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			}
 			// eg. pushl %ebp
 			FILLARGS1(reg_struct);
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* register to accumulator with register in the low 3 */
@@ -2703,7 +2709,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
 			const struct HooReg *secondReg = data16 ? &acumx_reg : &acumex_reg;
 			FILLARGS2( reg_struct, secondReg );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 		/* single segment register operand, with reg in bits 3-4 of op code */
@@ -2713,7 +2719,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%s\t%s\n", mnemonic, segReg->name );
 			// eg pushw	%es
 			FILLARGS1( segReg );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* single segment register operand, with register in	*/
@@ -2723,7 +2729,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name);
 			FILLARGS1( segReg );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* memory or register operand to register */
@@ -2740,7 +2746,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			//	eg. leal 0x08(%ebp),%ecx
 			FILLARGS2(abstractStrctPtr1, reg_struct);
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2759,7 +2765,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			//eg cmpb	$0x2f,%al
 			FILLARGS2( value0Immed, reg_struct );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* memory or register operand to accumulator */
@@ -2770,7 +2776,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg mull	%ecx
 			FILLARGS1( abstractStrctPtr1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2781,7 +2787,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex2_reg, 0, scale_factor[0] );
 				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex2_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
-				addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 				// printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
 			} else {
 				//TODO: this is in the repz loop
@@ -2790,7 +2796,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
-				addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			}
 			return(length);
 
@@ -2812,7 +2818,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)indexReg, 0, scale_factor[0] );
 			
 			FILLARGS2( reg_struct, indirect1 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2829,7 +2835,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				// lodsl (%esi),%eax
 				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, reg_struct );
-				addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			}
 			return(length);
 
@@ -2841,7 +2847,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 ); 
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2]; 
 			return(length);
 
 		/* indirect to memory or register operand */
@@ -2858,7 +2864,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 
 			FILLARGS1( abstractStrctPtr1 );			
 			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY ); 
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY]; 
 			return(length);
 		}
 
@@ -2870,7 +2876,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg ljmpl *%ebx				// TODO: missing the asterisk?
 			FILLARGS1( abstractStrctPtr1 );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2890,20 +2896,18 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			//		print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
 			//		print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
 			FILLARGS2( value0Immed, value1Immed );						
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* jmp/call. single operand, 8 bit displacement */
 		case BD:
-			// gohere			
 			value0_size = 1;
-			//TODO: THIS IS FUCKED
-			DISPLACEMENT(&symadd0, &symsub0, &value0, value0_size);
+			DISPLACEMENT( &symadd0, &symsub0, &value0, value0_size );
 			NEW_DISPLACEMENT( displaceStructPtr, value0 );
 			// eg jne	0x00002b1a
 			FILLARGS1( displaceStructPtr );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY2 );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2];
 			return(length);
 
 		/* single 32/16 bit immediate operand */
@@ -2913,7 +2917,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			FILLARGS1( value0Immed );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			// eg pushl  $0x00001000
 			return(length);
 
@@ -2926,7 +2930,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// eg. pushl $0x00 
 			FILLARGS1( value0Immed );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 
 		case ENTER:
@@ -2941,7 +2945,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
 			// print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
 			FILLARGS2( value0Immed, value1Immed );						
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* 16-bit immediate operand */
@@ -2951,7 +2955,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg ret	$0x0004	
 			FILLARGS1( value0Immed );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY ); 		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY]; 		
 			return(length);
 
 		/* single 8 bit port operand */
@@ -2962,7 +2966,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// printf("%s\t$", mnemonic);
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 			FILLARGS1( value0Immed );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );				
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];				
 			return(length);
 
 		/* single 8 bit (input) port operand				*/
@@ -2974,7 +2978,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
 			// eg inl $0x05,%eax
 			FILLARGS2( value0Immed, &acumex_reg );			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );			
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* single 8 bit (output) port operand				*/
@@ -2985,7 +2989,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg  outb %al,$0x00
 			FILLARGS2( &acumex_reg, value0Immed );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return(length);
 		}
 		/* single operand, dx register (variable port instruction) */
@@ -3003,7 +3007,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			} else {
 				FILLARGS2( &data1_reg, &acumex_reg );
 			}
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return(length);
 		}
 
@@ -3016,7 +3020,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 			} else {
 				FILLARGS2( &acumex_reg, &data1_reg );
 			}			
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
 			return(length);
 
 		/* The int instruction, which has two forms: int 3 (breakpoint) or  */
@@ -3026,33 +3030,33 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		/* to the correct base and output. */
 		case INT3:
 			// printf("%s\t$0x3\n", mnemonic);
-			addLine( addr, currentFuncPtr, &int3_instr, NULL, NOISY );
+			[self addLine:addr :currentFuncPtr :&int3_instr :NULL :NOISY];
 			return(length);
 
 		/* just an opcode and an unused byte that must be discarded */
 		case U:
 			byte = get_value( 1, sect, &length, &left);
 			// printf("%s\n", mnemonic);
-			addLine( addr, currentFuncPtr, dp, NULL, NOISY );			
+			[self addLine:addr :currentFuncPtr :dp :NULL :NOISY];			
 			return(length);
 
 		case CBW:
 			if(data16==TRUE){
 				// printf("cbtw\n"); // -- sign-extend byte in `%al' to word in `%ax'
-				addLine( addr, currentFuncPtr, &op_cbtw, NULL, NOISY );				
+				[self addLine:addr :currentFuncPtr :&op_cbtw :NULL :NOISY];				
 			}else{
 				// printf("cwtl\n"); // -- sign-extend word in `%ax' to long in `%eax'
-				addLine( addr, currentFuncPtr, &op_cwtl, NULL, NOISY );
+				[self addLine:addr :currentFuncPtr :&op_cwtl :NULL :NOISY];
 			}
 			return(length);
 
 		case CWD:
 			if(data16 == TRUE){
 				// printf("cwtd\n");
-				addLine( addr, currentFuncPtr, &op_cwtd, NULL, NOISY );
+				[self addLine:addr :currentFuncPtr :&op_cwtd :NULL :NOISY];
 			}else{
 				// printf("cltd\n");
-				addLine( addr, currentFuncPtr, &op_cltd, NULL, NOISY );				
+				[self addLine:addr :currentFuncPtr :&op_cltd :NULL :NOISY];				
 			}
 			return(length);
 
@@ -3060,7 +3064,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		case GO_ON:
 			 // eg. hlt, nop, etc.
 			if( strcmp(dp->name, "nop" )) {
-				addLine( addr, currentFuncPtr, dp, NULL, NOISY );
+				[self addLine:addr :currentFuncPtr :dp :NULL :NOISY];
 			}
 			return(length);
 
@@ -3068,7 +3072,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 		case F:
 		{
 			// printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
-			addLine( addr, currentFuncPtr, &fstp1_instr, NULL, NOISY );
+			[self addLine:addr :currentFuncPtr :&fstp1_instr :NULL :NOISY];
 			return(length);
 		}
 		/* float reg to float reg, with ret bit present */
@@ -3088,7 +3092,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				// printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
 			}
 			FILLARGS2( reg_struct, reg_struct2 );
-			addLine( addr, currentFuncPtr, dp, allArgs, NOISY  );		
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 		/* an invalid op code */
@@ -3103,6 +3107,7 @@ void addLine( char *memAddress, struct hooleyFuction **currentFuncPtr, const str
 				//	printf(", 0x%02x", 0xff & sect[i]);
 				// }
 				// printf(" #bad opcode\n");
+				[self addLine:addr :currentFuncPtr :NULL :NULL :NOISY];
 				return(length);
 	} /* end switch */
 }
