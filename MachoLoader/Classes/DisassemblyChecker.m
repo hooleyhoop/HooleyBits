@@ -8,6 +8,7 @@
 
 #import "DisassemblyChecker.h"
 #import "DebugCodeLine.h"
+#import "InstrArgStruct.h"
 
 #import <sys/param.h>
 
@@ -33,13 +34,18 @@
 	[super dealloc];
 }
 
-- (void)assertNextAdress:(char *)memAddress {
+- (void)assertNextAdress:(char *)memAddress argCount:(struct InstrArgStruct *)args {
 	
 	DebugCodeLine *line = [self nextLine:(char *)&_theCLine];
-	if( line && line->_address==(NSUInteger)memAddress) {
-		
+	if( line && line->_address==(NSUInteger)memAddress ) {
 	} else {
 		NSLog(@"Bollocks");
+	}
+	
+	NSUInteger numberOfArgs = args!=NULL ? args->numberOfArgs : 0;
+	if( line->_numberOfArgs==numberOfArgs ) {
+	} else {
+		NSLog(@"Bollocks - wrong number of args");
 	}
 }
 
@@ -105,8 +111,19 @@ NSArray *worderize( NSString *aLine ) {
 				NSArray *components = worderize( strippedline );
 				if( [[components objectAtIndex:1] isEqualToString:@"nop"]==NO ){
 					NSString *address = [components objectAtIndex:0];
+					//Instruction *instr = nil;
+					NSArray *allArgs = nil;
+					if([components count]>=3)
+					{
+						NSString *arguments = [components objectAtIndex:2];
+						TokenArray *tkns1 = [TokenArray tokensWithString:arguments];
+						[tkns1 secondPass];
+						ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
+						allArgs = [[scanner.allArguments copy] autorelease];
+					}
+					
 					NSUInteger addressInt = hexStringToInt(address);
-					newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:nil];
+					newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:allArgs];
 					break;
 				} else {
 					NSLog(@"Skipping nop");

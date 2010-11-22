@@ -12,6 +12,7 @@
 @interface DebugCodeLine : NSObject {
 @public;
 	NSUInteger	_address;
+	NSUInteger _numberOfArgs;
 }
 
 + (id)lineWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg;

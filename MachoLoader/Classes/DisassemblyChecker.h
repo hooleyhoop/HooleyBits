@@ -23,7 +23,7 @@
 - (BOOL)openOTOOL;
 - (BOOL)close;
 
-- (void)assertNextAdress:(char *)memAddress;
+- (void)assertNextAdress:(char *)memAddress argCount:(struct InstrArgStruct *)args;
 
 - (DebugCodeLine *)nextLine:(char *)theCLine;
 

@@ -600,6 +600,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 	newLine->instr = dp;
 	newLine->args = args;
 	
+	// TODO: this will move into dis checker?
 	//	assertNumberOfArgs( dp, args );
 	
 	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
@@ -614,7 +615,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 	currentFunc->lastLine = newLine;
 	
 	//	verify address
-	[_disChecker assertNextAdress:memAddress];
+	[_disChecker assertNextAdress:memAddress argCount:args];
 	
 	// lets try to add Labels
 	if( dp && (dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP) ) {
