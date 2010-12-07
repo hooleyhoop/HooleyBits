@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73136FF212AC5323003CF189 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73136FF112AC5323003CF189 /* Cocoa.framework */; };
+		73136FF712AC5323003CF189 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73136FF512AC5323003CF189 /* InfoPlist.strings */; };
+		73136FF912AC5323003CF189 /* InnerRender-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73136FF812AC5323003CF189 /* InnerRender-main.m */; };
+		73136FFC12AC5324003CF189 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73136FFA12AC5324003CF189 /* MainMenu.xib */; };
+		73136FFF12AC5324003CF189 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 73136FFD12AC5324003CF189 /* Credits.rtf */; };
+		7313700212AC5324003CF189 /* InnerRenderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */; };
+		7313700A12AC5324003CF189 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73136FF112AC5323003CF189 /* Cocoa.framework */; };
+		7313700E12AC5324003CF189 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7313700D12AC5324003CF189 /* InfoPlist.strings */; };
+		7313701212AC5324003CF189 /* InnerRenderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313701112AC5324003CF189 /* InnerRenderTests.m */; };
+		7313702112AC54B0003CF189 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702012AC54B0003CF189 /* RenderView.m */; };
+		7313702212AC54B0003CF189 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702012AC54B0003CF189 /* RenderView.m */; };
+		7313702512AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
+		7313702612AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
+		73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
+		73AB02CA12AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
+		73AB047D12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */; };
+		73AB047E12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */; };
+		73AB051D12AEA3220021C1F1 /* HooPolygonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB051C12AEA3220021C1F1 /* HooPolygonTests.m */; };
+		73AB052712AEA3440021C1F1 /* PolygonRasterizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB052612AEA3440021C1F1 /* PolygonRasterizerTests.m */; };
+		73AB052C12AEA3580021C1F1 /* RenderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB052B12AEA3580021C1F1 /* RenderViewTests.m */; };
+		73AB053412AEA3A80021C1F1 /* GridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB053312AEA3A80021C1F1 /* GridTests.m */; };
+		73AB053B12AEA3C20021C1F1 /* ShapeHandleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */; };
+		73AB054012AEA3D00021C1F1 /* RenderManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */; };
+		73AB054512AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */; };
+		73AB054912AEA4B10021C1F1 /* RenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2812AD774C0004572D /* RenderManager.m */; };
+		73AB054A12AEA4B20021C1F1 /* InnerRenderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */; };
+		73E7BE2912AD774C0004572D /* RenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2812AD774C0004572D /* RenderManager.m */; };
+		73E7BE2D12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
+		73E7BE2E12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		73136FEE12AC5323003CF189 /* InnerRender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InnerRender.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73136FF112AC5323003CF189 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		73136FF312AC5323003CF189 /* InnerRender-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InnerRender-Info.plist"; sourceTree = "<group>"; };
+		73136FF412AC5323003CF189 /* InnerRender-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InnerRender-Prefix.pch"; sourceTree = "<group>"; };
+		73136FF612AC5323003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73136FF812AC5323003CF189 /* InnerRender-main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "InnerRender-main.m"; sourceTree = "<group>"; };
+		73136FFB12AC5324003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		73136FFE12AC5324003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		7313700012AC5324003CF189 /* InnerRenderAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InnerRenderAppDelegate.h; sourceTree = "<group>"; };
+		7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InnerRenderAppDelegate.m; sourceTree = "<group>"; };
+		7313700912AC5324003CF189 /* InnerRenderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InnerRenderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7313700B12AC5324003CF189 /* InnerRenderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InnerRenderTests-Info.plist"; sourceTree = "<group>"; };
+		7313700C12AC5324003CF189 /* InnerRenderTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InnerRenderTests-Prefix.pch"; sourceTree = "<group>"; };
+		7313700D12AC5324003CF189 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InnerRenderTests/InfoPlist.strings; sourceTree = "<group>"; };
+		7313701112AC5324003CF189 /* InnerRenderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InnerRenderTests.m; sourceTree = "<group>"; };
+		7313701F12AC54B0003CF189 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
+		7313702012AC54B0003CF189 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
+		7313702312AC55B1003CF189 /* ShapeHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeHandle.h; sourceTree = "<group>"; };
+		7313702412AC55B1003CF189 /* ShapeHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeHandle.m; sourceTree = "<group>"; };
+		73AB02C712AE48DE0021C1F1 /* HooPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooPolygon.h; sourceTree = "<group>"; };
+		73AB02C812AE48DE0021C1F1 /* HooPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooPolygon.m; sourceTree = "<group>"; };
+		73AB047B12AE919E0021C1F1 /* PolygonRasterizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolygonRasterizer.h; sourceTree = "<group>"; };
+		73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolygonRasterizer.m; sourceTree = "<group>"; };
+		73AB051C12AEA3220021C1F1 /* HooPolygonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooPolygonTests.m; sourceTree = "<group>"; };
+		73AB052612AEA3440021C1F1 /* PolygonRasterizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolygonRasterizerTests.m; sourceTree = "<group>"; };
+		73AB052B12AEA3580021C1F1 /* RenderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewTests.m; sourceTree = "<group>"; };
+		73AB053312AEA3A80021C1F1 /* GridTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridTests.m; sourceTree = "<group>"; };
+		73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeHandleTests.m; sourceTree = "<group>"; };
+		73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderManagerTests.m; sourceTree = "<group>"; };
+		73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InnerRenderAppDelegateTests.m; sourceTree = "<group>"; };
+		73E7BE2712AD774C0004572D /* RenderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderManager.h; sourceTree = "<group>"; };
+		73E7BE2812AD774C0004572D /* RenderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderManager.m; sourceTree = "<group>"; };
+		73E7BE2B12AD79E10004572D /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
+		73E7BE2C12AD79E10004572D /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73136FEB12AC5323003CF189 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73136FF212AC5323003CF189 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7313700512AC5324003CF189 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7313700A12AC5324003CF189 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73136FDF12AC5323003CF189 = {
+			isa = PBXGroup;
+			children = (
+				7313700312AC5324003CF189 /* Tests */,
+				73136FE612AC5323003CF189 /* Classes */,
+				73136FE712AC5323003CF189 /* Other Sources */,
+				73136FE812AC5323003CF189 /* Resources */,
+				73136FE912AC5323003CF189 /* Frameworks */,
+				73136FEF12AC5323003CF189 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73136FE612AC5323003CF189 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				73AB02C712AE48DE0021C1F1 /* HooPolygon.h */,
+				73AB02C812AE48DE0021C1F1 /* HooPolygon.m */,
+				73AB047B12AE919E0021C1F1 /* PolygonRasterizer.h */,
+				73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */,
+				7313701F12AC54B0003CF189 /* RenderView.h */,
+				7313702012AC54B0003CF189 /* RenderView.m */,
+				73E7BE2B12AD79E10004572D /* Grid.h */,
+				73E7BE2C12AD79E10004572D /* Grid.m */,
+				7313702312AC55B1003CF189 /* ShapeHandle.h */,
+				7313702412AC55B1003CF189 /* ShapeHandle.m */,
+				73E7BE2712AD774C0004572D /* RenderManager.h */,
+				73E7BE2812AD774C0004572D /* RenderManager.m */,
+				7313700012AC5324003CF189 /* InnerRenderAppDelegate.h */,
+				7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		73136FE712AC5323003CF189 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				73136FF412AC5323003CF189 /* InnerRender-Prefix.pch */,
+				73136FF812AC5323003CF189 /* InnerRender-main.m */,
+				7313700C12AC5324003CF189 /* InnerRenderTests-Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		73136FE812AC5323003CF189 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				73136FF312AC5323003CF189 /* InnerRender-Info.plist */,
+				73136FF512AC5323003CF189 /* InfoPlist.strings */,
+				73136FFA12AC5324003CF189 /* MainMenu.xib */,
+				73136FFD12AC5324003CF189 /* Credits.rtf */,
+				7313700B12AC5324003CF189 /* InnerRenderTests-Info.plist */,
+				7313700D12AC5324003CF189 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		73136FE912AC5323003CF189 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73136FF112AC5323003CF189 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73136FEF12AC5323003CF189 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73136FEE12AC5323003CF189 /* InnerRender.app */,
+				7313700912AC5324003CF189 /* InnerRenderTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7313700312AC5324003CF189 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7313701112AC5324003CF189 /* InnerRenderTests.m */,
+				73AB053312AEA3A80021C1F1 /* GridTests.m */,
+				73AB051C12AEA3220021C1F1 /* HooPolygonTests.m */,
+				73AB052612AEA3440021C1F1 /* PolygonRasterizerTests.m */,
+				73AB052B12AEA3580021C1F1 /* RenderViewTests.m */,
+				73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */,
+				73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */,
+				73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73136FED12AC5323003CF189 /* InnerRender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7313701712AC5324003CF189 /* Build configuration list for PBXNativeTarget "InnerRender" */;
+			buildPhases = (
+				73136FEA12AC5323003CF189 /* Sources */,
+				73136FEB12AC5323003CF189 /* Frameworks */,
+				73136FEC12AC5323003CF189 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InnerRender;
+			productName = InnerRender;
+			productReference = 73136FEE12AC5323003CF189 /* InnerRender.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7313700812AC5324003CF189 /* InnerRenderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7313701A12AC5324003CF189 /* Build configuration list for PBXNativeTarget "InnerRenderTests" */;
+			buildPhases = (
+				7313700412AC5324003CF189 /* Sources */,
+				7313700512AC5324003CF189 /* Frameworks */,
+				7313700612AC5324003CF189 /* Resources */,
+				7313700712AC5324003CF189 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InnerRenderTests;
+			productName = InnerRenderTests;
+			productReference = 7313700912AC5324003CF189 /* InnerRenderTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73136FE112AC5323003CF189 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tinsal Parks";
+			};
+			buildConfigurationList = 73136FE412AC5323003CF189 /* Build configuration list for PBXProject "InnerRender" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 73136FDF12AC5323003CF189;
+			productRefGroup = 73136FEF12AC5323003CF189 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				73136FED12AC5323003CF189 /* InnerRender */,
+				7313700812AC5324003CF189 /* InnerRenderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73136FEC12AC5323003CF189 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73136FF712AC5323003CF189 /* InfoPlist.strings in Resources */,
+				73136FFC12AC5324003CF189 /* MainMenu.xib in Resources */,
+				73136FFF12AC5324003CF189 /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7313700612AC5324003CF189 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7313700E12AC5324003CF189 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7313700712AC5324003CF189 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73136FEA12AC5323003CF189 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73136FF912AC5323003CF189 /* InnerRender-main.m in Sources */,
+				7313700212AC5324003CF189 /* InnerRenderAppDelegate.m in Sources */,
+				7313702112AC54B0003CF189 /* RenderView.m in Sources */,
+				7313702512AC55B1003CF189 /* ShapeHandle.m in Sources */,
+				73E7BE2912AD774C0004572D /* RenderManager.m in Sources */,
+				73E7BE2D12AD79E10004572D /* Grid.m in Sources */,
+				73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */,
+				73AB047E12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7313700412AC5324003CF189 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7313701212AC5324003CF189 /* InnerRenderTests.m in Sources */,
+				7313702212AC54B0003CF189 /* RenderView.m in Sources */,
+				7313702612AC55B1003CF189 /* ShapeHandle.m in Sources */,
+				73E7BE2E12AD79E10004572D /* Grid.m in Sources */,
+				73AB02CA12AE48DE0021C1F1 /* HooPolygon.m in Sources */,
+				73AB047D12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */,
+				73AB051D12AEA3220021C1F1 /* HooPolygonTests.m in Sources */,
+				73AB052712AEA3440021C1F1 /* PolygonRasterizerTests.m in Sources */,
+				73AB052C12AEA3580021C1F1 /* RenderViewTests.m in Sources */,
+				73AB053412AEA3A80021C1F1 /* GridTests.m in Sources */,
+				73AB053B12AEA3C20021C1F1 /* ShapeHandleTests.m in Sources */,
+				73AB054012AEA3D00021C1F1 /* RenderManagerTests.m in Sources */,
+				73AB054512AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m in Sources */,
+				73AB054912AEA4B10021C1F1 /* RenderManager.m in Sources */,
+				73AB054A12AEA4B20021C1F1 /* InnerRenderAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		73136FF512AC5323003CF189 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73136FF612AC5323003CF189 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		73136FFA12AC5324003CF189 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73136FFB12AC5324003CF189 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		73136FFD12AC5324003CF189 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73136FFE12AC5324003CF189 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7313701312AC5324003CF189 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		7313701412AC5324003CF189 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+		7313701512AC5324003CF189 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		7313701612AC5324003CF189 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		7313701812AC5324003CF189 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InnerRender-Prefix.pch";
+				INFOPLIST_FILE = "InnerRender-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7313701912AC5324003CF189 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InnerRender-Prefix.pch";
+				INFOPLIST_FILE = "InnerRender-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7313701B12AC5324003CF189 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InnerRenderTests-Prefix.pch";
+				INFOPLIST_FILE = "InnerRenderTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		7313701C12AC5324003CF189 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InnerRenderTests-Prefix.pch";
+				INFOPLIST_FILE = "InnerRenderTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		7313701D12AC5324003CF189 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = InnerRenderTests;
+			};
+			name = Debug;
+		};
+		7313701E12AC5324003CF189 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = InnerRenderTests;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73136FE412AC5323003CF189 /* Build configuration list for PBXProject "InnerRender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7313701312AC5324003CF189 /* Debug */,
+				7313701412AC5324003CF189 /* Release */,
+				7313701512AC5324003CF189 /* Debug */,
+				7313701612AC5324003CF189 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7313701712AC5324003CF189 /* Build configuration list for PBXNativeTarget "InnerRender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7313701812AC5324003CF189 /* Debug */,
+				7313701912AC5324003CF189 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7313701A12AC5324003CF189 /* Build configuration list for PBXNativeTarget "InnerRenderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7313701B12AC5324003CF189 /* Debug */,
+				7313701C12AC5324003CF189 /* Release */,
+				7313701D12AC5324003CF189 /* Debug */,
+				7313701E12AC5324003CF189 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 73136FE112AC5323003CF189 /* Project object */;
+}
