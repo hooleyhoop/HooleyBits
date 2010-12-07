@@ -17,6 +17,6 @@
 
 + (id)lineWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg;
 
-- (id)initWithAddress:(NSUInteger)addressInt;
+- (id)initWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg;
 
 @end

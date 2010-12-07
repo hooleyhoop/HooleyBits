@@ -1112,20 +1112,20 @@ hooInstruction_ *opFE[8] = { &incb_instr, &decb_instr, &invalid_instr, &invalid_
 hooInstruction_ *opFF[8] = { &inc_instr1, &dec_instr1, &call_instr2, &lcall_instr1, &jmp_instr3, &ljmp_instr1, &push_instr4, &invalid_instr };
 
 
-hooInstruction_		op80_instr		= { &_________i1, "",(void *)op80,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op81_instr		= { &_________i1, "",(void *)op81,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op82_instr		= { &_________i1, "",(void *)op82,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op83_instr		= { &_________i1, "",(void *)op83,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opC0_instr		= { &_________i1, "",(void *)opC0,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opC1_instr		= { &_________i1, "",(void *)opC1,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opD0_instr		= { &_________i1, "",(void *)opD0,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opD1_instr		= { &_________i1, "",(void *)opD1,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opD2_instr		= { &_________i1, "",(void *)opD2,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opD3_instr		= { &_________i1, "",(void *)opD3,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opF6_instr		= { &_________i1, "",(void *)opF6,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opF7_instr		= { &_________i1, "",(void *)opF7,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opFE_instr		= { &_________i1, "",(void *)opFE,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		opFF_instr		= { &_________i1, "",(void *)opFF,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op80_instr		= { &___________, "",(void *)op80,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op81_instr		= { &___________, "",(void *)op81,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op82_instr		= { &___________, "",(void *)op82,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op83_instr		= { &___________, "",(void *)op83,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opC0_instr		= { &___________, "",(void *)opC0,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opC1_instr		= { &___________, "",(void *)opC1,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opD0_instr		= { &___________, "",(void *)opD0,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opD1_instr		= { &___________, "",(void *)opD1,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opD2_instr		= { &___________, "",(void *)opD2,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opD3_instr		= { &___________, "",(void *)opD3,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opF6_instr		= { &___________, "",(void *)opF6,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opF7_instr		= { &___________, "",(void *)opF7,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opFE_instr		= { &___________, "",(void *)opFE,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opFF_instr		= { &___________, "",(void *)opFF,TERM,0,0,"crazy indirect shit",0};
 
 /*
  * Decode table for 0x0F0F opcodes
@@ -1173,17 +1173,17 @@ hooInstruction_		*op0F38[256] = {
 &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr, &invalid_instr,
 };
 
-hooInstruction_		op0F00_instr		= { &_________i1, "",(void *)op0F00,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op0F01_instr		= { &_________i1, "",(void *)op0F01,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op0F3A_instr		= { &_________i1, "",(void *)op0F3A,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op0F38_instr		= { &_________i1, "",(void *)op0F38,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op0FAE_instr		= { &_________i1, "",(void *)op0FAE,TERM,0,0,"crazy indirect shit",0};
-hooInstruction_		op0FBA_instr		= { &_________i1, "",(void *)op0FBA,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F00_instr		= { &___________, "",(void *)op0F00,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F01_instr		= { &___________, "",(void *)op0F01,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F3A_instr		= { &___________, "",(void *)op0F3A,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F38_instr		= { &___________, "",(void *)op0F38,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0FAE_instr		= { &___________, "",(void *)op0FAE,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0FBA_instr		= { &___________, "",(void *)op0FBA,TERM,0,0,"crazy indirect shit",0};
 
-hooInstruction_		whatKindOfVoodooIsThis1_instr = { &_________i1, INVALID_32, &op_syscall, 0, 0 };
-hooInstruction_		whatKindOfVoodooIsThis2_instr = { &_________i1, INVALID_32, &op_sysret, 0, 0 };
+hooInstruction_		whatKindOfVoodooIsThis1_instr = { &___________, INVALID_32, &op_syscall, 0, 0 };
+hooInstruction_		whatKindOfVoodooIsThis2_instr = { &___________, INVALID_32, &op_sysret, 0, 0 };
 
-hooInstruction_		op0F0F_instr		= { &_________i1, "",(void *)op0F0F,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F0F_instr		= { &___________, "",(void *)op0F0F,TERM,0,0,"crazy indirect shit",0};
 
 
 /*
@@ -1210,7 +1210,7 @@ hooInstruction_ *op0F[16][16] = {
 
 /* These reference the table above so have to go here */
 // TODO: why does the indirect have an input? im sure it doesnt
-hooInstruction_		op0F_instr		= { &_________i1, "_indirect",(void *)op0F,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		op0F_instr		= { &___________, "",(void *)op0F,TERM,0,0,"crazy indirect shit",0};
 
 /* for 287 instructions, which are a mess to decode */
 hooInstruction_ *opFP1n2[8][8] = {
@@ -1223,7 +1223,7 @@ hooInstruction_ *opFP1n2[8][8] = {
 { &fiadds_instr, &fimuls_instr, &ficoms_instr, &ficomps_instr, &fisubs_instr, &fisubrs_instr, &fidivs_instr, &fidivrs_instr },
 { &filds_instr, &fisttps_instr, &fists_instr, &fistps_instr, &fbld_instr, &fildq_instr, &fbstp_instr, &fistpq_instr } };
 
-hooInstruction_		opFP1n2_instr		= { &_________i1, "",(void *)opFP1n2,TERM,0,0,"crazy indirect shit",0};
+hooInstruction_		opFP1n2_instr		= { &___________, "",(void *)opFP1n2,TERM,0,0,"crazy indirect shit",0};
 
 /* Hopefully without dependencies */
 

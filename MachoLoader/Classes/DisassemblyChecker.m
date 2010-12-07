@@ -9,7 +9,8 @@
 #import "DisassemblyChecker.h"
 #import "DebugCodeLine.h"
 #import "InstrArgStruct.h"
-
+#import "TokenArray.h"
+#import "ArgumentScanner.h"
 #import <sys/param.h>
 
 @interface DisassemblyChecker ()
@@ -36,17 +37,30 @@
 
 - (void)assertNextAdress:(char *)memAddress argCount:(struct InstrArgStruct *)args {
 	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	DebugCodeLine *line = [self nextLine:(char *)&_theCLine];
 	if( line && line->_address==(NSUInteger)memAddress ) {
 	} else {
 		NSLog(@"Bollocks");
+		goto balk;
 	}
 	
 	NSUInteger numberOfArgs = args!=NULL ? args->numberOfArgs : 0;
 	if( line->_numberOfArgs==numberOfArgs ) {
 	} else {
 		NSLog(@"Bollocks - wrong number of args");
+		goto balk;
 	}
+
+balk:
+	[pool release];
+}
+
+- (void)skipNextAdress:(char *)memAddress {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	DebugCodeLine *line = [self nextLine:(char *)&_theCLine];
+	[pool release];
 }
 
 NSUInteger hexStringToInt( NSString *hexString ) {
@@ -109,7 +123,10 @@ NSArray *worderize( NSString *aLine ) {
 			if( char1>47 && char1<58 && char2>47 && char2<58 ) {
 
 				NSArray *components = worderize( strippedline );
-				if( [[components objectAtIndex:1] isEqualToString:@"nop"]==NO ){
+				
+				// contreversal, ignore nop opcodes
+				if( [[components objectAtIndex:1] isEqualToString:@"nop"]==NO )
+				{
 					NSString *address = [components objectAtIndex:0];
 					//Instruction *instr = nil;
 					NSArray *allArgs = nil;
@@ -120,13 +137,16 @@ NSArray *worderize( NSString *aLine ) {
 						[tkns1 secondPass];
 						ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 						allArgs = [[scanner.allArguments copy] autorelease];
+						//for(Argument *arg in allArgs){
+						//	NSLog(@"String is %@    pattern is %@", [arg output], [arg pattern]);
+						//}
 					}
 					
 					NSUInteger addressInt = hexStringToInt(address);
 					newLine = [DebugCodeLine lineWithAddress:addressInt instruction:nil args:allArgs];
 					break;
 				} else {
-					NSLog(@"Skipping nop");
+//TODO					NSLog(@"Skipping nop");
 				}
 			}
 		}
@@ -138,7 +158,7 @@ NSArray *worderize( NSString *aLine ) {
 - (BOOL)openOTOOL {
 	
 	// Call otool and have the output piped a line at a time
-    return [self populateLineList:nil verbosely:YES fromSection:(char *)"__text" afterLine:nil includingPath:YES];
+    return [self populateLineList:nil verbosely:NO fromSection:(char *)"__text" afterLine:nil includingPath:YES];
 }
 
 #define MAX_ARCH_STRING_LENGTH      20      // "ppc", "i386" etc.

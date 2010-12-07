@@ -24,6 +24,7 @@
 - (BOOL)close;
 
 - (void)assertNextAdress:(char *)memAddress argCount:(struct InstrArgStruct *)args;
+- (void)skipNextAdress:(char *)memAddress;
 
 - (DebugCodeLine *)nextLine:(char *)theCLine;
 

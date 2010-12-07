@@ -103,6 +103,12 @@ struct DisplacementValue {
 	uint64				value;
 };
 
+struct IndexedRegisterValue {
+	enum argType		isah;
+	struct HooReg		*baseRegister;
+	uint64				regIndex;
+};
+
 // always refers to a memory location
 struct IndirectVal {
 	enum argType			isah;
@@ -119,6 +125,7 @@ struct IndirectVal {
 
 #define NEW_DISPLACEMENT( displaceStructPtr, intVal ) displaceStructPtr = calloc(1, sizeof(struct DisplacementValue)); displaceStructPtr->isah=DISPLACEMENT_ARG; displaceStructPtr->value=intVal;
 
+#define NEW_INDEXEDREGISTER( indexedRegisterStructPtr,baseReg,indexVal ) indexedRegisterStructPtr = calloc(1, sizeof(struct IndexedRegisterValue)); indexedRegisterStructPtr->isah=INDEXEDREGISTER_ARG; indexedRegisterStructPtr->baseRegister=baseReg; indexedRegisterStructPtr->regIndex=indexVal;
 
 /* Flags */
 #define HAS_SUFFIX			0x1	/* For instructions which may have a 'w', 'l', or 'q' suffix */
@@ -615,8 +622,12 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 	currentFunc->lastLine = newLine;
 	
 	//	verify address
-	[_disChecker assertNextAdress:memAddress argCount:args];
-	
+	if(dp)
+		[_disChecker assertNextAdress:memAddress argCount:args];
+	else {
+		[_disChecker skipNextAdress:memAddress];
+	}
+
 	// lets try to add Labels
 	if( dp && (dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP) ) {
 		struct label *newLabel = calloc( 1, sizeof(struct label) );
@@ -643,35 +654,42 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			for( NSUInteger i=0; i<args->numberOfArgs; i++ ){
 				struct InstrArgStruct argi = args[i];
 				struct HooAbstractDataType *abstractArgi = argi.value;
-				
-				char *segReg;
-				char *baseReg;
-				char *indexReg;
-				struct HooReg *regArg;
-				struct ImediateValue *immedArg;
-				struct IndirectVal *indirectArg;
-				struct DisplacementValue *displaceArg;
-				
+
 				switch(abstractArgi->isah) {
 					case REGISTER_ARG:
-						regArg = (struct HooReg *)abstractArgi;
+					{
+						struct HooReg *regArg = (struct HooReg *)abstractArgi;
 						sprintf( lineToPrint+strlen(lineToPrint), " %s", regArg->prettyName );
 						break;
+					}
 					case IMMEDIATE_ARG:
-						immedArg = (struct ImediateValue *)abstractArgi;
+					{
+						struct ImediateValue *immedArg = (struct ImediateValue *)abstractArgi;
 						sprintf( lineToPrint+strlen(lineToPrint), " %0qx", immedArg->value );
 						break;
+					}
 					case INDIRECT_ARG:
-						indirectArg = (struct IndirectVal *)abstractArgi;
-						segReg = indirectArg->segmentRegister ? (char *)indirectArg->segmentRegister->prettyName : (char *)"_";
+					{
+						struct IndirectVal *indirectArg = (struct IndirectVal *)abstractArgi;
+						char *segReg = indirectArg->segmentRegister ? (char *)indirectArg->segmentRegister->prettyName : (char *)"_";
 						char const *baseReg = indirectArg->baseRegister ? indirectArg->baseRegister->prettyName : "";
 						char const *indexReg = indirectArg->indexRegister ? indirectArg->indexRegister->prettyName : "_";
 						sprintf( lineToPrint+strlen(lineToPrint), " %s:%qi(%s,%s,%qi)", segReg, (uint64)indirectArg->displacement, baseReg, indexReg, (uint64)indirectArg->scale );
 						break;
+					}
 					case DISPLACEMENT_ARG:
-						displaceArg = (struct DisplacementValue *)abstractArgi;
+					{
+						struct DisplacementValue *displaceArg = (struct DisplacementValue *)abstractArgi;
 						sprintf( lineToPrint+strlen(lineToPrint), " %0qx", displaceArg->value );
-						break;			
+						break;
+					}
+					case INDEXEDREGISTER_ARG:
+					{
+						struct IndexedRegisterValue *indexedRegArg = (struct IndexedRegisterValue *)abstractArgi;
+						struct HooReg *baseReg = (struct HooReg *)indexedRegArg->baseRegister;
+						sprintf( lineToPrint+strlen(lineToPrint), " %s %i", baseReg->prettyName, (int)indexedRegArg->regIndex );
+						break;
+					}
 					default:
 						NSLog(@"Unknown HooAbstractDataType");
 						break;
@@ -3031,14 +3049,22 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		/* to the correct base and output. */
 		case INT3:
 			// printf("%s\t$0x3\n", mnemonic);
-			[self addLine:addr :currentFuncPtr :&int3_instr :NULL :NOISY];
+			NEW_IMMEDIATE( value0Immed, 0x3 );
+			FILLARGS1( &value0Immed );
+			[self addLine:addr :currentFuncPtr :&int3_instr :allArgs :NOISY];
 			return(length);
 
 		/* just an opcode and an unused byte that must be discarded */
 		case U:
+			
+			// TODO: ok, Otool prints the byte (this code discards it), so obviously this not the source to the installed Otool?
 			byte = get_value( 1, sect, &length, &left);
 			// printf("%s\n", mnemonic);
-			[self addLine:addr :currentFuncPtr :dp :NULL :NOISY];			
+			
+			// As Otool doesn't discard the byte, we have to include it so validation passes
+			NEW_IMMEDIATE( value0Immed, byte );
+			FILLARGS1( &value0Immed );
+			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		case CBW:
@@ -3073,7 +3099,10 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		case F:
 		{
 			// printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
-			[self addLine:addr :currentFuncPtr :&fstp1_instr :NULL :NOISY];
+			struct IndexedRegisterValue *indexedReg;
+			NEW_INDEXEDREGISTER( indexedReg, &fp_reg, r_m );
+			FILLARGS1( indexedReg );			
+			[self addLine:addr :currentFuncPtr :&fstp1_instr :allArgs :NOISY];
 			return(length);
 		}
 		/* float reg to float reg, with ret bit present */

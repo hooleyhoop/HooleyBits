@@ -10,18 +10,19 @@
 
 enum TokenType {
 
-    decimalNum,		// decNm
-	upperCaseChar,	// uprCC
-	lowerCaseChar,	// lwrCC
+    decimalNum,			// decNm
+	upperCaseChar,		// uprCC
+	lowerCaseChar,		// lwrCC
     openBracket,		// opBRK
     closeBracket,		// clBRK
     comma,				// comma
     asterisk,			// astrx
-    dollar,			// dollr
+    dollar,				// dollr
     percent,			// prcnt
     colon,				// colon
 	registerVal,		// rgstr
-	hexNum				// hexNm
+	hexNum,				// hexNm
+	questionMarkChar	// qsmrk
 };
 
 #pragma mark -
@@ -40,6 +41,7 @@ enum TokenType {
 - (void)insertPercent;
 - (void)insertDollar;
 - (void)insertColon;
+- (void)insertQuestionMark;
 
 - (void)insertDecimalChar:(char)val;
 - (void)insertUppercaseChar:(char)val;

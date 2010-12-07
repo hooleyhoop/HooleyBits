@@ -13,15 +13,16 @@
 
 + (id)lineWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg {
 	
-	DebugCodeLine *cl = [[[DebugCodeLine alloc] initWithAddress:addressInt] autorelease];
+	DebugCodeLine *cl = [[[DebugCodeLine alloc] initWithAddress:addressInt instruction:inst args:arg] autorelease];
 	return cl;
 }
 
-- (id)initWithAddress:(NSUInteger)addressInt {
+- (id)initWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg {
 	
 	self = [super init];
 	if(self){
 		_address = addressInt;
+		_numberOfArgs = [arg count];
 	}
 	return self;
 }

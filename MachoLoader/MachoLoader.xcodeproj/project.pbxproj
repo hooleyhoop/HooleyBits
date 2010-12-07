@@ -44,6 +44,14 @@
 		7395BD78125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
+		73A71FBA129BC74D0005959F /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FB9129BC74D0005959F /* TokenArray.m */; };
+		73A71FBB129BC74D0005959F /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FB9129BC74D0005959F /* TokenArray.m */; };
+		73A71FD5129BC8EE0005959F /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FD4129BC8EE0005959F /* ArgumentScanner.m */; };
+		73A71FE4129BC9520005959F /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FE3129BC9520005959F /* BasicToken.m */; };
+		73A71FE5129BC9520005959F /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FE3129BC9520005959F /* BasicToken.m */; };
+		73A71FF5129BC9F80005959F /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FD4129BC8EE0005959F /* ArgumentScanner.m */; };
+		73A71FFF129BCA300005959F /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FFE129BCA300005959F /* Argument.m */; };
+		73A72000129BCA300005959F /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A71FFE129BCA300005959F /* Argument.m */; };
 		73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
 		73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
 		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
@@ -129,6 +137,14 @@
 		7395BD77125630080046A8FE /* DisassemblyChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisassemblyChecker.m; path = Classes/DisassemblyChecker.m; sourceTree = "<group>"; };
 		7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionEnumerator.h; path = Classes/FunctionEnumerator.h; sourceTree = "<group>"; };
 		7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionEnumerator.m; path = Classes/FunctionEnumerator.m; sourceTree = "<group>"; };
+		73A71FB8129BC74D0005959F /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenArray.h; sourceTree = "<group>"; };
+		73A71FB9129BC74D0005959F /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenArray.m; sourceTree = "<group>"; };
+		73A71FD3129BC8EE0005959F /* ArgumentScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArgumentScanner.h; sourceTree = "<group>"; };
+		73A71FD4129BC8EE0005959F /* ArgumentScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArgumentScanner.m; sourceTree = "<group>"; };
+		73A71FE2129BC9520005959F /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicToken.h; sourceTree = "<group>"; };
+		73A71FE3129BC9520005959F /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicToken.m; sourceTree = "<group>"; };
+		73A71FFD129BCA300005959F /* Argument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Argument.h; sourceTree = "<group>"; };
+		73A71FFE129BCA300005959F /* Argument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Argument.m; sourceTree = "<group>"; };
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
@@ -309,12 +325,9 @@
 				73685DA21244D34F00DDEE60 /* InstrArgStruct.m */,
 				730DB3C112549EBC00203ED8 /* ArgStack.h */,
 				730DB3C212549EBC00203ED8 /* ArgStack.c */,
-				7395BD76125630080046A8FE /* DisassemblyChecker.h */,
-				7395BD77125630080046A8FE /* DisassemblyChecker.m */,
+				73A72005129BCA5B0005959F /* Otool */,
 				737BB51612705817007A531E /* DissasemblyProcessor.h */,
 				737BB51712705817007A531E /* DissasemblyProcessor.m */,
-				73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */,
-				73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -405,6 +418,33 @@
 			name = Config;
 			path = ../../Blake/Config;
 			sourceTree = SOURCE_ROOT;
+		};
+		73A72002129BCA3A0005959F /* otool parsing */ = {
+			isa = PBXGroup;
+			children = (
+				73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */,
+				73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */,
+				73A71FB8129BC74D0005959F /* TokenArray.h */,
+				73A71FB9129BC74D0005959F /* TokenArray.m */,
+				73A71FD3129BC8EE0005959F /* ArgumentScanner.h */,
+				73A71FD4129BC8EE0005959F /* ArgumentScanner.m */,
+				73A71FE2129BC9520005959F /* BasicToken.h */,
+				73A71FE3129BC9520005959F /* BasicToken.m */,
+				73A71FFD129BCA300005959F /* Argument.h */,
+				73A71FFE129BCA300005959F /* Argument.m */,
+			);
+			name = "otool parsing";
+			sourceTree = "<group>";
+		};
+		73A72005129BCA5B0005959F /* Otool */ = {
+			isa = PBXGroup;
+			children = (
+				7395BD76125630080046A8FE /* DisassemblyChecker.h */,
+				7395BD77125630080046A8FE /* DisassemblyChecker.m */,
+				73A72002129BCA3A0005959F /* otool parsing */,
+			);
+			name = Otool;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -567,6 +607,10 @@
 				73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */,
 				734E804C1289523100D5FC99 /* HooClass.c in Sources */,
 				73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */,
+				73A71FBA129BC74D0005959F /* TokenArray.m in Sources */,
+				73A71FD5129BC8EE0005959F /* ArgumentScanner.m in Sources */,
+				73A71FE4129BC9520005959F /* BasicToken.m in Sources */,
+				73A71FFF129BCA300005959F /* Argument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +642,10 @@
 				737BB51812705817007A531E /* DissasemblyProcessor.m in Sources */,
 				734E804B1289523100D5FC99 /* HooClass.c in Sources */,
 				73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */,
+				73A71FBB129BC74D0005959F /* TokenArray.m in Sources */,
+				73A71FE5129BC9520005959F /* BasicToken.m in Sources */,
+				73A71FF5129BC9F80005959F /* ArgumentScanner.m in Sources */,
+				73A72000129BCA300005959F /* Argument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

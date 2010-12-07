@@ -810,7 +810,9 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		if( iterationCounter==906390 )
 			NSLog(@"stop here");
 		
-		if( memPtr==(char *)0x56e176 )
+		//0x861D26 == align 4
+		//0x861D28 == dd 14725h
+		if( memPtr==(char *)0x861D26 )
 			NSLog(@"we get j==7 back in clang, == j==3 in GCC, it should be seven");
 		
 		

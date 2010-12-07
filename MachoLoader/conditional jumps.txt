@@ -1,0 +1,155 @@
+do while loop
+-------------
+
+label1
+instruction
+conditional jump to label1
+
+
+while loop
+-----------
+
+jump label2
+label1
+instruction
+conditional jump to label1
+label2
+
+
+for loop
+--------
+
+jump label2
+label1
+instruction
+label2
+conditional jump to label1
+
+
+for loop containing a continue
+-------------------------------
+
+jump label4
+label1
+instruction
+conditional jump label3
+instruction
+label3
+instruction
+label4
+conditional jump label1
+
+
+if
+-------
+
+conditional jump label1
+	instruction
+label1
+
+
+if else
+---------
+
+conditional jump label1
+insruction
+jump label2
+label1:
+insruction
+label2:
+
+
+switch with 3 cases and default
+-------------------------------
+
+
+conditional jump label1
+instruction
+conditional jump label2
+instruction
+conditional jump label3
+jump label4
+label3:
+instruction
+jump label5
+label1:
+instruction
+jump label5
+label2:
+instruction
+jump label5
+label4
+instruction
+label5
+
+
+
+• add all labels
+• divide into logical connected blocks (eh? even nested?)
+take a jump and is label - does it contain any more jumps and labels? if so add them and repeat
+
+
+1 conditional jump label1
+1 conditional jump label2
+1 conditional jump label3
+1 jump label4
+3 jumps label5
+
+* switch graph *
+
+- cj label1
+							- cj label2
+														- cj label3
+																					- j label4
+														- label3
+																												- j label5
+- label1
+																												- j label5
+							- label2
+																												- j label5
+																					- label4
+																												- label5
+
+
+
+
+* if else graph *
+
+- cj label1
+							- jump label2
+- label1:
+							- label2:
+
+
+
+
+* if graph *
+
+- cj label1
+- label1
+
+
+when you draw the connections between the nodes you can see that it is one piece
+SEE IMG branchgraph.psd
+
+if a node only has one input then it is a separate structure
+
+I think we really have something with the branch graph the key thing is to put in the labels
+
+Store state in any given function for branch points and
+if instr is branchIngInstruction label this branch address
+
+Hmmmmm, some jumps are relative or values from registers, etc. Could be difficult
+
+
+// Change of tack
+
+Just do calls
+-------------
+
+just do calls not in our text section ?
+
+Is possible that calls i cant identitfy are ARGUMENTS passed into the function. How to identify arguments?
+
+REAL PRIORITY! label arguments
+
