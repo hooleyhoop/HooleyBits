@@ -83,9 +83,25 @@ static char pixelBuffer[30][30];
 			BOOL isInside = ((pixelBuffer[y/20][x/20] & mask_table[1])!=0);
 			if(isInside) {
 				pixelBuffer[y/20][x/20] = (char)255;
-				NSLog(@"Inside %i", (int)(y/20));
 			} else {
-				pixelBuffer[y/20][x/20] = distanceFromVector();
+                
+                int numverts = [_poly numverts];
+                for( int i = 0; i<numverts; i++ ) {
+                    double pgon[4][2] = [_poly pts];
+                    double x1=pgon[i][X];
+                    double y1=pgon[i][Y];
+                    double x2=pgon[(i + 1) % numverts][X];
+                    double y2=pgon[(i + 1) % numverts][Y];
+                    
+                    v = 
+                    w = 
+                    p = CGPointMake(x, y)
+                    pixelBuffer[y/20][x/20] = minimum_distance( v, w, p );
+                    
+                    is it shortest dist?                  
+                }
+
+                draw shortest dist
 			}
 		}
 	}
@@ -123,7 +139,7 @@ static char pixelBuffer[30][30];
 
 static int pointinpoly( const double point[2], double pgon[MAXVERTS][2] ) {
 
-    int i, numverts, crossings = 0;
+    int numverts, crossings = 0;
     double x = point[X], y = point[Y];
 	
     for (numverts = 0; pgon[numverts][X] != -1 && numverts < MAXVERTS;
@@ -131,7 +147,7 @@ static int pointinpoly( const double point[2], double pgon[MAXVERTS][2] ) {
         /* just counting the vertexes */
     }
 	
-    for (i = 0; i < numverts; i++) {
+    for( int i = 0; i<numverts; i++ ) {
         double x1=pgon[i][X];
         double y1=pgon[i][Y];
         double x2=pgon[(i + 1) % numverts][X];
@@ -149,4 +165,18 @@ static int pointinpoly( const double point[2], double pgon[MAXVERTS][2] ) {
     return crossings & 0x01;
 }
 
+// Return minimum distance between line segment vw and point p
+float minimum_distance( CGPoint v, CGPoint w, CGPoint p ) {
+
+    const float l2 = length_squared(v, w);  // i.e. |w-v|^2 -  avoid a sqrt
+    if (l2 == 0.0) return distance(p, v);   // v == w case
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line. 
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    const float t = dot(p - v, w - v) / l2;
+    if (t < 0.0) return distance(p, v);       // Beyond the 'v' end of the segment
+    else if (t > 1.0) return distance(p, w);  // Beyond the 'w' end of the segment
+    const vec2 projection = v + t * (w - v);  // Projection falls on the segment
+    return distance(p, projection);
+}
 @end

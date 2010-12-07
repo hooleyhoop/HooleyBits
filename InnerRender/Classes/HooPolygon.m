@@ -11,30 +11,34 @@
 
 @implementation HooPolygon
 
-static int ptCount = 3;
-
-static double p1[2] = {10.,10.};
-static double p2[2] = {300.,300.};
-static double p3[2] = {600.,2.};
-
-static double pts[4][2] = { {10.,10.}, {250.,300.}, {400.,2.}, {10.,10.} };
-
-static int _height = 600;
-static int _width = 600;
-
 - (id)init {
 	self = [super init];
     if( self ) {
-//		addPt:
-//		addPt:
-//		addPt:		
+        
+        _ptArray = [[NSPointerArray pointerArrayWithWeakObjects] retain];
+        
+        CGPoint *p1 = malloc(sizeof(CGPoint));
+        CGPoint *p2 = malloc(sizeof(CGPoint));
+        CGPoint *p3 = malloc(sizeof(CGPoint));
+        p1->x = 10.; 
+        p1->y = 10.;
+        p2->x = 250.; 
+        p2->y = 300.;
+        p3->x = 400.; 
+        p3->y = 2.;
+        [_ptArray addPointer:p1];
+        [_ptArray addPointer:p2];
+        [_ptArray addPointer:p3];
+        [_ptArray addPointer:p1];
     }
-    
     return self;
 }
 
 - (void)dealloc {
     
+    // remove all pointer shit
+    
+    [_ptArray release];
     [super dealloc];
 }
 
@@ -51,19 +55,19 @@ static int _width = 600;
 	CGContextSetAllowsAntialiasing( windowContext, true );
 	CGContextSetLineWidth( windowContext, 1.0f );	
 	CGContextDrawPath( windowContext, kCGPathStroke );
-	CGContextMoveToPoint( windowContext, pts[0][0], pts[0][1] );
-	for( int i=1; i<ptCount; i++ ) {
-		CGContextAddLineToPoint( windowContext, pts[i][0], pts[i][1] );
+    
+    CGPoint *p = [_ptArray pointerAtIndex:0];
+	CGContextMoveToPoint( windowContext, p->x, p->y );
+	for( int i=1; i<[self numverts]; i++ ) {
+        p = [_ptArray pointerAtIndex:i];        
+		CGContextAddLineToPoint( windowContext, p->x, p->y );
 	}
-	CGContextAddLineToPoint( windowContext, pts[0][0], pts[0][1] );
 	CGContextDrawPath( windowContext, kCGPathStroke );
 
 	// draw each pt
-	for( int i=0; i<ptCount; i++ ) {
-		double px = pts[i][0];
-		double py = pts[i][1];
-		
-		CGContextFillRect( windowContext, CGRectMake( px, py, 5., 5.));
+	for( int i=0; i<[self numverts]-1; i++ ) {
+        CGPoint *p = [_ptArray pointerAtIndex:i];
+		CGContextFillRect( windowContext, CGRectMake( p->x, p->y, 5., 5.));
 	}
 	
 	CGColorRelease(blackCol);
@@ -71,13 +75,17 @@ static int _width = 600;
 }
 
 - (CGRect)boundsRect {
-	return CGRectMake( 0,0,_width, _height);
+    NSLog(@"TODO:FIX THIS!");
+	return CGRectMake( 0,0,600., 600.);
 }
 
-- (double (*)[2])pts {
-	return pts;
+- (NSPointerArray *)pts {
+	return _ptArray;
 }
 
+- (int)numverts {
+    return [_ptArray count];
+}
 //int pnpoly( int nvert, float *vertx, float *verty, float testx, float testy )
 //{
 //	int i, j, c = 0;

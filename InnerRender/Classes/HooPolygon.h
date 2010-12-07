@@ -9,10 +9,12 @@
 
 @interface HooPolygon : NSObject {
 
+    NSPointerArray *_ptArray;
 }
 
 
 - (CGRect)boundsRect;
-- (double (*)[2])pts;
+- (NSPointerArray *)pts;
+- (int)numverts;
 
 @end
