@@ -14,6 +14,8 @@
     Grid *_grid;
 	HooPolygon *_poly;
 	PolygonRasterizer *_rasterizer;
+	SEL action;
+	id target;
 }
 
 @end

@@ -9,12 +9,48 @@
 #import "PolygonRasterizer.h"
 #import "HooPolygon.h"
 
+#ifndef SQR
+#define SQR(a) ((a)*(a))
+#endif
 
-static char distanceFromVector(){
-	return (char)100;
+float dotProduct( CGPoint p1, CGPoint p2 ) { return p1.x * p2.x + p1.y * p2.y; }
+CGPoint subVectors( CGPoint p1, CGPoint p2 ) {
+	return CGPointMake( p1.x-p2.x, p1.y-p2.y );
+}
+CGPoint scaleVector( CGFloat mult, CGPoint vec ) {
+	return CGPointMake( vec.x*mult, vec.y*mult );
+}
+CGPoint addVectors( CGPoint p1, CGPoint p2 ) {
+	return CGPointMake( p1.x+p2.x, p1.y+p2.y );
+}
+CGFloat length_squared( CGPoint p1, CGPoint p2 ) {
+	return SQR(p1.x-p2.x) + SQR(p1.y-p2.y);
+}
+CGFloat distance( CGPoint p1, CGPoint p2 ){
+	return sqrt(SQR(p1.x-p2.x) + SQR(p1.y-p2.y));
+}
+
+// Return minimum distance between line segment vw and point p
+float minimum_distance( CGPoint v, CGPoint w, CGPoint p ) {
+	
+    const float l2 = length_squared(v, w);  // i.e. |w-v|^2 -  avoid a sqrt
+    if (l2 == 0.0) 
+		return distance(p, v);   // v == w case
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line. 
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    const float t = dotProduct( subVectors(p,v), subVectors(w,v) ) / l2;
+    if( t<0.0 )
+		return distance(p, v);       // Beyond the 'v' end of the segment
+    else if( t>1.0 )
+		return distance(p, w);  // Beyond the 'w' end of the segment
+    const CGPoint projection = addVectors( v, scaleVector( t, subVectors(w,v)));  // Projection falls on the segment
+    return distance(p, projection);
 }
 
 
+
+#pragma mark -
 @implementation PolygonRasterizer
 
 static char pixelBuffer[30][30];
@@ -43,12 +79,15 @@ static char pixelBuffer[30][30];
 	NSUInteger width = bounds.size.width;
 	NSUInteger height = bounds.size.height;
 	
+	NSPointerArray *allPts = [_poly pts];
+	
 	////// woah! temp - test each damn pixel
 	// see which are inside
 	for( NSUInteger y=0; y<height; y=y+20 ){
 		for( NSUInteger x=0; x<width; x=x+20 ){
 			double pt[2] = {x,y};
-			int result = pointinpoly( pt, [_poly pts] );
+			
+			int result = pointinpoly( pt, allPts );
 			if(result){
 				// Set the least significant bit to indicate it is inside
 				pixelBuffer[y/20][x/20] |= mask_table[ 0 ];
@@ -85,23 +124,25 @@ static char pixelBuffer[30][30];
 				pixelBuffer[y/20][x/20] = (char)255;
 			} else {
                 
-                int numverts = [_poly numverts];
-                for( int i = 0; i<numverts; i++ ) {
-                    double pgon[4][2] = [_poly pts];
-                    double x1=pgon[i][X];
-                    double y1=pgon[i][Y];
-                    double x2=pgon[(i + 1) % numverts][X];
-                    double y2=pgon[(i + 1) % numverts][Y];
-                    
-                    v = 
-                    w = 
-                    p = CGPointMake(x, y)
-                    pixelBuffer[y/20][x/20] = minimum_distance( v, w, p );
-                    
-                    is it shortest dist?                  
+                NSUInteger numverts = [_poly numverts];
+				CGFloat shortestDist = 255;
+                for( NSUInteger i=0; i<numverts; i++ )
+				{
+					NSPointerArray *pts = [_poly pts];
+					NSUInteger nextIndex = (i + 1) % numverts;
+					CGPoint *pt1 = [pts pointerAtIndex:i];
+					CGPoint *pt2 = [pts pointerAtIndex:nextIndex];
+					CGPoint p = CGPointMake(x, y);
+					CGFloat dist = minimum_distance( *pt1, *pt2, p );
+					if(dist<shortestDist){
+						shortestDist = dist;
+                    }
                 }
-
-                draw shortest dist
+				NSAssert( shortestDist>=0 && shortestDist<=255, @"value out of bounds" );
+				NSUInteger sd = floor(shortestDist);
+				unsigned char sdc = sd;
+				//NSLog(@"shortestDist = %i, %i", sd, (char)sd);
+				pixelBuffer[y/20][x/20] = sdc;
 			}
 		}
 	}
@@ -111,48 +152,56 @@ static char pixelBuffer[30][30];
 - (void)drawInContext:(CGContextRef)windowContext  {
 	
 	CGColorRef whiteCol = CGColorCreateGenericRGB( 1.0f, 1.0f, 1.0f, 1.0f );
-	CGColorRef greyCol = CGColorCreateGenericRGB( 1.0f, 0.5f, 0.5f, 1.0f );
 
 	// TODO: This wont do this here, this will just plot each value in the pixel buffer
 	for( NSUInteger j=0; j<30; j++ ){
 		for( NSUInteger i=0; i<30; i++ ){
-			char val = pixelBuffer[j][i];
-			NSLog(@"vale %i", val);
-			if( val==((char)255) ) {
-				CGContextSetFillColorWithColor( windowContext, whiteCol );
-				CGContextFillRect( windowContext, CGRectMake( i*20, j*20, 20., 20.));
-				// NSLog(@"yesy");
+			unsigned char val = pixelBuffer[j][i];
+
+			if( val==((unsigned char)255) ) {
+				// CGContextSetFillColorWithColor( windowContext, whiteCol );
+				// CGContextFillRect( windowContext, CGRectMake( i*20, j*20, 20., 20.));
 			} else {
+				// Wooooooah
+				// Wooooooah
+				// Wooooooah
+				// Wooooooah stop making fucking colours
+				NSUInteger intval = (NSUInteger)val;
+				NSLog(@"printing val %u", intval);
+				CGFloat greyVal = intval/255.;
+				CGColorRef greyCol = CGColorCreateGenericRGB(greyVal, greyVal, greyVal, 1.0f );
 				CGContextSetFillColorWithColor( windowContext, greyCol );
-	//			CGContextFillRect( windowContext, CGRectMake( i*20, j*20, 20., 20.));
-//				NSLog(@"No");
+				CGContextFillRect( windowContext, CGRectMake( i*20, j*20, 20., 20.));
+				CGColorRelease(greyCol);
 			}
 		}
 	}
-
-	// TODO: Now draw the anti aliased pixels
-	
 	
 	CGColorRelease(whiteCol);
-	CGColorRelease(greyCol);
 }
 
-static int pointinpoly( const double point[2], double pgon[MAXVERTS][2] ) {
+static int pointinpoly( const double point[2], NSPointerArray *pgon ) {
 
-    int numverts, crossings = 0;
+    int crossings = 0;
     double x = point[X], y = point[Y];
 	
-    for (numverts = 0; pgon[numverts][X] != -1 && numverts < MAXVERTS;
-		 numverts++) {
+	NSUInteger numverts = [pgon count];
+    // for (numverts = 0; pgon[numverts][X] != -1 && numverts < MAXVERTS; numverts++) {
         /* just counting the vertexes */
-    }
+    // }
 	
-    for( int i = 0; i<numverts; i++ ) {
-        double x1=pgon[i][X];
-        double y1=pgon[i][Y];
-        double x2=pgon[(i + 1) % numverts][X];
-        double y2=pgon[(i + 1) % numverts][Y];
-        double d=(y - y1) * (x2 - x1) - (x - x1) * (y2 - y1);
+	// Remember shape is closed, ie first pt also appears at the end
+    for( NSUInteger i=0; i<(numverts-1); i++ )
+	{
+		NSUInteger nextIndex = (i+1) % numverts;
+		CGPoint *vertexi = [pgon pointerAtIndex:i];
+		CGPoint *vertexii = [pgon pointerAtIndex:nextIndex];
+		
+        double x1=vertexi->x; //pgon[i][X];
+        double y1=vertexi->y; //pgon[i][Y];
+        double x2=vertexii->x;
+        double y2=vertexii->y;
+        double d= (y-y1) * (x2-x1) - (x-x1) * (y2-y1);
 		
         if ((y1 >= y) != (y2 >= y)) {
             crossings +=y2 - y1 >= 0 ? d >= 0 : d <= 0;
@@ -165,18 +214,5 @@ static int pointinpoly( const double point[2], double pgon[MAXVERTS][2] ) {
     return crossings & 0x01;
 }
 
-// Return minimum distance between line segment vw and point p
-float minimum_distance( CGPoint v, CGPoint w, CGPoint p ) {
 
-    const float l2 = length_squared(v, w);  // i.e. |w-v|^2 -  avoid a sqrt
-    if (l2 == 0.0) return distance(p, v);   // v == w case
-    // Consider the line extending the segment, parameterized as v + t (w - v).
-    // We find projection of point p onto the line. 
-    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
-    const float t = dot(p - v, w - v) / l2;
-    if (t < 0.0) return distance(p, v);       // Beyond the 'v' end of the segment
-    else if (t > 1.0) return distance(p, w);  // Beyond the 'w' end of the segment
-    const vec2 projection = v + t * (w - v);  // Projection falls on the segment
-    return distance(p, projection);
-}
 @end

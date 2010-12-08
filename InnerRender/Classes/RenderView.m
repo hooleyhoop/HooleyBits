@@ -46,6 +46,79 @@
     [super dealloc];
 }
 
+- (void)viewDidEndLiveResize {
+
+	[super viewDidEndLiveResize];
+	[self setNeedsDisplay:YES];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+	
+    if( YES ) // [theEvent modifierFlags] & NSAlternateKeyMask
+	{
+        BOOL dragActive = YES;
+        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSEvent *event = NULL;
+        NSWindow *targetWindow = [self window];
+		
+		NSAutoreleasePool *myPool = [[NSAutoreleasePool alloc] init];
+        while( dragActive )
+		{
+			NSLog(@"LOOP");
+
+            event = [targetWindow nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask | NSKeyDownMask) untilDate:[NSDate distantFuture] inMode:NSEventTrackingRunLoopMode dequeue:YES];
+            if(!event)
+                continue;
+            location = [self convertPoint:[event locationInWindow] fromView:nil];
+            switch ([event type])
+			{
+                case NSLeftMouseDragged:
+                    // annotationPeel = (location.x * 2.0 / [renderView bounds].size.width);
+                    // [imageLayer showLens:(annotationPeel <= 0.0)];
+                    // [peelOffFilter setValue:[NSNumber numberWithFloat:annotationPeel] forKey:@"inputTime"];
+                    // [self refresh];
+					NSLog(@"Dragging");
+                    break;
+					
+                case NSLeftMouseUp:
+                    dragActive = NO;
+					NSLog(@"UP");
+                    break;
+					
+                case NSKeyDown:
+					NSBeep();
+					continue;
+					
+                default:
+					NSLog(@"ARGGG");
+                    break;
+            }
+        }
+        [myPool release];
+    } else {
+        // other tasks handled here......
+    }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+
+    // [self setFrameColor:[NSColor greenColor]];
+    [self setNeedsDisplay:YES];
+	[NSApp sendAction:[self action] to:[self target] from:self];
+}
+
+- (SEL)action {return action; }
+
+- (void)setAction:(SEL)newAction {
+    action = newAction;
+}
+
+- (id)target { return target; }
+
+- (void)setTarget:(id)newTarget {
+    target = newTarget;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
 
     [[NSColor blackColor] set];

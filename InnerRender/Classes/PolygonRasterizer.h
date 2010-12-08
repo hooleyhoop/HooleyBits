@@ -33,7 +33,8 @@
 #define fmax(a,b) (((a)>(b))?(a):(b))
 #endif
 
-static int pointinpoly( const double point[2], double pgon[MAXVERTS][2]);
+// static int pointinpoly( const double point[2], double pgon[MAXVERTS][2]);
+static int pointinpoly( const double point[2], NSPointerArray *pgon );
 
 - (void)setResolution:(NSUInteger)numerator in:(NSUInteger)denominator;
 
