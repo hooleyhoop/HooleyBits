@@ -63,12 +63,6 @@
 		CGContextAddLineToPoint( windowContext, p->x, p->y );
 	}
 	CGContextDrawPath( windowContext, kCGPathStroke );
-
-	// draw each pt
-	for( int i=0; i<[self numverts]-1; i++ ) {
-        CGPoint *p = [_ptArray pointerAtIndex:i];
-		CGContextFillRect( windowContext, CGRectMake( p->x, p->y, 5., 5.));
-	}
 	
 	CGColorRelease(blackCol);
 	CGColorRelease(whiteCol);

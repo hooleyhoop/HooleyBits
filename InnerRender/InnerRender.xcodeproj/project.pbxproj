@@ -33,6 +33,8 @@
 		73AB054512AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */; };
 		73AB054912AEA4B10021C1F1 /* RenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2812AD774C0004572D /* RenderManager.m */; };
 		73AB054A12AEA4B20021C1F1 /* InnerRenderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */; };
+		73BF14CA12B1354600B714FB /* HandleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BF14C912B1354600B714FB /* HandleLayer.m */; };
+		73BF14CB12B1354600B714FB /* HandleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BF14C912B1354600B714FB /* HandleLayer.m */; };
 		73E7BE2912AD774C0004572D /* RenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2812AD774C0004572D /* RenderManager.m */; };
 		73E7BE2D12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
 		73E7BE2E12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
@@ -69,6 +71,8 @@
 		73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeHandleTests.m; sourceTree = "<group>"; };
 		73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderManagerTests.m; sourceTree = "<group>"; };
 		73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InnerRenderAppDelegateTests.m; sourceTree = "<group>"; };
+		73BF14C812B1354600B714FB /* HandleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleLayer.h; sourceTree = "<group>"; };
+		73BF14C912B1354600B714FB /* HandleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleLayer.m; sourceTree = "<group>"; };
 		73E7BE2712AD774C0004572D /* RenderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderManager.h; sourceTree = "<group>"; };
 		73E7BE2812AD774C0004572D /* RenderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderManager.m; sourceTree = "<group>"; };
 		73E7BE2B12AD79E10004572D /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				7313702012AC54B0003CF189 /* RenderView.m */,
 				73E7BE2B12AD79E10004572D /* Grid.h */,
 				73E7BE2C12AD79E10004572D /* Grid.m */,
+				73BF14C812B1354600B714FB /* HandleLayer.h */,
+				73BF14C912B1354600B714FB /* HandleLayer.m */,
 				7313702312AC55B1003CF189 /* ShapeHandle.h */,
 				7313702412AC55B1003CF189 /* ShapeHandle.m */,
 				73E7BE2712AD774C0004572D /* RenderManager.h */,
@@ -297,6 +303,7 @@
 				73E7BE2D12AD79E10004572D /* Grid.m in Sources */,
 				73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */,
 				73AB047E12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */,
+				73BF14CA12B1354600B714FB /* HandleLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +326,7 @@
 				73AB054512AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m in Sources */,
 				73AB054912AEA4B10021C1F1 /* RenderManager.m in Sources */,
 				73AB054A12AEA4B20021C1F1 /* InnerRenderAppDelegate.m in Sources */,
+				73BF14CB12B1354600B714FB /* HandleLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

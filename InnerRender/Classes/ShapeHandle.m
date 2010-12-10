@@ -11,10 +11,16 @@
 
 @implementation ShapeHandle
 
-- (id)init {
++ (ShapeHandle *)handleWithPt:(CGPoint *)pt {
+    ShapeHandle *handle = [[ShapeHandle alloc] initWithPt:pt];
+    return [handle autorelease];
+}
+
+- (id)initWithPt:(CGPoint *)pt {
 	self = [super init];
     if(self) {
-        // Initialization code here.
+        _x = pt->x;
+        _y = pt->y;
     }
     
     return self;
@@ -24,6 +30,14 @@
     // Clean-up code here.
     
     [super dealloc];
+}
+
+- (void)moveTo:(NSPoint *)location {
+    
+}
+
+- (BOOL)hitTest:(NSPoint *)pt {
+    return YES;
 }
 
 @end

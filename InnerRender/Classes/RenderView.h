@@ -6,16 +6,20 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-@class RenderManager, Grid, HooPolygon, PolygonRasterizer;
+@class RenderManager, Grid, HooPolygon, PolygonRasterizer, HandleLayer;
 
 @interface RenderView : NSView {
 @private
     RenderManager *_rMan;
     Grid *_grid;
+    HandleLayer *_handles;
 	HooPolygon *_poly;
 	PolygonRasterizer *_rasterizer;
-	SEL action;
-	id target;
+	SEL _action;
+	id _target;
 }
+
+@property (assign) SEL action;
+@property (assign) id target;
 
 @end
