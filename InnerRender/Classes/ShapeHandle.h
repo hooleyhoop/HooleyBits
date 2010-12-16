@@ -8,7 +8,7 @@
 
 @interface ShapeHandle : NSObject {
 @private
-    CGFloat _x, _y;
+    CGPoint *_pt;
 }
 
 + (ShapeHandle *)handleWithPt:(CGPoint *)pt;

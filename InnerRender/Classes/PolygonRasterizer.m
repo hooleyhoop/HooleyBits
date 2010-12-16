@@ -167,7 +167,7 @@ static char pixelBuffer[30][30];
 				// Wooooooah
 				// Wooooooah stop making fucking colours
 				NSUInteger intval = (NSUInteger)val;
-				NSLog(@"printing val %u", intval);
+				//NSLog(@"printing val %u", intval);
 				CGFloat greyVal = intval/255.;
 				CGColorRef greyCol = CGColorCreateGenericRGB(greyVal, greyVal, greyVal, 1.0f );
 				CGContextSetFillColorWithColor( windowContext, greyCol );

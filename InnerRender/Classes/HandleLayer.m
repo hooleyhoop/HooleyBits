@@ -41,11 +41,18 @@
 
 - (void)drawInContext:(CGContextRef)windowContext  {
 
+    CGColorRef redCol = CGColorCreateGenericRGB( 1.0f, 0.0f, 0.0f, 1.0f );
+    CGContextSetFillColorWithColor( windowContext, redCol );
+
     // draw each pt
-	for( int i=0; i<[self numverts]-1; i++ ) {
-        CGPoint *p = [_ptArray pointerAtIndex:i];
+    NSPointerArray *pts = [_poly pts];
+	for( NSUInteger i=0; i<[_poly numverts]-1; i++ )
+    {
+        CGPoint *p = [pts pointerAtIndex:i];
 		CGContextFillRect( windowContext, CGRectMake( p->x, p->y, 5., 5.));
 	}
+    
+    CGColorRelease(redCol); 
 }
 
 @end

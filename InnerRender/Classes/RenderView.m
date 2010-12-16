@@ -31,6 +31,8 @@
         _handles = [[HandleLayer alloc] init];
         _handles.poly = _poly;
         
+        -- ok so this is fucked if we need to redraw!
+            
 		_rasterizer = [[PolygonRasterizer alloc] init];
 		[_rasterizer setResolution:1 in:20];
 		[_rasterizer setPolygon:_poly];
@@ -84,7 +86,7 @@
                         
                     // -- handles forward drag
                     [_handles mouseDrag:&location];
-
+                    [self setNeedsDisplay:YES];
                     break;
 					
                 case NSLeftMouseUp:

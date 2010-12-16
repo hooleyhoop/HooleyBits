@@ -17,27 +17,34 @@
 }
 
 - (id)initWithPt:(CGPoint *)pt {
+
 	self = [super init];
     if(self) {
-        _x = pt->x;
-        _y = pt->y;
+        _pt = pt;
     }
     
     return self;
 }
 
 - (void)dealloc {
-    // Clean-up code here.
     
     [super dealloc];
 }
 
 - (void)moveTo:(NSPoint *)location {
     
+    _pt->x = location->x;
+    _pt->y = location->y;
 }
 
 - (BOOL)hitTest:(NSPoint *)pt {
-    return YES;
+    
+    NSUInteger ptSize = 10;
+    if( (pt->x < _pt->x+ptSize) && (pt->x > _pt->x-ptSize) )
+        if( (pt->y < _pt->y+ptSize) && (pt->y > _pt->y-ptSize) ) {
+            return YES;
+        }
+    return NO;
 }
 
 @end
