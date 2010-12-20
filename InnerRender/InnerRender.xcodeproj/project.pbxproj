@@ -20,7 +20,10 @@
 		7313702212AC54B0003CF189 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702012AC54B0003CF189 /* RenderView.m */; };
 		7313702512AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
 		7313702612AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
-		73AAB3E112B78423000B2B2D /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
+		731E744212BE6F2400B53D94 /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
+		7333F42712BE74EA0020F8B8 /* anotherTest.c in Sources */ = {isa = PBXBuildFile; fileRef = 7367B56C12BD47B900CE7A3F /* anotherTest.c */; };
+		7367B56712BD434100CE7A3F /* wxample3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7367B56612BD434100CE7A3F /* wxample3.cpp */; };
+		7367B56E12BD47B900CE7A3F /* anotherTest.c in Sources */ = {isa = PBXBuildFile; fileRef = 7367B56C12BD47B900CE7A3F /* anotherTest.c */; };
 		73AAB3E212B78423000B2B2D /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
 		73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
 		73AB02CA12AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
@@ -62,6 +65,11 @@
 		7313702012AC54B0003CF189 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		7313702312AC55B1003CF189 /* ShapeHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeHandle.h; sourceTree = "<group>"; };
 		7313702412AC55B1003CF189 /* ShapeHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeHandle.m; sourceTree = "<group>"; };
+		7367B55C12BD2D8C00CE7A3F /* ftmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmisc.h; sourceTree = "<group>"; };
+		7367B55D12BD2DCB00CE7A3F /* ftimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftimage.h; sourceTree = "<group>"; };
+		7367B56512BD434100CE7A3F /* wxample3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wxample3.h; sourceTree = "<group>"; };
+		7367B56612BD434100CE7A3F /* wxample3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wxample3.cpp; sourceTree = "<group>"; };
+		7367B56C12BD47B900CE7A3F /* anotherTest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = anotherTest.c; path = ../Classes/anotherTest.c; sourceTree = "<group>"; };
 		73AAB3DF12B78423000B2B2D /* ftraster.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftraster.c; sourceTree = "<group>"; };
 		73AAB3E012B78423000B2B2D /* ftraster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftraster.h; sourceTree = "<group>"; };
 		73AB02C712AE48DE0021C1F1 /* HooPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooPolygon.h; sourceTree = "<group>"; };
@@ -118,8 +126,12 @@
 		73136FE612AC5323003CF189 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				73AAB3DF12B78423000B2B2D /* ftraster.c */,
+				7367B55D12BD2DCB00CE7A3F /* ftimage.h */,
+				7367B55C12BD2D8C00CE7A3F /* ftmisc.h */,
 				73AAB3E012B78423000B2B2D /* ftraster.h */,
+				73AAB3DF12B78423000B2B2D /* ftraster.c */,
+				7367B56512BD434100CE7A3F /* wxample3.h */,
+				7367B56612BD434100CE7A3F /* wxample3.cpp */,
 				73AB02C712AE48DE0021C1F1 /* HooPolygon.h */,
 				73AB02C812AE48DE0021C1F1 /* HooPolygon.m */,
 				73AB047B12AE919E0021C1F1 /* PolygonRasterizer.h */,
@@ -191,6 +203,7 @@
 				73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */,
 				73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */,
 				73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */,
+				7367B56C12BD47B900CE7A3F /* anotherTest.c */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -310,7 +323,8 @@
 				73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */,
 				73AB047E12AE919E0021C1F1 /* PolygonRasterizer.m in Sources */,
 				73BF14CA12B1354600B714FB /* HandleLayer.m in Sources */,
-				73AAB3E112B78423000B2B2D /* ftraster.c in Sources */,
+				731E744212BE6F2400B53D94 /* ftraster.c in Sources */,
+				7333F42712BE74EA0020F8B8 /* anotherTest.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +349,8 @@
 				73AB054A12AEA4B20021C1F1 /* InnerRenderAppDelegate.m in Sources */,
 				73BF14CB12B1354600B714FB /* HandleLayer.m in Sources */,
 				73AAB3E212B78423000B2B2D /* ftraster.c in Sources */,
+				7367B56712BD434100CE7A3F /* wxample3.cpp in Sources */,
+				7367B56E12BD47B900CE7A3F /* anotherTest.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
