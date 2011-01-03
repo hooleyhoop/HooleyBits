@@ -7,7 +7,7 @@
 //
 
 #import "DebugCodeLine.h"
-
+#import "Argument.h"
 
 @implementation DebugCodeLine
 
@@ -23,6 +23,11 @@
 	if(self){
 		_address = addressInt;
 		_numberOfArgs = [arg count];
+		if(_numberOfArgs==1){
+			Argument *argOne = ((Argument *)[arg objectAtIndex:0]);
+			if( [argOne isJunk]==YES )
+				_junkLine = YES;
+		}
 	}
 	return self;
 }
@@ -30,5 +35,6 @@
 - (void)dealloc {
 	[super dealloc];
 }
+
 
 @end

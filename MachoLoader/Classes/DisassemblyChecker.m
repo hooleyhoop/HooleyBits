@@ -46,12 +46,17 @@
 		goto balk;
 	}
 	
-	NSUInteger numberOfArgs = args!=NULL ? args->numberOfArgs : 0;
-	if( line->_numberOfArgs==numberOfArgs ) {
+	if( line->_junkLine==NO ) {
+		NSUInteger numberOfArgs = args!=NULL ? args->numberOfArgs : 0;
+		if( line->_numberOfArgs==numberOfArgs ) {
+		} else {
+			NSLog(@"Bollocks - wrong number of args");
+			goto balk;
+		}
 	} else {
-		NSLog(@"Bollocks - wrong number of args");
-		goto balk;
+		NSLog(@"maybe one of thos encrypted bits. Whatever, this line is junk");
 	}
+
 
 balk:
 	[pool release];
@@ -137,6 +142,7 @@ NSArray *worderize( NSString *aLine ) {
 						[tkns1 secondPass];
 						ArgumentScanner *scanner = [ArgumentScanner scannerWithTokens:tkns1];
 						allArgs = [[scanner.allArguments copy] autorelease];
+						
 						//for(Argument *arg in allArgs){
 						//	NSLog(@"String is %@    pattern is %@", [arg output], [arg pattern]);
 						//}

@@ -36,20 +36,14 @@
 }
 
 - (void)_tokenizeString:(NSString *)arg {
-
-	// static int crazyQuestionMarkDebugTodoDoNotLeave = 0;
 	
 	const char *cString = [arg UTF8String];
 
 	// remember strlen doesn't include the null
 	size_t length = strlen(cString);
-	for( uint i=0; i<length; i++ )
+	for( NSUInteger i=0; i<length; i++ )
 	{
 		char val = cString[i];
-//		if(crazyQuestionMarkDebugTodoDoNotLeave){
-//			val = '?';
-//			crazyQuestionMarkDebugTodoDoNotLeave = 0;	
-//		}
 		
 		switch( val ) {
 			case '(':
@@ -66,7 +60,6 @@
 				break;
 			case '%':
 				[self insertPercent];
-//				crazyQuestionMarkDebugTodoDoNotLeave = 1;
 				break;
 			case '$':
 				[self insertDollar];
@@ -76,6 +69,7 @@
 				break;				
 			case '?':
 				[self insertQuestionMark];
+				i=length; // we are done - this line is junk
 				break;
 	
 			default:
@@ -173,8 +167,14 @@
 	{
 		BasicToken *tok = [_tokenArray objectAtIndex:i];
 		
+		if( tok.type==questionMarkChar )
+			return;
+			
 		if( tok.type==percent ){
 			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
+			if( nextTok.type==questionMarkChar )
+				return;
+			
 			if( nextTok.type==lowerCaseChar || nextTok.type==questionMarkChar ){
 				
 				// -- these two tokens are a register
@@ -206,10 +206,15 @@
 	for( NSUInteger i=startIndex; i<count-1; i++ )
 	{
 		BasicToken *tok = [_tokenArray objectAtIndex:i];
-		
+		if( tok.type==questionMarkChar )
+			return;
+			
 		if( tok.type==decimalNum && tok.length==1 && tok.value[0]=='0' )
 		{
 			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
+			if( nextTok.type==questionMarkChar )
+				return;
+
 			if( [nextTok isValidStartHexNumComponent] )
 			{
 				NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];

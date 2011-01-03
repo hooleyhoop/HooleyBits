@@ -13,6 +13,7 @@
 @public;
 	NSUInteger	_address;
 	NSUInteger _numberOfArgs;
+	BOOL _junkLine;
 }
 
 + (id)lineWithAddress:(NSUInteger)addressInt instruction:(id)inst args:(id)arg;

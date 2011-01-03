@@ -556,8 +556,8 @@ static NSUInteger xmm_rm(NSUInteger r_m, NSUInteger rex) {
 	return (r_m + (REX_B(rex) << 3));
 }
 
-#define NOISY 1
-#define NOISY2 1
+#define NOISY 0
+#define NOISY2 0
 
 void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args  ) {
 	

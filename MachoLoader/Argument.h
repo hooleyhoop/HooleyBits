@@ -11,6 +11,9 @@
 @interface Argument : NSObject {
 
 	NSMutableArray *_allTokens;
+	
+	@public
+		BOOL _junk;
 }
 
 @property (readonly) NSMutableArray *allTokens;
@@ -22,5 +25,7 @@
 
 - (NSString *)output;
 - (NSString *)pattern;
+- (BOOL)isJunk;
+
 
 @end
