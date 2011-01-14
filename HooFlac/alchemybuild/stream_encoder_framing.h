@@ -1,5 +1,5 @@
- /* libFLAC - Free Lossless Audio Codec library
- * Copyright (C) 2001,2002,2003,2004,2005,2006,2007  Josh Coalson
+/* libFLAC - Free Lossless Audio Codec library
+ * Copyright (C) 2000,2001,2002,2003,2004,2005,2006,2007  Josh Coalson
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,14 +29,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef FLAC__PRIVATE__BITMATH_H
-#define FLAC__PRIVATE__BITMATH_H
+#ifndef FLAC__PRIVATE__STREAM_ENCODER_FRAMING_H
+#define FLAC__PRIVATE__STREAM_ENCODER_FRAMING_H
 
-#include "ordinals.h"
+#include "format.h"
+#include "bitwriter.h"
 
-unsigned FLAC__bitmath_ilog2(FLAC__uint32 v);
-//unsigned FLAC__bitmath_ilog2_wide(FLAC__uint64 v);
-unsigned FLAC__bitmath_silog2(int v);
-unsigned FLAC__bitmath_silog2_wide(FLAC__int64 v);
+FLAC__bool FLAC__add_metadata_block(const FLAC__StreamMetadata *metadata, FLAC__BitWriter *bw);
+FLAC__bool FLAC__frame_add_header(const FLAC__FrameHeader *header, FLAC__BitWriter *bw);
+FLAC__bool FLAC__subframe_add_constant(const FLAC__Subframe_Constant *subframe, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw);
+FLAC__bool FLAC__subframe_add_fixed(const FLAC__Subframe_Fixed *subframe, unsigned residual_samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw);
+FLAC__bool FLAC__subframe_add_lpc(const FLAC__Subframe_LPC *subframe, unsigned residual_samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw);
+FLAC__bool FLAC__subframe_add_verbatim(const FLAC__Subframe_Verbatim *subframe, unsigned samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw);
 
 #endif

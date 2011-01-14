@@ -1,33 +1,39 @@
-/* example_c_encode_file - Simple FLAC file encoder using libFLAC
- * Copyright (C) 2007  Josh Coalson
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
-
-/*
- * This example shows how to use libFLAC to encode a WAVE file to a FLAC
- * file.  It only supports 16-bit stereo files in canonical WAVE format.
- *
- * Complete API documentation can be found at:
- *   http://flac.sourceforge.net/api/
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "AS3.h"
+
 #include "stream_encoder.h"
+
+#pragma mark -
+#pragma mark Actionscript example
+
+//Method exposed to ActionScript
+//Takes a String and echos it
+static AS3_Val echo( void *self, AS3_Val args ) {
+
+    printf("Hello Flash!\n");
+
+	//initialize string to null
+	char *val = NULL;
+	
+	//parse the arguments. Expect 1.
+	//pass in val to hold the first argument, which
+	//should be a string
+	AS3_ArrayValue( args, "StrType", &val );
+	
+	//if no argument is specified
+	if( val==NULL ) {
+		char* nullString = "null";
+		//return the string "null"
+		return AS3_String(nullString);
+	}	
+	//otherwise, return the string that was passed in
+	return AS3_String(val);
+} 
+
+#pragma mark -
+#pragma mark Flac Stuff
 
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
@@ -37,8 +43,27 @@ static unsigned total_samples = 0; /* can use a 32-bit number due to WAVE size l
 static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * 2/*channels*/]; /* we read the WAVE data into here */
 static FLAC__int32 pcm[READSIZE/*samples*/ * 2/*channels*/];
 
-int main(int argc, char *argv[])
+int main( )
 {
+    
+    /* Setup actionscript */
+    
+	//define the methods exposed to ActionScript
+	//typed as an ActionScript Function instance
+	AS3_Val echoMethod = AS3_Function( NULL, echo );    
+    
+	// construct an object that holds references to the functions
+	AS3_Val result = AS3_Object( "echo: AS3ValType", echoMethod );
+    
+	// Release
+	AS3_Release( echoMethod );
+    
+	// notify that we initialized -- THIS DOES NOT RETURN!
+	AS3_LibInit( result );
+    
+    
+    /* Flac Stuff - we never get here! */
+    
 	FLAC__bool ok = true;
 	FLAC__StreamEncoder *encoder = 0;
 	FLAC__StreamEncoderInitStatus init_status;

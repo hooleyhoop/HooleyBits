@@ -1,0 +1,319 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73DAECE112E0B7AC00F7490F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAECE012E0B7AC00F7490F /* main.c */; };
+		73DAED1612E0B80400F7490F /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1112E0B80400F7490F /* bitmath.c */; };
+		73DAED1712E0B80400F7490F /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1212E0B80400F7490F /* bitreader.c */; };
+		73DAED1812E0B80400F7490F /* bitwriter.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1312E0B80400F7490F /* bitwriter.c */; };
+		73DAED1912E0B80400F7490F /* cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1412E0B80400F7490F /* cpu.c */; };
+		73DAED1A12E0B80400F7490F /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1512E0B80400F7490F /* crc.c */; };
+		73DAED2012E0B81900F7490F /* fixed.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1D12E0B81900F7490F /* fixed.c */; };
+		73DAED2112E0B81900F7490F /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1E12E0B81900F7490F /* float.c */; };
+		73DAED2212E0B81900F7490F /* format.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED1F12E0B81900F7490F /* format.c */; };
+		73DAED2612E0B83800F7490F /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2312E0B83800F7490F /* lpc.c */; };
+		73DAED2712E0B83800F7490F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2412E0B83800F7490F /* md5.c */; };
+		73DAED2812E0B83800F7490F /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2512E0B83800F7490F /* memory.c */; };
+		73DAED2F12E0B86400F7490F /* stream_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2B12E0B86400F7490F /* stream_decoder.c */; };
+		73DAED3012E0B86400F7490F /* stream_encoder_framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2C12E0B86400F7490F /* stream_encoder_framing.c */; };
+		73DAED3112E0B86400F7490F /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2D12E0B86400F7490F /* stream_encoder.c */; };
+		73DAED3212E0B86400F7490F /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 73DAED2E12E0B86400F7490F /* window.c */; };
+		8DD76F6A0486A84900D96B5E /* Alchemy.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* Alchemy.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F6A0486A84900D96B5E /* Alchemy.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		73DAECE012E0B7AC00F7490F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = alchemybuild/main.c; sourceTree = "<group>"; };
+		73DAECE712E0B7BA00F7490F /* Target-defines.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-defines.xcconfig"; sourceTree = "<group>"; };
+		73DAECEB12E0B7CD00F7490F /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assert.h; path = alchemybuild/assert.h; sourceTree = "<group>"; };
+		73DAECEC12E0B7CD00F7490F /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = export.h; path = alchemybuild/export.h; sourceTree = "<group>"; };
+		73DAECED12E0B7CD00F7490F /* format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = format.h; path = alchemybuild/format.h; sourceTree = "<group>"; };
+		73DAECEF12E0B7CD00F7490F /* ordinals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ordinals.h; path = alchemybuild/ordinals.h; sourceTree = "<group>"; };
+		73DAECF012E0B7CD00F7490F /* stream_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_decoder.h; path = alchemybuild/stream_decoder.h; sourceTree = "<group>"; };
+		73DAECF112E0B7CD00F7490F /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_encoder.h; path = alchemybuild/stream_encoder.h; sourceTree = "<group>"; };
+		73DAED1112E0B80400F7490F /* bitmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitmath.c; path = alchemybuild/bitmath.c; sourceTree = "<group>"; };
+		73DAED1212E0B80400F7490F /* bitreader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitreader.c; path = alchemybuild/bitreader.c; sourceTree = "<group>"; };
+		73DAED1312E0B80400F7490F /* bitwriter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitwriter.c; path = alchemybuild/bitwriter.c; sourceTree = "<group>"; };
+		73DAED1412E0B80400F7490F /* cpu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpu.c; path = alchemybuild/cpu.c; sourceTree = "<group>"; };
+		73DAED1512E0B80400F7490F /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc.c; path = alchemybuild/crc.c; sourceTree = "<group>"; };
+		73DAED1D12E0B81900F7490F /* fixed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fixed.c; path = alchemybuild/fixed.c; sourceTree = "<group>"; };
+		73DAED1E12E0B81900F7490F /* float.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = float.c; path = alchemybuild/float.c; sourceTree = "<group>"; };
+		73DAED1F12E0B81900F7490F /* format.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = format.c; path = alchemybuild/format.c; sourceTree = "<group>"; };
+		73DAED2312E0B83800F7490F /* lpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc.c; sourceTree = "<group>"; };
+		73DAED2412E0B83800F7490F /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
+		73DAED2512E0B83800F7490F /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory.c; sourceTree = "<group>"; };
+		73DAED2B12E0B86400F7490F /* stream_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_decoder.c; sourceTree = "<group>"; };
+		73DAED2C12E0B86400F7490F /* stream_encoder_framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder_framing.c; sourceTree = "<group>"; };
+		73DAED2D12E0B86400F7490F /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
+		73DAED2E12E0B86400F7490F /* window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = window.c; sourceTree = "<group>"; };
+		73DAED3912E0B8B300F7490F /* bitmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmath.h; sourceTree = "<group>"; };
+		73DAED3A12E0B8BE00F7490F /* bitwriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitwriter.h; sourceTree = "<group>"; };
+		73DAED3D12E0B8CD00F7490F /* cpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu.h; sourceTree = "<group>"; };
+		73DAED3E12E0B8D300F7490F /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc.h; sourceTree = "<group>"; };
+		73DAED3F12E0B8D900F7490F /* fixed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixed.h; sourceTree = "<group>"; };
+		73DAED4012E0B8DD00F7490F /* float.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = float.h; sourceTree = "<group>"; };
+		73DAED4112E0B8E200F7490F /* format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = format.h; sourceTree = "<group>"; };
+		73DAED4212E0B8E800F7490F /* lpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpc.h; sourceTree = "<group>"; };
+		73DAED4312E0B8EE00F7490F /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		73DAED4412E0B8F100F7490F /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		73DAED4512E0B8F600F7490F /* stream_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_decoder.h; sourceTree = "<group>"; };
+		73DAED4612E0B8FB00F7490F /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
+		73DAED4712E0B8FE00F7490F /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
+		73DAED4A12E0B96E00F7490F /* bitreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitreader.h; sourceTree = "<group>"; };
+		73DAED4D12E0B99100F7490F /* alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alloc.h; sourceTree = "<group>"; };
+		73DAED5012E0B9A000F7490F /* stream_encoder_framing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder_framing.h; sourceTree = "<group>"; };
+		73DAEDA212E0BE9800F7490F /* AS3_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AS3_main.c; path = alchemybuild/AS3_main.c; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* Alchemy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Alchemy; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859E8B029090EE04C91782 /* Alchemy.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Alchemy.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* Alchemy */ = {
+			isa = PBXGroup;
+			children = (
+				73DAECE712E0B7BA00F7490F /* Target-defines.xcconfig */,
+				73DAECE012E0B7AC00F7490F /* main.c */,
+				73DAEDA212E0BE9800F7490F /* AS3_main.c */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6859E8C029090F304C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = Alchemy;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				73DAED4D12E0B99100F7490F /* alloc.h */,
+				73DAECEB12E0B7CD00F7490F /* assert.h */,
+				73DAECEC12E0B7CD00F7490F /* export.h */,
+				73DAECED12E0B7CD00F7490F /* format.h */,
+				73DAECEF12E0B7CD00F7490F /* ordinals.h */,
+				73DAECF012E0B7CD00F7490F /* stream_decoder.h */,
+				73DAECF112E0B7CD00F7490F /* stream_encoder.h */,
+				73DAED3912E0B8B300F7490F /* bitmath.h */,
+				73DAED1112E0B80400F7490F /* bitmath.c */,
+				73DAED4A12E0B96E00F7490F /* bitreader.h */,
+				73DAED1212E0B80400F7490F /* bitreader.c */,
+				73DAED3A12E0B8BE00F7490F /* bitwriter.h */,
+				73DAED1312E0B80400F7490F /* bitwriter.c */,
+				73DAED3D12E0B8CD00F7490F /* cpu.h */,
+				73DAED1412E0B80400F7490F /* cpu.c */,
+				73DAED3E12E0B8D300F7490F /* crc.h */,
+				73DAED1512E0B80400F7490F /* crc.c */,
+				73DAED3F12E0B8D900F7490F /* fixed.h */,
+				73DAED1D12E0B81900F7490F /* fixed.c */,
+				73DAED4012E0B8DD00F7490F /* float.h */,
+				73DAED1E12E0B81900F7490F /* float.c */,
+				73DAED4112E0B8E200F7490F /* format.h */,
+				73DAED1F12E0B81900F7490F /* format.c */,
+				73DAED4212E0B8E800F7490F /* lpc.h */,
+				73DAED2312E0B83800F7490F /* lpc.c */,
+				73DAED4312E0B8EE00F7490F /* md5.h */,
+				73DAED2412E0B83800F7490F /* md5.c */,
+				73DAED4412E0B8F100F7490F /* memory.h */,
+				73DAED2512E0B83800F7490F /* memory.c */,
+				73DAED4512E0B8F600F7490F /* stream_decoder.h */,
+				73DAED2B12E0B86400F7490F /* stream_decoder.c */,
+				73DAED5012E0B9A000F7490F /* stream_encoder_framing.h */,
+				73DAED2C12E0B86400F7490F /* stream_encoder_framing.c */,
+				73DAED4612E0B8FB00F7490F /* stream_encoder.h */,
+				73DAED2D12E0B86400F7490F /* stream_encoder.c */,
+				73DAED4712E0B8FE00F7490F /* window.h */,
+				73DAED2E12E0B86400F7490F /* window.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* Alchemy */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6859E8C029090F304C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859E8B029090EE04C91782 /* Alchemy.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* Alchemy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Alchemy" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Alchemy;
+			productInstallPath = "$(HOME)/bin";
+			productName = Alchemy;
+			productReference = 8DD76F6C0486A84900D96B5E /* Alchemy */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "Alchemy" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* Alchemy */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* Alchemy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73DAECE112E0B7AC00F7490F /* main.c in Sources */,
+				73DAED1612E0B80400F7490F /* bitmath.c in Sources */,
+				73DAED1712E0B80400F7490F /* bitreader.c in Sources */,
+				73DAED1812E0B80400F7490F /* bitwriter.c in Sources */,
+				73DAED1912E0B80400F7490F /* cpu.c in Sources */,
+				73DAED1A12E0B80400F7490F /* crc.c in Sources */,
+				73DAED2012E0B81900F7490F /* fixed.c in Sources */,
+				73DAED2112E0B81900F7490F /* float.c in Sources */,
+				73DAED2212E0B81900F7490F /* format.c in Sources */,
+				73DAED2612E0B83800F7490F /* lpc.c in Sources */,
+				73DAED2712E0B83800F7490F /* md5.c in Sources */,
+				73DAED2812E0B83800F7490F /* memory.c in Sources */,
+				73DAED2F12E0B86400F7490F /* stream_decoder.c in Sources */,
+				73DAED3012E0B86400F7490F /* stream_encoder_framing.c in Sources */,
+				73DAED3112E0B86400F7490F /* stream_encoder.c in Sources */,
+				73DAED3212E0B86400F7490F /* window.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73DAECE712E0B7BA00F7490F /* Target-defines.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = Alchemy;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = Alchemy;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Alchemy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "Alchemy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
