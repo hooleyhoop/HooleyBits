@@ -41,6 +41,7 @@ enum TokenType {
 - (void)insertPercent;
 - (void)insertDollar;
 - (void)insertColon;
+- (void)insertQuestionMark;
 
 - (void)insertDecimalChar:(char)val;
 - (void)insertUppercaseChar:(char)val;

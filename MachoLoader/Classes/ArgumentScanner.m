@@ -47,6 +47,14 @@
 			currentArgument = [Argument emptyArgument];
 		} else {
 			[currentArgument addToken:tok];
+			
+			if( tok.type==questionMarkChar ){
+				/* im afraid these arguments are junk */
+				[allArguments removeAllObjects];
+				currentArgument = [Argument emptyArgument];
+				currentArgument->_junk=YES;
+				break;
+			}
 		}
 	}
 	NSAssert( brkCount==0, @"Brackets must balance");
