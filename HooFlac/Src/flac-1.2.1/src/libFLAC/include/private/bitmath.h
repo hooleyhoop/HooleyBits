@@ -1,4 +1,4 @@
-/* libFLAC - Free Lossless Audio Codec library
+ /* libFLAC - Free Lossless Audio Codec library
  * Copyright (C) 2001,2002,2003,2004,2005,2006,2007  Josh Coalson
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 #include "ordinals.h"
 
 unsigned FLAC__bitmath_ilog2(FLAC__uint32 v);
-unsigned FLAC__bitmath_ilog2_wide(FLAC__uint64 v);
+//unsigned FLAC__bitmath_ilog2_wide(FLAC__uint64 v);
 unsigned FLAC__bitmath_silog2(int v);
 unsigned FLAC__bitmath_silog2_wide(FLAC__int64 v);
 

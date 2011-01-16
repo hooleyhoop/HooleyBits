@@ -10,16 +10,16 @@
 
 @interface RenderView : NSView {
 @private
-    RenderManager *_rMan;
-    Grid *_grid;
-    HandleLayer *_handles;
-	HooPolygon *_poly;
-	PolygonRasterizer *_rasterizer;
-	SEL _action;
-	id _target;
+    RenderManager			*_rMan;
+    Grid					*_grid;
+    HandleLayer				*_handles;
+	HooPolygon				*_poly;
+	PolygonRasterizer		*_rasterizer;
+	SEL						_action;
+	id						_target;
 }
 
-@property (assign) SEL action;
-@property (assign) id target;
+@property (assign) SEL		action;
+@property (assign) id		target;
 
 @end

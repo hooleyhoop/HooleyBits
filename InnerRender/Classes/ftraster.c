@@ -489,8 +489,8 @@ struct  TWorker_
 	
     TStates     state;              /* rendering state                     */
 	
-    FT_Bitmap   target;             /* description of target bit/pixmap    */
-    FT_Outline  outline;
+    struct FT_Bitmap_   target;             /* description of target bit/pixmap    */
+    struct FT_Outline_  outline;
 	
     Long        traceOfs;           /* current offset in target bitmap     */
     Long        traceG;             /* current offset in target pixmap     */
@@ -3488,12 +3488,10 @@ ft_black_set_mode( PRaster        raster,
 }
 
 
-static int
-ft_black_render( PRaster                  raster,
-				const FT_Raster_Params*  params )
-{
-    const FT_Outline*  outline    = (const FT_Outline*)params->source;
-    const FT_Bitmap*   target_map = params->target;
+static int ft_black_render( PRaster raster, const struct FT_Raster_Params_ *params ) {
+
+    const struct FT_Outline_ *outline = (const struct FT_Outline_ *)params->source;
+    const struct FT_Bitmap_*   target_map = params->target;
     PWorker            worker;
 	
 	

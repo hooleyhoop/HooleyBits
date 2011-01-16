@@ -38,11 +38,11 @@
 - (void)_tokenizeString:(NSString *)arg {
 	
 	const char *cString = [arg UTF8String];
-	
+
 	// remember strlen doesn't include the null
 	size_t length = strlen(cString);
-	for( uint i=0; i<length; i++ ){
-
+	for( NSUInteger i=0; i<length; i++ )
+	{
 		char val = cString[i];
 		
 		switch( val ) {
@@ -67,7 +67,11 @@
 			case ':':
 				[self insertColon];
 				break;				
-		
+			case '?':
+				[self insertQuestionMark];
+				i=length; // we are done - this line is junk
+				break;
+	
 			default:
 				if(val>=0x30 && val<=0x39)
 					[self insertDecimalChar:val];
@@ -119,6 +123,12 @@
 	[_tokenArray addObject:[BasicToken tokenWithType:colon value:':']];
 }
 
+
+- (void)insertQuestionMark {
+	
+	[_tokenArray addObject:[BasicToken tokenWithType:questionMarkChar value:'?']];
+}
+
 #pragma mark Long Tokens 
 
 - (void)_addToToken:(NSMutableArray *)arrayPtr :(enum TokenType)type :(char)val {
@@ -157,9 +167,15 @@
 	{
 		BasicToken *tok = [_tokenArray objectAtIndex:i];
 		
+		if( tok.type==questionMarkChar )
+			return;
+			
 		if( tok.type==percent ){
 			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
-			if(nextTok.type==lowerCaseChar){
+			if( nextTok.type==questionMarkChar )
+				return;
+			
+			if( nextTok.type==lowerCaseChar || nextTok.type==questionMarkChar ){
 				
 				// -- these two tokens are a register
 				BasicToken *registerToken = [BasicToken tokenWithType:registerVal value:nextTok.value length:nextTok.length];
@@ -190,10 +206,15 @@
 	for( NSUInteger i=startIndex; i<count-1; i++ )
 	{
 		BasicToken *tok = [_tokenArray objectAtIndex:i];
-		
+		if( tok.type==questionMarkChar )
+			return;
+			
 		if( tok.type==decimalNum && tok.length==1 && tok.value[0]=='0' )
 		{
 			BasicToken *nextTok = [_tokenArray objectAtIndex:i+1];
+			if( nextTok.type==questionMarkChar )
+				return;
+
 			if( [nextTok isValidStartHexNumComponent] )
 			{
 				NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];

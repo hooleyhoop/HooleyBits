@@ -118,5 +118,8 @@
 	return [_allTokens countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
+- (BOOL)isJunk {
+	return _junk;
+}
 
 @end

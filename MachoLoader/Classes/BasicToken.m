@@ -52,6 +52,9 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 		case hexNum:
 			typeString = @"hexNm";
 			break;
+		case questionMarkChar:
+			typeString = @"qsmrk";
+			break;
 		default:
 			[NSException raise:@"Dont know what this tosken type is" format:@"%i", type];
 			break;
@@ -130,6 +133,8 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 		default:
 			[NSException raise:@"Dont know what this tosken type is" format:@"%i", _type];
 			break;
+			
+//TODO		-- must do question mark
 	}
 	return stringValue;
 }
@@ -142,41 +147,55 @@ NSString *tokenTypeAsString( enum TokenType type ) {
 		case decimalNum:
 			typePattern = @"66";
 			break;
+			
 		case upperCaseChar:
 			typePattern = @"<error>";
 			break;
+			
 		case lowerCaseChar:
 			typePattern = @"<error>";
 			break;
+	
 		case registerVal:
 			typePattern = @"%r";
 			break;
+			
 		case hexNum:
 			typePattern = @"0xff";
-			break;			
+			break;
+			
 		case openBracket:
 			typePattern = @"(";
 			break;
+			
 		case closeBracket:
 			typePattern = @")";
 			break;
+			
 		case comma:
 			typePattern = @",";
 			break;
+			
 		case asterisk:
 			typePattern = @"*";
 			break;
+			
 		case dollar:
 			typePattern = @"$";
 			break;
+			
 		case percent:
 			typePattern = @"<error>";
 			break;
+			
 		case colon:
 			typePattern = @":";
 			break;
+			
+//TODO:			-- do question mark
+
 		default:
-			[NSException raise:@"Dont know what this tosken type is" format:@"%i", _type];
+			[NSException raise:@"Dont know what this token type is" format:@"%i", _type];
 			break;
 	}
 	return typePattern;
