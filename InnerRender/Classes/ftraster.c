@@ -48,7 +48,7 @@
 /*************************************************************************/
 #define _STANDALONE_ 1
 
-#ifdef _STANDALONE_
+//#ifdef _STANDALONE_
 
 #define FT_CONFIG_STANDARD_LIBRARY_H  <stdlib.h>
 
@@ -57,15 +57,13 @@
 #include "ftmisc.h"
 #include "ftimage.h"
 
-#else /* !_STANDALONE_ */
-
-#include <ft2build.h>
-#include "ftraster.h"
-#include FT_INTERNAL_CALC_H   /* for FT_MulDiv only */
-
-#include "rastpic.h"
-
-#endif /* !_STANDALONE_ */
+//#else /* !_STANDALONE_ */
+//#include <ft2build.h>
+//#include "ftraster.h"
+//#include FT_INTERNAL_CALC_H   /* for FT_MulDiv only */
+//
+//#include "rastpic.h"
+//#endif /* !_STANDALONE_ */
 
 
 /*************************************************************************/
@@ -385,7 +383,7 @@ typedef struct  TBand_
 
 #ifdef FT_STATIC_RASTER
 
-
+#error s
 #define RAS_ARGS       /* void */
 #define RAS_ARG        /* void */
 
@@ -523,6 +521,7 @@ struct  TWorker_
 	
 #ifdef FT_RASTER_OPTION_ANTI_ALIASING
 	
+#error s
     Byte*       grays;
 	
     Byte        gray_lines[RASTER_GRAY_LINES];

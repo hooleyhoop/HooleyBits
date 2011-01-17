@@ -82,17 +82,17 @@ typedef struct FT_MemoryRec_
 
 /* from src/ftcalc.c */
 
-#if ( defined _WIN32 || defined _WIN64 )
-
-typedef __int64  FT_Int64;
-
-#else
+//#if ( defined _WIN32 || defined _WIN64 )
+//
+//typedef __int64  FT_Int64;
+//#error s
+//#else
 
 #include "inttypes.h"
 
 typedef int64_t  FT_Int64;
 
-#endif
+//#endif
 
 
 static FT_Long
