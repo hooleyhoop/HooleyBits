@@ -397,12 +397,14 @@
 		};
 		73060CD912DFBC2A00CD04EF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73DAEB8912E0943500F7490F /* Target-Executable.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				EXECUTABLE_PREFIX = lib;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (

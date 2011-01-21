@@ -32,10 +32,11 @@
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
 #define READSIZE 1024
+#define __CHANNELCOUNT_ 1
 
 static unsigned total_samples = 0; /* can use a 32-bit number due to WAVE size limitations */
-static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * 2/*channels*/]; /* we read the WAVE data into here */
-static FLAC__int32 pcm[READSIZE/*samples*/ * 2/*channels*/];
+static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * __CHANNELCOUNT_/*channels*/]; /* we read the WAVE data into here */
+static FLAC__int32 pcm[READSIZE/*samples*/ * __CHANNELCOUNT_/*channels*/];
 
 int main(int argc, char *argv[])
 {
@@ -49,8 +50,8 @@ int main(int argc, char *argv[])
 	unsigned channels = 0;
 	unsigned bps = 0;
 
-    char *inputFilename = "/recording.wav";
-    char *outputFilename = "/Users/shooley/Desktop/recording.flac";
+    char *inputFilename = "/recording_mono.wav";
+    char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
     
 //	if(argc != 3) {
 //		fprintf(stderr, "usage: %s infile.wav outfile.flac\n", inputFilename );
@@ -65,18 +66,18 @@ int main(int argc, char *argv[])
 	/* read wav header and validate it */
 	if(
 		fread(buffer, 1, 44, fin) != 44 ||
-		memcmp(buffer, "RIFF", 4) ||
-		memcmp(buffer+8, "WAVEfmt \020\000\000\000\001\000\002\000", 16) ||
-		memcmp(buffer+32, "\004\000\020\000data", 8)
+		memcmp(buffer, "RIFF", 4) 
+       // || memcmp(buffer+8, "WAVEfmt \020\000\000\000\001\000\002\000", 16) ||
+	//	memcmp(buffer+32, "\004\000\020\000data", 8 )
 	) {
 		fprintf(stderr, "ERROR: invalid/unsupported WAVE file, only 16bps stereo WAVE in canonical form allowed\n");
 //		fclose(fin);
 //		return 1;
 	}
 	sample_rate = ((((((unsigned)buffer[27] << 8) | buffer[26]) << 8) | buffer[25]) << 8) | buffer[24];
-	channels = 2;
+	channels = __CHANNELCOUNT_;
 	bps = 16;
-	total_samples = (((((((unsigned)buffer[43] << 8) | buffer[42]) << 8) | buffer[41]) << 8) | buffer[40]) / 4;
+	total_samples = 60000; //(((((((unsigned)buffer[43] << 8) | buffer[42]) << 8) | buffer[41]) << 8) | buffer[40]) / 1;// (2*__CHANNELCOUNT_);
    
 	/* allocate the encoder */
 	if((encoder = FLAC__stream_encoder_new()) == NULL) {
@@ -150,8 +151,13 @@ int main(int argc, char *argv[])
                     
 				}
 				/* feed samples to encoder */
-                ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
-				// ok = FLAC__stream_encoder_process( encoder, pcm, need );
+                // ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
+    
+                FLAC__int32 *pcm_ptr = pcm;
+                FLAC__int32 **pcm_ptr_ptr = &pcm_ptr;
+    
+                
+                ok = FLAC__stream_encoder_process( encoder, pcm_ptr_ptr, need );
                 
 			}
 			left -= need;
