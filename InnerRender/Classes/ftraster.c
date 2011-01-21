@@ -48,7 +48,7 @@
 /*************************************************************************/
 #define _STANDALONE_ 1
 
-#ifdef _STANDALONE_
+//#ifdef _STANDALONE_
 
 #define FT_CONFIG_STANDARD_LIBRARY_H  <stdlib.h>
 
@@ -57,15 +57,13 @@
 #include "ftmisc.h"
 #include "ftimage.h"
 
-#else /* !_STANDALONE_ */
-
-#include <ft2build.h>
-#include "ftraster.h"
-#include FT_INTERNAL_CALC_H   /* for FT_MulDiv only */
-
-#include "rastpic.h"
-
-#endif /* !_STANDALONE_ */
+//#else /* !_STANDALONE_ */
+//#include <ft2build.h>
+//#include "ftraster.h"
+//#include FT_INTERNAL_CALC_H   /* for FT_MulDiv only */
+//
+//#include "rastpic.h"
+//#endif /* !_STANDALONE_ */
 
 
 /*************************************************************************/
@@ -385,7 +383,7 @@ typedef struct  TBand_
 
 #ifdef FT_STATIC_RASTER
 
-
+#error s
 #define RAS_ARGS       /* void */
 #define RAS_ARG        /* void */
 
@@ -489,8 +487,8 @@ struct  TWorker_
 	
     TStates     state;              /* rendering state                     */
 	
-    FT_Bitmap   target;             /* description of target bit/pixmap    */
-    FT_Outline  outline;
+    struct FT_Bitmap_   target;             /* description of target bit/pixmap    */
+    struct FT_Outline_  outline;
 	
     Long        traceOfs;           /* current offset in target bitmap     */
     Long        traceG;             /* current offset in target pixmap     */
@@ -523,6 +521,7 @@ struct  TWorker_
 	
 #ifdef FT_RASTER_OPTION_ANTI_ALIASING
 	
+#error s
     Byte*       grays;
 	
     Byte        gray_lines[RASTER_GRAY_LINES];
@@ -3488,12 +3487,10 @@ ft_black_set_mode( PRaster        raster,
 }
 
 
-static int
-ft_black_render( PRaster                  raster,
-				const FT_Raster_Params*  params )
-{
-    const FT_Outline*  outline    = (const FT_Outline*)params->source;
-    const FT_Bitmap*   target_map = params->target;
+static int ft_black_render( PRaster raster, const struct FT_Raster_Params_ *params ) {
+
+    const struct FT_Outline_ *outline = (const struct FT_Outline_ *)params->source;
+    const struct FT_Bitmap_*   target_map = params->target;
     PWorker            worker;
 	
 	

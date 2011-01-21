@@ -62,8 +62,7 @@ typedef struct FT_MemoryRec_*  FT_Memory;
 typedef void* (*FT_Alloc_Func)( FT_Memory  memory,
 							   long       size );
 
-typedef void (*FT_Free_Func)( FT_Memory  memory,
-							 void*      block );
+typedef void (*FT_Free_Func)( FT_Memory  memory, void*      block );
 
 typedef void* (*FT_Realloc_Func)( FT_Memory  memory,
 								 long       cur_size,
@@ -83,17 +82,17 @@ typedef struct FT_MemoryRec_
 
 /* from src/ftcalc.c */
 
-#if ( defined _WIN32 || defined _WIN64 )
-
-typedef __int64  FT_Int64;
-
-#else
+//#if ( defined _WIN32 || defined _WIN64 )
+//
+//typedef __int64  FT_Int64;
+//#error s
+//#else
 
 #include "inttypes.h"
 
 typedef int64_t  FT_Int64;
 
-#endif
+//#endif
 
 
 static FT_Long

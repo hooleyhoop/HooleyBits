@@ -296,8 +296,7 @@ typedef enum  FT_Palette_Mode_
 /*   grays.  However, drivers might be added in the future to support    */
 /*   more `colorful' options.                                            */
 /*                                                                       */
-typedef struct  FT_Bitmap_
-{
+struct  FT_Bitmap_ {
     int             rows;
     int             width;
     int             pitch;
@@ -307,7 +306,7 @@ typedef struct  FT_Bitmap_
     char            palette_mode;
     void*           palette;
 	
-} FT_Bitmap;
+};
 
 
 /*************************************************************************/
@@ -369,8 +368,7 @@ typedef struct  FT_Bitmap_
 /*    @FT_OUTLINE_IGNORE_DROPOUTS, @FT_OUTLINE_SMART_DROPOUTS, and       */
 /*    @FT_OUTLINE_INCLUDE_STUBS in `flags' is then overridden.           */
 /*                                                                       */
-typedef struct  FT_Outline_
-{
+struct  FT_Outline_ {
     short       n_contours;      /* number of contours in glyph        */
     short       n_points;        /* number of points in the glyph      */
 	
@@ -380,7 +378,7 @@ typedef struct  FT_Outline_
 	
     int         flags;           /* outline masks                      */
 	
-} FT_Outline;
+};
 
 /* Following limits must be consistent with */
 /* FT_Outline.{n_contours,n_points}         */
@@ -1090,9 +1088,8 @@ typedef void
 /*    rendering a monochrome bitmap, as they are crucial to implement    */
 /*    correct drop-out control as defined in the TrueType specification. */
 /*                                                                       */
-typedef struct  FT_Raster_Params_
-{
-    const FT_Bitmap*        target;
+struct  FT_Raster_Params_ {
+    const struct FT_Bitmap_ *target;
     const void*             source;
     int                     flags;
     FT_SpanFunc             gray_spans;
@@ -1102,7 +1099,7 @@ typedef struct  FT_Raster_Params_
     void*                   user;
     FT_BBox                 clip_box;
 	
-} FT_Raster_Params;
+};
 
 
 /*************************************************************************/
@@ -1248,11 +1245,9 @@ typedef int
 /*         for examples of distinct implementations which support direct */
 /*         composition).                                                 */
 /*                                                                       */
-typedef int
-(*FT_Raster_RenderFunc)( FT_Raster                raster,
-						const FT_Raster_Params*  params );
+typedef int (*FT_Raster_RenderFunc)( FT_Raster raster, const struct FT_Raster_Params_ *params );
 
-#define FT_Raster_Render_Func  FT_Raster_RenderFunc
+#define FT_Raster_Render_Func FT_Raster_RenderFunc
 
 
 /*************************************************************************/
