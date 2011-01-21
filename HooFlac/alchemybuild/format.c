@@ -5,6 +5,7 @@
 #include "assert.h"
 #include "format.h"
 #include "format.h"
+#include "hooHacks.h"
 
 #ifndef FLaC__INLINE
 #define FLaC__INLINE
@@ -21,13 +22,7 @@
 
 /* VERSION should come from configure */
 FLAC_API const char *FLAC__VERSION_STRING = "1.2";
-
-#if defined _MSC_VER || defined __BORLANDC__ || defined __MINW32__
-/* yet one more hack because of MSVC6: */
-FLAC_API const char *FLAC__VENDOR_STRING = "reference libFLAC 1.2.1 20070917";
-#else
 FLAC_API const char *FLAC__VENDOR_STRING = "reference libFLAC  1.2.1 20070917";
-#endif
 
 FLAC_API const FLAC__byte FLAC__STREAM_SYNC_STRING[4] = { 'f','L','a','C' };
 FLAC_API const unsigned FLAC__STREAM_SYNC = 0x664C6143;
@@ -548,7 +543,7 @@ FLAC__bool FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_s
 			return false;
 		if(0 == (object->raw_bits = (unsigned*)realloc(object->raw_bits, sizeof(unsigned)*(1 << max_partition_order))))
 			return false;
-		memset(object->raw_bits, 0, sizeof(unsigned)*(1 << max_partition_order));
+		custom_memset(object->raw_bits, 0, sizeof(unsigned)*(1 << max_partition_order));
 		object->capacity_by_order = max_partition_order;
 	}
 

@@ -4,6 +4,7 @@
 
 #include "md5.h"
 #include "alloc.h"
+#include "hooHacks.h"
 
 #ifndef FLaC__INLINE
 #define FLaC__INLINE
@@ -187,11 +188,11 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 
 	t = 64 - (t & 0x3f);	/* Space available in ctx->in (at least 1) */
 	if (t > len) {
-		memcpy((FLAC__byte *)ctx->in + 64 - t, buf, len);
+		custom_memcpy((FLAC__byte *)ctx->in + 64 - t, buf, len);
 		return;
 	}
 	/* First chunk is an odd size */
-	memcpy((FLAC__byte *)ctx->in + 64 - t, buf, t);
+	custom_memcpy((FLAC__byte *)ctx->in + 64 - t, buf, t);
 	byteSwapX16(ctx->in);
 	FLAC__MD5Transform(ctx->buf, ctx->in);
 	buf += t;
@@ -199,7 +200,7 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 
 	/* Process data in 64-byte chunks */
 	while (len >= 64) {
-		memcpy(ctx->in, buf, 64);
+		custom_memcpy(ctx->in, buf, 64);
 		byteSwapX16(ctx->in);
 		FLAC__MD5Transform(ctx->buf, ctx->in);
 		buf += 64;
@@ -207,7 +208,7 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 	}
 
 	/* Handle any remaining bytes of data. */
-	memcpy(ctx->in, buf, len);
+	custom_memcpy(ctx->in, buf, len);
 }
 
 /*
@@ -244,13 +245,13 @@ void FLAC__MD5Final(FLAC__byte digest[16], FLAC__MD5Context *ctx)
 	count = 56 - 1 - count;
 
 	if (count < 0) {	/* Padding forces an extra block */
-		memset(p, 0, count + 8);
+		custom_memset(p, 0, count + 8);
 		byteSwapX16(ctx->in);
 		FLAC__MD5Transform(ctx->buf, ctx->in);
 		p = (FLAC__byte *)ctx->in;
 		count = 56;
 	}
-	memset(p, 0, count);
+	custom_memset(p, 0, count);
 	byteSwap(ctx->in, 14);
 
 	/* Append length in bits and transform */
@@ -259,8 +260,8 @@ void FLAC__MD5Final(FLAC__byte digest[16], FLAC__MD5Context *ctx)
 	FLAC__MD5Transform(ctx->buf, ctx->in);
 
 	byteSwap(ctx->buf, 4);
-	memcpy(digest, ctx->buf, 16);
-	memset(ctx, 0, sizeof(ctx));	/* In case it's sensitive */
+	custom_memcpy(digest, ctx->buf, 16);
+	custom_memset(ctx, 0, sizeof(ctx));	/* In case it's sensitive */
 	if(0 != ctx->internal_buf) {
 		free(ctx->internal_buf);
 		ctx->internal_buf = 0;
@@ -281,14 +282,17 @@ static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], u
 #else
 	if(channels == 2 && bytes_per_sample == 2) {
 		FLAC__int16 *buf1_ = ((FLAC__int16*)buf_) + 1;
-		memcpy(buf_, signal[0], sizeof(FLAC__int32) * samples);
+		custom_memcpy(buf_, signal[0], sizeof(FLAC__int32) * samples);
 		for(sample = 0; sample < samples; sample++, buf1_+=2)
 			*buf1_ = (FLAC__int16)signal[1][sample];
 	}
 	else if(channels == 1 && bytes_per_sample == 2) {
 		FLAC__int16 *buf1_ = (FLAC__int16*)buf_;
-		for(sample = 0; sample < samples; sample++)
-			*buf1_++ = (FLAC__int16)signal[0][sample];
+		for(sample = 0; sample < samples; sample++) {
+            FLAC__int16 inputSample = (FLAC__int16)signal[0][sample];
+            fprintf( stderr, "inputSample %i ", inputSample  );
+			*buf1_++ = inputSample;
+        }
 	}
 	else
 #endif

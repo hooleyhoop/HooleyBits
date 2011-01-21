@@ -967,8 +967,6 @@ FLAC_API FLAC__bool FLAC__format_cuesheet_is_legal(const FLAC__StreamMetadata_Cu
  */
 FLAC_API FLAC__bool FLAC__format_picture_is_legal(const FLAC__StreamMetadata_Picture *picture, const char **violation);
 
-/* \} */
-
 	unsigned FLAC__format_get_max_rice_partition_order(unsigned blocksize, unsigned predictor_order);
 	unsigned FLAC__format_get_max_rice_partition_order_from_blocksize(unsigned blocksize);
 	unsigned FLAC__format_get_max_rice_partition_order_from_blocksize_limited_max_and_predictor_order(unsigned limit, unsigned blocksize, unsigned predictor_order);

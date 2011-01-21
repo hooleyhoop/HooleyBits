@@ -2,6 +2,7 @@
 #include "memory.h"
 #include "assert.h"
 #include "alloc.h"
+#include "hooHacks.h"
 
 void *FLAC__memory_alloc_aligned(size_t bytes, void **aligned_address)
 {
@@ -9,21 +10,16 @@ void *FLAC__memory_alloc_aligned(size_t bytes, void **aligned_address)
 
 	FLAC__ASSERT(0 != aligned_address);
 
-#ifdef FLAC__ALIGN_MALLOC_DATA
 	/* align on 32-byte (256-bit) boundary */
 	x = safe_malloc_add_2op_(bytes, /*+*/31);
-#ifdef SIZEOF_VOIDP
 
-#if SIZEOF_VOIDP == 4
-#elif SIZEOF_VOIDP == 8
-		*aligned_address = (void*)(((FLAC__uint64)x + 31) & (FLAC__uint64)(-((FLAC__int64)32)));
-#else
-# error  Unsupported sizeof(void*)
-#endif
-#else
-#endif
-#else
-#endif
+    uint32_t temp = (int32_t)x + 31;
+    uint32_t whaat = 32;
+    uint32_t cunt = (FLAC__uint64)(-whaat);
+    uint32_t arse = temp & cunt;
+    void *fluck = (void *)arse;
+		*aligned_address = fluck;
+
 	return x;
 }
 

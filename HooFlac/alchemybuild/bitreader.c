@@ -1,33 +1,3 @@
-/* libFLAC - Free Lossless Audio Codec library
- * Copyright (C) 2000,2001,2002,2003,2004,2005,2006,2007  Josh Coalson
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * - Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- *
- * - Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * - Neither the name of the Xiph.org Foundation nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
 #include <stdlib.h> /* for malloc() */
 #include <string.h> /* for memcpy(), memset() */
@@ -36,6 +6,7 @@
 #include "bitreader.h"
 #include "crc.h"
 #include "assert.h"
+#include "hooHacks.h"
 
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to COUNT_ZERO_MSBS below to match */
@@ -131,29 +102,13 @@ struct FLAC__BitReader {
 static FLaC__INLINE void crc16_update_word_(FLAC__BitReader *br, brword word)
 {
 	register unsigned crc = br->read_crc16;
-#if FLAC__BYTES_PER_WORD == 4
 	switch(br->crc16_align) {
 		case  0: crc = FLAC__CRC16_UPDATE((unsigned)(word >> 24), crc);
 		case  8: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 16) & 0xff), crc);
 		case 16: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 8) & 0xff), crc);
 		case 24: br->read_crc16 = FLAC__CRC16_UPDATE((unsigned)(word & 0xff), crc);
 	}
-#elif FLAC__BYTES_PER_WORD == 8
-	switch(br->crc16_align) {
-		case  0: crc = FLAC__CRC16_UPDATE((unsigned)(word >> 56), crc);
-		case  8: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 48) & 0xff), crc);
-		case 16: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 40) & 0xff), crc);
-		case 24: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 32) & 0xff), crc);
-		case 32: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 24) & 0xff), crc);
-		case 40: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 16) & 0xff), crc);
-		case 48: crc = FLAC__CRC16_UPDATE((unsigned)((word >> 8) & 0xff), crc);
-		case 56: br->read_crc16 = FLAC__CRC16_UPDATE((unsigned)(word & 0xff), crc);
-	}
-#else
-	for( ; br->crc16_align < FLAC__BITS_PER_WORD; br->crc16_align += 8)
-		crc = FLAC__CRC16_UPDATE((unsigned)((word >> (FLAC__BITS_PER_WORD-8-br->crc16_align)) & 0xff), crc);
-	br->read_crc16 = crc;
-#endif
+
 	br->crc16_align = 0;
 }
 
@@ -168,7 +123,7 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	if(br->consumed_words > 0) {
 		start = br->consumed_words;
 		end = br->words + (br->bytes? 1:0);
-		memmove(br->buffer, br->buffer+start, FLAC__BYTES_PER_WORD * (end - start));
+		custom_memmove(br->buffer, br->buffer+start, FLAC__BYTES_PER_WORD * (end - start));
 
 		br->words -= start;
 		br->consumed_words = 0;
@@ -190,11 +145,9 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	 * on LE machines, have to byteswap the odd tail word so nothing is
 	 * overwritten:
 	 */
-#if WORDS_BIGENDIAN
-#else
+
 	if(br->bytes)
 		br->buffer[br->words] = SWAP_BE_WORD_TO_HOST(br->buffer[br->words]);
-#endif
 
 	/* now it looks like:
 	 *   bitstream :  11 22 33 44 55            br->words=1 br->bytes=1
@@ -213,19 +166,11 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	 *   buffer[LE]:  44 33 22 11 55 66 77 88 99 AA BB CC DD EE FF ??
 	 * now have to byteswap on LE machines:
 	 */
-#if WORDS_BIGENDIAN
-#else
+
 	end = (br->words*FLAC__BYTES_PER_WORD + br->bytes + bytes + (FLAC__BYTES_PER_WORD-1)) / FLAC__BYTES_PER_WORD;
-# if defined(_MSC_VER) && (FLAC__BYTES_PER_WORD == 4)
-	if(br->cpu_info.type == FLAC__CPUINFO_TYPE_IA32 && br->cpu_info.data.ia32.bswap) {
-		start = br->words;
-		local_swap32_block_(br->buffer + start, end - start);
-	}
-	else
-# endif
+
 	for(start = br->words; start < end; start++)
 		br->buffer[start] = SWAP_BE_WORD_TO_HOST(br->buffer[start]);
-#endif
 
 	/* now it looks like:
 	 *   bitstream :  11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF
@@ -265,7 +210,6 @@ FLAC__BitReader *FLAC__bitreader_new(void)
 void FLAC__bitreader_delete(FLAC__BitReader *br)
 {
 	FLAC__ASSERT(0 != br);
-
 	FLAC__bitreader_free(br);
 	free(br);
 }
@@ -296,7 +240,6 @@ FLAC__bool FLAC__bitreader_init(FLAC__BitReader *br, FLAC__CPUInfo cpu, FLAC__Bi
 void FLAC__bitreader_free(FLAC__BitReader *br)
 {
 	FLAC__ASSERT(0 != br);
-
 	if(0 != br->buffer)
 		free(br->buffer);
 	br->buffer = 0;
@@ -515,7 +458,7 @@ FLaC__INLINE FLAC__bool FLAC__bitreader_read_uint32_little_endian(FLAC__BitReade
 
 	if(!FLAC__bitreader_read_raw_uint32(br, &x8, 8))
 		return false;
-	x32 |= (x8 << 24);
+x32 |= (x8 << 24);
 
 	*val = x32;
 	return true;
@@ -612,24 +555,12 @@ FLAC__bool FLAC__bitreader_read_byte_block_aligned_no_crc(FLAC__BitReader *br, F
 	while(nvals >= FLAC__BYTES_PER_WORD) {
 		if(br->consumed_words < br->words) {
 			const brword word = br->buffer[br->consumed_words++];
-#if FLAC__BYTES_PER_WORD == 4
+
 			val[0] = (FLAC__byte)(word >> 24);
 			val[1] = (FLAC__byte)(word >> 16);
 			val[2] = (FLAC__byte)(word >> 8);
 			val[3] = (FLAC__byte)word;
-#elif FLAC__BYTES_PER_WORD == 8
-			val[0] = (FLAC__byte)(word >> 56);
-			val[1] = (FLAC__byte)(word >> 48);
-			val[2] = (FLAC__byte)(word >> 40);
-			val[3] = (FLAC__byte)(word >> 32);
-			val[4] = (FLAC__byte)(word >> 24);
-			val[5] = (FLAC__byte)(word >> 16);
-			val[6] = (FLAC__byte)(word >> 8);
-			val[7] = (FLAC__byte)word;
-#else
-			for(x = 0; x < FLAC__BYTES_PER_WORD; x++)
-				val[x] = (FLAC__byte)(word >> (8*(FLAC__BYTES_PER_WORD-x-1)));
-#endif
+
 			val += FLAC__BYTES_PER_WORD;
 			nvals -= FLAC__BYTES_PER_WORD;
 		}

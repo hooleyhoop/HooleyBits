@@ -287,8 +287,10 @@ static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], u
 	}
 	else if(channels == 1 && bytes_per_sample == 2) {
 		FLAC__int16 *buf1_ = (FLAC__int16*)buf_;
-		for(sample = 0; sample < samples; sample++)
-			*buf1_++ = (FLAC__int16)signal[0][sample];
+		for(sample = 0; sample < samples; sample++){
+            FLAC__int16 inputSample = (FLAC__int16)signal[0][sample];            
+			*buf1_++ = inputSample;
+        }
 	}
 	else
 #endif

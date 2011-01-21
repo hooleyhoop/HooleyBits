@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 
 	/* initialize encoder */
 	if(ok) {
-		init_status = FLAC__stream_encoder_init_file(encoder, outputFilename, progress_callback, /*client_data=*/NULL);
+		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
 		if(init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
 			fprintf(stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
 			ok = false;

@@ -9,7 +9,7 @@
  * notice, this list of conditions and the following disclaimer.
  *
  * - Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
+ * notice, this list of conditions and the following disclaimer in the#if
  * documentation and/or other materials provided with the distribution.
  *
  * - Neither the name of the Xiph.org Foundation nor the names of its
@@ -1565,7 +1565,7 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_stream(FLAC__St
  *    \c FLAC__STREAM_ENCODER_INIT_STATUS_OK if initialization was successful;
  *    see FLAC__StreamEncoderInitStatus for the meanings of other return values.
  */
-FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_FILE(FLAC__StreamEncoder *encoder, FILE *file, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
+FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_FILE(FLAC__StreamEncoder *encoder, FILE *file, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
 
 /** Initialize the encoder instance to encode Ogg FLAC files.
  *
@@ -1632,7 +1632,10 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_FILE(FLAC__Stre
  *    \c FLAC__STREAM_ENCODER_INIT_STATUS_OK if initialization was successful;
  *    see FLAC__StreamEncoderInitStatus for the meanings of other return values.
  */
-FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__StreamEncoder *encoder, const char *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
+
+FLAC__StreamEncoderInitStatus testDoDo( FLAC__StreamEncoder *encoder, FILE *filePtr, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data );
+
+FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__StreamEncoder *encoder, const char *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
 
 /** Initialize the encoder instance to encode Ogg FLAC files.
  *
@@ -1761,8 +1764,6 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process_interleaved(FLAC__StreamEncoder
 #ifndef FLAC__PROTECTED__STREAM_ENCODER_H
 #define FLAC__PROTECTED__STREAM_ENCODER_H
 
-#ifndef FLAC__INTEGER_ONLY_LIBRARY
-
 #include "float.h"
 
 #define FLAC__MAX_APODIZATION_FUNCTIONS 32
@@ -1797,7 +1798,6 @@ typedef struct {
 	} parameters;
 } FLAC__ApodizationSpecification;
 
-#endif // #ifndef FLAC__INTEGER_ONLY_LIBRARY
 
 typedef struct FLAC__StreamEncoderProtected {
 	FLAC__StreamEncoderState state;

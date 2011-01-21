@@ -1526,7 +1526,7 @@ FLAC_API FLAC__uint64 FLAC__stream_encoder_get_total_samples_estimate(const FLAC
 	return encoder->protected_->total_samples_estimate;
 }
 
-FLAC_API FLAC__bool FLAC__stream_encoder_process(FLAC__StreamEncoder *encoder, const FLAC__int32 * const buffer[], unsigned samples)
+FLAC_API FLAC__bool FLAC__stream_encoder_process( FLAC__StreamEncoder *encoder, const FLAC__int32 * const buffer[], unsigned samples )
 {
 	unsigned i, j = 0, channel;
 	const unsigned channels = encoder->protected_->channels, blocksize = encoder->protected_->blocksize;

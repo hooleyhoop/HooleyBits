@@ -1,23 +1,9 @@
-
-#if defined _MSC_VER || defined __MINGW32__
-#include <io.h> /* for _setmode() */
-#include <fcntl.h> /* for _O_BINARY */
-#endif
-#if defined __CYGWIN__ || defined __EMX__
-#include <io.h> /* for setmode(), O_BINARY */
-#include <fcntl.h> /* for _O_BINARY */
-#endif
+#include "hooHacks.h"
 #include <stdio.h>
 #include <stdlib.h> /* for malloc() */
 #include <string.h> /* for memset/memcpy() */
 #include <sys/stat.h> /* for stat() */
 #include <sys/types.h> /* for off_t */
-#if defined _MSC_VER || defined __BORLANDC__ || defined __MINGW32__
-#if _MSC_VER <= 1600 || defined __BORLANDC__ /* @@@ [2G limit] */
-#define fseeko fseek
-#define ftello ftell
-#endif
-#endif
 #include "assert.h"
 #include "alloc.h"
 #include "stream_decoder.h"
@@ -821,15 +807,15 @@ FLAC_API FLAC__bool FLAC__stream_decoder_process_single(FLAC__StreamDecoder *dec
 
 	while(1) {
 		switch(decoder->protected_->state) {
-			case FLAC__STREAM_DECODER_SEARCH_FOR_METADATA:
-				if(!find_metadata_(decoder))
-					return false; /* above function sets the status for us */
-				break;
-			case FLAC__STREAM_DECODER_READ_METADATA:
-				if(!read_metadata_(decoder))
-					return false; /* above function sets the status for us */
-				else
-					return true;
+//			case FLAC__STREAM_DECODER_SEARCH_FOR_METADATA:
+//				if(!find_metadata_(decoder))
+//					return false; /* above function sets the status for us */
+//				break;
+//			case FLAC__STREAM_DECODER_READ_METADATA:
+//				if(!read_metadata_(decoder))
+//					return false; /* above function sets the status for us */
+//				else
+//					return true;
 			case FLAC__STREAM_DECODER_SEARCH_FOR_FRAME_SYNC:
 				if(!frame_sync_(decoder))
 					return true; /* above function sets the status for us */
@@ -1038,7 +1024,7 @@ void set_defaults_(FLAC__StreamDecoder *decoder)
 	decoder->private_->error_callback = 0;
 	decoder->private_->client_data = 0;
 
-	memset(decoder->private_->metadata_filter, 0, sizeof(decoder->private_->metadata_filter));
+	custom_memset(decoder->private_->metadata_filter, 0, sizeof(decoder->private_->metadata_filter));
 	decoder->private_->metadata_filter[FLAC__METADATA_TYPE_STREAMINFO] = true;
 	decoder->private_->metadata_filter_ids_count = 0;
 
@@ -1054,14 +1040,7 @@ FILE *get_binary_stdin_(void)
 	 * absence of an underscore before the identifiers 'setmode',
 	 * 'fileno', and/or 'O_BINARY'; check your system header files.
 	 */
-#if defined _MSC_VER || defined __MINGW32__
-	_setmode(_fileno(stdin), _O_BINARY);
-#elif defined __CYGWIN__ 
-	/* almost certainly not needed for any modern Cygwin, but let's be safe... */
-	setmode(_fileno(stdin), _O_BINARY);
-#elif defined __EMX__
-	setmode(fileno(stdin), O_BINARY);
-#endif
+
 
 	return stdin;
 }
@@ -1099,7 +1078,7 @@ FLAC__bool allocate_output_(FLAC__StreamDecoder *decoder, unsigned size, unsigne
 			decoder->protected_->state = FLAC__STREAM_DECODER_MEMORY_ALLOCATION_ERROR;
 			return false;
 		}
-		memset(tmp, 0, sizeof(FLAC__int32)*4);
+		custom_memset(tmp, 0, sizeof(FLAC__int32)*4);
 		decoder->private_->output[i] = tmp + 4;
 
 		/* WATCHOUT:
@@ -1538,7 +1517,7 @@ FLAC__bool read_metadata_cuesheet_(FLAC__StreamDecoder *decoder, FLAC__StreamMet
 
 	FLAC__ASSERT(FLAC__bitreader_is_consumed_byte_aligned(decoder->private_->input));
 
-	memset(obj, 0, sizeof(FLAC__StreamMetadata_CueSheet));
+	custom_memset(obj, 0, sizeof(FLAC__StreamMetadata_CueSheet));
 
 	FLAC__ASSERT(FLAC__STREAM_METADATA_CUESHEET_MEDIA_CATALOG_NUMBER_LEN % 8 == 0);
 	if(!FLAC__bitreader_read_byte_block_aligned_no_crc(decoder->private_->input, (FLAC__byte*)obj->media_catalog_number, FLAC__STREAM_METADATA_CUESHEET_MEDIA_CATALOG_NUMBER_LEN/8))
@@ -1868,7 +1847,7 @@ FLAC__bool read_frame_(FLAC__StreamDecoder *decoder, FLAC__bool *got_a_frame, FL
 		send_error_to_client_(decoder, FLAC__STREAM_DECODER_ERROR_STATUS_FRAME_CRC_MISMATCH);
 		if(do_full_decode) {
 			for(channel = 0; channel < decoder->private_->frame.header.channels; channel++) {
-				memset(decoder->private_->output[channel], 0, sizeof(FLAC__int32) * decoder->private_->frame.header.blocksize);
+				custom_memset(decoder->private_->output[channel], 0, sizeof(FLAC__int32) * decoder->private_->frame.header.blocksize);
 			}
 		}
 	}

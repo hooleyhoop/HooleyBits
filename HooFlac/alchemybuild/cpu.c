@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "hooHacks.h"
 
 /* these are flags in EDX of CPUID AX=00000001 */
 static const unsigned FLAC__CPUINFO_IA32_CPUID_CMOV = 0x00008000;

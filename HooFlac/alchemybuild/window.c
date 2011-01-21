@@ -3,8 +3,8 @@
 #include "assert.h"
 #include "format.h"
 #include "window.h"
+#include "hooHacks.h"
 
-#ifndef FLAC__INTEGER_ONLY_LIBRARY
 
 void FLAC__window_bartlett(FLAC__real *window, const FLAC__int32 L)
 {
@@ -181,5 +181,3 @@ void FLAC__window_welch(FLAC__real *window, const FLAC__int32 L)
 		window[n] = (FLAC__real)(1.0f - k * k);
 	}
 }
-
-#endif /* !defined FLAC__INTEGER_ONLY_LIBRARY */

@@ -4,6 +4,7 @@
 #include "bitmath.h"
 #include "fixed.h"
 #include "assert.h"
+#include "hooHacks.h"
 
 #ifndef M_LN2
 /* math.h in VC++ doesn't seem to have this (how Microsoft is that?) */
@@ -68,9 +69,9 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 	return order;
 }
 
-unsigned FLAC__fixed_compute_best_predictor_wide(const FLAC__int32 data[], unsigned data_len, FLAC__float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1])
+unsigned FLAC__fixed_compute_best_predictor_wide( const FLAC__int32 data[], uint32_t data_len, FLAC__float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1])
 {
-	FLAC__int32 last_error_0 = data[-1];
+    FLAC__int32 last_error_0 = data[-1];
 	FLAC__int32 last_error_1 = data[-1] - data[-2];
 	FLAC__int32 last_error_2 = last_error_1 - (data[-2] - data[-3]);
 	FLAC__int32 last_error_3 = last_error_2 - (data[-2] - 2*data[-3] + data[-4]);
@@ -79,8 +80,8 @@ unsigned FLAC__fixed_compute_best_predictor_wide(const FLAC__int32 data[], unsig
 	 * erratic signals when the bits-per-sample and blocksize are
 	 * large.
 	 */
-	FLAC__uint64 total_error_0 = 0, total_error_1 = 0, total_error_2 = 0, total_error_3 = 0, total_error_4 = 0;
-	unsigned i, order;
+    unsigned total_error_0 = 0, total_error_1 = 0, total_error_2 = 0, total_error_3 = 0, total_error_4 = 0;
+    unsigned i, order;
 
 	for(i = 0; i < data_len; i++) {
 		error  = data[i]     ; total_error_0 += local_abs(error);                      save = error;
@@ -110,11 +111,21 @@ unsigned FLAC__fixed_compute_best_predictor_wide(const FLAC__int32 data[], unsig
 	FLAC__ASSERT(data_len > 0 || total_error_3 == 0);
 	FLAC__ASSERT(data_len > 0 || total_error_4 == 0);
 
+//    float t3 = total_error_0 / data_len;
+//    float t1 =1 * t3;   
+ //   float t2 = t1;
+  //  residual_bits_per_sample[0] = (FLAC__float)((total_error_0 > 0) ? t2 : 0.0);
+
+//    if( total_error_0 > 0 )
+//        residual_bits_per_sample[0] = t2;
+//    else
+ //       residual_bits_per_sample[0] = 0.0f;
 	residual_bits_per_sample[0] = (FLAC__float)((total_error_0 > 0) ? log(M_LN2 * (FLAC__double)total_error_0 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[1] = (FLAC__float)((total_error_1 > 0) ? log(M_LN2 * (FLAC__double)total_error_1 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[2] = (FLAC__float)((total_error_2 > 0) ? log(M_LN2 * (FLAC__double)total_error_2 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[3] = (FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[4] = (FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
+        
+    residual_bits_per_sample[1] = (FLAC__float)((total_error_1 > 0) ? log(M_LN2 * (FLAC__double)total_error_1 / (FLAC__double)data_len) / M_LN2 : 0.0);
+    residual_bits_per_sample[2] = (FLAC__float)((total_error_2 > 0) ? log(M_LN2 * (FLAC__double)total_error_2 / (FLAC__double)data_len) / M_LN2 : 0.0);
+    residual_bits_per_sample[3] = (FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
+    residual_bits_per_sample[4] = (FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
 
 	return order;
 }
@@ -127,7 +138,7 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 	switch(order) {
 		case 0:
 			FLAC__ASSERT(sizeof(residual[0]) == sizeof(data[0]));
-			memcpy(residual, data, sizeof(residual[0])*data_len);
+			custom_memcpy(residual, data, sizeof(residual[0])*data_len);
 			break;
 		case 1:
 			for(i = 0; i < idata_len; i++)
@@ -160,7 +171,7 @@ void FLAC__fixed_restore_signal(const FLAC__int32 residual[], unsigned data_len,
 	switch(order) {
 		case 0:
 			FLAC__ASSERT(sizeof(residual[0]) == sizeof(data[0]));
-			memcpy(data, residual, sizeof(residual[0])*data_len);
+			custom_memcpy(data, residual, sizeof(residual[0])*data_len);
 			break;
 		case 1:
 			for(i = 0; i < idata_len; i++)

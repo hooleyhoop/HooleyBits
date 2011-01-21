@@ -6,6 +6,7 @@
 #include "crc.h"
 #include "assert.h"
 #include "alloc.h"
+#include "hooHacks.h"
 
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to SWAP_BE_WORD_TO_HOST below to match */
@@ -431,9 +432,7 @@ FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FL
 
 		msbits = uval >> parameter;
 
-#if 0 /* OPT: can remove this special case if it doesn't make up for the extra compare (doesn't make a statistically significant difference with msvc or gcc/x86) */
-#elif 1 /*@@@@@@ OPT: try this version with MSVC6 to see if better, not much difference for gcc-4 */
-		if(bw->bits && bw->bits + msbits + lsbits < FLAC__BITS_PER_WORD) { /* i.e. if the whole thing fits in the current bwword */
+if(bw->bits && bw->bits + msbits + lsbits < FLAC__BITS_PER_WORD) { /* i.e. if the whole thing fits in the current bwword */
 			/* ^^^ if bw->bits is 0 then we may have filled the buffer and have no free bwword to work in */
 			bw->bits = bw->bits + msbits + lsbits;
 			uval |= mask1; /* set stop bit */
@@ -442,7 +441,6 @@ FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FL
 			bw->accum |= uval;
 		}
 		else {
-#endif
 			/* slightly pessimistic size check but faster than "<= bw->words + (bw->bits+msbits+lsbits+FLAC__BITS_PER_WORD-1)/FLAC__BITS_PER_WORD" */
 			/* OPT: pessimism may cause flurry of false calls to grow_ which eat up all savings before it */
 			if(bw->capacity <= bw->words + bw->bits + msbits + 1/*lsbits always fit in 1 bwword*/ && !bitwriter_grow_(bw, msbits+lsbits))

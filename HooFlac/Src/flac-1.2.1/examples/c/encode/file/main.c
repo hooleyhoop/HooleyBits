@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 //		return 1;
 	}
 	sample_rate = ((((((unsigned)buffer[27] << 8) | buffer[26]) << 8) | buffer[25]) << 8) | buffer[24];
-	channels = 1;
+	channels = 2;
 	bps = 16;
 	total_samples = (((((((unsigned)buffer[43] << 8) | buffer[42]) << 8) | buffer[41]) << 8) | buffer[40]) / 4;
    
@@ -85,8 +85,8 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	ok &= FLAC__stream_encoder_set_verify(encoder, true);
-	ok &= FLAC__stream_encoder_set_compression_level(encoder, 8);
+//	ok &= FLAC__stream_encoder_set_verify(encoder, true);
+	ok &= FLAC__stream_encoder_set_compression_level(encoder, 5);
 	ok &= FLAC__stream_encoder_set_channels(encoder, channels);
 	ok &= FLAC__stream_encoder_set_bits_per_sample(encoder, bps);
 	ok &= FLAC__stream_encoder_set_sample_rate(encoder, sample_rate);
@@ -133,12 +133,26 @@ int main(int argc, char *argv[])
 			else {
 				/* convert the packed little-endian 16-bit PCM samples from WAVE into an interleaved FLAC__int32 buffer for libFLAC */
 				size_t i;
-				for(i = 0; i < need*channels; i++) {
+                
+                if( (need*channels) > READSIZE*2 )
+                    fprintf( stderr, "ERROR: why dont i know what is going on?\n" );
+                    
+				for(i = 0; i <need*channels; i++) {
 					/* inefficient but simple and works on big- or little-endian machines */
-					pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[2*i+1] << 8) | (FLAC__int16)buffer[2*i]);
+                    
+                    // we need 2 byte values for each 16bit input sample 
+                    //FLAC__int8 byte1 = buffer[2*i+1];
+                    //FLAC__int8 byte2 = buffer[2*i];
+                    //FLAC__int16 inVal = (((FLAC__int16)(FLAC__int8)byte1 << 8) | (FLAC__int16)byte2);
+                    //pcm[i] = (FLAC__int32)inVal;
+                    
+                    pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[2*i+1] << 8) | (FLAC__int16)buffer[2*i]);
+                    
 				}
 				/* feed samples to encoder */
-				ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
+                ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
+				// ok = FLAC__stream_encoder_process( encoder, pcm, need );
+                
 			}
 			left -= need;
 		}

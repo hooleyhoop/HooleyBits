@@ -100,7 +100,7 @@ FLAC__bool file_utils__generate_flacfile(FLAC__bool is_ogg, const char *output_f
 	FLAC__stream_encoder_set_blocksize(encoder, streaminfo->data.stream_info.min_blocksize);
 	FLAC__stream_encoder_set_max_lpc_order(encoder, 0);
 	FLAC__stream_encoder_set_qlp_coeff_precision(encoder, 0);
-	FLAC__stream_encoder_set_do_qlp_coeff_prec_search(encoder, false);
+	FLAC__stream_encoder_set_do_qlp_coeff_prec_search(encoder, false); 
 	FLAC__stream_encoder_set_do_escape_coding(encoder, false);
 	FLAC__stream_encoder_set_do_exhaustive_model_search(encoder, false);
 	FLAC__stream_encoder_set_min_residual_partition_order(encoder, 0);
