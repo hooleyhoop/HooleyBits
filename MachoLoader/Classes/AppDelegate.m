@@ -96,19 +96,21 @@
 		if([[NSFileManager defaultManager] fileExistsAtPath:each])
 		{
 			
-			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each];
-			[ml readFile];
+			simple_tracer([each UTF8String]);
 			
-			DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:each isFAT:ml->_binaryIsFAT];
-			BOOL success = [dc openOTOOL];
-			if(!success)
-				[NSException raise:@"Failed to open OTOOL" format:@""];
+//aa			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each];
+//aa			[ml readFile];
+			
+//aa			DisassemblyChecker *dc = [[DisassemblyChecker alloc] initWithPath:each isFAT:ml->_binaryIsFAT];
+//aa			BOOL success = [dc openOTOOL];
+//aa			if(!success)
+//aa				[NSException raise:@"Failed to open OTOOL" format:@""];
 
-			[ml disassembleWithChecker:dc];
+//aa			[ml disassembleWithChecker:dc];
 			
-			success = [dc close];
-			if(!success)
-				[NSException raise:@"Failed to close OTOOL" format:@""];
+//aa			success = [dc close];
+//aa			if(!success)
+//aa				[NSException raise:@"Failed to close OTOOL" format:@""];
 			
 			// Wooah! otool reader hijacks standard out?
 			NSLog(@"Fin!");
@@ -117,8 +119,8 @@
 //putback later			[dProcessor processApp];
 //putback later			[dProcessor release];
 		
-			[dc release];
-			[ml release];
+//aa			[dc release];
+//aa			[ml release];
 		}
 	}
 

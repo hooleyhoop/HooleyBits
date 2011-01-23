@@ -32,24 +32,31 @@
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
 #define READSIZE 1024
-#define __CHANNELCOUNT_ 1
 
-static unsigned total_samples = 0; /* can use a 32-bit number due to WAVE size limitations */
-static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * __CHANNELCOUNT_/*channels*/]; /* we read the WAVE data into here */
-static FLAC__int32 pcm[READSIZE/*samples*/ * __CHANNELCOUNT_/*channels*/];
+FLAC__int16 int16( FLAC__byte *data, int offset ) {
+	FLAC__int16 val = ((( data[offset+1]) << 8) | data[offset] );
+	return val;
+}
+
+FLAC__int32 int32( FLAC__byte *data, int offset ) {
+	FLAC__int32 val = (((((((unsigned)data[offset+3] << 8) | data[offset+2]) << 8) | data[offset+1]) << 8) | data[offset] );
+	return val;
+}
 
 int main(int argc, char *argv[])
 {
 	FLAC__bool ok = true;
 	FLAC__StreamEncoder *encoder = 0;
 	FLAC__StreamEncoderInitStatus init_status;
-//	FLAC__StreamMetadata *metadata[2];
-//	FLAC__StreamMetadata_VorbisComment_Entry entry;
+
 	FILE *fin;
 	unsigned sample_rate = 0;
-	unsigned channels = 0;
 	unsigned bps = 0;
-
+	unsigned compressionCode = 0;
+	unsigned channelCount = 0;
+	unsigned averageBytesPerSecond = 0;
+	unsigned blockAlign = 0;
+	
     char *inputFilename = "/recording_mono.wav";
     char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
     
@@ -58,27 +65,91 @@ int main(int argc, char *argv[])
 //		return 1;
 //	}
 
-	if((fin = fopen(inputFilename, "rb")) == NULL) {
+	if( (fin=fopen(inputFilename, "rb") )==NULL ) {
 		fprintf(stderr, "ERROR: opening %s for output\n", inputFilename);
 		return 1;
 	}
 
 	/* read wav header and validate it */
-	if(
-		fread(buffer, 1, 44, fin) != 44 ||
-		memcmp(buffer, "RIFF", 4) 
-       // || memcmp(buffer+8, "WAVEfmt \020\000\000\000\001\000\002\000", 16) ||
-	//	memcmp(buffer+32, "\004\000\020\000data", 8 )
-	) {
-		fprintf(stderr, "ERROR: invalid/unsupported WAVE file, only 16bps stereo WAVE in canonical form allowed\n");
-//		fclose(fin);
-//		return 1;
+	
+	// The first bit of a wav is always the same
+	FLAC__byte header_start[20];
+	int chunkPos = 0;	
+	fread( header_start, 1, 20, fin );
+	int filePos = 20;
+	
+	if( memcmp( header_start, "RIFF", 4)!=0 ) {
+		fprintf(stderr, "ERROR: Invalid file?\n" );
+		return 1;		
 	}
-	sample_rate = ((((((unsigned)buffer[27] << 8) | buffer[26]) << 8) | buffer[25]) << 8) | buffer[24];
-	channels = __CHANNELCOUNT_;
-	bps = 16;
-	total_samples = 60000; //(((((((unsigned)buffer[43] << 8) | buffer[42]) << 8) | buffer[41]) << 8) | buffer[40]) / 1;// (2*__CHANNELCOUNT_);
-   
+	chunkPos +=4;	
+	FLAC__int32 fileLength = int32( header_start, chunkPos ) +8; // The eight is the RIFF 8909909 that proceeded this line
+	
+	chunkPos +=4;		
+	if( memcmp( header_start+chunkPos, "WAVE", 4)!=0 ) {
+		fprintf(stderr, "ERROR: Invalid file?\n" );
+		return 1;		
+	}
+	
+	// ok so far! The next 4 bytes are the name of the next chunk, the next 4 bytes the length of the following chunk
+	chunkPos +=4;		
+	FLAC__int32 chunkName = int32( header_start, chunkPos );
+	
+	chunkPos +=4;	
+	FLAC__int32 chunkLength = int32( header_start, chunkPos );
+	
+	// Read all chunks
+	int exitLoop = 0;
+	while( !exitLoop ){
+		
+		// check exit conditions
+		if( memcmp( (void *)&chunkName, "data", 4)==0 )
+			break;
+		
+		// -exit condition (remaining bytes==0)
+
+		// copy the chunk and process it
+		int chunkLengthAndNextChunkNameAndLength = chunkLength+8;
+		FLAC__byte chunkData[chunkLengthAndNextChunkNameAndLength];
+		
+		fread( chunkData, 1, chunkLengthAndNextChunkNameAndLength, fin );
+		filePos+=chunkLengthAndNextChunkNameAndLength;
+		
+		chunkPos = 0;
+
+		if( memcmp( (void *)&chunkName, "fmt ", 4)==0 ) {
+	
+			compressionCode = int16( chunkData, chunkPos );
+				chunkPos +=2;
+			channelCount = int16( chunkData, chunkPos );
+				chunkPos +=2;			
+			sample_rate = int32( chunkData, chunkPos );
+				chunkPos +=4;			
+			averageBytesPerSecond = int32( chunkData, chunkPos );
+				chunkPos +=4;			
+			blockAlign = int16( chunkData, chunkPos );
+				chunkPos +=2;			
+			bps = int16( chunkData, chunkPos );
+				chunkPos +=2;			
+		}
+		
+		else if( memcmp( (void *)&chunkName, "LIST", 4)==0 ) {
+			// -- move to the end
+			chunkPos += chunkLength;
+		}
+		
+		// setup next loop
+		chunkName = int32( chunkData, chunkPos );
+		chunkPos +=4;	
+		chunkLength = int32( chunkData, chunkPos );
+	}
+
+	// we have reached the data section
+	int bytesPerSample = bps/8;
+	FLAC__byte buffer[READSIZE * bytesPerSample * channelCount]; /* we read the WAVE data into here */
+	FLAC__int32 pcm[READSIZE/*samples*/ * channelCount];
+   	unsigned total_samples = chunkLength / (2*channelCount);
+
 	/* allocate the encoder */
 	if((encoder = FLAC__stream_encoder_new()) == NULL) {
 		fprintf(stderr, "ERROR: allocating encoder\n");
@@ -86,12 +157,12 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-//	ok &= FLAC__stream_encoder_set_verify(encoder, true);
-	ok &= FLAC__stream_encoder_set_compression_level(encoder, 5);
-	ok &= FLAC__stream_encoder_set_channels(encoder, channels);
-	ok &= FLAC__stream_encoder_set_bits_per_sample(encoder, bps);
-	ok &= FLAC__stream_encoder_set_sample_rate(encoder, sample_rate);
-	ok &= FLAC__stream_encoder_set_total_samples_estimate(encoder, total_samples);
+	//ok &= FLAC__stream_encoder_set_verify(encoder, true);
+	ok &= FLAC__stream_encoder_set_compression_level( encoder, 5 );
+	ok &= FLAC__stream_encoder_set_channels( encoder, channelCount );
+	ok &= FLAC__stream_encoder_set_bits_per_sample( encoder, bps );
+	ok &= FLAC__stream_encoder_set_sample_rate( encoder, sample_rate );
+	ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples );
 
 	/* now add some metadata; we'll add some tags and a padding block */
 //	if(ok) {
@@ -115,7 +186,7 @@ int main(int argc, char *argv[])
 
 	/* initialize encoder */
 	if(ok) {
-		init_status = FLAC__stream_encoder_init_file(encoder, outputFilename, progress_callback, /*client_data=*/NULL);
+		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
 		if(init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
 			fprintf(stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
 			ok = false;
@@ -127,7 +198,10 @@ int main(int argc, char *argv[])
 		size_t left = (size_t)total_samples;
 		while(ok && left) {
 			size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
-			if(fread(buffer, channels*(bps/8), need, fin) != need) {
+			
+			int amountToRead = channelCount*(bps/8);
+			if( fread(buffer, amountToRead, need, fin) != need ) {
+				filePos += amountToRead;
 				fprintf(stderr, "ERROR: reading from WAVE file\n");
 				ok = false;
 			}
@@ -135,10 +209,10 @@ int main(int argc, char *argv[])
 				/* convert the packed little-endian 16-bit PCM samples from WAVE into an interleaved FLAC__int32 buffer for libFLAC */
 				size_t i;
                 
-                if( (need*channels) > READSIZE*2 )
+                if( (need*channelCount) > READSIZE*2 )
                     fprintf( stderr, "ERROR: why dont i know what is going on?\n" );
                     
-				for(i = 0; i <need*channels; i++) {
+				for(i = 0; i <need*channelCount; i++) {
 					/* inefficient but simple and works on big- or little-endian machines */
                     
                     // we need 2 byte values for each 16bit input sample 
@@ -181,6 +255,6 @@ int main(int argc, char *argv[])
 
 void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data)
 {
-	(void)encoder, (void)client_data;
-	fprintf(stderr, "wrote %llu bytes, %llu/%u samples, %u/%u frames\n", bytes_written, samples_written, total_samples, frames_written, total_frames_estimate);
+//	(void)encoder, (void)client_data;
+//	 fprintf(stderr, "wrote %llu bytes, %llu/%u samples, %u/%u frames\n", bytes_written, samples_written, total_samples, frames_written, total_frames_estimate);
 }

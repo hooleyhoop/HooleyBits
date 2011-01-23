@@ -47,6 +47,8 @@
 		73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
 		73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
 		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
+		73C72C3012EC8AC400BB0F5E /* simple_tracer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */; };
+		73C72C3112EC8AC400BB0F5E /* simple_tracer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */; };
 		73C81C9612DB33F8004D64BA /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81C9512DB33F8004D64BA /* TokenArray.m */; };
 		73C81C9712DB33F8004D64BA /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81C9512DB33F8004D64BA /* TokenArray.m */; };
 		73C81CB412DB3446004D64BA /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB312DB3446004D64BA /* Argument.m */; };
@@ -144,6 +146,7 @@
 		73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicDIYOOTests.m; path = Tests/BasicDIYOOTests.m; sourceTree = "<group>"; };
 		73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCodeLine.h; path = Classes/DebugCodeLine.h; sourceTree = "<group>"; };
 		73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCodeLine.m; path = Classes/DebugCodeLine.m; sourceTree = "<group>"; };
+		73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simple_tracer.c; path = Classes/simple_tracer.c; sourceTree = "<group>"; };
 		73C81C9412DB33F8004D64BA /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Classes/TokenArray.h; sourceTree = "<group>"; };
 		73C81C9512DB33F8004D64BA /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Classes/TokenArray.m; sourceTree = "<group>"; };
 		73C81CB212DB3446004D64BA /* Argument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Argument.h; path = Classes/Argument.h; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 				7302196A0F864C6E00906D18 /* Infrastructure */,
 				73EDD9230F863E4700E09434 /* MachoLoader.h */,
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
+				73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */,
 				7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */,
 				7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */,
 				73D6C1431267114000746DE2 /* Registers.h */,
@@ -615,6 +619,7 @@
 				73C81CB412DB3446004D64BA /* Argument.m in Sources */,
 				73C81CB812DB3477004D64BA /* ArgumentScanner.m in Sources */,
 				73C81CBC12DB347F004D64BA /* BasicToken.m in Sources */,
+				73C72C3012EC8AC400BB0F5E /* simple_tracer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +655,7 @@
 				73C81CB512DB3446004D64BA /* Argument.m in Sources */,
 				73C81CB912DB3477004D64BA /* ArgumentScanner.m in Sources */,
 				73C81CBD12DB347F004D64BA /* BasicToken.m in Sources */,
+				73C72C3112EC8AC400BB0F5E /* simple_tracer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
