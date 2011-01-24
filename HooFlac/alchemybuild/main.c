@@ -33,9 +33,6 @@ static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 b
 
 #define READSIZE 1024
 
-static unsigned total_samples = 0; /* can use a 32-bit number due to WAVE size limitations */
-static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * 2/*channels*/]; /* we read the WAVE data into here */
-static FLAC__int32 pcm[READSIZE/*samples*/ * 2/*channels*/];
 
 int main(int argc, char *argv[])
 {

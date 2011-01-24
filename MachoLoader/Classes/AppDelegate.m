@@ -18,6 +18,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
+    simple_tracer( "/Applications/6-386.app/Contents/MacOS/6-386" );
+
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 
 	NSArray *paths = [NSArray arrayWithObjects:
@@ -95,9 +97,7 @@
 	{
 		if([[NSFileManager defaultManager] fileExistsAtPath:each])
 		{
-			
-			simple_tracer([each UTF8String]);
-			
+						
 //aa			MachoLoader *ml = [[MachoLoader alloc] initWithPath:each];
 //aa			[ml readFile];
 			

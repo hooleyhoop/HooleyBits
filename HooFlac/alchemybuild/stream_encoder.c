@@ -779,7 +779,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 //		}
 //	}
 	
-    fprintf(stderr, "MADE IT! 1\n" );
     
 		encoder->private_->input_capacity = 0;
 		for(i = 0; i < encoder->protected_->channels; i++) {
@@ -822,7 +821,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 		encoder->private_->use_wide_by_order = (encoder->protected_->bits_per_sample + FLAC__bitmath_ilog2(max(encoder->protected_->max_lpc_order, FLAC__MAX_FIXED_ORDER))+1 > 30); /*@@@ need to use this? */
 		encoder->private_->use_wide_by_partition = (false); /*@@@ need to set this */
 
-    fprintf(stderr, "MADE IT! 2\n" );
 
 	/*
 	 * get the CPU info and set the function pointers
@@ -842,7 +840,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 		if(encoder->private_->use_wide_by_block) {
 			encoder->private_->local_fixed_compute_best_predictor = FLAC__fixed_compute_best_predictor_wide;
 		}
-    fprintf(stderr, "MADE IT! 3\n" );
 
 	/* set state to OK; from here on, errors are fatal and we'll override the state then */
 		encoder->protected_->state = FLAC__STREAM_ENCODER_OK;
@@ -854,18 +851,14 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 		encoder->private_->metadata_callback = metadata_callback;
 		encoder->private_->client_data = client_data;
 
-    fprintf(stderr, "MADE IT! 4\n" );
-
 		if(!resize_buffers_(encoder, encoder->protected_->blocksize)) {
 			/* the above function sets the state for us in case of an error */
             
-            fprintf(stderr, "Doh1\n" );
             
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
 
 		if(!FLAC__bitwriter_init(encoder->private_->frame)) {
-            fprintf(stderr, "Doh2\n" );
             
 			encoder->protected_->state = FLAC__STREAM_ENCODER_MEMORY_ALLOCATION_ERROR;
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
@@ -883,7 +876,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 			for(i = 0; i < encoder->protected_->channels; i++) {
 				if(0 == (encoder->private_->verify.input_fifo.data[i] = (FLAC__int32*)safe_malloc_mul_2op_(sizeof(FLAC__int32), /*times*/encoder->private_->verify.input_fifo.size))) {
 					encoder->protected_->state = FLAC__STREAM_ENCODER_MEMORY_ALLOCATION_ERROR;
-                    fprintf(stderr, "Doh3\n" );
                     
 					return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 				}
@@ -896,14 +888,12 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 			encoder->private_->verify.decoder = FLAC__stream_decoder_new();
 			if(0 == encoder->private_->verify.decoder) {
 				encoder->protected_->state = FLAC__STREAM_ENCODER_VERIFY_DECODER_ERROR;
-                fprintf(stderr, "Doh4\n" );
                 
 				return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 			}
 
 			if(FLAC__stream_decoder_init_stream(encoder->private_->verify.decoder, verify_read_callback_, /*seek_callback=*/0, /*tell_callback=*/0, /*length_callback=*/0, /*eof_callback=*/0, verify_write_callback_, verify_metadata_callback_, verify_error_callback_, /*client_data=*/encoder) != FLAC__STREAM_DECODER_INIT_STATUS_OK) {
 				encoder->protected_->state = FLAC__STREAM_ENCODER_VERIFY_DECODER_ERROR;
-                fprintf(stderr, "Doh5\n" );
                 
 				return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 			}
@@ -932,13 +922,11 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 			encoder->private_->verify.state_hint = ENCODER_IN_MAGIC;
 		if(!FLAC__bitwriter_write_raw_uint32(encoder->private_->frame, FLAC__STREAM_SYNC, FLAC__STREAM_SYNC_LEN)) {
 			encoder->protected_->state = FLAC__STREAM_ENCODER_FRAMING_ERROR;
-            fprintf(stderr, "Doh6\n" );
             
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
 		if(!write_bitbuffer_(encoder, 0, /*is_last_block=*/false)) {
 			/* the above function sets the state for us in case of an error */
-            fprintf(stderr, "Doh7\n" );
             
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
@@ -959,18 +947,16 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 		encoder->private_->streaminfo.data.stream_info.channels = encoder->protected_->channels;
 		encoder->private_->streaminfo.data.stream_info.bits_per_sample = encoder->protected_->bits_per_sample;
 		encoder->private_->streaminfo.data.stream_info.total_samples = encoder->protected_->total_samples_estimate; /* we will replace this later with the real total */
-		custom_memset(encoder->private_->streaminfo.data.stream_info.md5sum, 0, 16); /* we don't know this yet; have to fill it in later */
+		memset(encoder->private_->streaminfo.data.stream_info.md5sum, 0, 16); /* we don't know this yet; have to fill it in later */
 		if(encoder->protected_->do_md5)
 			FLAC__MD5Init(&encoder->private_->md5context);
 		if(!FLAC__add_metadata_block(&encoder->private_->streaminfo, encoder->private_->frame)) {
 			encoder->protected_->state = FLAC__STREAM_ENCODER_FRAMING_ERROR;
-            fprintf(stderr, "Doh8\n" );
 
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
 		if(!write_bitbuffer_(encoder, 0, /*is_last_block=*/false)) {
 			/* the above function sets the state for us in case of an error */
-            fprintf(stderr, "Doh9\n" );
             
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
@@ -1004,13 +990,11 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 			vorbis_comment.data.vorbis_comment.comments = 0;
 			if(!FLAC__add_metadata_block(&vorbis_comment, encoder->private_->frame)) {
 				encoder->protected_->state = FLAC__STREAM_ENCODER_FRAMING_ERROR;
-                fprintf(stderr, "Doh10\n" );
                 
 				return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 			}
 			if(!write_bitbuffer_(encoder, 0, /*is_last_block=*/false)) {
 				/* the above function sets the state for us in case of an error */
-                fprintf(stderr, "Doh11\n" );
                 
 				return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 			}
@@ -1034,7 +1018,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 	/* now that all the metadata is written, we save the stream offset */
 		if(encoder->private_->tell_callback && encoder->private_->tell_callback(encoder, &encoder->protected_->audio_offset, encoder->private_->client_data) == FLAC__STREAM_ENCODER_TELL_STATUS_ERROR) { /* FLAC__STREAM_ENCODER_TELL_STATUS_UNSUPPORTED just means we didn't get the offset; no error */
 			encoder->protected_->state = FLAC__STREAM_ENCODER_CLIENT_ERROR;
-            fprintf(stderr, "Doh12\n" );
             
 			return FLAC__STREAM_ENCODER_INIT_STATUS_ENCODER_ERROR;
 		}
@@ -1790,12 +1773,12 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, unsigned new_blocksize)
 
 	for(i = 0; ok && i < encoder->protected_->channels; i++) {
 		ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize+4+OVERREAD_, &encoder->private_->integer_signal_unaligned[i], &encoder->private_->integer_signal[i]);
-		custom_memset(encoder->private_->integer_signal[i], 0, sizeof(FLAC__int32)*4);
+		memset(encoder->private_->integer_signal[i], 0, sizeof(FLAC__int32)*4);
 		encoder->private_->integer_signal[i] += 4;
 	}
 	for(i = 0; ok && i < 2; i++) {
 		ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize+4+OVERREAD_, &encoder->private_->integer_signal_mid_side_unaligned[i], &encoder->private_->integer_signal_mid_side[i]);
-		custom_memset(encoder->private_->integer_signal_mid_side[i], 0, sizeof(FLAC__int32)*4);
+		memset(encoder->private_->integer_signal_mid_side[i], 0, sizeof(FLAC__int32)*4);
 		encoder->private_->integer_signal_mid_side[i] += 4;
 	}
 
@@ -1887,27 +1870,26 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, unsigned new_blocksize)
 	return ok;
 }
 
-FLAC__bool write_bitbuffer_(FLAC__StreamEncoder *encoder, unsigned samples, FLAC__bool is_last_block)
+FLAC__bool write_bitbuffer_( FLAC__StreamEncoder *encoder, unsigned samples, FLAC__bool is_last_block )
 {
-	const FLAC__byte *buffer;
+	FLAC__byte *buffer;
 	size_t bytes;
 
 	FLAC__ASSERT(FLAC__bitwriter_is_byte_aligned(encoder->private_->frame));
 
 	if(!FLAC__bitwriter_get_buffer(encoder->private_->frame, &buffer, &bytes)) {
-        fprintf(stderr, "BooHoo1\n" );
 
 		encoder->protected_->state = FLAC__STREAM_ENCODER_MEMORY_ALLOCATION_ERROR;
 		return false;
 	}
 
-	if(encoder->protected_->verify) {
-		encoder->private_->verify.output.data = buffer;
-		encoder->private_->verify.output.bytes = bytes;
-		if(encoder->private_->verify.state_hint == ENCODER_IN_MAGIC) {
-			encoder->private_->verify.needs_magic_hack = true;
-		}
-		else {
+//do we need this	if(encoder->protected_->verify) {
+//do we need this		encoder->private_->verify.output.data = buffer;
+//do we need this		encoder->private_->verify.output.bytes = bytes;
+//do we need this		if(encoder->private_->verify.state_hint == ENCODER_IN_MAGIC) {
+//do we need this			encoder->private_->verify.needs_magic_hack = true;
+//do we need this		}
+//do we need this		else {
 //do we need this			if( !FLAC__stream_decoder_process_single(encoder->private_->verify.decoder) ) 
 //do we need this            {
 //do we need this				FLAC__bitwriter_release_buffer(encoder->private_->frame);
@@ -1918,16 +1900,22 @@ FLAC__bool write_bitbuffer_(FLAC__StreamEncoder *encoder, unsigned samples, FLAC
 //do we need this                
 //do we need this				return false;
 //do we need this			}
-		}
-	}
+//do we need this		}
+//do we need this	}
 
+    static int printCount = 0;
+    
+    if(printCount<20){
+        fprintf( stderr, "%i) write_bitbuffer_ %p {%i %i %i %i} \n", printCount, buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
+        printCount++;
+    }    
+    
+    
 	if(write_frame_(encoder, buffer, bytes, samples, is_last_block) != FLAC__STREAM_ENCODER_WRITE_STATUS_OK) {
 		FLAC__bitwriter_release_buffer(encoder->private_->frame);
 		FLAC__bitwriter_clear(encoder->private_->frame);
 		encoder->protected_->state = FLAC__STREAM_ENCODER_CLIENT_ERROR;
-        
-        fprintf(stderr, "BooHoo3\n" );
-        
+                
 		return false;
 	}
 
@@ -1997,7 +1985,7 @@ FLAC__StreamEncoderWriteStatus write_frame_(FLAC__StreamEncoder *encoder, const 
 			}
 		}
 	}
-
+//    fprintf( stderr, "WRITING BUFFER (%p) %i %i %i %i \n", buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
 	status = encoder->private_->write_callback(encoder, buffer, bytes, samples, encoder->private_->current_frame_number, encoder->private_->client_data);
 
 	if(status == FLAC__STREAM_ENCODER_WRITE_STATUS_OK) {
@@ -2229,8 +2217,10 @@ FLAC__bool process_frame_(FLAC__StreamEncoder *encoder, FLAC__bool is_fractional
 	return true;
 }
 
-FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fractional_block)
-{
+FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fractional_block) {
+    
+    static int printLimit = 0;
+    
 	FLAC__FrameHeader frame_header;
 	unsigned channel, min_partition_order = encoder->protected_->min_residual_partition_order, max_partition_order;
 	FLAC__bool do_independent, do_mid_side;
@@ -2247,6 +2237,11 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 	}
 	min_partition_order = min(min_partition_order, max_partition_order);
 
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) max_partition_order = %i, min_partition_order = %i \n", printLimit, max_partition_order, min_partition_order );
+        printLimit++;        
+    }
+    
 	/*
 	 * Setup the frame
 	 */
@@ -2449,6 +2444,8 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 			return false;
 	}
 	else {
+       // fprintf( stderr, "about to add header.... \n" );
+        
 		if(!FLAC__frame_add_header(&frame_header, encoder->private_->frame)) {
 			encoder->protected_->state = FLAC__STREAM_ENCODER_FRAMING_ERROR;
 			return false;
@@ -2487,6 +2484,7 @@ FLAC__bool process_subframe_(
 	unsigned *best_bits
 )
 {
+    static int printLimit = 0;
 
 	FLAC__float fixed_residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1];
 
@@ -2503,7 +2501,10 @@ FLAC__bool process_subframe_(
 	unsigned _best_subframe;
 	/* only use RICE2 partitions if stream bps > 16 */
 	const unsigned rice_parameter_limit = FLAC__stream_encoder_get_bits_per_sample(encoder) > 16? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ESCAPE_PARAMETER;
-
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) rice_parameter_limit = %i \n", printLimit, rice_parameter_limit );
+    }
+    
 	FLAC__ASSERT(frame_header->blocksize > 0);
 
 	/* verbatim subframe is the baseline against which we measure other compressed subframes */
@@ -2513,6 +2514,11 @@ FLAC__bool process_subframe_(
 	else
 		_best_bits = evaluate_verbatim_subframe_(encoder, integer_signal, frame_header->blocksize, subframe_bps, subframe[_best_subframe]);
 
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) _best_bits = %i \n", printLimit, _best_bits );
+        printLimit++;
+    }
+    
 	if(frame_header->blocksize >= FLAC__MAX_FIXED_ORDER) {
 		unsigned signal_is_constant = false;
 		guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor(integer_signal+FLAC__MAX_FIXED_ORDER, frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
@@ -2534,6 +2540,8 @@ FLAC__bool process_subframe_(
 			}
 		}
 		if(signal_is_constant) {
+      //      fprintf( stderr, "sig is constant! \n");
+            
 			_candidate_bits = evaluate_constant_subframe_(encoder, integer_signal[0], frame_header->blocksize, subframe_bps, subframe[!_best_subframe]);
 			if(_candidate_bits < _best_bits) {
 				_best_subframe = !_best_subframe;
@@ -2549,6 +2557,9 @@ FLAC__bool process_subframe_(
 				}
 				else {
 					min_fixed_order = max_fixed_order = guess_fixed_order;
+                    if( printLimit<20 ) {
+                        fprintf( stderr, "%i) min_fixed_order = %i \n", printLimit, min_fixed_order );
+                    }                    
 				}
 				if(max_fixed_order >= frame_header->blocksize)
 					max_fixed_order = frame_header->blocksize - 1;
@@ -2585,6 +2596,12 @@ FLAC__bool process_subframe_(
 					if(_candidate_bits < _best_bits) {
 						_best_subframe = !_best_subframe;
 						_best_bits = _candidate_bits;
+                        
+                        if( printLimit<20 ) {
+                            fprintf( stderr, "%i) modifying bestBits %i \n", printLimit, _best_bits );
+                            printLimit++;
+                        }
+                        
 					}
 				}
 			}
@@ -2667,10 +2684,29 @@ FLAC__bool process_subframe_(
 											subframe[!_best_subframe],
 											partitioned_rice_contents[!_best_subframe]
 										);
+                                    
+                                    if( printLimit<20 ) {
+                                        fprintf( stderr, "%i) checkpoint sparrow \n", printLimit );
+                                        printLimit++;
+                                    }
+                                    
 									if(_candidate_bits > 0) { /* if == 0, there was a problem quantizing the lpcoeffs */
+                                        
+                                        if( printLimit<20 ) {
+                                            fprintf( stderr, "%i) in candidate bits %i, bestBits %i \n", printLimit, _candidate_bits, _best_bits );
+                                            printLimit++;
+                                        }
+                                        
 										if(_candidate_bits < _best_bits) {
 											_best_subframe = !_best_subframe;
 											_best_bits = _candidate_bits;
+                                            
+                                            if( printLimit<20 ) {
+                                                fprintf( stderr, "%i) _best_subframe = %i, _best_bits = %i \n", printLimit, (int)_best_subframe, _best_bits );
+                                                printLimit++;
+                                            }
+                                            
+                                            
 										}
 									}
 								}
@@ -2774,6 +2810,12 @@ unsigned evaluate_fixed_subframe_(
 	FLAC__EntropyCodingMethod_PartitionedRiceContents *partitioned_rice_contents
 )
 {
+    static int printLimit = 0;
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) evaluate_fixed_subframe_ \n", printLimit );
+        printLimit++;
+    }
+    
 	unsigned i, residual_bits, estimate;
 	const unsigned residual_samples = blocksize - order;
 
@@ -3020,6 +3062,8 @@ void precompute_partition_info_sums_(
 	unsigned bps
 )
 {
+    static int printLimit = 0;
+
 	const unsigned default_partition_samples = (residual_samples + predictor_order) >> max_partition_order;
 	unsigned partitions = 1u << max_partition_order;
 
@@ -3039,6 +3083,11 @@ void precompute_partition_info_sums_(
 				for( ; residual_sample < end; residual_sample++)
 					abs_residual_partition_sum += abs(residual[residual_sample]); /* abs(INT_MIN) is undefined, but if the residual is INT_MIN we have bigger problems */
 				abs_residual_partition_sums[partition] = abs_residual_partition_sum;
+                
+                if( printLimit<20 ) {
+                    fprintf( stderr, "%i) abs_residual_partition_sums[%i] = %i, \n", printLimit, partition, abs_residual_partition_sum );
+                    printLimit++;
+                }                   
 			}
 		}
 		else { /* have to pessimistically use 64 bits for accumulator */
@@ -3169,6 +3218,8 @@ FLAC__bool set_partitioned_rice_(
 	unsigned *bits
 )
 {
+    static int printLimit = 0;
+
 	unsigned rice_parameter, partition_bits;
 	unsigned best_partition_bits, best_rice_parameter = 0;
 	unsigned bits_ = FLAC__ENTROPY_CODING_METHOD_TYPE_LEN + FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ORDER_LEN;
@@ -3221,6 +3272,10 @@ FLAC__bool set_partitioned_rice_(
 					partition_samples -= predictor_order;
 			}
 			mean = abs_residual_partition_sums[partition];
+            if( printLimit<20 ) {
+                fprintf( stderr, "%i) mean = %i, \n", printLimit, (int)mean );
+                printLimit++;
+            }              
 			/* we are basically calculating the size in bits of the
 			 * average residual magnitude in the partition:
 			 *   rice_parameter = floor(log2(mean/partition_samples))
@@ -3387,7 +3442,7 @@ FLAC__StreamDecoderWriteStatus verify_write_callback_(const FLAC__StreamDecoder 
 	encoder->private_->verify.input_fifo.tail -= blocksize;
 	FLAC__ASSERT(encoder->private_->verify.input_fifo.tail <= OVERREAD_);
 	for(channel = 0; channel < channels; channel++)
-		custom_memmove(&encoder->private_->verify.input_fifo.data[channel][0], &encoder->private_->verify.input_fifo.data[channel][blocksize], encoder->private_->verify.input_fifo.tail * sizeof(encoder->private_->verify.input_fifo.data[0][0]));
+		memmove(&encoder->private_->verify.input_fifo.data[channel][0], &encoder->private_->verify.input_fifo.data[channel][blocksize], encoder->private_->verify.input_fifo.tail * sizeof(encoder->private_->verify.input_fifo.data[0][0]));
 	return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
 }
 

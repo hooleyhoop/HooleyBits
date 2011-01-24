@@ -4,6 +4,7 @@
 #include "bitmath.h"
 #include "fixed.h"
 #include "assert.h"
+#include <stdio.h>
 
 #ifndef M_LN2
 /* math.h in VC++ doesn't seem to have this (how Microsoft is that?) */
@@ -23,6 +24,8 @@
 
 unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned data_len, FLAC__float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1])
 {
+    static int printLimit = 0;
+    
 	FLAC__int32 last_error_0 = data[-1];
 	FLAC__int32 last_error_1 = data[-1] - data[-2];
 	FLAC__int32 last_error_2 = last_error_1 - (data[-2] - data[-3]);
@@ -65,6 +68,11 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 	residual_bits_per_sample[3] = (FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
 	residual_bits_per_sample[4] = (FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
 
+    //FAIL
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) residual_bits_per_sample = %f %f %f %f %f \n", printLimit, residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
+        printLimit++;
+    }  
 	return order;
 }
 
@@ -123,15 +131,26 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 {
 	const int idata_len = (int)data_len;
 	int i;
-
+    
+    static int printLimit = 0;
+    if( printLimit<20 ) {
+        fprintf( stderr, "%i) FLAC__fixed_compute_residual order = %i \n", printLimit, order );
+        printLimit++;
+    }
+    
 	switch(order) {
 		case 0:
 			FLAC__ASSERT(sizeof(residual[0]) == sizeof(data[0]));
 			memcpy(residual, data, sizeof(residual[0])*data_len);
 			break;
 		case 1:
-			for(i = 0; i < idata_len; i++)
+			for(i = 0; i < idata_len; i++){
 				residual[i] = data[i] - data[i-1];
+            }
+            if( printLimit<20 ) {
+                fprintf( stderr, "%i) residual[0]=%i, residual[2]=%i, residual[4]=%i, \n", printLimit, residual[0], residual[2], residual[4] );
+                printLimit++;
+            }             
 			break;
 		case 2:
 			for(i = 0; i < idata_len; i++)

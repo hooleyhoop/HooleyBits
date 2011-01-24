@@ -33,29 +33,34 @@ void run_target( const char *programname ) {
 	
 	procmsg( "target started. will run '%s'\n", programname );
 
+    // setsid(); // lldb
+    
     /* Allow tracing of this process */
     if( ptrace(PT_TRACE_ME, 0, 0, 0) < 0) {
-      //   ::ptrace (PT_SIGEXC, 0, 0, 0);    // Get BSD signals as mach exceptions
-		
         perror("ptrace");
         return;
     }
-
+    ptrace (PT_SIGEXC, 0, 0, 0);    // lldb // Get BSD signals as mach exceptions
+    setgid (getgid ());           // lldb
+    setpgid (0, 0);               // lldb Set the child process group to match its pid
+    sleep (1);                    // lldb
+    
     /* Replace this process's image with the given program */
-	execl( programname, programname, NULL );
+	execl( programname, programname, NULL ); // -- THis should never return? 
 }
 
 
 void run_debugger( pid_t child_pid ) {
-//jiggy    int wait_status;
-//jiggy    unsigned icounter = 0;
-//jiggy    procmsg("debugger started\n");
+    
+    int wait_status;
+    unsigned icounter = 0;
+    procmsg("debugger started\n");
 
     /* Wait for child to stop on its first instruction */
-//jiggy    wait(&wait_status);
+    wait( &wait_status );
 
-//jiggy    while (WIFSTOPPED(wait_status)) {
-//jiggy        icounter++;
+    while( WIFSTOPPED(wait_status) ) {
+        icounter++;
 //jiggy	struct user_regs_struct regs;
 //jiggy        ptrace(PTRACE_GETREGS, child_pid, 0, &regs);
 	
@@ -68,8 +73,7 @@ void run_debugger( pid_t child_pid ) {
 
 //jiggy        unsigned instr = ptrace(PTRACE_PEEKTEXT, child_pid, regs.eip, 0);
  
-//jiggy        procmsg("icounter = %u.  EIP = 0x%08x.  instr = 0x%08x\n",
-//jiggy                    icounter, regs.eip, instr);
+//jiggy        procmsg("icounter = %u.  EIP = 0x%08x.  instr = 0x%08x\n", icounter, regs.eip, instr);
 
         /* Make the child execute another instruction */
 //jiggy        if (ptrace(PT_STEP, child_pid, 0, 0) < 0) {
@@ -78,20 +82,24 @@ void run_debugger( pid_t child_pid ) {
 //jiggy        }
 
         /* Wait for child to stop on its next instruction */
-//jiggy        wait(&wait_status);
-//jiggy    }
+        wait( &wait_status );
+    }
 
-//jiggy    procmsg("the child executed %u instructions\n", icounter);
+    procmsg("the child executed %u instructions\n", icounter);
 }
 
 
 int simple_tracer( const char *programname ) {
 	
     pid_t child_pid = vfork();
-    if (child_pid == 0)
+    if( child_pid<0 ) {
+        // fork failed
+    } else if ( child_pid==0 ) {
+        // child process
         run_target(programname);
-    else if (child_pid > 0)
-        run_debugger(child_pid);
+    } else if (child_pid > 0)
+        // parent process
+        run_debugger( child_pid );
     else {
         perror("fork");
         return -1;

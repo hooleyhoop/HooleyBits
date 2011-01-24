@@ -275,6 +275,7 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsign
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FLAC__uint32 val, unsigned bits)
 {
+    static int printLimit = 0;
 	register unsigned left;
 
 	/* WATCHOUT: code does not work with <32bit words; we can make things much faster with this assertion */
@@ -292,10 +293,17 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 		return false;
 
 	left = FLAC__BITS_PER_WORD - bw->bits;
+    fprintf( stderr, "FLAC__bitwriter_write_raw_uint32 Left = %i, bits = %i \n", left, bits );
+    
 	if(bits < left) {
 		bw->accum <<= bits;
 		bw->accum |= val;
 		bw->bits += bits;
+        
+    //    if( printLimit<20 ) {
+            fprintf( stderr, "%i) bw->accum = %i, bw->bits = %i \n", printLimit, (int)bw->accum, bw->bits );
+            printLimit++;
+    //    }
 	}
 	else if(bw->bits) { /* WATCHOUT: if bw->bits == 0, left==FLAC__BITS_PER_WORD and bw->accum<<=left is a NOP instead of setting to 0 */
 		bw->accum <<= left;
@@ -306,6 +314,11 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 	else {
 		bw->accum = val;
 		bw->bits = 0;
+        
+        if( printLimit<20 ) {
+            fprintf( stderr, "%i) val=%i --- swapped val=%i \n", printLimit, (int)val, SWAP_BE_WORD_TO_HOST(val) );
+        }
+        
 		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(val);
 	}
 

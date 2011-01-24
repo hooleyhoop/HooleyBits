@@ -12,6 +12,16 @@ static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 b
 
 #define READSIZE 1024
 
+FLAC__int16 int16( FLAC__byte *data, int offset ) {
+	FLAC__int16 val = ((( data[offset+1]) << 8) | data[offset] );
+	return val;
+}
+
+FLAC__int32 int32( FLAC__byte *data, int offset ) {
+	FLAC__int32 val = (((((((unsigned)data[offset+3] << 8) | data[offset+2]) << 8) | data[offset+1]) << 8) | data[offset] );
+	return val;
+}
+
 /* Woah these are so incredibly useful! Use a bytearray as a FILE */
 
 /* Does a FILE * read against a ByteArray */
@@ -39,14 +49,10 @@ static int closeByteArray(void * cookie) {
 	return 0;
 }
 
-static unsigned total_samples = 0; /* can use a 32-bit number due to WAVE size limitations */
-static FLAC__byte buffer[READSIZE/*samples*/ * 2/*bytes_per_sample*/ * 2/*channels*/]; /* we read the WAVE data into here */
-static FLAC__int32 pcm[READSIZE/*samples*/ * 2/*channels*/];
-
 
 void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data) {
-	(void)encoder, (void)client_data;
-	fprintf( stderr, "wrote %llu bytes, %llu/%u samples, %u/%u frames\n", bytes_written, samples_written, total_samples, frames_written, total_frames_estimate);
+//	(void)encoder, (void)client_data;
+//	fprintf( stderr, "wrote %llu bytes, %llu/%u samples, %u/%u frames\n", bytes_written, samples_written, total_samples, frames_written, total_frames_estimate);
 }
 
 static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC__StreamEncoder *ASncoder, const FLAC__byte ABuffer[], size_t ABytes, unsigned ABamples, unsigned ACurrentFrame, void *clientData) {
@@ -59,12 +65,15 @@ static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC_
     AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
     fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
 
-    int ii;
-    for(ii=0;ii<ABytes;ii++){
-        int val = (int)ABuffer[ii];
-        if( val!=0 )
-            fprintf( stderr, "Jimmyny\n"  );
-    }
+//    static int nonZeroBytes = 0;
+//    int ii;
+//    for(ii=0;ii<ABytes;ii++){
+//        int val = (int)ABuffer[ii];
+//        if( val!=0 ){
+//            nonZeroBytes++;            
+//            fprintf( stderr, "%i nonZeroBytes Jimmyny\n", nonZeroBytes  );
+//        }
+//    }
     
     //	fwrite(ABuffer, sizeof(FLAC__byte), ABytes, AOwner->FCFile);
 //	if(ferror(AOwner->FCFile))
@@ -105,217 +114,204 @@ static FLAC__StreamEncoderTellStatus FLACStreamEncoderTellCallback(const FLAC__S
     
     AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );
     *AAbsoluteByteOffset = (FLAC__uint64)AS3_IntValue(pos);
-
+    fprintf( stderr, "TELL callback -- %i\n", AS3_IntValue(pos) );
+    
     return FLAC__STREAM_ENCODER_TELL_STATUS_OK;
 //	}
 }
 
 static AS3_Val encode( void *self, AS3_Val args ) {
 
-    // get Args
+    // get Actionscript Args
     AS3_Val wavData_arg = AS3_Undefined();
     AS3_Val dstData_arg = AS3_Undefined();
     AS3_ArrayValue( args, "AS3ValType, AS3ValType", &wavData_arg, &dstData_arg );
 
-    AS3_Val lengthOfByteArray = AS3_GetS( wavData_arg, "length" );
-    AS3_Trace( lengthOfByteArray );
-    int len = AS3_IntValue( lengthOfByteArray );
+    // The incoming wav data must be little-endian
+    AS3_Val lengthOfByteArray1 = AS3_GetS( wavData_arg, "length" );
+    AS3_Trace( lengthOfByteArray1 );
+    int len = AS3_IntValue( lengthOfByteArray1 );
     int success = fprintf( stderr, "length is %d\n", len );
-    AS3_Release( lengthOfByteArray );
+    AS3_Release( lengthOfByteArray1 );
 
     AS3_Val lengthOfByteArray2 = AS3_GetS( dstData_arg, "length" );
     AS3_Trace( lengthOfByteArray2 );
     int len2 = AS3_IntValue( lengthOfByteArray2 );
     int success2 = fprintf( stderr, "length is %d\n", len2 );
     AS3_Release( lengthOfByteArray2 );
-    
-    // not strictly nessasary - get rid of later
-    // fprintf( stderr, "about to read bytes" );
-    
-    // FLAC__byte wavData[len];
-    // int result = AS3_ByteArray_readBytes( wavData, wavData_arg, len );
-    // fprintf( stderr, "i have read you fucking wav bytes" );
-    
+
     /* Flac Stuff  */
 
 	FLAC__bool ok = true;
 	FLAC__StreamEncoder *encoder = 0;
 	FLAC__StreamEncoderInitStatus init_status;
-    //	FLAC__StreamMetadata *metadata[2];
-    //	FLAC__StreamMetadata_VorbisComment_Entry entry;
-//NOFILE	FILE *fin;
+
 	unsigned sample_rate = 0;
-	unsigned channels = 0;
 	unsigned bps = 0;
-
-//NOFILE    char *inputFilename = "/recording.wav";
-//NOFILE    char *outputFilename = "/Users/shooley/Desktop/recording.flac";
-
+	unsigned compressionCode = 0;
+	unsigned channelCount = 0;
+	unsigned averageBytesPerSecond = 0;
+	unsigned blockAlign = 0;
 
 	/* read wav header and validate it */
     if( len<44)
         success = fprintf( stderr, "Header too short!\n" );
 
-    FLAC__byte headerData[44];
-    int result = AS3_ByteArray_readBytes( headerData, wavData_arg, 44 );
+    // The first 18 bytes of a wav is always the same. Byte 19 contains the name of the next (arbitrary) chunk. Byte 20 the length of said chunk.
+	FLAC__byte header_start[20];
+	int chunkPos = 0;
     
-    if( memcmp( headerData, "RIFF", 4 )!=0 )
+	int filePos = 0;    
+    AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );    
+    int result = AS3_ByteArray_readBytes( header_start, wavData_arg, 20 );
+	filePos+= 20;    
+
+    if( memcmp( header_start, "RIFF", 4 )!=0 )
         success = fprintf( stderr, "Header cant find RIFF!\n" );
+	chunkPos +=4;	
 
-    fprintf( stderr, "we passed all tests" );
-
-//    if( memcmp(wavData+8, "WAVEfmt \020\000\000\000\001\000\002\000", 16)!=0 )
-//        success = fprintf( stderr, "Header cant find WAVEfmt!\n" );
-//
-//    if( memcmp(wavData+32, "\004\000\020\000data", 8)!=0 )
-//        success = fprintf( stderr, "Header cant find dataLength!\n" );
-
-//    if(
-       //HOO_EDIT fread(buffer, 1, 44, fin) != 44 ||
-//       len <44 ||
-//       memcmp(wavData, "RIFF", 4) ||
-//       memcmp(wavData+8, "WAVEfmt \020\000\000\000\001\000\002\000", 16) ||
-//       memcmp(wavData+32, "\004\000\020\000data", 8)
-//    ) {
-//        success = fprintf( stderr, "ERROR: invalid/unsupported WAVE file, only 16bps stereo WAVE in canonical form allowed\n");
-//        //		fclose(fin);
-//       return AS3_Undefined();
-//    } else {
-//        success = fprintf( stderr, "Header ok!\n" );
-//    }
-
-	sample_rate = ((((((unsigned)headerData[27] << 8) | headerData[26]) << 8) | headerData[25]) << 8) | headerData[24];
-	channels = 1;
-	bps = 16;
+    FLAC__int32 fileLength = int32( header_start, chunkPos ) +8; // The eight is the RIFF 8909909 that proceeded this line
+	chunkPos +=4;
     
-    // why is this divided by 4?
-	// total_samples = (((((((unsigned)wavData[43] << 8) | wavData[42]) << 8) | wavData[41]) << 8) | wavData[40]) / 4;
-	total_samples = (((((((unsigned)headerData[43] << 8) | headerData[42]) << 8) | headerData[41]) << 8) | headerData[40]) / 2;
+	if( memcmp( header_start+chunkPos, "WAVE", 4)!=0 ) {
+		fprintf(stderr, "ERROR: Invalid file?\n" );
+		return AS3_Undefined();		
+	}
+    
+	// ok so far! The next 4 bytes are the name of the next chunk, the next 4 bytes the length of the following chunk
+	chunkPos +=4;		
+	FLAC__int32 chunkName = int32( header_start, chunkPos );
+	
+	chunkPos +=4;	
+	FLAC__int32 chunkLengthBytes = int32( header_start, chunkPos );
+    
+	// Read all chunks
+	int exitLoop = 0;
+	while( !exitLoop ) {
 
-    success = fprintf( stderr, "sample rate=%d, tatalSamples=%d!\n", sample_rate, total_samples );
+        // check exit conditions
+		if( memcmp( (void *)&chunkName, "data", 4)==0 )
+			break;
+        
+		// --untested exit condition (remaining bytes==0)
+        
+		// copy the chunk and process it (includes the beggining of the next as well)
+		int chunkLengthAndNextChunkNameAndLength = chunkLengthBytes+8;
+		FLAC__byte chunkData[chunkLengthAndNextChunkNameAndLength];
+        AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );            
+        int result = AS3_ByteArray_readBytes( chunkData, wavData_arg, chunkLengthAndNextChunkNameAndLength );
+		filePos+=chunkLengthAndNextChunkNameAndLength;
+        
+		chunkPos = 0;
 
+		if( memcmp( (void *)&chunkName, "fmt ", 4)==0 ) {
+            
+			compressionCode = int16( chunkData, chunkPos );
+            chunkPos +=2;
+			channelCount = int16( chunkData, chunkPos );
+            chunkPos +=2;			
+			sample_rate = int32( chunkData, chunkPos );
+            chunkPos +=4;			
+			averageBytesPerSecond = int32( chunkData, chunkPos );
+            chunkPos +=4;			
+			blockAlign = int16( chunkData, chunkPos );
+            chunkPos +=2;			
+			bps = int16( chunkData, chunkPos );
+            chunkPos +=2;			
+		}
+		
+		else if( memcmp( (void *)&chunkName, "LIST", 4)==0 ) {
+			// -- move to the end
+			chunkPos += chunkLengthBytes;
+		}
+		
+		// setup next loop
+		chunkName = int32( chunkData, chunkPos );
+		chunkPos +=4;	
+		chunkLengthBytes = int32( chunkData, chunkPos );        
+    }
+    
+	// we have reached the data section
+    
+    // remember - each input sample is 16 bits long.. sooo
+    unsigned absolute_total_samples = chunkLengthBytes / 2;
+   	unsigned total_samples_per_channel = absolute_total_samples / channelCount;
+    
 	/* allocate the encoder */
-    if((encoder = FLAC__stream_encoder_new()) == NULL) {
+	if( (encoder = FLAC__stream_encoder_new())== NULL ) {
         fprintf(stderr, "ERROR: allocating encoder\n");
-//        fclose(fin);
+//      clean up needed!  fclose(fin);
         return AS3_Undefined();
     }
 
-    // NB remember that total sample is wrong
-    ok &= FLAC__stream_encoder_set_verify( encoder, false );
-    ok &= FLAC__stream_encoder_set_compression_level( encoder, 8 );
-    ok &= FLAC__stream_encoder_set_channels( encoder, channels );
-    ok &= FLAC__stream_encoder_set_bits_per_sample( encoder, bps );
-    ok &= FLAC__stream_encoder_set_sample_rate( encoder, sample_rate );
+	// ok &= FLAC__stream_encoder_set_verify(encoder, true);
+	ok &= FLAC__stream_encoder_set_compression_level( encoder, 5 );
+	ok &= FLAC__stream_encoder_set_channels( encoder, channelCount );
+	ok &= FLAC__stream_encoder_set_bits_per_sample( encoder, bps );
+	ok &= FLAC__stream_encoder_set_sample_rate( encoder, sample_rate );
+	ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples_per_channel );
     
-//    ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples );
-
-	/* now add some metadata; we'll add some tags and a padding block */
-    //	if(ok) {
-    //		if(
-    //			(metadata[0] = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT)) == NULL ||
-    //			(metadata[1] = FLAC__metadata_object_new(FLAC__METADATA_TYPE_PADDING)) == NULL ||
-    //			/* there are many tag (vorbiscomment) functions but these are convenient for this particular use: */
-    //			!FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(&entry, "ARTIST", "Some Artist") ||
-    //			!FLAC__metadata_object_vorbiscomment_append_comment(metadata[0], entry, /*copy=*/false) || /* copy=false: let metadata object take control of entry's allocated string */
-    //			!FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(&entry, "YEAR", "1984") ||
-    //			!FLAC__metadata_object_vorbiscomment_append_comment(metadata[0], entry, /*copy=*/false)
-    //		) {
-    //			fprintf(stderr, "ERROR: out of memory or tag error\n");
-    //			ok = false;
-    //		}
-    //
-    //		metadata[1]->length = 1234; /* set the padding length */
-    //
-    //		ok = FLAC__stream_encoder_set_metadata(encoder, metadata, 2);
-    //	}
-
-  
-    // Create the output ByteArray
- //   AS3_Val flash_utils_namespace = AS3_String("flash.utils");
- //   AS3_Val byteArray_property = AS3_String("ByteArray");
-    
- //   AS3_Val ByteArray_class = AS3_NSGet( flash_utils_namespace, byteArray_property );
- //   AS3_Trace( flash_utils_namespace );
- //   AS3_Trace( ByteArray_class );
- //   AS3_Val params = AS3_Array( "" );
-    AS3_Val destinationByteArray = dstData_arg; // AS3_New( ByteArray_class, params );
-    
-//    AS3_Release(ByteArray_class);
-//    AS3_Release(flash_utils_namespace); 
-//    FILE *outFilePtr = funopen( (void *)destinationByteArray, readByteArray, writeByteArray, seekByteArray, closeByteArray );
-
-    result = fprintf(stderr, "Are we ok? %d\n", ok );
-
 	/* initialize encoder */
     if(ok) {
-
         // init_status = FLAC__stream_encoder_init_file( encoder, NULL, NULL, NULL );
-        
-        // Hoo: use the FILE version instead
-       //  init_status = FLAC__stream_encoder_init_FILE( encoder, outFilePtr, progress_callback, NULL );
-
-        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)&destinationByteArray );
-        
+        // init_status = FLAC__stream_encoder_init_FILE( encoder, outFilePtr, progress_callback, NULL );
+        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)&dstData_arg );
         if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
             result = fprintf(stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
             ok = false;
         }
     }
 
+	int bytesPerSample = bps/8;
+    int in_bufferSize = READSIZE * bytesPerSample * channelCount;   // 2048 bytes
+    FLAC__byte *in_buffer = calloc( sizeof(FLAC__byte), in_bufferSize );  /* we read the WAVE data into here */
+    
+    int pcm_buffer_size = READSIZE/*samples*/ * channelCount;       // 1024 ints
+    FLAC__int32 *pcm = calloc( sizeof(FLAC__int32), pcm_buffer_size );
+    
 	/* read blocks of samples from WAVE file and feed to encoder */
-    size_t startPos = 44;
-
     if(ok) {
-        size_t left = (size_t)total_samples;
+        size_t left = (size_t)total_samples_per_channel;
         while( ok && left )
         {
             size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
             
             // fill our buffer
-            AS3_ByteArray_seek( wavData_arg, startPos, SEEK_SET );
-            AS3_ByteArray_readBytes( buffer, wavData_arg, len3 );
-
-//                if( fread(buffer, channels*(bps/8), need, fin) != need ) {
-//                    fprintf(stderr, "ERROR: reading from WAVE file\n");
-//                    ok = false;
-//                } else {
+            AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );
+            int readSuccess = AS3_ByteArray_readBytes( in_buffer, wavData_arg, need );
+            filePos += need;
+			if( readSuccess!= need ) {
+				fprintf(stderr, "ERROR: reading from WAVE file\n");
+				ok = false;
+			}
+			else {
                 /* convert the packed little-endian 16-bit PCM samples from WAVE into an interleaved FLAC__int32 buffer for libFLAC */
-            size_t i;
+                size_t i;
             
-            if( (need*channels) > (READSIZE*2) )
-                fprintf(stderr, "ERROR: How did this happen? pcm buffer isnt big enough\n");
+                int limitIndex = need*channelCount;
+                int max_read_index = 2*limitIndex+1;
             
-            for( i=0; i<need*channels; i++ )
-            {
-                /* inefficient but simple and works on big- or little-endian machines */
-//bishop                    size_t index1 = startPos + 2*i+1;                    
-//bishop                    size_t index2 = startPos + 2*i;
-                    
-//bishop                    FLAC__byte byte1 = wavData[index1];
-//bishop                    FLAC__byte byte2 = wavData[index2];
+                for( i=0; i<limitIndex; i++ )
+                {
+                    /* inefficient but simple and works on big- or little-endian machines */
+                    pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)in_buffer[2*i+1] << 8) | (FLAC__int16)in_buffer[2*i]);
 
-//bishop                    FLAC__int16 byte1Extended = byte1;
-//bishop                    byte1Extended = (byte1Extended << 8);
-//bishop                    FLAC__int16 byte2Extended = byte2;
-//bishop                    FLAC__int16 totalVal = ( byte1Extended | byte2Extended );
-                    
-//bishop                    result = fprintf(stderr, "Input PCM %i (b1=%i, b2=%i)\n", (int)totalVal, (int)byte1, (int)byte2 );
-                    
-//bishop                    pcm[i] = (FLAC__int32)totalVal;
-//bishop                }
+//PASS                    
+//                    static int printLimit = 0;
+//                    if( printLimit<20 ) {
+//                        fprintf( stderr, "%i) inputSample %i \n", printLimit, pcm[i] );
+//                        printLimit++;
+//                    }	                    
+                }
                 /* feed samples to encoder */
-//bishop                ok = FLAC__stream_encoder_process_interleaved( encoder, pcm, need);
-                        ok = FLAC__stream_encoder_process( encoder, const FLAC__int32 * const buffer[], need );
-
-            
-                // leak!
-//bishop                AS3_Val lengthOfByteArray = AS3_GetS( destinationByteArray, "length" );
-//bishop                AS3_Trace( lengthOfByteArray );
-            
-                startPos = startPos+need;
-//egad      }
-                left -= need;
+                // ok = FLAC__stream_encoder_process_interleaved( encoder, pcm, need);
+                FLAC__int32 **arrayOfArrays = &pcm;
+                ok = FLAC__stream_encoder_process( encoder, arrayOfArrays, need );
+                
+                // obviously temp
+                // return AS3_Int(69);
+            }
+            left -= need;
         }
     }
 
@@ -324,14 +320,13 @@ static AS3_Val encode( void *self, AS3_Val args ) {
     result = fprintf(stderr, "encoding: %s\n", ok? "succeeded" : "FAILED");
     result = fprintf(stderr, "   state: %s\n", FLAC__StreamEncoderStateString[FLAC__stream_encoder_get_state(encoder)]);
 
-	/* now that encoding is finished, the metadata can be freed */
-    //	FLAC__metadata_object_delete(metadata[0]);
-    //	FLAC__metadata_object_delete(metadata[1]);
 
     FLAC__stream_encoder_delete(encoder);
 //NOT_YET	fclose(fin);
 //    fclose( outFilePtr );
-
+    free(in_buffer);
+    free(pcm);
+    
     success = fprintf( stderr, "finished processing\n" );
 
     // int i;
@@ -365,21 +360,21 @@ static AS3_Val encode( void *self, AS3_Val args ) {
 
  //   AS3_Val length = AS3_GetS( byteArray, length_property );
 
-    AS3_Val lengthOfByteArray3 = AS3_GetS( destinationByteArray, "length" );
+    AS3_Val lengthOfByteArray3 = AS3_GetS( dstData_arg, "length" );
     int len3 = AS3_IntValue( lengthOfByteArray3 );
     unsigned char buffer[len3];
-    AS3_ByteArray_seek( destinationByteArray, 0, SEEK_SET );
-    AS3_ByteArray_readBytes( buffer, destinationByteArray, len3 );
-    int ii;
-    int nonZeroByteCount = 0;
-    for(ii=0;ii<len3;ii++){
-        int val = (int)buffer[ii];
-        if( val!=0 ){
-            success = fprintf( stderr, "Mutaha Fucker %i \n", val  );
-            nonZeroByteCount++;
-        }
-    }
-    success = fprintf( stderr, "Non Zero byte count %i \n", nonZeroByteCount  );
+    AS3_ByteArray_seek( dstData_arg, 0, SEEK_SET );
+    AS3_ByteArray_readBytes( buffer, dstData_arg, len3 );
+//    int ii;
+//    int nonZeroByteCount = 0;
+//    for(ii=0;ii<len3;ii++){
+//        int val = (int)buffer[ii];
+//        if( val!=0 ){
+//            success = fprintf( stderr, "Mutaha Fucker %i \n", val  );
+//            nonZeroByteCount++;
+//        }
+//    }
+//    success = fprintf( stderr, "Non Zero byte count %i \n", nonZeroByteCount  );
     
 //    printf( "Before FlYield\n" );
  //   flyield();
@@ -388,7 +383,7 @@ static AS3_Val encode( void *self, AS3_Val args ) {
     // return a value
     return AS3_Int(69);
     
-   //  return destinationByteArray;
+   //  return dstData_arg;
 }
 
 //Method exposed to ActionScript

@@ -31,6 +31,75 @@
 
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
+static int _ab_offset = 0;
+static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC__StreamEncoder *ASncoder, const FLAC__byte ABuffer[], size_t ABytes, unsigned ABamples, unsigned ACurrentFrame, void *clientData) {
+    
+ //   AS3_Val *destinationByteArrayPtr = clientData;
+    
+//	int result = AS3_ByteArray_writeBytes( *destinationByteArrayPtr, (char *)ABuffer, ABytes );
+    
+ //   AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
+//    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
+    
+    static int nonZeroBytes = 0;
+    int ii;
+//    for(ii=0;ii<ABytes;ii++){
+//        int val = (int)ABuffer[ii];
+//        if( val!=0 ){
+//            nonZeroBytes++;
+//            fprintf( stderr, "%i nonZeroBytes Jimmyny\n", nonZeroBytes  );
+//        }
+//    }
+    _ab_offset+=ABytes;
+    
+    //	fwrite(ABuffer, sizeof(FLAC__byte), ABytes, AOwner->FCFile);
+    //	if(ferror(AOwner->FCFile))
+    //		return FLAC__STREAM_ENCODER_WRITE_STATUS_FATAL_ERROR;
+    //	else
+    
+    
+    //    int i;
+    //    fprintf( stderr, "WRITE callback %i Bytes \n", (int)ABytes );
+    //    
+    //    for(i=0; i<10; i++)
+    //        fprintf( stderr, "WRITE callback %i \n", (int)ABuffer[i] );
+    
+    return FLAC__STREAM_ENCODER_WRITE_STATUS_OK;
+}
+
+static FLAC__StreamEncoderSeekStatus FLACStreamEncoderSeekCallback(const FLAC__StreamEncoder *AEncoder, FLAC__uint64 AAbsoluteByteOffset, void *clientData) {
+    
+//   AS3_Val *destinationByteArrayPtr = clientData;
+    
+    fprintf( stderr, "SEEK callback -- %i\n", (int)AAbsoluteByteOffset );
+    
+//	if( AS3_ByteArray_seek( *destinationByteArrayPtr, (int)AAbsoluteByteOffset, SEEK_SET ) < 0)
+//		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
+    
+    return FLAC__STREAM_ENCODER_SEEK_STATUS_OK;
+}
+
+static FLAC__StreamEncoderTellStatus FLACStreamEncoderTellCallback(const FLAC__StreamEncoder *AEncoder, FLAC__uint64 *AAbsoluteByteOffset, void *clientData) {
+    
+ //   AS3_Val *destinationByteArrayPtr = clientData;
+    
+    //	__int64 Pos;
+    //	if((Pos = _ftelli64(AOwner->FCFile)) < 0) {
+    //		return FLAC__STREAM_ENCODER_TELL_STATUS_ERROR;
+    //	} else {
+    //		*AAbsoluteByteOffset = (FLAC__uint64)Pos;
+    
+//    AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );
+    *AAbsoluteByteOffset = (FLAC__uint64)_ab_offset;
+    
+    return FLAC__STREAM_ENCODER_TELL_STATUS_OK;
+    //	}
+}
+
+
+
+
+
 #define READSIZE 1024
 
 FLAC__int16 int16( FLAC__byte *data, int offset ) {
@@ -57,8 +126,8 @@ int main(int argc, char *argv[])
 	unsigned averageBytesPerSecond = 0;
 	unsigned blockAlign = 0;
 	
-    char *inputFilename = "/recording_mono.wav";
-    char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
+    const char *inputFilename = "/recording_mono.wav";
+    const char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
     
 //	if(argc != 3) {
 //		fprintf(stderr, "usage: %s infile.wav outfile.flac\n", inputFilename );
@@ -96,7 +165,7 @@ int main(int argc, char *argv[])
 	FLAC__int32 chunkName = int32( header_start, chunkPos );
 	
 	chunkPos +=4;	
-	FLAC__int32 chunkLength = int32( header_start, chunkPos );
+	FLAC__int32 chunkLengthBytes = int32( header_start, chunkPos );
 	
 	// Read all chunks
 	int exitLoop = 0;
@@ -109,7 +178,7 @@ int main(int argc, char *argv[])
 		// -exit condition (remaining bytes==0)
 
 		// copy the chunk and process it
-		int chunkLengthAndNextChunkNameAndLength = chunkLength+8;
+		int chunkLengthAndNextChunkNameAndLength = chunkLengthBytes+8;
 		FLAC__byte chunkData[chunkLengthAndNextChunkNameAndLength];
 		
 		fread( chunkData, 1, chunkLengthAndNextChunkNameAndLength, fin );
@@ -135,23 +204,23 @@ int main(int argc, char *argv[])
 		
 		else if( memcmp( (void *)&chunkName, "LIST", 4)==0 ) {
 			// -- move to the end
-			chunkPos += chunkLength;
+			chunkPos += chunkLengthBytes;
 		}
 		
 		// setup next loop
 		chunkName = int32( chunkData, chunkPos );
 		chunkPos +=4;	
-		chunkLength = int32( chunkData, chunkPos );
+		chunkLengthBytes = int32( chunkData, chunkPos );
 	}
 
 	// we have reached the data section
-	int bytesPerSample = bps/8;
-	FLAC__byte buffer[READSIZE * bytesPerSample * channelCount]; /* we read the WAVE data into here */
-	FLAC__int32 pcm[READSIZE/*samples*/ * channelCount];
-   	unsigned total_samples = chunkLength / (2*channelCount);
+    
+    // remember - each input sample is 16 bits long.. sooo
+    unsigned absolute_total_samples = chunkLengthBytes / 2;
+   	unsigned total_samples_per_channel = absolute_total_samples / channelCount;
 
 	/* allocate the encoder */
-	if((encoder = FLAC__stream_encoder_new()) == NULL) {
+	if( (encoder = FLAC__stream_encoder_new())== NULL ) {
 		fprintf(stderr, "ERROR: allocating encoder\n");
 		fclose(fin);
 		return 1;
@@ -162,7 +231,7 @@ int main(int argc, char *argv[])
 	ok &= FLAC__stream_encoder_set_channels( encoder, channelCount );
 	ok &= FLAC__stream_encoder_set_bits_per_sample( encoder, bps );
 	ok &= FLAC__stream_encoder_set_sample_rate( encoder, sample_rate );
-	ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples );
+	ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples_per_channel );
 
 	/* now add some metadata; we'll add some tags and a padding block */
 //	if(ok) {
@@ -184,35 +253,60 @@ int main(int argc, char *argv[])
 //		ok = FLAC__stream_encoder_set_metadata(encoder, metadata, 2);
 //	}
 
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    PUT IN THE HOMEMADE SWAPBYTES
+    
+    
+    
 	/* initialize encoder */
 	if(ok) {
 		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
-		if(init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
-			fprintf(stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
+//        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
+        
+		if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
+			fprintf( stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
 			ok = false;
 		}
 	}
 
+	int bytesPerSample = bps/8;
+    int in_bufferSize = READSIZE * bytesPerSample * channelCount;   // 2048 bytes
+    FLAC__byte *in_buffer = calloc( sizeof(FLAC__byte), in_bufferSize );  /* we read the WAVE data into here */
+
+    int pcm_buffer_size = READSIZE/*samples*/ * channelCount;       // 1024 ints
+    FLAC__int32 *pcm = calloc( sizeof(FLAC__int32), pcm_buffer_size );
+    
 	/* read blocks of samples from WAVE file and feed to encoder */
 	if(ok) {
-		size_t left = (size_t)total_samples;
-		while(ok && left) {
+		size_t left = (size_t)total_samples_per_channel;
+		while( ok && left )
+        {
 			size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
 			
-			int amountToRead = channelCount*(bps/8);
-			if( fread(buffer, amountToRead, need, fin) != need ) {
-				filePos += amountToRead;
+            size_t readSuccess = fread( in_buffer, channelCount*bytesPerSample, need, fin );            
+            filePos += need;
+            
+			if( readSuccess!= need ) {
 				fprintf(stderr, "ERROR: reading from WAVE file\n");
 				ok = false;
 			}
 			else {
 				/* convert the packed little-endian 16-bit PCM samples from WAVE into an interleaved FLAC__int32 buffer for libFLAC */
 				size_t i;
+
+                int limitIndex = need*channelCount;
+                int max_read_index = 2*limitIndex+1;
                 
-                if( (need*channelCount) > READSIZE*2 )
-                    fprintf( stderr, "ERROR: why dont i know what is going on?\n" );
-                    
-				for(i = 0; i <need*channelCount; i++) {
+                // go through buffer 2 bytes at a time converting to 16 bit sample (ie 2048 bytes becomes 1024 samples)
+				for( i=0; i <limitIndex; i++ )
+                {
 					/* inefficient but simple and works on big- or little-endian machines */
                     
                     // we need 2 byte values for each 16bit input sample 
@@ -221,17 +315,20 @@ int main(int argc, char *argv[])
                     //FLAC__int16 inVal = (((FLAC__int16)(FLAC__int8)byte1 << 8) | (FLAC__int16)byte2);
                     //pcm[i] = (FLAC__int32)inVal;
                     
-                    pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[2*i+1] << 8) | (FLAC__int16)buffer[2*i]);
-                    
+                    pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)in_buffer[2*i+1] << 8) | (FLAC__int16)in_buffer[2*i]);
+
+//PASS                    
+//                    static int printLimit = 0;
+//                    if( printLimit<20 ) {
+//                        fprintf( stderr, "%i) inputSample %i \n", printLimit, pcm[i] );
+//                        printLimit++;
+//                    }	                      
 				}
 				/* feed samples to encoder */
                 // ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
-    
-                FLAC__int32 *pcm_ptr = pcm;
-                FLAC__int32 **pcm_ptr_ptr = &pcm_ptr;
-    
                 
-                ok = FLAC__stream_encoder_process( encoder, pcm_ptr_ptr, need );
+                FLAC__int32 **arrayOfArrays = &pcm;
+                ok = FLAC__stream_encoder_process( encoder, arrayOfArrays, need );
                 
 			}
 			left -= need;
@@ -250,6 +347,8 @@ int main(int argc, char *argv[])
 	FLAC__stream_encoder_delete(encoder);
 	fclose(fin);
 
+    free(in_buffer);
+    free(pcm);
 	return 0;
 }
 

@@ -18,9 +18,9 @@ typedef FLAC__uint32 brword;
 #define FLAC__WORD_ALL_ONES ((FLAC__uint32)0xffffffff)
 /* SWAP_BE_WORD_TO_HOST swaps bytes in a brword (which is always big-endian) if necessary to match host byte order */
 #if WORDS_BIGENDIAN
-#define SWAP_BE_WORD_TO_HOST(x) (x)
+//#define SWAP_BE_WORD_TO_HOST(x) (x)
 #else
-#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+//#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
 #endif
 /* counts the # of zero MSBs in a word */
 #define COUNT_ZERO_MSBS(word) ( \
@@ -123,7 +123,7 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	if(br->consumed_words > 0) {
 		start = br->consumed_words;
 		end = br->words + (br->bytes? 1:0);
-		custom_memmove(br->buffer, br->buffer+start, FLAC__BYTES_PER_WORD * (end - start));
+		memmove(br->buffer, br->buffer+start, FLAC__BYTES_PER_WORD * (end - start));
 
 		br->words -= start;
 		br->consumed_words = 0;
@@ -147,7 +147,7 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	 */
 
 	if(br->bytes)
-		br->buffer[br->words] = SWAP_BE_WORD_TO_HOST(br->buffer[br->words]);
+		br->buffer[br->words] = ByteSwap_32(br->buffer[br->words]);
 
 	/* now it looks like:
 	 *   bitstream :  11 22 33 44 55            br->words=1 br->bytes=1
@@ -170,7 +170,7 @@ FLAC__bool bitreader_read_from_client_(FLAC__BitReader *br)
 	end = (br->words*FLAC__BYTES_PER_WORD + br->bytes + bytes + (FLAC__BYTES_PER_WORD-1)) / FLAC__BYTES_PER_WORD;
 
 	for(start = br->words; start < end; start++)
-		br->buffer[start] = SWAP_BE_WORD_TO_HOST(br->buffer[start]);
+		br->buffer[start] = ByteSwap_32(br->buffer[start]);
 
 	/* now it looks like:
 	 *   bitstream :  11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF

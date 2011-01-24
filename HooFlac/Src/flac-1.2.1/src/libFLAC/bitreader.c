@@ -47,9 +47,8 @@ typedef FLAC__uint32 brword;
 #define FLAC__WORD_ALL_ONES ((FLAC__uint32)0xffffffff)
 /* SWAP_BE_WORD_TO_HOST swaps bytes in a brword (which is always big-endian) if necessary to match host byte order */
 #if WORDS_BIGENDIAN
-#define SWAP_BE_WORD_TO_HOST(x) (x)
 #else
-#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+    #define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
 #endif
 /* counts the # of zero MSBs in a word */
 #define COUNT_ZERO_MSBS(word) ( \

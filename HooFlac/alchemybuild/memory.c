@@ -12,14 +12,7 @@ void *FLAC__memory_alloc_aligned(size_t bytes, void **aligned_address)
 
 	/* align on 32-byte (256-bit) boundary */
 	x = safe_malloc_add_2op_(bytes, /*+*/31);
-
-    uint32_t temp = (int32_t)x + 31;
-    uint32_t whaat = 32;
-    uint32_t cunt = (FLAC__uint64)(-whaat);
-    uint32_t arse = temp & cunt;
-    void *fluck = (void *)arse;
-		*aligned_address = fluck;
-
+    *aligned_address = (void*)(((FLAC__uint64)x + 31) & (FLAC__uint64)(-((FLAC__int64)32)));
 	return x;
 }
 
