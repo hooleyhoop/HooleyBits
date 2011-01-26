@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stream_encoder.h"
+#include "string.h"
 
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 

@@ -63,7 +63,7 @@ static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC_
 	int result = AS3_ByteArray_writeBytes( *destinationByteArrayPtr, (char *)ABuffer, ABytes );
     
     AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
-    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
+//    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
 
 //    static int nonZeroBytes = 0;
 //    int ii;
@@ -94,7 +94,7 @@ static FLAC__StreamEncoderSeekStatus FLACStreamEncoderSeekCallback(const FLAC__S
     
     AS3_Val *destinationByteArrayPtr = clientData;
 
-    fprintf( stderr, "SEEK callback -- %i\n", (int)AAbsoluteByteOffset );
+//    fprintf( stderr, "SEEK callback -- %i\n", (int)AAbsoluteByteOffset );
     
 	if( AS3_ByteArray_seek( *destinationByteArrayPtr, (int)AAbsoluteByteOffset, SEEK_SET ) < 0)
 		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
@@ -114,7 +114,7 @@ static FLAC__StreamEncoderTellStatus FLACStreamEncoderTellCallback(const FLAC__S
     
     AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );
     *AAbsoluteByteOffset = (FLAC__uint64)AS3_IntValue(pos);
-    fprintf( stderr, "TELL callback -- %i\n", AS3_IntValue(pos) );
+//    fprintf( stderr, "TELL callback -- %i\n", AS3_IntValue(pos) );
     
     return FLAC__STREAM_ENCODER_TELL_STATUS_OK;
 //	}

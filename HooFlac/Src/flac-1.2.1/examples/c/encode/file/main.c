@@ -253,16 +253,7 @@ int main(int argc, char *argv[])
 //		ok = FLAC__stream_encoder_set_metadata(encoder, metadata, 2);
 //	}
 
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    PUT IN THE HOMEMADE SWAPBYTES
-    
+
     
     
 	/* initialize encoder */

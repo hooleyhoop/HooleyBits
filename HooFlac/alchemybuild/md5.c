@@ -145,36 +145,36 @@ static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16])
 #if WORDS_BIGENDIAN
 #error sssssssssssssssssssssssssssssssssssssssssssssss
 //@@@@@@ OPT: use bswap/intrinsics
-static void byteSwap(FLAC__uint32 *buf, unsigned words)
-{
-	register FLAC__uint32 x;
-	do {
-		x = *buf; 
-		x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff);
-		*buf++ = (x >> 16) | (x << 16);
-	} while (--words);
-}
-static void byteSwapX16(FLAC__uint32 *buf)
-{
-	register FLAC__uint32 x;
-
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
-	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf   = (x >> 16) | (x << 16);
-}
+//static void byteSwap(FLAC__uint32 *buf, unsigned words)
+//{
+//	register FLAC__uint32 x;
+//	do {
+//		x = *buf; 
+//		x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff);
+//		*buf++ = (x >> 16) | (x << 16);
+//	} while (--words);
+//}
+//static void byteSwapX16(FLAC__uint32 *buf)
+//{
+//	register FLAC__uint32 x;
+//
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf++ = (x >> 16) | (x << 16);
+//	x = *buf; x = ((x << 8) & 0xff00ff00) | ((x >> 8) & 0x00ff00ff); *buf   = (x >> 16) | (x << 16);
+//}
 #else
 #define byteSwap(buf, words)
 #define byteSwapX16(buf)
@@ -191,7 +191,7 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 
 	FLAC__uint32 t = ctx->bytes[0];
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) t=%i\n", printLimit, t );
+ //       fprintf( stderr, "%i) t=%i\n", printLimit, t );
         printLimit++;
     }  
     
@@ -201,7 +201,7 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
     
 	t = 64 - (t & 0x3f);	/* Space available in ctx->in (at least 1) */
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) t=%i\n", printLimit, t );
+//        fprintf( stderr, "%i) t=%i\n", printLimit, t );
         printLimit++;
     }
     
@@ -215,7 +215,7 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
     
 // FAIL
 if( printLimit<20 ) {
-    fprintf( stderr, "%i) inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
+ //   fprintf( stderr, "%i) inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
     printLimit++;
 }   
     

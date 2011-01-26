@@ -8,6 +8,8 @@
 #include "alloc.h"
 #include "hooHacks.h"
 
+#include "netinet/in.h"
+
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to SWAP_BE_WORD_TO_HOST below to match */
 /* WATCHOUT: there are a few places where the code will not work unless bwword is >= 32 bits wide */
@@ -16,11 +18,9 @@ typedef FLAC__uint32 bwword;
 #define FLAC__BITS_PER_WORD 32
 #define FLAC__WORD_ALL_ONES ((FLAC__uint32)0xffffffff)
 /* SWAP_BE_WORD_TO_HOST swaps bytes in a bwword (which is always big-endian) if necessary to match host byte order */
-#if WORDS_BIGENDIAN
-// #define SWAP_BE_WORD_TO_HOST(x) (x)
-#else
-// #define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
-#endif
+
+#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+
 
 /*
  * The default capacity here doesn't matter too much.  The buffer always grows
@@ -225,7 +225,7 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
     static int printCount = 0;
     
     if(printCount<20){
-        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
+//        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
         printCount++;
     }    
     
@@ -239,20 +239,20 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
 		if(bw->words == bw->capacity && !bitwriter_grow_(bw, FLAC__BITS_PER_WORD))
 			return false;
 		/* append bits as complete word to buffer, but don't change bw->accum or bw->bits */
-		bw->buffer[bw->words] = ByteSwap_32(bw->accum << (FLAC__BITS_PER_WORD-bw->bits));
+		bw->buffer[bw->words] = SWAP_BE_WORD_TO_HOST(bw->accum << (FLAC__BITS_PER_WORD-bw->bits));
 	}
 	/* now we can just return what we have */
 	*buffer = (FLAC__byte *)bw->buffer;
     
     if(printCount<20){
-        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
+ //       fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
         printCount++;
     } 
     
 	*bytes = (FLAC__BYTES_PER_WORD * bw->words) + (bw->bits >> 3);
     
     if(printCount<20){
-        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
+//        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
         printCount++;
     } 
     
@@ -288,7 +288,7 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsign
 		bits -= n;
 		bw->bits += n;
 		if(bw->bits == FLAC__BITS_PER_WORD) {
-			bw->buffer[bw->words++] = ByteSwap_32(bw->accum);
+			bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 			bw->bits = 0;
 		}
 		else
@@ -344,7 +344,7 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 	else if(bw->bits) { /* WATCHOUT: if bw->bits == 0, left==FLAC__BITS_PER_WORD and bw->accum<<=left is a NOP instead of setting to 0 */
 		bw->accum <<= left;
 		bw->accum |= val >> (bw->bits = bits - left);
-		bw->buffer[bw->words++] = ByteSwap_32(bw->accum);
+		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 		bw->accum = val;
 	}
 	else {
@@ -352,13 +352,13 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 		bw->bits = 0;
         
         if( printLimit<20 ) {
-            fprintf( stderr, "%i) val=%i --- swapped val=%i \n", printLimit, (int)val, ByteSwap_32(val) );
+            fprintf( stderr, "%i) val=%0x --- swapped val=%0x \n", printLimit, (int)val, ntohl(val) );
         }
         
-		bw->buffer[bw->words++] = ByteSwap_32(val);
+		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(val);
 	}
     if(printCount<20){
-        fprintf( stderr, "%i) FLAC__bitwriter_write_raw_uint32 {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
+//        fprintf( stderr, "%i) FLAC__bitwriter_write_raw_uint32 {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
         printCount++;
     }
 	return true;
@@ -514,7 +514,7 @@ if(bw->bits && bw->bits + msbits + lsbits < FLAC__BITS_PER_WORD) { /* i.e. if th
 					else {
 						bw->accum <<= left;
 						msbits -= left;
-						bw->buffer[bw->words++] = ByteSwap_32(bw->accum);
+						bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 						bw->bits = 0;
 					}
 				}
@@ -548,7 +548,7 @@ break1:
 				FLAC__ASSERT(left < FLAC__BITS_PER_WORD);
 				bw->accum <<= left;
 				bw->accum |= uval >> (bw->bits = lsbits - left);
-				bw->buffer[bw->words++] = ByteSwap_32(bw->accum);
+				bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 				bw->accum = uval;
 			}
 		}

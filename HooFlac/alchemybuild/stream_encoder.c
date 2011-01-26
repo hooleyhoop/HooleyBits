@@ -1906,7 +1906,7 @@ FLAC__bool write_bitbuffer_( FLAC__StreamEncoder *encoder, unsigned samples, FLA
     static int printCount = 0;
     
     if(printCount<20){
-        fprintf( stderr, "%i) write_bitbuffer_ %p {%i %i %i %i} \n", printCount, buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
+//        fprintf( stderr, "%i) write_bitbuffer_ %p {%i %i %i %i} \n", printCount, buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
         printCount++;
     }    
     
@@ -2238,7 +2238,7 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 	min_partition_order = min(min_partition_order, max_partition_order);
 
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) max_partition_order = %i, min_partition_order = %i \n", printLimit, max_partition_order, min_partition_order );
+ //       fprintf( stderr, "%i) max_partition_order = %i, min_partition_order = %i \n", printLimit, max_partition_order, min_partition_order );
         printLimit++;        
     }
     
@@ -2502,7 +2502,7 @@ FLAC__bool process_subframe_(
 	/* only use RICE2 partitions if stream bps > 16 */
 	const unsigned rice_parameter_limit = FLAC__stream_encoder_get_bits_per_sample(encoder) > 16? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ESCAPE_PARAMETER;
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) rice_parameter_limit = %i \n", printLimit, rice_parameter_limit );
+  //      fprintf( stderr, "%i) rice_parameter_limit = %i \n", printLimit, rice_parameter_limit );
     }
     
 	FLAC__ASSERT(frame_header->blocksize > 0);
@@ -2515,7 +2515,7 @@ FLAC__bool process_subframe_(
 		_best_bits = evaluate_verbatim_subframe_(encoder, integer_signal, frame_header->blocksize, subframe_bps, subframe[_best_subframe]);
 
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) _best_bits = %i \n", printLimit, _best_bits );
+//        fprintf( stderr, "%i) _best_bits = %i \n", printLimit, _best_bits );
         printLimit++;
     }
     
@@ -2558,7 +2558,7 @@ FLAC__bool process_subframe_(
 				else {
 					min_fixed_order = max_fixed_order = guess_fixed_order;
                     if( printLimit<20 ) {
-                        fprintf( stderr, "%i) min_fixed_order = %i \n", printLimit, min_fixed_order );
+          //              fprintf( stderr, "%i) min_fixed_order = %i \n", printLimit, min_fixed_order );
                     }                    
 				}
 				if(max_fixed_order >= frame_header->blocksize)
@@ -2598,7 +2598,7 @@ FLAC__bool process_subframe_(
 						_best_bits = _candidate_bits;
                         
                         if( printLimit<20 ) {
-                            fprintf( stderr, "%i) modifying bestBits %i \n", printLimit, _best_bits );
+  //                          fprintf( stderr, "%i) modifying bestBits %i \n", printLimit, _best_bits );
                             printLimit++;
                         }
                         
@@ -2686,14 +2686,14 @@ FLAC__bool process_subframe_(
 										);
                                     
                                     if( printLimit<20 ) {
-                                        fprintf( stderr, "%i) checkpoint sparrow \n", printLimit );
+ //                                       fprintf( stderr, "%i) checkpoint sparrow \n", printLimit );
                                         printLimit++;
                                     }
                                     
 									if(_candidate_bits > 0) { /* if == 0, there was a problem quantizing the lpcoeffs */
                                         
                                         if( printLimit<20 ) {
-                                            fprintf( stderr, "%i) in candidate bits %i, bestBits %i \n", printLimit, _candidate_bits, _best_bits );
+//                                            fprintf( stderr, "%i) in candidate bits %i, bestBits %i \n", printLimit, _candidate_bits, _best_bits );
                                             printLimit++;
                                         }
                                         
@@ -2702,7 +2702,7 @@ FLAC__bool process_subframe_(
 											_best_bits = _candidate_bits;
                                             
                                             if( printLimit<20 ) {
-                                                fprintf( stderr, "%i) _best_subframe = %i, _best_bits = %i \n", printLimit, (int)_best_subframe, _best_bits );
+//                                                fprintf( stderr, "%i) _best_subframe = %i, _best_bits = %i \n", printLimit, (int)_best_subframe, _best_bits );
                                                 printLimit++;
                                             }
                                             
@@ -2812,7 +2812,7 @@ unsigned evaluate_fixed_subframe_(
 {
     static int printLimit = 0;
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) evaluate_fixed_subframe_ \n", printLimit );
+//        fprintf( stderr, "%i) evaluate_fixed_subframe_ \n", printLimit );
         printLimit++;
     }
     
@@ -3085,7 +3085,7 @@ void precompute_partition_info_sums_(
 				abs_residual_partition_sums[partition] = abs_residual_partition_sum;
                 
                 if( printLimit<20 ) {
-                    fprintf( stderr, "%i) abs_residual_partition_sums[%i] = %i, \n", printLimit, partition, abs_residual_partition_sum );
+//                    fprintf( stderr, "%i) abs_residual_partition_sums[%i] = %i, \n", printLimit, partition, abs_residual_partition_sum );
                     printLimit++;
                 }                   
 			}
@@ -3273,7 +3273,7 @@ FLAC__bool set_partitioned_rice_(
 			}
 			mean = abs_residual_partition_sums[partition];
             if( printLimit<20 ) {
-                fprintf( stderr, "%i) mean = %i, \n", printLimit, (int)mean );
+//                fprintf( stderr, "%i) mean = %i, \n", printLimit, (int)mean );
                 printLimit++;
             }              
 			/* we are basically calculating the size in bits of the

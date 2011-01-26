@@ -12,6 +12,7 @@
 #import "GenericTimer.h"
 #import "FunctionEnumerator.h"
 #import "DissasemblyProcessor.h"
+#import "simple_tracer.h"
 
 
 @implementation AppDelegate

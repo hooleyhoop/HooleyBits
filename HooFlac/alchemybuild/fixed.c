@@ -71,7 +71,7 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 
     // FAIL
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) residual_bits_per_sample = %f %f %f %f %f \n", printLimit, residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
+ //       fprintf( stderr, "%i) residual_bits_per_sample = %f %f %f %f %f \n", printLimit, residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
         printLimit++;
     }
     
@@ -146,7 +146,7 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
     static int printLimit=0;
 
     if( printLimit<20 ) {
-        fprintf( stderr, "%i) FLAC__fixed_compute_residual order = %i \n", printLimit, order );
+//        fprintf( stderr, "%i) FLAC__fixed_compute_residual order = %i \n", printLimit, order );
         printLimit++;
     }
     
@@ -159,7 +159,7 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 			for(i = 0; i < idata_len; i++)
 				residual[i] = data[i] - data[i-1];
             if( printLimit<20 ) {
-                fprintf( stderr, "%i) residual[0]=%i, residual[2]=%i, residual[4]=%i, \n", printLimit, residual[0], residual[2], residual[4] );
+    //            fprintf( stderr, "%i) residual[0]=%i, residual[2]=%i, residual[4]=%i, \n", printLimit, residual[0], residual[2], residual[4] );
                 printLimit++;
             }   
             

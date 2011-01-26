@@ -11,6 +11,6 @@
 //#define memmove custom_memmove
 //#define memcpy custom_memcpy
 //#define memset custom_memset
-uint32_t ByteSwap_32(uint32_t Value);
+// uint32_t ByteSwap_32(uint32_t Value);
 
 #endif

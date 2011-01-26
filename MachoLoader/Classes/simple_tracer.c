@@ -33,7 +33,7 @@ void run_target( const char *programname ) {
 	
 	procmsg( "target started. will run '%s'\n", programname );
 
-    // setsid(); // lldb
+ //   setsid(); // lldb
     
     /* Allow tracing of this process */
     if( ptrace(PT_TRACE_ME, 0, 0, 0) < 0) {
@@ -41,8 +41,8 @@ void run_target( const char *programname ) {
         return;
     }
     ptrace (PT_SIGEXC, 0, 0, 0);    // lldb // Get BSD signals as mach exceptions
-    setgid (getgid ());           // lldb
-    setpgid (0, 0);               // lldb Set the child process group to match its pid
+ //   setgid (getgid ());           // lldb
+ //   setpgid (0, 0);               // lldb Set the child process group to match its pid
     sleep (1);                    // lldb
     
     /* Replace this process's image with the given program */
@@ -73,13 +73,14 @@ void run_debugger( pid_t child_pid ) {
 
 //jiggy        unsigned instr = ptrace(PTRACE_PEEKTEXT, child_pid, regs.eip, 0);
  
-//jiggy        procmsg("icounter = %u.  EIP = 0x%08x.  instr = 0x%08x\n", icounter, regs.eip, instr);
+       // procmsg("icounter = %u.  EIP = 0x%08x.  instr = 0x%08x\n", icounter, regs.eip, instr);
+        procmsg("icounter = %u. \n", icounter);
 
         /* Make the child execute another instruction */
-//jiggy        if (ptrace(PT_STEP, child_pid, 0, 0) < 0) {
-//jiggy            perror("ptrace");
-//jiggy            return;
-//jiggy        }
+        if (ptrace(PT_STEP, child_pid, 0, 0) < 0) {
+            perror("ptrace");
+            return;
+        }
 
         /* Wait for child to stop on its next instruction */
         wait( &wait_status );
