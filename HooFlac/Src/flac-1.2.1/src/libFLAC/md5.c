@@ -184,26 +184,26 @@ static void byteSwapX16(FLAC__uint32 *buf)
  * Update context to reflect the concatenation of another buffer full
  * of bytes.
  */
-static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsigned len)
-{
+static void FLAC__MD5Update( FLAC__MD5Context *ctx, FLAC__byte const *buf, unsigned len ) {
+    
 	/* Update byte count */
     static int printLimit = 0;
 
 	FLAC__uint32 t = ctx->bytes[0];
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) t=%i\n", printLimit, t );
-        printLimit++;
-    }   
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) t=%i\n", printLimit, t );
+//        printLimit++;
+//    }   
     
 	if ((ctx->bytes[0] = t + len) < t) {
 		ctx->bytes[1]++;	/* Carry from low to high */
     }
     
 	t = 64 - (t & 0x3f);	/* Space available in ctx->in (at least 1) */
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) t=%i\n", printLimit, t );
-        printLimit++;
-    }
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) t=%i\n", printLimit, t );
+//        printLimit++;
+//    }
     
 	if (t > len) {
 		memcpy((FLAC__byte *)ctx->in + 64 - t, buf, len);
@@ -213,11 +213,11 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 	memcpy((FLAC__byte *)ctx->in + 64 - t, buf, t);
 	byteSwapX16(ctx->in);
     
-// FAIL
-if( printLimit<20 ) {
-    fprintf( stderr, "%i) inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
-    printLimit++;
-}   
+// FAIL - i would say it is after here on first iteration
+// FAILif( printLimit<20 ) {
+// FAIL    fprintf( stderr, "%i) FLAC__MD5Update inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
+// FAIL    printLimit++;
+// FAIL}   
     
 	FLAC__MD5Transform( ctx->buf, ctx->in );
 	buf += t;

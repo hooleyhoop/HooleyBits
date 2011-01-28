@@ -6,6 +6,10 @@
 #include "alloc.h"
 #include "hooHacks.h"
 
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 #ifndef FLaC__INLINE
 #define FLaC__INLINE
 #endif
@@ -184,8 +188,8 @@ static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16])
  * Update context to reflect the concatenation of another buffer full
  * of bytes.
  */
-static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsigned len)
-{
+static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsigned len) {
+    
 	/* Update byte count */
     static int printLimit = 0;
 
@@ -214,10 +218,10 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
 	byteSwapX16(ctx->in);
     
 // FAIL
-if( printLimit<20 ) {
- //   fprintf( stderr, "%i) inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
-    printLimit++;
-}   
+//if( printLimit<20 ) {
+//    fprintf( stderr, "%i) FLAC__MD5Update inputSample %i %i %i %i \n", printLimit, ctx->in[0], ctx->in[1], ctx->in[2], ctx->in[3]  );
+//    printLimit++;
+//}   
     
 	FLAC__MD5Transform(ctx->buf, ctx->in);
 	buf += t;

@@ -59,10 +59,10 @@ static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC_
 
     AS3_Val *destinationByteArrayPtr = clientData;
     
-    AS3_Trace(*destinationByteArrayPtr);
+   // AS3_Trace(*destinationByteArrayPtr);
 	int result = AS3_ByteArray_writeBytes( *destinationByteArrayPtr, (char *)ABuffer, ABytes );
     
-    AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
+//    AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
 //    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
 
 //    static int nonZeroBytes = 0;
@@ -96,8 +96,13 @@ static FLAC__StreamEncoderSeekStatus FLACStreamEncoderSeekCallback(const FLAC__S
 
 //    fprintf( stderr, "SEEK callback -- %i\n", (int)AAbsoluteByteOffset );
     
-	if( AS3_ByteArray_seek( *destinationByteArrayPtr, (int)AAbsoluteByteOffset, SEEK_SET ) < 0)
-		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
+    // TODO: 
+    // Not sure if AS3_Int() and other stuff like it leaks.. find out!
+    int offset = AAbsoluteByteOffset;
+    AS3_SetS( *destinationByteArrayPtr, "position", AS3_Int(offset) );
+    
+//	if( AS3_ByteArray_seek( *destinationByteArrayPtr, (int)AAbsoluteByteOffset, SEEK_SET ) < 0)
+//		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
 
     return FLAC__STREAM_ENCODER_SEEK_STATUS_OK;
 }
@@ -121,6 +126,9 @@ static FLAC__StreamEncoderTellStatus FLACStreamEncoderTellCallback(const FLAC__S
 }
 
 static AS3_Val encode( void *self, AS3_Val args ) {
+
+    int magicVal = 66;
+    fprintf( stderr, "val=%0x --- swapped val=%0x \n", (int)magicVal, HooByteSwap(magicVal) );
 
     // get Actionscript Args
     AS3_Val wavData_arg = AS3_Undefined();
@@ -198,7 +206,9 @@ static AS3_Val encode( void *self, AS3_Val args ) {
 		// copy the chunk and process it (includes the beggining of the next as well)
 		int chunkLengthAndNextChunkNameAndLength = chunkLengthBytes+8;
 		FLAC__byte chunkData[chunkLengthAndNextChunkNameAndLength];
-        AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );            
+
+        // AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );      
+      
         int result = AS3_ByteArray_readBytes( chunkData, wavData_arg, chunkLengthAndNextChunkNameAndLength );
 		filePos+=chunkLengthAndNextChunkNameAndLength;
         
@@ -276,11 +286,20 @@ static AS3_Val encode( void *self, AS3_Val args ) {
         {
             size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
             
+            size_t alchemyCompensatedNeed = need*bytesPerSample;
+            
             // fill our buffer
-            AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );
-            int readSuccess = AS3_ByteArray_readBytes( in_buffer, wavData_arg, need );
-            filePos += need;
-			if( readSuccess!= need ) {
+//            AS3_ByteArray_seek( wavData_arg, filePos, SEEK_SET );
+            
+            AS3_Val currentPos = AS3_GetS( wavData_arg, "position" );
+            
+            fprintf( stderr, "About to READ FROM %i -- %i \n", AS3_IntValue(currentPos), alchemyCompensatedNeed );            
+            int readSuccess = AS3_ByteArray_readBytes( in_buffer, wavData_arg, alchemyCompensatedNeed );
+//            fprintf( stderr, "copied %i bytes into buffer \n", need );
+            
+            
+            filePos += alchemyCompensatedNeed;
+			if( readSuccess!= alchemyCompensatedNeed ) {
 				fprintf(stderr, "ERROR: reading from WAVE file\n");
 				ok = false;
 			}
@@ -306,6 +325,12 @@ static AS3_Val encode( void *self, AS3_Val args ) {
                 /* feed samples to encoder */
                 // ok = FLAC__stream_encoder_process_interleaved( encoder, pcm, need);
                 FLAC__int32 **arrayOfArrays = &pcm;
+                
+//                FLAC__int32 aaaaaaa = (FLAC__int16)in_buffer[2*512];
+//                FLAC__int32 bbbbbbb = (FLAC__int8)in_buffer[2*512+1];
+//                fprintf( stderr, "10 INTEGER SIGNAL VALIDITY TEST %i %i \n", aaaaaaa, bbbbbbb );  
+                // exit(0);
+                
                 ok = FLAC__stream_encoder_process( encoder, arrayOfArrays, need );
                 
                 // obviously temp
@@ -360,11 +385,11 @@ static AS3_Val encode( void *self, AS3_Val args ) {
 
  //   AS3_Val length = AS3_GetS( byteArray, length_property );
 
-    AS3_Val lengthOfByteArray3 = AS3_GetS( dstData_arg, "length" );
-    int len3 = AS3_IntValue( lengthOfByteArray3 );
-    unsigned char buffer[len3];
-    AS3_ByteArray_seek( dstData_arg, 0, SEEK_SET );
-    AS3_ByteArray_readBytes( buffer, dstData_arg, len3 );
+//    AS3_Val lengthOfByteArray3 = AS3_GetS( dstData_arg, "length" );
+//    int len3 = AS3_IntValue( lengthOfByteArray3 );
+//    unsigned char buffer[len3];
+//    AS3_ByteArray_seek( dstData_arg, 0, SEEK_SET );
+//    AS3_ByteArray_readBytes( buffer, dstData_arg, len3 );
 //    int ii;
 //    int nonZeroByteCount = 0;
 //    for(ii=0;ii<len3;ii++){

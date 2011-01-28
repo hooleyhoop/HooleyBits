@@ -10,6 +10,10 @@
 
 #include "netinet/in.h"
 
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to SWAP_BE_WORD_TO_HOST below to match */
 /* WATCHOUT: there are a few places where the code will not work unless bwword is >= 32 bits wide */
@@ -19,7 +23,9 @@ typedef FLAC__uint32 bwword;
 #define FLAC__WORD_ALL_ONES ((FLAC__uint32)0xffffffff)
 /* SWAP_BE_WORD_TO_HOST swaps bytes in a bwword (which is always big-endian) if necessary to match host byte order */
 
-#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+// #define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+#define SWAP_BE_WORD_TO_HOST(x) HooByteSwap(x)
+
 
 
 /*
@@ -351,9 +357,9 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 		bw->accum = val;
 		bw->bits = 0;
         
-        if( printLimit<20 ) {
-            fprintf( stderr, "%i) val=%0x --- swapped val=%0x \n", printLimit, (int)val, ntohl(val) );
-        }
+//        if( printLimit<20 ) {
+//            fprintf( stderr, "%i) val=%0x --- swapped val=%0x \n", printLimit, (int)val, SWAP_BE_WORD_TO_HOST(val) );
+//        }
         
 		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(val);
 	}

@@ -17,6 +17,10 @@
 #include "md5.h"
 #include "memory.h"
 
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 #ifdef max
 #undef max
 #endif

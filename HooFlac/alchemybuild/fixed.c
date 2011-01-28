@@ -6,6 +6,10 @@
 #include "assert.h"
 #include "hooHacks.h"
 
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 #ifndef M_LN2
 /* math.h in VC++ doesn't seem to have this (how Microsoft is that?) */
 #error cunt
@@ -70,10 +74,10 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 	residual_bits_per_sample[4] = (FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
 
     // FAIL
-    if( printLimit<20 ) {
- //       fprintf( stderr, "%i) residual_bits_per_sample = %f %f %f %f %f \n", printLimit, residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
-        printLimit++;
-    }
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) residual_bits_per_sample = %f %f %f %f %f \n", printLimit, residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
+//        printLimit++;
+//    }
     
 	return order;
 }
@@ -145,10 +149,12 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 	int i;
     static int printLimit=0;
 
-    if( printLimit<20 ) {
+//    if( printLimit<20 ) {
 //        fprintf( stderr, "%i) FLAC__fixed_compute_residual order = %i \n", printLimit, order );
-        printLimit++;
-    }
+//        printLimit++;
+//    }
+
+//    fprintf( stderr, "** ORDER ** %i \n", order );
     
 	switch(order) {
 		case 0:
@@ -156,17 +162,18 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 			memcpy(residual, data, sizeof(residual[0])*data_len);
 			break;
 		case 1:
-			for(i = 0; i < idata_len; i++)
+			for( i=0; i<idata_len; i++ ) {
+//                fprintf( stderr, "residual data[%u] = %i \n", i, data[i] );
+//                if( i==511 )
+//                    exit(0);                
 				residual[i] = data[i] - data[i-1];
-            if( printLimit<20 ) {
-    //            fprintf( stderr, "%i) residual[0]=%i, residual[2]=%i, residual[4]=%i, \n", printLimit, residual[0], residual[2], residual[4] );
-                printLimit++;
-            }   
-            
+                // fprintf( stderr, "residual[%i] = %i \n", i, residual[i] );
+            }
 			break;
 		case 2:
-			for(i = 0; i < idata_len; i++){
+			for( i=0; i<idata_len; i++) {
 				residual[i] = data[i] - data[i-1];
+//                fprintf( stderr, "CASE 2: residual[%i] = %i \n", i, residual[i] );                
             }
           
 			break;

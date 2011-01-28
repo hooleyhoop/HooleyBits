@@ -1537,33 +1537,53 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process( FLAC__StreamEncoder *encoder, 
 	FLAC__ASSERT(encoder->protected_->state == FLAC__STREAM_ENCODER_OK);
 
 	do {
-		const unsigned n = min(blocksize+OVERREAD_-encoder->private_->current_sample_number, samples-j);
+		const unsigned n = min( blocksize+OVERREAD_-encoder->private_->current_sample_number, samples-j);
+//        fprintf( stderr, "8 INTEGER SIGNAL VALIDITY TEST %i -- %u \n", encoder->private_->integer_signal[0][512], n );            
 
-		if(encoder->protected_->verify)
+		if( encoder->protected_->verify ) {
 			append_to_verify_fifo_(&encoder->private_->verify.input_fifo, buffer, j, channels, n);
+            fprintf( stderr, "VERIFY NOT SUPPORTED\n" );                        
+        }
+        
+		for( channel = 0; channel < channels; channel++ )
+        {   
+            void *restrict dest = &encoder->private_->integer_signal[channel][encoder->private_->current_sample_number];
+            const void *restrict src = &buffer[channel][j];
+            int size = sizeof( buffer[channel][0]) * n;
+//            fprintf( stderr, "memcpy dest=%p, src=%p, size=%i \n", dest, src, size );            
+			memcpy( dest, src, size);
+            
+            int *srcHoo = &buffer[channel][j];
+            int *dstHoo =  &encoder->private_->integer_signal[channel][encoder->private_->current_sample_number];
+//            fprintf( stderr, "9 INTEGER SIGNAL VALIDITY TEST %i %i\n", srcHoo[512], dstHoo[512] );            
+        }
+    
+//        fprintf( stderr, "7 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );            
 
-		for(channel = 0; channel < channels; channel++)
-			memcpy(&encoder->private_->integer_signal[channel][encoder->private_->current_sample_number], &buffer[channel][j], sizeof(buffer[channel][0]) * n);
-
-		if(encoder->protected_->do_mid_side_stereo) {
+		if(encoder->protected_->do_mid_side_stereo)
+        {
 			FLAC__ASSERT(channels == 2);
 			/* "i <= blocksize" to overread 1 sample; see comment in OVERREAD_ decl */
 			for(i = encoder->private_->current_sample_number; i <= blocksize && j < samples; i++, j++) {
 				encoder->private_->integer_signal_mid_side[1][i] = buffer[0][j] - buffer[1][j];
 				encoder->private_->integer_signal_mid_side[0][i] = (buffer[0][j] + buffer[1][j]) >> 1; /* NOTE: not the same as 'mid = (buffer[0][j] + buffer[1][j]) / 2' ! */
 			}
-		}
-		else
+		} else {
 			j += n;
-
+        }
+        
 		encoder->private_->current_sample_number += n;
 
 		/* we only process if we have a full block + 1 extra sample; final block is always handled by FLAC__stream_encoder_finish() */
-		if(encoder->private_->current_sample_number > blocksize) {
+		if( encoder->private_->current_sample_number > blocksize )
+        {
 			FLAC__ASSERT(encoder->private_->current_sample_number == blocksize+OVERREAD_);
 			FLAC__ASSERT(OVERREAD_ == 1); /* assert we only overread 1 sample which simplifies the rest of the code below */
-			if(!process_frame_(encoder, /*is_fractional_block=*/false, /*is_last_block=*/false))
+            
+//            fprintf( stderr, "6 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );            
+			if(!process_frame_( encoder, /*is_fractional_block=*/false, /*is_last_block=*/false ))
 				return false;
+            
 			/* move unprocessed overread samples to beginnings of arrays */
 			for(channel = 0; channel < channels; channel++)
 				encoder->private_->integer_signal[channel][0] = encoder->private_->integer_signal[channel][blocksize];
@@ -1573,7 +1593,7 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process( FLAC__StreamEncoder *encoder, 
 			}
 			encoder->private_->current_sample_number = 1;
 		}
-	} while(j < samples);
+	} while( j<samples );
 
 	return true;
 }
@@ -1947,11 +1967,12 @@ FLAC__bool write_bitbuffer_(FLAC__StreamEncoder *encoder, unsigned samples, FLAC
 //	}
 
     static int printCount = 0;
-    
-    if(printCount<20){
-        fprintf( stderr, "%i) write_bitbuffer_ %p {%i %i %i %i} \n", printCount, buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
-        printCount++;
-    }    
+
+//ok    
+//ok if(printCount<20){
+//ok     fprintf( stderr, "%i) write_bitbuffer_ > write_bitbuffer_ %p {%i %i %i %i} \n", printCount, buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
+//ok    printCount++;
+//ok}    
     
 	if(write_frame_(encoder, buffer, bytes, samples, is_last_block) != FLAC__STREAM_ENCODER_WRITE_STATUS_OK) {
 		FLAC__bitwriter_release_buffer(encoder->private_->frame);
@@ -2027,7 +2048,7 @@ FLAC__StreamEncoderWriteStatus write_frame_(FLAC__StreamEncoder *encoder, const 
 		}
 	}
 
-    fprintf( stderr, "WRITING BUFFER (%p) %i %i %i %i \n", buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
+//    fprintf( stderr, "WRITING BUFFER (%p) %i %i %i %i \n", buffer, buffer[0], buffer[1], buffer[2], buffer[3] );
 	status = encoder->private_->write_callback(encoder, buffer, bytes, samples, encoder->private_->current_frame_number, encoder->private_->client_data);
 
 	if(status == FLAC__STREAM_ENCODER_WRITE_STATUS_OK) {
@@ -2200,23 +2221,27 @@ void update_metadata_(const FLAC__StreamEncoder *encoder)
 	}
 }
 
-FLAC__bool process_frame_(FLAC__StreamEncoder *encoder, FLAC__bool is_fractional_block, FLAC__bool is_last_block)
+FLAC__bool process_frame_( FLAC__StreamEncoder *encoder, FLAC__bool is_fractional_block, FLAC__bool is_last_block )
 {
 	FLAC__uint16 crc;
-	FLAC__ASSERT(encoder->protected_->state == FLAC__STREAM_ENCODER_OK);
+	FLAC__ASSERT( encoder->protected_->state==FLAC__STREAM_ENCODER_OK );
+
+//    fprintf( stderr, "5 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );
 
 	/*
 	 * Accumulate raw signal to the MD5 signature
 	 */
-	if(encoder->protected_->do_md5 && !FLAC__MD5Accumulate(&encoder->private_->md5context, (const FLAC__int32 * const *)encoder->private_->integer_signal, encoder->protected_->channels, encoder->protected_->blocksize, (encoder->protected_->bits_per_sample+7) / 8)) {
+	if( encoder->protected_->do_md5 && !FLAC__MD5Accumulate(&encoder->private_->md5context, (const FLAC__int32 * const *)encoder->private_->integer_signal, encoder->protected_->channels, encoder->protected_->blocksize, (encoder->protected_->bits_per_sample+7) / 8)) {
 		encoder->protected_->state = FLAC__STREAM_ENCODER_MEMORY_ALLOCATION_ERROR;
 		return false;
 	}
 
+//    fprintf( stderr, "4 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );
+
 	/*
 	 * Process the frame header and subframes into the frame bitbuffer
 	 */
-	if(!process_subframes_(encoder, is_fractional_block)) {
+	if(!process_subframes_( encoder, is_fractional_block)) {
 		/* the above function sets the state for us in case of an error */
 		return false;
 	}
@@ -2279,10 +2304,12 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 	}
 	min_partition_order = min(min_partition_order, max_partition_order);
 
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) max_partition_order = %i, min_partition_order = %i \n", printLimit, max_partition_order, min_partition_order );
-        printLimit++;
-    }
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) max_partition_order = %i, min_partition_order = %i \n", printLimit, max_partition_order, min_partition_order );
+//        printLimit++;
+//    }
+//    fprintf( stderr, "3 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );
+    
 	/*
 	 * Setup the frame
 	 */
@@ -2319,25 +2346,29 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 	}
 
 	FLAC__ASSERT(do_independent || do_mid_side);
+ //   fprintf( stderr, "2 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );
 
 	/*
 	 * Check for wasted bits; set effective bps for each subframe
 	 */
 	if(do_independent) {
 		for(channel = 0; channel < encoder->protected_->channels; channel++) {
-			const unsigned w = get_wasted_bits_(encoder->private_->integer_signal[channel], encoder->protected_->blocksize);
+			const unsigned w = get_wasted_bits_( encoder->private_->integer_signal[channel], encoder->protected_->blocksize);
 			encoder->private_->subframe_workspace[channel][0].wasted_bits = encoder->private_->subframe_workspace[channel][1].wasted_bits = w;
 			encoder->private_->subframe_bps[channel] = encoder->protected_->bits_per_sample - w;
 		}
 	}
 	if(do_mid_side) {
 		FLAC__ASSERT(encoder->protected_->channels == 2);
-		for(channel = 0; channel < 2; channel++) {
-			const unsigned w = get_wasted_bits_(encoder->private_->integer_signal_mid_side[channel], encoder->protected_->blocksize);
+		for(channel = 0; channel < 2; channel++) 
+        {
+			const unsigned w = get_wasted_bits_( encoder->private_->integer_signal_mid_side[channel], encoder->protected_->blocksize );
 			encoder->private_->subframe_workspace_mid_side[channel][0].wasted_bits = encoder->private_->subframe_workspace_mid_side[channel][1].wasted_bits = w;
 			encoder->private_->subframe_bps_mid_side[channel] = encoder->protected_->bits_per_sample - w + (channel==0? 0:1);
 		}
 	}
+
+//    fprintf( stderr, "1 INTEGER SIGNAL VALIDITY TEST %i\n", encoder->private_->integer_signal[0][512] );
 
 	/*
 	 * First do a normal encoding pass of each independent channel
@@ -2351,6 +2382,8 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 					max_partition_order,
 					&frame_header,
 					encoder->private_->subframe_bps[channel],
+                                  
+                    // i think signal is already fucked here - but not sure
 					encoder->private_->integer_signal[channel],
 					encoder->private_->subframe_workspace_ptr[channel],
 					encoder->private_->partitioned_rice_contents_workspace_ptr[channel],
@@ -2485,7 +2518,7 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder, FLAC__bool is_fracti
 			return false;
 	}
 	else {
-        fprintf( stderr, "about to add header.... \n" );
+//        fprintf( stderr, "about to add header.... \n" );
         
 		if(!FLAC__frame_add_header(&frame_header, encoder->private_->frame)) {
 			encoder->protected_->state = FLAC__STREAM_ENCODER_FRAMING_ERROR;
@@ -2546,28 +2579,34 @@ FLAC__bool process_subframe_(
 	/* only use RICE2 partitions if stream bps > 16 */
 	const unsigned rice_parameter_limit = FLAC__stream_encoder_get_bits_per_sample(encoder) > 16? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ESCAPE_PARAMETER;
 
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) rice_parameter_limit = %i \n", printLimit, rice_parameter_limit );
-    }
+//    if( printLimit<20 ) {
+ //       fprintf( stderr, "%i) rice_parameter_limit = %i \n", printLimit, rice_parameter_limit );
+ //       fprintf( stderr, "0 INTEGER SIGNAL VALIDITY TEST %i\n", integer_signal[512] );
+  //      exit(0);
+//    }
     
 	FLAC__ASSERT(frame_header->blocksize > 0);
 
 	/* verbatim subframe is the baseline against which we measure other compressed subframes */
 	_best_subframe = 0;
-	if(encoder->private_->disable_verbatim_subframes && frame_header->blocksize >= FLAC__MAX_FIXED_ORDER)
+	if( encoder->private_->disable_verbatim_subframes && frame_header->blocksize >= FLAC__MAX_FIXED_ORDER ) {
 		_best_bits = UINT_MAX;
-	else
-		_best_bits = evaluate_verbatim_subframe_(encoder, integer_signal, frame_header->blocksize, subframe_bps, subframe[_best_subframe]);
-    
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) _best_bits = %i \n", printLimit, _best_bits );
-        printLimit++;
+	} else {
+		_best_bits = evaluate_verbatim_subframe_( encoder, integer_signal, frame_header->blocksize, subframe_bps, subframe[_best_subframe] );
     }
+    
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) process_subframe_ > _best_bits = %i \n", printLimit, _best_bits );
+//        printLimit++;
+//    }
     
 	if(frame_header->blocksize >= FLAC__MAX_FIXED_ORDER)
     {
 		unsigned signal_is_constant = false;
-		guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor(integer_signal+FLAC__MAX_FIXED_ORDER, frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
+        
+        // Is it here that integer signal gets fucked?
+        // DECIDE!
+		guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor( integer_signal+FLAC__MAX_FIXED_ORDER, frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
 		/* check for constant subframe */
 		if(
 			!encoder->private_->disable_constant_subframes &&
@@ -2580,8 +2619,10 @@ FLAC__bool process_subframe_(
 			/* the above means it's possible all samples are the same value; now double-check it: */
 			unsigned i;
 			signal_is_constant = true;
-			for(i = 1; i < frame_header->blocksize; i++) {
-				if(integer_signal[0] != integer_signal[i]) {
+			for( i=1; i<frame_header->blocksize; i++ )
+            {
+				if( integer_signal[0] != integer_signal[i])
+                {
 					signal_is_constant = false;
 					break;
 				}
@@ -2590,7 +2631,8 @@ FLAC__bool process_subframe_(
 		if(signal_is_constant) {
             fprintf( stderr, "sig is constant! \n");
             
-			_candidate_bits = evaluate_constant_subframe_(encoder, integer_signal[0], frame_header->blocksize, subframe_bps, subframe[!_best_subframe]);
+            // Does this modify the fucked integer signal?
+			_candidate_bits = evaluate_constant_subframe_( encoder, integer_signal[0], frame_header->blocksize, subframe_bps, subframe[!_best_subframe] );
 			if(_candidate_bits < _best_bits) {
 				_best_subframe = !_best_subframe;
 				_best_bits = _candidate_bits;
@@ -2605,9 +2647,9 @@ FLAC__bool process_subframe_(
 				}
 				else {
 					min_fixed_order = max_fixed_order = guess_fixed_order;
-                    if( printLimit<20 ) {
-                        fprintf( stderr, "%i) min_fixed_order = %i \n", printLimit, min_fixed_order );
-                    }
+//                    if( printLimit<20 ) {
+//                        fprintf( stderr, "%i) min_fixed_order = %i \n", printLimit, min_fixed_order );
+//                    }
 				}
 				if(max_fixed_order >= frame_header->blocksize)
 					max_fixed_order = frame_header->blocksize - 1;
@@ -2622,8 +2664,9 @@ FLAC__bool process_subframe_(
 						fprintf(stderr, "clipping rice_parameter (%u -> %u) @0\n", rice_parameter, rice_parameter_limit - 1);
 						rice_parameter = rice_parameter_limit - 1;
 					}
-					_candidate_bits =
-						evaluate_fixed_subframe_(
+                    
+                    // integer_signal is fucked..
+					_candidate_bits = evaluate_fixed_subframe_(
 							encoder,
 							integer_signal,
 							residual[!_best_subframe],
@@ -2645,10 +2688,10 @@ FLAC__bool process_subframe_(
 						_best_subframe = !_best_subframe;
 						_best_bits = _candidate_bits;
 
-                        if( printLimit<20 ) {
-                            fprintf( stderr, "%i) modifying bestBits %i \n", printLimit, _best_bits );
-                            printLimit++;
-                        }
+//                        if( printLimit<20 ) {
+//                            fprintf( stderr, "%i) modifying bestBits %i \n", printLimit, _best_bits );
+//                            printLimit++;
+//                        }
                         
 					}
 				}
@@ -2735,28 +2778,28 @@ FLAC__bool process_subframe_(
 											partitioned_rice_contents[!_best_subframe]
 										);
 
-                                    if( printLimit<20 ) {
-                                        fprintf( stderr, "%i) checkpoint sparrow \n", printLimit );
-                                        printLimit++;
-                                    }
+//                                    if( printLimit<20 ) {
+//                                        fprintf( stderr, "%i) checkpoint sparrow \n", printLimit );
+//                                        printLimit++;
+//                                    }
 									
                                     if(_candidate_bits > 0)
                                     { /* if == 0, there was a problem quantizing the lpcoeffs */
                                         
-                                        if( printLimit<20 ) {
-                                            fprintf( stderr, "%i) in candidate bits %i, bestBits %i \n", printLimit, _candidate_bits, _best_bits );
-                                            printLimit++;
-                                        }
+//                                        if( printLimit<20 ) {
+//                                            fprintf( stderr, "%i) in candidate bits %i, bestBits %i \n", printLimit, _candidate_bits, _best_bits );
+//                                            printLimit++;
+//                                        }
                                         
 										if(_candidate_bits < _best_bits)
                                         {
 											_best_subframe = !_best_subframe;
 											_best_bits = _candidate_bits;
                                             
-                                            if( printLimit<20 ) {
-                                                fprintf( stderr, "%i) _best_subframe = %i, _best_bits = %i \n", printLimit, (int)_best_subframe, _best_bits );
-                                                printLimit++;
-                                            }
+//                                            if( printLimit<20 ) {
+//                                                fprintf( stderr, "%i) _best_subframe = %i, _best_bits = %i \n", printLimit, (int)_best_subframe, _best_bits );
+//                                                printLimit++;
+//                                            }
                                         
 										}
 									}
@@ -2897,15 +2940,17 @@ unsigned evaluate_fixed_subframe_(
 {
     
     static int printLimit = 0;
-    if( printLimit<20 ) {
-        fprintf( stderr, "%i) evaluate_fixed_subframe_ \n", printLimit );
-        printLimit++;
-    }
+//    if( printLimit<20 ) {
+//        fprintf( stderr, "%i) evaluate_fixed_subframe_ \n", printLimit );
+//        printLimit++;
+//    }
     
 	unsigned i, residual_bits, estimate;
 	const unsigned residual_samples = blocksize - order;
 
-	FLAC__fixed_compute_residual(signal+order, residual_samples, order, residual);
+    // Does this modify residual?
+    // ok, signal is different
+	FLAC__fixed_compute_residual( signal+order, residual_samples, order, residual );
 
 	subframe->type = FLAC__SUBFRAME_TYPE_FIXED;
 
@@ -2913,8 +2958,7 @@ unsigned evaluate_fixed_subframe_(
 	subframe->data.fixed.entropy_coding_method.data.partitioned_rice.contents = partitioned_rice_contents;
 	subframe->data.fixed.residual = residual;
 
-	residual_bits =
-		find_best_partition_order_(
+	residual_bits = find_best_partition_order_(
 			encoder->private_,
 			residual,
 			abs_residual_partition_sums,
@@ -3081,7 +3125,7 @@ unsigned find_best_partition_order_(
 	max_partition_order = FLAC__format_get_max_rice_partition_order_from_blocksize_limited_max_and_predictor_order(max_partition_order, blocksize, predictor_order);
 	min_partition_order = min(min_partition_order, max_partition_order);
 
-	precompute_partition_info_sums_(residual, abs_residual_partition_sums, residual_samples, predictor_order, min_partition_order, max_partition_order, bps);
+	precompute_partition_info_sums_( residual, abs_residual_partition_sums, residual_samples, predictor_order, min_partition_order, max_partition_order, bps );
 
 	if(do_escape_coding)
 		precompute_partition_info_escapes_(residual, raw_bits_per_partition, residual_samples, predictor_order, min_partition_order, max_partition_order);
@@ -3180,34 +3224,48 @@ void precompute_partition_info_sums_(
 
 	FLAC__ASSERT(default_partition_samples > predictor_order);
 
-#if defined(FLAC__CPU_IA32) && !defined FLAC__NO_ASM && defined FLAC__HAS_NASM
-	/* slightly pessimistic but still catches all common cases */
-	/* WATCHOUT: "+ bps" is an assumption that the average residual magnitude will not be more than "bps" bits */
-	if(FLAC__bitmath_ilog2(default_partition_samples) + bps < 32) {
-		precompute_partition_info_sums_32bit_asm_ia32_(residual, abs_residual_partition_sums, residual_samples + predictor_order, predictor_order, min_partition_order, max_partition_order);
-		return;
-	}
-#endif
-
 	/* first do max_partition_order */
 	{
 		unsigned partition, residual_sample, end = (unsigned)(-(int)predictor_order);
 		/* slightly pessimistic but still catches all common cases */
 		/* WATCHOUT: "+ bps" is an assumption that the average residual magnitude will not be more than "bps" bits */
-		if(FLAC__bitmath_ilog2(default_partition_samples) + bps < 32) {
+		if( FLAC__bitmath_ilog2(default_partition_samples) + bps < 32)
+        {
 			FLAC__uint32 abs_residual_partition_sum;
 
-			for(partition = residual_sample = 0; partition < partitions; partition++) {
+			for( partition = residual_sample = 0; partition < partitions; partition++ )
+            {
 				end += default_partition_samples;
 				abs_residual_partition_sum = 0;
-				for( ; residual_sample < end; residual_sample++)
-					abs_residual_partition_sum += abs(residual[residual_sample]); /* abs(INT_MIN) is undefined, but if the residual is INT_MIN we have bigger problems */
+                
+//                fprintf( stderr, "partition %i end %i \n", partition, end );
+                
+				for( ; residual_sample < end; residual_sample++ )
+                {
+                    //-- 511 >> 1562 precompute_partition_info_sums_> abs_residual_partition_sum = 1562, 
+                    // it is residual sample 511 that is wrong
+                    unsigned inValue = residual[residual_sample];
+                    
+//                    if(residual_sample==511){
+//                        fprintf( stderr, "residual sample 511 is %u \n", inValue );
+////                        exit(0);   
+//                    }
+                        
+                    int inValAbs = abs(inValue);
+					abs_residual_partition_sum += inValAbs; /* abs(INT_MIN) is undefined, but if the residual is INT_MIN we have bigger problems */
+//                    fprintf( stderr, "%i >> %u precompute_partition_info_sums_> abs_residual_partition_sum = %i, \n", residual_sample, inValue, abs_residual_partition_sum );
+                }
 				abs_residual_partition_sums[partition] = abs_residual_partition_sum;
                 
-                if( printLimit<20 ) {
-                    fprintf( stderr, "%i) abs_residual_partition_sums[%i] = %i, \n", printLimit, partition, abs_residual_partition_sum );
-                    printLimit++;
-                }   
+//                if( printLimit<20 ) {
+//                    fprintf( stderr, "%i) precompute_partition_info_sums_> abs_residual_partition_sums[%i] = %i, \n", printLimit, partition, abs_residual_partition_sum );
+                    
+                    // THIS IS HOW FAR WE HAVE GOT IN ALCHEMY WITHOUT DIVERGING
+//                    int FAIL_LIMIT = 4;
+//                    if( printLimit == FAIL_LIMIT)
+//                        exit(0);
+//                    printLimit++;
+//                }   
 			}
 		}
 		else { /* have to pessimistically use 64 bits for accumulator */
@@ -3391,10 +3449,10 @@ FLAC__bool set_partitioned_rice_(
 					partition_samples -= predictor_order;
 			}
 			mean = abs_residual_partition_sums[partition];
-            if( printLimit<20 ) {
-                fprintf( stderr, "%i) mean = %i, \n", printLimit, (int)mean );
-                printLimit++;
-            }              
+//            if( printLimit<20 ) {
+//                fprintf( stderr, "%i) mean = %i, \n", printLimit, (int)mean );
+//                printLimit++;
+//            }              
 			/* we are basically calculating the size in bits of the
 			 * average residual magnitude in the partition:
 			 *   rice_parameter = floor(log2(mean/partition_samples))

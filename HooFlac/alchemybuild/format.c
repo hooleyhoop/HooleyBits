@@ -7,6 +7,10 @@
 #include "format.h"
 #include "hooHacks.h"
 
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 #ifndef FLaC__INLINE
 #define FLaC__INLINE
 #endif

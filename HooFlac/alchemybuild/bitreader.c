@@ -9,6 +9,11 @@
 #include "hooHacks.h"
 
 #include "netinet/in.h"
+
+//#define memmove custom_memmove
+//#define memcpy custom_memcpy
+//#define memset custom_memset
+
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to COUNT_ZERO_MSBS below to match */
 /* WATCHOUT: there are a few places where the code will not work unless brword is >= 32 bits wide */
@@ -19,7 +24,9 @@ typedef FLAC__uint32 brword;
 #define FLAC__WORD_ALL_ONES ((FLAC__uint32)0xffffffff)
 /* SWAP_BE_WORD_TO_HOST swaps bytes in a brword (which is always big-endian) if necessary to match host byte order */
 
-#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+//#define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
+#define SWAP_BE_WORD_TO_HOST(x) HooByteSwap(x)
+
 
 /* counts the # of zero MSBs in a word */
 #define COUNT_ZERO_MSBS(word) ( \

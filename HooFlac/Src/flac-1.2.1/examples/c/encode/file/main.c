@@ -114,6 +114,9 @@ FLAC__int32 int32( FLAC__byte *data, int offset ) {
 
 int main(int argc, char *argv[])
 {
+    int magicVal = 66;    
+    fprintf( stderr, "arggg val=%0x --- swapped val=%0x \n", (int)magicVal, ntohl(magicVal) );
+    
 	FLAC__bool ok = true;
 	FLAC__StreamEncoder *encoder = 0;
 	FLAC__StreamEncoderInitStatus init_status;
@@ -281,7 +284,9 @@ int main(int argc, char *argv[])
         {
 			size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
 			
-            size_t readSuccess = fread( in_buffer, channelCount*bytesPerSample, need, fin );            
+            fprintf( stderr, "About to READ FROM %i -- %i \n", ftell(fin), need*channelCount*bytesPerSample );            
+            size_t readSuccess = fread( in_buffer, channelCount*bytesPerSample, need, fin );
+            
             filePos += need;
             
 			if( readSuccess!= need ) {
@@ -307,7 +312,7 @@ int main(int argc, char *argv[])
                     //pcm[i] = (FLAC__int32)inVal;
                     
                     pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)in_buffer[2*i+1] << 8) | (FLAC__int16)in_buffer[2*i]);
-
+//                    fprintf( stderr, "11 INTEGER SIGNAL VALIDITY TEST %i %i \n", i, 2*i+1 );            
 //PASS                    
 //                    static int printLimit = 0;
 //                    if( printLimit<20 ) {
@@ -319,6 +324,12 @@ int main(int argc, char *argv[])
                 // ok = FLAC__stream_encoder_process_interleaved(encoder, pcm, need);
                 
                 FLAC__int32 **arrayOfArrays = &pcm;
+                
+                FLAC__int32 aaaaaaa = (FLAC__int16)in_buffer[2*512];
+                FLAC__int32 bbbbbbb = (FLAC__int8)in_buffer[2*512+1];
+//                fprintf( stderr, "10 INTEGER SIGNAL VALIDITY TEST %i %i \n", aaaaaaa, bbbbbbb );            
+                // exit(0);
+                
                 ok = FLAC__stream_encoder_process( encoder, arrayOfArrays, need );
                 
 			}
