@@ -1,87 +1,5 @@
 // !$*UTF8*$!
 {
-	7303A11A12F2D74900D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DD6812DFC7C60054394E /* bitreader.c */;
-		name = "bitreader.c: 50";
-		rLen = 5;
-		rLoc = 2524;
-		rType = 0;
-		vrLen = 1585;
-		vrLoc = 1713;
-	};
-	7303A12512F2D78800D97EB6 /* fixed.c:75 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_best_predictor()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 75;
-		location = EncodeTest;
-		modificationTime = 317923292.938937;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A14712F2D8D300D97EB6 /* md5.c:222 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDB812DFC7C60054394E /* md5.c */;
-		functionName = "FLAC__MD5Update()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 222;
-		location = EncodeTest;
-		modificationTime = 317923292.964008;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A15112F2D98000D97EB6 /* stream_encoder.c:3266 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "precompute_partition_info_sums_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3266;
-		location = EncodeTest;
-		modificationTime = 317923292.987668;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A18E12F2E30900D97EB6 /* stream_encoder.c:3261 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "precompute_partition_info_sums_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3261;
-		location = EncodeTest;
-		modificationTime = 317923293.023234;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
 	7303A1B412F2E94800D97EB6 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73C6DCDC12DFC7640054394E /* stream_encoder.h */;
@@ -104,455 +22,10 @@
 	};
 	7303A1B612F2E94800D97EB6 /* stdlib.h */ = {
 		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
 		name = stdlib.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/stdlib.h;
 		sourceTree = "<absolute>";
-	};
-	7303A1C912F2EB5500D97EB6 /* stream_encoder.c:3223 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "precompute_partition_info_sums_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3223;
-		location = EncodeTest;
-		modificationTime = 317923293.050493;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1CB12F2EB9900D97EB6 /* stream_encoder.c:3128 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "find_best_partition_order_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3128;
-		location = EncodeTest;
-		modificationTime = 317923293.088617;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1D912F2ECF500D97EB6 /* stream_encoder.c:3127 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "find_best_partition_order_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3127;
-		location = EncodeTest;
-		modificationTime = 317923293.112126;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1DB12F2ED2F00D97EB6 /* stream_encoder.c:2961 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "evaluate_fixed_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2961;
-		location = EncodeTest;
-		modificationTime = 317923293.136109;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1DD12F2ED4600D97EB6 /* stream_encoder.c:2953 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "evaluate_fixed_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2953;
-		location = EncodeTest;
-		modificationTime = 317923293.17235;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1EA12F2EDB600D97EB6 /* fixed.c:147 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 147;
-		location = EncodeTest;
-		modificationTime = 317923293.195952;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1EE12F2EDC300D97EB6 /* fixed.c:166 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 166;
-		location = EncodeTest;
-		modificationTime = 317923293.222052;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1F012F2EDC900D97EB6 /* fixed.c:173 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 173;
-		location = EncodeTest;
-		modificationTime = 317923293.247957;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A1F212F2EDCC00D97EB6 /* fixed.c:178 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 178;
-		location = EncodeTest;
-		modificationTime = 317923293.272733;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A21F12F30B7200D97EB6 /* fixed.c:142 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 142;
-		location = EncodeTest;
-		modificationTime = 317923293.297683;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A22112F30BFF00D97EB6 /* stream_encoder.c:2669 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2669;
-		location = EncodeTest;
-		modificationTime = 317923293.343223;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A22312F30C1700D97EB6 /* stream_encoder.c:2635 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2635;
-		location = EncodeTest;
-		modificationTime = 317923293.385163;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A22D12F30C6600D97EB6 /* stream_encoder.c:2624 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2624;
-		location = EncodeTest;
-		modificationTime = 317923293.40855;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A22F12F30C7F00D97EB6 /* stream_encoder.c:2609 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2609;
-		location = EncodeTest;
-		modificationTime = 317923293.445759;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A23912F30D5300D97EB6 /* stream_encoder.c:2595 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2595;
-		location = EncodeTest;
-		modificationTime = 317923293.470841;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A24412F30E0C00D97EB6 /* stream_encoder.c:2379 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframes_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2379;
-		location = EncodeTest;
-		modificationTime = 317923293.499805;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A26412F30FB200D97EB6 /* stream_encoder.c:2582 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2582;
-		location = EncodeTest;
-		modificationTime = 317923293.536345;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A26B12F3120F00D97EB6 /* stream_encoder.c:2311 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframes_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2311;
-		location = EncodeTest;
-		modificationTime = 317923293.566639;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A27912F3124000D97EB6 /* stream_encoder.c:2239 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_frame_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2239;
-		location = EncodeTest;
-		modificationTime = 317923293.603031;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A28B12F3126900D97EB6 /* stream_encoder.c:2229 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_frame_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2229;
-		location = EncodeTest;
-		modificationTime = 317923293.618367;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A28D12F3129D00D97EB6 /* stream_encoder.c:1583 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "FLAC__stream_encoder_process()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1583;
-		location = EncodeTest;
-		modificationTime = 317923293.640984;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A32612F31F6D00D97EB6 /* stream_encoder.c:1550 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "FLAC__stream_encoder_process()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1550;
-		location = EncodeTest;
-		modificationTime = 317923293.676268;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	7303A3A812F32AB500D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		name = "bitwriter.c: 318";
-		rLen = 161;
-		rLoc = 9650;
-		rType = 0;
-		vrLen = 1065;
-		vrLoc = 9095;
-	};
-	7303A3A912F32AB500D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		name = "fixed.c: 137";
-		rLen = 157;
-		rLoc = 6354;
-		rType = 0;
-		vrLen = 1701;
-		vrLoc = 5334;
-	};
-	7303A3AA12F32AB500D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DDB112DFC7C60054394E /* lpc.c */;
-		name = "lpc.c: 994";
-		rLen = 6;
-		rLoc = 32489;
-		rType = 0;
-		vrLen = 1232;
-		vrLoc = 31675;
-	};
-	7303A3AB12F32AB500D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DDB812DFC7C60054394E /* md5.c */;
-		name = "md5.c: 203";
-		rLen = 117;
-		rLoc = 7961;
-		rType = 0;
-		vrLen = 1221;
-		vrLoc = 6931;
-	};
-	7303A3C112F32EF700D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		name = "stream_encoder.c: 3467";
-		rLen = 6;
-		rLoc = 142067;
-		rType = 0;
-		vrLen = 1537;
-		vrLoc = 140348;
 	};
 	7303A3C212F32EF700D97EB6 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -564,26 +37,6 @@
 		vrLen = 1018;
 		vrLoc = 0;
 	};
-	7303A3EC12F3332400D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73DAE82B12E0522500F7490F /* main.c */;
-		name = "main.c: 287";
-		rLen = 123;
-		rLoc = 10119;
-		rType = 0;
-		vrLen = 989;
-		vrLoc = 9508;
-	};
-	7303A3FB12F33A9000D97EB6 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73DAE82B12E0522500F7490F /* main.c */;
-		name = "main.c: 233";
-		rLen = 42;
-		rLoc = 7531;
-		rType = 0;
-		vrLen = 1483;
-		vrLoc = 6884;
-	};
 	73060CCB12DFBC2900CD04EF /* Project object */ = {
 		activeArchitecturePreference = i386;
 		activeBuildConfigurationName = Debug;
@@ -593,60 +46,152 @@
 			73DAE82012E051F100F7490F /* EncodeTest */,
 		);
 		breakpoints = (
-			73C3358112E9FE3E00C74AD9 /* stream_encoder.c:3609 */,
-			731FE30712EDAB5F004DC5DB /* md5.c:217 */,
-			731FE33312EDAE91004DC5DB /* fixed.c:77 */,
-			731FE33B12EDB0BF004DC5DB /* stream_encoder.c:2584 */,
-			731FE36C12EDB550004DC5DB /* fixed.c:138 */,
-			731FE37612EDB56B004DC5DB /* stream_encoder.c:2651 */,
-			731FE37812EDB56E004DC5DB /* stream_encoder.c:2664 */,
-			731FE38D12EDB6F2004DC5DB /* stream_encoder.c:3268 */,
-			731FE3BA12EDBA91004DC5DB /* stream_encoder.c:2800 */,
-			731FE3CF12EDBCD0004DC5DB /* stream_encoder.c:2782 */,
-			731FE3DB12EDBD58004DC5DB /* stream_encoder.c:2790 */,
-			731FE3F512EDC31C004DC5DB /* stream_encoder.c:2695 */,
-			731FE41C12EDC6F8004DC5DB /* stream_encoder.c:2521 */,
-			731FE44412EDC973004DC5DB /* bitwriter.c:380 */,
-			731FE44612EDC977004DC5DB /* bitwriter.c:402 */,
-			731FE44812EDC97D004DC5DB /* bitwriter.c:240 */,
-			731FE44C12EDC988004DC5DB /* bitwriter.c:331 */,
-			731FE45212EDC99D004DC5DB /* bitwriter.c:428 */,
-			731FE45412EDC9A0004DC5DB /* bitwriter.c:522 */,
-			731FE45612EDC9A3004DC5DB /* bitwriter.c:568 */,
-			731FE45812EDC9A6004DC5DB /* bitwriter.c:624 */,
-			731FE46D12EDCC1E004DC5DB /* main.c:45 */,
-			731FE52C12EDE362004DC5DB /* bitreader.c:194 */,
-			731FE52E12EDE365004DC5DB /* bitreader.c:225 */,
-			731FE53212EDE36F004DC5DB /* bitwriter.c:257 */,
-			731FE53512EDE376004DC5DB /* bitwriter.c:319 */,
-			731FE53712EDE37A004DC5DB /* bitwriter.c:476 */,
-			731FE53A12EDE37F004DC5DB /* bitwriter.c:510 */,
-			7303A12512F2D78800D97EB6 /* fixed.c:75 */,
-			7303A14712F2D8D300D97EB6 /* md5.c:222 */,
-			7303A15112F2D98000D97EB6 /* stream_encoder.c:3266 */,
-			7303A18E12F2E30900D97EB6 /* stream_encoder.c:3261 */,
-			7303A1C912F2EB5500D97EB6 /* stream_encoder.c:3223 */,
-			7303A1CB12F2EB9900D97EB6 /* stream_encoder.c:3128 */,
-			7303A1D912F2ECF500D97EB6 /* stream_encoder.c:3127 */,
-			7303A1DB12F2ED2F00D97EB6 /* stream_encoder.c:2961 */,
-			7303A1DD12F2ED4600D97EB6 /* stream_encoder.c:2953 */,
-			7303A1EA12F2EDB600D97EB6 /* fixed.c:147 */,
-			7303A1EE12F2EDC300D97EB6 /* fixed.c:166 */,
-			7303A1F012F2EDC900D97EB6 /* fixed.c:173 */,
-			7303A1F212F2EDCC00D97EB6 /* fixed.c:178 */,
-			7303A21F12F30B7200D97EB6 /* fixed.c:142 */,
-			7303A22112F30BFF00D97EB6 /* stream_encoder.c:2669 */,
-			7303A22312F30C1700D97EB6 /* stream_encoder.c:2635 */,
-			7303A22D12F30C6600D97EB6 /* stream_encoder.c:2624 */,
-			7303A22F12F30C7F00D97EB6 /* stream_encoder.c:2609 */,
-			7303A23912F30D5300D97EB6 /* stream_encoder.c:2595 */,
-			7303A24412F30E0C00D97EB6 /* stream_encoder.c:2379 */,
-			7303A26412F30FB200D97EB6 /* stream_encoder.c:2582 */,
-			7303A26B12F3120F00D97EB6 /* stream_encoder.c:2311 */,
-			7303A27912F3124000D97EB6 /* stream_encoder.c:2239 */,
-			7303A28B12F3126900D97EB6 /* stream_encoder.c:2229 */,
-			7303A28D12F3129D00D97EB6 /* stream_encoder.c:1583 */,
-			7303A32612F31F6D00D97EB6 /* stream_encoder.c:1550 */,
+			73C1A3F412F482C700E02C03 /* window.c:183 */,
+			73C1A3F812F482CB00E02C03 /* window.c:142 */,
+			73C1A3FC12F482D000E02C03 /* window.c:123 */,
+			73C1A3FE12F482D500E02C03 /* window.c:114 */,
+			73C1A40012F482D800E02C03 /* window.c:105 */,
+			73C1A40212F482D900E02C03 /* window.c:96 */,
+			73C1A40412F482DB00E02C03 /* window.c:84 */,
+			73C1A40612F482DD00E02C03 /* window.c:75 */,
+			73C1A40812F482DF00E02C03 /* window.c:62 */,
+			73C1A40A12F482E000E02C03 /* window.c:53 */,
+			73C1A40C12F482E400E02C03 /* window.c:43 */,
+			73C1A40E12F482E600E02C03 /* window.c:34 */,
+			73C1A41012F482E800E02C03 /* window.c:15 */,
+			73C1A41612F4909200E02C03 /* stream_encoder_framing.c:341 */,
+			73C1A41812F4909700E02C03 /* stream_encoder_framing.c:354 */,
+			73C1A41C12F490A100E02C03 /* stream_encoder_framing.c:440 */,
+			73C1A42412F490CD00E02C03 /* stream_encoder.c:556 */,
+			73C1A42A12F490DC00E02C03 /* stream_encoder.c:1111 */,
+			73C1A42C12F490E100E02C03 /* stream_encoder.c:1172 */,
+			73C1A42E12F490E500E02C03 /* stream_encoder.c:1184 */,
+			73C1A43012F490E900E02C03 /* stream_encoder.c:1213 */,
+			73C1A43312F490ED00E02C03 /* stream_encoder.c:1218 */,
+			73C1A43612F490F800E02C03 /* stream_encoder.c:1277 */,
+			73C1A44012F4910B00E02C03 /* stream_encoder.c:1362 */,
+			73C1A45812F4912000E02C03 /* stream_encoder.c:1520 */,
+			73C1A45A12F4912300E02C03 /* stream_encoder.c:1528 */,
+			73C1A45E12F4912500E02C03 /* stream_encoder.c:1546 */,
+			73C1A46012F4912700E02C03 /* stream_encoder.c:1554 */,
+			73C1A46212F4912800E02C03 /* stream_encoder.c:1562 */,
+			73C1A46612F4912E00E02C03 /* stream_encoder.c:1644 */,
+			73C1A46B12F4913800E02C03 /* stream_encoder.c:1782 */,
+			73C1A47312F4914700E02C03 /* stream_encoder.c:2122 */,
+			73C1A47E12F4916800E02C03 /* stream_encoder.c:2935 */,
+			73C1A48012F4916B00E02C03 /* stream_encoder.c:2964 */,
+			73C1A48C12F4918200E02C03 /* stream_encoder.c:3376 */,
+			73C1A49412F4919100E02C03 /* stream_encoder.c:3597 */,
+			73C1A49612F4919400E02C03 /* stream_encoder.c:3609 */,
+			73C1A49812F4919600E02C03 /* stream_encoder.c:3626 */,
+			73C1A49A12F4919900E02C03 /* stream_encoder.c:3657 */,
+			73C1A49C12F4919C00E02C03 /* stream_encoder.c:3700 */,
+			73C1A49E12F4919D00E02C03 /* stream_encoder.c:3705 */,
+			73C1A4A112F491A100E02C03 /* stream_encoder.c:3712 */,
+			73C1A4A312F491A300E02C03 /* stream_encoder.c:3726 */,
+			73C1A4A512F491A500E02C03 /* stream_encoder.c:3736 */,
+			73C1A4A712F491A700E02C03 /* stream_encoder.c:3755 */,
+			73C1A4A912F492E000E02C03 /* stream_decoder.c:224 */,
+			73C1A4AB12F492E700E02C03 /* stream_decoder.c:287 */,
+			73C1A4AE12F492EE00E02C03 /* stream_decoder.c:329 */,
+			73C1A4B012F492F200E02C03 /* stream_decoder.c:400 */,
+			73C1A4B212F492F600E02C03 /* stream_decoder.c:453 */,
+			73C1A4B412F492FB00E02C03 /* stream_decoder.c:496 */,
+			73C1A4B612F492FF00E02C03 /* stream_decoder.c:560 */,
+			73C1A4B812F4930300E02C03 /* stream_decoder.c:668 */,
+			73C1A4BA12F4930700E02C03 /* stream_decoder.c:675 */,
+			73C1A4BC12F4930C00E02C03 /* stream_decoder.c:687 */,
+			73C1A4BE12F4930F00E02C03 /* stream_decoder.c:694 */,
+			73C1A4C012F4931100E02C03 /* stream_decoder.c:708 */,
+			73C1A4C312F4931500E02C03 /* stream_decoder.c:729 */,
+			73C1A4C512F4931700E02C03 /* stream_decoder.c:747 */,
+			73C1A4C712F4931A00E02C03 /* stream_decoder.c:765 */,
+			73C1A4C912F4931E00E02C03 /* stream_decoder.c:819 */,
+			73C1A4CB12F4932100E02C03 /* stream_decoder.c:856 */,
+			73C1A4CD12F4932700E02C03 /* stream_decoder.c:1018 */,
+			73C1A4CF12F4932900E02C03 /* stream_decoder.c:1032 */,
+			73C1A4D112F4932F00E02C03 /* stream_decoder.c:1072 */,
+			73C1A4D312F4933300E02C03 /* stream_decoder.c:1123 */,
+			73C1A4D512F4933500E02C03 /* stream_decoder.c:1137 */,
+			73C1A4D712F4933700E02C03 /* stream_decoder.c:1198 */,
+			73C1A4D912F4933D00E02C03 /* stream_decoder.c:1368 */,
+			73C1A4DB12F4934000E02C03 /* stream_decoder.c:1439 */,
+			73C1A4DD12F4934200E02C03 /* stream_decoder.c:1481 */,
+			73C1A4DF12F4934500E02C03 /* stream_decoder.c:1538 */,
+			73C1A4E112F4934800E02C03 /* stream_decoder.c:1621 */,
+			73C1A4E312F4934C00E02C03 /* stream_decoder.c:1689 */,
+			73C1A4E512F4934E00E02C03 /* stream_decoder.c:1711 */,
+			73C1A4E712F4935100E02C03 /* stream_decoder.c:1766 */,
+			73C1A4E912F4935600E02C03 /* stream_decoder.c:1905 */,
+			73C1A4EB12F4935E00E02C03 /* stream_decoder.c:2214 */,
+			73C1A4ED12F4936100E02C03 /* stream_decoder.c:2284 */,
+			73C1A4EF12F4936400E02C03 /* stream_decoder.c:2307 */,
+			73C1A4F112F4936700E02C03 /* stream_decoder.c:2364 */,
+			73C1A4F312F4936B00E02C03 /* stream_decoder.c:2456 */,
+			73C1A4F512F4936E00E02C03 /* stream_decoder.c:2479 */,
+			73C1A4F712F4937100E02C03 /* stream_decoder.c:2537 */,
+			73C1A4F912F4937300E02C03 /* stream_decoder.c:2551 */,
+			73C1A4FB12F4937700E02C03 /* stream_decoder.c:2619 */,
+			73C1A4FD12F4937A00E02C03 /* stream_decoder.c:2667 */,
+			73C1A4FF12F4937C00E02C03 /* stream_decoder.c:2675 */,
+			73C1A50112F4938000E02C03 /* stream_decoder.c:2692 */,
+			73C1A50412F4938300E02C03 /* stream_decoder.c:2704 */,
+			73C1A50612F4938600E02C03 /* stream_decoder.c:2719 */,
+			73C1A50812F4938900E02C03 /* stream_decoder.c:2734 */,
+			73C1A51012F4939900E02C03 /* memory.c:122 */,
+			73C1A51612F493A900E02C03 /* md5.c:154 */,
+			73C1A51812F493AE00E02C03 /* md5.c:163 */,
+			73C1A51E12F493B700E02C03 /* md5.c:271 */,
+			73C1A52C12F493D800E02C03 /* lpc.c:209 */,
+			73C1A53012F493E200E02C03 /* lpc.c:471 */,
+			73C1A53212F493E600E02C03 /* lpc.c:503 */,
+			73C1A53412F493ED00E02C03 /* lpc.c:729 */,
+			73C1A53612F493EF00E02C03 /* lpc.c:766 */,
+			73C1A53812F493F400E02C03 /* lpc.c:989 */,
+			73C1A53A12F493F700E02C03 /* lpc.c:1015 */,
+			73C1A54612F4941100E02C03 /* format.c:213 */,
+			73C1A54812F4941300E02C03 /* format.c:237 */,
+			73C1A54A12F4941600E02C03 /* format.c:248 */,
+			73C1A54C12F4941800E02C03 /* format.c:286 */,
+			73C1A54E12F4941C00E02C03 /* format.c:386 */,
+			73C1A55012F4941F00E02C03 /* format.c:465 */,
+			73C1A55212F4942100E02C03 /* format.c:492 */,
+			73C1A55A12F4942900E02C03 /* format.c:542 */,
+			73C1A56012F4943600E02C03 /* fixed.c:86 */,
+			73C1A56412F4943B00E02C03 /* fixed.c:194 */,
+			73C1A56612F4944400E02C03 /* crc.c:84 */,
+			73C1A56812F4944500E02C03 /* crc.c:89 */,
+			73C1A57112F4945D00E02C03 /* bitwriter.c:61 */,
+			73C1A57512F4946200E02C03 /* bitwriter.c:110 */,
+			73C1A57912F4946700E02C03 /* bitwriter.c:139 */,
+			73C1A58312F4947100E02C03 /* bitwriter.c:222 */,
+			73C1A59512F4948700E02C03 /* bitwriter.c:411 */,
+			73C1A59712F4948A00E02C03 /* bitwriter.c:433 */,
+			73C1A59D12F4949400E02C03 /* bitwriter.c:603 */,
+			73C1A5A112F494A400E02C03 /* bitreader.c:132 */,
+			73C1A5A312F494A800E02C03 /* bitreader.c:162 */,
+			73C1A5A512F494AC00E02C03 /* bitreader.c:250 */,
+			73C1A5A712F494B100E02C03 /* bitreader.c:266 */,
+			73C1A5A912F494B300E02C03 /* bitreader.c:280 */,
+			73C1A5AB12F494B500E02C03 /* bitreader.c:297 */,
+			73C1A5AD12F494B800E02C03 /* bitreader.c:311 */,
+			73C1A5AF12F494BA00E02C03 /* bitreader.c:348 */,
+			73C1A5B112F494BC00E02C03 /* bitreader.c:358 */,
+			73C1A5B312F494BE00E02C03 /* bitreader.c:374 */,
+			73C1A5B612F494C100E02C03 /* bitreader.c:379 */,
+			73C1A5B912F494C400E02C03 /* bitreader.c:384 */,
+			73C1A5BB12F494C700E02C03 /* bitreader.c:389 */,
+			73C1A5BD12F494CD00E02C03 /* bitreader.c:469 */,
+			73C1A5BF12F494CF00E02C03 /* bitreader.c:479 */,
+			73C1A5C112F494D100E02C03 /* bitreader.c:500 */,
+			73C1A5C312F494D400E02C03 /* bitreader.c:529 */,
+			73C1A5C512F494DA00E02C03 /* bitreader.c:560 */,
+			73C1A5C712F494DD00E02C03 /* bitreader.c:595 */,
+			73C1A5C912F494E000E02C03 /* bitreader.c:652 */,
+			73C1A5CB12F494E300E02C03 /* bitreader.c:713 */,
+			73C1A5CD12F494E700E02C03 /* bitreader.c:745 */,
+			73C1A5CF12F494ED00E02C03 /* bitreader.c:927 */,
+			73C1A5D112F494F000E02C03 /* bitreader.c:982 */,
 		);
 		codeSenseManager = 73C3355812E9FBDA00C74AD9 /* Code sense */;
 		executables = (
@@ -659,11 +204,11 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					355,
+					337,
 					20,
-					254,
-					254,
-					184,
+					236,
+					236,
+					166,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -682,7 +227,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					937,
+					865,
 					20,
 					48,
 					43,
@@ -721,36 +266,41 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 317903300;
-			PBXWorkspaceStateSaveDate = 317903300;
+			PBXPerProjectTemplateStateSaveDate = 318005182;
+			PBXWorkspaceStateSaveDate = 318005182;
 		};
 		perUserProjectItems = {
-			7303A11A12F2D74900D97EB6 /* PBXTextBookmark */ = 7303A11A12F2D74900D97EB6 /* PBXTextBookmark */;
 			7303A1B412F2E94800D97EB6 /* PBXTextBookmark */ = 7303A1B412F2E94800D97EB6 /* PBXTextBookmark */;
 			7303A1B512F2E94800D97EB6 /* PBXTextBookmark */ = 7303A1B512F2E94800D97EB6 /* PBXTextBookmark */;
-			7303A3A812F32AB500D97EB6 /* PBXTextBookmark */ = 7303A3A812F32AB500D97EB6 /* PBXTextBookmark */;
-			7303A3A912F32AB500D97EB6 /* PBXTextBookmark */ = 7303A3A912F32AB500D97EB6 /* PBXTextBookmark */;
-			7303A3AA12F32AB500D97EB6 /* PBXTextBookmark */ = 7303A3AA12F32AB500D97EB6 /* PBXTextBookmark */;
-			7303A3AB12F32AB500D97EB6 /* PBXTextBookmark */ = 7303A3AB12F32AB500D97EB6 /* PBXTextBookmark */;
-			7303A3C112F32EF700D97EB6 /* PBXTextBookmark */ = 7303A3C112F32EF700D97EB6 /* PBXTextBookmark */;
 			7303A3C212F32EF700D97EB6 /* PBXTextBookmark */ = 7303A3C212F32EF700D97EB6 /* PBXTextBookmark */;
-			7303A3EC12F3332400D97EB6 /* PBXTextBookmark */ = 7303A3EC12F3332400D97EB6 /* PBXTextBookmark */;
-			7303A3FB12F33A9000D97EB6 /* PBXTextBookmark */ = 7303A3FB12F33A9000D97EB6 /* PBXTextBookmark */;
-			731FE1F312ED8D5D004DC5DB /* PBXTextBookmark */ = 731FE1F312ED8D5D004DC5DB /* PBXTextBookmark */;
-			731FE21712ED93CB004DC5DB /* PBXTextBookmark */ = 731FE21712ED93CB004DC5DB /* PBXTextBookmark */;
-			731FE2F212EDA8A8004DC5DB /* PBXTextBookmark */ = 731FE2F212EDA8A8004DC5DB /* PBXTextBookmark */;
 			731FE30B12EDAB60004DC5DB /* PBXTextBookmark */ = 731FE30B12EDAB60004DC5DB /* PBXTextBookmark */;
-			731FE39612EDB77F004DC5DB /* PBXTextBookmark */ = 731FE39612EDB77F004DC5DB /* PBXTextBookmark */;
 			731FE3A912EDB8EC004DC5DB /* PBXTextBookmark */ = 731FE3A912EDB8EC004DC5DB /* PBXTextBookmark */;
-			731FE3C412EDBB88004DC5DB /* PBXTextBookmark */ = 731FE3C412EDBB88004DC5DB /* PBXTextBookmark */;
 			731FE49F12EDD212004DC5DB /* PBXTextBookmark */ = 731FE49F12EDD212004DC5DB /* PBXTextBookmark */;
-			731FE4FD12EDDD42004DC5DB /* PBXTextBookmark */ = 731FE4FD12EDDD42004DC5DB /* PBXTextBookmark */;
-			731FE4FF12EDDD42004DC5DB /* PBXTextBookmark */ = 731FE4FF12EDDD42004DC5DB /* PBXTextBookmark */;
-			731FE50012EDDD42004DC5DB /* PBXTextBookmark */ = 731FE50012EDDD42004DC5DB /* PBXTextBookmark */;
 			731FE5B212EDED38004DC5DB /* PBXTextBookmark */ = 731FE5B212EDED38004DC5DB /* PBXTextBookmark */;
-			731FE5B312EDED38004DC5DB /* PBXTextBookmark */ = 731FE5B312EDED38004DC5DB /* PBXTextBookmark */;
 			732BCB0E12EB612200A271CC /* PBXTextBookmark */ = 732BCB0E12EB612200A271CC /* PBXTextBookmark */;
-			73AAB70512EA03A900079625 /* PBXTextBookmark */ = 73AAB70512EA03A900079625 /* PBXTextBookmark */;
+			73C1A61D12F5C90600E02C03 /* PBXTextBookmark */ = 73C1A61D12F5C90600E02C03 /* PBXTextBookmark */;
+			73C1A62112F5C90600E02C03 /* PBXTextBookmark */ = 73C1A62112F5C90600E02C03 /* PBXTextBookmark */;
+			73C1A62312F5C90600E02C03 /* PBXTextBookmark */ = 73C1A62312F5C90600E02C03 /* PBXTextBookmark */;
+			73C1A62912F5C90600E02C03 /* PBXTextBookmark */ = 73C1A62912F5C90600E02C03 /* PBXTextBookmark */;
+			73C1A66E12F5CFD200E02C03 /* PBXTextBookmark */ = 73C1A66E12F5CFD200E02C03 /* PBXTextBookmark */;
+			73C1A68912F5D26800E02C03 /* PBXTextBookmark */ = 73C1A68912F5D26800E02C03 /* PBXTextBookmark */;
+			73C1A6A612F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6A612F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6A812F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6A812F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6A912F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6A912F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6AA12F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6AA12F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6AB12F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6AB12F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6AE12F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6AE12F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6AF12F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6AF12F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6B012F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6B012F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6B112F5D87F00E02C03 /* PBXTextBookmark */ = 73C1A6B112F5D87F00E02C03 /* PBXTextBookmark */;
+			73C1A6B512F5DCC300E02C03 /* PBXTextBookmark */ = 73C1A6B512F5DCC300E02C03 /* PBXTextBookmark */;
+			73C1A6C412F5E05500E02C03 /* PBXTextBookmark */ = 73C1A6C412F5E05500E02C03 /* PBXTextBookmark */;
+			73C1A6C512F5E05500E02C03 /* PBXTextBookmark */ = 73C1A6C512F5E05500E02C03 /* PBXTextBookmark */;
+			73C1A6C612F5E05500E02C03 /* PBXTextBookmark */ = 73C1A6C612F5E05500E02C03 /* PBXTextBookmark */;
+			73C1A6C812F5E05500E02C03 /* PBXTextBookmark */ = 73C1A6C812F5E05500E02C03 /* PBXTextBookmark */;
+			73C1A6C912F5E05500E02C03 /* PBXTextBookmark */ = 73C1A6C912F5E05500E02C03 /* PBXTextBookmark */;
+			73C1A6CA12F5E05500E02C03 /* XCBuildMessageTextBookmark */ = 73C1A6CA12F5E05500E02C03 /* XCBuildMessageTextBookmark */;
+			73C1A6CD12F5E07500E02C03 /* PBXTextBookmark */ = 73C1A6CD12F5E07500E02C03 /* PBXTextBookmark */;
 			73EA3E6212EE04160036CB7E /* PBXTextBookmark */ = 73EA3E6212EE04160036CB7E /* PBXTextBookmark */;
 		};
 		sourceControlManager = 73C3355712E9FBDA00C74AD9 /* Source Control */;
@@ -759,61 +309,6 @@
 	};
 	73060CD312DFBC2900CD04EF /* HooFlac */ = {
 		activeExec = 0;
-	};
-	731FE1F312ED8D5D004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 732BCB0D12EB612200A271CC /* stdio.h */;
-		name = "stdio.h: 265";
-		rLen = 69;
-		rLoc = 9875;
-		rType = 0;
-		vrLen = 2237;
-		vrLoc = 9041;
-	};
-	731FE21712ED93CB004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 731FE21812ED93CB004DC5DB /* main.c */;
-		name = "main.c: 7";
-		rLen = 1;
-		rLoc = 356;
-		rType = 0;
-		vrLen = 901;
-		vrLoc = 0;
-	};
-	731FE21812ED93CB004DC5DB /* main.c */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.c;
-		name = main.c;
-		path = "/Users/shooley/Downloads/flac-1.2.1/examples/c/encode/file/main.c";
-		sourceTree = "<absolute>";
-	};
-	731FE2F212EDA8A8004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DD7C12DFC7C60054394E /* format.c */;
-		name = "format.c: 497";
-		rLen = 0;
-		rLoc = 17490;
-		rType = 0;
-		vrLen = 1186;
-		vrLoc = 16704;
-	};
-	731FE30712EDAB5F004DC5DB /* md5.c:217 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDB812DFC7C60054394E /* md5.c */;
-		functionName = "FLAC__MD5Update()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 217;
-		location = EncodeTest;
-		modificationTime = 317923292.198768;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
 	};
 	731FE30B12EDAB60004DC5DB /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -824,124 +319,6 @@
 		rType = 0;
 		vrLen = 1542;
 		vrLoc = 0;
-	};
-	731FE33312EDAE91004DC5DB /* fixed.c:77 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_best_predictor()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 77;
-		location = EncodeTest;
-		modificationTime = 317923292.234955;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE33B12EDB0BF004DC5DB /* stream_encoder.c:2584 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2584;
-		location = EncodeTest;
-		modificationTime = 317923290.255771;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	731FE36C12EDB550004DC5DB /* fixed.c:138 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
-		functionName = "FLAC__fixed_compute_residual()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 138;
-		location = EncodeTest;
-		modificationTime = 317923292.258113;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE37612EDB56B004DC5DB /* stream_encoder.c:2651 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2651;
-		location = EncodeTest;
-		modificationTime = 317923292.297965;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE37812EDB56E004DC5DB /* stream_encoder.c:2664 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2664;
-		location = EncodeTest;
-		modificationTime = 317923292.323119;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE38D12EDB6F2004DC5DB /* stream_encoder.c:3268 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "precompute_partition_info_sums_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3268;
-		location = EncodeTest;
-		modificationTime = 317923292.349736;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE39612EDB77F004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DD6512DFC7C60054394E /* bitmath.c */;
-		name = "bitmath.c: 29";
-		rLen = 0;
-		rLoc = 490;
-		rType = 0;
-		vrLen = 499;
-		vrLoc = 269;
 	};
 	731FE3A912EDB8EC004DC5DB /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -960,272 +337,10 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/secure/_string.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 1885}}";
-			sepNavSelRange = "{1522, 37}";
-			sepNavVisRange = "{1275, 468}";
+			sepNavIntBoundsRect = "{{0, 0}, {1371, 1833}}";
+			sepNavSelRange = "{2558, 0}";
+			sepNavVisRange = "{2275, 724}";
 		};
-	};
-	731FE3BA12EDBA91004DC5DB /* stream_encoder.c:2800 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2800;
-		location = EncodeTest;
-		modificationTime = 317923292.376295;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE3C412EDBB88004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */;
-		name = "stream_encoder_framing.c: 387";
-		rLen = 0;
-		rLoc = 16788;
-		rType = 0;
-		vrLen = 1311;
-		vrLoc = 16194;
-	};
-	731FE3CF12EDBCD0004DC5DB /* stream_encoder.c:2782 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2782;
-		location = EncodeTest;
-		modificationTime = 317923292.401361;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE3DB12EDBD58004DC5DB /* stream_encoder.c:2790 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2790;
-		location = EncodeTest;
-		modificationTime = 317923292.429836;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE3F512EDC31C004DC5DB /* stream_encoder.c:2695 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframe_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2695;
-		location = EncodeTest;
-		modificationTime = 317923292.474343;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE41C12EDC6F8004DC5DB /* stream_encoder.c:2521 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "process_subframes_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2521;
-		location = EncodeTest;
-		modificationTime = 317923292.515063;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE44412EDC973004DC5DB /* bitwriter.c:380 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_unary_unsigned()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 380;
-		location = EncodeTest;
-		modificationTime = 317923292.531181;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE44612EDC977004DC5DB /* bitwriter.c:402 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_rice_signed()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 402;
-		location = EncodeTest;
-		modificationTime = 317923292.554935;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE44812EDC97D004DC5DB /* bitwriter.c:240 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_zeroes()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 240;
-		location = EncodeTest;
-		modificationTime = 317923292.592139;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE44C12EDC988004DC5DB /* bitwriter.c:331 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_raw_int32()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 331;
-		location = EncodeTest;
-		modificationTime = 317923292.615586;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE45212EDC99D004DC5DB /* bitwriter.c:428 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_rice_signed_block()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 428;
-		location = EncodeTest;
-		modificationTime = 317923292.639512;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE45412EDC9A0004DC5DB /* bitwriter.c:522 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_utf8_uint32()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 522;
-		location = EncodeTest;
-		modificationTime = 317923292.675219;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE45612EDC9A3004DC5DB /* bitwriter.c:568 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_utf8_uint64()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 568;
-		location = EncodeTest;
-		modificationTime = 317923292.698651;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE45812EDC9A6004DC5DB /* bitwriter.c:624 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_zero_pad_to_byte_boundary()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 624;
-		location = EncodeTest;
-		modificationTime = 317923292.735786;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE46D12EDCC1E004DC5DB /* main.c:45 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73DAE82B12E0522500F7490F /* main.c */;
-		functionName = "FLACStreamEncoderWriteCallback()";
-		hitCount = 4;
-		ignoreCount = 0;
-		lineNumber = 45;
-		location = EncodeTest;
-		modificationTime = 317923299.275069;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
 	};
 	731FE49F12EDD212004DC5DB /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1236,144 +351,6 @@
 		rType = 0;
 		vrLen = 954;
 		vrLoc = 15816;
-	};
-	731FE4FD12EDDD42004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73DAE92B12E0667000F7490F /* alloc.h */;
-		name = "alloc.h: 57";
-		rLen = 0;
-		rLoc = 2101;
-		rType = 0;
-		vrLen = 891;
-		vrLoc = 1692;
-	};
-	731FE4FF12EDDD42004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73DAE94812E0674800F7490F /* float.h */;
-		name = "float.h: 23";
-		rLen = 26;
-		rLoc = 662;
-		rType = 0;
-		vrLen = 697;
-		vrLoc = 0;
-	};
-	731FE50012EDDD42004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 73C6DDDF12DFC7C60054394E /* window.c */;
-		name = "window.c: 166";
-		rLen = 10;
-		rLoc = 4319;
-		rType = 0;
-		vrLen = 974;
-		vrLoc = 3548;
-	};
-	731FE52C12EDE362004DC5DB /* bitreader.c:194 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
-		functionName = "bitreader_read_from_client_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 194;
-		location = EncodeTest;
-		modificationTime = 317923292.759417;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE52E12EDE365004DC5DB /* bitreader.c:225 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
-		functionName = "bitreader_read_from_client_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 225;
-		location = EncodeTest;
-		modificationTime = 317923292.794862;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE53212EDE36F004DC5DB /* bitwriter.c:257 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_zeroes()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 257;
-		location = EncodeTest;
-		modificationTime = 317923292.82016;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE53512EDE376004DC5DB /* bitwriter.c:319 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_raw_uint32()";
-		hitCount = 1;
-		ignoreCount = 0;
-		lineNumber = 319;
-		location = EncodeTest;
-		modificationTime = 317923299.942468;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE53712EDE37A004DC5DB /* bitwriter.c:476 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_rice_signed_block()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 476;
-		location = EncodeTest;
-		modificationTime = 317923292.880686;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
-	731FE53A12EDE37F004DC5DB /* bitwriter.c:510 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
-		functionName = "FLAC__bitwriter_write_rice_signed_block()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 510;
-		location = EncodeTest;
-		modificationTime = 317923292.903897;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
 	};
 	731FE56612EDE4B4004DC5DB /* _endian.h */ = {
 		isa = PBXFileReference;
@@ -1392,29 +369,17 @@
 		vrLen = 1093;
 		vrLoc = 4943;
 	};
-	731FE5B312EDED38004DC5DB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 731FE5B412EDED38004DC5DB /* _endian.h */;
-		name = "_endian.h: 104";
-		rLen = 5;
-		rLoc = 4831;
-		rType = 0;
-		vrLen = 699;
-		vrLoc = 4581;
-	};
-	731FE5B412EDED38004DC5DB /* _endian.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = _endian.h;
-		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/System/Library/Frameworks/Kernel.framework/Versions/A/Headers/sys/_endian.h;
-		sourceTree = "<absolute>";
-	};
 	732BCB0D12EB612200A271CC /* stdio.h */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.c.h;
 		name = stdio.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/stdio.h;
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {844, 5928}}";
+			sepNavSelRange = "{3286, 15}";
+			sepNavVisRange = "{2651, 728}";
+		};
 	};
 	732BCB0E12EB612200A271CC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1433,15 +398,2871 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/string.h;
 		sourceTree = "<absolute>";
 	};
-	73AAB70512EA03A900079625 /* PBXTextBookmark */ = {
+	73C1A3F412F482C700E02C03 /* window.c:183 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_welch()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 183;
+		location = EncodeTest;
+		modificationTime = 318099595.46461;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A3F812F482CB00E02C03 /* window.c:142 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_triangle()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 142;
+		location = EncodeTest;
+		modificationTime = 318099595.493133;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A3FC12F482D000E02C03 /* window.c:123 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_nuttall()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 123;
+		location = EncodeTest;
+		modificationTime = 318099595.51925;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A3FE12F482D500E02C03 /* window.c:114 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_kaiser_bessel()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 114;
+		location = EncodeTest;
+		modificationTime = 318099595.55485;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40012F482D800E02C03 /* window.c:105 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_hann()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 105;
+		location = EncodeTest;
+		modificationTime = 318099595.581252;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40212F482D900E02C03 /* window.c:96 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_hamming()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 96;
+		location = EncodeTest;
+		modificationTime = 318099595.618851;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40412F482DB00E02C03 /* window.c:84 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_gauss()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 84;
+		location = EncodeTest;
+		modificationTime = 318099595.645237;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40612F482DD00E02C03 /* window.c:75 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_flattop()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 75;
+		location = EncodeTest;
+		modificationTime = 318099595.680175;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40812F482DF00E02C03 /* window.c:62 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_connes()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 62;
+		location = EncodeTest;
+		modificationTime = 318099595.708426;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40A12F482E000E02C03 /* window.c:53 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_blackman_harris_4term_92db_sidelobe()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 53;
+		location = EncodeTest;
+		modificationTime = 318099595.737104;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40C12F482E400E02C03 /* window.c:43 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_blackman()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 43;
+		location = EncodeTest;
+		modificationTime = 318099595.76866;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A40E12F482E600E02C03 /* window.c:34 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_bartlett_hann()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 34;
+		location = EncodeTest;
+		modificationTime = 318099595.810629;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A41012F482E800E02C03 /* window.c:15 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDF12DFC7C60054394E /* window.c */;
+		functionName = "FLAC__window_bartlett()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 15;
+		location = EncodeTest;
+		modificationTime = 318099595.841097;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A41612F4909200E02C03 /* stream_encoder_framing.c:341 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */;
+		functionName = "FLAC__subframe_add_constant()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 341;
+		location = EncodeTest;
+		modificationTime = 318099595.866925;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A41812F4909700E02C03 /* stream_encoder_framing.c:354 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */;
+		functionName = "FLAC__subframe_add_fixed()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 354;
+		location = EncodeTest;
+		modificationTime = 318099595.902821;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A41C12F490A100E02C03 /* stream_encoder_framing.c:440 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */;
+		functionName = "FLAC__subframe_add_verbatim()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 440;
+		location = EncodeTest;
+		modificationTime = 318099595.943509;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A42412F490CD00E02C03 /* stream_encoder.c:556 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_delete()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 556;
+		location = EncodeTest;
+		modificationTime = 318099595.983674;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A42A12F490DC00E02C03 /* stream_encoder.c:1111 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "init_FILE_internal_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1111;
+		location = EncodeTest;
+		modificationTime = 318099596.014885;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A42C12F490E100E02C03 /* stream_encoder.c:1172 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_init_FILE()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1172;
+		location = EncodeTest;
+		modificationTime = 318099596.051358;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A42E12F490E500E02C03 /* stream_encoder.c:1184 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "init_file_internal_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1184;
+		location = EncodeTest;
+		modificationTime = 318099596.071114;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A43012F490E900E02C03 /* stream_encoder.c:1213 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_init_file()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1213;
+		location = EncodeTest;
+		modificationTime = 318099596.098195;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A43312F490ED00E02C03 /* stream_encoder.c:1218 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_finish()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1218;
+		location = EncodeTest;
+		modificationTime = 318099596.133811;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A43612F490F800E02C03 /* stream_encoder.c:1277 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_set_verify()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1277;
+		location = EncodeTest;
+		modificationTime = 318099596.164963;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A44012F4910B00E02C03 /* stream_encoder.c:1362 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_set_blocksize()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1362;
+		location = EncodeTest;
+		modificationTime = 318099596.201203;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A45812F4912000E02C03 /* stream_encoder.c:1520 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_get_state()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1520;
+		location = EncodeTest;
+		modificationTime = 318099596.232466;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A45A12F4912300E02C03 /* stream_encoder.c:1528 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_get_verify()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1528;
+		location = EncodeTest;
+		modificationTime = 318099596.268718;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A45E12F4912500E02C03 /* stream_encoder.c:1546 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_get_sample_rate()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1546;
+		location = EncodeTest;
+		modificationTime = 318099596.299691;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A46012F4912700E02C03 /* stream_encoder.c:1554 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_get_blocksize()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1554;
+		location = EncodeTest;
+		modificationTime = 318099596.335594;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A46212F4912800E02C03 /* stream_encoder.c:1562 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_get_total_samples_estimate()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1562;
+		location = EncodeTest;
+		modificationTime = 318099596.378588;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A46612F4912E00E02C03 /* stream_encoder.c:1644 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "FLAC__stream_encoder_process_interleaved()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1644;
+		location = EncodeTest;
+		modificationTime = 318099596.419165;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A46B12F4913800E02C03 /* stream_encoder.c:1782 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "free_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1782;
+		location = EncodeTest;
+		modificationTime = 318099596.445465;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A47312F4914700E02C03 /* stream_encoder.c:2122 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "update_metadata_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2122;
+		location = EncodeTest;
+		modificationTime = 318099596.480394;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A47E12F4916800E02C03 /* stream_encoder.c:2935 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "spotcheck_subframe_estimate_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2935;
+		location = EncodeTest;
+		modificationTime = 318099596.507586;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A48012F4916B00E02C03 /* stream_encoder.c:2964 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "evaluate_constant_subframe_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2964;
+		location = EncodeTest;
+		modificationTime = 318099596.544417;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A48C12F4918200E02C03 /* stream_encoder.c:3376 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "precompute_partition_info_escapes_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3376;
+		location = EncodeTest;
+		modificationTime = 318099596.575184;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49412F4919100E02C03 /* stream_encoder.c:3597 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "append_to_verify_fifo_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3597;
+		location = EncodeTest;
+		modificationTime = 318099596.615694;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49612F4919400E02C03 /* stream_encoder.c:3609 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "append_to_verify_fifo_interleaved_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3609;
+		location = EncodeTest;
+		modificationTime = 318099596.65363;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49812F4919600E02C03 /* stream_encoder.c:3626 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "verify_read_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3626;
+		location = EncodeTest;
+		modificationTime = 318099596.680234;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49A12F4919900E02C03 /* stream_encoder.c:3657 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "verify_write_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3657;
+		location = EncodeTest;
+		modificationTime = 318099596.71719;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49C12F4919C00E02C03 /* stream_encoder.c:3700 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "verify_metadata_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3700;
+		location = EncodeTest;
+		modificationTime = 318099596.743642;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A49E12F4919D00E02C03 /* stream_encoder.c:3705 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "verify_error_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3705;
+		location = EncodeTest;
+		modificationTime = 318099596.772863;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4A112F491A100E02C03 /* stream_encoder.c:3712 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "file_read_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3712;
+		location = EncodeTest;
+		modificationTime = 318099596.799242;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4A312F491A300E02C03 /* stream_encoder.c:3726 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "file_seek_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3726;
+		location = EncodeTest;
+		modificationTime = 318099596.836723;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4A512F491A500E02C03 /* stream_encoder.c:3736 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "file_tell_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3736;
+		location = EncodeTest;
+		modificationTime = 318099596.862926;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4A712F491A700E02C03 /* stream_encoder.c:3755 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		functionName = "file_write_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 3755;
+		location = EncodeTest;
+		modificationTime = 318099596.898142;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4A912F492E000E02C03 /* stream_decoder.c:224 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_new()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 224;
+		location = EncodeTest;
+		modificationTime = 318099596.925875;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4AB12F492E700E02C03 /* stream_decoder.c:287 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_delete()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 287;
+		location = EncodeTest;
+		modificationTime = 318099596.954522;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4AE12F492EE00E02C03 /* stream_decoder.c:329 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "init_stream_internal_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 329;
+		location = EncodeTest;
+		modificationTime = 318099596.9906;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4B012F492F200E02C03 /* stream_decoder.c:400 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_init_stream()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 400;
+		location = EncodeTest;
+		modificationTime = 318099597.030068;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4B212F492F600E02C03 /* stream_decoder.c:453 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "init_FILE_internal_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 453;
+		location = EncodeTest;
+		modificationTime = 318099597.057466;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4B412F492FB00E02C03 /* stream_decoder.c:496 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_init_FILE()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 496;
+		location = EncodeTest;
+		modificationTime = 318099597.086223;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4B612F492FF00E02C03 /* stream_decoder.c:560 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_finish()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 560;
+		location = EncodeTest;
+		modificationTime = 318099597.122736;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4B812F4930300E02C03 /* stream_decoder.c:668 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_state()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 668;
+		location = EncodeTest;
+		modificationTime = 318099597.16573;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4BA12F4930700E02C03 /* stream_decoder.c:675 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_resolved_state_string()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 675;
+		location = EncodeTest;
+		modificationTime = 318099597.205628;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4BC12F4930C00E02C03 /* stream_decoder.c:687 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_total_samples()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 687;
+		location = EncodeTest;
+		modificationTime = 318099597.237095;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4BE12F4930F00E02C03 /* stream_decoder.c:694 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_channels()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 694;
+		location = EncodeTest;
+		modificationTime = 318099597.274854;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4C012F4931100E02C03 /* stream_decoder.c:708 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_bits_per_sample()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 708;
+		location = EncodeTest;
+		modificationTime = 318099597.303712;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4C312F4931500E02C03 /* stream_decoder.c:729 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_decode_position()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 729;
+		location = EncodeTest;
+		modificationTime = 318099597.332895;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4C512F4931700E02C03 /* stream_decoder.c:747 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_flush()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 747;
+		location = EncodeTest;
+		modificationTime = 318099597.36452;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4C712F4931A00E02C03 /* stream_decoder.c:765 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_reset()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 765;
+		location = EncodeTest;
+		modificationTime = 318099597.406775;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4C912F4931E00E02C03 /* stream_decoder.c:819 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_process_single()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 819;
+		location = EncodeTest;
+		modificationTime = 318099597.435763;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4CB12F4932100E02C03 /* stream_decoder.c:856 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_process_until_end_of_metadata()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 856;
+		location = EncodeTest;
+		modificationTime = 318099597.461502;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4CD12F4932700E02C03 /* stream_decoder.c:1018 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "FLAC__stream_decoder_get_input_bytes_unconsumed()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1018;
+		location = EncodeTest;
+		modificationTime = 318099597.496615;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4CF12F4932900E02C03 /* stream_decoder.c:1032 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "set_defaults_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1032;
+		location = EncodeTest;
+		modificationTime = 318099597.533888;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4D112F4932F00E02C03 /* stream_decoder.c:1072 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "allocate_output_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1072;
+		location = EncodeTest;
+		modificationTime = 318099597.574566;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4D312F4933300E02C03 /* stream_decoder.c:1123 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "has_id_filtered_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1123;
+		location = EncodeTest;
+		modificationTime = 318099597.605903;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4D512F4933500E02C03 /* stream_decoder.c:1137 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "find_metadata_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1137;
+		location = EncodeTest;
+		modificationTime = 318099597.641706;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4D712F4933700E02C03 /* stream_decoder.c:1198 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1198;
+		location = EncodeTest;
+		modificationTime = 318099597.684639;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4D912F4933D00E02C03 /* stream_decoder.c:1368 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_streaminfo_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1368;
+		location = EncodeTest;
+		modificationTime = 318099597.724775;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4DB12F4934000E02C03 /* stream_decoder.c:1439 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_seektable_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1439;
+		location = EncodeTest;
+		modificationTime = 318099597.766607;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4DD12F4934200E02C03 /* stream_decoder.c:1481 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_vorbiscomment_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1481;
+		location = EncodeTest;
+		modificationTime = 318099597.794559;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4DF12F4934500E02C03 /* stream_decoder.c:1538 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_cuesheet_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1538;
+		location = EncodeTest;
+		modificationTime = 318099597.830244;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4E112F4934800E02C03 /* stream_decoder.c:1621 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_metadata_picture_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1621;
+		location = EncodeTest;
+		modificationTime = 318099597.869563;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4E312F4934C00E02C03 /* stream_decoder.c:1689 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "skip_id3v2_tag_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1689;
+		location = EncodeTest;
+		modificationTime = 318099597.890019;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4E512F4934E00E02C03 /* stream_decoder.c:1711 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "frame_sync_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1711;
+		location = EncodeTest;
+		modificationTime = 318099597.916313;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4E712F4935100E02C03 /* stream_decoder.c:1766 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_frame_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1766;
+		location = EncodeTest;
+		modificationTime = 318099597.951784;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4E912F4935600E02C03 /* stream_decoder.c:1905 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_frame_header_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1905;
+		location = EncodeTest;
+		modificationTime = 318099597.978142;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4EB12F4935E00E02C03 /* stream_decoder.c:2214 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_subframe_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2214;
+		location = EncodeTest;
+		modificationTime = 318099598.016097;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4ED12F4936100E02C03 /* stream_decoder.c:2284 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_subframe_constant_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2284;
+		location = EncodeTest;
+		modificationTime = 318099598.042789;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4EF12F4936400E02C03 /* stream_decoder.c:2307 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_subframe_fixed_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2307;
+		location = EncodeTest;
+		modificationTime = 318099598.080336;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4F112F4936700E02C03 /* stream_decoder.c:2364 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_subframe_lpc_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2364;
+		location = EncodeTest;
+		modificationTime = 318099598.106872;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4F312F4936B00E02C03 /* stream_decoder.c:2456 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_subframe_verbatim_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2456;
+		location = EncodeTest;
+		modificationTime = 318099598.127113;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4F512F4936E00E02C03 /* stream_decoder.c:2479 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_residual_partitioned_rice_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2479;
+		location = EncodeTest;
+		modificationTime = 318099598.157522;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4F712F4937100E02C03 /* stream_decoder.c:2537 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_zero_padding_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2537;
+		location = EncodeTest;
+		modificationTime = 318099598.198701;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4F912F4937300E02C03 /* stream_decoder.c:2551 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "read_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2551;
+		location = EncodeTest;
+		modificationTime = 318099598.236229;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4FB12F4937700E02C03 /* stream_decoder.c:2619 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "write_audio_frame_to_client_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2619;
+		location = EncodeTest;
+		modificationTime = 318099598.255842;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4FD12F4937A00E02C03 /* stream_decoder.c:2667 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "send_error_to_client_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2667;
+		location = EncodeTest;
+		modificationTime = 318099598.29136;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A4FF12F4937C00E02C03 /* stream_decoder.c:2675 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "file_read_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2675;
+		location = EncodeTest;
+		modificationTime = 318099598.318033;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A50112F4938000E02C03 /* stream_decoder.c:2692 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "file_seek_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2692;
+		location = EncodeTest;
+		modificationTime = 318099598.354124;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A50412F4938300E02C03 /* stream_decoder.c:2704 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "file_tell_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2704;
+		location = EncodeTest;
+		modificationTime = 318099598.380833;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A50612F4938600E02C03 /* stream_decoder.c:2719 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "file_length_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2719;
+		location = EncodeTest;
+		modificationTime = 318099598.415991;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A50812F4938900E02C03 /* stream_decoder.c:2734 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		functionName = "file_eof_callback_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 2734;
+		location = EncodeTest;
+		modificationTime = 318099598.444842;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A51012F4939900E02C03 /* memory.c:122 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDBB12DFC7C60054394E /* memory.c */;
+		functionName = "FLAC__memory_alloc_aligned_unsigned_array()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 122;
+		location = EncodeTest;
+		modificationTime = 318099598.472575;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A51612F493A900E02C03 /* md5.c:154 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB812DFC7C60054394E /* md5.c */;
+		functionName = "byteSwap()";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 154;
+		location = EncodeTest;
+		modificationTime = 318099614.738099;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A51812F493AE00E02C03 /* md5.c:163 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB812DFC7C60054394E /* md5.c */;
+		functionName = "byteSwapX16()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 163;
+		location = EncodeTest;
+		modificationTime = 318099598.534335;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A51E12F493B700E02C03 /* md5.c:271 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB812DFC7C60054394E /* md5.c */;
+		functionName = "FLAC__MD5Final()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 271;
+		location = EncodeTest;
+		modificationTime = 318099598.569627;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A52C12F493D800E02C03 /* lpc.c:209 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		functionName = "FLAC__lpc_compute_residual_from_qlp_coefficients()";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 209;
+		location = EncodeTest;
+		modificationTime = 318099622.381365;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53012F493E200E02C03 /* lpc.c:471 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		functionName = "FLAC__lpc_compute_residual_from_qlp_coefficients_wide()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 471;
+		location = EncodeTest;
+		modificationTime = 318099598.632073;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53212F493E600E02C03 /* lpc.c:503 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 503;
+		location = EncodeTest;
+		modificationTime = 318099598.658979;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53412F493ED00E02C03 /* lpc.c:729 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		functionName = "FLAC__lpc_restore_signal()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 729;
+		location = EncodeTest;
+		modificationTime = 318099598.695535;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53612F493EF00E02C03 /* lpc.c:766 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 766;
+		location = EncodeTest;
+		modificationTime = 318099598.727018;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53812F493F400E02C03 /* lpc.c:989 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		functionName = "FLAC__lpc_restore_signal_wide()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 989;
+		location = EncodeTest;
+		modificationTime = 318099598.76304;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A53A12F493F700E02C03 /* lpc.c:1015 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 1015;
+		location = EncodeTest;
+		modificationTime = 318099598.78287;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A54612F4941100E02C03 /* format.c:213 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_seektable_is_legal()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 213;
+		location = EncodeTest;
+		modificationTime = 318099598.818673;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A54812F4941300E02C03 /* format.c:237 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "seekpoint_compare_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 237;
+		location = EncodeTest;
+		modificationTime = 318099598.846604;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A54A12F4941600E02C03 /* format.c:248 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_seektable_sort()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 248;
+		location = EncodeTest;
+		modificationTime = 318099598.888468;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A54C12F4941800E02C03 /* format.c:286 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "utf8len_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 286;
+		location = EncodeTest;
+		modificationTime = 318099598.919012;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A54E12F4941C00E02C03 /* format.c:386 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_cuesheet_is_legal()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 386;
+		location = EncodeTest;
+		modificationTime = 318099598.958228;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A55012F4941F00E02C03 /* format.c:465 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_picture_is_legal()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 465;
+		location = EncodeTest;
+		modificationTime = 318099598.995141;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A55212F4942100E02C03 /* format.c:492 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_get_max_rice_partition_order()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 492;
+		location = EncodeTest;
+		modificationTime = 318099599.021757;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A55A12F4942900E02C03 /* format.c:542 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7C12DFC7C60054394E /* format.c */;
+		functionName = "FLAC__format_entropy_coding_method_partitioned_rice_contents_clear()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 542;
+		location = EncodeTest;
+		modificationTime = 318099599.056893;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A56012F4943600E02C03 /* fixed.c:86 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
+		functionName = "FLAC__fixed_compute_best_predictor_wide()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 86;
+		location = EncodeTest;
+		modificationTime = 318099599.083587;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A56412F4943B00E02C03 /* fixed.c:194 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7412DFC7C60054394E /* fixed.c */;
+		functionName = "FLAC__fixed_restore_signal()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 194;
+		location = EncodeTest;
+		modificationTime = 318099599.119899;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A56612F4944400E02C03 /* crc.c:84 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7112DFC7C60054394E /* crc.c */;
+		functionName = "FLAC__crc8_update()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 84;
+		location = EncodeTest;
+		modificationTime = 318099599.147536;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A56812F4944500E02C03 /* crc.c:89 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD7112DFC7C60054394E /* crc.c */;
+		functionName = "FLAC__crc8_update_block()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 89;
+		location = EncodeTest;
+		modificationTime = 318099599.18602;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A57112F4945D00E02C03 /* bitwriter.c:61 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "bitwriter_grow_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 61;
+		location = EncodeTest;
+		modificationTime = 318099599.216728;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A57512F4946200E02C03 /* bitwriter.c:110 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_delete()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 110;
+		location = EncodeTest;
+		modificationTime = 318099599.254928;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A57912F4946700E02C03 /* bitwriter.c:139 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_free()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 139;
+		location = EncodeTest;
+		modificationTime = 318099599.281562;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A58312F4947100E02C03 /* bitwriter.c:222 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_get_input_bits_unconsumed()";
+		hitCount = 6;
+		ignoreCount = 0;
+		lineNumber = 222;
+		location = EncodeTest;
+		modificationTime = 318099626.726489;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A59512F4948700E02C03 /* bitwriter.c:411 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_write_unary_unsigned()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 411;
+		location = EncodeTest;
+		modificationTime = 318099599.358701;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A59712F4948A00E02C03 /* bitwriter.c:433 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_write_rice_signed()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 433;
+		location = EncodeTest;
+		modificationTime = 318099599.39773;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A59D12F4949400E02C03 /* bitwriter.c:603 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		functionName = "FLAC__bitwriter_write_utf8_uint64()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 603;
+		location = EncodeTest;
+		modificationTime = 318099599.42629;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5A112F494A400E02C03 /* bitreader.c:132 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "crc16_update_word_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 132;
+		location = EncodeTest;
+		modificationTime = 318099599.454532;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5A312F494A800E02C03 /* bitreader.c:162 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "bitreader_read_from_client_()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 162;
+		location = EncodeTest;
+		modificationTime = 318099599.489532;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5A512F494AC00E02C03 /* bitreader.c:250 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_new()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 250;
+		location = EncodeTest;
+		modificationTime = 318099599.516947;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5A712F494B100E02C03 /* bitreader.c:266 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_delete()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 266;
+		location = EncodeTest;
+		modificationTime = 318099599.552974;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5A912F494B300E02C03 /* bitreader.c:280 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_init()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 280;
+		location = EncodeTest;
+		modificationTime = 318099599.579548;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5AB12F494B500E02C03 /* bitreader.c:297 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_free()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 297;
+		location = EncodeTest;
+		modificationTime = 318099599.61601;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5AD12F494B800E02C03 /* bitreader.c:311 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_clear()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 311;
+		location = EncodeTest;
+		modificationTime = 318099599.647105;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5AF12F494BA00E02C03 /* bitreader.c:348 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_reset_read_crc16()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 348;
+		location = EncodeTest;
+		modificationTime = 318099599.679695;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5B112F494BC00E02C03 /* bitreader.c:358 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_get_read_crc16()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 358;
+		location = EncodeTest;
+		modificationTime = 318099599.710609;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5B312F494BE00E02C03 /* bitreader.c:374 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_is_consumed_byte_aligned()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 374;
+		location = EncodeTest;
+		modificationTime = 318099599.759988;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5B612F494C100E02C03 /* bitreader.c:379 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_bits_left_for_byte_alignment()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 379;
+		location = EncodeTest;
+		modificationTime = 318099599.779576;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5B912F494C400E02C03 /* bitreader.c:384 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_get_input_bits_unconsumed()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 384;
+		location = EncodeTest;
+		modificationTime = 318099599.806816;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5BB12F494C700E02C03 /* bitreader.c:389 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_raw_uint32()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 389;
+		location = EncodeTest;
+		modificationTime = 318099599.842605;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5BD12F494CD00E02C03 /* bitreader.c:469 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_raw_int32()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 469;
+		location = EncodeTest;
+		modificationTime = 318099599.870825;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5BF12F494CF00E02C03 /* bitreader.c:479 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_raw_uint64()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 479;
+		location = EncodeTest;
+		modificationTime = 318099599.906523;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5C112F494D100E02C03 /* bitreader.c:500 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_uint32_little_endian()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 500;
+		location = EncodeTest;
+		modificationTime = 318099599.932748;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5C312F494D400E02C03 /* bitreader.c:529 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_skip_bits_no_crc()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 529;
+		location = EncodeTest;
+		modificationTime = 318099599.969188;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5C512F494DA00E02C03 /* bitreader.c:560 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_skip_byte_block_aligned_no_crc()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 560;
+		location = EncodeTest;
+		modificationTime = 318099600.011705;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5C712F494DD00E02C03 /* bitreader.c:595 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_byte_block_aligned_no_crc()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 595;
+		location = EncodeTest;
+		modificationTime = 318099600.052764;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5C912F494E000E02C03 /* bitreader.c:652 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_unary_unsigned()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 652;
+		location = EncodeTest;
+		modificationTime = 318099600.082203;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5CB12F494E300E02C03 /* bitreader.c:713 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_rice_signed()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 713;
+		location = EncodeTest;
+		modificationTime = 318099600.119481;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5CD12F494E700E02C03 /* bitreader.c:745 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_rice_signed_block()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 745;
+		location = EncodeTest;
+		modificationTime = 318099600.15175;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5CF12F494ED00E02C03 /* bitreader.c:927 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_utf8_uint32()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 927;
+		location = EncodeTest;
+		modificationTime = 318099600.186762;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A5D112F494F000E02C03 /* bitreader.c:982 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		functionName = "FLAC__bitreader_read_utf8_uint64()";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 982;
+		location = EncodeTest;
+		modificationTime = 318099600.230156;
+		originalNumberOfMultipleMatches = 1;
+		state = 0;
+	};
+	73C1A61D12F5C90600E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DAE92B12E0667000F7490F /* alloc.h */;
+		name = "alloc.h: 57";
+		rLen = 0;
+		rLoc = 2101;
+		rType = 0;
+		vrLen = 1391;
+		vrLoc = 1300;
+	};
+	73C1A62112F5C90600E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DAE94C12E0679100F7490F /* assert.h */;
+		name = "assert.h: 7";
+		rLen = 0;
+		rLoc = 205;
+		rType = 0;
+		vrLen = 253;
+		vrLoc = 0;
+	};
+	73C1A62312F5C90600E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD6812DFC7C60054394E /* bitreader.c */;
+		name = "bitreader.c: 38";
+		rLen = 19;
+		rLoc = 1820;
+		rType = 0;
+		vrLen = 627;
+		vrLoc = 1620;
+	};
+	73C1A62912F5C90600E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDD612DFC7C60054394E /* stream_decoder.c */;
+		name = "stream_decoder.c: 23";
+		rLen = 0;
+		rLoc = 674;
+		rType = 0;
+		vrLen = 265;
+		vrLoc = 693;
+	};
+	73C1A66E12F5CFD200E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DAE82B12E0522500F7490F /* main.c */;
+		name = "main.c: 36";
+		rLen = 8;
+		rLoc = 1413;
+		rType = 0;
+		vrLen = 846;
+		vrLoc = 1155;
+	};
+	73C1A68912F5D26800E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD6512DFC7C60054394E /* bitmath.c */;
+		name = "bitmath.c: 34";
+		rLen = 0;
+		rLoc = 609;
+		rType = 0;
+		vrLen = 328;
+		vrLoc = 418;
+	};
+	73C1A6A612F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C1A6A712F5D87F00E02C03 /* stdint.h */;
+		name = "stdint.h: 55";
+		rLen = 39;
+		rLoc = 989;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 773;
+	};
+	73C1A6A712F5D87F00E02C03 /* stdint.h */ = {
+		isa = PBXFileReference;
+		name = stdint.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/gcc/darwin/4.2/stdint.h;
+		sourceTree = "<absolute>";
+	};
+	73C1A6A812F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DAE93012E0668D00F7490F /* ordinals.h */;
+		name = "ordinals.h: 15";
+		rLen = 8;
+		rLoc = 300;
+		rType = 0;
+		vrLen = 381;
+		vrLoc = 0;
+	};
+	73C1A6A912F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD6E12DFC7C60054394E /* cpu.c */;
+		name = "cpu.c: 23";
+		rLen = 18;
+		rLoc = 962;
+		rType = 0;
+		vrLen = 788;
+		vrLoc = 242;
+	};
+	73C1A6AA12F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD7112DFC7C60054394E /* crc.c */;
+		name = "crc.c: 107";
+		rLen = 0;
+		rLoc = 4699;
+		rType = 0;
+		vrLen = 354;
+		vrLoc = 4384;
+	};
+	73C1A6AB12F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD7412DFC7C60054394E /* fixed.c */;
+		name = "fixed.c: 137";
+		rLen = 0;
+		rLoc = 6515;
+		rType = 0;
+		vrLen = 664;
+		vrLoc = 6155;
+	};
+	73C1A6AE12F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD7C12DFC7C60054394E /* format.c */;
+		name = "format.c: 553";
+		rLen = 0;
+		rLoc = 19688;
+		rType = 0;
+		vrLen = 965;
+		vrLoc = 19256;
+	};
+	73C1A6AF12F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDB112DFC7C60054394E /* lpc.c */;
+		name = "lpc.c: 1272";
+		rLen = 0;
+		rLoc = 43160;
+		rType = 0;
+		vrLen = 579;
+		vrLoc = 43491;
+	};
+	73C1A6B012F5D87F00E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDB812DFC7C60054394E /* md5.c */;
+		name = "md5.c: 444";
+		rLen = 0;
+		rLoc = 14748;
+		rType = 0;
+		vrLen = 662;
+		vrLoc = 14402;
+	};
+	73C1A6B112F5D87F00E02C03 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 73C6DDBB12DFC7C60054394E /* memory.c */;
-		name = "memory.c: 49";
-		rLen = 0;
-		rLoc = 1224;
+		name = "memory.c: 151";
+		rLen = 18;
+		rLoc = 4198;
 		rType = 0;
-		vrLen = 949;
-		vrLoc = 134;
+		vrLen = 567;
+		vrLoc = 3931;
+	};
+	73C1A6B512F5DCC300E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */;
+		name = "stream_encoder_framing.c: 392";
+		rLen = 18;
+		rLoc = 16927;
+		rType = 0;
+		vrLen = 703;
+		vrLoc = 16346;
+	};
+	73C1A6C412F5E05500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73DAE94812E0674800F7490F /* float.h */;
+		name = "float.h: 23";
+		rLen = 26;
+		rLoc = 662;
+		rType = 0;
+		vrLen = 697;
+		vrLoc = 0;
+	};
+	73C1A6C512F5E05500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDDF12DFC7C60054394E /* window.c */;
+		name = "window.c: 160";
+		rLen = 0;
+		rLoc = 4135;
+		rType = 0;
+		vrLen = 966;
+		vrLoc = 3671;
+	};
+	73C1A6C612F5E05500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C1A6C712F5E05500E02C03 /* _types.h */;
+		name = "_types.h: 90";
+		rLen = 55;
+		rLoc = 3578;
+		rType = 0;
+		vrLen = 981;
+		vrLoc = 2966;
+	};
+	73C1A6C712F5E05500E02C03 /* _types.h */ = {
+		isa = PBXFileReference;
+		name = _types.h;
+		path = /Developer/SDKs/MacOSX10.6.sdk/usr/include/i386/_types.h;
+		sourceTree = "<absolute>";
+	};
+	73C1A6C812F5E05500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 732BCB0D12EB612200A271CC /* stdio.h */;
+		name = "stdio.h: 80";
+		rLen = 15;
+		rLoc = 3286;
+		rType = 0;
+		vrLen = 728;
+		vrLoc = 2651;
+	};
+	73C1A6C912F5E05500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DD6B12DFC7C60054394E /* bitwriter.c */;
+		name = "bitwriter.c: 364";
+		rLen = 0;
+		rLoc = 11064;
+		rType = 0;
+		vrLen = 1071;
+		vrLoc = 10466;
+	};
+	73C1A6CA12F5E05500E02C03 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Data argument not used by format string";
+		fRef = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 2043;
+		rType = 1;
+	};
+	73C1A6CD12F5E07500E02C03 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
+		name = "stream_encoder.c: 2044";
+		rLen = 0;
+		rLoc = 86276;
+		rType = 0;
+		vrLen = 1344;
+		vrLoc = 85622;
 	};
 	73C3354A12E9FBCF00C74AD9 /* EncodeTest */ = {
 		isa = PBXExecutable;
@@ -1491,24 +3312,6 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	73C3358112E9FE3E00C74AD9 /* stream_encoder.c:3609 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = 73C6DDD912DFC7C60054394E /* stream_encoder.c */;
-		functionName = "verify_write_callback_()";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 3609;
-		location = EncodeTest;
-		modificationTime = 317923292.185517;
-		originalNumberOfMultipleMatches = 1;
-		state = 0;
-	};
 	73C6DCD512DFC7640054394E /* format.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1443, 12753}}";
@@ -1525,37 +3328,51 @@
 	};
 	73C6DD6512DFC7C60054394E /* bitmath.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 1417}}";
-			sepNavSelRange = "{490, 0}";
-			sepNavVisRange = "{269, 499}";
+			sepNavIntBoundsRect = "{{0, 0}, {873, 1508}}";
+			sepNavSelRange = "{609, 0}";
+			sepNavVisRange = "{418, 328}";
 		};
 	};
 	73C6DD6812DFC7C60054394E /* bitreader.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1706, 13013}}";
-			sepNavSelRange = "{2524, 5}";
-			sepNavVisRange = "{1713, 1585}";
+			sepNavIntBoundsRect = "{{0, 0}, {1706, 13104}}";
+			sepNavSelRange = "{1820, 19}";
+			sepNavVisRange = "{1620, 627}";
 		};
 	};
 	73C6DD6B12DFC7C60054394E /* bitwriter.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 8333}}";
-			sepNavSelRange = "{9650, 161}";
-			sepNavVisRange = "{9095, 1065}";
+			sepNavIntBoundsRect = "{{0, 0}, {1172, 8983}}";
+			sepNavSelRange = "{6702, 0}";
+			sepNavVisRange = "{6418, 957}";
+		};
+	};
+	73C6DD6E12DFC7C60054394E /* cpu.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {873, 403}}";
+			sepNavSelRange = "{962, 18}";
+			sepNavVisRange = "{242, 788}";
+		};
+	};
+	73C6DD7112DFC7C60054394E /* crc.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {873, 1651}}";
+			sepNavSelRange = "{4699, 0}";
+			sepNavVisRange = "{4384, 354}";
 		};
 	};
 	73C6DD7412DFC7C60054394E /* fixed.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1699, 2808}}";
-			sepNavSelRange = "{6354, 157}";
-			sepNavVisRange = "{5334, 1701}";
+			sepNavIntBoundsRect = "{{0, 0}, {1069, 2886}}";
+			sepNavSelRange = "{6515, 0}";
+			sepNavVisRange = "{6155, 664}";
 		};
 	};
 	73C6DD7C12DFC7C60054394E /* format.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 7683}}";
-			sepNavSelRange = "{8429, 0}";
-			sepNavVisRange = "{8108, 717}";
+			sepNavIntBoundsRect = "{{0, 0}, {1230, 7501}}";
+			sepNavSelRange = "{19688, 0}";
+			sepNavVisRange = "{19256, 965}";
 		};
 	};
 	73C6DD9212DFC7C60054394E /* cpu.h */ = {
@@ -1574,44 +3391,51 @@
 	};
 	73C6DDB112DFC7C60054394E /* lpc.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1727, 16952}}";
-			sepNavSelRange = "{32489, 6}";
-			sepNavVisRange = "{31675, 1232}";
+			sepNavIntBoundsRect = "{{0, 0}, {1447, 16809}}";
+			sepNavSelRange = "{43160, 0}";
+			sepNavVisRange = "{43491, 579}";
 		};
 	};
 	73C6DDB812DFC7C60054394E /* md5.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1006, 5720}}";
-			sepNavSelRange = "{7961, 117}";
-			sepNavVisRange = "{6931, 1221}";
+			sepNavIntBoundsRect = "{{0, 0}, {1104, 6175}}";
+			sepNavSelRange = "{14748, 0}";
+			sepNavVisRange = "{14402, 662}";
 		};
 	};
 	73C6DDBB12DFC7C60054394E /* memory.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 2171}}";
-			sepNavSelRange = "{272, 91}";
-			sepNavVisRange = "{720, 1041}";
+			sepNavIntBoundsRect = "{{0, 0}, {971, 2262}}";
+			sepNavSelRange = "{4198, 18}";
+			sepNavVisRange = "{3931, 567}";
+		};
+	};
+	73C6DDD612DFC7C60054394E /* stream_decoder.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1043, 36283}}";
+			sepNavSelRange = "{674, 0}";
+			sepNavVisRange = "{693, 265}";
 		};
 	};
 	73C6DDD912DFC7C60054394E /* stream_encoder.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1587, 49426}}";
-			sepNavSelRange = "{142067, 6}";
-			sepNavVisRange = "{140761, 791}";
+			sepNavIntBoundsRect = "{{0, 0}, {1265, 49673}}";
+			sepNavSelRange = "{86276, 0}";
+			sepNavVisRange = "{85622, 1344}";
 		};
 	};
 	73C6DDDC12DFC7C60054394E /* stream_encoder_framing.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {2028, 6864}}";
-			sepNavSelRange = "{17521, 0}";
-			sepNavVisRange = "{16547, 1199}";
+			sepNavIntBoundsRect = "{{0, 0}, {1972, 7046}}";
+			sepNavSelRange = "{16927, 18}";
+			sepNavVisRange = "{16346, 703}";
 		};
 	};
 	73C6DDDF12DFC7C60054394E /* window.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 2496}}";
-			sepNavSelRange = "{4319, 10}";
-			sepNavVisRange = "{3548, 974}";
+			sepNavIntBoundsRect = "{{0, 0}, {1055, 2522}}";
+			sepNavSelRange = "{4135, 0}";
+			sepNavVisRange = "{3671, 966}";
 		};
 	};
 	73C6DFA312DFD24E0054394E /* config.h */ = {
@@ -1629,23 +3453,37 @@
 	};
 	73DAE82B12E0522500F7490F /* main.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1286, 5031}}";
-			sepNavSelRange = "{7531, 42}";
-			sepNavVisRange = "{6884, 1483}";
+			sepNavIntBoundsRect = "{{0, 0}, {1489, 5161}}";
+			sepNavSelRange = "{1413, 8}";
+			sepNavVisRange = "{1155, 846}";
 		};
 	};
 	73DAE92B12E0667000F7490F /* alloc.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 2288}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1132, 2301}}";
 			sepNavSelRange = "{2101, 0}";
-			sepNavVisRange = "{1692, 891}";
+			sepNavVisRange = "{1300, 1391}";
+		};
+	};
+	73DAE93012E0668D00F7490F /* ordinals.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {873, 312}}";
+			sepNavSelRange = "{300, 8}";
+			sepNavVisRange = "{0, 381}";
 		};
 	};
 	73DAE94812E0674800F7490F /* float.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1443, 445}}";
+			sepNavIntBoundsRect = "{{0, 0}, {844, 428}}";
 			sepNavSelRange = "{662, 26}";
 			sepNavVisRange = "{0, 697}";
+		};
+	};
+	73DAE94C12E0679100F7490F /* assert.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1043, 190}}";
+			sepNavSelRange = "{205, 0}";
+			sepNavVisRange = "{0, 253}";
 		};
 	};
 	73EA3E6212EE04160036CB7E /* PBXTextBookmark */ = {

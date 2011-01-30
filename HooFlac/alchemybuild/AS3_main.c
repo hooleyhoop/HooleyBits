@@ -133,21 +133,54 @@ static AS3_Val encode( void *self, AS3_Val args ) {
     // get Actionscript Args
     AS3_Val wavData_arg = AS3_Undefined();
     AS3_Val dstData_arg = AS3_Undefined();
-    AS3_ArrayValue( args, "AS3ValType, AS3ValType", &wavData_arg, &dstData_arg );
+    AS3_Val debFile_arg = AS3_Undefined();
+    AS3_ArrayValue( args, "AS3ValType, AS3ValType", &wavData_arg, &dstData_arg, &debFile_arg );
 
-    // The incoming wav data must be little-endian
+    /* The incoming wav data must be little-endian */
+	
+	// 1) Audio Data In
     AS3_Val lengthOfByteArray1 = AS3_GetS( wavData_arg, "length" );
     AS3_Trace( lengthOfByteArray1 );
     int len = AS3_IntValue( lengthOfByteArray1 );
     int success = fprintf( stderr, "length is %d\n", len );
     AS3_Release( lengthOfByteArray1 );
 
+	// 2) Flac Out
     AS3_Val lengthOfByteArray2 = AS3_GetS( dstData_arg, "length" );
     AS3_Trace( lengthOfByteArray2 );
     int len2 = AS3_IntValue( lengthOfByteArray2 );
     int success2 = fprintf( stderr, "length is %d\n", len2 );
     AS3_Release( lengthOfByteArray2 );
 
+	// 3) Debug Info Out
+    AS3_Val lengthOfByteArray3 = AS3_GetS( debFile_arg, "length" );
+    AS3_Trace( lengthOfByteArray3 );
+    int len3 = AS3_IntValue( lengthOfByteArray3 );
+    int success3 = fprintf( stderr, "length is %d\n", len3 );
+    AS3_Release( lengthOfByteArray2 );	
+	
+	char *stringToTest = "Hello World";
+	FILE *pFile = fopen ("myfile.txt" , "w");
+	
+	AS3_ArrayValue(args, "AS3ValType", &dest);
+	
+	// Open the ByteArray as a file
+	file = funopen((void *)dest, readByteArray, writeByteArray, seekByteArray, closeByteArray);
+	
+	char buffer2[] = {'H','e','l','l','o',' ','W','o','r','l','d','!'};
+	
+	fwrite (buffer2, 1, sizeof(buffer2), file);
+	// get file size
+	fseek (file, 0, SEEK_END);
+	fileSize = ftell(file);
+	rewind (file);
+	
+	fprintf( pFile, "OUT> %s", stringToTest );
+	
+
+	
+	
+	
     /* Flac Stuff  */
 
 	FLAC__bool ok = true;

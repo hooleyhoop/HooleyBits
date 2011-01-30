@@ -1,6 +1,11 @@
 
+#include <stdio.h>
+
 #include "bitmath.h"
 #include "assert.h"
+#include <assert.h>
+
+extern FILE *_logFile;
 
 /* An example of what FLAC__bitmath_ilog2() computes:
  *
@@ -24,8 +29,10 @@
  * ilog2(17) = 4
  * ilog2(18) = 4
  */
-unsigned FLAC__bitmath_ilog2(FLAC__uint32 v)
-{
+unsigned FLAC__bitmath_ilog2(FLAC__uint32 v) {
+	
+	fprintf( _logFile, "FLAC__bitmath_ilog2( %i )\n", v );
+	
 	unsigned l = 0;
 	FLAC__ASSERT(v > 0);
 	while(v >>= 1)

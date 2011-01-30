@@ -6,6 +6,7 @@
 #include "crc.h"
 #include "assert.h"
 #include "alloc.h"
+#include <assert.h>
 
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to SWAP_BE_WORD_TO_HOST below to match */
@@ -20,6 +21,8 @@ typedef FLAC__uint32 bwword;
 #else
 #define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
 #endif
+
+extern FILE *_logFile;
 
 /*
  * The default capacity here doesn't matter too much.  The buffer always grows
@@ -93,8 +96,10 @@ static FLAC__bool bitwriter_grow_(FLAC__BitWriter *bw, unsigned bits_to_add)
  *
  ***********************************************************************/
 
-FLAC__BitWriter *FLAC__bitwriter_new(void)
-{
+FLAC__BitWriter *FLAC__bitwriter_new(void) {
+	
+	fprintf( _logFile, "FLAC__bitwriter_new()\n" );
+	
 	FLAC__BitWriter *bw = (FLAC__BitWriter*)calloc(1, sizeof(FLAC__BitWriter));
 	/* note that calloc() sets all members to 0 for us */
 	return bw;
@@ -116,6 +121,8 @@ void FLAC__bitwriter_delete(FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_init(FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__bitwriter_init()\n" );
+
 	FLAC__ASSERT(0 != bw);
 
 	bw->words = bw->bits = 0;
@@ -140,6 +147,8 @@ void FLAC__bitwriter_free(FLAC__BitWriter *bw)
 
 void FLAC__bitwriter_clear(FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__bitwriter_clear()\n" );
+
 	bw->words = bw->bits = 0;
 }
 
@@ -169,6 +178,8 @@ void FLAC__bitwriter_clear(FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_get_write_crc16(FLAC__BitWriter *bw, FLAC__uint16 *crc)
 {
+	fprintf( _logFile, "FLAC__bitwriter_get_write_crc16()\n" );
+
 	const FLAC__byte *buffer;
 	size_t bytes;
 
@@ -184,6 +195,8 @@ FLAC__bool FLAC__bitwriter_get_write_crc16(FLAC__BitWriter *bw, FLAC__uint16 *cr
 
 FLAC__bool FLAC__bitwriter_get_write_crc8(FLAC__BitWriter *bw, FLAC__byte *crc)
 {
+	fprintf( _logFile, "FLAC__bitwriter_get_write_crc8()\n" );
+
 	const FLAC__byte *buffer;
 	size_t bytes;
 
@@ -199,6 +212,8 @@ FLAC__bool FLAC__bitwriter_get_write_crc8(FLAC__BitWriter *bw, FLAC__byte *crc)
 
 FLAC__bool FLAC__bitwriter_is_byte_aligned(const FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__bitwriter_is_byte_aligned()\n" );
+
 	return ((bw->bits & 7) == 0);
 }
 
@@ -209,6 +224,8 @@ unsigned FLAC__bitwriter_get_input_bits_unconsumed(const FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **buffer, size_t *bytes)
 {
+	fprintf( _logFile, "FLAC__bitwriter_get_buffer()\n" );
+
 	FLAC__ASSERT((bw->bits & 7) == 0);
 	/* double protection */
 	if(bw->bits & 7)
@@ -229,6 +246,8 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
 
 void FLAC__bitwriter_release_buffer(FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__bitwriter_release_buffer()\n" );
+
 	/* nothing to do.  in the future, strict checking of a 'writer-is-in-
 	 * get-mode' flag could be added everywhere and then cleared here
 	 */
@@ -237,6 +256,8 @@ void FLAC__bitwriter_release_buffer(FLAC__BitWriter *bw)
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsigned bits)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_zeroes( %i )\n", bits );
+
 	unsigned n;
 
 	FLAC__ASSERT(0 != bw);
@@ -275,6 +296,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsign
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FLAC__uint32 val, unsigned bits)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_raw_uint32( %i, %i )\n", val, bits );
+
     static int printLimit = 0;
 	register unsigned left;
 
@@ -327,6 +350,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_int32(FLAC__BitWriter *bw, FLAC__int32 val, unsigned bits)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_raw_int32( %i, %i )\n", val, bits );
+
 	/* zero-out unused bits */
 	if(bits < 32)
 		val &= (~(0xffffffff << bits));
@@ -336,6 +361,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_int32(FLAC__BitWriter *bw, FLA
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint64(FLAC__BitWriter *bw, FLAC__uint64 val, unsigned bits)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_raw_uint64( %ull, %u )\n", (unsigned long long)val, bits );
+
 	/* this could be a little faster but it's not used for much */
 	if(bits > 32) {
 		return
@@ -348,6 +375,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint64(FLAC__BitWriter *bw, FL
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32_little_endian(FLAC__BitWriter *bw, FLAC__uint32 val)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_raw_uint32_little_endian( %i )\n", val );
+
 	/* this doesn't need to be that fast as currently it is only used for vorbis comments */
 
 	if(!FLAC__bitwriter_write_raw_uint32(bw, val & 0xff, 8))
@@ -364,6 +393,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32_little_endian(FLAC__Bit
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_byte_block(FLAC__BitWriter *bw, const FLAC__byte vals[], unsigned nvals)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_byte_block( %i )\n", nvals );
+
 	unsigned i;
 
 	/* this could be faster but currently we don't need it to be since it's only used for writing metadata */
@@ -425,6 +456,8 @@ FLAC__bool FLAC__bitwriter_write_rice_signed(FLAC__BitWriter *bw, FLAC__int32 va
 
 FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FLAC__int32 *vals, unsigned nvals, unsigned parameter)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_rice_signed_block( %i, %i )\n", nvals, parameter );
+
 	const FLAC__uint32 mask1 = FLAC__WORD_ALL_ONES << parameter; /* we val|=mask1 to set the stop bit above it... */
 	const FLAC__uint32 mask2 = FLAC__WORD_ALL_ONES >> (31-parameter); /* ...then mask off the bits above the stop bit with val&=mask2*/
 	FLAC__uint32 uval;
@@ -519,6 +552,8 @@ break1:
 
 FLAC__bool FLAC__bitwriter_write_utf8_uint32(FLAC__BitWriter *bw, FLAC__uint32 val)
 {
+	fprintf( _logFile, "FLAC__bitwriter_write_utf8_uint32( %i )\n", val );
+
 	FLAC__bool ok = 1;
 
 	FLAC__ASSERT(0 != bw);
@@ -620,6 +655,8 @@ FLAC__bool FLAC__bitwriter_write_utf8_uint64(FLAC__BitWriter *bw, FLAC__uint64 v
 
 FLAC__bool FLAC__bitwriter_zero_pad_to_byte_boundary(FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__bitwriter_zero_pad_to_byte_boundary()\n" );
+
 	/* 0-pad to byte boundary */
 	if(bw->bits & 7u)
 		return FLAC__bitwriter_write_zeroes(bw, 8 - (bw->bits & 7u));

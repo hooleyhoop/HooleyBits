@@ -4,6 +4,7 @@
 #include "bitmath.h"
 #include "fixed.h"
 #include "assert.h"
+#include <assert.h>
 #include "hooHacks.h"
 
 //#define memmove custom_memmove

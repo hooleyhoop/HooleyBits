@@ -5,6 +5,7 @@
 #include <string.h> /* for memcpy() */
 #include <sys/types.h> /* for off_t */
 #include "assert.h"
+#include <assert.h>
 #include "stream_decoder.h"
 #include "alloc.h"
 #include "stream_encoder.h"

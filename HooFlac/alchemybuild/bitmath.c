@@ -1,6 +1,7 @@
 
 #include "bitmath.h"
 #include "assert.h"
+#include <assert.h>
 #include "hooHacks.h"
 
 /* An example of what FLAC__bitmath_ilog2() computes:

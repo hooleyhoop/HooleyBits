@@ -36,6 +36,7 @@
 #include "bitreader.h"
 #include "crc.h"
 #include "assert.h"
+#include <assert.h>
 
 /* Things should be fastest when this matches the machine word size */
 /* WATCHOUT: if you change this you must also change the following #defines down to COUNT_ZERO_MSBS below to match */

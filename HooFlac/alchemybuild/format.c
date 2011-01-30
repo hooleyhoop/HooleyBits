@@ -3,6 +3,7 @@
 #include <stdlib.h> /* for qsort() */
 #include <string.h> /* for memset() */
 #include "assert.h"
+#include <assert.h>
 #include "format.h"
 #include "format.h"
 #include "hooHacks.h"

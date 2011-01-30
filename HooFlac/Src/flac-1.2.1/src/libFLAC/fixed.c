@@ -4,6 +4,7 @@
 #include "bitmath.h"
 #include "fixed.h"
 #include "assert.h"
+#include <assert.h>
 #include <stdio.h>
 
 #ifndef M_LN2
@@ -21,9 +22,12 @@
 #endif
 #define local_abs(x) ((unsigned)((x)<0? -(x) : (x)))
 
+extern FILE *_logFile;
 
-unsigned FLAC__fixed_compute_best_predictor( const FLAC__int32 data[], unsigned data_len, FLAC__float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1] )
-{
+unsigned FLAC__fixed_compute_best_predictor( const FLAC__int32 data[], unsigned data_len, FLAC__float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1] ) {
+	
+	fprintf( _logFile, "evaluate_verbatim_subframe_( %i, %f )\n", data_len, residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1] );
+	
     static int printLimit = 0;
     
 	FLAC__int32 last_error_0 = data[-1];
@@ -128,8 +132,10 @@ unsigned FLAC__fixed_compute_best_predictor_wide(const FLAC__int32 data[], unsig
 	return order;
 }
 
-void FLAC__fixed_compute_residual( const FLAC__int32 data[], unsigned data_len, unsigned order, FLAC__int32 residual[])
-{
+void FLAC__fixed_compute_residual( const FLAC__int32 data[], unsigned data_len, unsigned order, FLAC__int32 residual[]) {
+	
+	fprintf( _logFile, "FLAC__fixed_compute_residual( %i )\n", data_len );
+	
 	const int idata_len = (int)data_len;
 	int i;
     

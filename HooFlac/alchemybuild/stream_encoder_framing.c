@@ -4,6 +4,7 @@
 #include "stream_encoder_framing.h"
 #include "crc.h"
 #include "assert.h"
+#include <assert.h>
 #include "hooHacks.h"
 
 #ifdef max

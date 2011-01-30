@@ -19,6 +19,7 @@
 #endif
 #endif
 #include "assert.h"
+#include <assert.h>
 #include "alloc.h"
 #include "stream_decoder.h"
 #include "bitreader.h"

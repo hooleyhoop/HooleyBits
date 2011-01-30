@@ -32,6 +32,9 @@
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
 static int _ab_offset = 0;
+static int _begun = 0;
+FILE *_logFile;
+
 static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC__StreamEncoder *ASncoder, const FLAC__byte ABuffer[], size_t ABytes, unsigned ABamples, unsigned ACurrentFrame, void *clientData) {
     
  //   AS3_Val *destinationByteArrayPtr = clientData;
@@ -40,16 +43,20 @@ static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC_
     
  //   AS3_Val pos = AS3_GetS( *destinationByteArrayPtr, "position" );    
 //    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
-    
+    if (_begun )
+	{
+		int ii;
+		for(ii=0;ii<ABytes;ii++){
+			exit(0);
+		//        int val = (int)ABuffer[ii];
+		//        if( val!=0 ){
+		//            nonZeroBytes++;
+		//            fprintf( stderr, "%i nonZeroBytes Jimmyny\n", nonZeroBytes  );
+		//        }
+		}
+	}
     static int nonZeroBytes = 0;
-    int ii;
-//    for(ii=0;ii<ABytes;ii++){
-//        int val = (int)ABuffer[ii];
-//        if( val!=0 ){
-//            nonZeroBytes++;
-//            fprintf( stderr, "%i nonZeroBytes Jimmyny\n", nonZeroBytes  );
-//        }
-//    }
+
     _ab_offset+=ABytes;
     
     //	fwrite(ABuffer, sizeof(FLAC__byte), ABytes, AOwner->FCFile);
@@ -72,7 +79,8 @@ static FLAC__StreamEncoderSeekStatus FLACStreamEncoderSeekCallback(const FLAC__S
 //   AS3_Val *destinationByteArrayPtr = clientData;
     
     fprintf( stderr, "SEEK callback -- %i\n", (int)AAbsoluteByteOffset );
-    
+    _ab_offset = (int)AAbsoluteByteOffset;
+	
 //	if( AS3_ByteArray_seek( *destinationByteArrayPtr, (int)AAbsoluteByteOffset, SEEK_SET ) < 0)
 //		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
     
@@ -131,9 +139,20 @@ int main(int argc, char *argv[])
 	
     const char *inputFilename = "/recording_mono.wav";
     const char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
-    
+    const char *logFilename = "/Users/shooley/Desktop/log_flac.txt";
+	
+	_logFile = fopen( logFilename, "w" );
+	if( _logFile==NULL ) {
+		printf("Error opening %s for writing. Program terminated.", logFilename );
+		abort();
+	}
+		
+
+	
+
+	
+	
 //	if(argc != 3) {
-//		fprintf(stderr, "usage: %s infile.wav outfile.flac\n", inputFilename );
 //		return 1;
 //	}
 
@@ -261,8 +280,8 @@ int main(int argc, char *argv[])
     
 	/* initialize encoder */
 	if(ok) {
-		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
-//        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
+//file		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
+        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
         
 		if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
 			fprintf( stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
@@ -284,7 +303,7 @@ int main(int argc, char *argv[])
         {
 			size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
 			
-            fprintf( stderr, "About to READ FROM %i -- %i \n", ftell(fin), need*channelCount*bytesPerSample );            
+            fprintf( stderr, "About to READ FROM %i -- %i \n", (int)ftell(fin), (int)(need*channelCount*bytesPerSample) );            
             size_t readSuccess = fread( in_buffer, channelCount*bytesPerSample, need, fin );
             
             filePos += need;
@@ -329,8 +348,8 @@ int main(int argc, char *argv[])
                 FLAC__int32 bbbbbbb = (FLAC__int8)in_buffer[2*512+1];
 //                fprintf( stderr, "10 INTEGER SIGNAL VALIDITY TEST %i %i \n", aaaaaaa, bbbbbbb );            
                 // exit(0);
-                
-                ok = FLAC__stream_encoder_process( encoder, arrayOfArrays, need );
+                _begun = 1;
+                ok = FLAC__stream_encoder_process( encoder, (int const *const *)arrayOfArrays, need );
                 
 			}
 			left -= need;
@@ -348,7 +367,7 @@ int main(int argc, char *argv[])
 
 	FLAC__stream_encoder_delete(encoder);
 	fclose(fin);
-
+	fclose( _logFile );
     free(in_buffer);
     free(pcm);
 	return 0;

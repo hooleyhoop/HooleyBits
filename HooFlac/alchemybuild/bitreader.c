@@ -6,6 +6,7 @@
 #include "bitreader.h"
 #include "crc.h"
 #include "assert.h"
+#include <assert.h>
 #include "hooHacks.h"
 
 #include "netinet/in.h"

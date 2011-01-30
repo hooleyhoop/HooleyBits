@@ -1,6 +1,7 @@
 
 #include <math.h>
 #include "assert.h"
+#include <assert.h>
 #include "format.h"
 #include "window.h"
 #include "hooHacks.h"

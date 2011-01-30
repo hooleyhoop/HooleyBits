@@ -47,13 +47,17 @@
 #define MD5STEP(f,w,x,y,z,in,s) \
 	 (w += f(x,y,z) + in, w = (w<<s | w>>(32-s)) + x)
 
+extern FILE *_logFile;
+
 /*
  * The core of the MD5 algorithm, this alters an existing MD5 hash to
  * reflect the addition of 16 longwords of new data.  MD5Update blocks
  * the data and converts bytes into longwords for this routine.
  */
-static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16])
-{
+static void FLAC__MD5Transform(FLAC__uint32 buf[4], FLAC__uint32 const in[16]) {
+	
+	fprintf( _logFile, "FLAC__MD5Transform()\n" );
+	
 	register FLAC__uint32 a, b, c, d;
 
 	a = buf[0];
@@ -186,6 +190,8 @@ static void byteSwapX16(FLAC__uint32 *buf)
  */
 static void FLAC__MD5Update( FLAC__MD5Context *ctx, FLAC__byte const *buf, unsigned len ) {
     
+	fprintf( _logFile, "FLAC__MD5Update( %i )\n", len );
+	
 	/* Update byte count */
     static int printLimit = 0;
 
@@ -242,6 +248,8 @@ static void FLAC__MD5Update( FLAC__MD5Context *ctx, FLAC__byte const *buf, unsig
  */
 void FLAC__MD5Init(FLAC__MD5Context *ctx)
 {
+	fprintf( _logFile, "FLAC__MD5Init()\n" );
+
 	ctx->buf[0] = 0x67452301;
 	ctx->buf[1] = 0xefcdab89;
 	ctx->buf[2] = 0x98badcfe;
@@ -297,8 +305,10 @@ void FLAC__MD5Final(FLAC__byte digest[16], FLAC__MD5Context *ctx)
 /*
  * Convert the incoming audio signal to a byte stream
  */
-static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], unsigned channels, unsigned samples, unsigned bytes_per_sample)
-{
+static void format_input_( FLAC__byte *buf, const FLAC__int32 * const signal[], unsigned channels, unsigned samples, unsigned bytes_per_sample) {
+
+	fprintf( _logFile, "format_input_( %i, %i, %i )\n", channels, samples, bytes_per_sample );
+
 	unsigned channel, sample;
 	register FLAC__int32 a_word;
 	register FLAC__byte *buf_ = buf;
@@ -311,9 +321,11 @@ static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], u
 		for(sample = 0; sample < samples; sample++, buf1_+=2)
 			*buf1_ = (FLAC__int16)signal[1][sample];
 	}
-	else if(channels == 1 && bytes_per_sample == 2) {
+	else if(channels == 1 && bytes_per_sample == 2)
+	{
 		FLAC__int16 *buf1_ = (FLAC__int16*)buf_;
-		for(sample = 0; sample < samples; sample++){
+		for( sample=0; sample < samples; sample++)
+		{
             FLAC__int16 inputSample = (FLAC__int16)signal[0][sample];
 
 //PASS            
@@ -324,10 +336,10 @@ static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], u
 //            }
 			*buf1_++ = inputSample;
         }
-	}
-	else
+	} else
 #endif
-	if(bytes_per_sample == 2) {
+	if(bytes_per_sample == 2)
+	{
 		if(channels == 2) {
 			for(sample = 0; sample < samples; sample++) {
 				a_word = signal[0][sample];
@@ -427,8 +439,10 @@ static void format_input_(FLAC__byte *buf, const FLAC__int32 * const signal[], u
 /*
  * Convert the incoming audio signal to a byte stream and FLAC__MD5Update it.
  */
-FLAC__bool FLAC__MD5Accumulate(FLAC__MD5Context *ctx, const FLAC__int32 * const signal[], unsigned channels, unsigned samples, unsigned bytes_per_sample)
-{
+FLAC__bool FLAC__MD5Accumulate( FLAC__MD5Context *ctx, const FLAC__int32 * const signal[], unsigned channels, unsigned samples, unsigned bytes_per_sample) {
+	
+	fprintf( _logFile, "FLAC__MD5Accumulate( %i, %i, %i )\n", channels, samples, bytes_per_sample );
+	
 	const size_t bytes_needed = (size_t)channels * (size_t)samples * (size_t)bytes_per_sample;
 
 	/* overflow check */

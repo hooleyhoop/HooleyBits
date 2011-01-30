@@ -1,6 +1,7 @@
 
 #include <math.h>
 #include "assert.h"
+#include <assert.h>
 #include "format.h"
 #include "bitmath.h"
 #include "lpc.h"

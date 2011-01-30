@@ -4,6 +4,9 @@
 #include "stream_encoder_framing.h"
 #include "crc.h"
 #include "assert.h"
+#include <assert.h>
+
+extern FILE *_logFile;
 
 #ifdef max
 #undef max
@@ -15,6 +18,8 @@ static FLAC__bool add_residual_partitioned_rice_(FLAC__BitWriter *bw, const FLAC
 
 FLAC__bool FLAC__add_metadata_block(const FLAC__StreamMetadata *metadata, FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__add_metadata_block()\n" );
+
 	unsigned i, j;
 	const unsigned vendor_string_length = (unsigned)strlen(FLAC__VENDOR_STRING);
 
@@ -184,6 +189,8 @@ FLAC__bool FLAC__add_metadata_block(const FLAC__StreamMetadata *metadata, FLAC__
 
 FLAC__bool FLAC__frame_add_header(const FLAC__FrameHeader *header, FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__frame_add_header()\n" );
+
 	unsigned u, blocksize_hint, sample_rate_hint;
 	FLAC__byte crc;
 
@@ -382,6 +389,8 @@ FLAC__bool FLAC__subframe_add_fixed(const FLAC__Subframe_Fixed *subframe, unsign
 
 FLAC__bool FLAC__subframe_add_lpc(const FLAC__Subframe_LPC *subframe, unsigned residual_samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw)
 {
+	fprintf( _logFile, "FLAC__subframe_add_lpc( %i, %i, %i )\n", residual_samples, subframe_bps, wasted_bits );
+
 	unsigned i;
 
 	if(!FLAC__bitwriter_write_raw_uint32(bw, FLAC__SUBFRAME_TYPE_LPC_BYTE_ALIGNED_MASK | ((subframe->order-1)<<1) | (wasted_bits? 1:0), FLAC__SUBFRAME_ZERO_PAD_LEN + FLAC__SUBFRAME_TYPE_LEN + FLAC__SUBFRAME_WASTED_BITS_FLAG_LEN))
@@ -446,6 +455,8 @@ FLAC__bool FLAC__subframe_add_verbatim(const FLAC__Subframe_Verbatim *subframe, 
 
 FLAC__bool add_entropy_coding_method_(FLAC__BitWriter *bw, const FLAC__EntropyCodingMethod *method)
 {
+	fprintf( _logFile, "add_entropy_coding_method_()\n" );
+
 	if(!FLAC__bitwriter_write_raw_uint32(bw, method->type, FLAC__ENTROPY_CODING_METHOD_TYPE_LEN))
 		return false;
 	switch(method->type) {
@@ -462,6 +473,8 @@ FLAC__bool add_entropy_coding_method_(FLAC__BitWriter *bw, const FLAC__EntropyCo
 
 FLAC__bool add_residual_partitioned_rice_(FLAC__BitWriter *bw, const FLAC__int32 residual[], const unsigned residual_samples, const unsigned predictor_order, const unsigned rice_parameters[], const unsigned raw_bits[], const unsigned partition_order, const FLAC__bool is_extended)
 {
+	fprintf( _logFile, "add_residual_partitioned_rice_( %i, %i, %i, %i )\n", residual_samples, predictor_order, partition_order, is_extended );
+
 	const unsigned plen = is_extended? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_PARAMETER_LEN : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_PARAMETER_LEN;
 	const unsigned pesc = is_extended? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ESCAPE_PARAMETER;
 
