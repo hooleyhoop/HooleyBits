@@ -4,6 +4,7 @@
 #include "bitmath.h"
 #include "assert.h"
 #include <assert.h>
+#include "HooHelper.h"
 
 extern FILE *_logFile;
 
@@ -30,13 +31,14 @@ extern FILE *_logFile;
  * ilog2(18) = 4
  */
 unsigned FLAC__bitmath_ilog2(FLAC__uint32 v) {
-	
-	fprintf( _logFile, "FLAC__bitmath_ilog2( %i )\n", v );
-	
+		
 	unsigned l = 0;
 	FLAC__ASSERT(v > 0);
 	while(v >>= 1)
 		l++;
+    
+	hooFileLog( "FLAC__bitmath_ilog2( %i %i )\n", v, l );
+    
 	return l;
 }
 

@@ -1,5 +1,8 @@
 #include "cpu.h"
 #include "hooHacks.h"
+#include <stdio.h>
+
+extern FILE *_logFile;
 
 /* these are flags in EDX of CPUID AX=00000001 */
 static const unsigned FLAC__CPUINFO_IA32_CPUID_CMOV = 0x00008000;
@@ -18,6 +21,8 @@ static const unsigned FLAC__CPUINFO_IA32_CPUID_EXTENDED_AMD_EXTMMX = 0x00400000;
 
 void FLAC__cpu_info(FLAC__CPUInfo *info)
 {
+    hooFileLog( "FLAC__cpu_info()\n" );
+
 /*
  * IA32-specific
  */

@@ -23,6 +23,8 @@
  * Complete API documentation can be found at:
  *   http://flac.sourceforge.net/api/
  */
+#include "HooHelper.h"
+#include "assert.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,9 +47,12 @@ static FLAC__StreamEncoderWriteStatus FLACStreamEncoderWriteCallback(const FLAC_
 //    fprintf( stderr, "WRITE %i bytes callback result=%i Pos now %i \n", ABytes, result, AS3_IntValue(pos) );
     if (_begun )
 	{
-		int ii;
-		for(ii=0;ii<ABytes;ii++){
-			exit(0);
+        static int writeCount=0;
+        hooFileLog( "WRITE FIRST BATCH\n", NULL );
+        if( writeCount++ == 4 ){
+            // exit(0);
+        }
+		for(int ii=0; ii<ABytes; ii++ ){
 		//        int val = (int)ABuffer[ii];
 		//        if( val!=0 ){
 		//            nonZeroBytes++;
@@ -248,6 +253,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+    int assertTest = 0;
+    FLAC__ASSERT(assertTest);
+
 	//ok &= FLAC__stream_encoder_set_verify(encoder, true);
 	ok &= FLAC__stream_encoder_set_compression_level( encoder, 5 );
 	ok &= FLAC__stream_encoder_set_channels( encoder, channelCount );
@@ -280,8 +288,8 @@ int main(int argc, char *argv[])
     
 	/* initialize encoder */
 	if(ok) {
-//file		init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
-        init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
+        init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
+  //stream out      init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
         
 		if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
 			fprintf( stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);

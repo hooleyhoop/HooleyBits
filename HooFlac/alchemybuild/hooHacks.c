@@ -1,5 +1,6 @@
 
 #include "hooHacks.h"
+#include <stdarg.h>
 
 void * custom_memmove( void * destination, const void * source, size_t num ) {
     void *result;
@@ -36,3 +37,31 @@ void * custom_memset ( void * ptr, int value, size_t num ) {
 unsigned long HooByteSwap (unsigned long nLongNumber) {
     return (((nLongNumber&0x000000FF)<<24)+((nLongNumber&0x0000FF00)<<8)+ ((nLongNumber&0x00FF0000)>>8)+((nLongNumber&0xFF000000)>>24));
 }
+
+long lrintf(float f)
+{
+    /* Implements the default IEEE 754-1985 rounding mode */
+    long * fp = (void *)&f;
+    int sign = (*fp) >> 31;
+    int exponent = 23 + 0x7f - (((*fp) >> 23) & 0xff);
+    unsigned int fraction = ((*fp) & 0x7fffff) | 0x800000;
+    long result = fraction >> exponent;
+    -- exponent;
+    if (fraction & (1 << exponent)) { // fraction >= 0.5
+        if (!(fraction & ~(-1 << exponent))) // fraction == 0.5
+            if (!(result & 1)) // result is even
+                return sign ? -result : result;
+        ++ result;
+    }
+    return sign ? -result : result;
+}
+
+void hooFileLogFunction( FILE *logFile, const char *message, ...) {
+    
+    va_list args;
+    va_start( args, message ); 
+    vfprintf( logFile, message, args );
+    va_end(args);
+}
+
+

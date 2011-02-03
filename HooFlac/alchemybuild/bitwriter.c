@@ -9,8 +9,6 @@
 #include "alloc.h"
 #include "hooHacks.h"
 
-#include "netinet/in.h"
-
 //#define memmove custom_memmove
 //#define memcpy custom_memcpy
 //#define memset custom_memset
@@ -27,6 +25,7 @@ typedef FLAC__uint32 bwword;
 // #define SWAP_BE_WORD_TO_HOST(x) ntohl(x)
 #define SWAP_BE_WORD_TO_HOST(x) HooByteSwap(x)
 
+extern FILE *_logFile;
 
 
 /*
@@ -105,6 +104,8 @@ static FLAC__bool bitwriter_grow_(FLAC__BitWriter *bw, unsigned bits_to_add)
 
 FLAC__BitWriter *FLAC__bitwriter_new(void)
 {
+    hooFileLog( "FLAC__bitwriter_new()\n" );
+
 	FLAC__BitWriter *bw = (FLAC__BitWriter*)calloc(1, sizeof(FLAC__BitWriter));
 	/* note that calloc() sets all members to 0 for us */
 	return bw;
@@ -126,6 +127,8 @@ void FLAC__bitwriter_delete(FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_init(FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__bitwriter_init()\n" );
+
 	FLAC__ASSERT(0 != bw);
 
 	bw->words = bw->bits = 0;
@@ -156,6 +159,8 @@ void FLAC__bitwriter_free(FLAC__BitWriter *bw)
 
 void FLAC__bitwriter_clear(FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__bitwriter_clear()\n" );
+
 	bw->words = bw->bits = 0;
 }
 
@@ -185,6 +190,8 @@ void FLAC__bitwriter_clear(FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_get_write_crc16(FLAC__BitWriter *bw, FLAC__uint16 *crc)
 {
+    hooFileLog( "FLAC__bitwriter_get_write_crc16()\n" );
+
 	const FLAC__byte *buffer;
 	size_t bytes;
 
@@ -202,6 +209,8 @@ FLAC__bool FLAC__bitwriter_get_write_crc16(FLAC__BitWriter *bw, FLAC__uint16 *cr
 
 FLAC__bool FLAC__bitwriter_get_write_crc8(FLAC__BitWriter *bw, FLAC__byte *crc)
 {
+    hooFileLog( "FLAC__bitwriter_get_write_crc8()\n" );
+
 	const FLAC__byte *buffer;
 	size_t bytes;
 
@@ -219,6 +228,8 @@ FLAC__bool FLAC__bitwriter_get_write_crc8(FLAC__BitWriter *bw, FLAC__byte *crc)
 
 FLAC__bool FLAC__bitwriter_is_byte_aligned(const FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__bitwriter_is_byte_aligned()\n" );
+
 	return ((bw->bits & 7) == 0);
 }
 
@@ -229,6 +240,8 @@ unsigned FLAC__bitwriter_get_input_bits_unconsumed(const FLAC__BitWriter *bw)
 
 FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **buffer, size_t *bytes)
 {
+    hooFileLog( "FLAC__bitwriter_get_buffer()\n" );
+
     static int printCount = 0;
     
     if(printCount<20){
@@ -268,6 +281,8 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
 
 void FLAC__bitwriter_release_buffer(FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__bitwriter_release_buffer()\n" );
+
 	/* nothing to do.  in the future, strict checking of a 'writer-is-in-
 	 * get-mode' flag could be added everywhere and then cleared here
 	 */
@@ -276,6 +291,8 @@ void FLAC__bitwriter_release_buffer(FLAC__BitWriter *bw)
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsigned bits)
 {
+    hooFileLog( "FLAC__bitwriter_write_zeroes( %i )\n", bits );
+
 	unsigned n;
 
  //   fprintf( stderr, "FLAC__bitwriter_write_zeroes \n" );
@@ -316,6 +333,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsign
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FLAC__uint32 val, unsigned bits)
 {
+    hooFileLog( "FLAC__bitwriter_write_raw_uint32( %i, %i )\n", val, bits );
+
     static int printCount = 0;
     static int printLimit = 0;
 
@@ -350,9 +369,22 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 	}
 	else if(bw->bits) { /* WATCHOUT: if bw->bits == 0, left==FLAC__BITS_PER_WORD and bw->accum<<=left is a NOP instead of setting to 0 */
 		bw->accum <<= left;
+        
+        // debug
+        // unsigned debugBits = bits - left;
+        // FLAC__uint32 aVal = val >> debugBits;
+        // FLAC__uint32 debugAccum = bw->accum | aVal;
+        // debug
+        
 		bw->accum |= val >> (bw->bits = bits - left);
+        
+        // HOOLEYISM
+        // FLAC__ASSERT( debugAccum==bw->accum );
+        
 		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 		bw->accum = val;
+
+        // hooFileLog( "debugAccum=%i bw->buffer=%i bw->accum=%i )\n", debugAccum, bw->buffer[bw->words-1], bw->accum );
 	}
 	else {
 		bw->accum = val;
@@ -373,6 +405,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_int32(FLAC__BitWriter *bw, FLAC__int32 val, unsigned bits)
 {
+    hooFileLog( "FLAC__bitwriter_write_raw_int32( %i, %i )\n", val, bits );
+
 	/* zero-out unused bits */
 	if(bits < 32)
 		val &= (~(0xffffffff << bits));
@@ -382,6 +416,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_int32(FLAC__BitWriter *bw, FLA
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint64(FLAC__BitWriter *bw, FLAC__uint64 val, unsigned bits)
 {
+    hooFileLog( "FLAC__bitwriter_write_raw_uint64( %ull, %u )\n", (unsigned long long)val, bits );
+
 	/* this could be a little faster but it's not used for much */
 	if(bits > 32) {
 		return
@@ -394,6 +430,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint64(FLAC__BitWriter *bw, FL
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32_little_endian(FLAC__BitWriter *bw, FLAC__uint32 val)
 {
+    hooFileLog( "FLAC__bitwriter_write_raw_uint32_little_endian( %i )\n", val );
+
 	/* this doesn't need to be that fast as currently it is only used for vorbis comments */
 
 	if(!FLAC__bitwriter_write_raw_uint32(bw, val & 0xff, 8))
@@ -410,6 +448,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32_little_endian(FLAC__Bit
 
 FLaC__INLINE FLAC__bool FLAC__bitwriter_write_byte_block(FLAC__BitWriter *bw, const FLAC__byte vals[], unsigned nvals)
 {
+    hooFileLog( "FLAC__bitwriter_write_byte_block( %i )\n", nvals );
+
 	unsigned i;
 
 	/* this could be faster but currently we don't need it to be since it's only used for writing metadata */
@@ -472,12 +512,13 @@ FLAC__bool FLAC__bitwriter_write_rice_signed(FLAC__BitWriter *bw, FLAC__int32 va
 			FLAC__bitwriter_write_raw_uint32(bw, pattern, interesting_bits); /* write the unary end bit and binary LSBs */
 }
 
-FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FLAC__int32 *vals, unsigned nvals, unsigned parameter)
-{
- //   fprintf( stderr, "FLAC__bitwriter_write_rice_signed \n" );
+FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FLAC__int32 *vals, unsigned nvals, unsigned parameter) {
 
 	const FLAC__uint32 mask1 = FLAC__WORD_ALL_ONES << parameter; /* we val|=mask1 to set the stop bit above it... */
 	const FLAC__uint32 mask2 = FLAC__WORD_ALL_ONES >> (31-parameter); /* ...then mask off the bits above the stop bit with val&=mask2*/
+    
+    hooFileLog( "FLAC__bitwriter_write_rice_signed_block( %i, %i %i %i )\n", nvals, parameter, mask1, mask2 );
+    
 	FLAC__uint32 uval;
 	unsigned left;
 	const unsigned lsbits = 1 + parameter;
@@ -489,21 +530,24 @@ FLAC__bool FLAC__bitwriter_write_rice_signed_block(FLAC__BitWriter *bw, const FL
 	/* WATCHOUT: code does not work with <32bit words; we can make things much faster with this assertion */
 	FLAC__ASSERT(FLAC__BITS_PER_WORD >= 32);
 
-	while(nvals) {
+	while(nvals)
+    {
 		/* fold signed to unsigned; actual formula is: negative(v)? -2v-1 : 2v */
 		uval = (*vals<<1) ^ (*vals>>31);
-
 		msbits = uval >> parameter;
+//TOMANY        hooFileLog( "uval %i msbits %i \n", uval, msbits );
 
-if(bw->bits && bw->bits + msbits + lsbits < FLAC__BITS_PER_WORD) { /* i.e. if the whole thing fits in the current bwword */
-			/* ^^^ if bw->bits is 0 then we may have filled the buffer and have no free bwword to work in */
-			bw->bits = bw->bits + msbits + lsbits;
-			uval |= mask1; /* set stop bit */
-			uval &= mask2; /* mask off unused top bits */
-			bw->accum <<= msbits + lsbits;
-			bw->accum |= uval;
-		}
-		else {
+        if( bw->bits && bw->bits + msbits + lsbits < FLAC__BITS_PER_WORD) 
+        { /* i.e. if the whole thing fits in the current bwword */
+                /* ^^^ if bw->bits is 0 then we may have filled the buffer and have no free bwword to work in */
+                bw->bits = bw->bits + msbits + lsbits;
+                uval |= mask1; /* set stop bit */
+                uval &= mask2; /* mask off unused top bits */
+                bw->accum <<= msbits + lsbits;
+                bw->accum |= uval;
+//TOMANY            hooFileLog( "%i bits %i - bw->accum %i \n", FLAC__BITS_PER_WORD, bw->bits, bw->accum );
+
+		} else {
 			/* slightly pessimistic size check but faster than "<= bw->words + (bw->bits+msbits+lsbits+FLAC__BITS_PER_WORD-1)/FLAC__BITS_PER_WORD" */
 			/* OPT: pessimism may cause flurry of false calls to grow_ which eat up all savings before it */
 			if(bw->capacity <= bw->words + bw->bits + msbits + 1/*lsbits always fit in 1 bwword*/ && !bitwriter_grow_(bw, msbits+lsbits))
@@ -553,10 +597,23 @@ break1:
 				 */
 				FLAC__ASSERT(bw->bits);
 				FLAC__ASSERT(left < FLAC__BITS_PER_WORD);
+                
+                unsigned debug_Bits = lsbits - left;
+                unsigned debugAccum = bw->accum << left;
+                unsigned kkkk = uval >> debug_Bits;
+                debugAccum = debugAccum | kkkk;
+                
 				bw->accum <<= left;
 				bw->accum |= uval >> (bw->bits = lsbits - left);
+                
+                // HOOLEYISM
+                FLAC__ASSERT( debugAccum==bw->accum );
+                
 				bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 				bw->accum = uval;
+
+               //  hooFileLog( "bw->buffer= %i bw->accum=%i \n", bw->buffer[bw->words-1], bw->accum );
+                
 			}
 		}
 		vals++;
@@ -567,8 +624,7 @@ break1:
 
 FLAC__bool FLAC__bitwriter_write_utf8_uint32(FLAC__BitWriter *bw, FLAC__uint32 val)
 {
-    
-//    fprintf( stderr, "FLAC__bitwriter_write_utf8_uint32 \n" );
+	hooFileLog( "FLAC__bitwriter_write_utf8_uint32( %i )\n", val );
 
 	FLAC__bool ok = 1;
 
@@ -673,6 +729,8 @@ FLAC__bool FLAC__bitwriter_write_utf8_uint64(FLAC__BitWriter *bw, FLAC__uint64 v
 
 FLAC__bool FLAC__bitwriter_zero_pad_to_byte_boundary(FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__bitwriter_zero_pad_to_byte_boundary()\n" );
+
 	/* 0-pad to byte boundary */
 	if(bw->bits & 7u)
 		return FLAC__bitwriter_write_zeroes(bw, 8 - (bw->bits & 7u));

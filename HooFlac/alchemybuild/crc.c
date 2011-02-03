@@ -2,6 +2,9 @@
 
 #include "crc.h"
 #include "hooHacks.h"
+#include <stdio.h>
+
+extern FILE *_logFile;
 
 /* CRC-8, poly = x^8 + x^2 + x^1 + x^0, init = 0 */
 
@@ -91,6 +94,8 @@ void FLAC__crc8_update_block(const FLAC__byte *data, unsigned len, FLAC__uint8 *
 
 FLAC__uint8 FLAC__crc8(const FLAC__byte *data, unsigned len)
 {
+    hooFileLog( "FLAC__crc8( %i )\n", len );
+
 	FLAC__uint8 crc = 0;
 
 	while(len--)
@@ -101,6 +106,8 @@ FLAC__uint8 FLAC__crc8(const FLAC__byte *data, unsigned len)
 
 unsigned FLAC__crc16(const FLAC__byte *data, unsigned len)
 {
+    hooFileLog( "FLAC__crc16( %i )\n", len );
+
 	unsigned crc = 0;
 
 	while(len--)

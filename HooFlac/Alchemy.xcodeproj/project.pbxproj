@@ -61,7 +61,6 @@
 		734C47AB12E6F69100E668A5 /* stream_encoder_framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stream_encoder_framing.c; path = alchemybuild/stream_encoder_framing.c; sourceTree = "<group>"; };
 		734C47AC12E6F69100E668A5 /* stream_encoder_framing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_encoder_framing.h; path = alchemybuild/stream_encoder_framing.h; sourceTree = "<group>"; };
 		734C47AE12E6F69C00E668A5 /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stream_encoder.c; path = alchemybuild/stream_encoder.c; sourceTree = "<group>"; };
-		734C47AF12E6F69C00E668A5 /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_encoder.h; path = alchemybuild/stream_encoder.h; sourceTree = "<group>"; };
 		734C47B112E6F6A900E668A5 /* window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = window.c; path = alchemybuild/window.c; sourceTree = "<group>"; };
 		734C47B212E6F6A900E668A5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = window.h; path = alchemybuild/window.h; sourceTree = "<group>"; };
 		734C482E12E7191600E668A5 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = makefile; path = alchemybuild/makefile; sourceTree = "<group>"; };
@@ -72,7 +71,6 @@
 		73DAECE712E0B7BA00F7490F /* Target-defines.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Target-defines.xcconfig"; sourceTree = "<group>"; };
 		73DAECEB12E0B7CD00F7490F /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assert.h; path = alchemybuild/assert.h; sourceTree = "<group>"; };
 		73DAECEC12E0B7CD00F7490F /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = export.h; path = alchemybuild/export.h; sourceTree = "<group>"; };
-		73DAECED12E0B7CD00F7490F /* format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = format.h; path = alchemybuild/format.h; sourceTree = "<group>"; };
 		73DAECEF12E0B7CD00F7490F /* ordinals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ordinals.h; path = alchemybuild/ordinals.h; sourceTree = "<group>"; };
 		73DAED1112E0B80400F7490F /* bitmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitmath.c; path = alchemybuild/bitmath.c; sourceTree = "<group>"; };
 		73DAED1212E0B80400F7490F /* bitreader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitreader.c; path = alchemybuild/bitreader.c; sourceTree = "<group>"; };
@@ -118,15 +116,14 @@
 			children = (
 				734C48C312E7506F00E668A5 /* hooHacks.h */,
 				734C48C412E7506F00E668A5 /* hooHacks.c */,
-				734C478612E6F5DE00E668A5 /* alloc.h */,
 				73DAECEB12E0B7CD00F7490F /* assert.h */,
-				73DAECEC12E0B7CD00F7490F /* export.h */,
-				73DAECED12E0B7CD00F7490F /* format.h */,
+				734C478612E6F5DE00E668A5 /* alloc.h */,
 				73DAECEF12E0B7CD00F7490F /* ordinals.h */,
 				734C478712E6F5F000E668A5 /* bitmath.h */,
 				73DAED1112E0B80400F7490F /* bitmath.c */,
 				734C478812E6F5F900E668A5 /* bitreader.h */,
 				73DAED1212E0B80400F7490F /* bitreader.c */,
+				73DAECEC12E0B7CD00F7490F /* export.h */,
 				734C478912E6F60300E668A5 /* bitwriter.h */,
 				73DAED1312E0B80400F7490F /* bitwriter.c */,
 				734C478A12E6F61000E668A5 /* cpu.h */,
@@ -149,8 +146,6 @@
 				734C47A712E6F67400E668A5 /* stream_decoder.c */,
 				734C47AC12E6F69100E668A5 /* stream_encoder_framing.h */,
 				734C47AB12E6F69100E668A5 /* stream_encoder_framing.c */,
-				734C47AF12E6F69C00E668A5 /* stream_encoder.h */,
-				734C47AF12E6F69C00E668A5 /* stream_encoder.h */,
 				734C47AE12E6F69C00E668A5 /* stream_encoder.c */,
 				734C47B212E6F6A900E668A5 /* window.h */,
 				734C47B112E6F6A900E668A5 /* window.c */,

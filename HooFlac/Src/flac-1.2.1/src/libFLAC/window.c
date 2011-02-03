@@ -1,12 +1,15 @@
 
-#include <math.h>
+// #include <math.h>
 #include <stdio.h>
 #include "assert.h"
 #include <assert.h>
 #include "format.h"
 #include "window.h"
+#include "HooHelper.h"
+#include "HooHelper.h"
 
 extern FILE *_logFile;
+#define M_PI        3.14159265358979323846264338327950288   /* pi */
 
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 
@@ -129,7 +132,7 @@ void FLAC__window_nuttall(FLAC__real *window, const FLAC__int32 L)
 
 void FLAC__window_rectangle(FLAC__real *window, const FLAC__int32 L)
 {
-	fprintf( _logFile, "FLAC__window_rectangle( %i )\n", L );
+	hooFileLog( "FLAC__window_rectangle( %i )\n", L );
 
 	FLAC__int32 n;
 
@@ -157,7 +160,7 @@ void FLAC__window_triangle(FLAC__real *window, const FLAC__int32 L)
 
 void FLAC__window_tukey(FLAC__real *window, const FLAC__int32 L, const FLAC__real p)
 {
-	fprintf( _logFile, "FLAC__window_tukey( %i, %f )\n", L, p );
+	hooFileLog( "FLAC__window_tukey( %i, %f )\n", L, p );
 
 	if (p <= 0.0)
 		FLAC__window_rectangle(window, L);

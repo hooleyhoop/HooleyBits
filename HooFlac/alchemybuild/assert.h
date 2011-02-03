@@ -4,7 +4,9 @@
 
 /* we need this since some compilers (like MSVC) leave assert()s on release code (and we don't want to use their ASSERT) */
 
-#define FLAC__ASSERT(x) assert(x)
+#define FLAC__ASSERT(x) 
+
+//assert(x)
 //#define FLAC__ASSERT_DECLARATION(x)
 
 #endif

@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include "crc.h"
+#include "HooHelper.h"
 
 extern FILE *_logFile;
 
@@ -92,7 +93,7 @@ void FLAC__crc8_update_block(const FLAC__byte *data, unsigned len, FLAC__uint8 *
 
 FLAC__uint8 FLAC__crc8(const FLAC__byte *data, unsigned len)
 {
-	fprintf( _logFile, "FLAC__crc8( %i )\n", len );
+	hooFileLog( "FLAC__crc8( %i )\n", len );
 
 	FLAC__uint8 crc = 0;
 
@@ -104,7 +105,7 @@ FLAC__uint8 FLAC__crc8(const FLAC__byte *data, unsigned len)
 
 unsigned FLAC__crc16(const FLAC__byte *data, unsigned len)
 {
-	fprintf( _logFile, "FLAC__crc16( %i )\n", len );
+	hooFileLog( "FLAC__crc16( %i )\n", len );
 
 	unsigned crc = 0;
 

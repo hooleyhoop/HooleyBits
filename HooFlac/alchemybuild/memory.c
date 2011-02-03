@@ -4,9 +4,14 @@
 #include <assert.h>
 #include "alloc.h"
 #include "hooHacks.h"
+#include <stdio.h>
+
+extern FILE *_logFile;
 
 void *FLAC__memory_alloc_aligned(size_t bytes, void **aligned_address)
 {
+    hooFileLog( "FLAC__memory_alloc_aligned()\n" );
+
 	void *x;
 
 	FLAC__ASSERT(0 != aligned_address);
@@ -19,6 +24,8 @@ void *FLAC__memory_alloc_aligned(size_t bytes, void **aligned_address)
 
 FLAC__bool FLAC__memory_alloc_aligned_int32_array(unsigned elements, FLAC__int32 **unaligned_pointer, FLAC__int32 **aligned_pointer)
 {
+    hooFileLog( "FLAC__memory_alloc_aligned_int32_array()\n" );
+
 	FLAC__int32 *pu; /* unaligned pointer */
 	union { /* union needed to comply with C99 pointer aliasing rules */
 		FLAC__int32 *pa; /* aligned pointer */
@@ -77,6 +84,8 @@ FLAC__bool FLAC__memory_alloc_aligned_int32_array(unsigned elements, FLAC__int32
 
 FLAC__bool FLAC__memory_alloc_aligned_uint64_array(unsigned elements, FLAC__uint64 **unaligned_pointer, FLAC__uint64 **aligned_pointer)
 {
+    hooFileLog( "FLAC__memory_alloc_aligned_uint64_array()\n" );
+
 	FLAC__uint64 *pu; /* unaligned pointer */
 	union { /* union needed to comply with C99 pointer aliasing rules */
 		FLAC__uint64 *pa; /* aligned pointer */
@@ -135,6 +144,8 @@ FLAC__bool FLAC__memory_alloc_aligned_unsigned_array(unsigned elements, unsigned
 
 FLAC__bool FLAC__memory_alloc_aligned_real_array(unsigned elements, FLAC__real **unaligned_pointer, FLAC__real **aligned_pointer)
 {
+    hooFileLog( "FLAC__memory_alloc_aligned_real_array()\n" );
+
 	FLAC__real *pu; /* unaligned pointer */
 	union { /* union needed to comply with C99 pointer aliasing rules */
 		FLAC__real *pa; /* aligned pointer */

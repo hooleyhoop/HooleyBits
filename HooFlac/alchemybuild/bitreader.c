@@ -9,8 +9,6 @@
 #include <assert.h>
 #include "hooHacks.h"
 
-#include "netinet/in.h"
-
 //#define memmove custom_memmove
 //#define memcpy custom_memcpy
 //#define memset custom_memset

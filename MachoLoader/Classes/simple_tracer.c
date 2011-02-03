@@ -33,6 +33,12 @@ void run_target( const char *programname ) {
 	
 	procmsg( "target started. will run '%s'\n", programname );
 
+    /* Make sure the task gets default signal setup.
+     */
+    for( int i=0; i<32; i++ ) {
+        signal( i, SIG_DFL );
+	}
+    
  //   setsid(); // lldb
     
     /* Allow tracing of this process */
@@ -41,14 +47,28 @@ void run_target( const char *programname ) {
         return;
     }
     ptrace (PT_SIGEXC, 0, 0, 0);    // lldb // Get BSD signals as mach exceptions
- //   setgid (getgid ());           // lldb
- //   setpgid (0, 0);               // lldb Set the child process group to match its pid
+    setgid (getgid ());           // lldb
+    setpgid (0, 0);               // lldb Set the child process group to match its pid
+    
+    int pid = (int)getpid();
+   // setpgid(pid, pid);              // Thimk this doesnt do much
+    procmsg("pid = %u. \n", pid);
+
     sleep (1);                    // lldb
     
     /* Replace this process's image with the given program */
-	execl( programname, programname, NULL ); // -- THis should never return? 
+	int result = execl( programname, programname, NULL ); // -- THis should never return?
+    procmsg("Whoops, execl returned  = %u. \n", result);
+    
+   // execve(executable, (char**)args, (char**)envl);
+
 }
 
+// -(void)waitUntilExit {
+//    while(isRunning)
+//        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode 
+//                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
+// }
 
 void run_debugger( pid_t child_pid ) {
     
@@ -59,8 +79,10 @@ void run_debugger( pid_t child_pid ) {
     /* Wait for child to stop on its first instruction */
     wait( &wait_status );
 
-    while( WIFSTOPPED(wait_status) ) {
+    while( WIFSTOPPED(wait_status) ) 
+    {
         icounter++;
+        printf("waiting");
 //jiggy	struct user_regs_struct regs;
 //jiggy        ptrace(PTRACE_GETREGS, child_pid, 0, &regs);
 	
@@ -77,7 +99,7 @@ void run_debugger( pid_t child_pid ) {
         procmsg("icounter = %u. \n", icounter);
 
         /* Make the child execute another instruction */
-        if (ptrace(PT_STEP, child_pid, 0, 0) < 0) {
+        if( ptrace(PT_STEP, child_pid, 0, 0) < 0) {
             perror("ptrace");
             return;
         }
@@ -92,16 +114,28 @@ void run_debugger( pid_t child_pid ) {
 
 int simple_tracer( const char *programname ) {
 	
+    //TODO: vfork or fork?
+    
     pid_t child_pid = vfork();
     if( child_pid<0 ) {
         // fork failed
+        //[NSException raise: NSInvalidArgumentException format: @"NSTask - failed to create child process"];
+        
     } else if ( child_pid==0 ) {
         // child process
-        run_target(programname);
-    } else if (child_pid > 0)
+        run_target( programname );
+    } else if (child_pid > 0) {
         // parent process
+        procmsg( "Child pid is = %u. \n", child_pid );
+        setpgid( child_pid, child_pid );
+        int err = ptrace( PT_ATTACHEXC, child_pid, 0, 0 );
+        if( err==0 ) {
+            printf( "successfully attached to pid %d", child_pid );
+        } else {
+            printf( "error: failed to attach to pid %d", child_pid );
+        }        
         run_debugger( child_pid );
-    else {
+    } else {
         perror("fork");
         return -1;
     }

@@ -24,6 +24,7 @@
 /* adjust for compilers that can't understand using LLU suffix for uint64_t literals */
 #define FLAC__U64L(x) x##LLU
 
+extern FILE *_logFile;
 
 /* VERSION should come from configure */
 FLAC_API const char *FLAC__VERSION_STRING = "1.2";
@@ -179,6 +180,8 @@ FLAC_API const char * const FLAC__StreamMetadata_Picture_TypeString[] = {
 
 FLAC_API FLAC__bool FLAC__format_sample_rate_is_valid(unsigned sample_rate)
 {
+    hooFileLog( "FLAC__format_sample_rate_is_valid( %i )\n", sample_rate );
+
 	if(sample_rate == 0 || sample_rate > FLAC__MAX_SAMPLE_RATE) {
 		return false;
 	}
@@ -188,6 +191,8 @@ FLAC_API FLAC__bool FLAC__format_sample_rate_is_valid(unsigned sample_rate)
 
 FLAC_API FLAC__bool FLAC__format_sample_rate_is_subset(unsigned sample_rate)
 {
+    hooFileLog( "FLAC__format_sample_rate_is_subset( %i )\n", sample_rate );
+
 	if(
 		!FLAC__format_sample_rate_is_valid(sample_rate) ||
 		(
@@ -494,6 +499,8 @@ unsigned FLAC__format_get_max_rice_partition_order(unsigned blocksize, unsigned 
 
 unsigned FLAC__format_get_max_rice_partition_order_from_blocksize(unsigned blocksize)
 {
+    hooFileLog( "FLAC__format_get_max_rice_partition_order_from_blocksize( %i )\n", blocksize );
+
 	unsigned max_rice_partition_order = 0;
 	while(!(blocksize & 1)) {
 		max_rice_partition_order++;
@@ -504,6 +511,8 @@ unsigned FLAC__format_get_max_rice_partition_order_from_blocksize(unsigned block
 
 unsigned FLAC__format_get_max_rice_partition_order_from_blocksize_limited_max_and_predictor_order(unsigned limit, unsigned blocksize, unsigned predictor_order)
 {
+    hooFileLog( "FLAC__format_get_max_rice_partition_order_from_blocksize_limited_max_and_predictor_order( %i %i %i )\n", limit, blocksize, predictor_order );
+
 	unsigned max_rice_partition_order = limit;
 
 	while(max_rice_partition_order > 0 && (blocksize >> max_rice_partition_order) <= predictor_order)
@@ -519,6 +528,8 @@ unsigned FLAC__format_get_max_rice_partition_order_from_blocksize_limited_max_an
 
 void FLAC__format_entropy_coding_method_partitioned_rice_contents_init(FLAC__EntropyCodingMethod_PartitionedRiceContents *object)
 {
+    hooFileLog( "FLAC__format_entropy_coding_method_partitioned_rice_contents_init()\n" );
+
 	FLAC__ASSERT(0 != object);
 
 	object->parameters = 0;
@@ -539,8 +550,9 @@ void FLAC__format_entropy_coding_method_partitioned_rice_contents_clear(FLAC__En
 
 FLAC__bool FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(FLAC__EntropyCodingMethod_PartitionedRiceContents *object, unsigned max_partition_order)
 {
-	FLAC__ASSERT(0 != object);
+    hooFileLog( "FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size( %i )\n", max_partition_order );
 
+	FLAC__ASSERT(0 != object);
 	FLAC__ASSERT(object->capacity_by_order > 0 || (0 == object->parameters && 0 == object->raw_bits));
 
 	if(object->capacity_by_order < max_partition_order) {

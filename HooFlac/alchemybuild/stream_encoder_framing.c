@@ -12,11 +12,15 @@
 #endif
 #define max(x,y) ((x)>(y)?(x):(y))
 
+extern FILE *_logFile;
+
 static FLAC__bool add_entropy_coding_method_(FLAC__BitWriter *bw, const FLAC__EntropyCodingMethod *method);
 static FLAC__bool add_residual_partitioned_rice_(FLAC__BitWriter *bw, const FLAC__int32 residual[], const unsigned residual_samples, const unsigned predictor_order, const unsigned rice_parameters[], const unsigned raw_bits[], const unsigned partition_order, const FLAC__bool is_extended);
 
 FLAC__bool FLAC__add_metadata_block(const FLAC__StreamMetadata *metadata, FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__add_metadata_block()\n" );
+
 	unsigned i, j;
 	const unsigned vendor_string_length = (unsigned)strlen(FLAC__VENDOR_STRING);
 
@@ -186,6 +190,8 @@ FLAC__bool FLAC__add_metadata_block(const FLAC__StreamMetadata *metadata, FLAC__
 
 FLAC__bool FLAC__frame_add_header(const FLAC__FrameHeader *header, FLAC__BitWriter *bw)
 {
+    hooFileLog( "FLAC__frame_add_header()\n" );
+
 	unsigned u, blocksize_hint, sample_rate_hint;
 	FLAC__byte crc;
 
@@ -348,8 +354,10 @@ FLAC__bool FLAC__subframe_add_fixed(const FLAC__Subframe_Fixed *subframe, unsign
 {
 	unsigned i;
 
-	if(!FLAC__bitwriter_write_raw_uint32(bw, FLAC__SUBFRAME_TYPE_FIXED_BYTE_ALIGNED_MASK | (subframe->order<<1) | (wasted_bits? 1:0), FLAC__SUBFRAME_ZERO_PAD_LEN + FLAC__SUBFRAME_TYPE_LEN + FLAC__SUBFRAME_WASTED_BITS_FLAG_LEN))
+    FLAC__bool result = FLAC__bitwriter_write_raw_uint32(bw, FLAC__SUBFRAME_TYPE_FIXED_BYTE_ALIGNED_MASK | (subframe->order<<1) | (wasted_bits? 1:0), FLAC__SUBFRAME_ZERO_PAD_LEN + FLAC__SUBFRAME_TYPE_LEN + FLAC__SUBFRAME_WASTED_BITS_FLAG_LEN);
+	if(!result)
 		return false;
+    
 	if(wasted_bits)
 		if(!FLAC__bitwriter_write_unary_unsigned(bw, wasted_bits-1))
 			return false;
@@ -382,31 +390,54 @@ FLAC__bool FLAC__subframe_add_fixed(const FLAC__Subframe_Fixed *subframe, unsign
 	return true;
 }
 
-FLAC__bool FLAC__subframe_add_lpc(const FLAC__Subframe_LPC *subframe, unsigned residual_samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw)
-{
+FLAC__bool FLAC__subframe_add_lpc(const FLAC__Subframe_LPC *subframe, unsigned residual_samples, unsigned subframe_bps, unsigned wasted_bits, FLAC__BitWriter *bw) {
+    
+	hooFileLog( "FLAC__subframe_add_lpc( %i order=%i, %i, %i, %i )\n", subframe->entropy_coding_method.data.partitioned_rice.order, subframe->order, residual_samples, subframe_bps, wasted_bits );
+    /* This is wrong by here */  
+    // exit(0);
+    
 	unsigned i;
 
 	if(!FLAC__bitwriter_write_raw_uint32(bw, FLAC__SUBFRAME_TYPE_LPC_BYTE_ALIGNED_MASK | ((subframe->order-1)<<1) | (wasted_bits? 1:0), FLAC__SUBFRAME_ZERO_PAD_LEN + FLAC__SUBFRAME_TYPE_LEN + FLAC__SUBFRAME_WASTED_BITS_FLAG_LEN))
 		return false;
+    
+    hooFileLog( "2 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+
+    
 	if(wasted_bits)
 		if(!FLAC__bitwriter_write_unary_unsigned(bw, wasted_bits-1))
 			return false;
+
+    hooFileLog( "3 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
 
 	for(i = 0; i < subframe->order; i++)
 		if(!FLAC__bitwriter_write_raw_int32(bw, subframe->warmup[i], subframe_bps))
 			return false;
 
+    hooFileLog( "4 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+
 	if(!FLAC__bitwriter_write_raw_uint32(bw, subframe->qlp_coeff_precision-1, FLAC__SUBFRAME_LPC_QLP_COEFF_PRECISION_LEN))
 		return false;
+    
+    hooFileLog( "5 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+    
 	if(!FLAC__bitwriter_write_raw_int32(bw, subframe->quantization_level, FLAC__SUBFRAME_LPC_QLP_SHIFT_LEN))
 		return false;
+    
+    hooFileLog( "6 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+ 
 	for(i = 0; i < subframe->order; i++)
 		if(!FLAC__bitwriter_write_raw_int32(bw, subframe->qlp_coeff[i], subframe->qlp_coeff_precision))
 			return false;
 
+    hooFileLog( "7 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+
 	if(!add_entropy_coding_method_(bw, &subframe->entropy_coding_method))
 		return false;
-	switch(subframe->entropy_coding_method.type) {
+    
+    hooFileLog( "8 FLAC__subframe_add_lpc( order=%i )\n", subframe->entropy_coding_method.data.partitioned_rice.order );
+	
+    switch(subframe->entropy_coding_method.type) {
 		case FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE:
 		case FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2:
 			if(!add_residual_partitioned_rice_(
@@ -446,8 +477,10 @@ FLAC__bool FLAC__subframe_add_verbatim(const FLAC__Subframe_Verbatim *subframe, 
 	return true;
 }
 
-FLAC__bool add_entropy_coding_method_(FLAC__BitWriter *bw, const FLAC__EntropyCodingMethod *method)
-{
+FLAC__bool add_entropy_coding_method_(FLAC__BitWriter *bw, const FLAC__EntropyCodingMethod *method) {
+    
+	hooFileLog( "add_entropy_coding_method_( %i, %i )\n", method->data.partitioned_rice.order, method->type );
+
 	if(!FLAC__bitwriter_write_raw_uint32(bw, method->type, FLAC__ENTROPY_CODING_METHOD_TYPE_LEN))
 		return false;
 	switch(method->type) {
@@ -466,6 +499,8 @@ FLAC__bool add_residual_partitioned_rice_(FLAC__BitWriter *bw, const FLAC__int32
 {
 	const unsigned plen = is_extended? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_PARAMETER_LEN : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_PARAMETER_LEN;
 	const unsigned pesc = is_extended? FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER : FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ESCAPE_PARAMETER;
+
+    hooFileLog( "add_residual_partitioned_rice_( %i, %i, partition_order=%i, %i, plen=%i, pesc=%i )\n", residual_samples, predictor_order, partition_order, is_extended, plen, pesc );
 
 	if(partition_order == 0) {
 		unsigned i;
@@ -493,6 +528,9 @@ FLAC__bool add_residual_partitioned_rice_(FLAC__BitWriter *bw, const FLAC__int32
 		unsigned i, j, k = 0, k_last = 0;
 		unsigned partition_samples;
 		const unsigned default_partition_samples = (residual_samples+predictor_order) >> partition_order;
+        
+        hooFileLog( "default_partition_samples=%i, ilimit=%i\n", default_partition_samples, (1u<<partition_order) );
+ 
 		for(i = 0; i < (1u<<partition_order); i++) {
 			partition_samples = default_partition_samples;
 			if(i == 0)

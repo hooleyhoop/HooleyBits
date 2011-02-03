@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "hooHacks.h"
 
+extern FILE *_logFile;
 
 #ifndef M_LN2
 #error s
@@ -19,15 +20,26 @@
 #define FLAC__LPC_UNROLLED_FILTER_LOOPS
 
 
+
 void FLAC__lpc_window_data(const FLAC__int32 in[], const FLAC__real window[], FLAC__real out[], unsigned data_len)
 {
-	unsigned i;
-	for(i = 0; i < data_len; i++)
-		out[i] = in[i] * window[i];
+	hooFileLog( "FLAC__lpc_window_data( %i )\n ", data_len );
+    
+	for( unsigned i=0; i<data_len; i++ )
+    {
+        /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */
+        FLAC__real hackResult = (int)(in[i] * window[i]) ;
+        
+		out[i] = hackResult;
+        hooFileLog( "out=%f ", out[i] );        
+    }
+    hooFileLog( "END FLAC__lpc_window_data\n\n" );
 }
 
 void FLAC__lpc_compute_autocorrelation(const FLAC__real data[], unsigned data_len, unsigned lag, FLAC__real autoc[])
 {
+    hooFileLog( "FLAC__lpc_compute_autocorrelation( %i, %i )\n", data_len, lag );
+
 	/* a readable, but slower, version */
 
 	/*
@@ -43,11 +55,18 @@ void FLAC__lpc_compute_autocorrelation(const FLAC__real data[], unsigned data_le
 
 	for(coeff = 0; coeff < lag; coeff++)
 		autoc[coeff] = 0.0f;
-	for(sample = 0; sample <= limit; sample++) {
+    
+	for( sample=0; sample<=limit; sample++ )
+    {
 		d = data[sample];
-		for(coeff = 0; coeff < lag; coeff++)
+//cantcopewithfloatdiff        hooFileLog( "data %2f\n", d );
+        
+		for( coeff=0; coeff<lag; coeff++ ) {
 			autoc[coeff] += d * data[sample+coeff];
+//cantcopewithfloatdiff            hooFileLog( "autoc[coeff] %2f\n", autoc[coeff] );                        
+        }
 	}
+
 	for(; sample < data_len; sample++) {
 		d = data[sample];
 		for(coeff = 0; coeff < data_len - sample; coeff++)
@@ -57,6 +76,8 @@ void FLAC__lpc_compute_autocorrelation(const FLAC__real data[], unsigned data_le
 
 void FLAC__lpc_compute_lp_coefficients(const FLAC__real autoc[], unsigned *max_order, FLAC__real lp_coeff[][FLAC__MAX_LPC_ORDER], FLAC__double error[])
 {
+	hooFileLog( "FLAC__lpc_compute_lp_coefficients( %i )\n", *max_order );
+
 	unsigned i, j;
 	FLAC__double r, err, ref[FLAC__MAX_LPC_ORDER], lpc[FLAC__MAX_LPC_ORDER];
 
@@ -66,6 +87,7 @@ void FLAC__lpc_compute_lp_coefficients(const FLAC__real autoc[], unsigned *max_o
 	FLAC__ASSERT(autoc[0] != 0.0);
 
 	err = autoc[0];
+//floatDiff     hooFileLog( "autoc[0] = %f\n", autoc[0] );
 
 	for(i = 0; i < *max_order; i++) {
 		/* Sum up this iteration's reflection coefficient. */
@@ -73,23 +95,31 @@ void FLAC__lpc_compute_lp_coefficients(const FLAC__real autoc[], unsigned *max_o
 		for(j = 0; j < i; j++)
 			r -= lpc[j] * autoc[i-j];
 		ref[i] = (r/=err);
+//floatDiff         hooFileLog( "ref[ %f ]\n", ref[i] );
 
 		/* Update LPC coefficients and total error. */
 		lpc[i]=r;
+//floatDiff         hooFileLog( "lpc[ %f ]\n", lpc[i] );
+        
 		for(j = 0; j < (i>>1); j++) {
 			FLAC__double tmp = lpc[j];
 			lpc[j] += r * lpc[i-1-j];
 			lpc[i-1-j] += r * tmp;
+//floatDiff             hooFileLog( "lpc[%f] lpc[%f]\n", lpc[j], lpc[i-1-j] );                        
 		}
 		if(i & 1)
 			lpc[j] += lpc[j] * r;
 
+//floatDiff         hooFileLog( "err %f %f\n", err, r );            
 		err *= (1.0 - r * r);
+//floatDiff         hooFileLog( "err %f\n", err );            
 
 		/* save this order */
-		for(j = 0; j <= i; j++)
+		for(j = 0; j <= i; j++){
 			lp_coeff[i][j] = (FLAC__real)(-lpc[j]); /* negate FIR filter coeff to get predictor coeff */
+        }
 		error[i] = err;
+//floatDiff         hooFileLog( "error[ %f ]\n", error[i] );
 
 		/* see SF bug #1601812 http://sourceforge.net/tracker/index.php?func=detail&aid=1601812&group_id=13478&atid=113478 */
 		if(err == 0.0) {
@@ -101,6 +131,8 @@ void FLAC__lpc_compute_lp_coefficients(const FLAC__real autoc[], unsigned *max_o
 
 int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], unsigned order, unsigned precision, FLAC__int32 qlp_coeff[], int *shift)
 {
+    hooFileLog( "FLAC__lpc_quantize_coefficients( %i, %i )\n", order, precision );
+
 	unsigned i;
 	FLAC__double cmax;
 	FLAC__int32 qmax, qmin;
@@ -116,8 +148,14 @@ int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], unsigned order,
 
 	/* calc cmax = max( |lp_coeff[i]| ) */
 	cmax = 0.0;
-	for(i = 0; i < order; i++) {
-		const FLAC__double d = fabs(lp_coeff[i]);
+    
+	for(i = 0; i < order; i++)
+    {
+        /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */
+
+		const FLAC__double d = (int)fabs(lp_coeff[i]);
+        hooFileLog( "intermediateVal fabs %f \n", d );
+        
 		if(d > cmax)
 			cmax = d;
 	}
@@ -130,6 +168,8 @@ int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], unsigned order,
 		const int max_shiftlimit = (1 << (FLAC__SUBFRAME_LPC_QLP_SHIFT_LEN-1)) - 1;
 		const int min_shiftlimit = -max_shiftlimit - 1;
 		int log2cmax;
+
+        hooFileLog( "\nDEAR GOD I DO NOT KNOW IF THIS IS IMPLEMENTEATED\n" );
 
 		(void)frexp(cmax, &log2cmax);
 		log2cmax--;
@@ -193,6 +233,8 @@ int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], unsigned order,
 
 void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, unsigned data_len, const FLAC__int32 qlp_coeff[], unsigned order, int lp_quantization, FLAC__int32 residual[])
 {
+    hooFileLog( "FLAC__lpc_compute_residual_from_qlp_coefficients( %i %i %i )\n", data_len, order, lp_quantization );
+
 	int i;
 	FLAC__int32 sum;
 
@@ -204,11 +246,16 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, u
 	 * Also they are roughly ordered to match frequency of occurrence to
 	 * minimize branching.
 	 */
-	if(order <= 12) {
-		if(order > 8) {
-			if(order > 10) {
-				if(order == 12) {
-					for(i = 0; i < (int)data_len; i++) {
+	if(order <= 12) 
+    {        
+		if(order > 8)
+        {
+			if(order > 10)
+            {
+				if(order == 12) 
+                {
+					for(i = 0; i < (int)data_len; i++)
+                    {
 						sum = 0;
 						sum += qlp_coeff[11] * data[i-12];
 						sum += qlp_coeff[10] * data[i-11];
@@ -290,7 +337,9 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, u
 						sum += qlp_coeff[2] * data[i-3];
 						sum += qlp_coeff[1] * data[i-2];
 						sum += qlp_coeff[0] * data[i-1];
-						residual[i] = data[i] - (sum >> lp_quantization);
+                        unsigned wha = sum >> lp_quantization;
+                        // hooFileLog( "wha = wha %i\n", wha );
+						residual[i] = data[i] - wha;
 					}
 				}
 				else { /* order == 7 */
@@ -303,7 +352,11 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, u
 						sum += qlp_coeff[2] * data[i-3];
 						sum += qlp_coeff[1] * data[i-2];
 						sum += qlp_coeff[0] * data[i-1];
-						residual[i] = data[i] - (sum >> lp_quantization);
+                        
+                        unsigned argghh = (sum >> lp_quantization);
+                        //hooFileLog( "7wha = wha %i\n", argghh );
+                        
+						residual[i] = data[i] - argghh;
 					}
 				}
 			}
@@ -317,7 +370,10 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, u
 						sum += qlp_coeff[2] * data[i-3];
 						sum += qlp_coeff[1] * data[i-2];
 						sum += qlp_coeff[0] * data[i-1];
-						residual[i] = data[i] - (sum >> lp_quantization);
+                        unsigned argghh = (sum >> lp_quantization);
+//                        hooFileLog( "6wha = wha %i\n", argghh );
+                        
+						residual[i] = data[i] - argghh;
 					}
 				}
 				else { /* order == 5 */
@@ -328,7 +384,11 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients(const FLAC__int32 *data, u
 						sum += qlp_coeff[2] * data[i-3];
 						sum += qlp_coeff[1] * data[i-2];
 						sum += qlp_coeff[0] * data[i-1];
-						residual[i] = data[i] - (sum >> lp_quantization);
+                        
+                        unsigned argghh = (sum >> lp_quantization);
+//                        hooFileLog( "5wha = wha %i\n", argghh );
+                        
+						residual[i] = data[i] - argghh;
 					}
 				}
 			}
@@ -736,6 +796,7 @@ void FLAC__lpc_restore_signal(const FLAC__int32 residual[], unsigned data_len, c
 						sum += qlp_coeff[2] * data[i-3];
 						sum += qlp_coeff[1] * data[i-2];
 						sum += qlp_coeff[0] * data[i-1];
+    
 						data[i] = residual[i] + (sum >> lp_quantization);
 					}
 				}
@@ -1085,6 +1146,8 @@ void FLAC__lpc_restore_signal_wide(const FLAC__int32 residual[], unsigned data_l
 
 FLAC__double FLAC__lpc_compute_expected_bits_per_residual_sample(FLAC__double lpc_error, unsigned total_samples)
 {
+    hooFileLog( "FLAC__lpc_compute_expected_bits_per_residual_sample( %f, %i )\n", lpc_error, total_samples );
+
 	FLAC__double error_scale;
 
 	FLAC__ASSERT(total_samples > 0);
@@ -1096,23 +1159,32 @@ FLAC__double FLAC__lpc_compute_expected_bits_per_residual_sample(FLAC__double lp
 
 FLAC__double FLAC__lpc_compute_expected_bits_per_residual_sample_with_error_scale(FLAC__double lpc_error, FLAC__double error_scale)
 {
-	if(lpc_error > 0.0) {
-		FLAC__double bps = (FLAC__double)0.5 * log(error_scale * lpc_error) / M_LN2;
-		if(bps >= 0.0)
+	hooFileLog( "FLAC__lpc_compute_expected_bits_per_residual_sample_with_error_scale( %f, %f )\n", lpc_error, error_scale );
+
+	if( lpc_error>0.0 )
+    {
+        /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */        
+        FLAC__double intermediateVal = (int)log(error_scale * lpc_error);
+        hooFileLog( "intermediateVal logVal %f \n", intermediateVal );
+		FLAC__double bps = (FLAC__double)0.5 * intermediateVal / M_LN2;
+		
+        if(bps >= 0.0)
 			return bps;
 		else
 			return 0.0;
-	}
-	else if(lpc_error < 0.0) { /* error should not be negative but can happen due to inadequate floating-point resolution */
+	} else if(lpc_error < 0.0) { /* error should not be negative but can happen due to inadequate floating-point resolution */
+        hooFileLog( "less than zero\n" );
 		return 1e32;
-	}
-	else {
+	} else {
+        hooFileLog( "zero\n" );        
 		return 0.0;
 	}
 }
 
 unsigned FLAC__lpc_compute_best_order(const FLAC__double lpc_error[], unsigned max_order, unsigned total_samples, unsigned overhead_bits_per_order)
 {
+    hooFileLog( "FLAC__lpc_compute_best_order( %i, %i, %i )\n", max_order, total_samples, overhead_bits_per_order );
+
 	unsigned order, index, best_index; /* 'index' the index into lpc_error; index==order-1 since lpc_error[0] is for order==1, lpc_error[1] is for order==2, etc */
 	FLAC__double bits, best_bits, error_scale;
 
@@ -1124,9 +1196,13 @@ unsigned FLAC__lpc_compute_best_order(const FLAC__double lpc_error[], unsigned m
 	best_index = 0;
 	best_bits = (unsigned)(-1);
 
-	for(index = 0, order = 1; index < max_order; index++, order++) {
-		bits = FLAC__lpc_compute_expected_bits_per_residual_sample_with_error_scale(lpc_error[index], error_scale) * (FLAC__double)(total_samples - order) + (FLAC__double)(order * overhead_bits_per_order);
-		if(bits < best_bits) {
+	for( index=0, order=1; index<max_order; index++, order++ )
+    {
+        FLAC__double arg1 = lpc_error[index];
+        FLAC__double arg2 = error_scale;
+		bits = FLAC__lpc_compute_expected_bits_per_residual_sample_with_error_scale( arg1, arg2 ) * (FLAC__double)(total_samples - order) + (FLAC__double)(order * overhead_bits_per_order);;
+		if( bits < best_bits )
+        {
 			best_index = index;
 			best_bits = bits;
 		}

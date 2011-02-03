@@ -1,5 +1,6 @@
 #include "cpu.h"
 #include <stdio.h>
+#include "HooHelper.h"
 
 extern FILE *_logFile;
 
@@ -20,7 +21,7 @@ static const unsigned FLAC__CPUINFO_IA32_CPUID_EXTENDED_AMD_EXTMMX = 0x00400000;
 
 void FLAC__cpu_info(FLAC__CPUInfo *info)
 {
-	fprintf( _logFile, "FLAC__cpu_info()\n" );
+	hooFileLog( "FLAC__cpu_info()\n", NULL );
 
 /*
  * IA32-specific

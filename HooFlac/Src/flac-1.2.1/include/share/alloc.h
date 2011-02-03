@@ -18,6 +18,7 @@
 
 #ifndef FLAC__SHARE__ALLOC_H
 #define FLAC__SHARE__ALLOC_H
+#include "HooHelper.h"
 
 /* WATCHOUT: for c++ you may have to #define __STDC_LIMIT_MACROS 1 real early
  * before #including this file,  otherwise SIZE_MAX might not be defined
