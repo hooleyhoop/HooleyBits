@@ -115,8 +115,8 @@ void run_debugger( pid_t child_pid ) {
 int simple_tracer( const char *programname ) {
 	
     //TODO: vfork or fork?
-    
-    pid_t child_pid = vfork();
+    // Suggest getting it to work with fork first
+    pid_t child_pid = fork();
     if( child_pid<0 ) {
         // fork failed
         //[NSException raise: NSInvalidArgumentException format: @"NSTask - failed to create child process"];

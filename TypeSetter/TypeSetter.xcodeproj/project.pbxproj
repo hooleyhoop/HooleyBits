@@ -137,6 +137,7 @@
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		73023BEE12FC02D00056EFB4 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = Src/stb_truetype.h; sourceTree = "<group>"; };
 		7331A9B8114573CB00EFCB8F /* GlyphRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphRenderer.h; path = Src/GlyphRenderer.h; sourceTree = "<group>"; };
 		7331A9B9114573CB00EFCB8F /* GlyphRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlyphRenderer.m; path = Src/GlyphRenderer.m; sourceTree = "<group>"; };
 		7331A9BD1145746300EFCB8F /* Picture 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Picture 4.png"; path = "images/Picture 4.png"; sourceTree = "<group>"; };
@@ -450,6 +451,7 @@
 			children = (
 				73BD7A611174ACC3000B0D56 /* AppDelegate.h */,
 				73BD7A621174ACC4000B0D56 /* AppDelegate.m */,
+				73023BEE12FC02D00056EFB4 /* stb_truetype.h */,
 				73BD7A661174ACE2000B0D56 /* WindowController.h */,
 				73BD7A671174ACE2000B0D56 /* WindowController.m */,
 				7344137C0F67CACD00D6CF73 /* DebugView.h */,
