@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		73136FF212AC5323003CF189 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73136FF112AC5323003CF189 /* Cocoa.framework */; };
 		73136FF712AC5323003CF189 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73136FF512AC5323003CF189 /* InfoPlist.strings */; };
-		73136FF912AC5323003CF189 /* InnerRender-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73136FF812AC5323003CF189 /* InnerRender-main.m */; };
 		73136FFC12AC5324003CF189 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73136FFA12AC5324003CF189 /* MainMenu.xib */; };
 		73136FFF12AC5324003CF189 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 73136FFD12AC5324003CF189 /* Credits.rtf */; };
 		7313700212AC5324003CF189 /* InnerRenderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */; };
@@ -21,6 +20,8 @@
 		7313702512AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
 		7313702612AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
 		731E744212BE6F2400B53D94 /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
+		732C826312FC9B6A001BD259 /* InnerRender-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732C826212FC9B6A001BD259 /* InnerRender-main.m */; };
+		732C827112FC9BC8001BD259 /* GetOutTheFunkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 732C827012FC9BC8001BD259 /* GetOutTheFunkTests.m */; };
 		73AAB3E212B78423000B2B2D /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
 		73AB02C912AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
 		73AB02CA12AE48DE0021C1F1 /* HooPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AB02C812AE48DE0021C1F1 /* HooPolygon.m */; };
@@ -47,22 +48,22 @@
 		73136FEE12AC5323003CF189 /* InnerRender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InnerRender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73136FF112AC5323003CF189 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73136FF312AC5323003CF189 /* InnerRender-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InnerRender-Info.plist"; sourceTree = "<group>"; };
-		73136FF412AC5323003CF189 /* InnerRender-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InnerRender-Prefix.pch"; sourceTree = "<group>"; };
 		73136FF612AC5323003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		73136FF812AC5323003CF189 /* InnerRender-main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "InnerRender-main.m"; sourceTree = "<group>"; };
 		73136FFB12AC5324003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		73136FFE12AC5324003CF189 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		7313700012AC5324003CF189 /* InnerRenderAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InnerRenderAppDelegate.h; sourceTree = "<group>"; };
 		7313700112AC5324003CF189 /* InnerRenderAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InnerRenderAppDelegate.m; sourceTree = "<group>"; };
 		7313700912AC5324003CF189 /* InnerRenderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InnerRenderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7313700B12AC5324003CF189 /* InnerRenderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InnerRenderTests-Info.plist"; sourceTree = "<group>"; };
-		7313700C12AC5324003CF189 /* InnerRenderTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InnerRenderTests-Prefix.pch"; sourceTree = "<group>"; };
 		7313700D12AC5324003CF189 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InnerRenderTests/InfoPlist.strings; sourceTree = "<group>"; };
 		7313701112AC5324003CF189 /* InnerRenderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InnerRenderTests.m; sourceTree = "<group>"; };
 		7313701F12AC54B0003CF189 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
 		7313702012AC54B0003CF189 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		7313702312AC55B1003CF189 /* ShapeHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeHandle.h; sourceTree = "<group>"; };
 		7313702412AC55B1003CF189 /* ShapeHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeHandle.m; sourceTree = "<group>"; };
+		732C826212FC9B6A001BD259 /* InnerRender-main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "InnerRender-main.m"; path = "Classes/InnerRender-main.m"; sourceTree = "<group>"; };
+		732C827012FC9BC8001BD259 /* GetOutTheFunkTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetOutTheFunkTests.m; sourceTree = "<group>"; };
+		732C827412FCADDF001BD259 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		7347D53412BF52C100B03821 /* FreeTypeExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreeTypeExample.cpp; path = Classes/FreeTypeExample.cpp; sourceTree = SOURCE_ROOT; };
 		7347D53512BF52C100B03821 /* FreeTypeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeTypeExample.h; path = Classes/FreeTypeExample.h; sourceTree = SOURCE_ROOT; };
 		7367B55C12BD2D8C00CE7A3F /* ftmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmisc.h; sourceTree = "<group>"; };
@@ -126,7 +127,9 @@
 		73136FDF12AC5323003CF189 = {
 			isa = PBXGroup;
 			children = (
+				732C827412FCADDF001BD259 /* readme.txt */,
 				73E4464512E3A1810053508A /* Config */,
+				732C826A12FC9B90001BD259 /* Examples */,
 				7313700312AC5324003CF189 /* Tests */,
 				73136FE612AC5323003CF189 /* Classes */,
 				73136FE712AC5323003CF189 /* Other Sources */,
@@ -163,9 +166,7 @@
 		73136FE712AC5323003CF189 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				73136FF412AC5323003CF189 /* InnerRender-Prefix.pch */,
-				73136FF812AC5323003CF189 /* InnerRender-main.m */,
-				7313700C12AC5324003CF189 /* InnerRenderTests-Prefix.pch */,
+				732C826212FC9B6A001BD259 /* InnerRender-main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -203,6 +204,7 @@
 		7313700312AC5324003CF189 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				732C827012FC9BC8001BD259 /* GetOutTheFunkTests.m */,
 				7313701112AC5324003CF189 /* InnerRenderTests.m */,
 				73AB053312AEA3A80021C1F1 /* GridTests.m */,
 				73AB051C12AEA3220021C1F1 /* HooPolygonTests.m */,
@@ -212,10 +214,18 @@
 				73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */,
 				73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */,
 				73E4459812E398DD0053508A /* FreeTypeTest.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		732C826A12FC9B90001BD259 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
 				7347D53412BF52C100B03821 /* FreeTypeExample.cpp */,
 				7347D53512BF52C100B03821 /* FreeTypeExample.h */,
 				73E4459E12E39A850053508A /* FTRasterExample.c */,
 			);
+			name = Examples;
 			path = Tests;
 			sourceTree = "<group>";
 		};
@@ -389,7 +399,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73136FF912AC5323003CF189 /* InnerRender-main.m in Sources */,
 				7313700212AC5324003CF189 /* InnerRenderAppDelegate.m in Sources */,
 				7313702112AC54B0003CF189 /* RenderView.m in Sources */,
 				7313702512AC55B1003CF189 /* ShapeHandle.m in Sources */,
@@ -424,6 +433,8 @@
 				73BF14CB12B1354600B714FB /* HandleLayer.m in Sources */,
 				73AAB3E212B78423000B2B2D /* ftraster.c in Sources */,
 				73E4459912E398DD0053508A /* FreeTypeTest.m in Sources */,
+				732C826312FC9B6A001BD259 /* InnerRender-main.m in Sources */,
+				732C827112FC9BC8001BD259 /* GetOutTheFunkTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

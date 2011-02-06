@@ -32,6 +32,8 @@
 	unsigned char mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 	char value;
+	
+	// this is garbage - value is uninitialized!
 	value |= mask_table[ 3 ];
 	STAssertTrue( value==8, nil );
 	value |= mask_table[ 1 ];

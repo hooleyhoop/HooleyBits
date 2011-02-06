@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,7 @@
 		7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
 		73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
+		7369E43E12FF10C8003FE5E3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7369E43D12FF10C8003FE5E3 /* Security.framework */; };
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		73794F1B1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFE12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
@@ -129,6 +130,7 @@
 		7363BDC0124E318500F080E7 /* GenericTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTimer.m; path = ../SimpleFileParser/Src/GenericTimer.m; sourceTree = SOURCE_ROOT; };
 		73685DA11244D34F00DDEE60 /* InstrArgStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstrArgStruct.h; path = Classes/InstrArgStruct.h; sourceTree = "<group>"; };
 		73685DA21244D34F00DDEE60 /* InstrArgStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstrArgStruct.m; path = Classes/InstrArgStruct.m; sourceTree = "<group>"; };
+		7369E43D12FF10C8003FE5E3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		73794F181223F903001B8AF6 /* SymbolicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SymbolicInfo.h; path = Classes/SymbolicInfo.h; sourceTree = "<group>"; };
 		73794F191223F903001B8AF6 /* SymbolicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SymbolicInfo.m; path = Classes/SymbolicInfo.m; sourceTree = "<group>"; };
 		737B3DDB12324C34008C67FC /* IntKeyDictionaryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionaryTests.m; path = Tests/IntKeyDictionaryTests.m; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7369E43E12FF10C8003FE5E3 /* Security.framework in Frameworks */,
 				731702C01232906900EE9ED6 /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +255,7 @@
 		29B97314FDCFA39411CA2CEA /* MachoLoader */ = {
 			isa = PBXGroup;
 			children = (
+				7369E43D12FF10C8003FE5E3 /* Security.framework */,
 				731FAA5A12196EE500D3EE3D /* Config */,
 				731FA9F912196E6F00D3EE3D /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -516,8 +520,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = uk.co.stevehooley;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -686,15 +693,7 @@
 		7310FD1812095D5D00AE9F6B /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "SimpleApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -702,7 +701,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = SimpleApp;
 			};
 			name = Debug32;
@@ -710,26 +708,15 @@
 		7310FD1912095D5D00AE9F6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "SimpleApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = SimpleApp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -742,7 +729,6 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_VERSION = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
@@ -757,15 +743,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_VERSION = "";
-				INFOPLIST_FILE = "MachoLoaderTests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -780,10 +759,7 @@
 					"-framework",
 					SenTestingKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MachoLoaderTests;
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -791,6 +767,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA5D12196EE500D3EE3D /* Project-Debug.xcconfig */;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug64;
 		};
@@ -798,34 +775,23 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = lldb_codesign;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_VERSION = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
 				);
 				PRODUCT_NAME = MachoLoader;
-				SDKROOT = "";
 			};
 			name = Debug64;
 		};
 		73EFF32B1256344200A85855 /* Debug64 */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "SimpleApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -833,7 +799,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = SimpleApp;
 			};
 			name = Debug64;
@@ -847,7 +812,6 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_VERSION = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
@@ -861,17 +825,16 @@
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = lldb_codesign;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
 				);
 				PRODUCT_NAME = MachoLoader;
-				SDKROOT = "";
 			};
 			name = Debug32;
 		};
@@ -879,33 +842,20 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA6112196EE500D3EE3D /* Target-Executable.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEPLOYMENT_POSTPROCESSING = YES;
+				CODE_SIGN_IDENTITY = lldb_codesign;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_ENABLE_SYMBOL_SEPARATION = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MachoLoader_Prefix.pch;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/local/lib/x86_64,
 					/opt/local/lib,
-					"\"/Volumes/Leopard/Developer/usr/lib/gcc/i686-apple-darwin9/4.2.1\"",
 					"\"$(SDKROOT)/usr/lib/i686-apple-darwin10/4.0.1\"",
 				);
 				PRODUCT_NAME = MachoLoader;
-				SDKROOT = "";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -913,6 +863,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA5D12196EE500D3EE3D /* Project-Debug.xcconfig */;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug32;
 		};
@@ -920,12 +871,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 731FAA5E12196EE500D3EE3D /* Project-Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Release;
 		};

@@ -3100,7 +3100,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		{
 			// printf("%s\t%%st(%1.1u)\n", mnemonic, r_m);
 			struct IndexedRegisterValue *indexedReg;
-			NEW_INDEXEDREGISTER( indexedReg, &fp_reg, r_m );
+			NEW_INDEXEDREGISTER( indexedReg, (struct HooReg *)&fp_reg, r_m );
 			FILLARGS1( indexedReg );			
 			[self addLine:addr :currentFuncPtr :&fstp1_instr :allArgs :NOISY];
 			return(length);

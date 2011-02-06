@@ -290,17 +290,17 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 	nsects = 0;
 	lc = load_commands;
 	big_load_end = 0;
-	for( NSUInteger i=0; i<ncmds; i++ )
+	for( NSInteger i=0; i<ncmds; i++ )
 	{
 	    memcpy( &l, (char *)lc, sizeof(struct load_command) );
 		//	    if(swapped)
 		//			swap_load_command(&l, host_byte_sex);
 		NSUInteger theSize = sizeof(int32_t);
 	    if( l.cmdsize % theSize !=0 )
-			printf("load command %lu size not a multiple of sizeof(int32_t)\n", i);
+			printf("load command %d size not a multiple of sizeof(int32_t)\n", i);
 	    big_load_end += l.cmdsize;
 	    if(big_load_end > sizeofcmds)
-			printf("load command %lu extends past end of load commands\n", i);
+			printf("load command %d extends past end of load commands\n", i);
 	    left = sizeofcmds-((char *)lc-(char *)load_commands);
  
 	    switch(l.cmd)
@@ -317,7 +317,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				bigsize *= sizeof(struct section);
 				bigsize += size;
 				if(bigsize > sg.cmdsize){
-					printf("number of sections in load command %lu extends past end of load commands\n", i);
+					printf("number of sections in load command %d extends past end of load commands\n", i);
 					sg.nsects = (uint32_t)((sg.cmdsize-size) / sizeof(struct section));
 				}
 				nsects += sg.nsects;
@@ -357,7 +357,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				bigsize *= sizeof(struct section_64);
 				bigsize += size;
 				if(bigsize > sg64.cmdsize){
-					printf("number of sections in load command %lu extends past end of load commands\n", i);
+					printf("number of sections in load command %d extends past end of load commands\n", i);
 					sg64.nsects = (uint32_t)((sg64.cmdsize-size) / sizeof(struct section_64));
 				}
 				nsects += sg64.nsects;
@@ -388,7 +388,7 @@ extern char *__cxa_demangle(const char* __mangled_name, char* __output_buffer, s
 				break;
 	    }
 	    if(l.cmdsize == 0){
-			printf("load command %lu size zero (can't advance to other load commands)\n", i);
+			printf("load command %d size zero (can't advance to other load commands)\n", i);
 			break;
 	    }
 	    lc = (struct load_command *)((char *)lc + l.cmdsize);
