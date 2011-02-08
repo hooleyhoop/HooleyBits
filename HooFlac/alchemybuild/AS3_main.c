@@ -210,7 +210,7 @@ static AS3_Val encodeWavData( void *self, AS3_Val args ) {
         fprintf( stderr, "FAILED to seek in wavDatfile\n" );
         exit(0);
     }
-    
+
 	long wavDatfileSize = ftell( wavDatfile );
 	rewind( wavDatfile );
     
@@ -393,9 +393,11 @@ static AS3_Val encodeWavData( void *self, AS3_Val args ) {
         {
             size_t need = (left>READSIZE? (size_t)READSIZE : (size_t)left);
             size_t alchemyCompensatedNeed = need*bytesPerSample;
+            
             // AS3_Val currentPos = AS3_GetS( wavData_arg, "position" );
-            // float percentage = (left*1.0/total_samples_per_channel) *100;
-            // fprintf( stderr, "%f About to READ FROM %i -- %i \n", percentage, AS3_IntValue(currentPos), alchemyCompensatedNeed );            
+            float percentage = (left*1.0/total_samples_per_channel) *100;
+            fprintf( stderr, "%f About to READ FROM %i -- %i \n", percentage, (int)ftell(wavDatfile), alchemyCompensatedNeed );
+            
             // int readSuccess = AS3_ByteArray_readBytes( in_buffer, wavData_arg, alchemyCompensatedNeed );
             size_t readSuccess = fread( in_buffer, 1, alchemyCompensatedNeed, wavDatfile );
             filePos += alchemyCompensatedNeed;
