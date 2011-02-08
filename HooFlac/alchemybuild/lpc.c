@@ -28,10 +28,10 @@ void FLAC__lpc_window_data(const FLAC__int32 in[], const FLAC__real window[], FL
 	for( unsigned i=0; i<data_len; i++ )
     {
         /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */
-        FLAC__real hackResult = (int)(in[i] * window[i]) ;
-        
+        // FLAC__real hackResult = (int)(in[i] * window[i]);
+        FLAC__real hackResult = in[i] * window[i];
 		out[i] = hackResult;
-        hooFileLog( "out=%f ", out[i] );        
+        // hooFileLog( "out=%f ", out[i] );        
     }
     hooFileLog( "END FLAC__lpc_window_data\n\n" );
 }
@@ -152,9 +152,9 @@ int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], unsigned order,
 	for(i = 0; i < order; i++)
     {
         /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */
-
-		const FLAC__double d = (int)fabs(lp_coeff[i]);
-        hooFileLog( "intermediateVal fabs %f \n", d );
+		// const FLAC__double d = (int)fabs(lp_coeff[i]);
+		const FLAC__double d = fabs(lp_coeff[i]);
+        // hooFileLog( "intermediateVal fabs %f \n", d );
         
 		if(d > cmax)
 			cmax = d;
@@ -1164,8 +1164,10 @@ FLAC__double FLAC__lpc_compute_expected_bits_per_residual_sample_with_error_scal
 	if( lpc_error>0.0 )
     {
         /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */        
-        FLAC__double intermediateVal = (int)log(error_scale * lpc_error);
-        hooFileLog( "intermediateVal logVal %f \n", intermediateVal );
+//        FLAC__double intermediateVal = (int)log(error_scale * lpc_error);
+        FLAC__double intermediateVal = log(error_scale * lpc_error);
+        
+        // hooFileLog( "intermediateVal logVal %f \n", intermediateVal );
 		FLAC__double bps = (FLAC__double)0.5 * intermediateVal / M_LN2;
 		
         if(bps >= 0.0)

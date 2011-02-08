@@ -3316,20 +3316,20 @@ static FLaC__INLINE unsigned count_rice_bits_in_partition_(
 {
     hooFileLog( "count_rice_bits_in_partition_( %i, %i, %i )\n", rice_parameter, partition_samples, (int)abs_residual_partition_sum );
 
-    unsigned tempResult = FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_PARAMETER_LEN + (1+rice_parameter) * partition_samples;
-    int grr = rice_parameter-1;
-    unsigned shadowy_buggy_result;
-    if( rice_parameter )
-        shadowy_buggy_result = (unsigned)(abs_residual_partition_sum >> (int)grr);
-    else
-        shadowy_buggy_result = (unsigned)(abs_residual_partition_sum << 1);
+//    unsigned tempResult = FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_PARAMETER_LEN + (1+rice_parameter) * partition_samples;
+//    int grr = rice_parameter-1;
+//    unsigned shadowy_buggy_result;
+//    if( rice_parameter )
+//        shadowy_buggy_result = (unsigned)(abs_residual_partition_sum >> (int)grr);
+//    else
+//        shadowy_buggy_result = (unsigned)(abs_residual_partition_sum << 1);
 
-    unsigned tempResult3 = (partition_samples >> 1);
+//    unsigned tempResult3 = (partition_samples >> 1);
     
-	hooFileLog( "TEMP RESULTS %i, %i, %i\n", tempResult, tempResult3, shadowy_buggy_result );
+//	hooFileLog( "TEMP RESULTS %i, %i, %i\n", tempResult, tempResult3, shadowy_buggy_result );
     
     // HOOLEYISM
-    unsigned assertResult = tempResult + shadowy_buggy_result - tempResult3;
+//    unsigned assertResult = tempResult + shadowy_buggy_result - tempResult3;
     
 	unsigned realResult = 
 		FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_PARAMETER_LEN + /* actually could end up being FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_PARAMETER_LEN but err on side of 16bps */
@@ -3348,7 +3348,7 @@ static FLaC__INLINE unsigned count_rice_bits_in_partition_(
 		 */
 	;
 
-    return assertResult;    
+    return realResult;    
 }
 
 FLAC__bool set_partitioned_rice_(

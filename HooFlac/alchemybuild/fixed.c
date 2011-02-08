@@ -34,7 +34,7 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 {
     hooFileLog( "FLAC__fixed_compute_best_predictor( %i, %f )\n", data_len, residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1] );
 
-    static int printLimit = 0;
+//    static int printLimit = 0;
  
 	FLAC__int32 last_error_0 = data[-1];
 	FLAC__int32 last_error_1 = data[-1] - data[-2];
@@ -73,15 +73,22 @@ unsigned FLAC__fixed_compute_best_predictor(const FLAC__int32 data[], unsigned d
 	FLAC__ASSERT(data_len > 0 || total_error_4 == 0);
 
     /* HOOLEYISM - VERY TEMP! DISCARD FLOATING POINT STUFF - DAMNIT - STILL DIFFERENT VALUES! */        
-	residual_bits_per_sample[0] = (int)(FLAC__float)((total_error_0 > 0) ? log(M_LN2 * (FLAC__double)total_error_0 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[1] = (int)(FLAC__float)((total_error_1 > 0) ? log(M_LN2 * (FLAC__double)total_error_1 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[2] = (int)(FLAC__float)((total_error_2 > 0) ? log(M_LN2 * (FLAC__double)total_error_2 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[3] = (int)(FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
-	residual_bits_per_sample[4] = (int)(FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
+//	residual_bits_per_sample[0] = (int)(FLAC__float)((total_error_0 > 0) ? log(M_LN2 * (FLAC__double)total_error_0 / (FLAC__double)data_len) / M_LN2 : 0.0);
+//	residual_bits_per_sample[1] = (int)(FLAC__float)((total_error_1 > 0) ? log(M_LN2 * (FLAC__double)total_error_1 / (FLAC__double)data_len) / M_LN2 : 0.0);
+//	residual_bits_per_sample[2] = (int)(FLAC__float)((total_error_2 > 0) ? log(M_LN2 * (FLAC__double)total_error_2 / (FLAC__double)data_len) / M_LN2 : 0.0);
+//	residual_bits_per_sample[3] = (int)(FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
+//	residual_bits_per_sample[4] = (int)(FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
 
+	residual_bits_per_sample[0] = (FLAC__float)((total_error_0 > 0) ? log(M_LN2 * (FLAC__double)total_error_0 / (FLAC__double)data_len) / M_LN2 : 0.0);
+	residual_bits_per_sample[1] = (FLAC__float)((total_error_1 > 0) ? log(M_LN2 * (FLAC__double)total_error_1 / (FLAC__double)data_len) / M_LN2 : 0.0);
+	residual_bits_per_sample[2] = (FLAC__float)((total_error_2 > 0) ? log(M_LN2 * (FLAC__double)total_error_2 / (FLAC__double)data_len) / M_LN2 : 0.0);
+	residual_bits_per_sample[3] = (FLAC__float)((total_error_3 > 0) ? log(M_LN2 * (FLAC__double)total_error_3 / (FLAC__double)data_len) / M_LN2 : 0.0);
+	residual_bits_per_sample[4] = (FLAC__float)((total_error_4 > 0) ? log(M_LN2 * (FLAC__double)total_error_4 / (FLAC__double)data_len) / M_LN2 : 0.0);
+    
+    
     // FAIL
 //    if( printLimit<20 ) {
-    hooFileLog( "residual_bits_per_sample = %f %f %f %f %f \n", residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
+//    hooFileLog( "residual_bits_per_sample = %f %f %f %f %f \n", residual_bits_per_sample[0], residual_bits_per_sample[1], residual_bits_per_sample[2], residual_bits_per_sample[3], residual_bits_per_sample[4] );
 //        printLimit++;
 //    }
     
@@ -155,7 +162,7 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
 
 	const int idata_len = (int)data_len;
 	int i;
-    static int printLimit=0;
+//    static int printLimit=0;
 
 //    if( printLimit<20 ) {
 //        fprintf( stderr, "%i) FLAC__fixed_compute_residual order = %i \n", printLimit, order );
@@ -178,13 +185,15 @@ void FLAC__fixed_compute_residual(const FLAC__int32 data[], unsigned data_len, u
         
 		case 2:
 			for( i=0; i<idata_len; i++) {
-                int var1 = data[i];
-                int var2 = (data[i-1] << 1);
-                int var3 = data[i-2];
-				residual[i] = var1 - var2 + var3;
-                FLAC__int32 testResult = data[i]-(data[i-1] << 1)+ data[i-2];
-                FLAC__ASSERT( testResult==residual[i]);
-                hooFileLog( "CASE 2: residual[%i]=%i ( %i, %i, %i) \n", i, residual[i], var1, var2, var3 );  
+//                int var1 = data[i];
+//                int var2 = (data[i-1] << 1);
+//                int var3 = data[i-2];
+//				residual[i] = var1 - var2 + var3;
+                residual[i] = data[i]-(data[i-1] << 1)+ data[i-2];
+                
+//                FLAC__int32 testResult = data[i]-(data[i-1] << 1)+ data[i-2];
+//                FLAC__ASSERT( testResult==residual[i]);
+//                hooFileLog( "CASE 2: residual[%i]=%i ( %i, %i, %i) \n", i, residual[i], var1, var2, var3 );  
             }
 			break;
         

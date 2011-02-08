@@ -242,12 +242,12 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
 {
     hooFileLog( "FLAC__bitwriter_get_buffer()\n" );
 
-    static int printCount = 0;
+//    static int printCount = 0;
     
-    if(printCount<20){
+//    if(printCount<20){
 //        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
-        printCount++;
-    }    
+//        printCount++;
+//    }    
     
 	FLAC__ASSERT((bw->bits & 7) == 0);
 	/* double protection */
@@ -264,17 +264,17 @@ FLAC__bool FLAC__bitwriter_get_buffer(FLAC__BitWriter *bw, const FLAC__byte **bu
 	/* now we can just return what we have */
 	*buffer = (FLAC__byte *)bw->buffer;
     
-    if(printCount<20){
+//    if(printCount<20){
  //       fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
-        printCount++;
-    } 
+//        printCount++;
+//    } 
     
 	*bytes = (FLAC__BYTES_PER_WORD * bw->words) + (bw->bits >> 3);
     
-    if(printCount<20){
+//    if(printCount<20){
 //        fprintf( stderr, "%i) FLAC__bitwriter_get_buffer %p {%i %i %i %i} \n", printCount,  bw->buffer,  bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
-        printCount++;
-    } 
+//        printCount++;
+//    } 
     
 	return true;
 }
@@ -335,8 +335,8 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
 {
     hooFileLog( "FLAC__bitwriter_write_raw_uint32( %i, %i )\n", val, bits );
 
-    static int printCount = 0;
-    static int printLimit = 0;
+ //   static int printCount = 0;
+ //   static int printLimit = 0;
 
 	register unsigned left;
 
@@ -396,10 +396,10 @@ FLaC__INLINE FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FL
         
 		bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(val);
 	}
-    if(printCount<20){
+//    if(printCount<20){
 //        fprintf( stderr, "%i) FLAC__bitwriter_write_raw_uint32 {%i %i %i %i} \n", printCount, bw->buffer[0], bw->buffer[1], bw->buffer[2], bw->buffer[3] );
-        printCount++;
-    }
+//        printCount++;
+//    }
 	return true;
 }
 
@@ -607,7 +607,7 @@ break1:
 				bw->accum |= uval >> (bw->bits = lsbits - left);
                 
                 // HOOLEYISM
-                FLAC__ASSERT( debugAccum==bw->accum );
+                // FLAC__ASSERT( debugAccum==bw->accum );
                 
 				bw->buffer[bw->words++] = SWAP_BE_WORD_TO_HOST(bw->accum);
 				bw->accum = uval;

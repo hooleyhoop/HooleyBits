@@ -195,9 +195,16 @@ static AS3_Val clearByteArray( void *self, AS3_Val args ) {
 static AS3_Val encodeWavData( void *self, AS3_Val args ) {
 
     int64_t time_start = gettime();
+
+    // get Actionscript Args
+    AS3_Val flacData_arg = NULL;    
+    AS3_Val logFile_arg = NULL;
+    char * fileName;
     
+    AS3_ArrayValue( args, "StrType, AS3ValType, AS3ValType", &fileName, &flacData_arg, &logFile_arg );
+
     // This method is read only - thats just the way it is
-    FILE *wavDatfile = fopen( "wavData.dat", "rb" );    // rb = read-binary
+    FILE *wavDatfile = fopen( fileName, "rb" );    // rb = read-binary
 	int result = fseek( wavDatfile, 0, SEEK_END );
     if(result==-1){
         fprintf( stderr, "FAILED to seek in wavDatfile\n" );
@@ -206,13 +213,7 @@ static AS3_Val encodeWavData( void *self, AS3_Val args ) {
     
 	long wavDatfileSize = ftell( wavDatfile );
 	rewind( wavDatfile );
-
-    // get Actionscript Args
-    AS3_Val flacData_arg = NULL;    
-    AS3_Val logFile_arg = NULL;
     
-    AS3_ArrayValue( args, "AS3ValType, AS3ValType", &flacData_arg, &logFile_arg );
-        
     // Open flacData as a FILE - why?
 //    _flacFile = funopen( (void *)flacData_arg, readByteArray, writeByteArray, seekByteArray, closeByteArray );
 //    if( _flacFile==NULL ){
