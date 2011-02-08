@@ -21,6 +21,10 @@
 #include <Security/Authorization.h>
 #include <mach/mach_traps.h>
 #include <mach/mach_init.h>
+#include <mach/task.h>
+#include <mach/thread_act.h>
+#include <mach/mach_error.h>
+#include <assert.h>
 
 /* Print a message to stdout, prefixed by the process ID
 */
@@ -84,7 +88,12 @@ void run_debugger( pid_t child_pid ) {
 
     // we need to be authorized to do this
     mach_port_name_t port = TASK_NULL;
+
 	int result = task_for_pid( mach_task_self(), child_pid, &port);
+    if( result!=KERN_SUCCESS ) {
+        printf( "task_for_pid() failed with message %s!\n", (char *)mach_error_string(result) );
+        exit(0);
+    }
     
     /* Wait for child to stop on its first instruction */
     wait( &wait_status );
@@ -93,15 +102,30 @@ void run_debugger( pid_t child_pid ) {
     {
         icounter++;
         printf("waiting");
-//jiggy	struct user_regs_struct regs;
-//jiggy        ptrace(PTRACE_GETREGS, child_pid, 0, &regs);
-	
-	// alternative way
-	thread_act_port_array_t thread_list;
-	mach_msg_type_number_t thread_count;
-    task_threads(port, &thread_list, &thread_count);
-//alt	thread_get_state() i396_thread_state_t
-//alt	printf(&quot; lr: 0x%x\n&quot;,ppc_state.lr);
+        
+        // alternative way for ptrace(PTRACE_GETREGS, child_pid, 0, &regs);	
+        thread_act_port_array_t thread_list;
+        mach_msg_type_number_t thread_count;
+
+        result = task_threads(port, &thread_list, &thread_count);
+        if( result!=KERN_SUCCESS ) {
+            printf( "task_threads() failed with message %s!\n", mach_error_string(result) );
+            exit(0);
+        }
+        
+        x86_thread_state32_t thread_state;
+        mach_msg_type_number_t stateCount = x86_THREAD_STATE32_COUNT;
+        long thread = 0;	// for first thread
+        
+        result = thread_get_state( thread_list[thread], x86_THREAD_STATE32, (thread_state_t)&thread_state, &stateCount );
+        if( result!=KERN_SUCCESS ) {
+            printf( "thread_get_state() failed with message %s!\n", mach_error_string(result) );
+            exit(0);
+        }
+        
+        printf( "EIP: %u\nEAX: %u\nEBX: %u\nECX: %u\nEDX: %u\nSS: %u\n", thread_state.__eip, thread_state.__eax, thread_state.__ebx, thread_state.__ecx, thread_state.__edx, thread_state.__ss );
+        
+        //alt	printf( " lr: 0x%x\n",ppc_state.lr);
 
 //jiggy        unsigned instr = ptrace(PTRACE_PEEKTEXT, child_pid, regs.eip, 0);
  
@@ -189,28 +213,46 @@ int simple_tracer( const char *programname ) {
     cpu_type_t architecturePreference[] = { preferredArchitecture(), CPU_TYPE_X86 };
     posix_spawnattr_setbinpref_np(&attr, 2, architecturePreference, 0);
     
-    result = ptrace(PT_TRACE_ME, getpid(), NULL, 0);
+//    result = ptrace(PT_TRACE_ME, getpid(), NULL, 0);
+    
+    // DYLD_NO_PIE
     
     short flags = 0;
-    //flags |= POSIX_SPAWN_SETEXEC; // this makes it act like execve, ie not return
-    flags |= POSIX_SPAWN_START_SUSPENDED;
-    flags |= _POSIX_SPAWN_DISABLE_ASLR;
+    
+// http://www.google.com/codesearch/p?hl=en#OAMlx_jo-ck/src/third_party/WebKit/Source/WebKit2/UIProcess/Launcher/mac/ProcessLauncherMac.mm&q=POSIX_SPAWN_START_SUSPENDED&sa=N&cd=3&ct=rc
+    
+    // We want our process to receive all signals.
+    sigset_t signalMaskSet;
+    sigemptyset(&signalMaskSet);
+    
+    posix_spawnattr_setsigmask(&attr, &signalMaskSet);
+    flags |= POSIX_SPAWN_SETSIGMASK;
+    
+   // flags |= POSIX_SPAWN_SETEXEC; // this makes it act like execve, ie not return
+   flags |= POSIX_SPAWN_START_SUSPENDED;
+   flags |= _POSIX_SPAWN_DISABLE_ASLR;
     
     result = posix_spawnattr_setflags( &attr, flags );
+    
+    static int debug_setpgrp = 657473;
+    result = posix_spawnattr_setpgroup (&attr, debug_setpgrp);
+	assert(result == 0);
     
     //const char *working_dir = "/";
     //chdir( working_dir );
     
     pid_t child_pid=1;
    // pid_t result = posix_spawn( &child_pid, spawnedArgs[0], NULL, &attr, spawnedArgs, environ );
-    result = posix_spawn( &child_pid, argv[0], NULL, &attr, argv, environ );
+    result = posix_spawnp( &child_pid, argv[0], NULL, &attr, argv, environ );
+    char pid_str[32];    
+    snprintf (pid_str, 31, "%d", child_pid);
 
     if(result!=0) {
         fprintf( stderr, "ERROR %s", strerror(result) );
         return 1;
     }
     
-    result = ptrace(PT_TRACE_ME, child_pid, NULL, 0);
+//    result = ptrace(PT_TRACE_ME, child_pid, NULL, 0);
     
     posix_spawnattr_destroy (&attr);
 
@@ -226,7 +268,6 @@ int simple_tracer( const char *programname ) {
         
         // child process
         procmsg( "CHILD!!! \n" );        
-        sleep(1000);
         run_target( programname );
         
     } else if (child_pid > 0) {
@@ -237,13 +278,20 @@ int simple_tracer( const char *programname ) {
         result = ptrace(PT_SIGEXC, child_pid, 0, 0);    // lldb // Get BSD signals as mach exceptions
 
         procmsg( "Child pid is = %u. \n", child_pid );
-  //      setpgid( child_pid, child_pid );
-        int err = ptrace( PT_ATTACHEXC, child_pid, 0, 0 );
-        if( err==0 ) {
-            printf( "successfully attached to pid %d", child_pid );
-        } else {
-            printf( "error: failed to attach to pid %d", child_pid );
-        }
+        setpgid( child_pid, child_pid );
+        
+//        int err = ptrace( PT_ATTACHEXC, child_pid, 0, 0 );
+        kill( child_pid, SIGCONT );
+
+        usleep(250000);
+        
+      //   macosx_child_attach (pid_str, from_tty);
+
+//        if( err==0 ) {
+//            printf( "successfully attached to pid %d", child_pid );
+//        } else {
+//            printf( "error: failed to attach to pid %d", child_pid );
+//        }
             
         run_debugger( child_pid );
     } else {

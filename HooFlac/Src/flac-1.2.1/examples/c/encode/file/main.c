@@ -305,7 +305,8 @@ int main(int argc, char *argv[])
     FLAC__int32 *pcm = calloc( sizeof(FLAC__int32), pcm_buffer_size );
     
 	/* read blocks of samples from WAVE file and feed to encoder */
-	if(ok) {
+	if(ok)
+    {
 		size_t left = (size_t)total_samples_per_channel;
 		while( ok && left )
         {

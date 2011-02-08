@@ -1981,7 +1981,7 @@ FLAC__bool write_bitbuffer_( FLAC__StreamEncoder *encoder, unsigned samples, FLA
 //do we need this		}
 //do we need this	}
 
-    static int printCount = 0;
+//    static int printCount = 0;
 
 //OK    
 //ok if(printCount<20){

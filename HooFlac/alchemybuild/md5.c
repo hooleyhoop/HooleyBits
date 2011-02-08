@@ -198,23 +198,23 @@ static void FLAC__MD5Update(FLAC__MD5Context *ctx, FLAC__byte const *buf, unsign
     hooFileLog( "FLAC__MD5Update( %i )\n", len );
 
 	/* Update byte count */
-    static int printLimit = 0;
+//    static int printLimit = 0;
 
 	FLAC__uint32 t = ctx->bytes[0];
-    if( printLimit<20 ) {
+//    if( printLimit<20 ) {
  //       fprintf( stderr, "%i) t=%i\n", printLimit, t );
-        printLimit++;
-    }  
+//        printLimit++;
+//    }  
     
 	if ((ctx->bytes[0] = t + len) < t) {
 		ctx->bytes[1]++;	/* Carry from low to high */
     }
     
 	t = 64 - (t & 0x3f);	/* Space available in ctx->in (at least 1) */
-    if( printLimit<20 ) {
+//    if( printLimit<20 ) {
 //        fprintf( stderr, "%i) t=%i\n", printLimit, t );
-        printLimit++;
-    }
+//        printLimit++;
+//    }
     
 	if (t > len) {
 		memcpy((FLAC__byte *)ctx->in + 64 - t, buf, len);
