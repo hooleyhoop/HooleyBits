@@ -78,6 +78,11 @@ void run_target( const char *programname ) {
 //        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode 
 //                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
 // }
+void error(char *msg)
+{
+    printf("[!] error: %s.\n",msg);
+    exit(1);
+}
 
 void run_debugger( pid_t child_pid ) {
     
@@ -93,6 +98,10 @@ void run_debugger( pid_t child_pid ) {
         printf( "task_for_pid() failed with message %s!\n", (char *)mach_error_string(result) );
         exit(0);
     }
+    
+    // better shut down the task while we do this.
+    if(task_suspend(childTaskPort)) error("suspending the task");
+    
     //   int err = task_resume(childTaskPort);
     //int err = task_suspend(childTaskPort);
     while(true)
@@ -116,6 +125,13 @@ void run_debugger( pid_t child_pid ) {
         
         printf( "EIP: %u\nEAX: %u\nEBX: %u\nECX: %u\nEDX: %u\nSS: %u\n", thread_state.__eip, thread_state.__eax, thread_state.__ebx, thread_state.__ecx, thread_state.__edx, thread_state.__ss );
 
+        ppc_state.r3 = 0xdeadbeef;
+        if(thread_set_state(
+                            thread_list[thread],
+                            PPC_THREAD_STATE,
+                            (thread_state_t)&ppc_state,
+                            sc
+                            )) error("setting state");
         
         /* Wait for child to stop on its first instruction */
         wait( &wait_status );
@@ -143,11 +159,77 @@ void run_debugger( pid_t child_pid ) {
         }
 
         /* Wait for child to stop on its next instruction */
-        wait( &wait_status );
+        wait( &wait_status ); NOHANG
     }
-
+    TF resides in bit 8 of the EFLAGS register and when set to 1 the pro-
+    cessor generates exception 1 (debug exception) after each instruction
+    is executed. When INT3 is executed, the processor generates exception 3
+    (breakpoint).
+    
     procmsg("the child executed %u instructions\n", icounter);
 }
+
+- (void)suspendThread;
+{
+    kern_return_t rc;
+    
+    rc = thread_suspend(_targetThread);
+    if (rc != KERN_SUCCESS)
+        // This isn't a hard error since the thread might have terminated  
+        between when you decided to call this method and when it actually got  
+        invoked.
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"Unable to suspend thread, rc = %d", rc];
+}
+
+- (void)resumeThread;
+{
+    kern_return_t rc;
+    
+    rc = thread_resume(_targetThread);
+    if (rc != KERN_SUCCESS) {
+        mach_error("task_resume", rc);
+        abort();
+    }
+}
+
+- (void) setSingleStepEnabled: (BOOL) yn;
+{
+    [self suspendThread];
+    
+    struct ppc_thread_state state;
+    
+    stateCount = PPC_THREAD_STATE_COUNT;
+    krc = thread_get_state(_targetThread, PPC_THREAD_STATE, (natural_t  
+                                                             *)&state, &stateCount);
+    if (krc != KERN_SUCCESS) {
+        [self resumeThread];
+        [NSException raise: NSInternalInconsistencyException
+                    format: @"Error getting thread state, krc = %d,  
+         %s", krc, mach_error_string(krc)];
+    }
+    
+    if (yn)
+        state.srr1 |= 0x400UL; // enable SE bit
+        else
+            state.srr1 &= ~0x400UL; // disable SE bit
+            
+            krc = thread_set_state(_targetThread, PPC_THREAD_STATE, (natural_t  
+                                                                     *)&state, stateCount);
+            if (krc != KERN_SUCCESS) {
+                [self resumeThread];
+                [NSException raise: NSInternalInconsistencyException
+                            format: @"Error setting thread state, krc = %d,  
+                 %s", krc, mach_error_string(krc)];
+            }
+    
+    [self resumeThread];
+    
+}
+http://www.omnigroup.com/mailman/archive/macosx-dev/2000-June/014178.html
+Each  thread and task in Mach has an exception handler port
+
+task_set_exception_ports is important!
 
 static cpu_type_t preferredArchitecture()
 {
@@ -252,7 +334,7 @@ int simple_tracer( const char *programname ) {
     posix_spawnattr_setsigmask(&attr, &signalMaskSet);
     flags |= POSIX_SPAWN_SETSIGMASK;
    // flags |= POSIX_SPAWN_SETEXEC; // this makes it act like execve, ie not return
-    flags |= POSIX_SPAWN_START_SUSPENDED;
+   // flags |= POSIX_SPAWN_START_SUSPENDED;
     flags |= _POSIX_SPAWN_DISABLE_ASLR;
     
     result = posix_spawnattr_setflags( &attr, flags );
@@ -298,13 +380,19 @@ int simple_tracer( const char *programname ) {
         // parent process
         procmsg( "PARENT!!! \n" );        
 
+        // Deliver signals as mach exceptions
+        // signals are implemented ontop of mach exceptions
+        // I think you need this because signals can't be handled by a different task
+        // i signal can be sent using kill()
         result = ptrace( PT_SIGEXC, child_pid, 0, 0 );    // lldb // Get BSD signals as mach exceptions
 
         procmsg( "Child pid is = %u. \n", child_pid );
         setpgid( child_pid, child_pid );
         
-    int err = ptrace( PT_ATTACHEXC, child_pid, 0, 0 );
-//min        kill( child_pid, SIGCONT );
+        // taskforpid is equivalent to this
+        // int err = ptrace( PT_ATTACHEXC, child_pid, 0, 0 );
+        
+//min        kill( child_pid, SIGCONT ); // send a bsd signal
 
 //min        usleep(250000);
         
@@ -316,7 +404,6 @@ int simple_tracer( const char *programname ) {
 //        } else {
 //            printf( "error: failed to attach to pid %d", child_pid );
 //        }
-            
         run_debugger( child_pid );
     } else {
         perror("fork");
