@@ -133,6 +133,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		734DE0F51305535100BBD4F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73BE90A011D0BDC3003C87B2 /* lldb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 26579F68126A25920007C5CB;
+			remoteInfo = "darwin-debug";
+		};
 		7392918611DBA965000429DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7392917811DBA965000429DC /* SHShared.xcodeproj */;
@@ -862,6 +869,7 @@
 			children = (
 				73BE90A611D0BDC3003C87B2 /* lldb */,
 				73BE90A811D0BDC3003C87B2 /* LLDB.framework */,
+				734DE0F61305535100BBD4F7 /* darwin-debug */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -994,6 +1002,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		734DE0F61305535100BBD4F7 /* darwin-debug */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "darwin-debug";
+			remoteRef = 734DE0F51305535100BBD4F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7392918711DBA965000429DC /* SHShared.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

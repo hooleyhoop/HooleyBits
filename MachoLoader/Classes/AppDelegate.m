@@ -12,14 +12,16 @@
 #import "GenericTimer.h"
 #import "FunctionEnumerator.h"
 #import "DissasemblyProcessor.h"
-#import "simple_tracer.h"
+#import "SimpleTracer.h"
 
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-    simple_tracer( "/Applications/6-386.app/Contents/MacOS/6-386" );
+    SimpleTracer *tracer = [[SimpleTracer alloc] init];
+    [tracer trace:"/Applications/6-386.app/Contents/MacOS/6-386"];
+    return;
 
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];
 

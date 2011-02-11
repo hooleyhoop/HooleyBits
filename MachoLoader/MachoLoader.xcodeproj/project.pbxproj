@@ -16,7 +16,6 @@
 		7315FE88124DF9140088A8F6 /* StaticInitializSpeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */; };
 		7315FE89124DF9340088A8F6 /* ExperimentalFrankenStructsTetsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E5BFD3124B68D7009712C6 /* ExperimentalFrankenStructsTetsts.m */; };
 		731701A0123286BF00EE9ED6 /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
-		731702BB1232903700EE9ED6 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 731702BA1232903700EE9ED6 /* libstdc++.dylib */; };
 		731702D9123290EF00EE9ED6 /* IntHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702D8123290EF00EE9ED6 /* IntHash.m */; };
 		731702DA123290EF00EE9ED6 /* IntHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702D8123290EF00EE9ED6 /* IntHash.m */; };
 		731FAA831219702700D3EE3D /* FileMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA821219702700D3EE3D /* FileMapView.m */; };
@@ -28,6 +27,10 @@
 		7332007512197B1E00D80990 /* MemoryMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007312197B1E00D80990 /* MemoryMap.m */; };
 		7332007A12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
 		7332007B12197B2C00D80990 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332007912197B2C00D80990 /* Segment.m */; };
+		7332C9E413040FBA00ACFCA7 /* SimpleTracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332C9E313040FBA00ACFCA7 /* SimpleTracer.m */; };
+		7332C9E513040FBA00ACFCA7 /* SimpleTracer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332C9E313040FBA00ACFCA7 /* SimpleTracer.m */; };
+		7332C9E91304108200ACFCA7 /* HooPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332C9E81304108200ACFCA7 /* HooPermissions.m */; };
+		7332C9EA1304108200ACFCA7 /* HooPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7332C9E81304108200ACFCA7 /* HooPermissions.m */; };
 		734B66DC1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734E804B1289523100D5FC99 /* HooClass.c in Sources */ = {isa = PBXBuildFile; fileRef = 734E804A1289523000D5FC99 /* HooClass.c */; };
@@ -46,10 +49,12 @@
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
 		73990C931301542100EA388E /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73990C921301542100EA388E /* libstdc++.dylib */; };
 		73AD85D81288BE2A00140E62 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
+		73B346BF13045620006FDF4E /* mach_excUser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BC1304561F006FDF4E /* mach_excUser.c */; };
+		73B346C013045620006FDF4E /* mach_excUser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BC1304561F006FDF4E /* mach_excUser.c */; };
+		73B346C113045620006FDF4E /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BD1304561F006FDF4E /* mach_excServer.c */; };
+		73B346C213045620006FDF4E /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BD1304561F006FDF4E /* mach_excServer.c */; };
 		73C3EDE312994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
 		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
-		73C72C3012EC8AC400BB0F5E /* simple_tracer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */; };
-		73C72C3112EC8AC400BB0F5E /* simple_tracer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */; };
 		73C81C9612DB33F8004D64BA /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81C9512DB33F8004D64BA /* TokenArray.m */; };
 		73C81C9712DB33F8004D64BA /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81C9512DB33F8004D64BA /* TokenArray.m */; };
 		73C81CB412DB3446004D64BA /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB312DB3446004D64BA /* Argument.m */; };
@@ -90,7 +95,6 @@
 		730DB3CA12549ED800203ED8 /* ArgStackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArgStackTests.m; path = Tests/ArgStackTests.m; sourceTree = "<group>"; };
 		7310FD1512095D5C00AE9F6B /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7315FE87124DF9140088A8F6 /* StaticInitializSpeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticInitializSpeedTests.m; path = Tests/StaticInitializSpeedTests.m; sourceTree = "<group>"; };
-		731702BA1232903700EE9ED6 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = SDKROOT; };
 		731702D7123290EF00EE9ED6 /* IntHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntHash.h; path = Classes/IntHash.h; sourceTree = "<group>"; };
 		731702D8123290EF00EE9ED6 /* IntHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntHash.m; path = Classes/IntHash.m; sourceTree = "<group>"; };
 		731702DE1232910200EE9ED6 /* IntHashTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntHashTests.m; path = Tests/IntHashTests.m; sourceTree = "<group>"; };
@@ -119,6 +123,10 @@
 		7332007312197B1E00D80990 /* MemoryMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryMap.m; path = Classes/MemoryMap.m; sourceTree = "<group>"; };
 		7332007812197B2C00D80990 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Segment.h; path = Classes/Segment.h; sourceTree = "<group>"; };
 		7332007912197B2C00D80990 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Segment.m; path = Classes/Segment.m; sourceTree = "<group>"; };
+		7332C9E213040F7C00ACFCA7 /* SimpleTracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTracer.h; path = Classes/SimpleTracer.h; sourceTree = "<group>"; };
+		7332C9E313040FBA00ACFCA7 /* SimpleTracer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTracer.m; path = Classes/SimpleTracer.m; sourceTree = "<group>"; };
+		7332C9E71304108200ACFCA7 /* HooPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooPermissions.h; path = Classes/HooPermissions.h; sourceTree = "<group>"; };
+		7332C9E81304108200ACFCA7 /* HooPermissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HooPermissions.m; path = Classes/HooPermissions.m; sourceTree = "<group>"; };
 		734B6028122554D5002C0B0F /* IndirectSymbolTableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndirectSymbolTableTests.m; path = Tests/IndirectSymbolTableTests.m; sourceTree = "<group>"; };
 		734B66DA1226900A002C0B0F /* IntKeyDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntKeyDictionary.h; path = Classes/IntKeyDictionary.h; sourceTree = "<group>"; };
 		734B66DB1226900A002C0B0F /* IntKeyDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntKeyDictionary.m; path = Classes/IntKeyDictionary.m; sourceTree = "<group>"; };
@@ -142,14 +150,18 @@
 		7395BD77125630080046A8FE /* DisassemblyChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisassemblyChecker.m; path = Classes/DisassemblyChecker.m; sourceTree = "<group>"; };
 		7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionEnumerator.h; path = Classes/FunctionEnumerator.h; sourceTree = "<group>"; };
 		7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionEnumerator.m; path = Classes/FunctionEnumerator.m; sourceTree = "<group>"; };
-		73990C921301542100EA388E /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "../../../../../../../../usr/lib/gcc/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = "<group>"; };
+		73990C921301542100EA388E /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/usr/lib/gcc/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicDIYOOTests.m; path = Tests/BasicDIYOOTests.m; sourceTree = "<group>"; };
+		73B3464513044546006FDF4E /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
+		73B346BB130455BB006FDF4E /* mach_exc.defs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.mig; name = mach_exc.defs; path = Classes/mach_exc.defs; sourceTree = "<group>"; };
+		73B346BC1304561F006FDF4E /* mach_excUser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mach_excUser.c; path = Classes/mach_excUser.c; sourceTree = "<group>"; };
+		73B346BD1304561F006FDF4E /* mach_excServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mach_excServer.c; path = Classes/mach_excServer.c; sourceTree = "<group>"; };
+		73B346BE13045620006FDF4E /* mach_exc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mach_exc.h; path = Classes/mach_exc.h; sourceTree = "<group>"; };
 		73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCodeLine.h; path = Classes/DebugCodeLine.h; sourceTree = "<group>"; };
 		73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCodeLine.m; path = Classes/DebugCodeLine.m; sourceTree = "<group>"; };
-		73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simple_tracer.c; path = Classes/simple_tracer.c; sourceTree = "<group>"; };
 		73C81C9412DB33F8004D64BA /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Classes/TokenArray.h; sourceTree = "<group>"; };
 		73C81C9512DB33F8004D64BA /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Classes/TokenArray.m; sourceTree = "<group>"; };
 		73C81CB212DB3446004D64BA /* Argument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Argument.h; path = Classes/Argument.h; sourceTree = "<group>"; };
@@ -173,7 +185,6 @@
 		73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMemoryBlock.m; path = Classes/SHMemoryBlock.m; sourceTree = "<group>"; };
 		73E76251121C304C00A4190C /* MemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlockStore.h; path = Classes/MemoryBlockStore.h; sourceTree = "<group>"; };
 		73E76252121C304C00A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = Classes/MemoryBlockStore.m; sourceTree = "<group>"; };
-		73EA3FBB12EEEA5C0036CB7E /* simple_tracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simple_tracer.h; path = Classes/simple_tracer.h; sourceTree = "<group>"; };
 		73EDD9230F863E4700E09434 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = Classes/MachoLoader.h; sourceTree = "<group>"; };
 		73EDD9240F863E4700E09434 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = Classes/MachoLoader.m; sourceTree = "<group>"; };
 		73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InnerFunctionBlockTests.m; path = Tests/InnerFunctionBlockTests.m; sourceTree = "<group>"; };
@@ -196,7 +207,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				731FAACD1219724100D3EE3D /* SenTestingKit.framework in Frameworks */,
-				731702BB1232903700EE9ED6 /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,8 +236,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73990C921301542100EA388E /* libstdc++.dylib */,
 				7369E43D12FF10C8003FE5E3 /* Security.framework */,
-				731702BA1232903700EE9ED6 /* libstdc++.dylib */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				731FAACC1219724100D3EE3D /* SenTestingKit.framework */,
 			);
@@ -237,6 +247,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73B3464513044546006FDF4E /* Kernel.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -257,7 +268,6 @@
 		29B97314FDCFA39411CA2CEA /* MachoLoader */ = {
 			isa = PBXGroup;
 			children = (
-				73990C921301542100EA388E /* libstdc++.dylib */,
 				731FAA5A12196EE500D3EE3D /* Config */,
 				731FA9F912196E6F00D3EE3D /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -321,8 +331,7 @@
 				7302196A0F864C6E00906D18 /* Infrastructure */,
 				73EDD9230F863E4700E09434 /* MachoLoader.h */,
 				73EDD9240F863E4700E09434 /* MachoLoader.m */,
-				73EA3FBB12EEEA5C0036CB7E /* simple_tracer.h */,
-				73C72C2F12EC8AC400BB0F5E /* simple_tracer.c */,
+				7332C9E61304104F00ACFCA7 /* Tracing */,
 				7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */,
 				7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */,
 				73D6C1431267114000746DE2 /* Registers.h */,
@@ -434,6 +443,18 @@
 			path = ../../Blake/Config;
 			sourceTree = SOURCE_ROOT;
 		};
+		7332C9E61304104F00ACFCA7 /* Tracing */ = {
+			isa = PBXGroup;
+			children = (
+				7332C9E213040F7C00ACFCA7 /* SimpleTracer.h */,
+				7332C9E313040FBA00ACFCA7 /* SimpleTracer.m */,
+				7332C9E71304108200ACFCA7 /* HooPermissions.h */,
+				7332C9E81304108200ACFCA7 /* HooPermissions.m */,
+				73B346C313045626006FDF4E /* Built with mig from .defs */,
+			);
+			name = Tracing;
+			sourceTree = "<group>";
+		};
 		73A72002129BCA3A0005959F /* otool parsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +480,17 @@
 				73A72002129BCA3A0005959F /* otool parsing */,
 			);
 			name = Otool;
+			sourceTree = "<group>";
+		};
+		73B346C313045626006FDF4E /* Built with mig from .defs */ = {
+			isa = PBXGroup;
+			children = (
+				73B346BB130455BB006FDF4E /* mach_exc.defs */,
+				73B346BC1304561F006FDF4E /* mach_excUser.c */,
+				73B346BD1304561F006FDF4E /* mach_excServer.c */,
+				73B346BE13045620006FDF4E /* mach_exc.h */,
+			);
+			name = "Built with mig from .defs";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -630,7 +662,10 @@
 				73C81CB412DB3446004D64BA /* Argument.m in Sources */,
 				73C81CB812DB3477004D64BA /* ArgumentScanner.m in Sources */,
 				73C81CBC12DB347F004D64BA /* BasicToken.m in Sources */,
-				73C72C3012EC8AC400BB0F5E /* simple_tracer.c in Sources */,
+				7332C9E513040FBA00ACFCA7 /* SimpleTracer.m in Sources */,
+				7332C9EA1304108200ACFCA7 /* HooPermissions.m in Sources */,
+				73B346C013045620006FDF4E /* mach_excUser.c in Sources */,
+				73B346C213045620006FDF4E /* mach_excServer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,7 +701,10 @@
 				73C81CB512DB3446004D64BA /* Argument.m in Sources */,
 				73C81CB912DB3477004D64BA /* ArgumentScanner.m in Sources */,
 				73C81CBD12DB347F004D64BA /* BasicToken.m in Sources */,
-				73C72C3112EC8AC400BB0F5E /* simple_tracer.c in Sources */,
+				7332C9E413040FBA00ACFCA7 /* SimpleTracer.m in Sources */,
+				7332C9E91304108200ACFCA7 /* HooPermissions.m in Sources */,
+				73B346BF13045620006FDF4E /* mach_excUser.c in Sources */,
+				73B346C113045620006FDF4E /* mach_excServer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +822,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					/System/Library/Frameworks,
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				LIBRARY_SEARCH_PATHS = (
@@ -838,6 +877,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					/System/Library/Frameworks,
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				LIBRARY_SEARCH_PATHS = (
@@ -846,6 +886,13 @@
 					"\"/usr/lib/gcc/i686-apple-darwin10/4.0.1\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
 				PRODUCT_NAME = MachoLoader;
 			};
 			name = Debug32;

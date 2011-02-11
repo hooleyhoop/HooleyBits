@@ -17,8 +17,15 @@
 //#include <errno.h>
 //
 
+@interface SimpleTracer : NSObject {
+    
+}
+
+- (int)trace:(const char *)programname;
+
+@end
+
 void run_target( const char *programname );
 
 void run_debugger( pid_t child_pid );
 
-int simple_tracer( const char *programname );
