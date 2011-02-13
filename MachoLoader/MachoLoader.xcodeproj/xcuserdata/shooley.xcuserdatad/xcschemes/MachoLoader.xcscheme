@@ -47,17 +47,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
@@ -90,7 +90,8 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            value = ""
+            key = "DYLD_NO_PIE"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
@@ -131,17 +132,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
@@ -174,7 +175,8 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            value = ""
+            key = "DYLD_NO_PIE"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
@@ -216,17 +218,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
@@ -259,7 +261,8 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            value = ""
+            key = "DYLD_NO_PIE"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

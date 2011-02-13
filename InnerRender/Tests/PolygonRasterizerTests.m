@@ -27,11 +27,16 @@
     [super tearDown];
 }
 
+/* This only works with bytes! 
+    BOOL val = 255; // == false !!
+    I did not know this
+ */
+    
 - (void)testBitfieldStuffIHaveForgottenAbout {
 
 	unsigned char mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
-	char value;
+	char value = 0;
 	
 	// this is garbage - value is uninitialized!
 	value |= mask_table[ 3 ];
