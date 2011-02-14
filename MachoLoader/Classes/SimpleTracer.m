@@ -3,6 +3,9 @@
 ** Eli Bendersky (http://eli.thegreenplace.net)
 ** This code is in the public domain.
 */
+
+#import <sys/param.h>
+
 #import <stdio.h>
 #import <stdarg.h>
 #import <stdlib.h>
@@ -11,22 +14,41 @@
 #import <sys/types.h>
 #import <sys/ptrace.h>
 #import <sys/wait.h>
-//#import <sys/reg.h>
+//#import <sys/proc.h>
 #import <sys/user.h>
+//#import <sys/systm.h>
+//#import <sys/ux_exception.h>
+#import <sys/vmparam.h>	/* MAXSSIZ */
+//#import <sys/reg.h>
+
 #import <unistd.h>
 #import <errno.h>
 #import <spawn.h>
 #import <string.h>
 #import <crt_externs.h>
 #import <Security/Authorization.h>
+
 #import <mach/mach_traps.h>
 #import <mach/mach_init.h>
 #import <mach/task.h>
 #import <mach/thread_act.h>
 #import <mach/mach_error.h>
 #import <mach/mach_port.h>
+#import <mach/port.h>
 #import <mach/message.h>
 #import <mach/mach.h>
+
+#import <mach/boolean.h>
+#import <mach/exception.h>
+#import <mach/kern_return.h>
+#import <mach/mig_errors.h>
+//#import <mach/exc_server.h>
+//#import <mach/mach_exc_server.h>
+//#import <kern/task.h>
+//#import <kern/thread.h>
+//#import <kern/sched_prim.h>
+//#import <kern/kalloc.h>
+
 
 /* This file is built by running mig -v mach_exc.defs */
 #import "mach_exc.h"
@@ -91,6 +113,10 @@ pid_t                   _child_pid=1;
 struct ExceptionPorts   *_oldHandlerData;
 mach_port_name_t        _childTaskPort;
 thread_act_t            _firstThread;
+
+static unsigned int mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 
+    0x100UL, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 
+    0x10000, 0x20000 };
 
 #pragma mark -
 extern boolean_t mach_exc_server(  mach_msg_header_t *InHeadP, mach_msg_header_t *OutHeadP );
@@ -171,28 +197,19 @@ static kern_return_t forward_exception( mach_port_t thread_port, mach_port_t tas
             
         case EXCEPTION_DEFAULT:
             fprintf(stderr, "forwarding to exception_raise\n");
-            kret = exception_raise
-            (port, thread_port, task_port, exception_type,
-             exception_data, data_count);
+            kret = exception_raise (port, thread_port, task_port, exception_type, exception_data, data_count);
             MACH_CHECK_ERROR (exception_raise, kret);
             break;
             
         case EXCEPTION_STATE:
             fprintf(stderr, "forwarding to exception_raise_state\n");
-            kret = exception_raise_state
-            (port, exception_type, exception_data, data_count, &flavor,
-             thread_state, thread_state_count, thread_state,
-             &thread_state_count);
+            kret = exception_raise_state (port, exception_type, exception_data, data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
             MACH_CHECK_ERROR (exception_raise_state, kret);
             break;
             
         case EXCEPTION_STATE_IDENTITY:
             fprintf(stderr, "forwarding to exception_raise_state_identity\n");
-            kret = exception_raise_state_identity
-            (port, thread_port, task_port, exception_type,
-             exception_data,  data_count,
-             &flavor, thread_state, thread_state_count, thread_state,
-             &thread_state_count);
+            kret = exception_raise_state_identity (port, thread_port, task_port, exception_type, exception_data,  data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
             MACH_CHECK_ERROR (exception_raise_state_identity, kret);
             break;
             
@@ -209,9 +226,25 @@ static kern_return_t forward_exception( mach_port_t thread_port, mach_port_t tas
     return KERN_SUCCESS;
 }
 
-static unsigned int mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 
-    0x100UL, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 
-    0x10000, 0x20000 };
+thread_act_t threadFromTask( int index, mach_port_name_t task ) {
+
+    thread_array_t thread_list = NULL;
+    mach_msg_type_number_t thread_list_count = 0;
+
+    kern_return_t result = task_threads( _childTaskPort, &thread_list, &thread_list_count );
+    if( result!=KERN_SUCCESS ) {
+        printf( "task_threads() failed with message %s!\n", mach_error_string(result) );
+        exit(0);
+    }
+    printf( "Child task has %i threads\n", thread_list_count );
+    assert( index < thread_list_count );
+
+    thread_act_t threadPort = thread_list[index];
+    
+    vm_deallocate( mach_task_self(), (vm_address_t)thread_list, (vm_size_t)(sizeof(thread_t)*thread_list_count) );
+
+    return threadPort;
+}
 
 void enableTraceFlag( thread_act_t theThread, BOOL enable ) {
     
@@ -376,7 +409,6 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     _exceptionPort = MACH_PORT_NULL;
     mach_port_t task_self = mach_task_self();
 
-    
     kern_return_t krc = mach_port_allocate( task_self, MACH_PORT_RIGHT_RECEIVE, &_exceptionPort );
     if( krc != KERN_SUCCESS )
         [NSException raise: NSInternalInconsistencyException format: @"Unable to create handler port, krc = %d, %s", krc, mach_error_string(krc)];
@@ -391,12 +423,12 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     // kern_return_t kr = bootstrap_register2( bootstrap_port, const_cast<char*>(serviceName.data()), listeningPort, 0);
 
     posix_spawnattr_t attr;
-    pid_t result = posix_spawnattr_init( &attr );
+    int result = posix_spawnattr_init( &attr );
     assert( result==0 );
 
     cpu_type_t architecturePreference[] = { preferredArchitecture(), CPU_TYPE_X86 }; // 7
     posix_spawnattr_setbinpref_np( &attr, 2, architecturePreference, 0 );
-    
+
     posix_spawn_file_actions_t file_actions;
     posix_spawn_file_actions_init( &file_actions);
     posix_spawn_file_actions_addclose( &file_actions, STDIN_FILENO );
@@ -405,60 +437,90 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     posix_spawn_file_actions_addopen( &file_actions, STDIN_FILENO, "/dev/null", O_RDONLY | O_NOCTTY, 0 );
     posix_spawn_file_actions_addopen( &file_actions, STDOUT_FILENO, "/dev/null",  O_WRONLY | O_NOCTTY, 0 );
     posix_spawn_file_actions_addopen( &file_actions, STDERR_FILENO, "/dev/null", O_RDWR | O_NOCTTY, 0 );
-    
+
     // We want our process to receive all signals.
     sigset_t signalMaskSet;
     sigemptyset(&signalMaskSet);
     posix_spawnattr_setsigmask( &attr, &signalMaskSet );
-    
+
     short flags = 0;    
     flags |= POSIX_SPAWN_SETSIGMASK;
     // flags |= POSIX_SPAWN_SETEXEC;            // this makes it act like execve, ie not return
     flags |= POSIX_SPAWN_START_SUSPENDED;
     flags |= _POSIX_SPAWN_DISABLE_ASLR;
-    
+
     result = posix_spawnattr_setflags( &attr, flags );
     assert( result==0 );
 
     static int debug_setpgrp = 657473;
     result = posix_spawnattr_setpgroup (&attr, debug_setpgrp);
     assert( result==0 );
-    
+
     const char *working_dir = "/";
     chdir( working_dir );
-    
+
     // pid_t result = posix_spawn( &_child_pid, spawnedArgs[0], NULL, &attr, spawnedArgs, environ );
     result = posix_spawnp( &_child_pid, argv[0], &file_actions, &attr, argv, environ );
-    
-    int res = ptrace( PT_TRACE_ME, _child_pid, NULL, 0 );
-    assert( res==0 );
-
-    char pid_str[32];    
-    snprintf( pid_str, 31, "%d", _child_pid );
-    
     if(result!=0) error( strerror(result) );
-    
-    posix_spawnattr_destroy (&attr);
-    
+
+//    int res = ptrace( PT_TRACE_ME, _child_pid, NULL, 0 );
+//    assert( res==0 );
+
+//    char pid_str[32];    
+//    snprintf( pid_str, 31, "%d", _child_pid );
+
+
+    posix_spawnattr_destroy(&attr);
+
     // Set up the termination notification handler and then ask the child process to continue.
     setUpTerminationNotificationHandler( _child_pid );
-    //kill( _child_pid, SIGCONT );
+
+    // we need to be authorized to do this
+    _childTaskPort = TASK_NULL;
+
+    // This is like ptrace attach, no?
+    krc = task_for_pid( task_self, _child_pid, &_childTaskPort );
+    if( krc!=KERN_SUCCESS ) {
+        printf( "task_for_pid() failed with message %s!\n", (char *)mach_error_string(result) );
+        exit(0);
+    }
+
+    _firstThread = threadFromTask( 0, _childTaskPort );
+
+    [self setExceptionPorts];
+    [self createExceptionThread];
+
+    enableTraceFlag( _firstThread, YES );
+
+    /* The task needs starting */
+    kill( _child_pid, SIGCONT );
+
+
+    
+  //   [SimpleTracer performSelectorOnMainThread:@selector(run_debugger) withObject:nil waitUntilDone:NO];        
+    //    [_staticInstance resumeChildTask];
+
+//    run_debugger(_child_pid);
+//    [_staticInstance resumeChildTask];
+    
+    
+//    run_debugger( _child_pid );
+//    run_debugger( _child_pid );
+
+
+
 
  //   res = ptrace(PT_CONTINUE, _child_pid, 1, 0);
  //  assert( res==0 );
  //   return 1;
 
 
-    [self setExceptionPorts];
-    [self createExceptionThread];
-    usleep(250000);
-    sleep(1);
-    
-    run_debugger( _child_pid );
-
- //   enableTraceFlag( _firstThread, NO );
-
-    usleep(250000);
+//    usleep(250000);
+//    sleep(1);
+//    
+//
+//
+//    usleep(250000);
  
 //    int err = ptrace( PT_ATTACHEXC, _child_pid, 0, 0 );
 
@@ -468,7 +530,9 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
 //            return;
 //        }
     
-    [self resumeChildTask];
+ //   int rc = thread_resume( _firstThread );
+
+ //   [self resumeChildTask];
     
 
 
@@ -551,22 +615,13 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
         // parent process
         procmsg( "PARENT!!! \n" );        
 
-        int result = ptrace( PT_SIGEXC, _child_pid, 0, 0 );    // lldb // Get BSD signals as mach exceptions
-        assert( result==0 );
+ //err       int result = ptrace( PT_SIGEXC, _child_pid, 0, 0 );    // lldb // Get BSD signals as mach exceptions
+//err        assert( result==0 );
 
-        procmsg( "Child pid is = %u. \n", _child_pid );
-        setpgid( _child_pid, _child_pid );
+ //eerr       procmsg( "Child pid is = %u. \n", _child_pid );
+//errr        setpgid( _child_pid, _child_pid );
 
-        // we need to be authorized to do this
-        _childTaskPort = TASK_NULL;
-        mach_port_t task_self = mach_task_self();
 
-        // This is like ptrace attach, no?
-        result = task_for_pid( task_self, _child_pid, &_childTaskPort );
-        if( result!=KERN_SUCCESS ) {
-            printf( "task_for_pid() failed with message %s!\n", (char *)mach_error_string(result) );
-            exit(0);
-        }  
         
         // task you be stopped, no?
         // better shut down the task while we do this.
@@ -575,7 +630,7 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
 
 
         // Save the original state of the exception ports for our child process
-        [self SaveExceptionPortInfo];
+//BLAH        [self SaveExceptionPortInfo];
 
         // Set the ability to get all exceptions on this port
         
@@ -602,20 +657,9 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
         
 // HERE!DO TASK OR THREAD?
         
-        thread_act_port_array_t thread_list;
-        mach_msg_type_number_t thread_count;
-        
-        // you need to dealloc the threads!
-        
-         result = task_threads( _childTaskPort, &thread_list, &thread_count);
-        if( result!=KERN_SUCCESS ) {
-            printf( "task_threads() failed with message %s!\n", mach_error_string(result) );
-            exit(0);
-        }
-        printf( "Child task has %i threads\n", thread_count );
-        
-        long threadIndex = 0;	// for first thread    
-        _firstThread = thread_list[threadIndex];
+
+        _firstThread = _firstThread = threadFromTask( 0, _childTaskPort );
+
         
         //kern_return_t krc = thread_set_exception_ports( _firstThread, EXC_MASK_ALL, _exceptionPort, EXCEPTION_DEFAULT | MACH_EXCEPTION_CODES, THREAD_STATE_NONE );        
          kern_return_t krc = task_set_exception_ports( _childTaskPort, EXC_MASK_ALL, _exceptionPort, EXCEPTION_DEFAULT | MACH_EXCEPTION_CODES, THREAD_STATE_NONE );
@@ -660,10 +704,10 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
         
         //put_back     } else {
         //perror("fork");
-        return 1;
+        return;
     }
     
-    return 0;
+    return;
 }
 
 
@@ -726,13 +770,18 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
             exit(1);
         }
 
+        krc = mach_msg(reply, MACH_SEND_MSG, reply->msgh_size, 0, msg->msgh_local_port, 0, MACH_PORT_NULL);
+        MACH_CHECK_ERROR(mach_msg, krc);
+        
+        
+        
         fprintf(stderr, "wooooooooooo!\n");
     }
 }
 
 + (void)run_debugger {
     
-    // usleep(1000000);
+    usleep(1000000);
     run_debugger(_child_pid);
 }
 
@@ -746,6 +795,7 @@ integer_t child_suspend_count() {
         error((char *)"getting task info");    
     integer_t suspendCount = taskInformation->suspend_count;
     free(taskInformation);
+    printf( "Task suspend count >%i\n", suspendCount );
     return suspendCount;
 }
 
@@ -770,17 +820,25 @@ integer_t thread_suspend_state( thread_act_t thread ) {
 
 - (void)resumeChildTask {
     
-    kern_return_t rc = task_resume(_childTaskPort);
-    if( rc != KERN_SUCCESS )
-        error((char *)"resuming task");
+    sleep(1);
+    
+    mach_port_t task_self = mach_task_self();
+    int krc = task_for_pid( task_self, _child_pid, &_childTaskPort );
+
+    kill( _child_pid, SIGCONT );
+
+    assert( child_suspend_count()==0 );
+    assert( thread_suspend_state( _firstThread )==0 );
+
+//    kern_return_t rc = task_resume(_childTaskPort);
+//    if( rc != KERN_SUCCESS )
+//        error((char *)"resuming task");
   
     // i think its proabbly wrong to examine the state when not suspended
 //    assert( child_suspend_count()==0 );
  ///   assert( thread_suspend_state( _firstThread )==0 );
  //   kill( _child_pid, SIGCONT );
 }
-
-
 
 void run_debugger( pid_t child_pid ) {
     
@@ -790,30 +848,21 @@ void run_debugger( pid_t child_pid ) {
 //    if( child_suspend_count()==0 ) {
 //        procmsg("supending task\n");
 //        
-        kern_return_t rc = task_suspend( _childTaskPort );
-        if( rc != KERN_SUCCESS )
-            error((char *)"resuming thread");
+//        kern_return_t rc = task_suspend( _childTaskPort );
+//        if( rc != KERN_SUCCESS )
+//            error((char *)"suspending thread");
 //    }
 //    assert( child_suspend_count()==1 );
     
     // kill( _child_pid, SIGTSTP );
 
     // alternative way for ptrace(PTRACE_GETREGS, child_pid, 0, &regs);	
-    thread_act_port_array_t thread_list;
-    mach_msg_type_number_t thread_count;
+
     
     // you need to dealloc the threads!
     
-    int result = task_threads( _childTaskPort, &thread_list, &thread_count);
-    if( result!=KERN_SUCCESS ) {
-        printf( "task_threads() failed with message %s!\n", mach_error_string(result) );
-        exit(0);
-    }
-    printf( "Child task has %i threads\n", thread_count );
+    _firstThread = threadFromTask( 0, _childTaskPort );
     
-    long threadIndex = 0;	// for first thread    
-    _firstThread = thread_list[threadIndex];
-
 //    static int debugger = 0;
 //    if(debugger==0) {
 //        int err = ptrace( PT_ATTACHEXC, _child_pid, 0, 0 );
@@ -836,8 +885,8 @@ void run_debugger( pid_t child_pid ) {
 //        debugger++;
 
         // rc = thread_resume( _firstThread );
-    
-    
+
+
     /* Wait for child to stop on its first instruction */
     //        wait( &wait_status );
     //    }
@@ -975,23 +1024,55 @@ void run_target( const char *programname ) {
 // in a sinal handler you can only do very limited things (eg you cant call malloc!)
 // are these signal handlers?
 
+/*
+ * XXX Things that should be retrieved from Mach headers, but aren't
+ */
+struct ipc_object;
+extern kern_return_t ipc_object_copyin( ipc_space_t space, mach_port_name_t name, mach_msg_type_name_t msgt_name, struct ipc_object **objectp );
+
+//extern mach_msg_return_t mach_msg_receive(mach_msg_header_t *msg,
+//                                          mach_msg_option_t option, mach_msg_size_t rcv_size,
+//                                          mach_port_name_t rcv_name, mach_msg_timeout_t rcv_timeout,
+//                                          void (*continuation)(mach_msg_return_t),
+//                                          mach_msg_size_t slist_size);
+//extern mach_msg_return_t mach_msg_send(mach_msg_header_t *msg,
+//                                       mach_msg_option_t option, mach_msg_size_t send_size,
+//                                       mach_msg_timeout_t send_timeout, mach_port_name_t notify);
+// extern thread_t convert_port_to_thread(ipc_port_t port);
+// extern void ipc_port_release(ipc_port_t);
+
+static void darwin_encode_reply( mig_reply_error_t *reply, mach_msg_header_t *hdr, integer_t code )
+{
+    mach_msg_header_t *rh = &reply->Head;
+    rh->msgh_bits = MACH_MSGH_BITS(MACH_MSGH_BITS_REMOTE(hdr->msgh_bits), 0);
+    rh->msgh_remote_port = hdr->msgh_remote_port;
+    rh->msgh_size = (mach_msg_size_t)sizeof(mig_reply_error_t);
+    rh->msgh_local_port = MACH_PORT_NULL;
+    rh->msgh_id = hdr->msgh_id + 100;
+    
+    reply->NDR = NDR_record;
+    reply->RetCode = code;
+}
+
 kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_t thread, mach_port_t task, exception_type_t exception,
                                     exception_data_t code, mach_msg_type_number_t codeCount ) {
 
     assert( exception_port==_exceptionPort );
     assert( task==_childTaskPort );
     assert( thread==_firstThread );
-    
-    kern_return_t krc = KERN_FAILURE;
+
+    kern_return_t krc = MACH_MSG_SUCCESS;
 
     if( exception == EXC_BREAKPOINT ) {
 
-            run_debugger(_child_pid);
-        // [SimpleTracer performSelectorOnMainThread:@selector(run_debugger) withObject:nil waitUntilDone:NO];
- [_staticInstance resumeChildTask];
+        // main thread must not be blocked!
+        [_staticInstance performSelectorOnMainThread:@selector(resumeChildTask) withObject:nil waitUntilDone:NO];        
+
+        mig_reply_error_t reply;
+
         /* The child task will only continue if we return KERN_SUCCESS */
-        return KERN_SUCCESS;
-        
+        return KERN_SUCCESS; 
+
     } else {
         fprintf( stdout, "UNKNOWN EXCEPTION" );        
         fprintf( stdout, "%s(): thread: 0x%x task: 0x%x type: 0x%x code: %p codeCnt: 0x%x", __func__, thread, task, exception, code, codeCount );
