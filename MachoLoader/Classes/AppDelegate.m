@@ -24,6 +24,8 @@
     SimpleTracer *tracer = [[SimpleTracer alloc] init];
     [tracer trace:"/Applications/6-386.app/Contents/MacOS/6-386"];
 //    [tracer trace:"/Users/shooley/Desktop/Organ/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug32/CommandLineApp"];
+    
+    [tracer performSelector:@selector(stopTracing) withObject:nil afterDelay:5];
     return;
 
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];

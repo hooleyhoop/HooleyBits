@@ -496,7 +496,15 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     kill( _child_pid, SIGCONT );
 
 
-    
+//    -- all interesting stuff is now on Exception thread
+//    -- what does the main thread do?
+//    
+//    -- at some point the main thread wants to stop the child task and the exception thread.
+//
+//    -- ** first things first, i need a stop button ** --
+//        
+//        -- wait for task to stop, quit task, exit exception thread
+        
   //   [SimpleTracer performSelectorOnMainThread:@selector(run_debugger) withObject:nil waitUntilDone:NO];        
     //    [_staticInstance resumeChildTask];
 
@@ -593,6 +601,17 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     return 0;
 }
 
+- (void)stopTracing {
+    
+    NSLog(@"stoppped!");
+    
+ //   NSThreadWillExitNotification
+    
+    // -- exit exception thread and wait for quit
+    _shouldStop = YES;
+    sleep(1);    
+    kill( _child_pid, SIGQUIT );
+}
 
 - (void)setExceptionPorts {
     
@@ -712,13 +731,13 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
 
 
 - (void)createExceptionThread {
-    [NSThread detachNewThreadSelector: @selector(_handleExceptions) toTarget: isa withObject: nil];        
+    [NSThread detachNewThreadSelector: @selector(_handleExceptions) toTarget:self withObject: nil];        
 }
 
+- (void)_handleExceptions {
+    
 #define MSG_SIZE 512
 
-+ (void)_handleExceptions {
-    
     kern_return_t krc;
     mach_msg_header_t *msg, *reply;
     
@@ -767,15 +786,16 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
   
         if( !mach_exc_server(msg, reply) ) {
             fprintf(stderr, "mach_exc_server hated the message\n");
-            exit(1);
+            // exit(1);
+        } else {
+            if(_shouldStop) {
+                NSLog(@"Thread is exiting");
+                return;
+            }
+            krc = mach_msg(reply, MACH_SEND_MSG, reply->msgh_size, 0, msg->msgh_local_port, 0, MACH_PORT_NULL);
+            MACH_CHECK_ERROR(mach_msg, krc);
         }
-
-        krc = mach_msg(reply, MACH_SEND_MSG, reply->msgh_size, 0, msg->msgh_local_port, 0, MACH_PORT_NULL);
-        MACH_CHECK_ERROR(mach_msg, krc);
         
-        
-        
-        fprintf(stderr, "wooooooooooo!\n");
     }
 }
 
@@ -827,8 +847,8 @@ integer_t thread_suspend_state( thread_act_t thread ) {
 
     kill( _child_pid, SIGCONT );
 
-    assert( child_suspend_count()==0 );
-    assert( thread_suspend_state( _firstThread )==0 );
+//    assert( child_suspend_count()==0 );
+//    assert( thread_suspend_state( _firstThread )==0 );
 
 //    kern_return_t rc = task_resume(_childTaskPort);
 //    if( rc != KERN_SUCCESS )
@@ -1024,35 +1044,6 @@ void run_target( const char *programname ) {
 // in a sinal handler you can only do very limited things (eg you cant call malloc!)
 // are these signal handlers?
 
-/*
- * XXX Things that should be retrieved from Mach headers, but aren't
- */
-struct ipc_object;
-extern kern_return_t ipc_object_copyin( ipc_space_t space, mach_port_name_t name, mach_msg_type_name_t msgt_name, struct ipc_object **objectp );
-
-//extern mach_msg_return_t mach_msg_receive(mach_msg_header_t *msg,
-//                                          mach_msg_option_t option, mach_msg_size_t rcv_size,
-//                                          mach_port_name_t rcv_name, mach_msg_timeout_t rcv_timeout,
-//                                          void (*continuation)(mach_msg_return_t),
-//                                          mach_msg_size_t slist_size);
-//extern mach_msg_return_t mach_msg_send(mach_msg_header_t *msg,
-//                                       mach_msg_option_t option, mach_msg_size_t send_size,
-//                                       mach_msg_timeout_t send_timeout, mach_port_name_t notify);
-// extern thread_t convert_port_to_thread(ipc_port_t port);
-// extern void ipc_port_release(ipc_port_t);
-
-static void darwin_encode_reply( mig_reply_error_t *reply, mach_msg_header_t *hdr, integer_t code )
-{
-    mach_msg_header_t *rh = &reply->Head;
-    rh->msgh_bits = MACH_MSGH_BITS(MACH_MSGH_BITS_REMOTE(hdr->msgh_bits), 0);
-    rh->msgh_remote_port = hdr->msgh_remote_port;
-    rh->msgh_size = (mach_msg_size_t)sizeof(mig_reply_error_t);
-    rh->msgh_local_port = MACH_PORT_NULL;
-    rh->msgh_id = hdr->msgh_id + 100;
-    
-    reply->NDR = NDR_record;
-    reply->RetCode = code;
-}
 
 kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_t thread, mach_port_t task, exception_type_t exception,
                                     exception_data_t code, mach_msg_type_number_t codeCount ) {
@@ -1065,10 +1056,14 @@ kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_
 
     if( exception == EXC_BREAKPOINT ) {
 
-        // main thread must not be blocked!
-        [_staticInstance performSelectorOnMainThread:@selector(resumeChildTask) withObject:nil waitUntilDone:NO];        
+        /* A dispatch queue can replace locks to protect a shared resource */
+//        dispatch_sync(my_queue, ^{
+//            // Critical section
+//        });
+//        
+//        // main thread must not be blocked!
+//        [_staticInstance performSelectorOnMainThread:@selector(resumeChildTask) withObject:nil waitUntilDone:NO];        
 
-        mig_reply_error_t reply;
 
         /* The child task will only continue if we return KERN_SUCCESS */
         return KERN_SUCCESS; 

@@ -10,7 +10,6 @@
 #import <sys/time.h>
 
 // gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
-
 double sys_getrealtime(void) {
 	
     static struct timeval then;
@@ -38,7 +37,7 @@ double sys_getrealtime(void) {
 
 - (void)close {
 	double time = sys_getrealtime()-_startTime;
-	NSLog(@"Timer took %f", time);
+	NSLog(@"Timer took %.2f", time);
 }
 
 @end

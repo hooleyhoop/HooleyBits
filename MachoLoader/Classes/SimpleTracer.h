@@ -19,9 +19,12 @@
 
 @interface SimpleTracer : NSObject {
     
+    BOOL _shouldStop;
 }
 
 - (int)trace:(const char *)programname;
+
+- (void)stopTracing;
 
 @end
 
