@@ -236,9 +236,9 @@ thread_act_t threadFromTask( int index, mach_port_name_t task ) {
         printf( "task_threads() failed with message %s!\n", mach_error_string(result) );
         exit(0);
     }
-    printf( "Child task has %i threads\n", thread_list_count );
+    // printf( "Child task has %i threads\n", thread_list_count );
     assert( index < thread_list_count );
-
+    assert( thread_list_count==1 );
     thread_act_t threadPort = thread_list[index];
     
     vm_deallocate( mach_task_self(), (vm_address_t)thread_list, (vm_size_t)(sizeof(thread_t)*thread_list_count) );
@@ -294,6 +294,18 @@ void enableTraceFlag( thread_act_t theThread, BOOL enable ) {
     }      
 }
 
+// So the TASK_DYLD_INFO used to just return the address of the all image infos
+// as a single member called "all_image_info". Then someone decided it would be
+// a good idea to rename this first member to "all_image_info_addr" and add a
+// size member called "all_image_info_size". This of course can not be detected
+// using code or #defines. So to hack around this problem, we define our own
+// version of the TASK_DYLD_INFO structure so we can guarantee what is inside it.
+
+struct hack_task_dyld_info {
+    mach_vm_address_t   all_image_info_addr;
+    mach_vm_size_t      all_image_info_size;
+};
+
 void printRegisters() {
     
     struct x86_thread_state thread_state;
@@ -307,6 +319,23 @@ void printRegisters() {
         
         x86_thread_state32_t tState = thread_state.uts.ts32;
         
+        
+        struct hack_task_dyld_info dyld_info;
+        mach_msg_type_number_t count = TASK_DYLD_INFO_COUNT;
+        
+        // Make sure that COUNT isn't bigger than our hacked up struct hack_task_dyld_info.
+        // If it is, then make COUNT smaller to match.
+        if (count > (sizeof(struct hack_task_dyld_info) / sizeof(natural_t)))
+            count = (sizeof(struct hack_task_dyld_info) / sizeof(natural_t));
+
+        kern_return_t result =  task_info(_childTaskPort, TASK_DYLD_INFO, (task_info_t)&dyld_info, &count);
+
+        dyld            = 8fe44400
+        eip             = 8fe01032
+        address in dis  = 00002ac0
+        
+        how to set a breakpoint on the first line?
+    
         printf(
                "Instruction Pointer:\t\t %0x\n"
                "Accumulator:\t\t\t\t %0x\n"
@@ -326,9 +355,9 @@ void printRegisters() {
                "data segment (string):\t\t %0x\n"
                "data segment:\t\t\t\t  %0x\n"
                "data segment:\t\t\t\t  %0x\n",
-               
+//               
                //TODO:    0x0000264a vs 8fe01030
-               tState.__eip, 
+               tState.__eip,
                tState.__eax,
                tState.__edx,
                tState.__ecx,
@@ -390,14 +419,14 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     dispatch_resume(processDiedSource);
 }
 
-- (int)trace:(const char *)programname {
+- (int)trace:(NSString *)programname {
         
     [HooPermissions acquireTaskportRight];
     
     char **argv = (char **)calloc(sizeof(char *), 8 + 1);
     // char **env = (char **)calloc(sizeof(char *), 8 + 1);
     
-    argv[0] = (char *)programname;
+    argv[0] = (char *)[programname UTF8String];
     
     char const *envp[0];
    	char*** envPtr = _NSGetEnviron();
@@ -745,17 +774,17 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     reply = alloca(MSG_SIZE);
     
     while (TRUE) {
-        fprintf(stderr, "Waiting for exception messages...\n");
+//        fprintf(stderr, "Waiting for exception messages...\n");
         krc = mach_msg( msg, MACH_RCV_MSG, MSG_SIZE, MSG_SIZE, _exceptionPort, 0, MACH_PORT_NULL );
         MACH_CHECK_ERROR(mach_msg, krc);
         
-        fprintf(stderr, "Message received on exception port\n");
-        fprintf(stderr, "  msgh_bits:        0x%08x\n", msg->msgh_bits);
-        fprintf(stderr, "  msgh_size:        %d\n", msg->msgh_size);
-        fprintf(stderr, "  msgh_remote_port: 0x%x\n", msg->msgh_remote_port);
-        fprintf(stderr, "  msgh_local_port:  0x%x\n", msg->msgh_local_port);
-        fprintf(stderr, "  msgh_reserved:    0x%x\n", msg->msgh_reserved);
-        fprintf(stderr, "  msgh_id:          %d\n", msg->msgh_id);
+//        fprintf(stderr, "Message received on exception port\n");
+//        fprintf(stderr, "  msgh_bits:        0x%08x\n", msg->msgh_bits);
+//        fprintf(stderr, "  msgh_size:        %d\n", msg->msgh_size);
+//        fprintf(stderr, "  msgh_remote_port: 0x%x\n", msg->msgh_remote_port);
+//        fprintf(stderr, "  msgh_local_port:  0x%x\n", msg->msgh_local_port);
+//        fprintf(stderr, "  msgh_reserved:    0x%x\n", msg->msgh_reserved);
+//        fprintf(stderr, "  msgh_id:          %d\n", msg->msgh_id);
         
         // The exc_server function is the MIG generated server handling function
         // to handle messages from the kernel relating to the occurrence of an
@@ -799,11 +828,11 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     }
 }
 
-+ (void)run_debugger {
-    
-    usleep(1000000);
-    run_debugger(_child_pid);
-}
+//+ (void)run_debugger {
+//    
+//    usleep(1000000);
+//    run_debugger(_child_pid);
+//}
 
 integer_t child_suspend_count() {
 
@@ -829,7 +858,7 @@ integer_t thread_suspend_state( thread_act_t thread ) {
     integer_t runState = basicInfoPtr->run_state;
     integer_t suspendCount = basicInfoPtr->suspend_count;
     free( basicInfoPtr );
-    printf( "Thread run state >%i, thread suspend count >%i\n", runState, suspendCount );
+    // printf( "Thread run state >%i, thread suspend count >%i\n", runState, suspendCount );
     return suspendCount;
 }
 
@@ -860,21 +889,21 @@ integer_t thread_suspend_state( thread_act_t thread ) {
  //   kill( _child_pid, SIGCONT );
 }
 
-void run_debugger( pid_t child_pid ) {
+void step_debugger( pid_t child_pid ) {
     
     int wait_status;
     static unsigned icounter = 0;
     
+    // The child task thread is waiting at the trap
+    // But i think we gotta suspend it anyhows
 //    if( child_suspend_count()==0 ) {
 //        procmsg("supending task\n");
 //        
-//        kern_return_t rc = task_suspend( _childTaskPort );
-//        if( rc != KERN_SUCCESS )
-//            error((char *)"suspending thread");
-//    }
-//    assert( child_suspend_count()==1 );
+    kern_return_t rc = task_suspend( _childTaskPort );
+    if( rc != KERN_SUCCESS )
+        error((char *)"suspending child task");
+    assert( child_suspend_count()==1 );
     
-    // kill( _child_pid, SIGTSTP );
 
     // alternative way for ptrace(PTRACE_GETREGS, child_pid, 0, &regs);	
 
@@ -889,7 +918,6 @@ void run_debugger( pid_t child_pid ) {
 //        kill( _child_pid, SIGCONT );        
 //    }
 //    debugger++;    
-//    return;
     
     int tada=  thread_suspend_state( _firstThread );
     
@@ -900,7 +928,7 @@ void run_debugger( pid_t child_pid ) {
 
     printRegisters( _firstThread );
         
-    enableTraceFlag( _firstThread, YES );
+ //   enableTraceFlag( _firstThread, YES );
 
 //        debugger++;
 
@@ -921,7 +949,7 @@ void run_debugger( pid_t child_pid ) {
     //jiggy        unsigned instr = ptrace(PTRACE_PEEKTEXT, child_pid, regs.eip, 0);
     
     // procmsg("icounter = %u.  EIP = 0x%08x.  instr = 0x%08x\n", icounter, regs.eip, instr);
-    procmsg("icounter = %u. \n", icounter);
+    // procmsg("icounter = %u. \n", icounter);
     
     /* Make the child execute another instruction */
     //        if( ptrace(PT_STEP, child_pid, 1, 0) < 0) {
@@ -933,8 +961,11 @@ void run_debugger( pid_t child_pid ) {
     //        wait( &wait_status ); NOHANG
     //   }
 
-    
-    procmsg("the child executed %u instructions\n", icounter);
+    rc = task_resume(_childTaskPort);
+    if( rc != KERN_SUCCESS )
+        error((char *)"resuming task");
+
+   // procmsg("the child executed %u instructions\n", icounter);
 }
 
 @end
@@ -999,7 +1030,7 @@ void run_target( const char *programname ) {
 //    
 //    rc = thread_resume(_targetThread);
 //    if (rc != KERN_SUCCESS) {
-//        mach_error("task_resume", rc);
+//        mach_error("thread_resume", rc);
 //        abort();
 //    }
 //}
@@ -1063,7 +1094,8 @@ kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_
 //        
 //        // main thread must not be blocked!
 //        [_staticInstance performSelectorOnMainThread:@selector(resumeChildTask) withObject:nil waitUntilDone:NO];        
-
+        
+        step_debugger( _child_pid );
 
         /* The child task will only continue if we return KERN_SUCCESS */
         return KERN_SUCCESS; 

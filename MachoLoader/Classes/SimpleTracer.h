@@ -22,7 +22,7 @@
     BOOL _shouldStop;
 }
 
-- (int)trace:(const char *)programname;
+- (int)trace:(NSString *)programname;
 
 - (void)stopTracing;
 

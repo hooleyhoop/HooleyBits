@@ -21,11 +21,19 @@
 
     [[NSApp mainMenu] addItem:[[[NSClassFromString(@"FScriptMenuItem") alloc] init] autorelease]];
 
-    SimpleTracer *tracer = [[SimpleTracer alloc] init];
-    [tracer trace:"/Applications/6-386.app/Contents/MacOS/6-386"];
-//    [tracer trace:"/Users/shooley/Desktop/Organ/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug32/CommandLineApp"];
+    NSString *pathToApp = @"/Applications/6-386.app/Contents/MacOS/6-386";
+    MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
+    [ml readFile];
+
+    // [ml disassembleWithChecker:nil];
     
-    [tracer performSelector:@selector(stopTracing) withObject:nil afterDelay:5];
+    SimpleTracer *tracer = [[SimpleTracer alloc] init];
+    [tracer trace:pathToApp];
+    
+    
+//    [tracer trace:"/Users/shooley/Desktop/Organ/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug32/CommandLineApp"];
+
+//    [tracer performSelector:@selector(stopTracing) withObject:nil afterDelay:5];
     return;
 
 	GenericTimer *readTimer = [[[GenericTimer alloc] init] autorelease];

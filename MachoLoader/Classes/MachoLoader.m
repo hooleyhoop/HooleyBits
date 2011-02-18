@@ -720,6 +720,8 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 								:_strings_size];
 }
 
+// Check out MachOView.app - open source!
+
 - (void)disassembleWithChecker:(DisassemblyChecker *)dc {
 	
 	i386_disasm *dis = [[[i386_disasm alloc] initWithChecker:dc] autorelease];
