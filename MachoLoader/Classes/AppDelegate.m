@@ -25,10 +25,12 @@
     MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
     [ml readFile];
 
-    // [ml disassembleWithChecker:nil];
+//    [ml disassembleWithChecker:nil];
+    
+    char *firstInstruction = [ml addressOfFirstInstruction];
     
     SimpleTracer *tracer = [[SimpleTracer alloc] init];
-    [tracer trace:pathToApp];
+    [tracer trace:pathToApp firstInstruction:firstInstruction size:ml.codeSize];
     
     
 //    [tracer trace:"/Users/shooley/Desktop/Organ/Programming/Cocoa/HooleyBits/MachoLoader/build/Debug32/CommandLineApp"];

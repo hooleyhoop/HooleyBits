@@ -48,7 +48,8 @@
 //#import <kern/thread.h>
 //#import <kern/sched_prim.h>
 //#import <kern/kalloc.h>
-
+#import "sw_breakpoint.h"
+#import "hw_breakpoint.h"
 
 /* This file is built by running mig -v mach_exc.defs */
 #import "mach_exc.h"
@@ -114,6 +115,8 @@ struct ExceptionPorts   *_oldHandlerData;
 mach_port_name_t        _childTaskPort;
 thread_act_t            _firstThread;
 
+static void (^_instructionTrapAction)() = NULL;
+
 static unsigned int mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 
     0x100UL, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 
     0x10000, 0x20000 };
@@ -163,9 +166,7 @@ static kern_return_t forward_exception( mach_port_t thread_port, mach_port_t tas
     exception_behavior_t behavior;
     thread_state_flavor_t flavor;
     
- //   thread_state_data_t thread_state;
     struct x86_thread_state thread_state;
-
     mach_msg_type_number_t thread_state_count;
     
     for (portIndex = 0; portIndex < oldExceptionPorts->maskCount; portIndex++) {
@@ -197,19 +198,19 @@ static kern_return_t forward_exception( mach_port_t thread_port, mach_port_t tas
             
         case EXCEPTION_DEFAULT:
             fprintf(stderr, "forwarding to exception_raise\n");
-            kret = exception_raise (port, thread_port, task_port, exception_type, exception_data, data_count);
+         //   kret = exception_raise (port, thread_port, task_port, exception_type, exception_data, data_count);
             MACH_CHECK_ERROR (exception_raise, kret);
             break;
             
         case EXCEPTION_STATE:
             fprintf(stderr, "forwarding to exception_raise_state\n");
-            kret = exception_raise_state (port, exception_type, exception_data, data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
+       //     kret = exception_raise_state (port, exception_type, exception_data, data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
             MACH_CHECK_ERROR (exception_raise_state, kret);
             break;
             
         case EXCEPTION_STATE_IDENTITY:
             fprintf(stderr, "forwarding to exception_raise_state_identity\n");
-            kret = exception_raise_state_identity (port, thread_port, task_port, exception_type, exception_data,  data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
+        //    kret = exception_raise_state_identity (port, thread_port, task_port, exception_type, exception_data,  data_count, &flavor, thread_state, thread_state_count, thread_state, &thread_state_count);
             MACH_CHECK_ERROR (exception_raise_state_identity, kret);
             break;
             
@@ -306,74 +307,75 @@ struct hack_task_dyld_info {
     mach_vm_size_t      all_image_info_size;
 };
 
-void printRegisters() {
+unsigned int getInstructionPointer( thread_act_t thread ) {
+
+    struct x86_thread_state thread_state;
+    mach_msg_type_number_t stateCount = MACHINE_THREAD_STATE_COUNT;
+    memset( &thread_state, 0, sizeof(i386_thread_state_t));    
+    kern_return_t result = thread_get_state( thread, MACHINE_THREAD_STATE, (thread_state_t)&thread_state, &stateCount );
+    MACH_CHECK_ERROR( thread_get_state, result );
+    if( thread_state.tsh.flavor==x86_THREAD_STATE32 ){
+        x86_thread_state32_t tState = thread_state.uts.ts32;
+        return tState.__eip;
+    } else if( thread_state.tsh.flavor==x86_THREAD_STATE64 ) {
+        x86_thread_state64_t tState = thread_state.uts.ts64;
+        [NSException raise:NSInternalInconsistencyException format:@"Do this"];
+    } else {
+        [NSException raise:NSInternalInconsistencyException format:@"What the fuck"];
+    }         
+}
+
+void printRegisters( thread_act_t thread ) {
     
     struct x86_thread_state thread_state;
     mach_msg_type_number_t stateCount = MACHINE_THREAD_STATE_COUNT;
     memset( &thread_state, 0, sizeof(i386_thread_state_t));    
-    kern_return_t result = thread_get_state( _firstThread, MACHINE_THREAD_STATE, (thread_state_t)&thread_state, &stateCount );
+    kern_return_t result = thread_get_state( thread, MACHINE_THREAD_STATE, (thread_state_t)&thread_state, &stateCount );
   
     MACH_CHECK_ERROR( thread_get_state, result );
     
     if( thread_state.tsh.flavor==x86_THREAD_STATE32 ){
         
         x86_thread_state32_t tState = thread_state.uts.ts32;
-        
-        
-        struct hack_task_dyld_info dyld_info;
-        mach_msg_type_number_t count = TASK_DYLD_INFO_COUNT;
-        
-        // Make sure that COUNT isn't bigger than our hacked up struct hack_task_dyld_info.
-        // If it is, then make COUNT smaller to match.
-        if (count > (sizeof(struct hack_task_dyld_info) / sizeof(natural_t)))
-            count = (sizeof(struct hack_task_dyld_info) / sizeof(natural_t));
-
-        kern_return_t result =  task_info(_childTaskPort, TASK_DYLD_INFO, (task_info_t)&dyld_info, &count);
-
-        dyld            = 8fe44400
-        eip             = 8fe01032
-        address in dis  = 00002ac0
-        
-        how to set a breakpoint on the first line?
     
         printf(
-               "Instruction Pointer:\t\t %0x\n"
-               "Accumulator:\t\t\t\t %0x\n"
-               "Data:\t\t\t\t\t\t %0x\n"
-               "Count:\t\t\t\t\t\t %0x\n"               
-               "Base:\t\t\t\t\t\t %0x\n"
-               "Frame base pointer:\t\t\t %0x\n"
-               "Source index:\t\t\t\t %0x\n"
-               "Destination index:\t\t\t %0x\n"
-               "Stack Pointer:\t\t\t\t %0x\n"
-               
-               /* Other registers */
-               "stack segment:\t\t\t\t %0x\n"
-               "eflags:\t\t\t\t\t\t %0x\n"
-               "code segment:\t\t\t\t %0x\n"
-               "data segment:\t\t\t\t %0x\n"
-               "data segment (string):\t\t %0x\n"
-               "data segment:\t\t\t\t  %0x\n"
-               "data segment:\t\t\t\t  %0x\n",
+               "Instruction Pointer:\t\t %0x\n",
+//               "Accumulator:\t\t\t\t %0x\n"
+//               "Data:\t\t\t\t\t\t %0x\n"
+//               "Count:\t\t\t\t\t\t %0x\n"               
+//               "Base:\t\t\t\t\t\t %0x\n"
+//               "Frame base pointer:\t\t\t %0x\n"
+//               "Source index:\t\t\t\t %0x\n"
+//               "Destination index:\t\t\t %0x\n"
+//               "Stack Pointer:\t\t\t\t %0x\n"
+//               
+//               /* Other registers */
+//               "stack segment:\t\t\t\t %0x\n"
+//               "eflags:\t\t\t\t\t\t %0x\n"
+//               "code segment:\t\t\t\t %0x\n"
+//               "data segment:\t\t\t\t %0x\n"
+//               "data segment (string):\t\t %0x\n"
+//               "data segment:\t\t\t\t  %0x\n"
+//               "data segment:\t\t\t\t  %0x\n",
 //               
                //TODO:    0x0000264a vs 8fe01030
-               tState.__eip,
-               tState.__eax,
-               tState.__edx,
-               tState.__ecx,
-               tState.__ebx,
-               tState.__ebp,
-               tState.__esi,
-               tState.__edi,
-               tState.__esp,
-               
-               tState.__ss,
-               tState.__eflags,
-               tState.__cs,
-               tState.__ds,
-               tState.__es,
-               tState.__fs,
-               tState.__gs
+               tState.__eip
+//               tState.__eax,
+//               tState.__edx,
+//               tState.__ecx,
+//               tState.__ebx,
+//               tState.__ebp,
+//               tState.__esi,
+//               tState.__edi,
+//               tState.__esp,
+//               
+//               tState.__ss,
+//               tState.__eflags,
+//               tState.__cs,
+//               tState.__ds,
+//               tState.__es,
+//               tState.__fs,
+//               tState.__gs
                );
     } else if( thread_state.tsh.flavor==x86_THREAD_STATE64 ) {
         x86_thread_state64_t tState = thread_state.uts.ts64;
@@ -419,7 +421,8 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     dispatch_resume(processDiedSource);
 }
 
-- (int)trace:(NSString *)programname {
+
+- (int)trace:(NSString *)programname firstInstruction:(char *)address size:(NSUInteger)codeLen {
         
     [HooPermissions acquireTaskportRight];
     
@@ -475,7 +478,7 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     short flags = 0;    
     flags |= POSIX_SPAWN_SETSIGMASK;
     // flags |= POSIX_SPAWN_SETEXEC;            // this makes it act like execve, ie not return
-    flags |= POSIX_SPAWN_START_SUSPENDED;
+    //flags |= POSIX_SPAWN_START_SUSPENDED;
     flags |= _POSIX_SPAWN_DISABLE_ASLR;
 
     result = posix_spawnattr_setflags( &attr, flags );
@@ -491,13 +494,6 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     // pid_t result = posix_spawn( &_child_pid, spawnedArgs[0], NULL, &attr, spawnedArgs, environ );
     result = posix_spawnp( &_child_pid, argv[0], &file_actions, &attr, argv, environ );
     if(result!=0) error( strerror(result) );
-
-//    int res = ptrace( PT_TRACE_ME, _child_pid, NULL, 0 );
-//    assert( res==0 );
-
-//    char pid_str[32];    
-//    snprintf( pid_str, 31, "%d", _child_pid );
-
 
     posix_spawnattr_destroy(&attr);
 
@@ -519,12 +515,83 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     [self setExceptionPorts];
     [self createExceptionThread];
 
-    enableTraceFlag( _firstThread, YES );
+//    // can we find the address where our task is loaded?
+//    struct hack_task_dyld_info dyld_info;
+//    mach_msg_type_number_t count = TASK_DYLD_INFO_COUNT;
+//    
+//    // Make sure that COUNT isn't bigger than our hacked up struct hack_task_dyld_info.
+//    // If it is, then make COUNT smaller to match.
+//    if (count > (sizeof(struct hack_task_dyld_info) / sizeof(natural_t)))
+//        count = (sizeof(struct hack_task_dyld_info) / sizeof(natural_t));
+//    
+//    result =  task_info(_childTaskPort, TASK_DYLD_INFO, (task_info_t)&dyld_info, &count);
+//    if(result!=0) error( strerror(result) );
+    
+    // how to set a breakpoint on the first line?    
+    // dyld            = 8fe44400
+    // eip             = 8fe01032
+    // address in dis  = 00002ac0 work
+    // address in dis  = 0x2640 home
+    
+#pragma mark Business
+    set_hw_breakpoint( (void *)(address), _firstThread ); // 0x2640 + dyld_info.all_image_info_addr;
+
+    /* Blocks 101 */
+    // myBlock takes no args
+    // void (^myBlock)() = ^ {
+    //    NSLog(@"started child app");
+    // };
+    
+    // myBlock takes an int
+    // void (^myBlock1)(int) = ^(int num) {
+    //    NSLog(@"started child app");
+    // };
+    
+    
+    void (^_steppingBlock)() = ^ {
+
+        kern_return_t rc = thread_suspend( _firstThread );
+        if( rc != KERN_SUCCESS ) error((char *)"suspending thread");
+        
+        unsigned int instructionPtr = getInstructionPointer(_firstThread);
+        if( instructionPtr>(unsigned int)address && instructionPtr<((unsigned int)address+codeLen) ) 
+            NSLog(@"stepping child app %0x", instructionPtr);
+        
+        rc = thread_resume( _firstThread );
+        if( rc != KERN_SUCCESS ) error((char *)"resuming thread");
+};
+
+    void (^_initialBlock)() = ^ {
+        
+        kern_return_t rc = thread_suspend( _firstThread );
+        if( rc != KERN_SUCCESS ) error((char *)"suspending thread");
+        
+        unsigned int instructionPtr = getInstructionPointer(_firstThread);
+        NSLog(@"started child app %0x", instructionPtr);
+
+        rc = thread_resume( _firstThread );
+        if( rc != KERN_SUCCESS ) error((char *)"resuming thread");
+
+        if(instructionPtr==(unsigned int)address){
+            // remove the harware breakpoint
+            clear_hw_breakpoint( _firstThread );
+            
+            // set trace bit
+            enableTraceFlag( _firstThread, YES );        
+            _instructionTrapAction = Block_copy(_steppingBlock);
+        }
+    };
+
+    // First block, needs only executing once
+    _instructionTrapAction = Block_copy(_initialBlock); 
 
     /* The task needs starting */
     kill( _child_pid, SIGCONT );
 
 
+    
+    
+    
 //    -- all interesting stuff is now on Exception thread
 //    -- what does the main thread do?
 //    
@@ -1084,19 +1151,13 @@ kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_
     assert( thread==_firstThread );
 
     kern_return_t krc = MACH_MSG_SUCCESS;
-
+    
     if( exception == EXC_BREAKPOINT ) {
 
-        /* A dispatch queue can replace locks to protect a shared resource */
-//        dispatch_sync(my_queue, ^{
-//            // Critical section
-//        });
-//        
-//        // main thread must not be blocked!
-//        [_staticInstance performSelectorOnMainThread:@selector(resumeChildTask) withObject:nil waitUntilDone:NO];        
+        /* Execute the block */
+        if(_instructionTrapAction)
+            _instructionTrapAction();
         
-        step_debugger( _child_pid );
-
         /* The child task will only continue if we return KERN_SUCCESS */
         return KERN_SUCCESS; 
 

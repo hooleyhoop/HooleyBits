@@ -140,4 +140,8 @@ const char * guess_indirect_symbol(
 								   const uint32_t nsymbols,
 								   const char *strings,
 								   const uint32_t strings_size);
+
+- (char *)addressOfFirstInstruction;
+- (NSUInteger)codeSize;
+
 @end

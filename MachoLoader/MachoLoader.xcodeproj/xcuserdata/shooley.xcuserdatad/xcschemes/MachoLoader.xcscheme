@@ -47,17 +47,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
@@ -132,17 +132,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
@@ -181,6 +181,26 @@
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>
+         <AdditionalOption
+            key = "NSExceptionLoggingEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "DYLD_PRINT_LIBRARIES"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "DYLD_PRINT_APIS"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "USERBREAK"
+            value = "1"
+            isEnabled = "YES">
+         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -218,17 +238,17 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_APIS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_SEGMENTS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_BINDINGS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"

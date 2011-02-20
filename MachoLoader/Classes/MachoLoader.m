@@ -2851,4 +2851,10 @@ const char * guess_indirect_symbol(
 	return(NULL);
 }
 
+- (char *)addressOfFirstInstruction {
+    return _text_sect_addr;
+}
+- (NSUInteger)codeSize {
+    return _textSectSize;
+}
 @end

@@ -36,6 +36,8 @@
 		734B66DD1226900A002C0B0F /* IntKeyDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 734B66DB1226900A002C0B0F /* IntKeyDictionary.m */; };
 		734E804B1289523100D5FC99 /* HooClass.c in Sources */ = {isa = PBXBuildFile; fileRef = 734E804A1289523000D5FC99 /* HooClass.c */; };
 		734E804C1289523100D5FC99 /* HooClass.c in Sources */ = {isa = PBXBuildFile; fileRef = 734E804A1289523000D5FC99 /* HooClass.c */; };
+		735BED2D13100C1800454D58 /* sw_breakpoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 735BED25130FFC5D00454D58 /* sw_breakpoint.c */; };
+		735BED2E13100C1C00454D58 /* hw_breakpoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 735BED26130FFC5D00454D58 /* hw_breakpoint.c */; };
 		7363BDC1124E318500F080E7 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73685DA31244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
 		73685DA41244D34F00DDEE60 /* InstrArgStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 73685DA21244D34F00DDEE60 /* InstrArgStruct.m */; };
@@ -148,6 +150,10 @@
 		734B677812269AD6002C0B0F /* DemangleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemangleTests.m; path = Tests/DemangleTests.m; sourceTree = "<group>"; };
 		734E80491289523000D5FC99 /* HooClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HooClass.h; path = Classes/HooClass.h; sourceTree = "<group>"; };
 		734E804A1289523000D5FC99 /* HooClass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = HooClass.c; path = Classes/HooClass.c; sourceTree = "<group>"; };
+		735BED25130FFC5D00454D58 /* sw_breakpoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sw_breakpoint.c; path = Classes/sw_breakpoint.c; sourceTree = "<group>"; };
+		735BED26130FFC5D00454D58 /* hw_breakpoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hw_breakpoint.c; path = Classes/hw_breakpoint.c; sourceTree = "<group>"; };
+		735BED2B13100BD900454D58 /* sw_breakpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sw_breakpoint.h; path = Classes/sw_breakpoint.h; sourceTree = "<group>"; };
+		735BED2C13100BF000454D58 /* hw_breakpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hw_breakpoint.h; path = Classes/hw_breakpoint.h; sourceTree = "<group>"; };
 		7363ABC81236649E00018772 /* i386_disasm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i386_disasm.h; path = Classes/i386_disasm.h; sourceTree = "<group>"; };
 		7363BDBF124E318500F080E7 /* GenericTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTimer.h; path = ../SimpleFileParser/Src/GenericTimer.h; sourceTree = SOURCE_ROOT; };
 		7363BDC0124E318500F080E7 /* GenericTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTimer.m; path = ../SimpleFileParser/Src/GenericTimer.m; sourceTree = SOURCE_ROOT; };
@@ -477,6 +483,10 @@
 			children = (
 				7332C9E213040F7C00ACFCA7 /* SimpleTracer.h */,
 				7332C9E313040FBA00ACFCA7 /* SimpleTracer.m */,
+				735BED2B13100BD900454D58 /* sw_breakpoint.h */,
+				735BED25130FFC5D00454D58 /* sw_breakpoint.c */,
+				735BED2C13100BF000454D58 /* hw_breakpoint.h */,
+				735BED26130FFC5D00454D58 /* hw_breakpoint.c */,
 				7332C9E71304108200ACFCA7 /* HooPermissions.h */,
 				7332C9E81304108200ACFCA7 /* HooPermissions.m */,
 				73B346C313045626006FDF4E /* Built with mig from .defs */,
@@ -769,6 +779,8 @@
 				7332C9E91304108200ACFCA7 /* HooPermissions.m in Sources */,
 				73B346BF13045620006FDF4E /* mach_excUser.c in Sources */,
 				73B346C113045620006FDF4E /* mach_excServer.c in Sources */,
+				735BED2D13100C1800454D58 /* sw_breakpoint.c in Sources */,
+				735BED2E13100C1C00454D58 /* hw_breakpoint.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

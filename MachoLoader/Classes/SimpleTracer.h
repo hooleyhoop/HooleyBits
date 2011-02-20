@@ -22,11 +22,17 @@
     BOOL _shouldStop;
 }
 
-- (int)trace:(NSString *)programname;
+- (int)trace:(NSString *)programname firstInstruction:(char *)address size:(NSUInteger)codeLen;
 
 - (void)stopTracing;
 
+- (void)setExceptionPorts;
+- (void)createExceptionThread;
+- (void)resumeChildTask;
+
 @end
+
+void printRegisters();
 
 void run_target( const char *programname );
 
