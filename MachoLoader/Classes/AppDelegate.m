@@ -25,7 +25,7 @@
     MachoLoader *ml = [[MachoLoader alloc] initWithPath:pathToApp];
     [ml readFile];
 
-//    [ml disassembleWithChecker:nil];
+    [ml disassembleWithChecker:nil];
     
     char *firstInstruction = [ml addressOfFirstInstruction];
     

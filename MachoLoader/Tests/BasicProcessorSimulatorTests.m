@@ -67,7 +67,7 @@
 - (void)testSettingLinesForAdresses {
 
     // -- make a data block
-    id inputData = @"010203040506070809";
+    id inputData = 0x@"010203040506070809";
     id appCode = [[TPAssembledCodeBlock alloc] initWithData:inputData];
     
     // -- add lines as interpretations of bytes at addressess

@@ -718,24 +718,23 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 								:_nsymbols
 								:_strtable
 								:_strings_size];
+    [self sortSymbols];
 }
 
 // Check out MachOView.app - open source!
 
-- (void)disassembleWithChecker:(DisassemblyChecker *)dc {
+- (void)sortSymbols {
 	
-	i386_disasm *dis = [[[i386_disasm alloc] initWithChecker:dc] autorelease];
-
 	// Do text
 	char *locPtr = _text_sect_pointer;
 	char *memPtr = _text_sect_addr;
 	
-	struct symbol *sorted_symbols = allocate(_nsymbols * sizeof(struct symbol));
-	struct relocation_info	*text_sorted_relocs = allocate(_text_nsorted_relocs * sizeof(struct relocation_info));
-	memcpy( text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
-	qsort( text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
+	_sorted_symbols = allocate(_nsymbols * sizeof(struct symbol));
+	_text_sorted_relocs = allocate(_text_nsorted_relocs * sizeof(struct relocation_info));
+	memcpy( _text_sorted_relocs, _text_relocs, _text_nsorted_relocs *sizeof(struct relocation_info));
+	qsort( _text_sorted_relocs, _text_nsorted_relocs, sizeof(struct relocation_info),(int (*)(const void *, const void *))rel_compare);
 	
-	uint32_t nsorted_symbols = 0;
+	_nsorted_symbols = 0;
 	for( NSUInteger i=0; i<_nsymbols; i++ )
 	{
 		uint32_t n_strx;
@@ -770,12 +769,20 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 				continue;
 			if(n_type == N_ABS && n_value == 0 && *p == '.')
 				continue;
-			sorted_symbols[nsorted_symbols].n_value = (char *)n_value;
-			sorted_symbols[nsorted_symbols].name = p;
-			nsorted_symbols++;
+			_sorted_symbols[_nsorted_symbols].n_value = (char *)n_value;
+			_sorted_symbols[_nsorted_symbols].name = p;
+			_nsorted_symbols++;
 		}
 	}
-	qsort(sorted_symbols, nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
+	qsort( _sorted_symbols, _nsorted_symbols, sizeof(struct symbol), (int (*)(const void *, const void *))sym_compare);
+}
+
+- (void)disassembleWithChecker:(DisassemblyChecker *)dc {
+
+    char *locPtr = _text_sect_pointer;
+	char *memPtr = _text_sect_addr;
+    
+    i386_disasm *dis = [[[i386_disasm alloc] initWithChecker:dc] autorelease];
 
 	// otx decompiles other sections as well? __coalesced_text __textcoal_nt - they dont seem to be present here
 	_allFunctions = calloc( 1, sizeof(struct hooleyAllFuctions));
@@ -791,7 +798,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	{
 		uint64 bytesLeft = _textSectSize-i;
 		
-		print_label( memPtr, 1, sorted_symbols, nsorted_symbols);
+		print_label( memPtr, 1, _sorted_symbols, _nsorted_symbols);
 		
 		/* otx setup - try to incorporate into one pass
 		 [self gatherLineInfos]; -- marks a line as code or other
@@ -823,21 +830,21 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		//	debugLine = [_dc nextLine];
 		//	printf("%p", memPtr);
 		// read j bytes from locPtr
-		
+        struct hooleyCodeLine *disassembledLine = NULL;	
 		
 		j = [dis i386_disassemble
-			 :&currentFunction
+			 :&disassembledLine
 			 :locPtr
 			 :bytesLeft
 			 :memPtr
 			 :_text_sect_addr
-			 :text_sorted_relocs
+			 :_text_sorted_relocs
 			 :_text_nsorted_relocs
 			 :_symtable_ptr32
 			 :_symtable_ptr64
 			 :_nsymbols									 
-			 :sorted_symbols 
-			 :nsorted_symbols
+			 :_sorted_symbols 
+			 :_nsorted_symbols
 			 :_strtable
 			 :_strings_size
 			 :__cast__(uint32_t *)_indirectSymbolTable
@@ -858,6 +865,45 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		//		printf("\t\t%0x\n", value );
 		
 
+//struct hooleyCodeLine *currentLine = currentFunc->lastLine;
+//if(currentLine) {
+//    // append this new line
+//    newLine->prev = currentLine;
+//    currentLine->next = newLine;
+//} else {
+//    // new line is the only line at the moment
+//    currentFunc->firstLine = newLine;
+//}
+//currentFunc->lastLine = newLine;
+        
+//// lets try to add Labels
+//if( dp && (dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP) ) {
+//struct label *newLabel = calloc( 1, sizeof(struct label) );
+//
+////TODO: replace the argument with the label
+//
+//if(currentFunc->labels){
+//newLabel->prev = currentFunc->labels;
+//currentFunc->labels->next = newLabel;
+//currentFunc->labels = newLabel;
+//} else {
+//currentFunc->labels = newLabel;
+//}
+//}
+        
+//BOOL isNewFunc = !strcmp(dp->name, "push") && !strcmp(reg_struct->name,"%ebp");
+//if (isNewFunc) {
+///* NEW FUNCTION */
+//// Not entirely sure this is a sufficient test (push instruction) for a new function
+//struct hooleyFuction *currentFunc = *currentFuncPtr;
+//struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction) );
+//newFunc->prev = currentFunc;
+//newFunc->index = currentFunc->index+1;
+//currentFunc->next = newFunc;
+//currentFunc = newFunc;
+//*currentFuncPtr = currentFunc;
+//}
+        
 		locPtr = locPtr + j;
 		memPtr = memPtr + j;
 		i += j;

@@ -322,7 +322,8 @@ unsigned int getInstructionPointer( thread_act_t thread ) {
         [NSException raise:NSInternalInconsistencyException format:@"Do this"];
     } else {
         [NSException raise:NSInternalInconsistencyException format:@"What the fuck"];
-    }         
+    }
+    return 0;
 }
 
 void printRegisters( thread_act_t thread ) {

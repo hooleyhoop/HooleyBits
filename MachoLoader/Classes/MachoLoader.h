@@ -100,6 +100,10 @@ struct hooleyAllFuctions {
 	NSUInteger					_text_nsorted_relocs;
 	NSUInteger					_textSectSize;
 	
+    struct symbol *_sorted_symbols;
+    struct relocation_info	*_text_sorted_relocs;
+    uint32_t _nsorted_symbols;
+    
 	// ok - the results of the disasembly
 	struct hooleyAllFuctions	*_allFunctions;
 	
@@ -112,6 +116,7 @@ struct hooleyAllFuctions {
 - (id)initWithPath:(NSString *)aPath;
 
 - (void)readFile;
+- (void)sortSymbols;
 - (void)disassembleWithChecker:(DisassemblyChecker *)dc;
 
 - (SymbolicInfo *)symbolicInfoForAddress:(char *)memAddr;

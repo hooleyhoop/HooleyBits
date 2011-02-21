@@ -34,7 +34,7 @@
 - (id)initWithChecker:(DisassemblyChecker *)dc;
 
 - (NSUInteger)i386_disassemble
-								:(struct hooleyFuction **)currentFuncPtr
+                                :(struct hooleyCodeLine **)currentLinePtrPtr
 								:(char *)sect
 								:(uint64)left
 								:(char *)addr

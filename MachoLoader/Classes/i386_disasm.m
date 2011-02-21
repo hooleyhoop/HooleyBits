@@ -595,13 +595,11 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 }
 
 - (void)addLine:(char *)memAddress
-:(struct hooleyFuction **)currentFuncPtr
+:(struct hooleyCodeLine **)currentLinePtrPtr
 :(const struct instable *)dp
 :(struct InstrArgStruct *)args
 :(int)noisy {
-	
-	struct hooleyFuction *currentFunc = *currentFuncPtr;
-	
+    
 	struct hooleyCodeLine *newLine = calloc( 1, sizeof(struct hooleyCodeLine) );
 	newLine->address = memAddress;
 	newLine->instr = dp;
@@ -610,17 +608,6 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 	// TODO: this will move into dis checker?
 	//	assertNumberOfArgs( dp, args );
 	
-	struct hooleyCodeLine *currentLine = currentFunc->lastLine;
-	if(currentLine) {
-		// append this new line
-		newLine->prev = currentLine;
-		currentLine->next = newLine;
-	} else {
-		// new line is the only line at the moment
-		currentFunc->firstLine = newLine;
-	}
-	currentFunc->lastLine = newLine;
-	
 	//	verify address
 	if(dp)
 		[_disChecker assertNextAdress:memAddress argCount:args];
@@ -628,21 +615,11 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		[_disChecker skipNextAdress:memAddress];
 	}
 
-	// lets try to add Labels
-	if( dp && (dp->typeBitField==ISBRANCH || dp->typeBitField==ISJUMP) ) {
-		struct label *newLabel = calloc( 1, sizeof(struct label) );
-		
-		//TODO: replace the argument with the label
-		
-		if(currentFunc->labels){
-			newLabel->prev = currentFunc->labels;
-			currentFunc->labels->next = newLabel;
-			currentFunc->labels = newLabel;
-		} else {
-			currentFunc->labels = newLabel;
-		}
-	}
-	
+    *currentLinePtrPtr = newLine;
+
+//    struct hooleyCodeLine *currentLinePtr = *currentLinePtrPtr;
+//    currentLinePtr
+    
 	if(noisy)
 	{
 		char lineToPrint[256];
@@ -704,7 +681,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
   * i386_disassemble()
  */
 - (NSUInteger)i386_disassemble
-:(struct hooleyFuction **)currentFuncPtr
+:(struct hooleyCodeLine **)currentLinePtrPtr
 :(char *)sect
 :(uint64)left
 :(char *)addr
@@ -1080,7 +1057,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_regStruct((opcode5 & 0x7), 1, data16, rex);
 			// eg bswap	%eax
 			FILLARGS1( reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return length;
 
 		case XINST:
@@ -1096,7 +1073,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t%s,", mnemonic, reg_name);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return length;
 
 		/* movsbl movsbw (0x0FBE) or movswl (0x0FBF) */
@@ -1118,7 +1095,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg movzbl	(%edx),%eax	
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -1142,7 +1119,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg imull $0x44,%edx,%eax
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2]; 
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY2]; 
 			return length;
 		}
 
@@ -1162,7 +1139,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg. movl 0x04(%ebp),%ebx
 			FILLARGS2( abstractStrctPtr1,reg_struct );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -1188,7 +1165,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			 // -- move register to oprand eg. movl	%esp,%ebp		movl %ebx,0x00(%esp)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -1257,7 +1234,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				[NSException raise:@"what?" format:@"what?"];
 			}
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return length;
 		}
 
@@ -1358,7 +1335,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 
 			// eg movsd	%xmm0,0x20(%edx,%ecx)
 			FILLARGS2( reg_struct, abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -1390,7 +1367,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// printf("%s\n", result1);
 			FILLARGS2( abstractStrctPtr1, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];				
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];				
 			return length;
 		}
 	
@@ -1807,7 +1784,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 						NSUInteger regNum = xmm_rm(r_m, rex);
 						const struct HooReg *reg_struct2 = xmmReg_Struct[regNum]; //%xmm0
 						FILLARGS2( reg_struct2, reg_struct );
-						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+						[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 						// printf("%s\t%%xmm%u,%s\n", mnemonic, reg_struct2, reg_name);
 						return length;
 						
@@ -1815,7 +1792,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 						reg_struct = get_regStruct(reg, 1, data16, rex);
 						const struct HooReg *mmReg = mmReg_Struct[r_m];
 						FILLARGS2( mmReg, reg_struct );
-						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+						[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 						// printf("%s\t%%mm%u,%s\n", mnemonic, mmReg, reg_name);
 						return length;
 					}
@@ -1874,7 +1851,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg movsd	(%eax),%xmm0
 			FILLARGS2( abstractStrctPtr1, reg_struct );
 			// printf("%s\n", result1);
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return length;
 		}
 
@@ -2067,7 +2044,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 						// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, ",");
 						// printf("%%mm%u\n", reg);
 						FILLARGS3( value0Immed, abstractStrctPtr1, &mmReg_Struct[reg] );
-						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+						[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 						return length;
 					}
 					break;
@@ -2081,7 +2058,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 						// printf("%%mm%u\n", reg);
 						const struct HooReg *mmReg = mmReg_Struct[reg];
 						FILLARGS3( value0Immed, abstractStrctPtr1, mmReg );
-						[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+						[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 						return length;
 					}
 					break;
@@ -2129,7 +2106,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			regNum = xmm_reg(reg, rex);
 			reg_struct = xmmReg_Struct[regNum]; //%xmm0
 			FILLARGS3( value0Immed, abstractStrctPtr1, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2232,7 +2209,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%%xmm%u\n", reg_struct );
 			// eg psllq $0x1f,%xmm2
 			FILLARGS2( value0Immed, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return length;
 
 		/* 3DNow instructions */
@@ -2307,7 +2284,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return length;
 		}
 
@@ -2341,7 +2318,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			FILLARGS3( value0Immed, reg_struct, abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2360,7 +2337,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// cl is &count1_reg
 			// eg shldl	%cl,%eax,%esi
 			FILLARGS3( &count1_reg, reg_struct, abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2377,7 +2354,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg. andl $0xf0,%esp    subl $0x10,%esp
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2397,7 +2374,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg movl	$0x00021730, 0x04(%edx)
 			FILLARGS2( value0Immed, abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 		}
 
@@ -2411,7 +2388,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);
 			// eg movb	$0x00,%al
 			FILLARGS2( value0Immed, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* immediate to register with register in low 3 bits of op code, possibly with a 64-bit immediate */
@@ -2424,7 +2401,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_r_m_regStruct(reg, wbit, data16, rex);		
 			 // eg. movl	$0x00b9ee00,%ecx
 			FILLARGS2( value0Immed, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* memory operand to accumulator */
@@ -2441,7 +2418,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	0x0123d000,%eax
 			FILLARGS2( value0Immed, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return length;
 
 		/* accumulator to memory operand */
@@ -2458,7 +2435,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_regStruct(0, wbit, data16, rex);
 			// eg movl	%eax,0x00f2300c
 			FILLARGS2( reg_struct, value0Immed );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return length;
 
 		/* memory or register operand to segment register */
@@ -2474,7 +2451,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			segReg = (struct HooReg *)SEGREG[reg];
 			FILLARGS2( abstractStrctPtr1, segReg );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2494,7 +2471,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t%s,", mnemonic, SEGREG[reg]);
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( segReg, abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2516,7 +2493,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			}
 			// eg sarl	%eax
 			// shll		%cl,%edx
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];	
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];	
 			return(length);
 		}
 
@@ -2541,7 +2518,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				FILLARGS2(value0Immed, abstractStrctPtr1);
 			}
 			// eg shll	$0x02,%eb
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2558,7 +2535,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// print_operand("", symadd1, symsub1, imm0, value1_size, "", ",");
 			// print_operand(seg, symadd0, symsub0, value0, value0_size, result0, "\n");
 			FILLARGS2( value0Immed, abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2569,7 +2546,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NSUInteger needThis = REPLACEMENT_GET_OPERAND(&symadd0, &symsub0, &value0, &value0_size, result0);
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			FILLARGS1( abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 
@@ -2633,7 +2610,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 
 			// eg nopl	0x00(%eax,%eax)   fldl	0xe8(%ebp)
 			FILLARGS1( abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 	
@@ -2650,7 +2627,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg setbe	%al
 			FILLARGS1( abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2702,21 +2679,9 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg = REGNO(opcode2);
 			reg_struct = get_r_m_regStruct(reg, LONGOPERAND, data16, rex);
 
-			BOOL isNewFunc = !strcmp(dp->name, "push") && !strcmp(reg_struct->name,"%ebp");
-			if (isNewFunc) {
-				/* NEW FUNCTION */
-				// Not entirely sure this is a sufficient test (push instruction) for a new function
-				struct hooleyFuction *currentFunc = *currentFuncPtr;
-				struct hooleyFuction *newFunc = calloc( 1, sizeof(struct hooleyFuction) );
-				newFunc->prev = currentFunc;
-				newFunc->index = currentFunc->index+1;
-				currentFunc->next = newFunc;
-				currentFunc = newFunc;
-				*currentFuncPtr = currentFunc;
-			}
 			// eg. pushl %ebp
 			FILLARGS1(reg_struct);
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* register to accumulator with register in the low 3 */
@@ -2728,7 +2693,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t%s,%s\n", mnemonic, reg_name, (data16 ? "%ax" : "%eax"));
 			const struct HooReg *secondReg = data16 ? &acumx_reg : &acumex_reg;
 			FILLARGS2( reg_struct, secondReg );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 		}
 		/* single segment register operand, with reg in bits 3-4 of op code */
@@ -2738,7 +2703,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t%s\n", mnemonic, segReg->name );
 			// eg pushw	%es
 			FILLARGS1( segReg );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* single segment register operand, with register in	*/
@@ -2748,7 +2713,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			segReg = (struct HooReg *)SEGREG[reg];
 			// printf("%s\t%s\n", mnemonic, segReg->name);
 			FILLARGS1( segReg );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* memory or register operand to register */
@@ -2765,7 +2730,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			reg_struct = get_regStruct(reg, wbit, data16, rex);
 			//	eg. leal 0x08(%ebp),%ecx
 			FILLARGS2(abstractStrctPtr1, reg_struct);
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2784,7 +2749,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			//eg cmpb	$0x2f,%al
 			FILLARGS2( value0Immed, reg_struct );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 
 		/* memory or register operand to accumulator */
@@ -2795,7 +2760,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg mull	%ecx
 			FILLARGS1( abstractStrctPtr1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2806,7 +2771,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex2_reg, 0, scale_factor[0] );
 				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex2_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
-				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+				[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 				// printf("%s\t%s(%%si),(%%di)\n", mnemonic, seg);
 			} else {
 				//TODO: this is in the repz loop
@@ -2815,7 +2780,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				NEW_INDIRECT( indirect2, 0, 0, (struct HooReg *)&destinationIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, indirect2 );
 				// printf("%s\t%s(%%esi),(%%edi)\n", mnemonic, segReg->name);
-				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+				[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			}
 			return(length);
 
@@ -2837,7 +2802,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)indexReg, 0, scale_factor[0] );
 			
 			FILLARGS2( reg_struct, indirect1 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2854,7 +2819,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				// lodsl (%esi),%eax
 				NEW_INDIRECT( indirect1, segReg, 0, (struct HooReg *)&sourceIndex1_reg, 0, scale_factor[0] );
 				FILLARGS2( indirect1, reg_struct );
-				[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+				[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			}
 			return(length);
 
@@ -2866,7 +2831,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg. calll 0x00002aea
 			FILLARGS1(displaceStructPtr);			
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2]; 
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY2]; 
 			return(length);
 
 		/* indirect to memory or register operand */
@@ -2883,7 +2848,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 
 			FILLARGS1( abstractStrctPtr1 );			
 			// eg jmp	*%ecx, *0x00ac6798(,%eax,4)
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY]; 
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY]; 
 			return(length);
 		}
 
@@ -2895,7 +2860,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			abstractStrctPtr1 = (struct HooAbstractDataType *)needThis;
 			// eg ljmpl *%ebx				// TODO: missing the asterisk?
 			FILLARGS1( abstractStrctPtr1 );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 
@@ -2915,7 +2880,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			//		print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
 			//		print_operand(seg, symadd1, symsub1, imm1, value1_size, "", "\n");
 			FILLARGS2( value0Immed, value1Immed );						
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* jmp/call. single operand, 8 bit displacement */
@@ -2926,7 +2891,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg jne	0x00002b1a
 			FILLARGS1( displaceStructPtr );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY2];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY2];
 			return(length);
 
 		/* single 32/16 bit immediate operand */
@@ -2936,7 +2901,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			FILLARGS1( value0Immed );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			// eg pushl  $0x00001000
 			return(length);
 
@@ -2949,7 +2914,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// eg. pushl $0x00 
 			FILLARGS1( value0Immed );
 //			printf("line>%lu\t\t", (unsigned long)iterationCounter);			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 
 		case ENTER:
@@ -2964,7 +2929,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// print_operand("", symadd0, symsub0, imm0, value0_size, "", ",$");
 			// print_operand("", symadd1, symsub1, imm1, value1_size, "", "\n");
 			FILLARGS2( value0Immed, value1Immed );						
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* 16-bit immediate operand */
@@ -2974,7 +2939,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg ret	$0x0004	
 			FILLARGS1( value0Immed );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY]; 		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY]; 		
 			return(length);
 
 		/* single 8 bit port operand */
@@ -2985,7 +2950,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t$", mnemonic);
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", "\n");
 			FILLARGS1( value0Immed );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];				
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];				
 			return(length);
 
 		/* single 8 bit (input) port operand				*/
@@ -2997,7 +2962,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// print_operand(seg, symadd0, symsub0, imm0, value0_size, "", ",%eax\n");
 			// eg inl $0x05,%eax
 			FILLARGS2( value0Immed, &acumex_reg );			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		/* single 8 bit (output) port operand				*/
@@ -3008,7 +2973,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			NEW_IMMEDIATE( value0Immed, imm0 );
 			// eg  outb %al,$0x00
 			FILLARGS2( &acumex_reg, value0Immed );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return(length);
 		}
 		/* single operand, dx register (variable port instruction) */
@@ -3026,7 +2991,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			} else {
 				FILLARGS2( &data1_reg, &acumex_reg );
 			}
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return(length);
 		}
 
@@ -3039,7 +3004,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			} else {
 				FILLARGS2( &acumex_reg, &data1_reg );
 			}			
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];		
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];		
 			return(length);
 
 		/* The int instruction, which has two forms: int 3 (breakpoint) or  */
@@ -3051,7 +3016,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// printf("%s\t$0x3\n", mnemonic);
 			NEW_IMMEDIATE( value0Immed, 0x3 );
 			FILLARGS1( &value0Immed );
-			[self addLine:addr :currentFuncPtr :&int3_instr :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :&int3_instr :allArgs :NOISY];
 			return(length);
 
 		/* just an opcode and an unused byte that must be discarded */
@@ -3064,26 +3029,26 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			// As Otool doesn't discard the byte, we have to include it so validation passes
 			NEW_IMMEDIATE( value0Immed, byte );
 			FILLARGS1( &value0Immed );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];			
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];			
 			return(length);
 
 		case CBW:
 			if(data16==TRUE){
 				// printf("cbtw\n"); // -- sign-extend byte in `%al' to word in `%ax'
-				[self addLine:addr :currentFuncPtr :&op_cbtw :NULL :NOISY];				
+				[self addLine:addr :currentLinePtrPtr :&op_cbtw :NULL :NOISY];				
 			}else{
 				// printf("cwtl\n"); // -- sign-extend word in `%ax' to long in `%eax'
-				[self addLine:addr :currentFuncPtr :&op_cwtl :NULL :NOISY];
+				[self addLine:addr :currentLinePtrPtr :&op_cwtl :NULL :NOISY];
 			}
 			return(length);
 
 		case CWD:
 			if(data16 == TRUE){
 				// printf("cwtd\n");
-				[self addLine:addr :currentFuncPtr :&op_cwtd :NULL :NOISY];
+				[self addLine:addr :currentLinePtrPtr :&op_cwtd :NULL :NOISY];
 			}else{
 				// printf("cltd\n");
-				[self addLine:addr :currentFuncPtr :&op_cltd :NULL :NOISY];				
+				[self addLine:addr :currentLinePtrPtr :&op_cltd :NULL :NOISY];				
 			}
 			return(length);
 
@@ -3091,7 +3056,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 		case GO_ON:
 			 // eg. hlt, nop, etc.
 			if( strcmp(dp->name, "nop" )) {
-				[self addLine:addr :currentFuncPtr :dp :NULL :NOISY];
+				[self addLine:addr :currentLinePtrPtr :dp :NULL :NOISY];
 			}
 			return(length);
 
@@ -3102,7 +3067,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 			struct IndexedRegisterValue *indexedReg;
 			NEW_INDEXEDREGISTER( indexedReg, (struct HooReg *)&fp_reg, r_m );
 			FILLARGS1( indexedReg );			
-			[self addLine:addr :currentFuncPtr :&fstp1_instr :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :&fstp1_instr :allArgs :NOISY];
 			return(length);
 		}
 		/* float reg to float reg, with ret bit present */
@@ -3122,7 +3087,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				// printf("%s\t%%st(%1.1u),%%st\n", mnemonic, r_m);
 			}
 			FILLARGS2( reg_struct, reg_struct2 );
-			[self addLine:addr :currentFuncPtr :dp :allArgs :NOISY];
+			[self addLine:addr :currentLinePtrPtr :dp :allArgs :NOISY];
 			return(length);
 		}
 		/* an invalid op code */
@@ -3137,7 +3102,7 @@ void assertNumberOfArgs( const struct instable *dp, struct InstrArgStruct *args 
 				//	printf(", 0x%02x", 0xff & sect[i]);
 				// }
 				// printf(" #bad opcode\n");
-				[self addLine:addr :currentFuncPtr :NULL :NULL :NOISY];
+				[self addLine:addr :currentLinePtrPtr :NULL :NULL :NOISY];
 				return(length);
 	} /* end switch */
 }
