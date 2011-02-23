@@ -45,7 +45,7 @@
 #pragma mark -
 @interface TPAssembledCodeBlock : NSObject {}
 @end @implementation TPAssembledCodeBlock
-- (id)initWithData:(NSString *)data {
+- (id)initWithData:(char *)data {
     self = [super init];
     return self;
 }
@@ -59,7 +59,7 @@
 @end
 
 #pragma mark -
-@interface BasicProcessorSimulator : SenTestCase {	
+@interface BasicProcessorSimulatorTests : SenTestCase {	
 } @end
 
 @implementation BasicProcessorSimulatorTests
@@ -67,14 +67,22 @@
 - (void)testSettingLinesForAdresses {
 
     // -- make a data block
-    id inputData = 0x@"010203040506070809";
-    id appCode = [[TPAssembledCodeBlock alloc] initWithData:inputData];
+    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithData:simpleInData];
     
     // -- add lines as interpretations of bytes at addressess
-    id line1 = [[[TPLine alloc] init] autorelease];
-    [appCode :line1];
-    [appCode :line2];
+    id mockLine1 = [[[TPLine alloc] init] autorelease];
+    id mockLine2 = [[[TPLine alloc] init] autorelease];
+ 
+    [codeDataBlock setLine:mockLine1 atPos:1 forLength:1];
+    [codeDataBlock setLine:mockLine2 atPos:4 forLength:3];
+    
     // -- verify the output
+    codeDataBlock:0 == 1 byte of dta
+    codeDataBlock:1 == line length 1
+    codeDataBlock:2 == 2 byte of dta
+    codeDataBlock:4 == line length 3
+
 }
 
 - (void)testUnknownStuff {
@@ -83,9 +91,9 @@
 //	02 = jump
 //	03 = call
 //	04 = move
-//	
-//	programCounter = 0
-//	inputData = "010203040506070809"
+	
+	int programCounter = 0;
+    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 //	
 //    [allDataBlock interpretation:line forAddress:095]
 //    
