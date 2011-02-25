@@ -83,15 +83,24 @@
     codeDataBlock:2 == 2 byte of dta
     codeDataBlock:4 == line length 3
 
+    
+    new data
+    assert data.elementCount = 1
+    add line at begging 
+    assert data.elementCount = 2
+    addLine at end
+    asserrt data.elementCount = 3
+    add line in middle
+    assert data.elementCount = 5
 }
 
 - (void)testUnknownStuff {
-	
+
 //	01 = add
 //	02 = jump
 //	03 = call
 //	04 = move
-	
+
 	int programCounter = 0;
     char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 //	
