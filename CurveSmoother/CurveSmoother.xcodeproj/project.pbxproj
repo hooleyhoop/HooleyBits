@@ -1,0 +1,466 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73F9B43E13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
+		73F9B44813196E3400ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B44613196E3400ED3BC1 /* InfoPlist.strings */; };
+		73F9B44B13196E3400ED3BC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B44A13196E3400ED3BC1 /* main.m */; };
+		73F9B44E13196E3400ED3BC1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B44C13196E3400ED3BC1 /* Credits.rtf */; };
+		73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B45013196E3400ED3BC1 /* CurveSmootherAppDelegate.m */; };
+		73F9B45413196E3400ED3BC1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B45213196E3400ED3BC1 /* MainMenu.xib */; };
+		73F9B45B13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
+		73F9B46313196E3500ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B46113196E3500ED3BC1 /* InfoPlist.strings */; };
+		73F9B46613196E3500ED3BC1 /* CurveSmootherTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */; };
+		73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */; };
+		73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B47213196EB100ED3BC1 /* DrawingView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73F9B45C13196E3400ED3BC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73F9B43013196E3400ED3BC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73F9B43813196E3400ED3BC1;
+			remoteInfo = CurveSmoother;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		73F9B43913196E3400ED3BC1 /* CurveSmoother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurveSmoother.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F9B43D13196E3400ED3BC1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		73F9B44013196E3400ED3BC1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		73F9B44113196E3400ED3BC1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		73F9B44213196E3400ED3BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		73F9B44513196E3400ED3BC1 /* CurveSmoother-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurveSmoother-Info.plist"; sourceTree = "<group>"; };
+		73F9B44713196E3400ED3BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73F9B44913196E3400ED3BC1 /* CurveSmoother-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CurveSmoother-Prefix.pch"; sourceTree = "<group>"; };
+		73F9B44A13196E3400ED3BC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		73F9B44D13196E3400ED3BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		73F9B44F13196E3400ED3BC1 /* CurveSmootherAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveSmootherAppDelegate.h; sourceTree = "<group>"; };
+		73F9B45013196E3400ED3BC1 /* CurveSmootherAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurveSmootherAppDelegate.m; sourceTree = "<group>"; };
+		73F9B45313196E3400ED3BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		73F9B45A13196E3400ED3BC1 /* CurveSmootherTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurveSmootherTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F9B46013196E3500ED3BC1 /* CurveSmootherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurveSmootherTests-Info.plist"; sourceTree = "<group>"; };
+		73F9B46213196E3500ED3BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73F9B46413196E3500ED3BC1 /* CurveSmootherTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CurveSmootherTests-Prefix.pch"; sourceTree = "<group>"; };
+		73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveSmootherTests.h; sourceTree = "<group>"; };
+		73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurveSmootherTests.m; sourceTree = "<group>"; };
+		73F9B47113196EB100ED3BC1 /* DrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawingView.h; path = Src/DrawingView.h; sourceTree = "<group>"; };
+		73F9B47213196EB100ED3BC1 /* DrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawingView.m; path = Src/DrawingView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73F9B43613196E3400ED3BC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B43E13196E3400ED3BC1 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73F9B45613196E3400ED3BC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B45B13196E3400ED3BC1 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73F9B42E13196E3400ED3BC1 = {
+			isa = PBXGroup;
+			children = (
+				73F9B44313196E3400ED3BC1 /* CurveSmoother */,
+				73F9B45E13196E3400ED3BC1 /* CurveSmootherTests */,
+				73F9B43C13196E3400ED3BC1 /* Frameworks */,
+				73F9B43A13196E3400ED3BC1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73F9B43A13196E3400ED3BC1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B43913196E3400ED3BC1 /* CurveSmoother.app */,
+				73F9B45A13196E3400ED3BC1 /* CurveSmootherTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73F9B43C13196E3400ED3BC1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B43D13196E3400ED3BC1 /* Cocoa.framework */,
+				73F9B43F13196E3400ED3BC1 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73F9B43F13196E3400ED3BC1 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B44013196E3400ED3BC1 /* AppKit.framework */,
+				73F9B44113196E3400ED3BC1 /* CoreData.framework */,
+				73F9B44213196E3400ED3BC1 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		73F9B44313196E3400ED3BC1 /* CurveSmoother */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B44F13196E3400ED3BC1 /* CurveSmootherAppDelegate.h */,
+				73F9B45013196E3400ED3BC1 /* CurveSmootherAppDelegate.m */,
+				73F9B47113196EB100ED3BC1 /* DrawingView.h */,
+				73F9B47213196EB100ED3BC1 /* DrawingView.m */,
+				73F9B45213196E3400ED3BC1 /* MainMenu.xib */,
+				73F9B44413196E3400ED3BC1 /* Supporting Files */,
+			);
+			path = CurveSmoother;
+			sourceTree = "<group>";
+		};
+		73F9B44413196E3400ED3BC1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B44513196E3400ED3BC1 /* CurveSmoother-Info.plist */,
+				73F9B44613196E3400ED3BC1 /* InfoPlist.strings */,
+				73F9B44913196E3400ED3BC1 /* CurveSmoother-Prefix.pch */,
+				73F9B44A13196E3400ED3BC1 /* main.m */,
+				73F9B44C13196E3400ED3BC1 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		73F9B45E13196E3400ED3BC1 /* CurveSmootherTests */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */,
+				73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */,
+				73F9B45F13196E3500ED3BC1 /* Supporting Files */,
+			);
+			path = CurveSmootherTests;
+			sourceTree = "<group>";
+		};
+		73F9B45F13196E3500ED3BC1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73F9B46013196E3500ED3BC1 /* CurveSmootherTests-Info.plist */,
+				73F9B46113196E3500ED3BC1 /* InfoPlist.strings */,
+				73F9B46413196E3500ED3BC1 /* CurveSmootherTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73F9B43813196E3400ED3BC1 /* CurveSmoother */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73F9B46B13196E3500ED3BC1 /* Build configuration list for PBXNativeTarget "CurveSmoother" */;
+			buildPhases = (
+				73F9B43513196E3400ED3BC1 /* Sources */,
+				73F9B43613196E3400ED3BC1 /* Frameworks */,
+				73F9B43713196E3400ED3BC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CurveSmoother;
+			productName = CurveSmoother;
+			productReference = 73F9B43913196E3400ED3BC1 /* CurveSmoother.app */;
+			productType = "com.apple.product-type.application";
+		};
+		73F9B45913196E3400ED3BC1 /* CurveSmootherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73F9B46E13196E3500ED3BC1 /* Build configuration list for PBXNativeTarget "CurveSmootherTests" */;
+			buildPhases = (
+				73F9B45513196E3400ED3BC1 /* Sources */,
+				73F9B45613196E3400ED3BC1 /* Frameworks */,
+				73F9B45713196E3400ED3BC1 /* Resources */,
+				73F9B45813196E3400ED3BC1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73F9B45D13196E3400ED3BC1 /* PBXTargetDependency */,
+			);
+			name = CurveSmootherTests;
+			productName = CurveSmootherTests;
+			productReference = 73F9B45A13196E3400ED3BC1 /* CurveSmootherTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73F9B43013196E3400ED3BC1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tinsal Parks";
+			};
+			buildConfigurationList = 73F9B43313196E3400ED3BC1 /* Build configuration list for PBXProject "CurveSmoother" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 73F9B42E13196E3400ED3BC1;
+			productRefGroup = 73F9B43A13196E3400ED3BC1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				73F9B43813196E3400ED3BC1 /* CurveSmoother */,
+				73F9B45913196E3400ED3BC1 /* CurveSmootherTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73F9B43713196E3400ED3BC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B44813196E3400ED3BC1 /* InfoPlist.strings in Resources */,
+				73F9B44E13196E3400ED3BC1 /* Credits.rtf in Resources */,
+				73F9B45413196E3400ED3BC1 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73F9B45713196E3400ED3BC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B46313196E3500ED3BC1 /* InfoPlist.strings in Resources */,
+				73F9B46613196E3500ED3BC1 /* CurveSmootherTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		73F9B45813196E3400ED3BC1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73F9B43513196E3400ED3BC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B44B13196E3400ED3BC1 /* main.m in Sources */,
+				73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */,
+				73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73F9B45513196E3400ED3BC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		73F9B45D13196E3400ED3BC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73F9B43813196E3400ED3BC1 /* CurveSmoother */;
+			targetProxy = 73F9B45C13196E3400ED3BC1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		73F9B44613196E3400ED3BC1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73F9B44713196E3400ED3BC1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		73F9B44C13196E3400ED3BC1 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73F9B44D13196E3400ED3BC1 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		73F9B45213196E3400ED3BC1 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73F9B45313196E3400ED3BC1 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		73F9B46113196E3500ED3BC1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73F9B46213196E3500ED3BC1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		73F9B46913196E3500ED3BC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		73F9B46A13196E3500ED3BC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		73F9B46C13196E3500ED3BC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurveSmoother/CurveSmoother-Prefix.pch";
+				INFOPLIST_FILE = "CurveSmoother/CurveSmoother-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		73F9B46D13196E3500ED3BC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurveSmoother/CurveSmoother-Prefix.pch";
+				INFOPLIST_FILE = "CurveSmoother/CurveSmoother-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		73F9B46F13196E3500ED3BC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CurveSmoother.app/Contents/MacOS/CurveSmoother";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurveSmootherTests/CurveSmootherTests-Prefix.pch";
+				INFOPLIST_FILE = "CurveSmootherTests/CurveSmootherTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		73F9B47013196E3500ED3BC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CurveSmoother.app/Contents/MacOS/CurveSmoother";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CurveSmootherTests/CurveSmootherTests-Prefix.pch";
+				INFOPLIST_FILE = "CurveSmootherTests/CurveSmootherTests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73F9B43313196E3400ED3BC1 /* Build configuration list for PBXProject "CurveSmoother" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73F9B46913196E3500ED3BC1 /* Debug */,
+				73F9B46A13196E3500ED3BC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73F9B46B13196E3500ED3BC1 /* Build configuration list for PBXNativeTarget "CurveSmoother" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73F9B46C13196E3500ED3BC1 /* Debug */,
+				73F9B46D13196E3500ED3BC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		73F9B46E13196E3500ED3BC1 /* Build configuration list for PBXNativeTarget "CurveSmootherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73F9B46F13196E3500ED3BC1 /* Debug */,
+				73F9B47013196E3500ED3BC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 73F9B43013196E3400ED3BC1 /* Project object */;
+}
