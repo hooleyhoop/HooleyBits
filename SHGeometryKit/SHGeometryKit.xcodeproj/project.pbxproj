@@ -149,7 +149,8 @@
 		730E301D11A4428000C7CDAA /* LWKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWKey.m; path = Src/LWKey.m; sourceTree = "<group>"; };
 		730E302011A4428D00C7CDAA /* LWEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LWEnvelope.h; path = Src/LWEnvelope.h; sourceTree = "<group>"; };
 		730E302111A4428D00C7CDAA /* LWEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LWEnvelope.m; path = Src/LWEnvelope.m; sourceTree = "<group>"; };
-		7311E2D80AD64FB4005062FE /* SHGeometryKitTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHGeometryKitTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7311CBB410BFDA7F00BF3A27 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Framework.xcconfig"; path = "../Config/Target-Framework.xcconfig"; sourceTree = SOURCE_ROOT; };
+		7311E2D80AD64FB4005062FE /* SHGeometryKitTest.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHGeometryKitTest.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		7311E2EE0AD65000005062FE /* G3DDefsIntl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DDefsIntl.h; sourceTree = "<group>"; };
 		7311E3030AD65063005062FE /* G3DTrigonometry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = G3DTrigonometry.h; sourceTree = "<group>"; };
 		7311E3040AD65063005062FE /* G3DTrigonometry.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = G3DTrigonometry.m; sourceTree = "<group>"; };
@@ -275,7 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* SHGeometryKit.framework */,
-				7311E2D80AD64FB4005062FE /* SHGeometryKitTest.octest */,
+				7311E2D80AD64FB4005062FE /* SHGeometryKitTest.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -618,7 +619,7 @@
 			);
 			name = SHGeometryKitTest;
 			productName = SHGeometryKitTest;
-			productReference = 7311E2D80AD64FB4005062FE /* SHGeometryKitTest.octest */;
+			productReference = 7311E2D80AD64FB4005062FE /* SHGeometryKitTest.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8DC2EF4F0486A6940098B216 /* SHGeometryKit */ = {
@@ -847,6 +848,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 730E2E4011A438C300C7CDAA /* Project-Debug.xcconfig */;
 			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug;
 		};
@@ -858,10 +861,12 @@
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Library/PrivateFrameworks;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = /Users/Shared/Library/PrivateFrameworks;
 				LIBRARY_SEARCH_PATHS = /Users/Shared/Library/PrivateFrameworks;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = YES;
 				SDKROOT = macosx10.6;
 			};
@@ -869,7 +874,7 @@
 		};
 		7311E2DB0AD64FB4005062FE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 730E2E4A11A438C300C7CDAA /* Target-TestBundle.xcconfig */;
+			baseConfigurationReference = 7311CBB410BFDA7F00BF3A27 /* Target-Framework.xcconfig */;
 			buildSettings = {
 				"GCC_VERSION[sdk=macosx10.6][arch=i386]" = 4.2;
 				PRODUCT_NAME = SHGeometryKitTest;
@@ -878,7 +883,7 @@
 		};
 		7311E2DC0AD64FB4005062FE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 730E2E4A11A438C300C7CDAA /* Target-TestBundle.xcconfig */;
+			baseConfigurationReference = 7311CBB410BFDA7F00BF3A27 /* Target-Framework.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
