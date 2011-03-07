@@ -95,18 +95,54 @@ FT_Error Err;
 
 - (void)setUp {
     [super setUp];
-    
-    // Set-up code here.
 }
 
-- (void)tearDown {
-    // Tear-down code here.
-    
+- (void)tearDown {    
     [super tearDown];
 }
 
+struct FT_Outline_ *_allocSpaceForShape( int numberOfContours, int numberOfPts ) {
+    
+    struct FT_Outline_ *outline = calloc( 1, sizeof(struct FT_Outline_) );
+    struct  FT_Vector_ *pts = calloc( numberOfPts, sizeof(struct  FT_Vector_) );
+    char *ptTags = calloc( numberOfContours, 1 );
+    short *contours = calloc( numberOfContours, sizeof(short) );
+    // fill in pts
+    // fill in tags
+    // fill in contours
+    outline->points = pts;
+    outline->tags = ptTags;
+    outline->contours = contours;
+    outline->n_contours = numberOfContours;
+    outline->n_points = numberOfPts;
+    outline->flags = 0;
+    return outline;
+}
+
+void _freeSpaceForShape( struct FT_Outline_ *outline ) {
+    
+    free( outline->points ); outline->points = NULL;
+    free( outline->tags ); outline->tags = NULL;
+    free( outline->contours ); outline->contours = NULL;
+    outline->n_contours = 0;
+    outline->n_points = 0;
+    free(outline);
+}
+
+- (void)test_timeComplexRender {
+    
+    struct FT_Outline_ *complexOutLine = _allocSpaceForShape(1,100);
+    
+    // fill in some points - for a closed shape
+    complexOutLine->contours[0] = 99;
+    for(){
+        -- use polar coordinates for this
+    }
+    _freeSpaceForShape( complexOutLine );
+}
+
 // Render a shape and dump it out as a raw image 
-- (void)testMain {
+- (void)test_firstAttemptAtFreetype {
 // Set up the memory management to use malloc and free
 //putback FT_MemoryRec_mem = new FT_MemoryRec_;
 //putback mem->alloc = MY_Alloc_Func;
