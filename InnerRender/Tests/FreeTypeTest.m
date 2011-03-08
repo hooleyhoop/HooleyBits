@@ -129,15 +129,108 @@ void _freeSpaceForShape( struct FT_Outline_ *outline ) {
     free(outline);
 }
 
-- (void)test_timeComplexRender {
+void cartToPolar( float x, float y, float *r, float *theta ) {
+    *r = sqrt(x*x+y*y);
+    *theta = atan2(y,x);
+}
+
+void polarToCart( float r, float theta, float *x, float *y ) {
+    *x = r * cos(theta);
+    *y = r * sin(theta);
+}
+
+// you need to release the poly
+struct FT_Outline_ *makePoly() {
     
-    struct FT_Outline_ *complexOutLine = _allocSpaceForShape(1,100);
+    int contourCount = 1;
+    int lineSegments = 4;
+    int ptCount = lineSegments-1; // assuming auto closed    
+    struct FT_Outline_ *complexOutLine = _allocSpaceForShape( contourCount, ptCount );
     
     // fill in some points - for a closed shape
-    complexOutLine->contours[0] = 99;
-    for(){
-        -- use polar coordinates for this
+    complexOutLine->contours[0] = ptCount-1;
+    float angle = 360.0f/lineSegments;
+    
+    float rad = 100.0f;
+    float centrex = 200, centrey = 200;
+    
+    // for 4 sections, add start, assuming contour is automatically closed, so we miss off the last point
+    // ie n pts gives n+1 sections (assuming it is closed automatically - verify this)
+    for( int i=0; i<lineSegments; i++ ) {
+        float theta = i*angle;
+        float x, y;
+        polarToCart( rad, theta, &x, &y );
+        NSLog(@"x>%f, y>%f",x,y);
+		complexOutLine->points[i].x = x+centrex;
+		complexOutLine->points[i].y = y+centrey;
+        complexOutLine->tags[i] = 1;
     }
+    return complexOutLine;
+}
+
+struct FT_Bitmap_ *makeBitmap() {
+    
+    struct FT_Bitmap_ *bitmap = calloc(1,sizeof(struct FT_Bitmap_));
+    
+	const int width = 400;
+	const int rows = 400;
+	const int pitch = ((width + 15) >> 4) << 1; // one row including padding    
+    unsigned char *buffer = calloc(1, width*pitch);
+	bitmap->buffer = buffer;
+	bitmap->width = width;
+	bitmap->rows = rows;
+	bitmap->pitch = pitch;
+	//if aa bitmap.num_grays = 256;
+	bitmap->pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY
+    return bitmap;
+}
+
+void releaseBitmap( struct FT_Bitmap_ *bitmap ) {
+    
+    bitmap->width = 0;
+	bitmap->rows = 0;
+	bitmap->pitch = 0;
+    free(bitmap->buffer);
+    free(bitmap);
+}
+
+struct FT_Raster_Params_ *makeParams( struct FT_Outline_ *outline, struct FT_Bitmap_ *bitmap ) {
+    
+    struct FT_Raster_Params_ *params = calloc(1, sizeof(struct FT_Raster_Params_));
+	params->source = outline;
+	params->target = bitmap;
+	params->flags = FT_RASTER_FLAG_DEFAULT; // @FT_RASTER_FLAG_AA, @FT_RASTER_FLAG_DIRECT
+    params->user = (void *)0xffffffc0;	// data passed to the callback        
+    return params;
+}
+
+void releaseParams( struct FT_Raster_Params_ *params ) {
+    free(params);
+}
+
+- (void)test_timeComplexRender {
+    
+    struct FT_Outline_ *complexOutLine = makePoly();
+    struct FT_Bitmap_ *bitmap = makeBitmap();
+	struct FT_Raster_Params_ *params = makeParams( complexOutLine, bitmap );
+
+	// Allocate a chunk of mem for the render pool. Shared - Optional, reccomended for efficiency
+	const int kRenderPoolSize = 1024 * 1024;
+	unsigned char *renderPool = calloc( 1, kRenderPoolSize );
+    
+	// Initialize the rasterer and get it to render into the bitmap.
+	struct FT_RasterRec_ *raster;
+	Err = ft_standard_raster.raster_new( NULL, &raster );
+	ft_standard_raster.raster_reset( raster, renderPool, kRenderPoolSize );
+	Err = ft_standard_raster.raster_render( raster, params );
+    
+	if (Err != 0) {
+		printf("Encountered error %d rendering fourth glyph\n", Err);
+		exit(1);
+    }
+    
+    releaseParams(params);
+    releaseBitmap(bitmap);
     _freeSpaceForShape( complexOutLine );
 }
 
@@ -213,6 +306,8 @@ void _freeSpaceForShape( struct FT_Outline_ *outline ) {
 		printf("Encountered error %d rendering fourth glyph\n", Err);
 		exit(1);
     }
+    
+    ft_standard_raster.raster_done(raster);
 	// Dump out the raw image data (in PBM format).
 //putback std::ofstream out("out.pbm", std::ios::binary);
 //putback out << "P4 " << width << " " << rows << "\n";
