@@ -27,4 +27,7 @@
     [super tearDown];
 }
 
+- (void)testStuff {
+    STFail(@"nah", nil);
+}
 @end
