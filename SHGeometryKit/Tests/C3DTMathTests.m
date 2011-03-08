@@ -16,7 +16,7 @@
 
 double sys_getrealtime(void) {
 	
-    static struct timeval then;
+    static struct timev al then;
     struct timeval now;
     gettimeofday(&now, 0);
     if (then.tv_sec == 0 && then.tv_usec == 0) then = now;

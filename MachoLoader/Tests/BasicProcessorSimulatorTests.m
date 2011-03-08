@@ -43,18 +43,51 @@
 @end
 
 #pragma mark -
-@interface TPAssembledCodeBlock : NSObject {}
+@interface TPAssembledCodeBlock : NSObject {
+    NSMutableArray *_list;
+}
 @end @implementation TPAssembledCodeBlock
-- (id)initWithData:(char *)data {
+
+- (id)initWithRawData:(char *)data {
     self = [super init];
+    _list = [[NSMutableArray alloc] initWithCapacity:1000000];
+    TPData *listHead = [[[TPData alloc] init] autorelease];
+    [_list addObject:listHead];
     return self;
 }
-- (void)disasembleALine:( NSString *)inputData { /*do we pass all data or just data in correct position? */
+
+- (void)setLine:(TPLine *)ln atPos:(int)linePos forLength:(int)lineLength {
     
+}
+
+- (id)itemAtAddress:(int)add {
+    return nil;
+}
+
+- (NSInteger)findInsertionPt:(SHMemoryBlock *)memBlock {
+	
+	NSUInteger low = 0;
+	NSUInteger high  = [_memoryBlockStore count];
+	NSUInteger index = low;
+	
+	while( index < high ) {
+		const NSUInteger mid = (index + high)/2;
+		SHMemoryBlock *test = [_memoryBlockStore objectAtIndex: mid];
+		NSInteger result = [test compareStartAddress:memBlock];
+		if ( result < 0) {
+			index = mid + 1;
+		} else {
+			high = mid;
+		}
+	}
+	return index;
+}
+
+// - (void)disasembleALine:( NSString *)inputData { /*do we pass all data or just data in correct position? */
 //    newLine = [[[TPLine alloc] initWithAddress:currentAddress] autorelease]
 //    bytesRead = 1;
 //    return newLine
-}
+//}
 
 @end
 
@@ -64,11 +97,14 @@
 
 @implementation BasicProcessorSimulatorTests
 
+/*
+ * I dont think at this point functionas should be objects, they should just be labels on the line objects
+ */
 - (void)testSettingLinesForAdresses {
 
     // -- make a data block
     char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithData:simpleInData];
+    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData];
     
     // -- add lines as interpretations of bytes at addressess
     id mockLine1 = [[[TPLine alloc] init] autorelease];
@@ -77,21 +113,25 @@
     [codeDataBlock setLine:mockLine1 atPos:1 forLength:1];
     [codeDataBlock setLine:mockLine2 atPos:4 forLength:3];
     
+    // -- fundamentally we want to interogate it at addresses and find out what is there
+    // -- this has got to be arbitrary, ie, we dont access it in order
+    
     // -- verify the output
-    codeDataBlock:0 == 1 byte of dta
-    codeDataBlock:1 == line length 1
-    codeDataBlock:2 == 2 byte of dta
-    codeDataBlock:4 == line length 3
+    STAssertNotNil([codeDataBlock itemAtAddress:0], nil);    //== 1 byte of dta
+    STAssertNotNil([codeDataBlock itemAtAddress:1], nil);    //== line length 1
+    STAssertNotNil([codeDataBlock itemAtAddress:2], nil);    //== 2 byte of dta
+    STAssertNotNil([codeDataBlock itemAtAddress:3], nil);    //== ??
+    STAssertNotNil([codeDataBlock itemAtAddress:4], nil);    //== line length 3
 
     
-    new data
-    assert data.elementCount = 1
-    add line at begging 
-    assert data.elementCount = 2
-    addLine at end
-    asserrt data.elementCount = 3
-    add line in middle
-    assert data.elementCount = 5
+//    new data
+//    assert data.elementCount = 1
+//    add line at begging 
+//    assert data.elementCount = 2
+//    addLine at end
+//    asserrt data.elementCount = 3
+//    add line in middle
+//    assert data.elementCount = 5
 }
 
 - (void)testUnknownStuff {

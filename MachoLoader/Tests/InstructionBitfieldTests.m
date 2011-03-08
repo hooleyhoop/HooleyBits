@@ -6,7 +6,8 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-
+// Intersting bit twiddling hacks
+// http://www-graphics.stanford.edu/~seander/bithacks.html
 
 
 @interface InstructionBitfieldTests : SenTestCase {
