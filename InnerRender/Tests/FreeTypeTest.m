@@ -208,6 +208,18 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
     free(params);
 }
 
+void spawnWindowWithImage( CGImageRef img ){
+    
+   // NSRect frame = NSMakeRect(0, 0, CGImageGetWidth(img), CGImageGetHeight(img));
+   // NSWindow *newWindow = [[NSWindow alloc] initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+   // [newWindow makeKeyAndOrderFront:nil];
+    
+    NSImage *im = [[NSImage alloc] initWithCGImage:img size:CGSizeZero];
+    NSData *tiff = [im TIFFRepresentation];
+    BOOL result = [tiff writeToFile:@"/testStuff.tif" atomically:NO];
+    NSLog(@"boo %i", result);
+}
+
 - (void)test_timeComplexRender {
     
     struct FT_Outline_ *complexOutLine = makePoly();
@@ -229,6 +241,40 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
 		exit(1);
     }
     
+    // to cgImage
+    int actualDataLength = 400*400;
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithData( NULL, bitmap->buffer, actualDataLength, NULL);
+    
+	CGFloat scaledGlyph1Width = 400;
+	CGFloat scaledGlyph1Height = 400;
+	size_t bitsPerComponent = 8;
+	size_t componentsPerPixel = 1;
+	size_t bitsPerPixel = bitsPerComponent * componentsPerPixel;
+	size_t bytesPerRow = ( scaledGlyph1Width * bitsPerPixel + 7)/8;	
+	size_t dataLength = bytesPerRow * scaledGlyph1Height;
+    
+    CGColorSpaceRef colorspace = CGColorSpaceCreateWithName( kCGColorSpaceModelMonochrome );
+	CGBitmapInfo bitmapInfo = kCGImageAlphaNone;
+
+	CGImageRef cgImage = CGImageCreate( 
+                                       scaledGlyph1Width, 
+                                       scaledGlyph1Height, 
+                                       bitsPerComponent, 
+                                       bitsPerPixel, 
+                                       bytesPerRow, 
+                                       colorspace, 
+                                       bitmapInfo, 
+                                       dataProvider, 
+                                       NULL, 
+                                       false, 
+                                       kCGRenderingIntentDefault );
+
+    spawnWindowWithImage(cgImage);
+    sleep(100);
+    
+	CGImageRelease( cgImage );    
+	CGDataProviderRelease(dataProvider);
+
     releaseParams(params);
     releaseBitmap(bitmap);
     _freeSpaceForShape( complexOutLine );

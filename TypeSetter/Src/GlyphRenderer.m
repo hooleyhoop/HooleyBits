@@ -739,7 +739,18 @@ shitStack:
 	
 	// -- draw new context into window context
 	CGDataProviderRef dataProvider = CGDataProviderCreateWithData( NULL, bitmap, dataLength, NULL);
-	CGImageRef cgImage = CGImageCreate( scaledGlyph1Width, scaledGlyph1Height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorspace, bitmapInfo, dataProvider, NULL, false, kCGRenderingIntentDefault );
+	CGImageRef cgImage = CGImageCreate( 
+                                       scaledGlyph1Width, 
+                                       scaledGlyph1Height, 
+                                       bitsPerComponent, 
+                                       bitsPerPixel, 
+                                       bytesPerRow, 
+                                       colorspace, 
+                                       bitmapInfo, 
+                                       dataProvider, 
+                                       NULL, 
+                                       false, 
+                                       kCGRenderingIntentDefault );
 	CGContextDrawImage( windowContext, CGRectMake( 6, 6, scaledGlyph1Width, scaledGlyph1Height), cgImage );
 	
 	CGImageRelease( cgImage );
