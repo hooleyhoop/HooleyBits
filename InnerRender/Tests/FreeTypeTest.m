@@ -2,6 +2,18 @@
 #import "ftimage.h"
 #import "ftraster.h"
 
+#import <sys/time.h>
+
+// gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
+double sys_getrealtime(void) {
+	
+    static struct timeval then;
+    struct timeval now;
+    gettimeofday(&now, 0);
+    if (then.tv_sec == 0 && then.tv_usec == 0) then = now;
+    return ((now.tv_sec - then.tv_sec) + (1./1000000.) * (now.tv_usec - then.tv_usec));
+}
+
 //#include "malloc.h"
 //#include <fstream>
 
@@ -48,27 +60,30 @@
 void PopulatePointsRegular( FT_Vector *Points, char *Tags, int scale ) {
 
     /* Populate the regular glyph Points array */
-    if (scale == 72) {
-		Points[0].x = 252;
-		Points[0].y = 0;
-		Points[1].x = 252;
-		Points[1].y = 25;
-		Points[2].x = 0;
-		Points[2].y = 25;
-		Points[3].x = 0;
-		Points[3].y = 0;
-    }
+//    if (scale == 72) {
+		Points[0].x = 0 *64;
+		Points[0].y = 0 *64;
+        
+		Points[1].x = 300 *64;
+		Points[1].y = 20 *64;
+        
+		Points[2].x = 399 *64 ;
+		Points[2].y = 399 *64;
+        
+		Points[3].x = 20 *64;
+		Points[3].y = 350 *64;
+//    }
 	
-    if (scale == 96) {
-		Points[0].x = 344;
-		Points[0].y = 42;
-		Points[1].x = 344;
-		Points[1].y = 76;
-		Points[2].x = 0;
-		Points[2].y = 76;
-		Points[3].x = 0;
-		Points[3].y = 42;
-    }
+//    if (scale == 96) {
+//		Points[0].x = 344;
+//		Points[0].y = 42;
+//		Points[1].x = 344;
+//		Points[1].y = 76;
+//		Points[2].x = 0;
+//		Points[2].y = 76;
+//		Points[3].x = 0;
+//		Points[3].y = 42;
+//    }
 	
 	// bit 0 = on curve or not
 	// if bit 0==0, ie. is off curve, ie, is control pt, bit 1=third-order Bézier arc control point if set (postscript), and a second-order control point if unset (truetype). 
@@ -129,27 +144,43 @@ void _freeSpaceForShape( struct FT_Outline_ *outline ) {
     free(outline);
 }
 
-void cartToPolar( float x, float y, float *r, float *theta ) {
+void cartToPolarDegress( float x, float y, float *r, float *theta ) {
     *r = sqrt(x*x+y*y);
-    *theta = atan2(y,x);
+    *theta = atan2(y,x) * 180. / pi;
 }
 
-void polarToCart( float r, float theta, float *x, float *y ) {
-    *x = r * cos(theta);
-    *y = r * sin(theta);
+void polarDegreesToCart( float r, float theta, float *x, float *y ) {
+    float rads = theta*pi/180;
+    *x = r * cos(rads);
+    *y = r * sin(rads);
+}
+
+- (void)testCoordConversion {
+  
+    float x, y;    
+    polarDegreesToCart( 100, 90, &x, &y );
+    NSLog(@"%f %f", x, y);
+    
+    polarDegreesToCart( 100, 180, &x, &y );
+    NSLog(@"%f %f", x, y);
+    
+    float r, theta;
+    cartToPolarDegress(x,y,&r,&theta);
+    NSLog(@"%f %f", r, theta);
+    
 }
 
 // you need to release the poly
 struct FT_Outline_ *makePoly() {
-    
+
     int contourCount = 1;
-    int lineSegments = 4;
-    int ptCount = lineSegments-1; // assuming auto closed    
-    struct FT_Outline_ *complexOutLine = _allocSpaceForShape( contourCount, ptCount );
+    int lineSegments = 100;
+    //int ptCount = lineSegments-1; // assuming auto closed    
+    struct FT_Outline_ *complexOutLine = _allocSpaceForShape( contourCount, lineSegments );
     
     // fill in some points - for a closed shape
-    complexOutLine->contours[0] = ptCount-1;
-    float angle = 360.0f/lineSegments;
+    complexOutLine->contours[0] = lineSegments-1;
+    float angle = (360.0f/lineSegments);
     
     float rad = 100.0f;
     float centrex = 200, centrey = 200;
@@ -159,12 +190,17 @@ struct FT_Outline_ *makePoly() {
     for( int i=0; i<lineSegments; i++ ) {
         float theta = i*angle;
         float x, y;
-        polarToCart( rad, theta, &x, &y );
+        polarDegreesToCart( rad, theta, &x, &y );
         NSLog(@"x>%f, y>%f",x,y);
-		complexOutLine->points[i].x = x+centrex;
-		complexOutLine->points[i].y = y+centrey;
+		complexOutLine->points[i].x = 64*(x+centrex);
+		complexOutLine->points[i].y = 64*(y+centrey);
         complexOutLine->tags[i] = 1;
     }
+    
+//    complexOutLine->points[3].x = complexOutLine->points[0].x;
+//    complexOutLine->points[3].y = complexOutLine->points[0].y;
+//    complexOutLine->tags[3] = complexOutLine->tags[0];
+    
     return complexOutLine;
 }
 
@@ -175,13 +211,13 @@ struct FT_Bitmap_ *makeBitmap() {
 	const int width = 400;
 	const int rows = 400;
 	const int pitch = ((width + 15) >> 4) << 1; // one row including padding    
-    unsigned char *buffer = calloc(1, width*pitch);
+    unsigned char *buffer = calloc(1, width*pitch); // ??
 	bitmap->buffer = buffer;
 	bitmap->width = width;
 	bitmap->rows = rows;
 	bitmap->pitch = pitch;
 	//if aa bitmap.num_grays = 256;
-	bitmap->pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY
+	bitmap->pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY  FT_PIXEL_MODE_MONO
     return bitmap;
 }
 
@@ -232,55 +268,57 @@ void spawnWindowWithImage( CGImageRef img ){
     
 	// Initialize the rasterer and get it to render into the bitmap.
 	struct FT_RasterRec_ *raster;
-	Err = ft_standard_raster.raster_new( NULL, &raster );
-	ft_standard_raster.raster_reset( raster, renderPool, kRenderPoolSize );
-	Err = ft_standard_raster.raster_render( raster, params );
     
-	if (Err != 0) {
-		printf("Encountered error %d rendering fourth glyph\n", Err);
-		exit(1);
+    double startTime = sys_getrealtime();
+    double time = 0;
+    
+    static int profileCount = 0;
+    while(time<3.0)
+    {
+        Err = ft_standard_raster.raster_new( NULL, &raster );        
+        ft_standard_raster.raster_reset( raster, renderPool, kRenderPoolSize );
+        Err = ft_standard_raster.raster_render( raster, params );
+        if (Err != 0) {
+            printf("Encountered error %d rendering fourth glyph\n", Err);
+            exit(1);
+        }        
+        time = sys_getrealtime()-startTime;
+        profileCount++;
+    }
+    // Compare this result with
+    NSLog(@"in three seconds %i times", profileCount);
+    
+    unsigned char *eightBitBuffer = calloc(1,400*400); // 16 bit align this? maybe later
+    for(int j=0; j<400; j++){
+        for(int i=0; i<50; i++){
+            unsigned char c = params->target->buffer[j*50+i];
+            for (int k=0; k<8; k++){
+                int b = ((c >> k) & 1);
+                int address = j*400+(i*8)+7-k; // this swaps byte order, possible endian issue!
+                if(b)
+                    eightBitBuffer[address] = 255;
+            }
+        }
     }
     
-    // to cgImage
-    int actualDataLength = 400*400;
-    CGDataProviderRef dataProvider = CGDataProviderCreateWithData( NULL, bitmap->buffer, actualDataLength, NULL);
+    FILE *fp;
+    fp = fopen( "/Users/shooley/Desktop/cout_mono_test2.raw", "wb" );
+    fwrite( eightBitBuffer, 1, 400*400, fp );
+    fclose(fp);
     
-	CGFloat scaledGlyph1Width = 400;
-	CGFloat scaledGlyph1Height = 400;
-	size_t bitsPerComponent = 8;
-	size_t componentsPerPixel = 1;
-	size_t bitsPerPixel = bitsPerComponent * componentsPerPixel;
-	size_t bytesPerRow = ( scaledGlyph1Width * bitsPerPixel + 7)/8;	
-	size_t dataLength = bytesPerRow * scaledGlyph1Height;
-    
-    CGColorSpaceRef colorspace = CGColorSpaceCreateWithName( kCGColorSpaceModelMonochrome );
-	CGBitmapInfo bitmapInfo = kCGImageAlphaNone;
+    free(eightBitBuffer);
 
-	CGImageRef cgImage = CGImageCreate( 
-                                       scaledGlyph1Width, 
-                                       scaledGlyph1Height, 
-                                       bitsPerComponent, 
-                                       bitsPerPixel, 
-                                       bytesPerRow, 
-                                       colorspace, 
-                                       bitmapInfo, 
-                                       dataProvider, 
-                                       NULL, 
-                                       false, 
-                                       kCGRenderingIntentDefault );
-
-    spawnWindowWithImage(cgImage);
-    sleep(100);
-    
-	CGImageRelease( cgImage );    
-	CGDataProviderRelease(dataProvider);
 
     releaseParams(params);
     releaseBitmap(bitmap);
     _freeSpaceForShape( complexOutLine );
+    
+    ft_standard_raster.raster_done(raster);
+    
 }
 
 // Render a shape and dump it out as a raw image 
+// http://www.freetype.org/freetype2/docs/tutorial/example3.cpp
 - (void)test_firstAttemptAtFreetype {
 // Set up the memory management to use malloc and free
 //putback FT_MemoryRec_mem = new FT_MemoryRec_;
@@ -299,23 +337,40 @@ void spawnWindowWithImage( CGImageRef img ){
 
     outline.n_contours = 1; // number of shapes, ie uppercase B has 3 contours
     outline.n_points = 4;
-	outline.flags = 0; //0x104 ? // FT_OUTLINE_OWNER, FT_OUTLINE_EVEN_ODD_FILL (only smooth rasterizer), FT_OUTLINE_REVERSE_FILL, FT_OUTLINE_HIGH_PRECISION, FT_OUTLINE_SINGLE_PASS, etc
+	outline.flags = FT_OUTLINE_HIGH_PRECISION; //0x104 ? // FT_OUTLINE_OWNER, FT_OUTLINE_EVEN_ODD_FILL (only smooth rasterizer), FT_OUTLINE_REVERSE_FILL, FT_OUTLINE_HIGH_PRECISION, FT_OUTLINE_SINGLE_PASS, etc
     outline.tags = (char *)&RegularTags;
     outline.contours = (short *)&RegularContours; // shape 0 is pt 0 to contour[0], shape 1 is the next pt to contour[1]
     outline.points = (FT_Vector *)&RegularPoints;
 	
-	const int width = 400;
+	const int widthPx = 400;
 	const int rows = 400;
-	const int pitch = ((width + 15) >> 4) << 1; // one row including padding
+    
+	const int pitch_sixteenBitAligned = ((widthPx + 15) >> 4) << 1; // one row bytes including padding - 50
 
+    // 1 bit per pixel.
+    const int pitch_mono = (widthPx + 7) >> 3;
+    
+    // 8 bits per pixel; must be a multiple of four. -- this doesnt work?
+    const int pitch_gray = (widthPx + 3) & -4;
+    
+    const int chosenPitch = pitch_mono;
+    
+//    for(int i=0; i<400; i++){
+//        const int pitch = ((i + 15) >> 4) << 1;
+//        const int pitch_mono = (i + 7) >> 3;
+//        const int p2 = (widthPx + 3) & -4;
+//        
+//        NSLog(@"%i %i %i", pitch, pitch_mono, p2);
+//    }
+    
 	// Set up a bitmap
 	struct FT_Bitmap_ bitmap;
-    unsigned char buffer[width * pitch];
-	bitmap.buffer = buffer;
-	memset( bitmap.buffer, 0, width * pitch );
-	bitmap.width = width;
+    unsigned char oneBitBuffer[rows * chosenPitch]; // ?? TOD: check this
+	bitmap.buffer = oneBitBuffer;
+	memset( bitmap.buffer, 0, rows * chosenPitch );
+	bitmap.width = widthPx;
 	bitmap.rows = rows;
-	bitmap.pitch = pitch;
+	bitmap.pitch = chosenPitch;
 	//if aa bitmap.num_grays = 256;
 	bitmap.pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY
 	
@@ -327,8 +382,8 @@ void spawnWindowWithImage( CGImageRef img ){
 	memset( &params, 0, sizeof(params) );
 	params.source = &outline;
 	params.target = &bitmap;
-	params.flags = FT_RASTER_FLAG_DEFAULT; // @FT_RASTER_FLAG_AA, @FT_RASTER_FLAG_DIRECT
-    params.user = (void *)0xffffffc0;	// data passed to the callback
+	params.flags = FT_RASTER_FLAG_DEFAULT; // @FT_RASTER_FLAG_AA, @FT_RASTER_FLAG_DIRECT, use @FT_RASTER_FLAG_AA for greyscale
+    //params.user = (void *)0xffffffc0;	// data passed to the callback
 	
 	// if @FT_RASTER_FLAG_DIRECT is set (AA mode only) - you have to set these, otherwise dont bother
 	// gray_spans = span_rendering_fuction
@@ -352,13 +407,51 @@ void spawnWindowWithImage( CGImageRef img ){
 		printf("Encountered error %d rendering fourth glyph\n", Err);
 		exit(1);
     }
-    
-    ft_standard_raster.raster_done(raster);
-	// Dump out the raw image data (in PBM format).
-//putback std::ofstream out("out.pbm", std::ios::binary);
-//putback out << "P4 " << width << " " << rows << "\n";
-//putback out.write((const char *)bitmap.buffer, width * pitch);
+   	
+    //fputs("STATE: +com.sample-cyan-error\n", stderr);
 
+    // Dump out the raw image data (in PBM format).
+    //putback std::ofstream out("out.pbm", std::ios::binary);
+    //putback out << "P4 " << width << " " << rows << "\n";
+    //putback out.write((const char *)bitmap.buffer, width * pitch); 
+    
+    // the buffer is single bit, try converting to 8bit so we can load in photoshop
+    
+    // the image may be 5 bits wide, say. That is we need to know how many bytes to iterate over
+    unsigned char *eightBitBuffer = calloc(1,400*400); // 16 bit align this? maybe later
+ 
+    // i dont know if the padding is at the end of the line or between bytes
+    int incompleteRowBytes = widthPx/8; // there are some pixels in the next byte
+//    int ignoredPixels = widthPx - (incompleteRowBytes*8);
+//    for(int j=0; j<400*50; j++){
+//        unsigned char c = oneBitBuffer[j];
+//        if(c>0)
+//            NSLog(@"really? %i", c);        
+//    }
+//    
+    for(int j=0; j<rows; j++){
+        for(int i=0; i<50; i++){
+            unsigned char c = oneBitBuffer[j*50+i];
+            for (int k=0; k<8; k++){
+                int b = ((c >> k) & 1);
+                int address = j*400+(i*8)+7-k; // this swaps byte order, possible endian issue!
+                if(b)
+                    eightBitBuffer[address] = 255;
+            }
+        }
+    }
+ //   [0000][0000][0000][1100] 14 out of 16
+        
+    //-- is it bits or bytes?
+    FILE *fp;
+    fp = fopen( "/Users/shooley/Desktop/cout_mono_test1.raw", "wb" );
+    fwrite( eightBitBuffer, 1, 400*400, fp );
+    fclose(fp);
+
+    free(eightBitBuffer);
+    // write(STDERR_FILENO, buffer, 400);
+
+    ft_standard_raster.raster_done(raster);
 }
 
 @end

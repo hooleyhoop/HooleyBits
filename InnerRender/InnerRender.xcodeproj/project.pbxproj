@@ -30,6 +30,7 @@
 		73BF14CA12B1354600B714FB /* HandleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BF14C912B1354600B714FB /* HandleLayer.m */; };
 		73BF14CB12B1354600B714FB /* HandleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BF14C912B1354600B714FB /* HandleLayer.m */; };
 		73C3D44C132591AE00235FC5 /* FreeTypeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E4459812E398DD0053508A /* FreeTypeTest.m */; };
+		73CDE7AB132D5B9D00522179 /* HooRenderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CDE7AA132D5B9D00522179 /* HooRenderTest.m */; };
 		73E7BE2912AD774C0004572D /* RenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2812AD774C0004572D /* RenderManager.m */; };
 		73E7BE2D12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
 		73E7BE2E12AD79E10004572D /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7BE2C12AD79E10004572D /* Grid.m */; };
@@ -74,6 +75,7 @@
 		73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InnerRenderAppDelegateTests.m; sourceTree = "<group>"; };
 		73BF14C812B1354600B714FB /* HandleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleLayer.h; sourceTree = "<group>"; };
 		73BF14C912B1354600B714FB /* HandleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleLayer.m; sourceTree = "<group>"; };
+		73CDE7AA132D5B9D00522179 /* HooRenderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooRenderTest.m; sourceTree = "<group>"; };
 		73E4459812E398DD0053508A /* FreeTypeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTypeTest.m; sourceTree = "<group>"; };
 		73E4459E12E39A850053508A /* FTRasterExample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FTRasterExample.c; sourceTree = "<group>"; };
 		73E4464612E3A1810053508A /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
@@ -136,12 +138,6 @@
 				734106F312E23C020084D6FE /* View */,
 				734106F412E23C2A0084D6FE /* Control */,
 				734106F512E23C330084D6FE /* Model */,
-				7367B55C12BD2D8C00CE7A3F /* ftmisc.h */,
-				73AB02C712AE48DE0021C1F1 /* HooPolygon.h */,
-				73AB02C812AE48DE0021C1F1 /* HooPolygon.m */,
-				7367B55D12BD2DCB00CE7A3F /* ftimage.h */,
-				73AB047B12AE919E0021C1F1 /* PolygonRasterizer.h */,
-				73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */,
 				73E7BE2B12AD79E10004572D /* Grid.h */,
 				73E7BE2C12AD79E10004572D /* Grid.m */,
 				73BF14C812B1354600B714FB /* HandleLayer.h */,
@@ -204,7 +200,7 @@
 				73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */,
 				73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */,
 				73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */,
-				73E4459812E398DD0053508A /* FreeTypeTest.m */,
+				73CDE7A8132D5B7100522179 /* basic render comparisons */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -247,6 +243,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		73CDE7A8132D5B7100522179 /* basic render comparisons */ = {
+			isa = PBXGroup;
+			children = (
+				73E4459812E398DD0053508A /* FreeTypeTest.m */,
+				73CDE7AA132D5B9D00522179 /* HooRenderTest.m */,
+			);
+			name = "basic render comparisons";
+			sourceTree = "<group>";
+		};
 		73E4453712E389400053508A /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,8 +262,14 @@
 		73E4453812E3894A0053508A /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				7367B55C12BD2D8C00CE7A3F /* ftmisc.h */,
+				7367B55D12BD2DCB00CE7A3F /* ftimage.h */,
 				73AAB3E012B78423000B2B2D /* ftraster.h */,
 				73AAB3DF12B78423000B2B2D /* ftraster.c */,
+				73AB02C712AE48DE0021C1F1 /* HooPolygon.h */,
+				73AB02C812AE48DE0021C1F1 /* HooPolygon.m */,
+				73AB047B12AE919E0021C1F1 /* PolygonRasterizer.h */,
+				73AB047C12AE919E0021C1F1 /* PolygonRasterizer.m */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -417,6 +428,7 @@
 				73AAB3E212B78423000B2B2D /* ftraster.c in Sources */,
 				732C826312FC9B6A001BD259 /* InnerRender-main.m in Sources */,
 				73C3D44C132591AE00235FC5 /* FreeTypeTest.m in Sources */,
+				73CDE7AB132D5B9D00522179 /* HooRenderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
