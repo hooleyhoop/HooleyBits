@@ -12,9 +12,10 @@
     NSPointerArray *_ptArray;
 }
 
++ (HooPolygon *)complexTestPoly;
 
 - (CGRect)boundsRect;
 - (NSPointerArray *)pts;
-- (int)numverts;
+- (NSUInteger)numverts;
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
 
-@class HooPolygon;
+@class HooPolygon, HooBitmap;
 
 @interface PolygonRasterizer : NSObject {
 
@@ -40,6 +40,11 @@ static int pointinpoly( const double point[2], NSPointerArray *pgon );
 
 - (void)setPolygon:(HooPolygon *)poly;
 
+- (void)reset;
+
+- (void)render:(HooPolygon *)complexOutLine into:(HooBitmap *)bitmap;
+ 
+/* old */
 - (void)render;
 
 @end

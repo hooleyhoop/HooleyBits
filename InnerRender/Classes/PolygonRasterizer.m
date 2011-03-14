@@ -8,6 +8,7 @@
 
 #import "PolygonRasterizer.h"
 #import "HooPolygon.h"
+#import "HooBitmap.h"
 
 #ifndef SQR
 #define SQR(a) ((a)*(a))
@@ -64,6 +65,14 @@ static char pixelBuffer[30][30];
 	
 	// leak
 	_poly = [poly retain];
+}
+
+- (void)reset {
+    
+}
+
+- (void)render:(HooPolygon *)complexOutLine into:(HooBitmap *)bitmap {
+    
 }
 
 - (void)render {

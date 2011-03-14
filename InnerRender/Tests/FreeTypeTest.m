@@ -1,6 +1,8 @@
 #import "ftmisc.h"
 #import "ftimage.h"
 #import "ftraster.h"
+#import "FreetypeTestShapes.h"
+#include "HoboMaths.h"
 
 #import <sys/time.h>
 
@@ -57,43 +59,6 @@ double sys_getrealtime(void) {
 //putback	return realloc(block, new_size);
 //putback}
 
-void PopulatePointsRegular( FT_Vector *Points, char *Tags, int scale ) {
-
-    /* Populate the regular glyph Points array */
-//    if (scale == 72) {
-		Points[0].x = 0 *64;
-		Points[0].y = 0 *64;
-        
-		Points[1].x = 300 *64;
-		Points[1].y = 20 *64;
-        
-		Points[2].x = 399 *64 ;
-		Points[2].y = 399 *64;
-        
-		Points[3].x = 20 *64;
-		Points[3].y = 350 *64;
-//    }
-	
-//    if (scale == 96) {
-//		Points[0].x = 344;
-//		Points[0].y = 42;
-//		Points[1].x = 344;
-//		Points[1].y = 76;
-//		Points[2].x = 0;
-//		Points[2].y = 76;
-//		Points[3].x = 0;
-//		Points[3].y = 42;
-//    }
-	
-	// bit 0 = on curve or not
-	// if bit 0==0, ie. is off curve, ie, is control pt, bit 1=third-order Bézier arc control point if set (postscript), and a second-order control point if unset (truetype). 
-    // If bit~2 is set, bits 5-7 contain the drop-out mode
-	// Bits 3 and~4 are reserved for internal purposes
-	Tags[0] = 1; 
-    Tags[1] = 1;
-    Tags[2] = 1;
-    Tags[3] = 1;
-}
 
 
 //FT_Memory mem;
@@ -116,45 +81,6 @@ FT_Error Err;
     [super tearDown];
 }
 
-struct FT_Outline_ *_allocSpaceForShape( int numberOfContours, int numberOfPts ) {
-    
-    struct FT_Outline_ *outline = calloc( 1, sizeof(struct FT_Outline_) );
-    struct  FT_Vector_ *pts = calloc( numberOfPts, sizeof(struct  FT_Vector_) );
-    char *ptTags = calloc( numberOfContours, 1 );
-    short *contours = calloc( numberOfContours, sizeof(short) );
-    // fill in pts
-    // fill in tags
-    // fill in contours
-    outline->points = pts;
-    outline->tags = ptTags;
-    outline->contours = contours;
-    outline->n_contours = numberOfContours;
-    outline->n_points = numberOfPts;
-    outline->flags = 0;
-    return outline;
-}
-
-void _freeSpaceForShape( struct FT_Outline_ *outline ) {
-    
-    free( outline->points ); outline->points = NULL;
-    free( outline->tags ); outline->tags = NULL;
-    free( outline->contours ); outline->contours = NULL;
-    outline->n_contours = 0;
-    outline->n_points = 0;
-    free(outline);
-}
-
-void cartToPolarDegress( float x, float y, float *r, float *theta ) {
-    *r = sqrt(x*x+y*y);
-    *theta = atan2(y,x) * 180. / pi;
-}
-
-void polarDegreesToCart( float r, float theta, float *x, float *y ) {
-    float rads = theta*pi/180;
-    *x = r * cos(rads);
-    *y = r * sin(rads);
-}
-
 - (void)testCoordConversion {
   
     float x, y;    
@@ -168,40 +94,6 @@ void polarDegreesToCart( float r, float theta, float *x, float *y ) {
     cartToPolarDegress(x,y,&r,&theta);
     NSLog(@"%f %f", r, theta);
     
-}
-
-// you need to release the poly
-struct FT_Outline_ *makePoly() {
-
-    int contourCount = 1;
-    int lineSegments = 100;
-    //int ptCount = lineSegments-1; // assuming auto closed    
-    struct FT_Outline_ *complexOutLine = _allocSpaceForShape( contourCount, lineSegments );
-    
-    // fill in some points - for a closed shape
-    complexOutLine->contours[0] = lineSegments-1;
-    float angle = (360.0f/lineSegments);
-    
-    float rad = 100.0f;
-    float centrex = 200, centrey = 200;
-    
-    // for 4 sections, add start, assuming contour is automatically closed, so we miss off the last point
-    // ie n pts gives n+1 sections (assuming it is closed automatically - verify this)
-    for( int i=0; i<lineSegments; i++ ) {
-        float theta = i*angle;
-        float x, y;
-        polarDegreesToCart( rad, theta, &x, &y );
-        NSLog(@"x>%f, y>%f",x,y);
-		complexOutLine->points[i].x = 64*(x+centrex);
-		complexOutLine->points[i].y = 64*(y+centrey);
-        complexOutLine->tags[i] = 1;
-    }
-    
-//    complexOutLine->points[3].x = complexOutLine->points[0].x;
-//    complexOutLine->points[3].y = complexOutLine->points[0].y;
-//    complexOutLine->tags[3] = complexOutLine->tags[0];
-    
-    return complexOutLine;
 }
 
 struct FT_Bitmap_ *makeBitmap() {
@@ -244,21 +136,9 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
     free(params);
 }
 
-void spawnWindowWithImage( CGImageRef img ){
-    
-   // NSRect frame = NSMakeRect(0, 0, CGImageGetWidth(img), CGImageGetHeight(img));
-   // NSWindow *newWindow = [[NSWindow alloc] initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-   // [newWindow makeKeyAndOrderFront:nil];
-    
-    NSImage *im = [[NSImage alloc] initWithCGImage:img size:CGSizeZero];
-    NSData *tiff = [im TIFFRepresentation];
-    BOOL result = [tiff writeToFile:@"/testStuff.tif" atomically:NO];
-    NSLog(@"boo %i", result);
-}
-
 - (void)test_timeComplexRender {
     
-    struct FT_Outline_ *complexOutLine = makePoly();
+    struct FT_Outline_ *complexOutLine = makeSegmentedCirclePoly();
     struct FT_Bitmap_ *bitmap = makeBitmap();
 	struct FT_Raster_Params_ *params = makeParams( complexOutLine, bitmap );
 
@@ -311,7 +191,7 @@ void spawnWindowWithImage( CGImageRef img ){
 
     releaseParams(params);
     releaseBitmap(bitmap);
-    _freeSpaceForShape( complexOutLine );
+    freeSpaceForShape( complexOutLine );
     
     ft_standard_raster.raster_done(raster);
     
@@ -320,28 +200,9 @@ void spawnWindowWithImage( CGImageRef img ){
 // Render a shape and dump it out as a raw image 
 // http://www.freetype.org/freetype2/docs/tutorial/example3.cpp
 - (void)test_firstAttemptAtFreetype {
-// Set up the memory management to use malloc and free
-//putback FT_MemoryRec_mem = new FT_MemoryRec_;
-//putback mem->alloc = MY_Alloc_Func;
-//putback mem->free = MY_Free_Func;
-//putback mem->realloc = MY_Realloc_Func;
 
-    // Build an outline manually
-    struct FT_Outline_ outline;
-    FT_Vector RegularPoints[4];
-    char RegularTags[4];
-    short RegularContours[1];	
-
-	PopulatePointsRegular((FT_Vector *)&RegularPoints, (char *)&RegularTags, 72);
-    RegularContours[0] = 3;
-
-    outline.n_contours = 1; // number of shapes, ie uppercase B has 3 contours
-    outline.n_points = 4;
-	outline.flags = FT_OUTLINE_HIGH_PRECISION; //0x104 ? // FT_OUTLINE_OWNER, FT_OUTLINE_EVEN_ODD_FILL (only smooth rasterizer), FT_OUTLINE_REVERSE_FILL, FT_OUTLINE_HIGH_PRECISION, FT_OUTLINE_SINGLE_PASS, etc
-    outline.tags = (char *)&RegularTags;
-    outline.contours = (short *)&RegularContours; // shape 0 is pt 0 to contour[0], shape 1 is the next pt to contour[1]
-    outline.points = (FT_Vector *)&RegularPoints;
-	
+    struct FT_Outline_ *simpleOutLine = makeSimplePoly();
+    
 	const int widthPx = 400;
 	const int rows = 400;
     
@@ -380,7 +241,7 @@ void spawnWindowWithImage( CGImageRef img ){
 	// Set up the raster params (these seem to be the only two checked).
 	struct FT_Raster_Params_ params;
 	memset( &params, 0, sizeof(params) );
-	params.source = &outline;
+	params.source = simpleOutLine;
 	params.target = &bitmap;
 	params.flags = FT_RASTER_FLAG_DEFAULT; // @FT_RASTER_FLAG_AA, @FT_RASTER_FLAG_DIRECT, use @FT_RASTER_FLAG_AA for greyscale
     //params.user = (void *)0xffffffc0;	// data passed to the callback
@@ -449,6 +310,8 @@ void spawnWindowWithImage( CGImageRef img ){
     fclose(fp);
 
     free(eightBitBuffer);
+    freeSpaceForShape(simpleOutLine);
+
     // write(STDERR_FILENO, buffer, 400);
 
     ft_standard_raster.raster_done(raster);

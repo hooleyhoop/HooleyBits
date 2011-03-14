@@ -38,12 +38,12 @@
     HooBitmap *bitmap = [[HooBitmap alloc] init];
     PolygonRasterizer *rasterizer = [[PolygonRasterizer alloc] init];
     [rasterizer reset];
-    [rasterizer render:complexOutLine, bitmap ];
+    [rasterizer render:complexOutLine into:bitmap];
 
     unsigned char *eightBitBuffer = calloc(1,400*400); // 16 bit align this? maybe later
     for(int j=0; j<400; j++){
         for(int i=0; i<50; i++){
-            unsigned char c = params->target->buffer[j*50+i];
+            unsigned char c = bitmap->buffer[j*50+i];
             for (int k=0; k<8; k++){
                 int b = ((c >> k) & 1);
                 int address = j*400+(i*8)+7-k; // this swaps byte order, possible endian issue!

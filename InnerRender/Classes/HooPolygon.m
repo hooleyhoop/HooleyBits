@@ -7,9 +7,19 @@
 //
 
 #import "HooPolygon.h"
+#import "FreetypeTestShapes.h"
 
 
 @implementation HooPolygon
+
++ (HooPolygon *)complexTestPoly {
+    
+    struct FT_Outline_ *poly = makeSegmentedCirclePoly();
+
+    -- so what is the best storage?
+    -- with this we have to keep reallocing
+    return nil;
+}
 
 - (id)init {
 	self = [super init];
@@ -77,7 +87,7 @@
 	return _ptArray;
 }
 
-- (int)numverts {
+- (NSUInteger)numverts {
     return [_ptArray count];
 }
 //int pnpoly( int nvert, float *vertx, float *verty, float testx, float testy )
