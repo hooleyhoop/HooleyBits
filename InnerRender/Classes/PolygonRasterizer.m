@@ -189,6 +189,12 @@ static char pixelBuffer[30][30];
 	CGColorRelease(whiteCol);
 }
 
+// for classic even/odd just against all lines
+// otherwise..
+// Union > in any of the contours
+// ??   > in only one of the contours
+// ??   > in all of the contours
+// etc
 static int pointinpoly( const double point[2], NSPointerArray *pgon ) {
 
     int crossings = 0;

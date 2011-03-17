@@ -9,7 +9,13 @@
 
 @interface HooPolygon : NSObject {
 
-    NSPointerArray *_ptArray;
+    NSPointerArray      *_ptArray;  // a growable list of pts
+    //                    _tags       // a list of ints
+                        
+    // open or closed ?
+    
+    //-- presumably we need multiple contours? - arse
+    //                    _contours
 }
 
 + (HooPolygon *)complexTestPoly;

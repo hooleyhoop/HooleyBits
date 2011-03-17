@@ -8,17 +8,15 @@
 
 #import "HooPolygon.h"
 #import "FreetypeTestShapes.h"
-
+#import "ftmisc.h"
+#import "ftimage.h"
 
 @implementation HooPolygon
 
 + (HooPolygon *)complexTestPoly {
     
     struct FT_Outline_ *poly = makeSegmentedCirclePoly();
-
-    -- so what is the best storage?
-    -- with this we have to keep reallocing
-    return nil;
+    return [[[HooPolygon alloc] initWithFreeTypePoly:poly] autorelease];
 }
 
 - (id)init {
@@ -40,6 +38,20 @@
         [_ptArray addPointer:p2];
         [_ptArray addPointer:p3];
         [_ptArray addPointer:p1];
+    }
+    return self;
+}
+
+- (id)initWithFreeTypePoly:(struct FT_Outline_ *)poly {
+    self = [super init];
+    if( self ) {
+        // ignore n_contours for now. doh
+        for(int i=0;i<poly->n_points;i++){
+            CGPoint *p1 = malloc(sizeof(CGPoint));
+            p1->x = poly->points[i].x; 
+            p1->y = poly->points[i].y;            
+            [_ptArray addPointer:p1];
+        }
     }
     return self;
 }
