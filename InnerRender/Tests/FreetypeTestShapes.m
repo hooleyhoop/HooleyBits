@@ -109,7 +109,6 @@ struct FT_Outline_ *makeSegmentedCirclePoly() {
         float theta = i*angle;
         float x, y;
         polarDegreesToCart( rad, theta, &x, &y );
-        NSLog(@"x>%f, y>%f",x,y);
 		complexOutLine->points[i].x = 64*(x+centrex);
 		complexOutLine->points[i].y = 64*(y+centrey);
         complexOutLine->tags[i] = 1;

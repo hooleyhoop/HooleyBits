@@ -151,6 +151,7 @@ void line(int x0, int y0, int x1, int y1) {
     [[NSColor colorWithDeviceRed:1.0f green: 0 blue: 0 alpha:1.0] set];
     NSRectFill( dirtyRect );
          
+    /* Drw the offscreen image */
     _image = CGImageCreate( 480, 360, 8, 8, 480*1, _colorSpace, kCGBitmapByteOrderDefault, _provider, NULL, FALSE, kCGRenderingIntentDefault);
     
     CGContextDrawImage( context, CGRectMake(0.0, 0.0, 480.0, 360.0), _image );
@@ -165,7 +166,7 @@ void line(int x0, int y0, int x1, int y1) {
     int px1 = _pointList[0] % 480;
     CGContextMoveToPoint(context, px1, py1);
     
-    // for debuf purposes, redraw red over top
+    // for debug purposes, redraw vector red lines over top
     for (int i=0; i<_pointListCount; i++) {
         py1 = _pointList[i] /480;
         px1 = _pointList[i] % 480;
@@ -178,10 +179,10 @@ void line(int x0, int y0, int x1, int y1) {
     
     CGImageRelease(_image);
     
-    /* step along each pixel */
+    /* prove we can step along step along each pixel */
     // starting at the first pixel
     // [self calcLength];
-    [[NSColor colorWithDeviceRed:1.0f green:1.0f blue:1.0f alpha:1.0] set];
+    [[NSColor colorWithDeviceRed:0.0f green:1.0f blue:1.0f alpha:1.0] set];
     
     px1 = _pointList[0] /480;
     py1 = _pointList[0] % 480;
@@ -206,7 +207,7 @@ void line(int x0, int y0, int x1, int y1) {
                 draw = !draw;   // plot every other pixel
                 if(draw){
                     //NSLog(@"%i, %i",px1,py1);
-                    NSRectFill( NSMakeRect(px1,py1,1,1) );
+                    NSRectFill( NSMakeRect(py1,px1,1,1) );
                 }
             }
             if (px1==px2 && py1==py2) break;
@@ -218,6 +219,11 @@ void line(int x0, int y0, int x1, int y1) {
         py1 = py2;
         skipFirstPixel=YES;
     }
+    
+    /* draw a line tageting */
+    float speed;
+    float accel;
+    float angle_dir;
 }
 
 @end

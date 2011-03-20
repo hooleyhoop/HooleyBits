@@ -23,43 +23,51 @@
 	self = [super init];
     if( self ) {
         
+        // need to init with pointer functions
         _ptArray = [[NSPointerArray pointerArrayWithWeakObjects] retain];
         
-        CGPoint *p1 = malloc(sizeof(CGPoint));
-        CGPoint *p2 = malloc(sizeof(CGPoint));
-        CGPoint *p3 = malloc(sizeof(CGPoint));
-        p1->x = 10.; 
-        p1->y = 10.;
-        p2->x = 250.; 
-        p2->y = 300.;
-        p3->x = 400.; 
-        p3->y = 2.;
-        [_ptArray addPointer:p1];
-        [_ptArray addPointer:p2];
-        [_ptArray addPointer:p3];
-        [_ptArray addPointer:p1];
+//        CGPoint *p1 = malloc(sizeof(CGPoint));
+//        CGPoint *p2 = malloc(sizeof(CGPoint));
+//        CGPoint *p3 = malloc(sizeof(CGPoint));
+//        p1->x = 10.; 
+//        p1->y = 10.;
+//        p2->x = 250.; 
+//        p2->y = 300.;
+//        p3->x = 400.; 
+//        p3->y = 2.;
+//        [_ptArray addPointer:p1];
+//        [_ptArray addPointer:p2];
+//        [_ptArray addPointer:p3];
+//        [_ptArray addPointer:p1];
     }
     return self;
 }
 
 - (id)initWithFreeTypePoly:(struct FT_Outline_ *)poly {
-    self = [super init];
-    if( self ) {
-        // ignore n_contours for now. doh
+    
+    assert(poly);
+
+    self = [self init];
+    assert(_ptArray);
+
+    // ignore n_contours for now. doh
         for(int i=0;i<poly->n_points;i++){
             CGPoint *p1 = malloc(sizeof(CGPoint));
             p1->x = poly->points[i].x; 
             p1->y = poly->points[i].y;            
             [_ptArray addPointer:p1];
         }
-    }
+
     return self;
 }
 
 - (void)dealloc {
     
+    // this wont work
     // remove all pointer shit
-    
+//    for each(CGPoint *p in _ptArray){
+//        free(p)
+//    }
     [_ptArray release];
     [super dealloc];
 }
@@ -96,6 +104,7 @@
 }
 
 - (NSPointerArray *)pts {
+    assert(_ptArray);
 	return _ptArray;
 }
 

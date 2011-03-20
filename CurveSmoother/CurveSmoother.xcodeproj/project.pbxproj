@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730C98B613367E0E00993137 /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
+		730C98B713367E0E00993137 /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
+		730C98BA13367E2C00993137 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
+		730C98BB13367E2C00993137 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
+		730C98BE13367E5200993137 /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
+		730C98BF13367E5200993137 /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
 		73F9B43E13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
 		73F9B44813196E3400ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B44613196E3400ED3BC1 /* InfoPlist.strings */; };
 		73F9B44B13196E3400ED3BC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B44A13196E3400ED3BC1 /* main.m */; };
@@ -31,6 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		730C98B413367E0E00993137 /* LocalSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalSpace.h; path = CurveSmoother/Src/LocalSpace.h; sourceTree = "<group>"; };
+		730C98B513367E0E00993137 /* LocalSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalSpace.m; path = CurveSmoother/Src/LocalSpace.m; sourceTree = "<group>"; };
+		730C98B813367E2B00993137 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vehicle.h; path = CurveSmoother/Src/Vehicle.h; sourceTree = "<group>"; };
+		730C98B913367E2B00993137 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vehicle.m; path = CurveSmoother/Src/Vehicle.m; sourceTree = "<group>"; };
+		730C98BC13367E5200993137 /* Seeker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Seeker.h; path = CurveSmoother/Src/Seeker.h; sourceTree = "<group>"; };
+		730C98BD13367E5200993137 /* Seeker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Seeker.m; path = CurveSmoother/Src/Seeker.m; sourceTree = "<group>"; };
 		73F9B43913196E3400ED3BC1 /* CurveSmoother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurveSmoother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73F9B43D13196E3400ED3BC1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73F9B44013196E3400ED3BC1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -74,6 +86,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		730C98C013367EE900993137 /* jva stuff */ = {
+			isa = PBXGroup;
+			children = (
+				730C98BC13367E5200993137 /* Seeker.h */,
+				730C98BD13367E5200993137 /* Seeker.m */,
+				730C98B813367E2B00993137 /* Vehicle.h */,
+				730C98B913367E2B00993137 /* Vehicle.m */,
+				730C98B413367E0E00993137 /* LocalSpace.h */,
+				730C98B513367E0E00993137 /* LocalSpace.m */,
+			);
+			name = "jva stuff";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		73F9B42E13196E3400ED3BC1 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +141,7 @@
 		73F9B44313196E3400ED3BC1 /* CurveSmoother */ = {
 			isa = PBXGroup;
 			children = (
+				730C98C013367EE900993137 /* jva stuff */,
 				73F9B44F13196E3400ED3BC1 /* CurveSmootherAppDelegate.h */,
 				73F9B45013196E3400ED3BC1 /* CurveSmootherAppDelegate.m */,
 				73F9B47113196EB100ED3BC1 /* DrawingView.h */,
@@ -268,6 +295,9 @@
 				73F9B44B13196E3400ED3BC1 /* main.m in Sources */,
 				73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */,
 				73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */,
+				730C98B613367E0E00993137 /* LocalSpace.m in Sources */,
+				730C98BA13367E2C00993137 /* Vehicle.m in Sources */,
+				730C98BE13367E5200993137 /* Seeker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +306,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */,
+				730C98B713367E0E00993137 /* LocalSpace.m in Sources */,
+				730C98BB13367E2C00993137 /* Vehicle.m in Sources */,
+				730C98BF13367E5200993137 /* Seeker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +484,7 @@
 				73F9B46D13196E3500ED3BC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73F9B46E13196E3500ED3BC1 /* Build configuration list for PBXNativeTarget "CurveSmootherTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +493,7 @@
 				73F9B47013196E3500ED3BC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

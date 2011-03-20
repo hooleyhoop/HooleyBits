@@ -3,18 +3,9 @@
 #import "ftraster.h"
 #import "FreetypeTestShapes.h"
 #include "HoboMaths.h"
+#include "TestUtils.h"
 
-#import <sys/time.h>
 
-// gettimeofday is microsecond accurate. for higher resolution (nanosecond) switch to http://developer.apple.com/library/mac/#qa/qa2004/qa1398.html
-double sys_getrealtime(void) {
-	
-    static struct timeval then;
-    struct timeval now;
-    gettimeofday(&now, 0);
-    if (then.tv_sec == 0 && then.tv_usec == 0) then = now;
-    return ((now.tv_sec - then.tv_sec) + (1./1000000.) * (now.tv_usec - then.tv_usec));
-}
 
 //#include "malloc.h"
 //#include <fstream>
@@ -110,6 +101,8 @@ struct FT_Bitmap_ *makeBitmap() {
 	bitmap->pitch = pitch;
 	//if aa bitmap.num_grays = 256;
 	bitmap->pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY  FT_PIXEL_MODE_MONO
+    // not used - bitmap.palette = 0;
+    // not used - bitmap.palette_mode = 0;
     return bitmap;
 }
 
@@ -151,7 +144,6 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
     
     double startTime = sys_getrealtime();
     double time = 0;
-    
     static int profileCount = 0;
     while(time<3.0)
     {
@@ -225,24 +217,13 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
 //    }
     
 	// Set up a bitmap
-	struct FT_Bitmap_ bitmap;
-    unsigned char oneBitBuffer[rows * chosenPitch]; // ?? TOD: check this
-	bitmap.buffer = oneBitBuffer;
-	memset( bitmap.buffer, 0, rows * chosenPitch );
-	bitmap.width = widthPx;
-	bitmap.rows = rows;
-	bitmap.pitch = chosenPitch;
-	//if aa bitmap.num_grays = 256;
-	bitmap.pixel_mode = FT_PIXEL_MODE_MONO; // FT_PIXEL_MODE_GRAY
-	
-    // not used - bitmap.palette = 0;
-    // not used - bitmap.palette_mode = 0;
-
+	struct FT_Bitmap_ *bitmap = makeBitmap();
+    
 	// Set up the raster params (these seem to be the only two checked).
 	struct FT_Raster_Params_ params;
 	memset( &params, 0, sizeof(params) );
 	params.source = simpleOutLine;
-	params.target = &bitmap;
+	params.target = bitmap;
 	params.flags = FT_RASTER_FLAG_DEFAULT; // @FT_RASTER_FLAG_AA, @FT_RASTER_FLAG_DIRECT, use @FT_RASTER_FLAG_AA for greyscale
     //params.user = (void *)0xffffffc0;	// data passed to the callback
 	
@@ -292,7 +273,7 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
 //    
     for(int j=0; j<rows; j++){
         for(int i=0; i<50; i++){
-            unsigned char c = oneBitBuffer[j*50+i];
+            unsigned char c = bitmap->buffer[j*50+i];
             for (int k=0; k<8; k++){
                 int b = ((c >> k) & 1);
                 int address = j*400+(i*8)+7-k; // this swaps byte order, possible endian issue!
@@ -311,6 +292,7 @@ void releaseParams( struct FT_Raster_Params_ *params ) {
 
     free(eightBitBuffer);
     freeSpaceForShape(simpleOutLine);
+    releaseBitmap(bitmap);
 
     // write(STDERR_FILENO, buffer, 400);
 

@@ -10,6 +10,7 @@
 #import "HooPolygon.h"
 #import "HooBitmap.h"
 #import "PolygonRasterizer.h"
+#import "TestUtils.h"
 
 @interface HooRenderTest : SenTestCase {
 @private
@@ -35,11 +36,23 @@
 - (void)test_timeComplexRender {
     
     HooPolygon *complexOutLine = [HooPolygon complexTestPoly];
-    HooBitmap *bitmap = [[HooBitmap alloc] init];
+    HooBitmap *bitmap = [[HooBitmap alloc] initWithWidth:400 height:400];
     PolygonRasterizer *rasterizer = [[PolygonRasterizer alloc] init];
-    [rasterizer reset];
-    [rasterizer render:complexOutLine into:bitmap];
 
+    double startTime = sys_getrealtime();
+    double time = 0;
+    static int profileCount = 0;
+    while(time<3.0)
+    {
+        [rasterizer reset];
+        [rasterizer render:complexOutLine into:bitmap];
+        
+        time = sys_getrealtime()-startTime;
+        profileCount++;
+    }
+    // Compare this result with
+    NSLog(@"in three seconds HOORENDER: %i times", profileCount); // 24216
+    
     unsigned char *eightBitBuffer = calloc(1,400*400); // 16 bit align this? maybe later
     for(int j=0; j<400; j++){
         for(int i=0; i<50; i++){

@@ -71,14 +71,34 @@ static char pixelBuffer[30][30];
     
 }
 
+static unsigned char mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+
 - (void)render:(HooPolygon *)complexOutLine into:(HooBitmap *)bitmap {
     
+    assert(complexOutLine);
+    assert(bitmap);
+
+	NSPointerArray *allPts = [complexOutLine pts];
+	////// woah! temp - test each damn pixel
+	// see which are inside
+    int width = bitmap->pxheight;
+    int height = bitmap->pxwidth;
+    int x, y;
+	for( y=0; y<200; y++ ){
+		for( x=0; x<200; x++ ){
+			//double pt[2] = {x,y};
+			//int result = pointinpoly( pt, allPts );
+			//if(result){
+            //    int buferpos = 0; // ok for speed test
+				// Set the least significant bit to indicate it is inside
+			//	bitmap->buffer[buferpos] |= mask_table[ 0 ];
+            //}
+        }
+    }
 }
 
 - (void)render {
 	
-	unsigned char mask_table[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
-
 	// TODO: Always transpose the polygon to origin before drawing
 	// Of course we will have too have some pixel space for anti aliasing
 	

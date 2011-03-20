@@ -20,6 +20,8 @@
 
 + (HooPolygon *)complexTestPoly;
 
+- (id)initWithFreeTypePoly:(struct FT_Outline_ *)poly;
+
 - (CGRect)boundsRect;
 - (NSPointerArray *)pts;
 - (NSUInteger)numverts;

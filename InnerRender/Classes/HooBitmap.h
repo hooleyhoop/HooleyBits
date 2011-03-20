@@ -12,6 +12,7 @@
 @interface HooBitmap : NSObject {
 @public
     unsigned char *buffer;
+    int pxwidth, pxheight;
 }
-
+- (id)initWithWidth:(int)width height:(int)height;
 @end

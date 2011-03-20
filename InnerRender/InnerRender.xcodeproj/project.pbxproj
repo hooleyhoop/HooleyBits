@@ -20,6 +20,7 @@
 		7313702612AC55B1003CF189 /* ShapeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7313702412AC55B1003CF189 /* ShapeHandle.m */; };
 		731E744212BE6F2400B53D94 /* ftraster.c in Sources */ = {isa = PBXBuildFile; fileRef = 73AAB3DF12B78423000B2B2D /* ftraster.c */; };
 		732C826312FC9B6A001BD259 /* InnerRender-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 732C826212FC9B6A001BD259 /* InnerRender-main.m */; };
+		73778E8C1334CFE0001297E6 /* TestUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 73778E8A1334CFE0001297E6 /* TestUtils.c */; };
 		739D3071132EBCA0008A3BE3 /* HooBitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D3070132EBCA0008A3BE3 /* HooBitmap.m */; };
 		739D3072132EBCA0008A3BE3 /* HooBitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D3070132EBCA0008A3BE3 /* HooBitmap.m */; };
 		739D3075132EC795008A3BE3 /* FreetypeTestShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 739D3074132EC795008A3BE3 /* FreetypeTestShapes.m */; };
@@ -65,6 +66,8 @@
 		7347D53512BF52C100B03821 /* FreeTypeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeTypeExample.h; path = Classes/FreeTypeExample.h; sourceTree = SOURCE_ROOT; };
 		7367B55C12BD2D8C00CE7A3F /* ftmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmisc.h; sourceTree = "<group>"; };
 		7367B55D12BD2DCB00CE7A3F /* ftimage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftimage.h; sourceTree = "<group>"; };
+		73778E8A1334CFE0001297E6 /* TestUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TestUtils.c; sourceTree = "<group>"; };
+		73778E8B1334CFE0001297E6 /* TestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUtils.h; sourceTree = "<group>"; };
 		739D306F132EBCA0008A3BE3 /* HooBitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooBitmap.h; sourceTree = "<group>"; };
 		739D3070132EBCA0008A3BE3 /* HooBitmap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooBitmap.m; sourceTree = "<group>"; };
 		739D3073132EC794008A3BE3 /* FreetypeTestShapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreetypeTestShapes.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 				73AB053A12AEA3C20021C1F1 /* ShapeHandleTests.m */,
 				73AB053F12AEA3D00021C1F1 /* RenderManagerTests.m */,
 				73AB054412AEA3DE0021C1F1 /* InnerRenderAppDelegateTests.m */,
+				73778E8B1334CFE0001297E6 /* TestUtils.h */,
+				73778E8A1334CFE0001297E6 /* TestUtils.c */,
 				73CDE7A8132D5B7100522179 /* basic render comparisons */,
 			);
 			path = Tests;
@@ -451,6 +456,7 @@
 				739D3072132EBCA0008A3BE3 /* HooBitmap.m in Sources */,
 				739D3075132EC795008A3BE3 /* FreetypeTestShapes.m in Sources */,
 				739D3079132ECC87008A3BE3 /* HoboMaths.c in Sources */,
+				73778E8C1334CFE0001297E6 /* TestUtils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
