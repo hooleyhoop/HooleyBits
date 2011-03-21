@@ -6,8 +6,15 @@
 //  Copyright 2011 Tinsal Parks. All rights reserved.
 //
 
-#import "CurveSmootherTests.h"
+#import <SenTestingKit/SenTestingKit.h>
 
+
+@interface CurveSmootherTests : SenTestCase {
+@private
+    
+}
+
+@end
 
 @implementation CurveSmootherTests
 

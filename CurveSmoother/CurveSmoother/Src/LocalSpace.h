@@ -7,10 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <Accelerate/Accelerate.h>
 
 @interface LocalSpace : NSObject {
 @private
+    
+    vFloat woah;
+//    Vector3 position;
+//    Vector3 forward;
+//    Vector3 side;
+//    Vector3 up;
+//    static Vector3 component = new Vector3();
     
 }
 

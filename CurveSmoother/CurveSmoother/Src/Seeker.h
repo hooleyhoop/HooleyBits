@@ -12,7 +12,10 @@
 
 @interface Seeker : Vehicle {
 @private
-    
+    CGPoint target;
+    CGPoint steering;
+    CGPoint drawSteer;
+    BOOL seek, touch;
 }
 
 @end

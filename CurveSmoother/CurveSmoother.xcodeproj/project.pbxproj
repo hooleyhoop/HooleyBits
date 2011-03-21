@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		730C98B613367E0E00993137 /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
-		730C98B713367E0E00993137 /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
-		730C98BA13367E2C00993137 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
-		730C98BB13367E2C00993137 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
-		730C98BE13367E5200993137 /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
-		730C98BF13367E5200993137 /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
+		73CFC3531338078C00027659 /* VectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC3521338078C00027659 /* VectorTest.m */; };
+		73CFC3551338083200027659 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CFC3541338083200027659 /* Accelerate.framework */; };
+		73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.c */; };
+		73CFC359133809DB00027659 /* 2DVectorOps.c in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.c */; };
 		73F9B43E13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
 		73F9B44813196E3400ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B44613196E3400ED3BC1 /* InfoPlist.strings */; };
 		73F9B44B13196E3400ED3BC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B44A13196E3400ED3BC1 /* main.m */; };
@@ -21,7 +19,6 @@
 		73F9B45413196E3400ED3BC1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B45213196E3400ED3BC1 /* MainMenu.xib */; };
 		73F9B45B13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
 		73F9B46313196E3500ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B46113196E3500ED3BC1 /* InfoPlist.strings */; };
-		73F9B46613196E3500ED3BC1 /* CurveSmootherTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */; };
 		73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */; };
 		73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B47213196EB100ED3BC1 /* DrawingView.m */; };
 /* End PBXBuildFile section */
@@ -43,6 +40,10 @@
 		730C98B913367E2B00993137 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vehicle.m; path = CurveSmoother/Src/Vehicle.m; sourceTree = "<group>"; };
 		730C98BC13367E5200993137 /* Seeker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Seeker.h; path = CurveSmoother/Src/Seeker.h; sourceTree = "<group>"; };
 		730C98BD13367E5200993137 /* Seeker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Seeker.m; path = CurveSmoother/Src/Seeker.m; sourceTree = "<group>"; };
+		73CFC3521338078C00027659 /* VectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorTest.m; sourceTree = "<group>"; };
+		73CFC3541338083200027659 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		73CFC356133809DB00027659 /* 2DVectorOps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = 2DVectorOps.c; path = CurveSmoother/Src/2DVectorOps.c; sourceTree = "<group>"; };
+		73CFC357133809DB00027659 /* 2DVectorOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 2DVectorOps.h; path = CurveSmoother/Src/2DVectorOps.h; sourceTree = "<group>"; };
 		73F9B43913196E3400ED3BC1 /* CurveSmoother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurveSmoother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73F9B43D13196E3400ED3BC1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73F9B44013196E3400ED3BC1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -60,7 +61,6 @@
 		73F9B46013196E3500ED3BC1 /* CurveSmootherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurveSmootherTests-Info.plist"; sourceTree = "<group>"; };
 		73F9B46213196E3500ED3BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73F9B46413196E3500ED3BC1 /* CurveSmootherTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CurveSmootherTests-Prefix.pch"; sourceTree = "<group>"; };
-		73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveSmootherTests.h; sourceTree = "<group>"; };
 		73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurveSmootherTests.m; sourceTree = "<group>"; };
 		73F9B47113196EB100ED3BC1 /* DrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawingView.h; path = Src/DrawingView.h; sourceTree = "<group>"; };
 		73F9B47213196EB100ED3BC1 /* DrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawingView.m; path = Src/DrawingView.m; sourceTree = "<group>"; };
@@ -79,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73CFC3551338083200027659 /* Accelerate.framework in Frameworks */,
 				73F9B45B13196E3400ED3BC1 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +96,8 @@
 				730C98B913367E2B00993137 /* Vehicle.m */,
 				730C98B413367E0E00993137 /* LocalSpace.h */,
 				730C98B513367E0E00993137 /* LocalSpace.m */,
+				73CFC357133809DB00027659 /* 2DVectorOps.h */,
+				73CFC356133809DB00027659 /* 2DVectorOps.c */,
 			);
 			name = "jva stuff";
 			path = ..;
@@ -103,6 +106,7 @@
 		73F9B42E13196E3400ED3BC1 = {
 			isa = PBXGroup;
 			children = (
+				73CFC3541338083200027659 /* Accelerate.framework */,
 				73F9B44313196E3400ED3BC1 /* CurveSmoother */,
 				73F9B45E13196E3400ED3BC1 /* CurveSmootherTests */,
 				73F9B43C13196E3400ED3BC1 /* Frameworks */,
@@ -167,8 +171,8 @@
 		73F9B45E13196E3400ED3BC1 /* CurveSmootherTests */ = {
 			isa = PBXGroup;
 			children = (
-				73F9B46513196E3500ED3BC1 /* CurveSmootherTests.h */,
 				73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */,
+				73CFC3521338078C00027659 /* VectorTest.m */,
 				73F9B45F13196E3500ED3BC1 /* Supporting Files */,
 			);
 			path = CurveSmootherTests;
@@ -265,7 +269,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				73F9B46313196E3500ED3BC1 /* InfoPlist.strings in Resources */,
-				73F9B46613196E3500ED3BC1 /* CurveSmootherTests.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,9 +298,7 @@
 				73F9B44B13196E3400ED3BC1 /* main.m in Sources */,
 				73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */,
 				73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */,
-				730C98B613367E0E00993137 /* LocalSpace.m in Sources */,
-				730C98BA13367E2C00993137 /* Vehicle.m in Sources */,
-				730C98BE13367E5200993137 /* Seeker.m in Sources */,
+				73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,9 +307,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */,
-				730C98B713367E0E00993137 /* LocalSpace.m in Sources */,
-				730C98BB13367E2C00993137 /* Vehicle.m in Sources */,
-				730C98BF13367E5200993137 /* Seeker.m in Sources */,
+				73CFC3531338078C00027659 /* VectorTest.m in Sources */,
+				73CFC359133809DB00027659 /* 2DVectorOps.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

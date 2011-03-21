@@ -12,7 +12,9 @@
 
 @interface Vehicle : LocalSpace {
 @private
-    
+    float maxSpeed;
+    float maxForce;
+    Vector3 velocity;
 }
 
 @end
