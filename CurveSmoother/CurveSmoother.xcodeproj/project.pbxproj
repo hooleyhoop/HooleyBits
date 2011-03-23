@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		738225E7133A927900FCF59B /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
+		738225E8133A927900FCF59B /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
+		738225E9133A927900FCF59B /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
+		738225EA133A927B00FCF59B /* Seeker.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98BD13367E5200993137 /* Seeker.m */; };
+		738225EB133A927B00FCF59B /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B913367E2B00993137 /* Vehicle.m */; };
+		738225EC133A927B00FCF59B /* LocalSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 730C98B513367E0E00993137 /* LocalSpace.m */; };
+		738225EF133A943E00FCF59B /* SeekerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 738225EE133A943E00FCF59B /* SeekerTests.m */; };
 		73CFC3531338078C00027659 /* VectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC3521338078C00027659 /* VectorTest.m */; };
 		73CFC3551338083200027659 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CFC3541338083200027659 /* Accelerate.framework */; };
 		73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.c */; };
@@ -40,6 +47,7 @@
 		730C98B913367E2B00993137 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vehicle.m; path = CurveSmoother/Src/Vehicle.m; sourceTree = "<group>"; };
 		730C98BC13367E5200993137 /* Seeker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Seeker.h; path = CurveSmoother/Src/Seeker.h; sourceTree = "<group>"; };
 		730C98BD13367E5200993137 /* Seeker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Seeker.m; path = CurveSmoother/Src/Seeker.m; sourceTree = "<group>"; };
+		738225EE133A943E00FCF59B /* SeekerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeekerTests.m; sourceTree = "<group>"; };
 		73CFC3521338078C00027659 /* VectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorTest.m; sourceTree = "<group>"; };
 		73CFC3541338083200027659 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		73CFC356133809DB00027659 /* 2DVectorOps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = 2DVectorOps.c; path = CurveSmoother/Src/2DVectorOps.c; sourceTree = "<group>"; };
@@ -87,7 +95,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		730C98C013367EE900993137 /* jva stuff */ = {
+		730C98C013367EE900993137 /* java stuff */ = {
 			isa = PBXGroup;
 			children = (
 				730C98BC13367E5200993137 /* Seeker.h */,
@@ -99,7 +107,7 @@
 				73CFC357133809DB00027659 /* 2DVectorOps.h */,
 				73CFC356133809DB00027659 /* 2DVectorOps.c */,
 			);
-			name = "jva stuff";
+			name = "java stuff";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -145,7 +153,7 @@
 		73F9B44313196E3400ED3BC1 /* CurveSmoother */ = {
 			isa = PBXGroup;
 			children = (
-				730C98C013367EE900993137 /* jva stuff */,
+				730C98C013367EE900993137 /* java stuff */,
 				73F9B44F13196E3400ED3BC1 /* CurveSmootherAppDelegate.h */,
 				73F9B45013196E3400ED3BC1 /* CurveSmootherAppDelegate.m */,
 				73F9B47113196EB100ED3BC1 /* DrawingView.h */,
@@ -171,6 +179,7 @@
 		73F9B45E13196E3400ED3BC1 /* CurveSmootherTests */ = {
 			isa = PBXGroup;
 			children = (
+				738225EE133A943E00FCF59B /* SeekerTests.m */,
 				73F9B46713196E3500ED3BC1 /* CurveSmootherTests.m */,
 				73CFC3521338078C00027659 /* VectorTest.m */,
 				73F9B45F13196E3500ED3BC1 /* Supporting Files */,
@@ -299,6 +308,9 @@
 				73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */,
 				73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */,
 				73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */,
+				738225EA133A927B00FCF59B /* Seeker.m in Sources */,
+				738225EB133A927B00FCF59B /* Vehicle.m in Sources */,
+				738225EC133A927B00FCF59B /* LocalSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +321,10 @@
 				73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */,
 				73CFC3531338078C00027659 /* VectorTest.m in Sources */,
 				73CFC359133809DB00027659 /* 2DVectorOps.c in Sources */,
+				738225E7133A927900FCF59B /* Seeker.m in Sources */,
+				738225E8133A927900FCF59B /* Vehicle.m in Sources */,
+				738225E9133A927900FCF59B /* LocalSpace.m in Sources */,
+				738225EF133A943E00FCF59B /* SeekerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

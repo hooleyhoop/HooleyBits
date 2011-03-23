@@ -7,15 +7,17 @@
 //
 
 #import "Seeker.h"
-import java.awt.Color;
-import java.awt.Graphics;
+#import "Vehicle.h"
+
+//import java.awt.Color;
+//import java.awt.Graphics;
 
 @implementation Seeker
 
-static final Color seekLineColor = new Color(0.0F, 0.3F, 0.0F);
-static final Color seekFillColor = new Color(0.5F, 1.0F, 0.5F);
-static final Color fleeLineColor = new Color(0.3F, 0.0F, 0.0F);
-static final Color fleeFillColor = new Color(1.0F, 0.5F, 0.5F);
+//static final Color seekLineColor = new Color(0.0F, 0.3F, 0.0F);
+//static final Color seekFillColor = new Color(0.5F, 1.0F, 0.5F);
+//static final Color fleeLineColor = new Color(0.3F, 0.0F, 0.0F);
+//static final Color fleeFillColor = new Color(1.0F, 0.5F, 0.5F);
 
 - (id)init {
     self = [super init];
@@ -32,30 +34,30 @@ static final Color fleeFillColor = new Color(1.0F, 0.5F, 0.5F);
     [super dealloc];
 }
 
-- (void)update() {
+- (void)update {
 
-    [self steeringForSeekFlee:steering];
-    [self applyGlobalForce:steering];
-    
-    touch |= target.approximateDistance(this.position) < 0.6D;
-    
-    [super update];
+//    [self steeringForSeekFlee:steering];
+//    [self applyGlobalForce:steering];
+//    
+//    touch |= target.approximateDistance(this.position) < 0.6D;
+//    
+//    [super update];
 }
 
 - (void)steeringForSeekFlee:(CGPoint)v {
 
-    if(seek)
-        steering.setDiff(target, position);
-    else {
-        steering.setDiff(position, target);
-    }
-    
-    float goalLength = 1.1F * velocity.approximateLength();
-    steering.setApproximateTruncate(goalLength);
-    
-    steering.setDiff(steering, velocity);
-    steering.setApproximateTruncate(maxForce);
-    v.set(steering);
+//    if(seek)
+//        steering.setDiff(target, position);
+//    else {
+//        steering.setDiff(position, target);
+//    }
+//    
+//    float goalLength = 1.1F * velocity.approximateLength();
+//    steering.setApproximateTruncate(goalLength);
+//    
+//    steering.setDiff(steering, velocity);
+//    steering.setApproximateTruncate(maxForce);
+//    v.set(steering);
 }
 
 //- (void)draw(Graphics g, float scale) {

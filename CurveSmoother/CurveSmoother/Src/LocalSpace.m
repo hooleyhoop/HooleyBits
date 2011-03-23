@@ -11,11 +11,15 @@
 
 @implementation LocalSpace
 
+@synthesize position;
+
+//        component = new Vector3();
+
 - (id)init {
     self = [super init];
     if (self) {
-//        component = new Vector3();
-//        setToIdentity();
+        position = calloc(1, sizeof(CGPoint));
+        [self setToIdentity];
     }
     
     return self;
@@ -30,15 +34,14 @@
 //    setToIdentity();
 //    this.position = paramVector3;
 //}
-//
-//public void setToIdentity()
-//{
-//    this.position = new Vector3(0.0F, 0.0F, 0.0F);
+
+- (void)setToIdentity {
+    memset(position, 0, sizeof(CGPoint));
 //    this.forward = new Vector3(0.0F, 0.0F, 1.0F);
 //    this.side = new Vector3(1.0F, 0.0F, 0.0F);
 //    this.up = new Vector3(0.0F, 1.0F, 0.0F);
-//}
-//
+}
+
 //public void globalizePosition(Vector3 paramVector31, Vector3 paramVector32)
 //{
 //    synchronized (component)

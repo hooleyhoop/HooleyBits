@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class Vehicle;
+#import "Vehicle.h"
 
 @interface Seeker : Vehicle {
-@private
+
     CGPoint target;
     CGPoint steering;
     CGPoint drawSteer;

@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class LocalSpace;
+#import "LocalSpace.h"
 
 @interface Vehicle : LocalSpace {
-@private
+    float mass;    
     float maxSpeed;
     float maxForce;
-    Vector3 velocity;
+    CGPoint velocity;
 }
 
 @end
