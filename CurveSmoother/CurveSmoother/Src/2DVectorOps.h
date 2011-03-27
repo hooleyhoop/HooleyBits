@@ -8,9 +8,11 @@
 #import <Foundation/Foundation.h>
 
 //setZero()
-//approximateDistance()
-//setDiff
-//approximateLength
-//setApproximateTruncate
+float approximateDistance( CGPoint this, CGPoint v );
+CGPoint setDiff( CGPoint a, CGPoint b );
+float approximateLength( CGPoint this );
+CGPoint setApproximateTruncate( CGPoint this, float threshold );
 
 CGPoint setUnitRandom();
+CGPoint setScale( float a, CGPoint b );
+CGPoint setSum( CGPoint a, CGPoint b );

@@ -8,6 +8,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "Seeker.h"
+#include "2DVectorOps.h"
 
 @interface SeekerTests : SenTestCase {
     Seeker *seeker, *fleer;
@@ -35,6 +36,27 @@
     [super tearDown];
 }
 
+- (void)resetSeekers {
+    
+    CGPoint viewCenter = CGPointMake( 200, 200 );
+    
+    [seeker setPosition: setUnitRandom()];
+    [seeker setPosition: setScale(17.0F, seeker.position)];
+    [seeker setPosition: setSum( viewCenter, seeker.position)];
+    
+    [seeker setVelocity: setUnitRandom()];
+    [seeker setVelocity: setScale( seeker.maxSpeed, seeker.velocity)];
+    
+    seeker.target = viewCenter;
+    seeker.touch = NO;
+    
+    fleer.seek = NO;
+    [fleer setPosition: seeker.position];
+    [fleer setVelocity: seeker.velocity];
+    fleer.target = viewCenter;
+    fleer.touch = NO;
+}
+        
 - (void)updateSeekers {
     
     [seeker update];
@@ -53,25 +75,6 @@
 // seeker.setPosition.setUnitRandom()
 // setUnitRandom( seeker.setPosition )
 
-- (void)resetSeekers {
-    
-    [seeker setPosition: setUnitRandom()];
-    [seeker setPosition: setScale(17.0F, this.seeker.position)];
-    [seeker setPosition: setSum(this.viewCenter, this.seeker.position)];
-    // [seeker setPosition.z = 0.0F];
-     
-    [seeker setVelocity: setUnitRandom()];
-    [seeker setVelocity: setScale(this.seeker.maxSpeed, this.seeker.velocity)];
-    // [seeker setVelocity.z = 0.0F;
-    [seeker.target.set(this.viewCenter);
-    [seeker.touch = false;
-
-    [fleer.seek = false;
-    [fleer setPosition.set(this.seeker.position);
-    [fleer setVelocity.set(this.seeker.velocity);
-    [fleer.target.set(this.viewCenter);
-    [fleer.touch = false;
-}
 
 - (void)testSeek {
 

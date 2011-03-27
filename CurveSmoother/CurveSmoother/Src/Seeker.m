@@ -8,11 +8,14 @@
 
 #import "Seeker.h"
 #import "Vehicle.h"
+#include "2DVectorOps.h"
 
 //import java.awt.Color;
 //import java.awt.Graphics;
 
 @implementation Seeker
+
+@synthesize target, touch, seek;
 
 //static final Color seekLineColor = new Color(0.0F, 0.3F, 0.0F);
 //static final Color seekFillColor = new Color(0.5F, 1.0F, 0.5F);
@@ -36,28 +39,28 @@
 
 - (void)update {
 
-//    [self steeringForSeekFlee:steering];
-//    [self applyGlobalForce:steering];
-//    
-//    touch |= target.approximateDistance(this.position) < 0.6D;
-//    
-//    [super update];
+    [self steeringForSeekFlee:steering];
+    [self applyGlobalForce:steering];
+    
+    touch |= approximateDistance( target, position ) < 0.6f;
+    
+    [super update];
 }
 
 - (void)steeringForSeekFlee:(CGPoint)v {
 
-//    if(seek)
-//        steering.setDiff(target, position);
-//    else {
-//        steering.setDiff(position, target);
-//    }
-//    
-//    float goalLength = 1.1F * velocity.approximateLength();
-//    steering.setApproximateTruncate(goalLength);
-//    
-//    steering.setDiff(steering, velocity);
-//    steering.setApproximateTruncate(maxForce);
-//    v.set(steering);
+    if(seek)
+        steering = setDiff(target, position);
+    else {
+        steering = setDiff(position, target);
+    }
+    
+    float goalLength = 1.1F * velocity.approximateLength();
+    steering = setApproximateTruncate( steering, goalLength );
+    
+    steering = setDiff(steering, velocity);
+    steering = setApproximateTruncate( steering, maxForce );
+    v.set(steering);
 }
 
 //- (void)draw(Graphics g, float scale) {

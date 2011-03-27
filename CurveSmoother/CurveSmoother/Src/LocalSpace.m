@@ -8,6 +8,7 @@
 
 #import "LocalSpace.h"
 #import <x86intrin.h>
+#include "2DVectorOps.h"
 
 @implementation LocalSpace
 
@@ -18,7 +19,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        position = calloc(1, sizeof(CGPoint));
         [self setToIdentity];
     }
     
@@ -36,7 +36,7 @@
 //}
 
 - (void)setToIdentity {
-    memset(position, 0, sizeof(CGPoint));
+    position = CGPointMake(0, 0);
 //    this.forward = new Vector3(0.0F, 0.0F, 1.0F);
 //    this.side = new Vector3(1.0F, 0.0F, 0.0F);
 //    this.up = new Vector3(0.0F, 1.0F, 0.0F);
@@ -71,7 +71,7 @@
 //{
 //    synchronized (component)
 //    {
-//        component.setDiff(paramVector31, this.position);
+//        component = setDiff(paramVector31, this.position);
 //        paramVector32.set(component.dot(this.side), component.dot(this.up), component.dot(this.forward));
 //        
 //        return;

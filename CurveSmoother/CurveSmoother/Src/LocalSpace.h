@@ -11,7 +11,7 @@
 
 @interface LocalSpace : NSObject {
     
-    CGPoint *position;              // How to manipulate position, say reset ?
+    CGPoint position;
     
 //    Vector3 forward;
 //    Vector3 side;
@@ -20,7 +20,7 @@
     
 }
 
-@property (assign) CGPoint *position;
+@property (assign) CGPoint position;
 
 - (void)setToIdentity;
 

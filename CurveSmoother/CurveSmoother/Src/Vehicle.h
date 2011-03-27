@@ -14,6 +14,13 @@
     float maxSpeed;
     float maxForce;
     CGPoint velocity;
+    CGPoint allForces;
 }
+
+@property (assign) CGPoint velocity;
+@property (assign) float maxSpeed;
+
+- (void)update;
+- (void)applyGlobalForce:(CGPoint)force;
 
 @end

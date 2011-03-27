@@ -8,11 +8,13 @@
 
 #import "Vehicle.h"
 #import "LocalSpace.h"
+#include "2DVectorOps.h"
 
 
 @implementation Vehicle
 
-//Vector3 allForces;
+@synthesize velocity, maxSpeed;
+
 //Vector3 acceleration = new Vector3();
 //static Vector3 accelUp = new Vector3();
 //static final Vector3 globalUp = new Vector3(0.0F, 0.1F, 0.0F);
@@ -26,8 +28,8 @@
         mass = 1.0F;
         maxSpeed = 1.0F;
         maxForce = 0.04F;
-//        this.velocity = new Vector3();
-//        this.allForces = new Vector3();
+        velocity = CGPointMake(0, 0);
+        allForces = CGPointMake(0, 0);
     }
     
     return self;
@@ -37,13 +39,13 @@
     [super dealloc];
 }
 
-//- (void)applyGlobalForce(Vector3 force) {
+- (void)applyGlobalForce:(CGPoint)force {
 //    this.allForces.setSum(this.allForces, force);
-//}
+}
 
 - (void)update {
     
-//    this.allForces.setApproximateTruncate(this.maxForce);
+    allForces = setApproximateTruncate( allForces, maxForce );
 //    
 //    if (this.mass == 1.0F)
 //        newAccel.set(this.allForces);
@@ -54,7 +56,7 @@
 //    this.acceleration.setInterp(accelDamping, newAccel, this.acceleration);
 //    
 //    this.velocity.setSum(this.velocity, this.acceleration);
-//    this.velocity.setApproximateTruncate(this.maxSpeed);
+    velocity = setApproximateTruncate( velocity, maxSpeed );
 //    
 //    this.position.setSum(this.position, this.velocity);
 //    

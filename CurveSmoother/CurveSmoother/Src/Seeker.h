@@ -18,4 +18,10 @@
     BOOL seek, touch;
 }
 
+@property (assign) CGPoint target;
+@property (assign) BOOL touch;
+@property (assign) BOOL seek;
+
+- (void)steeringForSeekFlee:(CGPoint)v;
+
 @end

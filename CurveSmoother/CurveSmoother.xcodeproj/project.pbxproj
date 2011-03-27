@@ -16,8 +16,8 @@
 		738225EF133A943E00FCF59B /* SeekerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 738225EE133A943E00FCF59B /* SeekerTests.m */; };
 		73CFC3531338078C00027659 /* VectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC3521338078C00027659 /* VectorTest.m */; };
 		73CFC3551338083200027659 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CFC3541338083200027659 /* Accelerate.framework */; };
-		73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.c */; };
-		73CFC359133809DB00027659 /* 2DVectorOps.c in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.c */; };
+		73CFC358133809DB00027659 /* 2DVectorOps.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.m */; };
+		73CFC359133809DB00027659 /* 2DVectorOps.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CFC356133809DB00027659 /* 2DVectorOps.m */; };
 		73F9B43E13196E3400ED3BC1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F9B43D13196E3400ED3BC1 /* Cocoa.framework */; };
 		73F9B44813196E3400ED3BC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73F9B44613196E3400ED3BC1 /* InfoPlist.strings */; };
 		73F9B44B13196E3400ED3BC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F9B44A13196E3400ED3BC1 /* main.m */; };
@@ -50,7 +50,7 @@
 		738225EE133A943E00FCF59B /* SeekerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeekerTests.m; sourceTree = "<group>"; };
 		73CFC3521338078C00027659 /* VectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorTest.m; sourceTree = "<group>"; };
 		73CFC3541338083200027659 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		73CFC356133809DB00027659 /* 2DVectorOps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = 2DVectorOps.c; path = CurveSmoother/Src/2DVectorOps.c; sourceTree = "<group>"; };
+		73CFC356133809DB00027659 /* 2DVectorOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = 2DVectorOps.m; path = CurveSmoother/Src/2DVectorOps.m; sourceTree = "<group>"; };
 		73CFC357133809DB00027659 /* 2DVectorOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 2DVectorOps.h; path = CurveSmoother/Src/2DVectorOps.h; sourceTree = "<group>"; };
 		73F9B43913196E3400ED3BC1 /* CurveSmoother.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurveSmoother.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73F9B43D13196E3400ED3BC1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -105,7 +105,7 @@
 				730C98B413367E0E00993137 /* LocalSpace.h */,
 				730C98B513367E0E00993137 /* LocalSpace.m */,
 				73CFC357133809DB00027659 /* 2DVectorOps.h */,
-				73CFC356133809DB00027659 /* 2DVectorOps.c */,
+				73CFC356133809DB00027659 /* 2DVectorOps.m */,
 			);
 			name = "java stuff";
 			path = ..;
@@ -307,7 +307,7 @@
 				73F9B44B13196E3400ED3BC1 /* main.m in Sources */,
 				73F9B45113196E3400ED3BC1 /* CurveSmootherAppDelegate.m in Sources */,
 				73F9B47313196EB100ED3BC1 /* DrawingView.m in Sources */,
-				73CFC358133809DB00027659 /* 2DVectorOps.c in Sources */,
+				73CFC358133809DB00027659 /* 2DVectorOps.m in Sources */,
 				738225EA133A927B00FCF59B /* Seeker.m in Sources */,
 				738225EB133A927B00FCF59B /* Vehicle.m in Sources */,
 				738225EC133A927B00FCF59B /* LocalSpace.m in Sources */,
@@ -320,7 +320,7 @@
 			files = (
 				73F9B46813196E3500ED3BC1 /* CurveSmootherTests.m in Sources */,
 				73CFC3531338078C00027659 /* VectorTest.m in Sources */,
-				73CFC359133809DB00027659 /* 2DVectorOps.c in Sources */,
+				73CFC359133809DB00027659 /* 2DVectorOps.m in Sources */,
 				738225E7133A927900FCF59B /* Seeker.m in Sources */,
 				738225E8133A927900FCF59B /* Vehicle.m in Sources */,
 				738225E9133A927900FCF59B /* LocalSpace.m in Sources */,
