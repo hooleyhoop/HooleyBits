@@ -7,7 +7,7 @@
 //
 #import "SHMemoryBlock.h"
 
-@interface Section : SHMemoryBlock {
+@interface Section : SHNamedMemoryBlock {
 
 	NSString		*_segName;
 	char			*_sect_pointer;

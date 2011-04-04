@@ -14,6 +14,8 @@
 	NSMutableArray *_memoryBlockStore;
 }
 
+- (NSUInteger)findInsertionPt:(SHMemoryBlock *)memBlock;
+
 - (void)insertMemoryBlock:(SHMemoryBlock *)memBlock;
 - (SHMemoryBlock *)blockForAddress:(char *)memAddr;
 

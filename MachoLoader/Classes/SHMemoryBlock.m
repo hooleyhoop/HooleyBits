@@ -11,15 +11,13 @@
 
 @implementation SHMemoryBlock
 
-@synthesize name=_name;
 @synthesize startAddr=_startAddr;
 @synthesize length=_length;
 
-- (id)initWithName:(NSString *)name start:(char *)memAddr length:(uint64)len {
+- (id)initWithStart:(char *)memAddr length:(uint64)len {
 	
 	self = [super init];
 	if(self){
-		_name = [name retain];
 		_startAddr = memAddr;
 		_length = len;
 	}
@@ -28,7 +26,6 @@
 
 - (void)dealloc {
 	
-	[_name release];
 	[super dealloc];
 }
 

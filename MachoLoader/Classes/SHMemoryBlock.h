@@ -11,14 +11,12 @@
 
 	char			*_startAddr;
 	uint64			_length;
-	NSString		*_name;
 }
 
-@property (readonly) NSString	*name;
 @property (readonly) char		*startAddr;
 @property (readonly) uint64		length;
 
-- (id)initWithName:(NSString *)name start:(char *)memAddr length:(uint64)len;
+- (id)initWithStart:(char *)memAddr length:(uint64)len;
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg;
 - (NSComparisonResult)compareStartAddressToAddress:(char *)otherAddress;

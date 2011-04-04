@@ -37,6 +37,8 @@
 		73B346BF13045620006FDF4E /* mach_excUser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BC1304561F006FDF4E /* mach_excUser.c */; };
 		73B346C113045620006FDF4E /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BD1304561F006FDF4E /* mach_excServer.c */; };
 		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
+		73C5AE05134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */; };
+		73C5AE06134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */; };
 		73C81C9712DB33F8004D64BA /* TokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81C9512DB33F8004D64BA /* TokenArray.m */; };
 		73C81CB512DB3446004D64BA /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB312DB3446004D64BA /* Argument.m */; };
 		73C81CB912DB3477004D64BA /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB712DB3477004D64BA /* ArgumentScanner.m */; };
@@ -155,6 +157,8 @@
 		73B346BE13045620006FDF4E /* mach_exc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mach_exc.h; path = Classes/mach_exc.h; sourceTree = "<group>"; };
 		73C3EDE112994B9000F4A9CC /* DebugCodeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCodeLine.h; path = Classes/DebugCodeLine.h; sourceTree = "<group>"; };
 		73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DebugCodeLine.m; path = Classes/DebugCodeLine.m; sourceTree = "<group>"; };
+		73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHNamedMemoryBlock.m; path = Classes/SHNamedMemoryBlock.m; sourceTree = "<group>"; };
+		73C5AE04134A54A7001EF00A /* SHNamedMemoryBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHNamedMemoryBlock.h; path = Classes/SHNamedMemoryBlock.h; sourceTree = "<group>"; };
 		73C81C9412DB33F8004D64BA /* TokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenArray.h; path = Classes/TokenArray.h; sourceTree = "<group>"; };
 		73C81C9512DB33F8004D64BA /* TokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenArray.m; path = Classes/TokenArray.m; sourceTree = "<group>"; };
 		73C81CB212DB3446004D64BA /* Argument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Argument.h; path = Classes/Argument.h; sourceTree = "<group>"; };
@@ -366,6 +370,8 @@
 				73794F191223F903001B8AF6 /* SymbolicInfo.m */,
 				73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */,
 				73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */,
+				73C5AE04134A54A7001EF00A /* SHNamedMemoryBlock.h */,
+				73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */,
 				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
 				73E76252121C304C00A4190C /* MemoryBlockStore.m */,
 				7332007812197B2C00D80990 /* Segment.h */,
@@ -670,6 +676,7 @@
 			files = (
 				73D382531315B6DC0028CEE2 /* BasicDIYOOTests.m in Sources */,
 				73D382541315B73B0028CEE2 /* BasicProcessorSimulatorTests.m in Sources */,
+				73C5AE06134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +726,7 @@
 				73B346C113045620006FDF4E /* mach_excServer.c in Sources */,
 				735BED2D13100C1800454D58 /* sw_breakpoint.c in Sources */,
 				735BED2E13100C1C00454D58 /* hw_breakpoint.c in Sources */,
+				73C5AE05134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,7 +904,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Debug64;
@@ -1019,7 +1027,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Debug32;
@@ -1033,7 +1041,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Release;

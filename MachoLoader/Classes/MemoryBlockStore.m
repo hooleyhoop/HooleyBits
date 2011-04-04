@@ -56,7 +56,7 @@
 		char *currentStartAddress = [existingObjectAtThatIndex startAddr];
 		
 		if( newLastAddress >= currentStartAddress )
-			[NSException raise:@"Addresses have colided" format:@"Addresses have colided %@ - %@ %i > %i", memBlock.name, existingObjectAtThatIndex.name, newLastAddress, currentStartAddress];
+			[NSException raise:@"Addresses have colided" format:@"Addresses have colided %i > %i", newLastAddress, currentStartAddress];
 	}
 	
 	[_memoryBlockStore insertObject:memBlock atIndex:ind];

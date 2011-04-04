@@ -10,7 +10,7 @@
 
 #import "SHMemoryBlock.h"
 
-@interface Segment : SHMemoryBlock {
+@interface Segment : SHNamedMemoryBlock {
 
 	MemoryBlockStore	*_sectionStore;
 }
