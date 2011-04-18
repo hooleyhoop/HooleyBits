@@ -12,6 +12,7 @@
 		730830B112392CA7007F8247 /* i386_disasm.m in Sources */ = {isa = PBXBuildFile; fileRef = 730830B012392CA7007F8247 /* i386_disasm.m */; };
 		730DB3C412549EBC00203ED8 /* ArgStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 730DB3C212549EBC00203ED8 /* ArgStack.c */; };
 		731702DA123290EF00EE9ED6 /* IntHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 731702D8123290EF00EE9ED6 /* IntHash.m */; };
+		731AEB10135CF22F00B848E6 /* SHMemoryBlockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */; };
 		731FAA831219702700D3EE3D /* FileMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA821219702700D3EE3D /* FileMapView.m */; };
 		731FAA851219703B00D3EE3D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA841219703B00D3EE3D /* main.m */; };
 		731FAA871219704800D3EE3D /* SimpleApp_main.m in Sources */ = {isa = PBXBuildFile; fileRef = 731FAA861219704800D3EE3D /* SimpleApp_main.m */; };
@@ -43,9 +44,13 @@
 		73C81CB512DB3446004D64BA /* Argument.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB312DB3446004D64BA /* Argument.m */; };
 		73C81CB912DB3477004D64BA /* ArgumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CB712DB3477004D64BA /* ArgumentScanner.m */; };
 		73C81CBD12DB347F004D64BA /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C81CBB12DB347F004D64BA /* BasicToken.m */; };
+		73C9A2241350553600BD4EE7 /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
+		73C9A2251350555000BD4EE7 /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
 		73CD29FA126457220034E7D9 /* GenericTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7363BDC0124E318500F080E7 /* GenericTimer.m */; };
 		73D382531315B6DC0028CEE2 /* BasicDIYOOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */; };
-		73D382541315B73B0028CEE2 /* BasicProcessorSimulatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FD208B12D9B8CB007BAD00 /* BasicProcessorSimulatorTests.m */; };
+		73D988AA1359E71800E14E6A /* MemorySectionIndexStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */; };
+		73D988AB1359E71800E14E6A /* MemorySectionIndexStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */; };
+		73D988AF1359E80D00E14E6A /* MemorySectionIndexStructureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D988AD1359E80D00E14E6A /* MemorySectionIndexStructureTest.m */; };
 		73DBEADC12476D1A0024B450 /* StringManipulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEADA12476D1A0024B450 /* StringManipulation.m */; };
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
@@ -85,6 +90,7 @@
 		731702D7123290EF00EE9ED6 /* IntHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntHash.h; path = Classes/IntHash.h; sourceTree = "<group>"; };
 		731702D8123290EF00EE9ED6 /* IntHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntHash.m; path = Classes/IntHash.m; sourceTree = "<group>"; };
 		731702DE1232910200EE9ED6 /* IntHashTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntHashTests.m; path = Tests/IntHashTests.m; sourceTree = "<group>"; };
+		731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMemoryBlockTests.m; path = Tests/SHMemoryBlockTests.m; sourceTree = "<group>"; };
 		731FAA0312196EA900D3EE3D /* MachoLoaderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MachoLoaderTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		731FAA5B12196EE500D3EE3D /* Project-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
 		731FAA5C12196EE500D3EE3D /* Project-Coverage.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project-Coverage.xcconfig"; sourceTree = "<group>"; };
@@ -169,6 +175,9 @@
 		73C81CBB12DB347F004D64BA /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicToken.m; path = Classes/BasicToken.m; sourceTree = "<group>"; };
 		73D6C1431267114000746DE2 /* Registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registers.h; path = Classes/Registers.h; sourceTree = "<group>"; };
 		73D6C1471267115800746DE2 /* Instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instructions.h; path = Classes/Instructions.h; sourceTree = "<group>"; };
+		73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemorySectionIndexStructure.m; path = Classes/MemorySectionIndexStructure.m; sourceTree = "<group>"; };
+		73D988A91359E71800E14E6A /* MemorySectionIndexStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemorySectionIndexStructure.h; path = Classes/MemorySectionIndexStructure.h; sourceTree = "<group>"; };
+		73D988AD1359E80D00E14E6A /* MemorySectionIndexStructureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemorySectionIndexStructureTest.m; path = Tests/MemorySectionIndexStructureTest.m; sourceTree = "<group>"; };
 		73D9BCA2124A590900989317 /* InstructionBitfieldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstructionBitfieldTests.m; path = Tests/InstructionBitfieldTests.m; sourceTree = "<group>"; };
 		73DBE9C8124755050024B450 /* PrettyStringFindReplace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrettyStringFindReplace.m; path = Tests/PrettyStringFindReplace.m; sourceTree = "<group>"; };
 		73DBEAD912476D1A0024B450 /* StringManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringManipulation.h; path = Classes/StringManipulation.h; sourceTree = "<group>"; };
@@ -374,6 +383,8 @@
 				73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */,
 				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
 				73E76252121C304C00A4190C /* MemoryBlockStore.m */,
+				73D988A91359E71800E14E6A /* MemorySectionIndexStructure.h */,
+				73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */,
 				7332007812197B2C00D80990 /* Segment.h */,
 				7332007912197B2C00D80990 /* Segment.m */,
 				73E761E7121C28C900A4190C /* Section.h */,
@@ -428,6 +439,8 @@
 				73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */,
 				73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */,
 				73FD208B12D9B8CB007BAD00 /* BasicProcessorSimulatorTests.m */,
+				73D988AD1359E80D00E14E6A /* MemorySectionIndexStructureTest.m */,
+				731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -675,8 +688,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				73D382531315B6DC0028CEE2 /* BasicDIYOOTests.m in Sources */,
-				73D382541315B73B0028CEE2 /* BasicProcessorSimulatorTests.m in Sources */,
 				73C5AE06134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */,
+				73C9A2241350553600BD4EE7 /* MemoryBlockStore.m in Sources */,
+				73C9A2251350555000BD4EE7 /* SHMemoryBlock.m in Sources */,
+				73D988AB1359E71800E14E6A /* MemorySectionIndexStructure.m in Sources */,
+				73D988AF1359E80D00E14E6A /* MemorySectionIndexStructureTest.m in Sources */,
+				731AEB10135CF22F00B848E6 /* SHMemoryBlockTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +744,7 @@
 				735BED2D13100C1800454D58 /* sw_breakpoint.c in Sources */,
 				735BED2E13100C1C00454D58 /* hw_breakpoint.c in Sources */,
 				73C5AE05134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */,
+				73D988AA1359E71800E14E6A /* MemorySectionIndexStructure.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

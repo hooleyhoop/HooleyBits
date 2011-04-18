@@ -5,12 +5,12 @@
 //  Created by Steven Hooley on 18/08/2010.
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
+@class MemorySectionIndexStructure;
 
 
 @interface SHMemoryBlock : NSObject {
 
-	char			*_startAddr;
-	uint64			_length;
+    struct MemSectionIndexes *_sizeAndPoisition;
 }
 
 @property (readonly) char		*startAddr;

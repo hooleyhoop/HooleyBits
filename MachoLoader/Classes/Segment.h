@@ -8,7 +8,7 @@
 
 @class Section, MemoryBlockStore;
 
-#import "SHMemoryBlock.h"
+#import "SHNamedMemoryBlock.h"
 
 @interface Segment : SHNamedMemoryBlock {
 

@@ -5,7 +5,7 @@
 //  Created by Steven Hooley on 18/08/2010.
 //  Copyright 2010 Tinsal Parks. All rights reserved.
 //
-#import "SHMemoryBlock.h"
+#import "SHNamedMemoryBlock.h"
 
 @interface Section : SHNamedMemoryBlock {
 

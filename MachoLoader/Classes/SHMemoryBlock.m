@@ -7,6 +7,7 @@
 //
 
 #import "SHMemoryBlock.h"
+#import "MemorySectionIndexStructure.h"
 
 
 @implementation SHMemoryBlock
@@ -18,14 +19,13 @@
 	
 	self = [super init];
 	if(self){
-		_startAddr = memAddr;
-		_length = len;
+        _sizeAndPoisition = new_MemSectionIndexes( memAddr, len );
 	}
 	return self;
 }
 
 - (void)dealloc {
-	
+	free( _sizeAndPoisition );
 	[super dealloc];
 }
 
