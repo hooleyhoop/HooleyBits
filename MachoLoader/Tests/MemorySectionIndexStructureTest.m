@@ -29,16 +29,16 @@
 
 struct SplitDataResultIndexes * split( struct MemSectionIndexes *data, struct MemSectionIndexes *line ) {
 
-    int starts[3];
-    int lengths[3];
+    char *starts[3];
+    uint64 lengths[3];
     
     struct SplitDataResultIndexes *result;
     
-    int line_firstByte = line->start;
-    int line_lastByte = line_firstByte + line->length-1;
+    char *line_firstByte = line->start;
+    char *line_lastByte = line_firstByte + line->length-1;
 
-    int data_firstByte = data->start;
-    int data_lastByte = data_firstByte+data->length-1;
+    char *data_firstByte = data->start;
+    char *data_lastByte = data_firstByte+data->length-1;
         
     NSCAssert( line_firstByte >= data_firstByte, nil );
     NSCAssert( line_lastByte <= data_lastByte, nil );
@@ -83,7 +83,7 @@ struct SplitDataResultIndexes * split( struct MemSectionIndexes *data, struct Me
     STAssertTrue( result->indexOfSplitter==0, nil );
     STAssertTrue( result->memSectionIndexes[0].start==0, nil );
     STAssertTrue( result->memSectionIndexes[0].length==1, nil );
-    STAssertTrue( result->memSectionIndexes[1].start==1, nil );
+    STAssertTrue( result->memSectionIndexes[1].start==(char *)1, nil );
     STAssertTrue( result->memSectionIndexes[1].length==9, nil );    
     
     free(data1);
@@ -92,16 +92,16 @@ struct SplitDataResultIndexes * split( struct MemSectionIndexes *data, struct Me
 
     // a line in the middle
     data1 = new_MemSectionIndexes( 0, 10 );
-    line1 = new_MemSectionIndexes( 1, 1 );
+    line1 = new_MemSectionIndexes( (char *)1, 1 );
     
     result = split( data1, line1 );
     STAssertTrue( result->numberOfMemSectionIndexes==3, nil );
     STAssertTrue( result->indexOfSplitter==1, nil );
     STAssertTrue( result->memSectionIndexes[0].start==0, nil );
     STAssertTrue( result->memSectionIndexes[0].length==1, nil );
-    STAssertTrue( result->memSectionIndexes[1].start==1, nil );
+    STAssertTrue( result->memSectionIndexes[1].start==(char *)1, nil );
     STAssertTrue( result->memSectionIndexes[1].length==1, nil ); 
-    STAssertTrue( result->memSectionIndexes[2].start==2, nil );
+    STAssertTrue( result->memSectionIndexes[2].start==(char *)2, nil );
     STAssertTrue( result->memSectionIndexes[2].length==8, nil );     
 
     free(data1);
@@ -122,13 +122,13 @@ struct SplitDataResultIndexes * split( struct MemSectionIndexes *data, struct Me
    
     // a line at the end   
     data1 = new_MemSectionIndexes( 0, 10 );
-    line1 = new_MemSectionIndexes( 8, 2 );
+    line1 = new_MemSectionIndexes( (char *)8, 2 );
     result = split( data1, line1 );
     STAssertTrue( result->numberOfMemSectionIndexes==2, nil );
     STAssertTrue( result->indexOfSplitter==1, nil );
     STAssertTrue( result->memSectionIndexes[0].start==0, nil );
     STAssertTrue( result->memSectionIndexes[0].length==8, nil );
-    STAssertTrue( result->memSectionIndexes[1].start==8, nil );
+    STAssertTrue( result->memSectionIndexes[1].start==(char *)8, nil );
     STAssertTrue( result->memSectionIndexes[1].length==2, nil ); 
 
     free(data1);

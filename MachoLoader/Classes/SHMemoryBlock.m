@@ -12,9 +12,6 @@
 
 @implementation SHMemoryBlock
 
-@synthesize startAddr=_startAddr;
-@synthesize length=_length;
-
 - (id)initWithStart:(char *)memAddr length:(uint64)len {
 	
 	self = [super init];
@@ -31,22 +28,34 @@
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg {
 	
-	char *otherAddress = seg.startAddr;
+	char *otherAddress = [seg startAddress];
 	return [self compareStartAddressToAddress:otherAddress];
 }
 
 - (NSComparisonResult)compareStartAddressToAddress:(char *)otherAddress {
 	
-	if( otherAddress>_startAddr )
+	if( otherAddress>_sizeAndPoisition->start )
 		return (NSComparisonResult)NSOrderedAscending;
-	else if( otherAddress<_startAddr ) 
+	else if( otherAddress<_sizeAndPoisition->start ) 
 		return (NSComparisonResult)NSOrderedDescending;
 	return (NSComparisonResult)NSOrderedSame;
 }
 
-- (char *)lastAddress {
-	return _startAddr+_length-1;
+- (void)shrinkToLength:(uint64)newLength {
+    NSParameterAssert( newLength<_sizeAndPoisition->length );
+    _sizeAndPoisition->length = newLength;
 }
 
+- (char *)startAddress {
+    return _sizeAndPoisition->start;
+}
+
+- (char *)lastAddress {
+	return _sizeAndPoisition->start+_sizeAndPoisition->length-1;
+}
+
+- (uint64)length {
+    return _sizeAndPoisition->length;
+}
 
 @end

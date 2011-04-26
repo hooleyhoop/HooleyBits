@@ -53,7 +53,7 @@
 	if( ind<[_memoryBlockStore count] ){
 		SHMemoryBlock *existingObjectAtThatIndex = [_memoryBlockStore objectAtIndex:ind];
 		char *newLastAddress = [memBlock lastAddress];
-		char *currentStartAddress = [existingObjectAtThatIndex startAddr];
+		char *currentStartAddress = [existingObjectAtThatIndex startAddress];
 		
 		if( newLastAddress >= currentStartAddress )
 			[NSException raise:@"Addresses have colided" format:@"Addresses have colided %i > %i", newLastAddress, currentStartAddress];
@@ -86,14 +86,25 @@
 		index = index-1;
 	if(index==-1)
 		return nil;
-	SHMemoryBlock *test = [_memoryBlockStore objectAtIndex: index];
-	if( memAddr>=[test startAddr] && memAddr<=[test lastAddress] )
+	SHMemoryBlock *test = [_memoryBlockStore objectAtIndex:index];
+	if( memAddr>=[test startAddress] && memAddr<=[test lastAddress] )
 		return test;
 	return nil;
+}
+
+- (int)itemCount {
+    return 0;
+}
+
+- (char *)startAddress {
+    return [[_memoryBlockStore objectAtIndex:0] startAddress];
 }
 
 - (char *)lastAddress {
 	return [[_memoryBlockStore lastObject] lastAddress];
 }
 
+- (SHMemoryBlock *)memoryBlockAtIndex:(int)ind {
+    return [_memoryBlockStore objectAtIndex:ind];
+}
 @end
