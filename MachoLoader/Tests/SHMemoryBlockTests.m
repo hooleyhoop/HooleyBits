@@ -29,5 +29,7 @@
 - (void)testSplittingAMemoryBlock {
     
     -- make ablock of data, test splitting it (we need to do this to add a line)
+    
+    -- maybe we can use Blocks for this? And do it in a FP way?
 }
 @end
