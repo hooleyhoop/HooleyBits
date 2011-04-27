@@ -10,12 +10,12 @@
 
 // The indexes that represent a memory block 
 struct MemSectionIndexes {
-    int start;
-    int length;
+    char *start;
+    uint64 length;
 };
 
 // constructor
-struct MemSectionIndexes * new_MemSectionIndexes( int start, int length );
+struct MemSectionIndexes * new_MemSectionIndexes( char *start, uint64 length );
 
 #pragma mark - stuff to help splitting a section
 

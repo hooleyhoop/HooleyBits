@@ -61,18 +61,14 @@ const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
 @end
 
 #pragma mark -
-@interface TPAssembledCodeBlock : MemoryBlockStore {
-    char *_startAddress;
-    uint64 _length;
-}
+//TODO: rename contiguousMemoryBlockStore - note doesnt store anything!
+@interface TPAssembledCodeBlock : MemoryBlockStore {}
 @end @implementation TPAssembledCodeBlock
-
+//NB this doesnt save the data at the mo - just the pointers into it
 - (id)initWithRawData:(char *)data start:(char *)memAddr length:(uint64)len {
     
     self = [super init];
     if(self){
-        _startAddress = memAddr;
-        _length = len;
         TPData *listHead = [[[TPData alloc] initWithStart:memAddr length:len] autorelease];
         [self insertMemoryBlock:listHead];
     }
@@ -84,25 +80,43 @@ const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
     [super dealloc];
 }
 
-- (BOOL)containsAddress:(int)address {
+- (uint64)contiguousLength {
+    return [self lastAddress]-[self startAddress]+1;
+}
+
+- (BOOL)containsAddress:(char *)address {
+    return address >= [self startAddress] && address<=[self lastAddress];
+}
+
+// just a test, if we cant just split the data in half we arent going to get anywhere
+- (void)simpleTemporarySplit {
     
-    return address>=_startAddress && address<_startAddress+_length;
+ //putback   -- do this, just split the initial bit in half
+ //putback    0 1 2 3 4   5 6 7 8 9
+    
+     SHMemoryBlock *ob1 = [self memoryBlockAtIndex:0];
+    [ob1 shrinkToLength: 5];
+    
+     new ob2
+     ob2.start = ob1.start + ob1.length // does this reference the same data ?
+     ob2.length = 5;
+     insert ob2
 }
 
 // we already have the data object and the line by this points
-splitData:dataBlk WithLine:line
+//putback splitData:dataBlk WithLine:line
 
-    struct SplitDataResultIndexes *indexesAfterSplit = split( dataBlk->_sizeAndPoisition, line->_sizeAndPoisition );
+//putback     struct SplitDataResultIndexes *indexesAfterSplit = split( dataBlk->_sizeAndPoisition, line->_sizeAndPoisition );
 
-    int num = indexesAfterSplit->numberOfMemSectionIndexes 
-    int lineInd = indexesAfterSplit->indexOfSplitter
+//putback     int num = indexesAfterSplit->numberOfMemSectionIndexes 
+//putback     int lineInd = indexesAfterSplit->indexOfSplitter
 
-    -- split the data 3 ways (in reality, there will be at least 1 and at least 1 will be the line)
-    data1 = memSectionIndexes[0].start, memSectionIndexes[0].length
-    data2 = memSectionIndexes[1].start, memSectionIndexes[1].length
-    data3 = memSectionIndexes[2].start, memSectionIndexes[2].length
+//putback     -- split the data 3 ways (in reality, there will be at least 1 and at least 1 will be the line)
+//putback     data1 = memSectionIndexes[0].start, memSectionIndexes[0].length
+//putback     data2 = memSectionIndexes[1].start, memSectionIndexes[1].length
+//putback     data3 = memSectionIndexes[2].start, memSectionIndexes[2].length
 
-    replaceDataWith( data1, data2, data3 )
+//putback     replaceDataWith( data1, data2, data3 )
 
 
 
@@ -112,7 +126,7 @@ enum datatype {
     datatype_ERROR
 };
 
-- (enum datatype)getItemAtAddress:(int)address item:(id *)ptr {
+- (enum datatype)getItemAtAddress:(char *)address item:(id *)ptr {
     
     SHMemoryBlock *bl = [self blockForAddress:address];
     *ptr = bl;
@@ -132,12 +146,35 @@ enum datatype {
 
 @implementation TPAssembledCodeBlockTests
 
+- (void)testContiguousLength {
+    
+    char simpleInData1[1] = {0xff};  
+    char simpleInData2[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    id codeDataBlock1 = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData1 start:(char *)0 length:1];
+    STAssertTrue([codeDataBlock1 contiguousLength]==1, nil);
+    [codeDataBlock1 release];
+    
+    id codeDataBlock2 = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData2 start:(char *)1 length:10];
+    STAssertTrue([codeDataBlock2 contiguousLength]==10, nil);
+    [codeDataBlock2 release];   
+}
+
 - (void)testContainsAddress {
-    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData start:0 length:10];
-    STAssertTrue([codeDataBlock containsAddress:0], nil);
-    STAssertTrue([codeDataBlock containsAddress:9], nil);
-    STAssertFalse([codeDataBlock containsAddress:9], nil);
+    
+    char simpleInData1[1] = {0xff};  
+    char simpleInData2[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    id codeDataBlock1 = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData1 start:(char *)0 length:1];
+    STAssertTrue([codeDataBlock1 containsAddress:(char *)0], nil);
+    STAssertFalse([codeDataBlock1 containsAddress:(char *)9], nil);
+    [codeDataBlock1 release];
+    
+    id codeDataBlock2 = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData2 start:(char *)1 length:10];
+    STAssertFalse([codeDataBlock2 containsAddress:(char *)0], nil);
+    STAssertTrue([codeDataBlock2 containsAddress:(char *)1], nil);
+    STAssertTrue([codeDataBlock2 containsAddress:(char *)5], nil);
+    STAssertTrue([codeDataBlock2 containsAddress:(char *)10], nil);
+    STAssertFalse([codeDataBlock2 containsAddress:(char *)11], nil);    
+    [codeDataBlock2 release];
 }
 
 - (void)testGetItemAtAddress {
@@ -147,13 +184,36 @@ enum datatype {
     id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData start:0 length:10];
     
     id datBlock;
-    STAssertTrue([codeDataBlock getItemAtAddress:0 item:&datBlock]==datatype_DATA, nil);
-    STAssertTrue([codeDataBlock getItemAtAddress:5 item:&datBlock]==datatype_DATA, nil);
-    STAssertTrue([codeDataBlock getItemAtAddress:9 item:&datBlock]==datatype_DATA, nil);
+    STAssertTrue([codeDataBlock getItemAtAddress:(char *)0 item:&datBlock]==datatype_DATA, nil);
+    STAssertTrue([codeDataBlock getItemAtAddress:(char *)5 item:&datBlock]==datatype_DATA, nil);
+    STAssertTrue([codeDataBlock getItemAtAddress:(char *)9 item:&datBlock]==datatype_DATA, nil);
+    
+    [codeDataBlock release];
 }
 
-
--- when we have implemented memory section splitting lets put this back
+// -- when we have implemented memory section splitting lets put this back
+- (void)testTemporarySimpleSplit {
+    
+    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData start:0 length:10];
+    
+    [codeDataBlock simpleTemporarySplit];
+    STAssertTrue( [codeDataBlock startAddress]==0, nil);
+    STAssertTrue( [codeDataBlock contiguousLength]==10, nil);
+    STAssertTrue( [codeDataBlock itemCount]==2, nil);
+    
+    id item1 = [codeDataBlock memoryBlockAtIndex:0];
+    STAssertTrue( [item1 startAddress]==(char *)0, nil);
+    STAssertTrue( [item1 contiguousLength]==5, nil);
+    STAssertTrue( [item1 lastAddress]==(char *)4, nil);
+    
+    id item2 = [codeDataBlock memoryBlockAtIndex:1];
+    STAssertTrue( [item2 startAddress]==(char *)5, nil);
+    STAssertTrue( [item1 contiguousLength]==5, nil);
+    STAssertTrue( [item1 lastAddress]==(char *)9, nil);
+    
+    [codeDataBlock release];
+}
 
 //- (void)testSetLine {
 //
@@ -175,12 +235,12 @@ enum datatype {
 
 @implementation TPDissemblerTests
 - (void)testDecompileToLine {
-    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData start:0 length:10];
+//putback    char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+//putback    id codeDataBlock = [[TPAssembledCodeBlock alloc] initWithRawData:simpleInData start:0 length:10];
     
-    TPData *ablock;
-    TPDissembler *disassembler = [[TPDissembler alloc] init];
-    TPLine *nextLine = [disassembler decompile:ablock fromOffset:5];
+//putback    TPData *ablock;
+//putback    TPDissembler *disassembler = [[TPDissembler alloc] init];
+//putback    TPLine *nextLine = [disassembler decompile:ablock fromOffset:5];
 }
 @end
 
@@ -194,7 +254,7 @@ enum datatype {
 /*
  * I dont think at this point functionas should be objects, they should just be labels on the line objects
  */
-- (void)testSettingLinesForAdresses {
+- (void)testSettingLinesForAdressess {
 
     // -- make a data block
     char simpleInData[10] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
@@ -204,8 +264,8 @@ enum datatype {
     id mockLine1 = [[[TPLine alloc] initWithStart:(char *)1 length:1] autorelease];
     id mockLine2 = [[[TPLine alloc] initWithStart:(char *)4 length:3] autorelease];
  
-    [codeDataBlock setLine:mockLine1];
-    [codeDataBlock setLine:mockLine2];
+ //derp   [codeDataBlock setLine:mockLine1];
+//derp    [codeDataBlock setLine:mockLine2];
     
     // d,<d>,d,d,<d,d,d>,d,d,d
     
@@ -219,11 +279,11 @@ enum datatype {
     
     // - So, getItemAtAddress: might return line (if the line begins at that address), NSError (if you try to access mid line), or the nearest datablock (?? what use would this be?)
     id ob;
-    STAssertTrue( [codeDataBlock getItemAtAddress:1 item:&ob]== datatype_LINE, nil );      //== line length 1
+    STAssertTrue( [codeDataBlock getItemAtAddress:(char *)1 item:&ob]== datatype_LINE, nil );      //== line length 1
     
-    STAssertTrue( [codeDataBlock getItemAtAddress:4 item:&ob]==datatype_LINE, nil );      //== line length 3
-    STAssertTrue( [codeDataBlock getItemAtAddress:5 item:&ob]==datatype_ERROR, nil );    // can only access line from start
-    STAssertTrue( [codeDataBlock getItemAtAddress:6 item:&ob]==datatype_ERROR, nil );    // can only access line from start
+    STAssertTrue( [codeDataBlock getItemAtAddress:(char *)4 item:&ob]==datatype_LINE, nil );      //== line length 3
+    STAssertTrue( [codeDataBlock getItemAtAddress:(char *)5 item:&ob]==datatype_ERROR, nil );    // can only access line from start
+    STAssertTrue( [codeDataBlock getItemAtAddress:(char *)6 item:&ob]==datatype_ERROR, nil );    // can only access line from start
 
     // if we use SHMemoryBlock we must put in correct init
     
@@ -283,24 +343,24 @@ enum datatype {
 //		processLine( inputData, programCounter )
 //	}
     
-    -- make sure the disasembler just returns addresses and has no dependencies
+//putback     -- make sure the disasembler just returns addresses and has no dependencies
     
-    addresss - ?
-    add hardware breakpoint
+//putback     addresss - ?
+//putback     add hardware breakpoint
     
-    debuggerDidStopped(){
-        is address from debugger within data block?
-        if(YES)
-            -- get item at address
-            -- is it a line or data
-            if(line)
-                step debugger
-            if(data)
-                line = [data decompile to line: fromOffset:address
-                splitData: WithLine
-        if(NO)
-            step debugger
-    }
+//putback     debuggerDidStopped(){
+//putback         is address from debugger within data block?
+//putback         if(YES)
+//putback             -- get item at address
+//putback             -- is it a line or data
+//putback             if(line)
+//putback                 step debugger
+//putback             if(data)
+//putback                 line = [data decompile to line: fromOffset:address
+//putback                 splitData: WithLine
+//putback         if(NO)
+//putback             step debugger
+//putback     }
 }
 
 

@@ -9,7 +9,7 @@
 #import "MemorySectionIndexStructure.h"
 
 // constructor
-struct MemSectionIndexes * new_MemSectionIndexes( int start, int length ) {
+struct MemSectionIndexes * new_MemSectionIndexes( char *start, uint64 length ) {
 
     struct MemSectionIndexes *obj;
     obj = malloc( sizeof *obj );

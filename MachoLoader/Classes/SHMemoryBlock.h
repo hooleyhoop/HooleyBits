@@ -13,15 +13,16 @@
     struct MemSectionIndexes *_sizeAndPoisition;
 }
 
-@property (readonly) char		*startAddr;
-@property (readonly) uint64		length;
-
 - (id)initWithStart:(char *)memAddr length:(uint64)len;
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg;
 - (NSComparisonResult)compareStartAddressToAddress:(char *)otherAddress;
 
+- (void)shrinkToLength:(uint64)newLength;
+
+- (char *)startAddress;
 - (char *)lastAddress;
+- (uint64)length;
 
 
 @end
