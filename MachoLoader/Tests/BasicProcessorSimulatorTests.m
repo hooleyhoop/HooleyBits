@@ -97,10 +97,9 @@ const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
      SHMemoryBlock *ob1 = [self memoryBlockAtIndex:0];
     [ob1 shrinkToLength: 5];
     
-     new ob2
-     ob2.start = ob1.start + ob1.length // does this reference the same data ?
-     ob2.length = 5;
-     insert ob2
+    SHMemoryBlock *newBlock = [[[SHMemoryBlock alloc] initWithStart:[ob1 lastAddress]+1 length:5] autorelease];
+	[_memoryBlockStore insertObject:newBlock atIndex:1];
+
 }
 
 // we already have the data object and the line by this points
@@ -202,15 +201,15 @@ enum datatype {
     STAssertTrue( [codeDataBlock contiguousLength]==10, nil);
     STAssertTrue( [codeDataBlock itemCount]==2, nil);
     
-    id item1 = [codeDataBlock memoryBlockAtIndex:0];
+    SHMemoryBlock *item1 = [codeDataBlock memoryBlockAtIndex:0];
     STAssertTrue( [item1 startAddress]==(char *)0, nil);
-    STAssertTrue( [item1 contiguousLength]==5, nil);
+    STAssertTrue( [item1 length]==5, nil);
     STAssertTrue( [item1 lastAddress]==(char *)4, nil);
     
-    id item2 = [codeDataBlock memoryBlockAtIndex:1];
+    SHMemoryBlock *item2 = [codeDataBlock memoryBlockAtIndex:1];
     STAssertTrue( [item2 startAddress]==(char *)5, nil);
-    STAssertTrue( [item1 contiguousLength]==5, nil);
-    STAssertTrue( [item1 lastAddress]==(char *)9, nil);
+    STAssertTrue( [item2 length]==5, nil);
+    STAssertTrue( [item2 lastAddress]==(char *)9, @"%i", [item1 lastAddress] );
     
     [codeDataBlock release];
 }

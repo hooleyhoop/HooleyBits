@@ -21,7 +21,7 @@
 
 - (SHMemoryBlock *)memoryBlockAtIndex:(int)ind;
 
-- (int)itemCount;
+- (NSUInteger)itemCount;
 - (char *)startAddress;
 - (char *)lastAddress;
 

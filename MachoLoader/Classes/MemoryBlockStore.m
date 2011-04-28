@@ -92,8 +92,8 @@
 	return nil;
 }
 
-- (int)itemCount {
-    return 0;
+- (NSUInteger)itemCount {
+    return [_memoryBlockStore count];
 }
 
 - (char *)startAddress {
