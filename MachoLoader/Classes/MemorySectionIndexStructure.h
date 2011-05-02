@@ -29,3 +29,4 @@ struct SplitDataResultIndexes {
 
 // constructor
 struct SplitDataResultIndexes * new_SplitDataResultIndexes( int numberOfSections );
+struct SplitDataResultIndexes * splitMemSectionIndexes( struct MemSectionIndexes *data, struct MemSectionIndexes *line );

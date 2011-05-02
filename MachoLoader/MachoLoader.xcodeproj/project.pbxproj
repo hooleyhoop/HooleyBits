@@ -36,6 +36,13 @@
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
 		73990C931301542100EA388E /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73990C921301542100EA388E /* libstdc++.dylib */; };
+		73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
+		73B15040136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
+		73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */; };
+		73B150BC136C6EE700A5D74A /* TPData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B150BB136C6EE700A5D74A /* TPData.m */; };
+		73B150BD136C6EE700A5D74A /* TPData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B150BB136C6EE700A5D74A /* TPData.m */; };
+		73B150C2136C72BF00A5D74A /* TPLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B150C1136C72BF00A5D74A /* TPLine.m */; };
+		73B150C3136C72BF00A5D74A /* TPLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B150C1136C72BF00A5D74A /* TPLine.m */; };
 		73B346BF13045620006FDF4E /* mach_excUser.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BC1304561F006FDF4E /* mach_excUser.c */; };
 		73B346C113045620006FDF4E /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 73B346BD1304561F006FDF4E /* mach_excServer.c */; };
 		73C3EDE412994B9000F4A9CC /* DebugCodeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C3EDE212994B9000F4A9CC /* DebugCodeLine.m */; };
@@ -159,6 +166,13 @@
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73AD85D71288BE2A00140E62 /* BasicDIYOOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicDIYOOTests.m; path = Tests/BasicDIYOOTests.m; sourceTree = "<group>"; };
+		73B1503D136C633A00A5D74A /* ContiguousMemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContiguousMemoryBlockStore.h; path = Classes/ContiguousMemoryBlockStore.h; sourceTree = "<group>"; };
+		73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContiguousMemoryBlockStore.m; path = Classes/ContiguousMemoryBlockStore.m; sourceTree = "<group>"; };
+		73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContiguousMemoryBlockStoreTests.m; path = Tests/ContiguousMemoryBlockStoreTests.m; sourceTree = "<group>"; };
+		73B150BA136C6EE700A5D74A /* TPData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPData.h; path = Classes/TPData.h; sourceTree = "<group>"; };
+		73B150BB136C6EE700A5D74A /* TPData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPData.m; path = Classes/TPData.m; sourceTree = "<group>"; };
+		73B150C0136C72BF00A5D74A /* TPLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPLine.h; path = Classes/TPLine.h; sourceTree = "<group>"; };
+		73B150C1136C72BF00A5D74A /* TPLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPLine.m; path = Classes/TPLine.m; sourceTree = "<group>"; };
 		73B3464513044546006FDF4E /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
 		73B346BB130455BB006FDF4E /* mach_exc.defs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.mig; name = mach_exc.defs; path = Classes/mach_exc.defs; sourceTree = "<group>"; };
 		73B346BC1304561F006FDF4E /* mach_excUser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mach_excUser.c; path = Classes/mach_excUser.c; sourceTree = "<group>"; };
@@ -380,20 +394,7 @@
 			children = (
 				73794F181223F903001B8AF6 /* SymbolicInfo.h */,
 				73794F191223F903001B8AF6 /* SymbolicInfo.m */,
-				73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */,
-				73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */,
-				73C5AE04134A54A7001EF00A /* SHNamedMemoryBlock.h */,
-				73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */,
-				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
-				73E76252121C304C00A4190C /* MemoryBlockStore.m */,
-				73D988A91359E71800E14E6A /* MemorySectionIndexStructure.h */,
-				73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */,
-				7332007812197B2C00D80990 /* Segment.h */,
-				7332007912197B2C00D80990 /* Segment.m */,
-				73E761E7121C28C900A4190C /* Section.h */,
-				73E761E8121C28C900A4190C /* Section.m */,
-				7332007212197B1E00D80990 /* MemoryMap.h */,
-				7332007312197B1E00D80990 /* MemoryMap.m */,
+				73B150BF136C6F1900A5D74A /* Data */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -445,6 +446,7 @@
 				73D988AD1359E80D00E14E6A /* MemorySectionIndexStructureTest.m */,
 				731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */,
 				73339C0013662D6600F91128 /* MemoryBlockStoreTests.m */,
+				73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -520,6 +522,49 @@
 				73A72002129BCA3A0005959F /* otool parsing */,
 			);
 			name = Otool;
+			sourceTree = "<group>";
+		};
+		73B1503C136C60A200A5D74A /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				7332007212197B1E00D80990 /* MemoryMap.h */,
+				7332007312197B1E00D80990 /* MemoryMap.m */,
+				73E76251121C304C00A4190C /* MemoryBlockStore.h */,
+				73E76252121C304C00A4190C /* MemoryBlockStore.m */,
+				73B1503D136C633A00A5D74A /* ContiguousMemoryBlockStore.h */,
+				73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		73B150BE136C6EF800A5D74A /* Stored Items */ = {
+			isa = PBXGroup;
+			children = (
+				73E7623B121C2E5D00A4190C /* SHMemoryBlock.h */,
+				73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */,
+				73C5AE04134A54A7001EF00A /* SHNamedMemoryBlock.h */,
+				73C5AE03134A54A7001EF00A /* SHNamedMemoryBlock.m */,
+				73B150BA136C6EE700A5D74A /* TPData.h */,
+				73B150BB136C6EE700A5D74A /* TPData.m */,
+				73B150C0136C72BF00A5D74A /* TPLine.h */,
+				73B150C1136C72BF00A5D74A /* TPLine.m */,
+				7332007812197B2C00D80990 /* Segment.h */,
+				7332007912197B2C00D80990 /* Segment.m */,
+				73E761E7121C28C900A4190C /* Section.h */,
+				73E761E8121C28C900A4190C /* Section.m */,
+			);
+			name = "Stored Items";
+			sourceTree = "<group>";
+		};
+		73B150BF136C6F1900A5D74A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				73D988A91359E71800E14E6A /* MemorySectionIndexStructure.h */,
+				73D988A81359E71800E14E6A /* MemorySectionIndexStructure.m */,
+				73B150BE136C6EF800A5D74A /* Stored Items */,
+				73B1503C136C60A200A5D74A /* Store */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		73B346C313045626006FDF4E /* Built with mig from .defs */ = {
@@ -700,6 +745,10 @@
 				731AEB10135CF22F00B848E6 /* SHMemoryBlockTests.m in Sources */,
 				73339C0113662D6600F91128 /* MemoryBlockStoreTests.m in Sources */,
 				73D8663C136755B400F9C623 /* BasicProcessorSimulatorTests.m in Sources */,
+				73B15040136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */,
+				73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */,
+				73B150BD136C6EE700A5D74A /* TPData.m in Sources */,
+				73B150C3136C72BF00A5D74A /* TPLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +800,9 @@
 				735BED2E13100C1C00454D58 /* hw_breakpoint.c in Sources */,
 				73C5AE05134A54A7001EF00A /* SHNamedMemoryBlock.m in Sources */,
 				73D988AA1359E71800E14E6A /* MemorySectionIndexStructure.m in Sources */,
+				73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */,
+				73B150BC136C6EE700A5D74A /* TPData.m in Sources */,
+				73B150C2136C72BF00A5D74A /* TPLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

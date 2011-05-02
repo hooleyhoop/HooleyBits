@@ -17,7 +17,10 @@
 - (NSUInteger)findInsertionPt:(SHMemoryBlock *)memBlock;
 
 - (void)insertMemoryBlock:(SHMemoryBlock *)memBlock;
+- (void)replaceItemAtIndex:(int)ind with:(SHMemoryBlock *)firstItem,  ...;
+
 - (SHMemoryBlock *)blockForAddress:(char *)memAddr;
+- (NSInteger)block:(SHMemoryBlock **)blk forAddress:(char *)memAddr;
 
 - (SHMemoryBlock *)memoryBlockAtIndex:(int)ind;
 

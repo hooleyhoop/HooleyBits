@@ -62,7 +62,26 @@
 	[_memoryBlockStore insertObject:memBlock atIndex:ind];
 }
 
+- (void)replaceItemAtIndex:(int)ind with:(SHMemoryBlock *)firstItem,  ... {
+    
+    [_memoryBlockStore replaceObjectAtIndex:ind++ withObject:firstItem];
+
+    id eachObject;
+    va_list argumentList;
+    va_start(argumentList, firstItem);
+    while (eachObject = va_arg(argumentList, id))
+        [_memoryBlockStore insertObject:eachObject atIndex:ind++]; // that isn't nil, add it to self's contents.
+    va_end(argumentList);
+}
+
 - (SHMemoryBlock *)blockForAddress:(char *)memAddr {
+
+    SHMemoryBlock *memBlk = nil;
+    [self block:&memBlk forAddress:memAddr];
+    return memBlk;
+}
+
+- (NSInteger)block:(SHMemoryBlock **)blk forAddress:(char *)memAddr {
 
 	NSUInteger low = 0;
 	NSUInteger high  = [_memoryBlockStore count];
@@ -82,14 +101,18 @@
 			high = mid;
 		}
 	}
-	if(!hit)
+	if(!hit){
 		index = index-1;
-	if(index==-1)
-		return nil;
+    }
+	if(index==-1){
+		return -1;
+    }
 	SHMemoryBlock *test = [_memoryBlockStore objectAtIndex:index];
-	if( memAddr>=[test startAddress] && memAddr<=[test lastAddress] )
-		return test;
-	return nil;
+	if( memAddr>=[test startAddress] && memAddr<=[test lastAddress] ) {
+        *blk = test;
+		return index;
+    }
+	return -1;
 }
 
 - (NSUInteger)itemCount {

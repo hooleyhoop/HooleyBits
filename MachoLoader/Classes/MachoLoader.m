@@ -982,7 +982,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 			NSAssert( stringTableEntry, @"what?");
 			
 			// try copying an int out to see what it is?
-			char *memPtr = sec.startAddr;
+			char *memPtr = [sec startAddress];
 			char *locPtr = sec.sect_pointer;
 			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;
 			int32_t a4ByteLiteral = 0;
@@ -995,7 +995,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 		} else if( [[sec name] isEqualToString:@"__literal4"] ) {
 
 			// 4 byte literals
-			char *memPtr = sec.startAddr;
+			char *memPtr = [sec startAddress];
 			char *locPtr = sec.sect_pointer;
 			uint64 newSectSize = sec.length;
 			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;
@@ -1024,7 +1024,7 @@ void print_label( char *addr, int colon_and_newline, struct symbol *sorted_symbo
 	
 		} else if( [[sec name] isEqualToString:@"__literal8"] ) {
 
-			char *memPtr = sec.startAddr;
+			char *memPtr = [sec startAddress];
 			char *locPtr = sec.sect_pointer;
 			uint64 newSectSize = sec.length;
 			char *a4ByteLiteralAddress = locPtr+(uint64)memAddr-(uint64)memPtr;

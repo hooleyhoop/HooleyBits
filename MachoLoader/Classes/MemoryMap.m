@@ -35,7 +35,7 @@
 
 - (void)insertSection:(Section *)sec {
 	
-	Segment *containerSeg = [self segmentForAddress:sec.startAddr];
+	Segment *containerSeg = [self segmentForAddress:[sec startAddress]];
 	if( [sec.segmentName isEqualToString:containerSeg.name]==NO )
 		[NSException raise:@"Fucked up somewhere" format:@"Fucked up somewhere"];
 	

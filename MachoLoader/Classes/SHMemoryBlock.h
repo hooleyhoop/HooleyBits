@@ -9,20 +9,26 @@
 
 
 @interface SHMemoryBlock : NSObject {
-
+@public
     struct MemSectionIndexes *_sizeAndPoisition;
 }
+
+struct SplitData {
+    SHMemoryBlock *blk1;
+    SHMemoryBlock *blk2;
+};
 
 - (id)initWithStart:(char *)memAddr length:(uint64)len;
 
 - (NSComparisonResult)compareStartAddress:(SHMemoryBlock *)seg;
 - (NSComparisonResult)compareStartAddressToAddress:(char *)otherAddress;
 
-- (void)shrinkToLength:(uint64)newLength;
+- (struct SplitData)splitAtAddress:(char *)splitAddr;
 
 - (char *)startAddress;
 - (char *)lastAddress;
 - (uint64)length;
 
+- (BOOL)containsAddress:(char *)addr;
 
 @end
