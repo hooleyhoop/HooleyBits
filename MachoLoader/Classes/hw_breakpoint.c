@@ -56,7 +56,7 @@ void set_hw_breakpoint( void *addr, thread_act_t thread ) {
     MACH_CHECK_ERROR( thread_get_state, result );
     
     // set the address to break on
-    dr.uds.ds32.__dr0 = (uint32_t)addr;
+    dr.uds.ds32.__dr0 = (uint32_t)addr; // set debug register to address to stop on dr0, d1, dr2, dr3
     
     // set some enables
     dr.uds.ds32.__dr7 = (1 << 9) | (1 << 8) | (1 << 0);

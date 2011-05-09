@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SHMemoryBlock.h"
 
 @interface TPData : SHMemoryBlock {
 @private

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SHMemoryBlock.h"
 
 
 @interface TPLine : SHMemoryBlock {

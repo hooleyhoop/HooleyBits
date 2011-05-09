@@ -60,6 +60,7 @@
 #import "SimpleTracer.h"
 #import "HooPermissions.h"
 
+#import <pthread.h>
 
 /* Useful links 
  *
@@ -548,15 +549,15 @@ static void setUpTerminationNotificationHandler( pid_t pid ) {
     //    NSLog(@"started child app");
     // };
     
-    
+    // so this happens on a background thread?
     void (^_steppingBlock)() = ^ {
 
         kern_return_t rc = thread_suspend( _firstThread );
         if( rc != KERN_SUCCESS ) error((char *)"suspending thread");
         
         unsigned int instructionPtr = getInstructionPointer(_firstThread);
-        if( instructionPtr>(unsigned int)address && instructionPtr<((unsigned int)address+codeLen) ) 
-            NSLog(@"stepping child app %0x", instructionPtr);
+//no        if( instructionPtr>(unsigned int)address && instructionPtr<((unsigned int)address+codeLen) ) 
+//no            NSLog(@"stepping child app %0x", instructionPtr);
         
         rc = thread_resume( _firstThread );
         if( rc != KERN_SUCCESS ) error((char *)"resuming thread");
@@ -1143,6 +1144,7 @@ void run_target( const char *programname ) {
 // in a sinal handler you can only do very limited things (eg you cant call malloc!)
 // are these signal handlers?
 
+// signals are delivered on any thread that happens to be running. Is that true for this ?
 
 kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_t thread, mach_port_t task, exception_type_t exception,
                                     exception_data_t code, mach_msg_type_number_t codeCount ) {
@@ -1150,6 +1152,8 @@ kern_return_t catch_mach_exception_raise( mach_port_t exception_port, mach_port_
     assert( exception_port==_exceptionPort );
     assert( task==_childTaskPort );
     assert( thread==_firstThread );
+
+    printf("The ID of this thread is: %u\n", (unsigned int)pthread_self());
 
     kern_return_t krc = MACH_MSG_SUCCESS;
     
