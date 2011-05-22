@@ -1,0 +1,440 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
+		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
+		73D528281389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
+		73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528121389165300B50908 /* HooStateMachine.framework */; };
+		73D528311389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5282F1389165300B50908 /* InfoPlist.strings */; };
+		73D528341389165300B50908 /* HooStateMachineTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 73D528331389165300B50908 /* HooStateMachineTests.h */; };
+		73D528361389165300B50908 /* HooStateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D528351389165300B50908 /* HooStateMachineTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73D528291389165300B50908 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73D528081389165300B50908 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73D528111389165300B50908;
+			remoteInfo = HooStateMachine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		73D528181389165300B50908 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		73D528191389165300B50908 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		73D5281A1389165300B50908 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		73D5281D1389165300B50908 /* HooStateMachine-Info.plist */ = {isa = PBXFileReference; path = "HooStateMachine-Info.plist"; sourceTree = "<group>"; };
+		73D5281F1389165300B50908 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73D528211389165300B50908 /* HooStateMachine-Prefix.pch */ = {isa = PBXFileReference; path = "HooStateMachine-Prefix.pch"; sourceTree = "<group>"; };
+		73D528271389165300B50908 /* HooStateMachineTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HooStateMachineTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73D5282E1389165300B50908 /* HooStateMachineTests-Info.plist */ = {isa = PBXFileReference; path = "HooStateMachineTests-Info.plist"; sourceTree = "<group>"; };
+		73D528301389165300B50908 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73D528321389165300B50908 /* HooStateMachineTests-Prefix.pch */ = {isa = PBXFileReference; path = "HooStateMachineTests-Prefix.pch"; sourceTree = "<group>"; };
+		73D528331389165300B50908 /* HooStateMachineTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HooStateMachineTests.h; sourceTree = "<group>"; };
+		73D528351389165300B50908 /* HooStateMachineTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HooStateMachineTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73D5280E1389165300B50908 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D528161389165300B50908 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73D528231389165300B50908 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D528281389165300B50908 /* Cocoa.framework in Frameworks */,
+				73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73D528061389165300B50908 = {
+			isa = PBXGroup;
+			children = (
+				73D5281B1389165300B50908 /* HooStateMachine */,
+				73D5282C1389165300B50908 /* HooStateMachineTests */,
+				73D528141389165300B50908 /* Frameworks */,
+				73D528131389165300B50908 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73D528131389165300B50908 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73D528121389165300B50908 /* HooStateMachine.framework */,
+				73D528271389165300B50908 /* HooStateMachineTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73D528141389165300B50908 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73D528151389165300B50908 /* Cocoa.framework */,
+				73D528171389165300B50908 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73D528171389165300B50908 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73D528181389165300B50908 /* AppKit.framework */,
+				73D528191389165300B50908 /* CoreData.framework */,
+				73D5281A1389165300B50908 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		73D5281B1389165300B50908 /* HooStateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				73D5281C1389165300B50908 /* Supporting Files */,
+			);
+			path = HooStateMachine;
+			sourceTree = "<group>";
+		};
+		73D5281C1389165300B50908 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73D5281D1389165300B50908 /* HooStateMachine-Info.plist */,
+				73D5281E1389165300B50908 /* InfoPlist.strings */,
+				73D528211389165300B50908 /* HooStateMachine-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		73D5282C1389165300B50908 /* HooStateMachineTests */ = {
+			isa = PBXGroup;
+			children = (
+				73D528331389165300B50908 /* HooStateMachineTests.h */,
+				73D528351389165300B50908 /* HooStateMachineTests.m */,
+				73D5282D1389165300B50908 /* Supporting Files */,
+			);
+			path = HooStateMachineTests;
+			sourceTree = "<group>";
+		};
+		73D5282D1389165300B50908 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73D5282E1389165300B50908 /* HooStateMachineTests-Info.plist */,
+				73D5282F1389165300B50908 /* InfoPlist.strings */,
+				73D528321389165300B50908 /* HooStateMachineTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		73D5280F1389165300B50908 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		73D528111389165300B50908 /* HooStateMachine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73D528391389165300B50908 /* Build configuration list for PBXNativeTarget "HooStateMachine" */;
+			buildPhases = (
+				73D5280D1389165300B50908 /* Sources */,
+				73D5280E1389165300B50908 /* Frameworks */,
+				73D5280F1389165300B50908 /* Headers */,
+				73D528101389165300B50908 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HooStateMachine;
+			productName = HooStateMachine;
+			productReference = 73D528121389165300B50908 /* HooStateMachine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		73D528261389165300B50908 /* HooStateMachineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73D5283C1389165300B50908 /* Build configuration list for PBXNativeTarget "HooStateMachineTests" */;
+			buildPhases = (
+				73D528221389165300B50908 /* Sources */,
+				73D528231389165300B50908 /* Frameworks */,
+				73D528241389165300B50908 /* Resources */,
+				73D528251389165300B50908 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73D5282A1389165300B50908 /* PBXTargetDependency */,
+			);
+			name = HooStateMachineTests;
+			productName = HooStateMachineTests;
+			productReference = 73D528271389165300B50908 /* HooStateMachineTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73D528081389165300B50908 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tinsal Parks";
+			};
+			buildConfigurationList = 73D5280B1389165300B50908 /* Build configuration list for PBXProject "HooStateMachine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 73D528061389165300B50908;
+			productRefGroup = 73D528131389165300B50908 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				73D528111389165300B50908 /* HooStateMachine */,
+				73D528261389165300B50908 /* HooStateMachineTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73D528101389165300B50908 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D528201389165300B50908 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73D528241389165300B50908 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D528311389165300B50908 /* InfoPlist.strings in Resources */,
+				73D528341389165300B50908 /* HooStateMachineTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		73D528251389165300B50908 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73D5280D1389165300B50908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73D528221389165300B50908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73D528361389165300B50908 /* HooStateMachineTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		73D5282A1389165300B50908 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73D528111389165300B50908 /* HooStateMachine */;
+			targetProxy = 73D528291389165300B50908 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		73D5281E1389165300B50908 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73D5281F1389165300B50908 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		73D5282F1389165300B50908 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73D528301389165300B50908 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		73D528371389165300B50908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		73D528381389165300B50908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		73D5283A1389165300B50908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine/HooStateMachine-Prefix.pch";
+				INFOPLIST_FILE = "HooStateMachine/HooStateMachine-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		73D5283B1389165300B50908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine/HooStateMachine-Prefix.pch";
+				INFOPLIST_FILE = "HooStateMachine/HooStateMachine-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		73D5283D1389165300B50908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachineTests/HooStateMachineTests-Prefix.pch";
+				INFOPLIST_FILE = "HooStateMachineTests/HooStateMachineTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		73D5283E1389165300B50908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachineTests/HooStateMachineTests-Prefix.pch";
+				INFOPLIST_FILE = "HooStateMachineTests/HooStateMachineTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73D5280B1389165300B50908 /* Build configuration list for PBXProject "HooStateMachine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73D528371389165300B50908 /* Debug */,
+				73D528381389165300B50908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73D528391389165300B50908 /* Build configuration list for PBXNativeTarget "HooStateMachine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73D5283A1389165300B50908 /* Debug */,
+				73D5283B1389165300B50908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		73D5283C1389165300B50908 /* Build configuration list for PBXNativeTarget "HooStateMachineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73D5283D1389165300B50908 /* Debug */,
+				73D5283E1389165300B50908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 73D528081389165300B50908 /* Project object */;
+}
