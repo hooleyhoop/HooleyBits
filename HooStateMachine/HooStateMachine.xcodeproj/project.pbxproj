@@ -35,6 +35,8 @@
 		73D5286413891B1100B50908 /* HooStateMachineConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285413891B1100B50908 /* HooStateMachineConfigurator.h */; };
 		73D5286513891B1100B50908 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73D5286713891B2B00B50908 /* StateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5286613891B2B00B50908 /* StateMachineTests.m */; };
+		73E07428138ACC63007FDF93 /* simplest_config_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E07427138ACC63007FDF93 /* simplest_config_json.json */; };
+		73E0742E138ACF89007FDF93 /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E0742D138ACF89007FDF93 /* hierarchical.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooStateMachineConfigurator.m; sourceTree = "<group>"; };
 		73D5286613891B2B00B50908 /* StateMachineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachineTests.m; sourceTree = "<group>"; };
 		73D5286E13891D4200B50908 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "../../../Source/json-framework/JSON.xcodeproj"; sourceTree = "<group>"; };
+		73E07427138ACC63007FDF93 /* simplest_config_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simplest_config_json.json; sourceTree = "<group>"; };
+		73E0742D138ACF89007FDF93 /* hierarchical.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hierarchical.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +242,8 @@
 				73D5286613891B2B00B50908 /* StateMachineTests.m */,
 				730B2B0513891FDB0012F1C1 /* JSONTest.m */,
 				73D528351389165300B50908 /* HooStateMachineTests.m */,
+				73E07427138ACC63007FDF93 /* simplest_config_json.json */,
+				73E0742D138ACF89007FDF93 /* hierarchical.json */,
 				73D5282D1389165300B50908 /* Supporting Files */,
 			);
 			path = HooStateMachineTests;
@@ -394,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73D528201389165300B50908 /* InfoPlist.strings in Resources */,
+				73E0742E138ACF89007FDF93 /* hierarchical.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73D528311389165300B50908 /* InfoPlist.strings in Resources */,
+				73E07428138ACC63007FDF93 /* simplest_config_json.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

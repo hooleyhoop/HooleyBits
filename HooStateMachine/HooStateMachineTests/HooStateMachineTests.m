@@ -11,6 +11,9 @@
 #import "HooStateMachine_command.h"
 #import "HooStateMachine_state.h"
 #import "HooStateMachine.h"
+#import "HooStateMachine_controller.h"
+#import "HooStateMachineConfigurator.h"
+#import <JSON/JSON.h>
 
 @interface HooStateMachineTests : SenTestCase {
 @private
@@ -61,218 +64,94 @@
     [idle_state addEntryAction:unlockDoorCmd];
     [idle_state addEntryAction:lockPanelCmd];
     
-	[active_state addTransitionOn:drawerOpened_event toState:[waitingForLight_state ];
-	[active_state addTransitionOn:lightOn_event toState:waitingForDrawer_state];
-    
-	[waitingForLight_state addTransitionOn:lightOn_event toState:unlockedPanel_state];
-    
-	[waitingForDrawer_state addTransitionOn:drawerOpened_event toState:unlockedPanel_state];
-    
-	unlockedPanel_state.addEntryAction( unlockPanelCmd );
-	unlockedPanel_state.addEntryAction( lockDoorCmd );
-	unlockedPanel_state addTransitionOn:( panelClosed_event, idle_state );
-    
-	var resetEvents = new Array();
-	resetEvents.push( doorOpened_event );
-	stateMachineInstance.addResetEvents( resetEvents );
-    
-	var testReciever = HooStateMachine_testCommandChannel alloc]();
-	var controller = HooStateMachine_controller alloc]( { currentState: idle_state, machine: stateMachineInstance, commandsChannel: testReciever } );
-    
-	equals( controller.currentState.name, "idle", "!" );
-    
-	controller.handle( "doorClosed" );
-	equals( controller.currentState.name, "active", "!" );
-    
-	controller.handle( "drawerOpened" );
-	equals( controller.currentState.name, "waitingForLight", "!" );
-    
-	controller.handle( "lightOn" );
-	equals( controller.currentState.name, "unlockedPanel", "!" );
-});
+    [active_state addTransitionOn:drawerOpened_event toState:waitingForLight_state];
+    [active_state addTransitionOn:lightOn_event toState:waitingForDrawer_state];
 
-test("the simplest state machine example with json", function() {
-    
-	var simplestSM_config = {
-		"states": [
-                   "st_idle",
-                   "st_active",
-                   "st_waitingForLight",
-                   "st_waitingForDrawer",
-                   "st_unlockedPanel"
-                   ],
-		"events": [
-                   "ev_doorClosed",
-                   "ev_drawerOpened",
-                   "ev_lightOn",
-                   "ev_doorOpened",
-                   "ev_panelClosed"
-                   ],
-		"commands": [
-                     "cmd_unlockPanel",
-                     "cmd_lockPanel",
-                     "cmd_lockDoor",
-                     "cmd_unlockDoor"
-                     ],
-		"transitions": [
-                        { "state": "st_idle",					"event": "ev_doorClosed", 	"nextState": "st_active" },
-                        { "state": "st_active", 				"event": "ev_drawerOpened",	"nextState": "st_waitingForLight" },
-                        { "state": "st_active", 				"event": "ev_lightOn", 		"nextState": "st_waitingForDrawer" },
-                        { "state": "st_waitingForLight",		"event": "ev_lightOn", 		"nextState": "st_unlockedPanel" },
-                        { "state": "st_waitingForDrawer", 		"event": "ev_drawerOpened", "nextState": "st_unlockedPanel" },
-                        { "state": "st_unlockedPanel", 			"event": "ev_panelClosed", 	"nextState": "st_idle" }
-                        ],
-		"actions": [
-                    {"state": "st_idle", 			"entryAction": "cmd_unlockDoor", 	"exitAction": null },
-                    {"state": "st_idle", 			"entryAction": "cmd_lockPanel", 	"exitAction": null },
-                    {"state": "st_unlockedPanel", 	"entryAction": "cmd_unlockPanel", 	"exitAction": null },
-                    {"state": "st_unlockedPanel", 	"entryAction": "cmd_lockDoor",		"exitAction": null }
-                    ],
-		"resetEvents": [
-                        "doorOpened_event"
-                        ]
-	};
-    
-	var simpleStateMachineParser = HooStateMachineConfigurator alloc]({config: simplestSM_config });
-	var stateMachineInstance = HooStateMachine alloc]( {startState: simpleStateMachineParser.state("st_idle") } );
-	var testReciever = HooStateMachine_testCommandChannel alloc]();
-	var controller = HooStateMachine_controller alloc]( { currentState: simpleStateMachineParser.state("st_idle"), machine: stateMachineInstance, commandsChannel: testReciever } );
-    
-	equals( controller.currentState.name, "st_idle", "!" );
-    
-	controller.handle( "ev_doorClosed" );
-	equals( controller.currentState.name, "st_active", "!" );
-    
-	controller.handle( "ev_drawerOpened" );
-	equals( controller.currentState.name, "st_waitingForLight", "!" );
-    
-	controller.handle( "ev_lightOn" );
-	equals( controller.currentState.name, "st_unlockedPanel", "!" );
-});
+    [waitingForLight_state addTransitionOn:lightOn_event toState:unlockedPanel_state];
 
-test("a hierarchical state machine example", function() {
+    [waitingForDrawer_state addTransitionOn:drawerOpened_event toState:unlockedPanel_state];
+
+    [unlockedPanel_state addEntryAction:unlockPanelCmd];
+    [unlockedPanel_state addEntryAction:lockDoorCmd];
+    [unlockedPanel_state addTransitionOn:panelClosed_event toState:idle_state];
     
-	var hierarchicalSM_config = {
-		"states": [
-                   "st_off",
-                   "st_on",
-                   ["st_loading", "st_on"],
-                   ["st_playing", "st_on"]
-                   ],
-		"events": [
-                   "ev_load",
-                   "ev_play",
-                   "ev_turnOff"
-                   ],
-		"commands": [
-                     "cmd_showOff",
-                     "cmd_showOn",
-                     "cmd_showLoad",
-                     "cmd_showPlay"
-                     ],
-		"transitions": [
-                        { "state": "st_off",		"event": "ev_load", 	"nextState": "st_loading" },
-                        { "state": "st_off", 		"event": "ev_play",		"nextState": "st_playing" },
-                        { "state": "st_loading", 	"event": "ev_play",		"nextState": "st_playing" }
-                        ],
-		"actions": [
-                    {"state": "st_off", 		"entryAction": "cmd_showOff", 	"exitAction": null },
-                    {"state": "st_on", 			"entryAction": "cmd_showOn", 	"exitAction": null },
-                    {"state": "st_loading", 	"entryAction": "cmd_showLoad", 	"exitAction": null },
-                    {"state": "st_playing", 	"entryAction": "cmd_showPlay",	"exitAction": null }
-                    ],
-		"resetEvents": ["ev_turnOff"]
-	};
+    NSArray *resetEvents = [NSArray arrayWithObject:doorOpened_event];
+    [stateMachineInstance addResetEvents:resetEvents];
     
-	var resultCommands = new Array();
-	var TestCommandChannel = SC.Object.extend({
-    send: function( command ) {
-        resultCommands.push( command.name );
-    }
-	});
+	// HooStateMachine_testCommandChannel testReciever = HooStateMachine_testCommandChannel alloc]();
+    HooStateMachine_controller *controller = [[[HooStateMachine_controller alloc] initWithCurrentState:idle_state machine:stateMachineInstance commandsChannel:self] autorelease];
+
+    STAssertEquals( [[controller currentState] name], @"st_idle", nil );
+
+    [controller handle:@"ev_doorClosed"];
+    STAssertEquals( [[controller currentState] name], @"st_active", nil );
+
+    [controller handle:@"ev_drawerOpened"];
+    STAssertEquals( [[controller currentState] name], @"st_waitingForLight", nil );
+
+    [controller handle:@"ev_lightOn"];
+    STAssertEquals( [[controller currentState] name], @"st_unlockedPanel", nil );
+}
+
+- (void)testTheSimplestStateMachineExampleWithJson {
     
-	var cmdChl = TestCommandChannel alloc]();
-	var hierarchicalStateMachineParser = HooStateMachineConfigurator alloc]({ config: hierarchicalSM_config });
-	var stateMachineInstance = HooStateMachine alloc]( { startState: hierarchicalStateMachineParser.state("st_off"), resetEvents: hierarchicalStateMachineParser._resetEvents } );
-	var controller = HooStateMachine_controller alloc]( { currentState: hierarchicalStateMachineParser.state("st_off"), machine: stateMachineInstance, commandsChannel: cmdChl } );
+    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"simplest_config_json" ofType:@"json"];
+    NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
+    NSError *error = nil;    
+    NSDictionary *config = [parser objectWithString:configContents error:&error];
+
+	HooStateMachineConfigurator *simpleStateMachineParser = [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];    
+    HooStateMachine *stateMachineInstance = [[[HooStateMachine alloc] initWithStartState:[simpleStateMachineParser state:@"st_idle"] resetEvents:nil] autorelease];
+
+	// var testReciever = HooStateMachine_testCommandChannel alloc]();
+    HooStateMachine_controller *controller = [[[HooStateMachine_controller alloc] initWithCurrentState:[simpleStateMachineParser state:@"st_idle"] machine:stateMachineInstance commandsChannel:self] autorelease];
+
+    STAssertEquals( [[controller currentState] name], @"st_idle", nil );
     
-	equals( controller.currentState.name, "st_off", "!" );
-	controller.handle( "ev_load" );
-	equals( controller.currentState.name, "st_loading", "!" );
-	controller.handle( "ev_play" );
-	equals( controller.currentState.name, "st_playing", "!" );
-	controller.handle( "ev_turnOff" );
-	equals( controller.currentState.name, "st_off", "!" );
+    [controller handle:@"ev_doorClosed"];
+    STAssertEquals( [[controller currentState] name], @"st_active", nil );
+    
+    [controller handle:@"ev_drawerOpened"];
+    STAssertEquals( [[controller currentState] name], @"st_waitingForLight", nil );
+    
+    [controller handle:@"ev_lightOn"];
+    STAssertEquals( [[controller currentState] name], @"st_unlockedPanel", nil );
+}
+
+- (void)testAHierarchicalStateMachineExample {
+    
+    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"hierarchical" ofType:@"json"];
+    NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
+    NSError *error = nil;    
+    NSDictionary *config = [parser objectWithString:configContents error:&error];
+    
+	HooStateMachineConfigurator *simpleStateMachineParser = [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];   
+
+    HooStateMachine *stateMachineInstance = [[[HooStateMachine alloc] initWithStartState:[simpleStateMachineParser state:@"st_off"] resetEvents:nil] autorelease];
+    
+	// var testReciever = HooStateMachine_testCommandChannel alloc]();
+    HooStateMachine_controller *controller = [[[HooStateMachine_controller alloc] initWithCurrentState:[simpleStateMachineParser state:@"st_off"] machine:stateMachineInstance commandsChannel:self] autorelease];
+
+    STAssertEquals( [[controller currentState] name], @"st_off", nil );
+
+    [controller handle:@"ev_load"];
+
+    STAssertEquals( [[controller currentState] name], @"st_loading", nil );
+    
+    [controller handle:@"ev_play"];
+
+    STAssertEquals( [[controller currentState] name], @"st_playing", nil );
+    
+    [controller handle:@"ev_turnOff"];
+
+    STAssertEquals( [[controller currentState] name], @"st_off", nil );
+    
     
 	// -- test result commands
     
-});
-
-test("ThreeStateButtonStateMachine", function() {
-    
-	var ninja = new Mock();
-    
-	var threeButtonSM = ThreeStateButtonStateMachine alloc]({ _controller: ninja });
-	equals( threeButtonSM.currentStateName(), "st_disabled", "!" );
-    
-	ninja.expects(1).method('cmd_enableButton');
-	ninja.expects(1).method('cmd_showMouseUp1');
-	threeButtonSM.processInputSignal( "ev_showState1" );
-	equals( threeButtonSM.currentStateName(), "st_active1", "!" );
-	ok(ninja.verify(), "!");
-    
-	ninja.expects(1).method('cmd_showMouseDown1');
-	threeButtonSM.processInputSignal( "ev_buttonPressed" );
-	equals( threeButtonSM.currentStateName(), "st_active_down1", "!" );
-	ok(ninja.verify(), "!");
-    
-	ninja.expects(1).method('cmd_showMouseDownOut1');
-	threeButtonSM.processInputSignal( "ev_mouseDraggedOutside" );
-	equals( threeButtonSM.currentStateName(), "st_active_down_out1", "!" );
-	ok(ninja.verify(), "!");
-    
-	var ninja = new Mock();
-	ninja.expects(1).method('cmd_showMouseDown1');
-	threeButtonSM._controller = ninja;
-	threeButtonSM.processInputSignal( "ev_mouseDraggedInside" );
-	equals( threeButtonSM.currentStateName(), "st_active_down1", "!" );
-	ok(ninja.verify(), "!");
-    
-	ninja.expects(1).method('cmd_fireButtonAction1');
-	threeButtonSM.processInputSignal( "ev_buttonReleased" );
-	equals( threeButtonSM.currentStateName(), "st_clicked1", "!" );
-	ok(ninja.verify(), "!");
-    
-	ninja.expects(1).method('cmd_disableButton');
-	threeButtonSM.processInputSignal( "ev_disable" );
-	equals( threeButtonSM.currentStateName(), "st_disabled", "!" );
-	ok(ninja.verify(), "!");
-    
-	//threeButtonSM.processInputSignal( "ev_error" );
-	//equals( threeButtonSM.currentStateName(), "st_off", "!" );
-    
-	//threeButtonSM.processInputSignal( "ev_clickAbortCompleted" );
-	//equals( threeButtonSM.currentStateName(), "st_off", "!" );
-});
-
-test("FiveStateButtonStateMachine", function() {
-    
-	var ninja = new Mock();
-    
-	var fiveButtonSM = FiveStateButtonStateMachine alloc]({ _controller: ninja });
-});
-
-HooStateMachine_testCommandChannel = SC.Object.extend({
-send: function( command ) {
-    //alert( command.name );
 }
-});
-
-// ok( true, "this test is fine" );
-// var value = "hello";
-// equals( "hello", value, "We expect value to be hello" );
-
-
 
 
 @end

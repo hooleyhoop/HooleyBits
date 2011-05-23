@@ -20,5 +20,6 @@
 
 - (BOOL)isResetEvent:(NSString *)eventName;
 - (HooStateMachine_state *)startState;
+- (void)addResetEvents:(NSArray *)events;
 
 @end

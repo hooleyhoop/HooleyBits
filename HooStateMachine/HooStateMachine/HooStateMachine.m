@@ -45,12 +45,9 @@
 //    });
 //}
 
-//- (void)addResetEvents: ( events ) {
-//    var self = this;
-//    $.each( events, function(index, value) {
-//        self.resetEvents.push(value);
-//    });
-//}
+- (void)addResetEvents:(NSArray *)events {
+    [_resetEvents addObjectsFromArray:events];
+}
 
 - (NSArray *)resetEventNames {
     
