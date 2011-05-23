@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class HooStateMachine_state, HooStateMachine_event;
 
-@interface HooStateMachine_transition : NSObject {
+@interface HooStateMachine_transition : _ROOT_OBJECT_ {
 @private
     HooStateMachine_state *_srcState;
     HooStateMachine_event *_triggerEv;

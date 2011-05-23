@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface HooStateMachine_abstractEvent : NSObject {
+@interface HooStateMachine_abstractEvent : _ROOT_OBJECT_ {
 @private
     NSString *_name;
 }

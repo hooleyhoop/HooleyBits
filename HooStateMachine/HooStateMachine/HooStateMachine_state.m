@@ -14,6 +14,10 @@
 
 @implementation HooStateMachine_state
 
+- (id)initWithName:(NSString *)stateName {
+    return [self initWithName:stateName parent:nil];
+}
+
 - (id)initWithName:(NSString *)stateName parent:(HooStateMachine_state *)parentState {
     
     self = [super initWithName:stateName];

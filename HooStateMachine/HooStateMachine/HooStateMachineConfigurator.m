@@ -122,18 +122,21 @@
         HooStateMachine_state *state = [_states objectForKey:stateName];
         if(entryAction!=nil) {
             HooStateMachine_command *entryCmd = [_commands objectForKey:entryAction];
+            if(entryCmd)
             // alert("state > "+state+" entry cmd "+entryCmd);
-            [state addEntryAction:entryCmd];
+                [state addEntryAction:entryCmd];
         }
         if(exitAction!=nil) {
             HooStateMachine_command *exitCmd = [_commands objectForKey:exitAction];            
             // alert("state > "+state+" exit cmd "+entryCmd);
-            [state addExitAction:exitCmd];
+            if(exitCmd)
+                [state addExitAction:exitCmd];
         }
     }
 }
 
 - (HooStateMachine_state *)state:(NSString *)key {
+    NSParameterAssert(key);
     return [_states objectForKey:key];
 }
 

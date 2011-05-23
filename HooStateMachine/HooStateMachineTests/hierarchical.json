@@ -1,31 +1,31 @@
-var hierarchicalSM_config = {
-"states": [
-"st_off",
-"st_on",
-["st_loading", "st_on"],
-["st_playing", "st_on"]
-],
-"events": [
-"ev_load",
-"ev_play",
-"ev_turnOff"
-],
-"commands": [
-"cmd_showOff",
-"cmd_showOn",
-"cmd_showLoad",
-"cmd_showPlay"
-],
-"transitions": [
-{ "state": "st_off",		"event": "ev_load", 	"nextState": "st_loading" },
-{ "state": "st_off", 		"event": "ev_play",		"nextState": "st_playing" },
-{ "state": "st_loading", 	"event": "ev_play",		"nextState": "st_playing" }
-],
-"actions": [
-{"state": "st_off", 		"entryAction": "cmd_showOff", 	"exitAction": null },
-{"state": "st_on", 			"entryAction": "cmd_showOn", 	"exitAction": null },
-{"state": "st_loading", 	"entryAction": "cmd_showLoad", 	"exitAction": null },
-{"state": "st_playing", 	"entryAction": "cmd_showPlay",	"exitAction": null }
-],
-"resetEvents": ["ev_turnOff"]
-};
+{
+    "states": [
+        "st_off",
+        "st_on",
+        ["st_loading", "st_on"],
+        ["st_playing", "st_on"]
+    ],
+    "events": [
+        "ev_load",
+        "ev_play",
+        "ev_turnOff"
+    ],
+    "commands": [
+        "cmd_showOff",
+        "cmd_showOn",
+        "cmd_showLoad",
+        "cmd_showPlay"
+    ],
+    "transitions": [
+        { "state": "st_off",		"event": "ev_load", 	"nextState": "st_loading" },
+        { "state": "st_off", 		"event": "ev_play",		"nextState": "st_playing" },
+        { "state": "st_loading", 	"event": "ev_play",		"nextState": "st_playing" }
+    ],
+    "actions": [
+        {"state": "st_off", 		"entryAction": "cmd_showOff", 	"exitAction": null },
+        {"state": "st_on", 			"entryAction": "cmd_showOn", 	"exitAction": null },
+        {"state": "st_loading", 	"entryAction": "cmd_showLoad", 	"exitAction": null },
+        {"state": "st_playing", 	"entryAction": "cmd_showPlay",	"exitAction": null }
+    ],
+    "resetEvents": ["ev_turnOff"]
+}

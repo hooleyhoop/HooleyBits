@@ -14,9 +14,10 @@
 
 - (id)initWithStartState:(HooStateMachine_state *)startState resetEvents:(NSArray *)resetEvents {
     
+    NSParameterAssert(startState);
     self = [super init];
     if (self) {
-        _startState = startState;
+        _startState = [startState retain];
         _resetEvents = resetEvents ? [resetEvents retain] : [[NSMutableArray alloc] init];
     }
     
@@ -24,6 +25,7 @@
 }
 
 - (void)dealloc {
+    [_startState release];
     [_resetEvents release];
     [super dealloc];
 }

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class HooStateMachine_state, HooStateMachine;
 
-@interface HooStateMachine_controller : NSObject {
+@interface HooStateMachine_controller : _ROOT_OBJECT_ {
 @private
     HooStateMachine_state *_currentState;
     HooStateMachine *_machine;

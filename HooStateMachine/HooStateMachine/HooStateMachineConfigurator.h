@@ -10,7 +10,7 @@
 
 @class HooStateMachine_state;
 
-@interface HooStateMachineConfigurator : NSObject {
+@interface HooStateMachineConfigurator : _ROOT_OBJECT_ {
 @private
     NSDictionary *_config;
     NSMutableDictionary *_states;
