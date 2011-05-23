@@ -16,7 +16,7 @@
     id _commandsChannel;   
 }
 
-- (id)intWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl;
+- (id)initWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl;
 - (void)handle:(NSString *)eventName;
 - (HooStateMachine_state *)currentState;
 @end

@@ -10,6 +10,7 @@
 #import "HooStateMachine_event.h"
 #import "HooStateMachine_transition.h"
 #import "HooStateMachine_command.h"
+#import "AbstractConfiguration.h"
 
 @implementation HooStateMachine_state
 
@@ -47,7 +48,7 @@
 }
 
 //- (void)removeAllTransitions: () {
-//    this.transitions = new Object();
+//    _transitions = new Object();
 //}
 
 - (void)addEntryAction:(HooStateMachine_command *)cmd {
@@ -68,48 +69,56 @@
 //    return result;
 //}
 
-//- (void)hasTransition: ( eventName ) {
-//    var hasT = this.transitions.hasOwnProperty( eventName );
-//    if( hasT==false && this._parent!=null )
-//        hasT = this._parent.hasTransition(eventName);
-//    return hasT;
-//}
+- (BOOL)hasTransition:(NSString *)eventName {
+    
+    BOOL hasT = [_transitions objectForKey:eventName]!=nil;
+    if( hasT==NO && _parent!=nil )
+        hasT = [_parent hasTransition:eventName];
+    return hasT;
+}
 
-//- (void)transitionForEvent: ( eventName ) {
-//    var transition = this.transitions[eventName];
-//    if( transition==null && this._parent!=null )
-//        transition = this._parent.transitionForEvent(eventName);
-//    return transition;
-//}
+- (HooStateMachine_transition *)transitionForEvent:(NSString *)eventName {
+    
+    HooStateMachine_transition *transition = [_transitions objectForKey:eventName];
+    if( transition==nil && _parent!=nil )
+        transition = [_parent transitionForEvent:eventName];
+    return transition;
+}
 
-//- (void)targetState: ( eventName ) {
-//    var transition = this.transitionForEvent(eventName);
-//    var tState = transition.target;
-//    return tState;
-//}
+- (HooStateMachine_state *)targetState:(NSString *)eventName {
 
-//- (void)executeEntryActions: ( commandsChannel ) {
-//    
-//    $.each( this.entryActions, function(index, value) {
-//        commandsChannel.send( value );
-//    });
-//}
+    HooStateMachine_transition *transition = [self transitionForEvent:eventName];
+    HooStateMachine_state *tState = [transition target];
+    return tState;
+}
 
-//- (void)executeExitActions: ( commandsChannel ) {
-//    
-//    $.each( this.exitActions, function(index, value) {
-//        commandsChannel.send( value );
-//    });
-//}
+- (void)executeEntryActions:(id)commandsChannel {
+    
+    for( HooStateMachine_command *value in _entryActions ) {
+        [commandsChannel send:value];
+    }
+}
 
-//- (void)hierachyList: () {
-//    var hierachy = new Array();
-//    var head = this;
-//    while( head != null ){
-//        hierachy.unshift(head); // because insertAtBeginning would be too helpful
-//        head = head._parent;
-//    }
-//    return hierachy;
-//}
+- (void)executeExitActions:(id)commandsChannel {
+    
+    for( HooStateMachine_command *value in _exitActions ) {
+        [commandsChannel send:value];
+    }
+}
+
+- (NSArray *)hierachyList {
+    
+    NSMutableArray *hierachy = [[[NSMutableArray alloc] init] autorelease];
+    HooStateMachine_state *head = self;
+    while( head != nil ){
+        [hierachy insertObject:head atIndex:0];
+         head = [head parent];
+    }
+    return hierachy;
+}
+
+- (HooStateMachine_state *)parent {
+    return _parent;
+}
 
 @end

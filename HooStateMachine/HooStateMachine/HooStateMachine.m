@@ -8,6 +8,7 @@
 
 #import "HooStateMachine.h"
 #import "HooStateMachine_state.h"
+#import "HooStateMachine_event.h"
 
 @implementation HooStateMachine
 
@@ -15,6 +16,7 @@
     
     self = [super init];
     if (self) {
+        _startState = startState;
         _resetEvents = resetEvents ? [resetEvents retain] : [[NSMutableArray alloc] init];
     }
     
@@ -50,19 +52,23 @@
 //    });
 //}
 
-//- (void)isResetEvent: ( eventName ) {
-//    var resetEventNames = this.resetEventNames();
-//    var result = $.inArray( eventName, resetEventNames );
-//    return result > -1;
-//}
+- (NSArray *)resetEventNames {
+    
+    NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
+    for( HooStateMachine_event *ev in _resetEvents ) {
+        [result addObject:[ev name]];
+    }
+    return result;
+}
 
-//- (void)resetEventNames: () {
-//    var result = new Array();
-//    $.each( this.resetEvents, function(index, value) {
-//        result.push( value.name );
-//    });
-//    return result;
-//}
+- (BOOL)isResetEvent:(NSString *)eventName {
 
+    NSArray *resetEventNames = [self resetEventNames];
+    return [resetEventNames containsObject:eventName];
+}
+
+- (HooStateMachine_state *)startState {
+    return _startState;
+}
 
 @end

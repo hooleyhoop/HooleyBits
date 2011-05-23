@@ -19,4 +19,5 @@
 
 - (id)initWith:(HooStateMachine_state *)srcState trigger:(HooStateMachine_event *)event target:(HooStateMachine_state *)trgtState;
 
+- (HooStateMachine_state *)target;
 @end

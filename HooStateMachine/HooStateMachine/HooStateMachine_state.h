@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HooStateMachine_abstractEvent.h"
 
-@class HooStateMachine_event, HooStateMachine_state, HooStateMachine_command;
+@class HooStateMachine_event, HooStateMachine_state, HooStateMachine_command, HooStateMachine_transition;
 
 @interface HooStateMachine_state : HooStateMachine_abstractEvent {
 @private
@@ -24,5 +24,14 @@
 - (void)addTransitionOn:(HooStateMachine_event *)event toState:(HooStateMachine_state *)targetState;
 - (void)addEntryAction:(HooStateMachine_command *)cmd;
 - (void)addExitAction:(HooStateMachine_command *)cmd;
+
+- (void)executeEntryActions:(id)commandsChannel;
+- (void)executeExitActions:(id)commandsChannel;
+
+- (BOOL)hasTransition:(NSString *)eventName;
+- (HooStateMachine_state *)targetState:(NSString *)eventName;
+- (HooStateMachine_transition *)transitionForEvent:(NSString *)eventName;
+- (NSArray *)hierachyList;
+- (HooStateMachine_state *)parent;
 
 @end

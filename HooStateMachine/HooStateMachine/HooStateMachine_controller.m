@@ -13,7 +13,7 @@
 
 @implementation HooStateMachine_controller
 
-- (id)intWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl {
+- (id)initWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl {
     
     self = [super init];
     if (self) {
@@ -33,6 +33,36 @@
     [_machine release];
     [_commandsChannel release];
     [super dealloc];
+}
+
+- (void)_transitionTo:(HooStateMachine_state *)targetState {
+    
+    NSArray *thisParentList = [_currentState hierachyList];
+    NSArray *thatParentList = [targetState hierachyList];
+    
+    // eliminate shared parents from the front of the chain - the ones left in thisParentList are the ones we are exiting, the ones left in thatParentList are the ones we are entering
+    NSUInteger shortestLength = [thisParentList count] < [thatParentList count] ? [thisParentList count] : [thatParentList count];
+    NSUInteger sharedparentsIndex = -1;
+    for( NSUInteger i=0; i<shortestLength; i++ ) {
+        if( [thisParentList objectAtIndex:i]==[thatParentList objectAtIndex:i] )
+            sharedparentsIndex = i;
+        else
+            break;
+    }
+    if( sharedparentsIndex > -1 ) {
+        thisParentList = [thisParentList subarrayWithRange:NSMakeRange(0, sharedparentsIndex+1)];
+        thatParentList = [thatParentList subarrayWithRange:NSMakeRange(0,sharedparentsIndex+1)];
+    }
+    
+    for( id element in [thisParentList reverseObjectEnumerator]) {
+        [element executeExitActions:_commandsChannel];        
+    }
+    
+    _currentState = targetState;
+    
+    for( id element in [thatParentList reverseObjectEnumerator]) {
+        [element executeEntryActions:_commandsChannel];        
+    }
 }
 
 - (void)handle:(NSString *)eventName {
@@ -56,39 +86,8 @@
     }
 }
 
-- (void)_transitionTo:(HooStateMachine_state *)targetState {
-    
-//    var self = this;
-//    var thisParentList = _currentState.hierachyList();
-//    var thatParentList = targetState.hierachyList();
-//    
-//    // eliminate shared parents from the front of the chain - the ones left in thisParentList are the ones we are exiting, the ones left in thatParentList are the ones we are entering
-//    var shortestLength = thisParentList.length < thatParentList.length ? thisParentList.length : thatParentList.length;
-//    var sharedparentsIndex = -1;
-//    for( var i=0; i<shortestLength; i++ ) {
-//        if(thisParentList[i]==thatParentList[i])
-//            sharedparentsIndex = i;
-//        else
-//            break;
-//    }
-//    if(sharedparentsIndex > -1) {
-//        thisParentList.splice(0,sharedparentsIndex+1);
-//        thatParentList.splice(0,sharedparentsIndex+1);
-//    }
-//    
-//    thisParentList.reverse();
-//    $.each( thisParentList, function(index, element) {
-//        element.executeExitActions( _commandsChannel );
-//    });
-//    
-//    _currentState = targetState;
-//    
-//    $.each( thatParentList, function(index, element) {
-//        element.executeEntryActions( _commandsChannel );
-//    });
-}
-
 - (HooStateMachine_state *)currentState {
     return _currentState;
 }
+
 @end

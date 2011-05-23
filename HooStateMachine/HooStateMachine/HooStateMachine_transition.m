@@ -34,6 +34,10 @@
     [super dealloc];
 }
 
+- (HooStateMachine_state *)target {
+    return _trgtState;
+}
+
 //- (void)getEventName: () {
  //   return this.trigger.name;
 //}

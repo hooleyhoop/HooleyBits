@@ -6,23 +6,59 @@
 //  Copyright 2011 Tinsal Parks. All rights reserved.
 //
 
-#import "JSONTest.h"
+#import <SenTestingKit/SenTestingKit.h>
+#import <JSON/JSON.h>
 
+
+@interface JSONTest : SenTestCase {
+@private
+    
+}
+
+@end
 
 @implementation JSONTest
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     
-    // Set-up code here.
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
+- (void)tearDown {
     
     [super tearDown];
+}
+
+- (void)testJSON {
+    
+    NSString *json_string = @"{"
+    "\"glossary\": {"
+    "   \"title\": \"example glossary\","
+    "   \"GlossDiv\": {"
+    "       \"title\": \"S\","
+    "       \"GlossList\": {"
+    "           \"GlossEntry\": {"
+    "               \"ID\": \"SGML\","
+    "               \"SortAs\": \"SGML\","
+    "               \"GlossTerm\": \"Standard Generalized Markup Language\","
+    "               \"Acronym\": \"SGML\","
+    "               \"Abbrev\": \"ISO 8879:1986\","
+    "               \"GlossDef\": {"
+    "                   \"para\": \"A meta-markup language, used to create markup languages such as DocBook.\","
+    "                   \"GlossSeeAlso\": [\"GML\", \"XML\"]"
+    "               },"
+    "               \"GlossSee\": \"markup\""
+    "              }"
+    "           }"
+    "         }"
+    "     }"
+    "}";
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
+    NSError *error = nil;    
+    NSDictionary *object = [parser objectWithString:json_string error:&error];
+    STAssertTrue([[object allKeys] count]>0, nil);
+    NSLog(@"%@", [object allKeys]);
 }
 
 @end

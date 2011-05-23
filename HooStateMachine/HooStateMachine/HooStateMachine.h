@@ -18,4 +18,7 @@
 
 - (id)initWithStartState:(HooStateMachine_state *)startState resetEvents:(NSArray *)resetEvents;
 
+- (BOOL)isResetEvent:(NSString *)eventName;
+- (HooStateMachine_state *)startState;
+
 @end

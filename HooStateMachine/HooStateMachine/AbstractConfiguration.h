@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class HooStateMachine_controller, HooStateMachine_command;
 
 @interface AbstractConfiguration : NSObject {
 @private
-    
+    HooStateMachine_controller *_stateMachineController;
+    id _controller;
 }
+
+@property (retain) HooStateMachine_controller *stateMachineController;
+
+- (void)processInputSignal:(NSString *)signal;
+- (NSString *)currentStateName;
+- (void)send:(HooStateMachine_command *)command;
 
 @end

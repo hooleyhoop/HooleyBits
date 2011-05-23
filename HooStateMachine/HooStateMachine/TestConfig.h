@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AbstractConfiguration.h"
 
 
 @interface TestConfig : AbstractConfiguration {
