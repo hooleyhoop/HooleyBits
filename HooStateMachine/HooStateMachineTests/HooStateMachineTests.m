@@ -14,6 +14,7 @@
 #import "HooStateMachine_controller.h"
 #import "HooStateMachineConfigurator.h"
 #import <JSON/JSON.h>
+#import "AbstractConfiguration.h"
 
 @interface HooStateMachineTests : SenTestCase {
 @private
@@ -151,5 +152,20 @@
     STAssertEqualObjects( [[controller currentState] name], @"st_off", nil );
 }
 
+- (void)testAbstractConfig {
+
+    AbstractConfiguration *sm = [AbstractConfiguration smConfiguration:@"hierarchical" inBundle:[NSBundle bundleForClass:[self class]] delegate:self];   
+
+    STAssertEqualObjects( [sm currentStateName], @"st_off", nil );
+    
+    [sm processInputSignal:@"ev_load"];
+    STAssertEqualObjects( [sm currentStateName], @"st_loading", nil );
+    
+    [sm processInputSignal:@"ev_play"];
+    STAssertEqualObjects( [sm currentStateName], @"st_playing", nil );
+    
+    [sm processInputSignal:@"ev_turnOff"];
+    STAssertEqualObjects( [sm currentStateName], @"st_off", nil );                                                                 
+}
 
 @end

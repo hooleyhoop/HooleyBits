@@ -14,14 +14,20 @@
 #import "HooStateMachine_command.h"
 
 @interface AbstractConfiguration ()
-- (void)setupStateMachines:(NSDictionary *)config;
+- (void)setupStateMachines:(HooStateMachineConfigurator *)config;
 @end
 
 @implementation AbstractConfiguration
 
 @synthesize stateMachineController;
 
-- (id)initWithConfig:(NSDictionary *)config controler:(id)cntrllr {
++ (id)smConfiguration:(NSString *)configName inBundle:(NSBundle *)bndl delegate:(id)cntrl {
+    
+	HooStateMachineConfigurator *simpleStateMachineParser = [HooStateMachineConfigurator configNamed:configName inBundle:bndl]; 
+    return [[[self alloc] initWithConfig:simpleStateMachineParser controller:cntrl] autorelease];
+}
+
+- (id)initWithConfig:(HooStateMachineConfigurator *)config controller:(id)cntrllr {
     
     self = [super init];
     if (self) {
@@ -37,20 +43,14 @@
     [super dealloc];
 }
 
-- (void)setupStateMachines:(NSDictionary *)config {
-
-    HooStateMachine_state *startState;
-    HooStateMachineConfigurator *stateMachineParser;
-
-    stateMachineParser = [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
+- (void)setupStateMachines:(HooStateMachineConfigurator *)config {
 
     // assume first state is start state
-    NSString *firstStateName = [[config objectForKey:@"states"] objectAtIndex:0];
-    startState = [stateMachineParser state:firstStateName];
+    HooStateMachine_state *startState = [config firstState];
 
     HooStateMachine *stateMachineInstance = [[[HooStateMachine alloc] initWithStartState:startState 
-                                                                             transitions:[stateMachineParser transitions]
-                                                                             resetEvents:[stateMachineParser resetEvents]] autorelease];
+                                                                             transitions:[config transitions]
+                                                                             resetEvents:[config resetEvents]] autorelease];
 
     _stateMachineController = [[HooStateMachine_controller alloc] initWithCurrentState:startState machine:stateMachineInstance commandsChannel:self];
 }

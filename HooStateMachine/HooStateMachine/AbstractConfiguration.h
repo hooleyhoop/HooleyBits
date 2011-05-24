@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class HooStateMachine_controller, HooStateMachine_command;
+@class HooStateMachine_controller, HooStateMachine_command, HooStateMachineConfigurator;
 
 @interface AbstractConfiguration : _ROOT_OBJECT_ {
 @private
@@ -16,6 +16,9 @@
 }
 
 @property (retain) HooStateMachine_controller *stateMachineController;
+
++ (id)smConfiguration:(NSString *)configName inBundle:(NSBundle *)bndl delegate:(id)cntrl;
+- (id)initWithConfig:(HooStateMachineConfigurator *)config controller:(id)cntrllr;
 
 - (void)processInputSignal:(NSString *)signal;
 - (NSString *)currentStateName;

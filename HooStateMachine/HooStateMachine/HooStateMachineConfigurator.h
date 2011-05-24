@@ -18,11 +18,14 @@
     NSMutableDictionary *_commands;
     NSMutableArray *_transitions;
     NSMutableArray *_resetEvents;
+    HooStateMachine_state *_firstState;
 }
 
 + (id)configNamed:(NSString *)cnfgName inBundle:(NSBundle *)bund;
 - (id)initWithConfig:(NSDictionary *)cnfg;
 - (HooStateMachine_state *)state:(NSString *)key;
+
+- (HooStateMachine_state *)firstState;
 - (NSMutableArray *)resetEvents;
 - (NSMutableArray *)transitions;
 

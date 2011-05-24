@@ -8,29 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		730B2B0613891FDB0012F1C1 /* JSONTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 730B2B0513891FDB0012F1C1 /* JSONTest.m */; };
-		7351335813893103007393A5 /* AbstractConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351335613893103007393A5 /* AbstractConfiguration.h */; };
+		7351335813893103007393A5 /* AbstractConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351335613893103007393A5 /* AbstractConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7351335913893103007393A5 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
+		73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BCB9C6138C1F9600F4C8D7 /* HooSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
 		73D528281389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528121389165300B50908 /* HooStateMachine.framework */; };
 		73D528311389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5282F1389165300B50908 /* InfoPlist.strings */; };
 		73D528361389165300B50908 /* HooStateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D528351389165300B50908 /* HooStateMachineTests.m */; };
-		73D5285613891B1100B50908 /* HooStateMachine_abstractEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284613891B1100B50908 /* HooStateMachine_abstractEvent.h */; };
+		73D5285613891B1100B50908 /* HooStateMachine_abstractEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284613891B1100B50908 /* HooStateMachine_abstractEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5285713891B1100B50908 /* HooStateMachine_abstractEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284713891B1100B50908 /* HooStateMachine_abstractEvent.m */; };
-		73D5285813891B1100B50908 /* HooStateMachine_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284813891B1100B50908 /* HooStateMachine_command.h */; };
+		73D5285813891B1100B50908 /* HooStateMachine_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284813891B1100B50908 /* HooStateMachine_command.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5285913891B1100B50908 /* HooStateMachine_command.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284913891B1100B50908 /* HooStateMachine_command.m */; };
-		73D5285A13891B1100B50908 /* HooStateMachine_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284A13891B1100B50908 /* HooStateMachine_controller.h */; };
+		73D5285A13891B1100B50908 /* HooStateMachine_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284A13891B1100B50908 /* HooStateMachine_controller.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5285B13891B1100B50908 /* HooStateMachine_controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284B13891B1100B50908 /* HooStateMachine_controller.m */; };
-		73D5285C13891B1100B50908 /* HooStateMachine_event.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284C13891B1100B50908 /* HooStateMachine_event.h */; };
+		73D5285C13891B1100B50908 /* HooStateMachine_event.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284C13891B1100B50908 /* HooStateMachine_event.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5285D13891B1100B50908 /* HooStateMachine_event.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284D13891B1100B50908 /* HooStateMachine_event.m */; };
-		73D5285E13891B1100B50908 /* HooStateMachine_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284E13891B1100B50908 /* HooStateMachine_state.h */; };
+		73D5285E13891B1100B50908 /* HooStateMachine_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5284E13891B1100B50908 /* HooStateMachine_state.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5285F13891B1100B50908 /* HooStateMachine_state.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284F13891B1100B50908 /* HooStateMachine_state.m */; };
-		73D5286013891B1100B50908 /* HooStateMachine_transition.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285013891B1100B50908 /* HooStateMachine_transition.h */; };
+		73D5286013891B1100B50908 /* HooStateMachine_transition.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285013891B1100B50908 /* HooStateMachine_transition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5286113891B1100B50908 /* HooStateMachine_transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285113891B1100B50908 /* HooStateMachine_transition.m */; };
-		73D5286213891B1100B50908 /* HooStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285213891B1100B50908 /* HooStateMachine.h */; };
+		73D5286213891B1100B50908 /* HooStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285213891B1100B50908 /* HooStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5286313891B1100B50908 /* HooStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285313891B1100B50908 /* HooStateMachine.m */; };
-		73D5286413891B1100B50908 /* HooStateMachineConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285413891B1100B50908 /* HooStateMachineConfigurator.h */; };
+		73D5286413891B1100B50908 /* HooStateMachineConfigurator.h in Headers */ = {isa = PBXBuildFile; fileRef = 73D5285413891B1100B50908 /* HooStateMachineConfigurator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D5286513891B1100B50908 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73D5286713891B2B00B50908 /* StateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5286613891B2B00B50908 /* StateMachineTests.m */; };
 		73E07428138ACC63007FDF93 /* simplest_config_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E07427138ACC63007FDF93 /* simplest_config_json.json */; };
@@ -125,8 +126,9 @@
 		730B2B0513891FDB0012F1C1 /* JSONTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONTest.m; sourceTree = "<group>"; };
 		7351335613893103007393A5 /* AbstractConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractConfiguration.h; sourceTree = "<group>"; };
 		7351335713893103007393A5 /* AbstractConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractConfiguration.m; sourceTree = "<group>"; };
-		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestConfig.h; sourceTree = "<group>"; };
-		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestConfig.m; sourceTree = "<group>"; };
+		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConfig.h; path = ../HooStateMachine/TestConfig.h; sourceTree = "<group>"; };
+		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestConfig.m; path = ../HooStateMachine/TestConfig.m; sourceTree = "<group>"; };
+		73BCB9C6138C1F9600F4C8D7 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73D528181389165300B50908 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -238,6 +240,7 @@
 		73D5281B1389165300B50908 /* HooStateMachine */ = {
 			isa = PBXGroup;
 			children = (
+				73BCB9C6138C1F9600F4C8D7 /* HooSM.h */,
 				73D5284613891B1100B50908 /* HooStateMachine_abstractEvent.h */,
 				73D5284713891B1100B50908 /* HooStateMachine_abstractEvent.m */,
 				73D5284813891B1100B50908 /* HooStateMachine_command.h */,
@@ -256,8 +259,6 @@
 				73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */,
 				7351335613893103007393A5 /* AbstractConfiguration.h */,
 				7351335713893103007393A5 /* AbstractConfiguration.m */,
-				7351335A138932EE007393A5 /* TestConfig.h */,
-				7351335B138932EE007393A5 /* TestConfig.m */,
 				73D5281C1389165300B50908 /* Supporting Files */,
 			);
 			path = HooStateMachine;
@@ -276,6 +277,8 @@
 		73D5282C1389165300B50908 /* HooStateMachineTests */ = {
 			isa = PBXGroup;
 			children = (
+				7351335A138932EE007393A5 /* TestConfig.h */,
+				7351335B138932EE007393A5 /* TestConfig.m */,
 				73D5286613891B2B00B50908 /* StateMachineTests.m */,
 				730B2B0513891FDB0012F1C1 /* JSONTest.m */,
 				73D528351389165300B50908 /* HooStateMachineTests.m */,
@@ -333,14 +336,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				73D5285613891B1100B50908 /* HooStateMachine_abstractEvent.h in Headers */,
-				73D5285813891B1100B50908 /* HooStateMachine_command.h in Headers */,
-				73D5285A13891B1100B50908 /* HooStateMachine_controller.h in Headers */,
-				73D5285C13891B1100B50908 /* HooStateMachine_event.h in Headers */,
 				73D5285E13891B1100B50908 /* HooStateMachine_state.h in Headers */,
-				73D5286013891B1100B50908 /* HooStateMachine_transition.h in Headers */,
-				73D5286213891B1100B50908 /* HooStateMachine.h in Headers */,
-				73D5286413891B1100B50908 /* HooStateMachineConfigurator.h in Headers */,
 				7351335813893103007393A5 /* AbstractConfiguration.h in Headers */,
+				73D5286413891B1100B50908 /* HooStateMachineConfigurator.h in Headers */,
+				73D5286013891B1100B50908 /* HooStateMachine_transition.h in Headers */,
+				73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */,
+				73D5285C13891B1100B50908 /* HooStateMachine_event.h in Headers */,
+				73D5285A13891B1100B50908 /* HooStateMachine_controller.h in Headers */,
+				73D5285813891B1100B50908 /* HooStateMachine_command.h in Headers */,
+				73D5286213891B1100B50908 /* HooStateMachine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

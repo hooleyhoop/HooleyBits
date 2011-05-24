@@ -82,6 +82,8 @@
             NSAssert(parentState,@"parentState should exist");
         }
         HooStateMachine_state *newState = [[[HooStateMachine_state alloc] initWithName:stateName parent:parentState] autorelease];
+        if(!_firstState)
+            _firstState = newState;
         [_states setObject:newState forKey:stateName];
     }
 }
@@ -150,6 +152,10 @@
                 [state addExitAction:exitCmd];
         }
     }
+}
+
+- (HooStateMachine_state *)firstState {
+    return _firstState;
 }
 
 - (HooStateMachine_state *)state:(NSString *)key {
