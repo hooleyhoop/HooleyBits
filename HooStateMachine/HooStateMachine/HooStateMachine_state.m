@@ -36,11 +36,10 @@
     [_entryActions release];
     [_exitActions release];
     [_transitions release];
-    [_parent release];
     [super dealloc];
 }
 
-- (void)addTransitionOn:(HooStateMachine_event *)event toState:(HooStateMachine_state *)targetState {
+- (HooStateMachine_transition *)addTransitionOn:(HooStateMachine_event *)event toState:(HooStateMachine_state *)targetState {
     
     NSParameterAssert(event && targetState);
     
@@ -49,6 +48,7 @@
     NSString *key = [event name];
     NSAssert( [_transitions objectForKey:key]==nil, @"already exits!");
     [_transitions setObject:t forKey:key];
+    return t;
 }
 
 //- (void)removeAllTransitions: () {

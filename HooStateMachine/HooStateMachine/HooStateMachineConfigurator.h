@@ -16,11 +16,14 @@
     NSMutableDictionary *_states;
     NSMutableDictionary *_events;
     NSMutableDictionary *_commands;
+    NSMutableArray *_transitions;
     NSMutableArray *_resetEvents;
 }
 
++ (id)configNamed:(NSString *)cnfgName inBundle:(NSBundle *)bund;
 - (id)initWithConfig:(NSDictionary *)cnfg;
 - (HooStateMachine_state *)state:(NSString *)key;
 - (NSMutableArray *)resetEvents;
+- (NSMutableArray *)transitions;
 
 @end

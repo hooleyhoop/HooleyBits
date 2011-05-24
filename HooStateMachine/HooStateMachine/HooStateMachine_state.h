@@ -21,7 +21,7 @@
 
 - (id)initWithName:(NSString *)stateName parent:(HooStateMachine_state *)parentState;
 
-- (void)addTransitionOn:(HooStateMachine_event *)event toState:(HooStateMachine_state *)targetState;
+- (HooStateMachine_transition *)addTransitionOn:(HooStateMachine_event *)event toState:(HooStateMachine_state *)targetState;
 - (void)addEntryAction:(HooStateMachine_command *)cmd;
 - (void)addExitAction:(HooStateMachine_command *)cmd;
 

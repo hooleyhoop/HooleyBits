@@ -13,6 +13,8 @@
 
 @implementation HooStateMachine_controller
 
+@synthesize currentState=_currentState;
+
 - (id)initWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl {
     
     self = [super init];
@@ -21,7 +23,7 @@
         _machine = [stateMachineInstance retain];
         
         //TODO: probably don't retain this 
-        _commandsChannel = [cmdCnl retain];   
+        _commandsChannel = cmdCnl;   
     }
     
     return self;
@@ -31,7 +33,6 @@
 
     [_currentState release];
     [_machine release];
-    [_commandsChannel release];
     [super dealloc];
 }
 
@@ -58,7 +59,7 @@
         [element executeExitActions:_commandsChannel];        
     }
     
-    _currentState = targetState;
+    self.currentState = targetState;
     
     for( id element in [thatParentList reverseObjectEnumerator]) {
         [element executeEntryActions:_commandsChannel];        
@@ -84,10 +85,6 @@
     if(nextState) {
         [self _transitionTo:nextState];
     }
-}
-
-- (HooStateMachine_state *)currentState {
-    return _currentState;
 }
 
 @end

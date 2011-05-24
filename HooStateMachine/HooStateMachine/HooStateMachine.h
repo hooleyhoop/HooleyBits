@@ -14,9 +14,10 @@
     
     HooStateMachine_state *_startState;
     NSMutableArray *_resetEvents;
+    NSArray *_transitions;
 }
 
-- (id)initWithStartState:(HooStateMachine_state *)startState resetEvents:(NSArray *)resetEvents;
+- (id)initWithStartState:(HooStateMachine_state *)startState transitions:(NSArray *)transitions resetEvents:(NSMutableArray *)resetEvents;
 
 - (BOOL)isResetEvent:(NSString *)eventName;
 - (HooStateMachine_state *)startState;

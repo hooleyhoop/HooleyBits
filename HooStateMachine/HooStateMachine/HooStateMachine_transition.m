@@ -28,14 +28,18 @@
 }
 
 - (void)dealloc {
-    [_srcState release];
-    [_triggerEv release];
-    [_trgtState release];
     [super dealloc];
 }
 
 - (HooStateMachine_state *)target {
     return _trgtState;
+}
+
+- (void)cleanUp {
+
+    [_srcState release];
+    [_triggerEv release];
+    [_trgtState release];
 }
 
 //- (void)getEventName: () {

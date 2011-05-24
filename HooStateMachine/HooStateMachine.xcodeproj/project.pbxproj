@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		730A6DFE138AFEC800471CD2 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730A6DFD138AFEC800471CD2 /* SHRootObject.framework */; };
-		730B2B0113891D910012F1C1 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730B2B0013891D910012F1C1 /* JSON.framework */; };
-		730B2B0313891D970012F1C1 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730B2B0213891D970012F1C1 /* JSON.framework */; };
 		730B2B0613891FDB0012F1C1 /* JSONTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 730B2B0513891FDB0012F1C1 /* JSONTest.m */; };
 		7351335813893103007393A5 /* AbstractConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351335613893103007393A5 /* AbstractConfiguration.h */; };
 		7351335913893103007393A5 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
-		735BC105138B07B900A7AACA /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735BC104138B07B900A7AACA /* SHRootObject.framework */; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
 		73D528281389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
@@ -38,6 +34,10 @@
 		73D5286513891B1100B50908 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73D5286713891B2B00B50908 /* StateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5286613891B2B00B50908 /* StateMachineTests.m */; };
 		73E07428138ACC63007FDF93 /* simplest_config_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E07427138ACC63007FDF93 /* simplest_config_json.json */; };
+		73E0745A138BCC3A007FDF93 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E07458138BCC3A007FDF93 /* JSON.framework */; };
+		73E0745B138BCC3A007FDF93 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E07459138BCC3A007FDF93 /* SHRootObject.framework */; };
+		73E0745E138BCC5C007FDF93 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0745C138BCC5C007FDF93 /* JSON.framework */; };
+		73E0745F138BCC5C007FDF93 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0745D138BCC5C007FDF93 /* SHRootObject.framework */; };
 		73E9481E138AE83D00891D31 /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E0742D138ACF89007FDF93 /* hierarchical.json */; };
 /* End PBXBuildFile section */
 
@@ -122,15 +122,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		730A6DFD138AFEC800471CD2 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = SOURCE_ROOT; };
-		730B2B0013891D910012F1C1 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
-		730B2B0213891D970012F1C1 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
 		730B2B0513891FDB0012F1C1 /* JSONTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONTest.m; sourceTree = "<group>"; };
 		7351335613893103007393A5 /* AbstractConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractConfiguration.h; sourceTree = "<group>"; };
 		7351335713893103007393A5 /* AbstractConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractConfiguration.m; sourceTree = "<group>"; };
 		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestConfig.h; sourceTree = "<group>"; };
 		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestConfig.m; sourceTree = "<group>"; };
-		735BC104138B07B900A7AACA /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73D528181389165300B50908 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -164,6 +160,10 @@
 		73D5286E13891D4200B50908 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "../../../Source/json-framework/JSON.xcodeproj"; sourceTree = "<group>"; };
 		73E07427138ACC63007FDF93 /* simplest_config_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simplest_config_json.json; sourceTree = "<group>"; };
 		73E0742D138ACF89007FDF93 /* hierarchical.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hierarchical.json; sourceTree = "<group>"; };
+		73E07458138BCC3A007FDF93 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73E07459138BCC3A007FDF93 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73E0745C138BCC5C007FDF93 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73E0745D138BCC5C007FDF93 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHRootObject.xcodeproj; path = ../../../../../../Dropbox/Programming/SHRootObject/SHRootObject.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,8 +172,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				730A6DFE138AFEC800471CD2 /* SHRootObject.framework in Frameworks */,
-				730B2B0313891D970012F1C1 /* JSON.framework in Frameworks */,
+				73E0745E138BCC5C007FDF93 /* JSON.framework in Frameworks */,
+				73E0745F138BCC5C007FDF93 /* SHRootObject.framework in Frameworks */,
 				73D528161389165300B50908 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,8 +182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				735BC105138B07B900A7AACA /* SHRootObject.framework in Frameworks */,
-				730B2B0113891D910012F1C1 /* JSON.framework in Frameworks */,
+				73E0745A138BCC3A007FDF93 /* JSON.framework in Frameworks */,
+				73E0745B138BCC3A007FDF93 /* SHRootObject.framework in Frameworks */,
 				73D528281389165300B50908 /* Cocoa.framework in Frameworks */,
 				73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */,
 			);
@@ -195,7 +195,6 @@
 		73D528061389165300B50908 = {
 			isa = PBXGroup;
 			children = (
-				735BC104138B07B900A7AACA /* SHRootObject.framework */,
 				73E94969138AFD3B00891D31 /* Dependencies */,
 				73D5281B1389165300B50908 /* HooStateMachine */,
 				73D5282C1389165300B50908 /* HooStateMachineTests */,
@@ -216,9 +215,10 @@
 		73D528141389165300B50908 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				730A6DFD138AFEC800471CD2 /* SHRootObject.framework */,
-				730B2B0213891D970012F1C1 /* JSON.framework */,
-				730B2B0013891D910012F1C1 /* JSON.framework */,
+				73E0745C138BCC5C007FDF93 /* JSON.framework */,
+				73E0745D138BCC5C007FDF93 /* SHRootObject.framework */,
+				73E07458138BCC3A007FDF93 /* JSON.framework */,
+				73E07459138BCC3A007FDF93 /* SHRootObject.framework */,
 				73D528151389165300B50908 /* Cocoa.framework */,
 				73D528171389165300B50908 /* Other Frameworks */,
 			);

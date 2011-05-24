@@ -12,13 +12,14 @@
 
 @implementation HooStateMachine
 
-- (id)initWithStartState:(HooStateMachine_state *)startState resetEvents:(NSArray *)resetEvents {
+- (id)initWithStartState:(HooStateMachine_state *)startState transitions:(NSArray *)transitions resetEvents:(NSMutableArray *)resetEvents {
     
     NSParameterAssert(startState);
     self = [super init];
     if (self) {
         _startState = [startState retain];
         _resetEvents = resetEvents ? [resetEvents retain] : [[NSMutableArray alloc] init];
+        _transitions = [transitions retain]; 
     }
     
     return self;
@@ -27,6 +28,8 @@
 - (void)dealloc {
     [_startState release];
     [_resetEvents release];
+    [_transitions makeObjectsPerformSelector:@selector(cleanUp)];
+    [_transitions release];
     [super dealloc];
 }
 

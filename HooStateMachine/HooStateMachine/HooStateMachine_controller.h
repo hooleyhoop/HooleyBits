@@ -16,7 +16,10 @@
     id _commandsChannel;   
 }
 
+@property(retain,nonatomic) HooStateMachine_state *currentState;
+
 - (id)initWithCurrentState:(HooStateMachine_state *)startState machine:(HooStateMachine *)stateMachineInstance commandsChannel:(id)cmdCnl;
 - (void)handle:(NSString *)eventName;
 - (HooStateMachine_state *)currentState;
+
 @end

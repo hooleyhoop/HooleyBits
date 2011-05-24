@@ -10,6 +10,7 @@
 #import "HooStateMachine_state.h"
 #import "HooStateMachine_event.h"
 #import "HooStateMachine_command.h"
+#import <JSON/JSON.h>
 
 @interface HooStateMachineConfigurator ()
 - (void)parseStates;
@@ -22,6 +23,20 @@
 
 @implementation HooStateMachineConfigurator
 
+
++ (id)configNamed:(NSString *)cnfgName inBundle:(NSBundle *)bund {
+    
+    NSParameterAssert(cnfgName && bund);
+    
+    NSString *path = [bund pathForResource:cnfgName ofType:@"json"];
+    NSError *error = nil;        
+    NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
+    error = nil;    
+    NSDictionary *config = [parser objectWithString:configContents error:&error];
+    return [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
+}
+
 - (id)initWithConfig:(NSDictionary *)cnfg {
     
     self = [super init];
@@ -30,6 +45,7 @@
         _states = [[NSMutableDictionary alloc] init];
         _events = [[NSMutableDictionary alloc] init];
         _commands = [[NSMutableDictionary alloc] init];
+        _transitions = [[NSMutableArray alloc] init];
         _resetEvents = [[NSMutableArray alloc] init];
         
         [self parseStates];
@@ -39,7 +55,6 @@
         [self parseActions];
         [self parseResetEvents];
     }
-    
     return self;
 }
 
@@ -50,6 +65,7 @@
     [_events release];
     [_commands release];
     [_resetEvents release];
+    [_transitions release];
     [super dealloc];
 }
 
@@ -108,7 +124,8 @@
         HooStateMachine_state *state = [_states objectForKey:stateName];
         HooStateMachine_state *nestState = [_states objectForKey:nextStateName];
         HooStateMachine_event *ev = [_events objectForKey:eventName];
-        [state addTransitionOn:ev toState:nestState];
+        id t = [state addTransitionOn:ev toState:nestState];
+        [_transitions addObject:t];
     }
 }
 
@@ -144,4 +161,7 @@
     return _resetEvents;
 }
 
+- (NSMutableArray *)transitions {
+    return _transitions;
+}
 @end

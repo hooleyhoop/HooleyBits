@@ -38,29 +38,31 @@
 }
 
 - (void)setupStateMachines:(NSDictionary *)config {
-    
+
     HooStateMachine_state *startState;
     HooStateMachineConfigurator *stateMachineParser;
-    
+
     stateMachineParser = [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
-    
+
     // assume first state is start state
     NSString *firstStateName = [[config objectForKey:@"states"] objectAtIndex:0];
     startState = [stateMachineParser state:firstStateName];
-    
-    HooStateMachine *stateMachineInstance = [[[HooStateMachine alloc] initWithStartState:startState resetEvents:[stateMachineParser resetEvents]] autorelease];
-    
+
+    HooStateMachine *stateMachineInstance = [[[HooStateMachine alloc] initWithStartState:startState 
+                                                                             transitions:[stateMachineParser transitions]
+                                                                             resetEvents:[stateMachineParser resetEvents]] autorelease];
+
     _stateMachineController = [[HooStateMachine_controller alloc] initWithCurrentState:startState machine:stateMachineInstance commandsChannel:self];
 }
-    
+
 // input
 - (void)processInputSignal:(NSString *)signal {
     [_stateMachineController handle: signal];
 }
-    
+
 // output from sm
 - (void)send:(HooStateMachine_command *)command {
-    
+
     NSString *funcName = [command name];
     SEL selector = NSSelectorFromString(funcName);
     if( [_controller respondsToSelector:selector] ) {
