@@ -14,3 +14,4 @@
 #import <HooStateMachine/HooStateMachine.h>
 #import <HooStateMachine/HooStateMachine_controller.h>
 #import <HooStateMachine/HooStateMachineConfigurator.h>
+#import <HooStateMachine/AbstractConfiguration.h>
