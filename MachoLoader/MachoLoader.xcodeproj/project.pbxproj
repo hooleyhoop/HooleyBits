@@ -33,9 +33,16 @@
 		73794F1A1223F903001B8AF6 /* SymbolicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73794F191223F903001B8AF6 /* SymbolicInfo.m */; };
 		737B3DFF12324D38008C67FC /* CFDictCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 737B3DFD12324D38008C67FC /* CFDictCallbacks.m */; };
 		737BB51812705817007A531E /* DissasemblyProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 737BB51712705817007A531E /* DissasemblyProcessor.m */; };
+		738CEE9313928B6C00FFCC6E /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EB67D213928AAE00699025 /* SHRootObject.framework */; };
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
 		73990C931301542100EA388E /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73990C921301542100EA388E /* libstdc++.dylib */; };
+		739EE4B613926FD80076942B /* RepeatingAsyncTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */; };
+		739EE4B713926FD80076942B /* RepeatingAsyncTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */; };
+		739EE4BA139270170076942B /* RepeatingAsyncTaskControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */; };
+		739EE4BE139271700076942B /* AsyncAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4BD139271700076942B /* AsyncAction.m */; };
+		739EE4BF139271700076942B /* AsyncAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4BD139271700076942B /* AsyncAction.m */; };
+		739EE4C21392724C0076942B /* AsyncActionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4C11392724C0076942B /* AsyncActionTests.m */; };
 		73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
 		73B15040136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
 		73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */; };
@@ -64,10 +71,42 @@
 		73E761E9121C28C900A4190C /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E761E8121C28C900A4190C /* Section.m */; };
 		73E7623D121C2E5D00A4190C /* SHMemoryBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */; };
 		73E76253121C304C00A4190C /* MemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E76252121C304C00A4190C /* MemoryBlockStore.m */; };
+		73EB67D313928AAE00699025 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EB67D213928AAE00699025 /* SHRootObject.framework */; };
 		73EDD9250F863E4700E09434 /* MachoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EDD9240F863E4700E09434 /* MachoLoader.m */; };
 		73FF6B260FD6AB8B00A8136A /* Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FF6B240FD6AB8B00A8136A /* Hex.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		739EE4CE1392783B0076942B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73E9485E138AEC9500891D31;
+			remoteInfo = SHRootObject;
+		};
+		739EE4D01392783B0076942B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73E94873138AEC9500891D31;
+			remoteInfo = SHRootObjectTests;
+		};
+		739EE5551392789A0076942B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73E9485D138AEC9500891D31;
+			remoteInfo = SHRootObject;
+		};
+		73EB67D013928AA900699025 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 73E9485D138AEC9500891D31;
+			remoteInfo = SHRootObject;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		736BAF291306B72900972187 /* CopyFiles */ = {
@@ -162,6 +201,13 @@
 		7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionEnumerator.h; path = Classes/FunctionEnumerator.h; sourceTree = "<group>"; };
 		7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionEnumerator.m; path = Classes/FunctionEnumerator.m; sourceTree = "<group>"; };
 		73990C921301542100EA388E /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/usr/lib/gcc/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
+		739EE4B413926FD80076942B /* RepeatingAsyncTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RepeatingAsyncTaskController.h; path = Classes/RepeatingAsyncTaskController.h; sourceTree = "<group>"; };
+		739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RepeatingAsyncTaskController.m; path = Classes/RepeatingAsyncTaskController.m; sourceTree = "<group>"; };
+		739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RepeatingAsyncTaskControllerTests.m; path = Tests/RepeatingAsyncTaskControllerTests.m; sourceTree = "<group>"; };
+		739EE4BC139271700076942B /* AsyncAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncAction.h; path = Classes/AsyncAction.h; sourceTree = "<group>"; };
+		739EE4BD139271700076942B /* AsyncAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncAction.m; path = Classes/AsyncAction.m; sourceTree = "<group>"; };
+		739EE4C11392724C0076942B /* AsyncActionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncActionTests.m; path = Tests/AsyncActionTests.m; sourceTree = "<group>"; };
+		739EE4C91392783B0076942B /* SHRootObject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHRootObject.xcodeproj; path = ../../../../../../Dropbox/Programming/SHRootObject/SHRootObject.xcodeproj; sourceTree = "<group>"; };
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
 		73A7BDCE123A369A003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Classes/TextSectionDisasemble.m; sourceTree = "<group>"; };
@@ -208,6 +254,7 @@
 		73E7623C121C2E5D00A4190C /* SHMemoryBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMemoryBlock.m; path = Classes/SHMemoryBlock.m; sourceTree = "<group>"; };
 		73E76251121C304C00A4190C /* MemoryBlockStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryBlockStore.h; path = Classes/MemoryBlockStore.h; sourceTree = "<group>"; };
 		73E76252121C304C00A4190C /* MemoryBlockStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryBlockStore.m; path = Classes/MemoryBlockStore.m; sourceTree = "<group>"; };
+		73EB67D213928AAE00699025 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = SHRootObject.framework; path = /Users/shooley/Dropbox/Programming/SHRootObject/build/Debug/SHRootObject.framework; sourceTree = "<absolute>"; };
 		73EDD9230F863E4700E09434 /* MachoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachoLoader.h; path = Classes/MachoLoader.h; sourceTree = "<group>"; };
 		73EDD9240F863E4700E09434 /* MachoLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachoLoader.m; path = Classes/MachoLoader.m; sourceTree = "<group>"; };
 		73F73F2F1288941900293F6B /* InnerFunctionBlockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InnerFunctionBlockTests.m; path = Tests/InnerFunctionBlockTests.m; sourceTree = "<group>"; };
@@ -230,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				731FAACD1219724100D3EE3D /* SenTestingKit.framework in Frameworks */,
+				738CEE9313928B6C00FFCC6E /* SHRootObject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73EB67D313928AAE00699025 /* SHRootObject.framework in Frameworks */,
 				733F75131306E662008ED2AC /* FScript.framework in Frameworks */,
 				73990C931301542100EA388E /* libstdc++.dylib in Frameworks */,
 				7369E43E12FF10C8003FE5E3 /* Security.framework in Frameworks */,
@@ -267,6 +316,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73EB67D213928AAE00699025 /* SHRootObject.framework */,
 				733F75121306E662008ED2AC /* FScript.framework */,
 				73990C921301542100EA388E /* libstdc++.dylib */,
 				7369E43D12FF10C8003FE5E3 /* Security.framework */,
@@ -301,6 +351,7 @@
 		29B97314FDCFA39411CA2CEA /* MachoLoader */ = {
 			isa = PBXGroup;
 			children = (
+				739EE554139278600076942B /* Dependencies */,
 				731FAA5A12196EE500D3EE3D /* Config */,
 				731FA9F912196E6F00D3EE3D /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -402,6 +453,7 @@
 		7302196A0F864C6E00906D18 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				739EE4BB139271520076942B /* Looping Async action */,
 				737B3DFC12324D38008C67FC /* CFDictCallbacks.h */,
 				737B3DFD12324D38008C67FC /* CFDictCallbacks.m */,
 				734B66DA1226900A002C0B0F /* IntKeyDictionary.h */,
@@ -447,6 +499,8 @@
 				731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */,
 				73339C0013662D6600F91128 /* MemoryBlockStoreTests.m */,
 				73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */,
+				739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */,
+				739EE4C11392724C0076942B /* AsyncActionTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -495,6 +549,34 @@
 				736BAF301306B72900972187 /* CommandLineApp.1 */,
 			);
 			path = CommandLineApp;
+			sourceTree = "<group>";
+		};
+		739EE4BB139271520076942B /* Looping Async action */ = {
+			isa = PBXGroup;
+			children = (
+				739EE4B413926FD80076942B /* RepeatingAsyncTaskController.h */,
+				739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */,
+				739EE4BC139271700076942B /* AsyncAction.h */,
+				739EE4BD139271700076942B /* AsyncAction.m */,
+			);
+			name = "Looping Async action";
+			sourceTree = "<group>";
+		};
+		739EE4CA1392783B0076942B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				739EE4CF1392783B0076942B /* SHRootObject.framework */,
+				739EE4D11392783B0076942B /* SHRootObjectTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		739EE554139278600076942B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				739EE4C91392783B0076942B /* SHRootObject.xcodeproj */,
+			);
+			name = Dependencies;
 			sourceTree = "<group>";
 		};
 		73A72002129BCA3A0005959F /* otool parsing */ = {
@@ -610,6 +692,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				739EE5561392789A0076942B /* PBXTargetDependency */,
 			);
 			name = MachoLoaderTests;
 			productName = MachoLoaderTests;
@@ -644,6 +727,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				73EB67D113928AA900699025 /* PBXTargetDependency */,
 			);
 			name = MachoLoader;
 			productInstallPath = "$(HOME)/Applications";
@@ -671,6 +755,12 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MachoLoader */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 739EE4CA1392783B0076942B /* Products */;
+					ProjectRef = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* MachoLoader */,
@@ -680,6 +770,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		739EE4CF1392783B0076942B /* SHRootObject.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SHRootObject.framework;
+			remoteRef = 739EE4CE1392783B0076942B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		739EE4D11392783B0076942B /* SHRootObjectTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHRootObjectTests.octest;
+			remoteRef = 739EE4D01392783B0076942B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7310FD1112095D5C00AE9F6B /* Resources */ = {
@@ -749,6 +856,10 @@
 				73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */,
 				73B150BD136C6EE700A5D74A /* TPData.m in Sources */,
 				73B150C3136C72BF00A5D74A /* TPLine.m in Sources */,
+				739EE4B713926FD80076942B /* RepeatingAsyncTaskController.m in Sources */,
+				739EE4BA139270170076942B /* RepeatingAsyncTaskControllerTests.m in Sources */,
+				739EE4BF139271700076942B /* AsyncAction.m in Sources */,
+				739EE4C21392724C0076942B /* AsyncActionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,10 +914,25 @@
 				73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */,
 				73B150BC136C6EE700A5D74A /* TPData.m in Sources */,
 				73B150C2136C72BF00A5D74A /* TPLine.m in Sources */,
+				739EE4B613926FD80076942B /* RepeatingAsyncTaskController.m in Sources */,
+				739EE4BE139271700076942B /* AsyncAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		739EE5561392789A0076942B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHRootObject;
+			targetProxy = 739EE5551392789A0076942B /* PBXContainerItemProxy */;
+		};
+		73EB67D113928AA900699025 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHRootObject;
+			targetProxy = 73EB67D013928AA900699025 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -871,6 +997,8 @@
 					/Developer/Library/Frameworks,
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -888,7 +1016,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
@@ -994,6 +1126,7 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 					/System/Library/Frameworks,
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1031,6 +1164,8 @@
 					/Developer/Library/Frameworks,
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1051,6 +1186,7 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 					/System/Library/Frameworks,
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1078,6 +1214,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
@@ -1133,7 +1270,7 @@
 				7310FD1912095D5D00AE9F6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug64;
 		};
 		731FAA0712196EAA00D3EE3D /* Build configuration list for PBXNativeTarget "MachoLoaderTests" */ = {
 			isa = XCConfigurationList;
@@ -1143,7 +1280,7 @@
 				731FAA0612196EAA00D3EE3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug64;
 		};
 		736BAF341306B72900972187 /* Build configuration list for PBXNativeTarget "CommandLineApp" */ = {
 			isa = XCConfigurationList;
@@ -1153,7 +1290,7 @@
 				736BAF331306B72900972187 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug64;
 		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MachoLoader" */ = {
 			isa = XCConfigurationList;
@@ -1163,7 +1300,7 @@
 				C01FCF4C08A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug64;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */ = {
 			isa = XCConfigurationList;
@@ -1173,7 +1310,7 @@
 				C01FCF5008A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug64;
 		};
 /* End XCConfigurationList section */
 	};
