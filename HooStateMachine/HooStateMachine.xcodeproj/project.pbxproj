@@ -10,6 +10,18 @@
 		730B2B0613891FDB0012F1C1 /* JSONTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 730B2B0513891FDB0012F1C1 /* JSONTest.m */; };
 		7351335813893103007393A5 /* AbstractConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351335613893103007393A5 /* AbstractConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7351335913893103007393A5 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
+		73AB4E4913A1595A00063149 /* HooStateMachine_abstractEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284713891B1100B50908 /* HooStateMachine_abstractEvent.m */; };
+		73AB4E4A13A1596600063149 /* HooStateMachine_command.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284913891B1100B50908 /* HooStateMachine_command.m */; };
+		73AB4E4B13A1596600063149 /* HooStateMachine_event.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284D13891B1100B50908 /* HooStateMachine_event.m */; };
+		73AB4E4C13A1596600063149 /* HooStateMachine_state.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284F13891B1100B50908 /* HooStateMachine_state.m */; };
+		73AB4E4D13A1596600063149 /* HooStateMachine_transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285113891B1100B50908 /* HooStateMachine_transition.m */; };
+		73AB4E4E13A1596600063149 /* HooStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285313891B1100B50908 /* HooStateMachine.m */; };
+		73AB4E4F13A1596600063149 /* HooStateMachine_controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5284B13891B1100B50908 /* HooStateMachine_controller.m */; };
+		73AB4E5013A1596600063149 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
+		73AB4E5113A1596600063149 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
+		73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8113A1817F00CE4B80 /* SHRootObject.framework */; };
+		73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8313A1818E00CE4B80 /* JSON.framework */; };
+		73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */; };
 		73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BCB9C6138C1F9600F4C8D7 /* HooSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
@@ -35,42 +47,19 @@
 		73D5286513891B1100B50908 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73D5286713891B2B00B50908 /* StateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5286613891B2B00B50908 /* StateMachineTests.m */; };
 		73E07428138ACC63007FDF93 /* simplest_config_json.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E07427138ACC63007FDF93 /* simplest_config_json.json */; };
-		73E0745A138BCC3A007FDF93 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E07458138BCC3A007FDF93 /* JSON.framework */; };
-		73E0745B138BCC3A007FDF93 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E07459138BCC3A007FDF93 /* SHRootObject.framework */; };
-		73E0745E138BCC5C007FDF93 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0745C138BCC5C007FDF93 /* JSON.framework */; };
-		73E0745F138BCC5C007FDF93 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E0745D138BCC5C007FDF93 /* SHRootObject.framework */; };
 		73E9481E138AE83D00891D31 /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = 73E0742D138ACF89007FDF93 /* hierarchical.json */; };
+		73EE83C713A152860076FFE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE83C613A152860076FFE6 /* Foundation.framework */; };
+		73EE83D213A152860076FFE6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE83D113A152860076FFE6 /* UIKit.framework */; };
+		73EE83D313A152860076FFE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE83C613A152860076FFE6 /* Foundation.framework */; };
+		73EE83D513A152860076FFE6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE83D413A152860076FFE6 /* CoreGraphics.framework */; };
+		73EE83D813A152860076FFE6 /* libHooStateMachine_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE83C513A152860076FFE6 /* libHooStateMachine_ios.a */; };
+		73EE83DE13A152860076FFE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73EE83DC13A152860076FFE6 /* InfoPlist.strings */; };
+		73EE83E113A152860076FFE6 /* HooStateMachine_iosTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 73EE83E013A152860076FFE6 /* HooStateMachine_iosTests.h */; };
+		73EE83E313A152860076FFE6 /* HooStateMachine_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE83E213A152860076FFE6 /* HooStateMachine_iosTests.m */; };
+		73EE844B13A159060076FFE6 /* liblibjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE844A13A159060076FFE6 /* liblibjson.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		730A6DFB138AFEBB00471CD2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73E9485D138AEC9500891D31;
-			remoteInfo = SHRootObject;
-		};
-		730B2AFC13891D810012F1C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BC8778D9136CDE4400549A6D;
-			remoteInfo = JSON;
-		};
-		730B2AFE13891D870012F1C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BC8778D9136CDE4400549A6D;
-			remoteInfo = JSON;
-		};
-		735BC102138B07B000A7AACA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73E9485D138AEC9500891D31;
-			remoteInfo = SHRootObject;
-		};
 		73D528291389165300B50908 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73D528081389165300B50908 /* Project object */;
@@ -78,47 +67,12 @@
 			remoteGlobalIDString = 73D528111389165300B50908;
 			remoteInfo = HooStateMachine;
 		};
-		73D5287713891D4200B50908 /* PBXContainerItemProxy */ = {
+		73EE83D613A152860076FFE6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC8778DA136CDE4400549A6D;
-			remoteInfo = JSON;
-		};
-		73D5287913891D4200B50908 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC8778EE136CDE4400549A6D;
-			remoteInfo = JSONTests;
-		};
-		73D5287B13891D4200B50908 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC2BC02C136CE6B30073BC4B;
-			remoteInfo = libjson;
-		};
-		73D5287D13891D4200B50908 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC2BC036136CE6B30073BC4B;
-			remoteInfo = libjsonTests;
-		};
-		73E94965138AFD3200891D31 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73E9485E138AEC9500891D31;
-			remoteInfo = SHRootObject;
-		};
-		73E94967138AFD3200891D31 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73E94873138AEC9500891D31;
-			remoteInfo = SHRootObjectTests;
+			containerPortal = 73D528081389165300B50908 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73EE83C413A152860076FFE6;
+			remoteInfo = HooStateMachine_ios;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -128,6 +82,9 @@
 		7351335713893103007393A5 /* AbstractConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractConfiguration.m; sourceTree = "<group>"; };
 		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConfig.h; path = ../HooStateMachine/TestConfig.h; sourceTree = "<group>"; };
 		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestConfig.m; path = ../HooStateMachine/TestConfig.m; sourceTree = "<group>"; };
+		73B20B8113A1817F00CE4B80 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = SOURCE_ROOT; };
+		73B20B8313A1818E00CE4B80 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
+		73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSHRootObject_ios.a; sourceTree = SOURCE_ROOT; };
 		73BCB9C6138C1F9600F4C8D7 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -159,14 +116,20 @@
 		73D5285413891B1100B50908 /* HooStateMachineConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooStateMachineConfigurator.h; sourceTree = "<group>"; };
 		73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooStateMachineConfigurator.m; sourceTree = "<group>"; };
 		73D5286613891B2B00B50908 /* StateMachineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMachineTests.m; sourceTree = "<group>"; };
-		73D5286E13891D4200B50908 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "../../../Source/json-framework/JSON.xcodeproj"; sourceTree = "<group>"; };
 		73E07427138ACC63007FDF93 /* simplest_config_json.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simplest_config_json.json; sourceTree = "<group>"; };
 		73E0742D138ACF89007FDF93 /* hierarchical.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hierarchical.json; sourceTree = "<group>"; };
-		73E07458138BCC3A007FDF93 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73E07459138BCC3A007FDF93 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73E0745C138BCC5C007FDF93 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73E0745D138BCC5C007FDF93 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHRootObject.xcodeproj; path = ../../../../../../Dropbox/Programming/SHRootObject/SHRootObject.xcodeproj; sourceTree = "<group>"; };
+		73EE83C513A152860076FFE6 /* libHooStateMachine_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHooStateMachine_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		73EE83C613A152860076FFE6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		73EE83CA13A152860076FFE6 /* HooStateMachine_ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HooStateMachine_ios-Prefix.pch"; sourceTree = "<group>"; };
+		73EE83D013A152860076FFE6 /* HooStateMachine_iosTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HooStateMachine_iosTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73EE83D113A152860076FFE6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		73EE83D413A152860076FFE6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		73EE83DB13A152860076FFE6 /* HooStateMachine_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HooStateMachine_iosTests-Info.plist"; sourceTree = "<group>"; };
+		73EE83DD13A152860076FFE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		73EE83DF13A152860076FFE6 /* HooStateMachine_iosTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HooStateMachine_iosTests-Prefix.pch"; sourceTree = "<group>"; };
+		73EE83E013A152860076FFE6 /* HooStateMachine_iosTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HooStateMachine_iosTests.h; sourceTree = "<group>"; };
+		73EE83E213A152860076FFE6 /* HooStateMachine_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HooStateMachine_iosTests.m; sourceTree = "<group>"; };
+		73EE844A13A159060076FFE6 /* liblibjson.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = liblibjson.a; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +137,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73E0745E138BCC5C007FDF93 /* JSON.framework in Frameworks */,
-				73E0745F138BCC5C007FDF93 /* SHRootObject.framework in Frameworks */,
+				73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */,
+				73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */,
 				73D528161389165300B50908 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,10 +147,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73E0745A138BCC3A007FDF93 /* JSON.framework in Frameworks */,
-				73E0745B138BCC3A007FDF93 /* SHRootObject.framework in Frameworks */,
 				73D528281389165300B50908 /* Cocoa.framework in Frameworks */,
 				73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73EE83C213A152860076FFE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */,
+				73EE844B13A159060076FFE6 /* liblibjson.a in Frameworks */,
+				73EE83C713A152860076FFE6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73EE83CC13A152860076FFE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73EE83D213A152860076FFE6 /* UIKit.framework in Frameworks */,
+				73EE83D313A152860076FFE6 /* Foundation.framework in Frameworks */,
+				73EE83D513A152860076FFE6 /* CoreGraphics.framework in Frameworks */,
+				73EE83D813A152860076FFE6 /* libHooStateMachine_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,9 +179,10 @@
 		73D528061389165300B50908 = {
 			isa = PBXGroup;
 			children = (
-				73E94969138AFD3B00891D31 /* Dependencies */,
 				73D5281B1389165300B50908 /* HooStateMachine */,
 				73D5282C1389165300B50908 /* HooStateMachineTests */,
+				73EE83C813A152860076FFE6 /* HooStateMachine_ios */,
+				73EE83D913A152860076FFE6 /* HooStateMachine_iosTests */,
 				73D528141389165300B50908 /* Frameworks */,
 				73D528131389165300B50908 /* Products */,
 			);
@@ -210,6 +193,8 @@
 			children = (
 				73D528121389165300B50908 /* HooStateMachine.framework */,
 				73D528271389165300B50908 /* HooStateMachineTests.octest */,
+				73EE83C513A152860076FFE6 /* libHooStateMachine_ios.a */,
+				73EE83D013A152860076FFE6 /* HooStateMachine_iosTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,11 +202,14 @@
 		73D528141389165300B50908 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73E0745C138BCC5C007FDF93 /* JSON.framework */,
-				73E0745D138BCC5C007FDF93 /* SHRootObject.framework */,
-				73E07458138BCC3A007FDF93 /* JSON.framework */,
-				73E07459138BCC3A007FDF93 /* SHRootObject.framework */,
+				73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */,
+				73B20B8313A1818E00CE4B80 /* JSON.framework */,
+				73B20B8113A1817F00CE4B80 /* SHRootObject.framework */,
+				73EE844A13A159060076FFE6 /* liblibjson.a */,
 				73D528151389165300B50908 /* Cocoa.framework */,
+				73EE83C613A152860076FFE6 /* Foundation.framework */,
+				73EE83D113A152860076FFE6 /* UIKit.framework */,
+				73EE83D413A152860076FFE6 /* CoreGraphics.framework */,
 				73D528171389165300B50908 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -299,33 +287,40 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		73D5286F13891D4200B50908 /* Products */ = {
+		73EE83C813A152860076FFE6 /* HooStateMachine_ios */ = {
 			isa = PBXGroup;
 			children = (
-				73D5287813891D4200B50908 /* JSON.framework */,
-				73D5287A13891D4200B50908 /* JSONTests.octest */,
-				73D5287C13891D4200B50908 /* liblibjson.a */,
-				73D5287E13891D4200B50908 /* libjsonTests.octest */,
+				73EE83C913A152860076FFE6 /* Supporting Files */,
 			);
-			name = Products;
+			path = HooStateMachine_ios;
 			sourceTree = "<group>";
 		};
-		73E9495E138AFD3200891D31 /* Products */ = {
+		73EE83C913A152860076FFE6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				73E94966138AFD3200891D31 /* SHRootObject.framework */,
-				73E94968138AFD3200891D31 /* SHRootObjectTests.octest */,
+				73EE83CA13A152860076FFE6 /* HooStateMachine_ios-Prefix.pch */,
 			);
-			name = Products;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		73E94969138AFD3B00891D31 /* Dependencies */ = {
+		73EE83D913A152860076FFE6 /* HooStateMachine_iosTests */ = {
 			isa = PBXGroup;
 			children = (
-				73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */,
-				73D5286E13891D4200B50908 /* JSON.xcodeproj */,
+				73EE83E013A152860076FFE6 /* HooStateMachine_iosTests.h */,
+				73EE83E213A152860076FFE6 /* HooStateMachine_iosTests.m */,
+				73EE83DA13A152860076FFE6 /* Supporting Files */,
 			);
-			name = Dependencies;
+			path = HooStateMachine_iosTests;
+			sourceTree = "<group>";
+		};
+		73EE83DA13A152860076FFE6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				73EE83DB13A152860076FFE6 /* HooStateMachine_iosTests-Info.plist */,
+				73EE83DC13A152860076FFE6 /* InfoPlist.strings */,
+				73EE83DF13A152860076FFE6 /* HooStateMachine_iosTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,6 +343,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73EE83C313A152860076FFE6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -363,8 +365,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				730A6DFC138AFEBB00471CD2 /* PBXTargetDependency */,
-				730B2AFD13891D810012F1C1 /* PBXTargetDependency */,
 			);
 			name = HooStateMachine;
 			productName = HooStateMachine;
@@ -383,13 +383,47 @@
 			buildRules = (
 			);
 			dependencies = (
-				735BC103138B07B000A7AACA /* PBXTargetDependency */,
-				730B2AFF13891D870012F1C1 /* PBXTargetDependency */,
 				73D5282A1389165300B50908 /* PBXTargetDependency */,
 			);
 			name = HooStateMachineTests;
 			productName = HooStateMachineTests;
 			productReference = 73D528271389165300B50908 /* HooStateMachineTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		73EE83C413A152860076FFE6 /* HooStateMachine_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73EE83E413A152860076FFE6 /* Build configuration list for PBXNativeTarget "HooStateMachine_ios" */;
+			buildPhases = (
+				73EE83C113A152860076FFE6 /* Sources */,
+				73EE83C213A152860076FFE6 /* Frameworks */,
+				73EE83C313A152860076FFE6 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HooStateMachine_ios;
+			productName = HooStateMachine_ios;
+			productReference = 73EE83C513A152860076FFE6 /* libHooStateMachine_ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		73EE83CF13A152860076FFE6 /* HooStateMachine_iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73EE83E713A152860076FFE6 /* Build configuration list for PBXNativeTarget "HooStateMachine_iosTests" */;
+			buildPhases = (
+				73EE83CB13A152860076FFE6 /* Sources */,
+				73EE83CC13A152860076FFE6 /* Frameworks */,
+				73EE83CD13A152860076FFE6 /* Resources */,
+				73EE83CE13A152860076FFE6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73EE83D713A152860076FFE6 /* PBXTargetDependency */,
+			);
+			name = HooStateMachine_iosTests;
+			productName = HooStateMachine_iosTests;
+			productReference = 73EE83D013A152860076FFE6 /* HooStateMachine_iosTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -410,68 +444,15 @@
 			mainGroup = 73D528061389165300B50908;
 			productRefGroup = 73D528131389165300B50908 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 73D5286F13891D4200B50908 /* Products */;
-					ProjectRef = 73D5286E13891D4200B50908 /* JSON.xcodeproj */;
-				},
-				{
-					ProductGroup = 73E9495E138AFD3200891D31 /* Products */;
-					ProjectRef = 73E9495D138AFD3200891D31 /* SHRootObject.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				73D528111389165300B50908 /* HooStateMachine */,
 				73D528261389165300B50908 /* HooStateMachineTests */,
+				73EE83C413A152860076FFE6 /* HooStateMachine_ios */,
+				73EE83CF13A152860076FFE6 /* HooStateMachine_iosTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		73D5287813891D4200B50908 /* JSON.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = JSON.framework;
-			remoteRef = 73D5287713891D4200B50908 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73D5287A13891D4200B50908 /* JSONTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = JSONTests.octest;
-			remoteRef = 73D5287913891D4200B50908 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73D5287C13891D4200B50908 /* liblibjson.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjson.a;
-			remoteRef = 73D5287B13891D4200B50908 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73D5287E13891D4200B50908 /* libjsonTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = libjsonTests.octest;
-			remoteRef = 73D5287D13891D4200B50908 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73E94966138AFD3200891D31 /* SHRootObject.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHRootObject.framework;
-			remoteRef = 73E94965138AFD3200891D31 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73E94968138AFD3200891D31 /* SHRootObjectTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SHRootObjectTests.octest;
-			remoteRef = 73E94967138AFD3200891D31 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		73D528101389165300B50908 /* Resources */ = {
@@ -492,10 +473,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73EE83CD13A152860076FFE6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73EE83DE13A152860076FFE6 /* InfoPlist.strings in Resources */,
+				73EE83E113A152860076FFE6 /* HooStateMachine_iosTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		73D528251389165300B50908 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		73EE83CE13A152860076FFE6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -537,33 +540,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73EE83C113A152860076FFE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73AB4E4913A1595A00063149 /* HooStateMachine_abstractEvent.m in Sources */,
+				73AB4E4A13A1596600063149 /* HooStateMachine_command.m in Sources */,
+				73AB4E4B13A1596600063149 /* HooStateMachine_event.m in Sources */,
+				73AB4E4C13A1596600063149 /* HooStateMachine_state.m in Sources */,
+				73AB4E4D13A1596600063149 /* HooStateMachine_transition.m in Sources */,
+				73AB4E4E13A1596600063149 /* HooStateMachine.m in Sources */,
+				73AB4E4F13A1596600063149 /* HooStateMachine_controller.m in Sources */,
+				73AB4E5013A1596600063149 /* HooStateMachineConfigurator.m in Sources */,
+				73AB4E5113A1596600063149 /* AbstractConfiguration.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73EE83CB13A152860076FFE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73EE83E313A152860076FFE6 /* HooStateMachine_iosTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		730A6DFC138AFEBB00471CD2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHRootObject;
-			targetProxy = 730A6DFB138AFEBB00471CD2 /* PBXContainerItemProxy */;
-		};
-		730B2AFD13891D810012F1C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSON;
-			targetProxy = 730B2AFC13891D810012F1C1 /* PBXContainerItemProxy */;
-		};
-		730B2AFF13891D870012F1C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSON;
-			targetProxy = 730B2AFE13891D870012F1C1 /* PBXContainerItemProxy */;
-		};
-		735BC103138B07B000A7AACA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHRootObject;
-			targetProxy = 735BC102138B07B000A7AACA /* PBXContainerItemProxy */;
-		};
 		73D5282A1389165300B50908 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 73D528111389165300B50908 /* HooStateMachine */;
 			targetProxy = 73D528291389165300B50908 /* PBXContainerItemProxy */;
+		};
+		73EE83D713A152860076FFE6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73EE83C413A152860076FFE6 /* HooStateMachine_ios */;
+			targetProxy = 73EE83D613A152860076FFE6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -580,6 +592,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				73D528301389165300B50908 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		73EE83DC13A152860076FFE6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				73EE83DD13A152860076FFE6 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -714,6 +734,102 @@
 			};
 			name = Release;
 		};
+		73EE83E513A152860076FFE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/HooStateMachine_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine_ios/HooStateMachine_ios-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"_ROOT_OBJECT_=SHooleyObject",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		73EE83E613A152860076FFE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/HooStateMachine_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine_ios/HooStateMachine_ios-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		73EE83E813A152860076FFE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine_iosTests/HooStateMachine_iosTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"_ROOT_OBJECT_=SHooleyObject",
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "HooStateMachine_iosTests/HooStateMachine_iosTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		73EE83E913A152860076FFE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HooStateMachine_iosTests/HooStateMachine_iosTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "HooStateMachine_iosTests/HooStateMachine_iosTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -740,6 +856,24 @@
 			buildConfigurations = (
 				73D5283D1389165300B50908 /* Debug */,
 				73D5283E1389165300B50908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73EE83E413A152860076FFE6 /* Build configuration list for PBXNativeTarget "HooStateMachine_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73EE83E513A152860076FFE6 /* Debug */,
+				73EE83E613A152860076FFE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73EE83E713A152860076FFE6 /* Build configuration list for PBXNativeTarget "HooStateMachine_iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73EE83E813A152860076FFE6 /* Debug */,
+				73EE83E913A152860076FFE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

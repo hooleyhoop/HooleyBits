@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <SHRootObject/RootObject.h>
 
 @interface HooStateMachine_abstractEvent : _ROOT_OBJECT_ {
 @private
