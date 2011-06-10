@@ -10,7 +10,6 @@
 #import "HooStateMachine_state.h"
 #import "HooStateMachine_event.h"
 #import "HooStateMachine_command.h"
-#import <JSON/JSON.h>
 
 @interface HooStateMachineConfigurator ()
 - (void)parseStates;

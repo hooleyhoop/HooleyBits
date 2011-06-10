@@ -19,7 +19,7 @@
 
 @implementation AbstractConfiguration
 
-@synthesize stateMachineController;
+@synthesize stateMachineController=_stateMachineController;
 
 + (id)smConfiguration:(NSString *)configName inBundle:(NSBundle *)bndl delegate:(id)cntrl {
     
