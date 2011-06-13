@@ -23,6 +23,7 @@
 		73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8313A1818E00CE4B80 /* JSON.framework */; };
 		73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */; };
 		73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BCB9C6138C1F9600F4C8D7 /* HooSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73C12DBE13A6C849004F1824 /* HooSM_headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C12DBD13A6C849004F1824 /* HooSM_headers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
 		73D528281389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
@@ -86,6 +87,7 @@
 		73B20B8313A1818E00CE4B80 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
 		73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSHRootObject_ios.a; sourceTree = SOURCE_ROOT; };
 		73BCB9C6138C1F9600F4C8D7 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
+		73C12DBD13A6C849004F1824 /* HooSM_headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM_headers.h; sourceTree = "<group>"; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		73D528181389165300B50908 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				73BCB9C6138C1F9600F4C8D7 /* HooSM.h */,
+				73C12DBD13A6C849004F1824 /* HooSM_headers.h */,
 				73D5284613891B1100B50908 /* HooStateMachine_abstractEvent.h */,
 				73D5284713891B1100B50908 /* HooStateMachine_abstractEvent.m */,
 				73D5284813891B1100B50908 /* HooStateMachine_command.h */,
@@ -340,6 +343,7 @@
 				73D5285A13891B1100B50908 /* HooStateMachine_controller.h in Headers */,
 				73D5285813891B1100B50908 /* HooStateMachine_command.h in Headers */,
 				73D5286213891B1100B50908 /* HooStateMachine.h in Headers */,
+				73C12DBE13A6C849004F1824 /* HooSM_headers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
