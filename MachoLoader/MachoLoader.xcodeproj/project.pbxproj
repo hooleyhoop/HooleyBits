@@ -37,12 +37,6 @@
 		7395BD79125630080046A8FE /* DisassemblyChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395BD77125630080046A8FE /* DisassemblyChecker.m */; };
 		7397BAF4127045BC00D0E0CE /* FunctionEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */; };
 		73990C931301542100EA388E /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73990C921301542100EA388E /* libstdc++.dylib */; };
-		739EE4B613926FD80076942B /* RepeatingAsyncTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */; };
-		739EE4B713926FD80076942B /* RepeatingAsyncTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */; };
-		739EE4BA139270170076942B /* RepeatingAsyncTaskControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */; };
-		739EE4BE139271700076942B /* AsyncAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4BD139271700076942B /* AsyncAction.m */; };
-		739EE4BF139271700076942B /* AsyncAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4BD139271700076942B /* AsyncAction.m */; };
-		739EE4C21392724C0076942B /* AsyncActionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 739EE4C11392724C0076942B /* AsyncActionTests.m */; };
 		73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
 		73B15040136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B1503E136C633A00A5D74A /* ContiguousMemoryBlockStore.m */; };
 		73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */; };
@@ -78,6 +72,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		73270BA813AFE2EF00619119 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73EE83F413A152C60076FFE6;
+			remoteInfo = SHRootObject_ios;
+		};
+		73270BAA13AFE2EF00619119 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73EE83FF13A152C60076FFE6;
+			remoteInfo = SHRootObject_iosTests;
+		};
 		739EE4CE1392783B0076942B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 739EE4C91392783B0076942B /* SHRootObject.xcodeproj */;
@@ -201,12 +209,6 @@
 		7397BAF2127045BC00D0E0CE /* FunctionEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FunctionEnumerator.h; path = Classes/FunctionEnumerator.h; sourceTree = "<group>"; };
 		7397BAF3127045BC00D0E0CE /* FunctionEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FunctionEnumerator.m; path = Classes/FunctionEnumerator.m; sourceTree = "<group>"; };
 		73990C921301542100EA388E /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "/usr/lib/gcc/i686-apple-darwin10/4.0.1/libstdc++.dylib"; sourceTree = "<absolute>"; };
-		739EE4B413926FD80076942B /* RepeatingAsyncTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RepeatingAsyncTaskController.h; path = Classes/RepeatingAsyncTaskController.h; sourceTree = "<group>"; };
-		739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RepeatingAsyncTaskController.m; path = Classes/RepeatingAsyncTaskController.m; sourceTree = "<group>"; };
-		739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RepeatingAsyncTaskControllerTests.m; path = Tests/RepeatingAsyncTaskControllerTests.m; sourceTree = "<group>"; };
-		739EE4BC139271700076942B /* AsyncAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncAction.h; path = Classes/AsyncAction.h; sourceTree = "<group>"; };
-		739EE4BD139271700076942B /* AsyncAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncAction.m; path = Classes/AsyncAction.m; sourceTree = "<group>"; };
-		739EE4C11392724C0076942B /* AsyncActionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncActionTests.m; path = Tests/AsyncActionTests.m; sourceTree = "<group>"; };
 		739EE4C91392783B0076942B /* SHRootObject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SHRootObject.xcodeproj; path = ../../../../../../Dropbox/Programming/SHRootObject/SHRootObject.xcodeproj; sourceTree = "<group>"; };
 		73A7BD89123A2ED3003FF058 /* TextSectionDisasemble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextSectionDisasemble.m; path = Tests/TextSectionDisasemble.m; sourceTree = "<group>"; };
 		73A7BDCD123A369A003FF058 /* TextSectionDisasemble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSectionDisasemble.h; path = Classes/TextSectionDisasemble.h; sourceTree = "<group>"; };
@@ -453,7 +455,6 @@
 		7302196A0F864C6E00906D18 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				739EE4BB139271520076942B /* Looping Async action */,
 				737B3DFC12324D38008C67FC /* CFDictCallbacks.h */,
 				737B3DFD12324D38008C67FC /* CFDictCallbacks.m */,
 				734B66DA1226900A002C0B0F /* IntKeyDictionary.h */,
@@ -499,8 +500,6 @@
 				731AEB0F135CF22F00B848E6 /* SHMemoryBlockTests.m */,
 				73339C0013662D6600F91128 /* MemoryBlockStoreTests.m */,
 				73B15042136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m */,
-				739EE4B9139270170076942B /* RepeatingAsyncTaskControllerTests.m */,
-				739EE4C11392724C0076942B /* AsyncActionTests.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -551,22 +550,13 @@
 			path = CommandLineApp;
 			sourceTree = "<group>";
 		};
-		739EE4BB139271520076942B /* Looping Async action */ = {
-			isa = PBXGroup;
-			children = (
-				739EE4B413926FD80076942B /* RepeatingAsyncTaskController.h */,
-				739EE4B513926FD80076942B /* RepeatingAsyncTaskController.m */,
-				739EE4BC139271700076942B /* AsyncAction.h */,
-				739EE4BD139271700076942B /* AsyncAction.m */,
-			);
-			name = "Looping Async action";
-			sourceTree = "<group>";
-		};
 		739EE4CA1392783B0076942B /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				739EE4CF1392783B0076942B /* SHRootObject.framework */,
 				739EE4D11392783B0076942B /* SHRootObjectTests.octest */,
+				73270BA913AFE2EF00619119 /* libSHRootObject_ios.a */,
+				73270BAB13AFE2EF00619119 /* SHRootObject_iosTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -741,6 +731,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = uk.co.stevehooley;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MachoLoader" */;
@@ -772,6 +763,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		73270BA913AFE2EF00619119 /* libSHRootObject_ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSHRootObject_ios.a;
+			remoteRef = 73270BA813AFE2EF00619119 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		73270BAB13AFE2EF00619119 /* SHRootObject_iosTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SHRootObject_iosTests.octest;
+			remoteRef = 73270BAA13AFE2EF00619119 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		739EE4CF1392783B0076942B /* SHRootObject.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -856,10 +861,6 @@
 				73B15043136C653400A5D74A /* ContiguousMemoryBlockStoreTests.m in Sources */,
 				73B150BD136C6EE700A5D74A /* TPData.m in Sources */,
 				73B150C3136C72BF00A5D74A /* TPLine.m in Sources */,
-				739EE4B713926FD80076942B /* RepeatingAsyncTaskController.m in Sources */,
-				739EE4BA139270170076942B /* RepeatingAsyncTaskControllerTests.m in Sources */,
-				739EE4BF139271700076942B /* AsyncAction.m in Sources */,
-				739EE4C21392724C0076942B /* AsyncActionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,8 +915,6 @@
 				73B1503F136C633A00A5D74A /* ContiguousMemoryBlockStore.m in Sources */,
 				73B150BC136C6EE700A5D74A /* TPData.m in Sources */,
 				73B150C2136C72BF00A5D74A /* TPLine.m in Sources */,
-				739EE4B613926FD80076942B /* RepeatingAsyncTaskController.m in Sources */,
-				739EE4BE139271700076942B /* AsyncAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,7 +958,6 @@
 		7310FD1812095D5D00AE9F6B /* Debug32 */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
@@ -975,7 +973,6 @@
 		7310FD1912095D5D00AE9F6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
@@ -1021,7 +1018,6 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/build/Debug\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1110,9 +1106,10 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Debug64;
@@ -1142,7 +1139,6 @@
 		73EFF32B1256344200A85855 /* Debug64 */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
@@ -1238,9 +1234,10 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Debug32;
@@ -1252,9 +1249,10 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = build;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 			};
 			name = Release;

@@ -24,10 +24,8 @@
 		73C8285F1187342300451EF9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735AB37F10F5F641008378AA /* SenTestingKit.framework */; };
 		73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7382F57F10F89B6500691006 /* OCMock.framework */; };
 		73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B360041116E0FF0064AF28 /* FScript.framework */; };
-		73C839511139BE8000E0295E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73D975841108845B0060A7C2 /* NSScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975831108845B0060A7C2 /* NSScriptCommand.m */; };
 		73D975CB110886450060A7C2 /* NSSayWhateverCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D975CA110886450060A7C2 /* NSSayWhateverCommand.m */; };
-		73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7B710F771B9002B5E45 /* SHShared.framework */; };
 		73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364E7C310F771B9002B5E45 /* SHTestUtilities.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -41,13 +39,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 732E93681189AFEA00DD3435;
 			remoteInfo = PerformanceTests;
-		};
-		7364E7B610F771B9002B5E45 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
 		};
 		7364E7B810F771B9002B5E45 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -105,26 +96,12 @@
 			remoteGlobalIDString = 73CC082911368A3700B53CA9;
 			remoteInfo = TestUtilitiesTests;
 		};
-		73E2149B11582FCF00F4007E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
-			remoteInfo = SHShared;
-		};
 		73E2149D11582FCF00F4007E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 73D6ED9410C7C5BC0072DC88;
 			remoteInfo = SHTestUtilities;
-		};
-		73EB2BC2112B03C0004F3A26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7364E7AC10F771B9002B5E45 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
-			remoteInfo = SHShared;
 		};
 		73EB2BC4112B03C0004F3A26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -213,7 +190,6 @@
 			files = (
 				73C8394B1139BDFA00E0295E /* OCMock.framework in Frameworks */,
 				73C8394E1139BE0000E0295E /* FScript.framework in Frameworks */,
-				73C839511139BE8000E0295E /* SHShared.framework in Frameworks */,
 				73BC1A091139C5620088135A /* SHTestUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,7 +203,6 @@
 				7384E12910FBBB0D0077D202 /* ApplicationServices.framework in Frameworks */,
 				7384E13E10FBBB930077D202 /* Carbon.framework in Frameworks */,
 				73B360051116E0FF0064AF28 /* FScript.framework in Frameworks */,
-				73E2132511582D4E00F4007E /* SHShared.framework in Frameworks */,
 				73E2132611582D5000F4007E /* SHTestUtilities.framework in Frameworks */,
 				73C8285F1187342300451EF9 /* SenTestingKit.framework in Frameworks */,
 			);
@@ -350,7 +325,6 @@
 		7364E7AD10F771B9002B5E45 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7364E7B710F771B9002B5E45 /* SHShared.framework */,
 				7364E7B910F771B9002B5E45 /* SHSharedTests.octest */,
 				7364E7BB10F771B9002B5E45 /* libSHShared_static.a */,
 				7364E7BD10F771B9002B5E45 /* libSHShared_iphone.a */,
@@ -434,7 +408,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73EB2BC3112B03C0004F3A26 /* PBXTargetDependency */,
 				73EB2BC5112B03C0004F3A26 /* PBXTargetDependency */,
 			);
 			name = TestTests;
@@ -455,7 +428,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73E2149C11582FCF00F4007E /* PBXTargetDependency */,
 				73E2149E11582FCF00F4007E /* PBXTargetDependency */,
 			);
 			name = InAppTests;
@@ -474,7 +446,11 @@
 			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "InAppTests" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* InAppTests */;
 			projectDirPath = "";
 			projectReferences = (
@@ -497,13 +473,6 @@
 			fileType = wrapper.cfbundle;
 			path = PerformanceTests.octest;
 			remoteRef = 7301387611996294002AFF89 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7364E7B710F771B9002B5E45 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 7364E7B610F771B9002B5E45 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		7364E7B910F771B9002B5E45 /* SHSharedTests.octest */ = {
@@ -628,20 +597,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		73E2149C11582FCF00F4007E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared;
-			targetProxy = 73E2149B11582FCF00F4007E /* PBXContainerItemProxy */;
-		};
 		73E2149E11582FCF00F4007E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SHTestUtilities;
 			targetProxy = 73E2149D11582FCF00F4007E /* PBXContainerItemProxy */;
-		};
-		73EB2BC3112B03C0004F3A26 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared;
-			targetProxy = 73EB2BC2112B03C0004F3A26 /* PBXContainerItemProxy */;
 		};
 		73EB2BC5112B03C0004F3A26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
