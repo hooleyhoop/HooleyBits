@@ -12,11 +12,11 @@
 		7328AF2C11AAD59500025001 /* C3DTMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7328AF2B11AAD59500025001 /* C3DTMathTests.m */; };
 		7328AF3B11AAD6CB00025001 /* G3DFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 730E2EF411A43F8900C7CDAA /* G3DFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7328AF3C11AAD6CB00025001 /* G3DFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351FA0811A54CA000BF4D6F /* G3DFunctions.m */; };
-		7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734826401004CC5A00E80278 /* SHShared.framework */; };
 		735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D511A53E2800A6BA88 /* Quartz.framework */; };
 		735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735C62D711A53E2800A6BA88 /* QuartzCore.framework */; };
 		736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739D0B4BF3F600D8D0D1 /* GLUT.framework */; };
 		736C73A00B4BF3F600D8D0D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */; };
+		73859F5A13C3076E002EC667 /* log.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 73859F5913C3076E002EC667 /* log.rtf */; };
 		73AB7C8711A57C9100EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
 		73AB7CAB11A57C9B00EDFDED /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AB7C8611A57C9100EDFDED /* Accelerate.framework */; };
 		73DE03E911A9A72700BDF39F /* C3DTTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7351FAB111A5516C00BF4D6F /* C3DTTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,13 +80,6 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = SHGeometryKit;
 		};
-		7348263F1004CC5A00E80278 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 734826381004CC5A00E80278 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
 		734826411004CC5A00E80278 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 734826381004CC5A00E80278 /* SHShared.xcodeproj */;
@@ -107,13 +100,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 73AC016B0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
-		};
-		7348264A1004CC6F00E80278 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 734826381004CC5A00E80278 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
-			remoteInfo = SHShared;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -171,6 +157,7 @@
 		735C62D711A53E2800A6BA88 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		736C739D0B4BF3F600D8D0D1 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		736C739E0B4BF3F600D8D0D1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		73859F5913C3076E002EC667 /* log.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = log.rtf; sourceTree = "<group>"; };
 		73AB7C8611A57C9100EDFDED /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		73D939F11326C5F00029CF1C /* G3DTuple2f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = G3DTuple2f.h; path = Src/G3DTuple2f.h; sourceTree = "<group>"; };
 		73D939F21326C5F00029CF1C /* G3DTuple2f.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = G3DTuple2f.m; path = Src/G3DTuple2f.m; sourceTree = "<group>"; };
@@ -262,7 +249,6 @@
 			files = (
 				736C73A00B4BF3F600D8D0D1 /* OpenGL.framework in Frameworks */,
 				736C739F0B4BF3F600D8D0D1 /* GLUT.framework in Frameworks */,
-				7348264C1004CC8500E80278 /* SHShared.framework in Frameworks */,
 				735C62D611A53E2800A6BA88 /* Quartz.framework in Frameworks */,
 				735C62D811A53E2800A6BA88 /* QuartzCore.framework in Frameworks */,
 				73AB7C8711A57C9100EDFDED /* Accelerate.framework in Frameworks */,
@@ -284,6 +270,7 @@
 		0867D691FE84028FC02AAC07 /* SHGeometryKit */ = {
 			isa = PBXGroup;
 			children = (
+				73859F5913C3076E002EC667 /* log.rtf */,
 				73E7A63C0F6C304A00795867 /* Config */,
 				7351FB1111A554CF00BF4D6F /* SHGeometryKit.h */,
 				730E2EFC11A43FDE00C7CDAA /* G3DDefs.h */,
@@ -514,7 +501,6 @@
 		734826391004CC5A00E80278 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				734826401004CC5A00E80278 /* SHShared.framework */,
 				734826421004CC5A00E80278 /* SHSharedTests.octest */,
 				734826441004CC5A00E80278 /* libSHShared_static.a */,
 				734826461004CC5A00E80278 /* libSHShared_iphone.a */,
@@ -643,7 +629,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7348264B1004CC6F00E80278 /* PBXTargetDependency */,
 			);
 			name = SHGeometryKit;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -726,13 +711,6 @@
 			remoteRef = 730E2E1C11A438A600C7CDAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		734826401004CC5A00E80278 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 7348263F1004CC5A00E80278 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		734826421004CC5A00E80278 /* SHSharedTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -768,6 +746,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73859F5A13C3076E002EC667 /* log.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,11 +793,6 @@
 			isa = PBXTargetDependency;
 			target = 8DC2EF4F0486A6940098B216 /* SHGeometryKit */;
 			targetProxy = 7311E3F20AD65509005062FE /* PBXContainerItemProxy */;
-		};
-		7348264B1004CC6F00E80278 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared;
-			targetProxy = 7348264A1004CC6F00E80278 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
