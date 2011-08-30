@@ -879,6 +879,8 @@ int stbtt_GetGlyphShape(const stbtt_fontinfo *info, int glyph_index, stbtt_verte
    numberOfContours = ttSHORT(data + g);
 
    if (numberOfContours > 0) {
+    
+       // GET THEM CONTOURS
       stbtt_uint8 flags=0,flagcount;
       stbtt_int32 ins, i,j=0,m,n, next_move, was_off=0, off;
       stbtt_int16 x,y,cx,cy,sx,sy;
@@ -992,6 +994,9 @@ int stbtt_GetGlyphShape(const stbtt_fontinfo *info, int glyph_index, stbtt_verte
          else
             stbtt_setvertex(&vertices[num_vertices++], STBTT_vline,sx,sy,0,0);
       }
+       
+       
+// COMPOUND
    } else if (numberOfContours == -1) {
       // Compound shapes.
       int more = 1;

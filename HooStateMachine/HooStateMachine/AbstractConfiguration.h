@@ -17,7 +17,9 @@
 
 @property (retain) HooStateMachine_controller *stateMachineController;
 
++ (id)smConfiguration:(NSString *)config delegate:(id)cntrl;
 + (id)smConfiguration:(NSString *)configName inBundle:(NSBundle *)bndl delegate:(id)cntrl;
+    
 - (id)initWithConfig:(HooStateMachineConfigurator *)config controller:(id)cntrllr;
 
 - (void)processInputSignal:(NSString *)signal;

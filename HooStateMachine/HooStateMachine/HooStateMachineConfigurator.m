@@ -30,9 +30,15 @@
     NSString *path = [bund pathForResource:cnfgName ofType:@"json"];
     NSError *error = nil;        
     NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    
+    return [self configWithString:configContents];
+}
+
++ (id)configWithString:(NSString *)cnfgStr {
+
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    error = nil;    
-    NSDictionary *config = [parser objectWithString:configContents error:&error];
+    NSError *error = nil;        
+    NSDictionary *config = [parser objectWithString:cnfgStr error:&error];
     return [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
 }
 

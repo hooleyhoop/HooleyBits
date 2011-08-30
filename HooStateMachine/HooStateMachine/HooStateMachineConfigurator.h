@@ -22,6 +22,8 @@
 }
 
 + (id)configNamed:(NSString *)cnfgName inBundle:(NSBundle *)bund;
++ (id)configWithString:(NSString *)cnfgStr;
+
 - (id)initWithConfig:(NSDictionary *)cnfg;
 - (HooStateMachine_state *)state:(NSString *)key;
 

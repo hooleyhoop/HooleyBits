@@ -23,7 +23,17 @@
 
 + (id)smConfiguration:(NSString *)configName inBundle:(NSBundle *)bndl delegate:(id)cntrl {
     
-	HooStateMachineConfigurator *simpleStateMachineParser = [HooStateMachineConfigurator configNamed:configName inBundle:bndl]; 
+    NSParameterAssert(configName && bndl);
+    
+    NSString *path = [bndl pathForResource:configName ofType:@"json"];
+    NSError *error = nil;        
+    NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    return [self smConfiguration:configContents delegate:cntrl];
+}
+
++ (id)smConfiguration:(NSString *)config delegate:(id)cntrl {
+    
+	HooStateMachineConfigurator *simpleStateMachineParser = [HooStateMachineConfigurator configWithString:config]; 
     return [[[self alloc] initWithConfig:simpleStateMachineParser controller:cntrl] autorelease];
 }
 
