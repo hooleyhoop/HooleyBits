@@ -760,7 +760,7 @@ FLAC_API void FLAC__stream_decoder_delete(FLAC__StreamDecoder *decoder);
  * \retval FLAC__bool
  *    \c false if the decoder is already initialized, else \c true.
  */
-// FLAC_API FLAC__bool FLAC__stream_decoder_set_md5_checking(FLAC__StreamDecoder *decoder, FLAC__bool value);
+FLAC_API FLAC__bool FLAC__stream_decoder_set_md5_checking(FLAC__StreamDecoder *decoder, FLAC__bool value);
 
 /** Direct the decoder to pass on all metadata blocks of type \a type.
  *
@@ -1127,6 +1127,8 @@ FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_stream(
 //	void *client_data
 //);
 
+FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_file( FLAC__StreamDecoder *decoder, const char *filename, FLAC__StreamDecoderWriteCallback write_callback, FLAC__StreamDecoderMetadataCallback metadata_callback, FLAC__StreamDecoderErrorCallback error_callback, void *client_data );
+
 /** Initialize the decoder instance to decode native FLAC files.
  *
  *  This flavor of initialization sets up the decoder to decode from a
@@ -1446,7 +1448,7 @@ FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_metadata(FLAC__Str
  *    information about the decoder, check the decoder state with
  *    FLAC__stream_decoder_get_state().
  */
-// FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_stream(FLAC__StreamDecoder *decoder);
+FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_stream(FLAC__StreamDecoder *decoder);
 
 /** Skip one audio frame.
  *  This version instructs the decoder to 'skip' a single frame and stop,

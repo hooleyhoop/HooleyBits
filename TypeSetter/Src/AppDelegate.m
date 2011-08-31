@@ -13,7 +13,7 @@
 
 
 // check out this guys great c code
-http://nothings.org/stb/stb_truetype.h
+#warning http://nothings.org/stb/stb_truetype.h
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

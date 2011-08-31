@@ -192,6 +192,91 @@ static AS3_Val clearByteArray( void *self, AS3_Val args ) {
 	return AS3_Int(0);    
 }
 
+// Tests modifying an array to see if it is passed by reference or copy
+// A. Definitely passed by reference, you can modify the byte array as you please!
+// ! warning, leaky !
+static AS3_Val testModifyPassedInByteArray( void *self, AS3_Val args ) {
+    
+    char outStr[255];
+    memset(outStr,0, 255);
+    
+    AS3_Val funkData_arg = NULL;    
+    AS3_ArrayValue( args, "AS3ValType", &funkData_arg );
+    
+    // examine length
+    AS3_Val lengthOfFunkByteArray = AS3_GetS( funkData_arg, "length" );
+    int l = AS3_IntValue( lengthOfFunkByteArray );
+    sprintf( outStr,  "Alchemy= funk length is %d\n", l );
+    AS3_Val msg = AS3_String(outStr);
+    AS3_Trace(msg);
+    
+    // examine position - looks like position is reset when we pass in a byte array
+    AS3_Val positionOfFunkByteArray = AS3_GetS( funkData_arg, "position" );
+    int pos = AS3_IntValue( positionOfFunkByteArray );
+    memset(outStr,0, 255);    
+    sprintf( outStr,  "Alchemy= funk position is %d\n", pos );
+    msg = AS3_String(outStr);
+    AS3_Trace(msg);
+    
+    // reset the position
+    AS3_Val zero = AS3_Int(0);
+	AS3_SetS( funkData_arg, "position", zero );
+	AS3_Release(zero);
+    
+    // a single float obviously has length 4
+    FLAC__byte in_buffer[l+1];
+    in_buffer[l] = 0;
+    int readSuccess = AS3_ByteArray_readBytes( in_buffer, funkData_arg, l );
+    if( readSuccess != l ){
+        fprintf( stderr, "ERROR: reading from passed in byteArray\n" );
+        exit(0);
+    }
+    
+    // Verify what we passed in..
+    memset(outStr,0, 255);    
+    sprintf( outStr, "Alchemy= %s \n", in_buffer );
+    msg = AS3_String(outStr);
+    AS3_Trace(msg);
+
+    // Now modify what we passed in
+	AS3_SetS( funkData_arg, "position", zero );        
+    int writeSuccess = AS3_ByteArray_writeBytes( funkData_arg, "shit", 4 );
+    if( writeSuccess != 4 ){
+        fprintf( stderr, "ERROR: writing to passed in byteArray\n" );
+        exit(0);
+    }    
+
+    // Verify the modification..
+	AS3_SetS( funkData_arg, "position", zero );    
+    readSuccess = AS3_ByteArray_readBytes( in_buffer, funkData_arg, l );
+    if( readSuccess != l ){
+        fprintf( stderr, "ERROR: reading from passed in byteArray\n" );
+        exit(0);
+    }
+    memset(outStr,0, 255);    
+    sprintf( outStr, "Alchemy= %s \n", in_buffer );
+    msg = AS3_String(outStr);
+    AS3_Trace(msg);
+    
+    // verify the position - when we are back in as3 this will be the position
+    positionOfFunkByteArray = AS3_GetS( funkData_arg, "position" );
+    pos = AS3_IntValue( positionOfFunkByteArray );
+    memset(outStr,0, 255);    
+    sprintf( outStr,  "Alchemy= funk position is %d\n", pos );
+    msg = AS3_String(outStr);
+    AS3_Trace(msg);
+    
+    // Move to position 3 in the byte array and marvel at how it persists across the alchemy border and back into as3
+    AS3_ByteArray_seek( funkData_arg, 3, SEEK_SET );
+    
+    AS3_Release( lengthOfFunkByteArray );
+    AS3_Release( funkData_arg );
+    
+	return AS3_Int(0);    
+}
+
+
+// Tests passing in an array of float values
 static AS3_Val testTheFunk( void *self, AS3_Val args ) {
     
     AS3_Val funkData_arg = NULL;    
@@ -229,6 +314,214 @@ static AS3_Val testTheFunk( void *self, AS3_Val args ) {
 	return AS3_Int(0);    
 }
 
+
+/*
+ *
+ *
+ *
+ * NEW STUFF to encode raw just a chunk at a time 
+ * (As it uploads)
+ *
+ *
+ *
+*/
+
+static FLAC__StreamEncoder *_static_encoder = 0;
+static AS3_Val _rawData_in = NULL;
+static AS3_Val _flacData_out = NULL;
+static FLAC__byte *_in_buffer = NULL;
+static int _raw_bytesPerSample;
+static unsigned _channelCount = 1;
+static FLAC__int32 *_pcm;
+
+static AS3_Val new_createStaticFlacEncoder( void *self, AS3_Val args ) {
+
+    FLAC__bool ok = true;
+    char outStr[255];
+    AS3_Val msg;
+    
+    /* allocate the encoder */
+    if( (_static_encoder = FLAC__stream_encoder_new())== NULL ) {
+        fprintf(stderr, "ERROR: allocating static encoder\n");
+        exit(0);
+    }
+    
+    unsigned sample_rate = 0;
+    
+    // get Actionscript Args
+    AS3_ArrayValue( args, "AS3ValType, AS3ValType, IntType", &_rawData_in, &_flacData_out, &sample_rate );
+    
+    unsigned pcm_bps = 16;
+    unsigned raw_bps = 32;    
+    _channelCount = 1;
+    _raw_bytesPerSample = raw_bps/8;
+    
+	// ok &= FLAC__stream_encoder_set_verify(encoder, true);
+    ok &= FLAC__stream_encoder_set_compression_level( _static_encoder, 5 );
+    ok &= FLAC__stream_encoder_set_channels( _static_encoder, _channelCount );
+    ok &= FLAC__stream_encoder_set_bits_per_sample( _static_encoder, pcm_bps );
+    ok &= FLAC__stream_encoder_set_sample_rate( _static_encoder, sample_rate );
+    // ok &= FLAC__stream_encoder_set_total_samples_estimate( _static_encoder, total_samples_per_channel );
+
+    /* initialize encoder */
+    FLAC__StreamEncoderInitStatus init_status;    
+    if(ok) {
+        init_status = FLAC__stream_encoder_init_stream( _static_encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)&_flacData_out );
+        if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
+            memset(outStr,0, 255); sprintf( outStr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status] ); msg = AS3_String(outStr); AS3_Trace(msg); AS3_ReleaseX( msg );
+            ok = false;
+        }
+    }
+    
+    int in_bufferSize = READSIZE * _raw_bytesPerSample * _channelCount;
+    _in_buffer = calloc( sizeof(FLAC__byte), in_bufferSize );  /* we read the WAVE data into here */
+    
+    int pcm_buffer_size = READSIZE/*samples*/ * _channelCount;       // 1024 ints
+    _pcm = calloc( sizeof(FLAC__int32), pcm_buffer_size );
+    
+    AS3_ReleaseX( args );    
+    return AS3_Int( 0 );    
+}
+
+/* pass in raw data incrementally and flacify it a piece at a time */
+static AS3_Val new_encodeChunckOfRawData( void *self, AS3_Val args ) {
+
+    char outStr[255]; AS3_Val msg;
+    
+    // as we are not passing the byte arrays into this function each time their position is preserved
+    
+    // current stats are passed in as arguments
+    int srcPos=0, dstPos=0, srcLength=0, dstLength=0, chunkSize_KBytes=0;
+    AS3_ArrayValue( args, "IntType, IntType, IntType, IntType, IntType", &srcPos, &dstPos, &srcLength, &dstLength, &chunkSize_KBytes );
+
+    // actually we can inspect the arrays, we dont really need to pass in the values, but for now we can use them to assert some stuff
+    // AS3_Val positionOfSrcArray = AS3_GetS( _rawData_in, "position" );
+    // AS3_Val lengthOfSrcArray = AS3_GetS( _rawData_in, "length" );    
+    // int pos = AS3_IntValue( positionOfSrcArray );
+    // int length = AS3_IntValue( lengthOfSrcArray );
+    // AS3_ReleaseX( positionOfSrcArray ); AS3_ReleaseX( lengthOfSrcArray );        
+    // memset(outStr,0, 255); sprintf( outStr,  "Alchemy_Debug> (s_p1=%d, s_p2=%d, s_l1=%d, s_l2=%d) & (d_p1=%d, d_l1=%d)", srcPos, pos, srcLength, length, dstPos, dstLength); msg = AS3_String(outStr); AS3_Trace(msg);
+
+    FLAC__bool ok = true;
+
+    // To avoid blocking we are only processing in chunks then returning, regardless of how much input there is
+    long rawDatfileSize_becomes_max_chunk_size = 1024*chunkSize_KBytes; // 200k? chunk at a time?
+    long availableBytes = srcLength - srcPos;
+
+    if( rawDatfileSize_becomes_max_chunk_size > availableBytes ) {
+        rawDatfileSize_becomes_max_chunk_size = availableBytes;
+    }
+    
+    unsigned absolute_total_samples = rawDatfileSize_becomes_max_chunk_size / _raw_bytesPerSample;
+    unsigned total_samples_per_channel = absolute_total_samples / _channelCount;
+    
+   	/* read blocks of samples from WAVE file and feed to encoder */
+    size_t samplesLeft = (size_t)total_samples_per_channel;
+
+    // temporary - just advance thru the src array so we dont get stuck in an infinite loop
+    // AS3_ByteArray_seek( _rawData_in, rawDatfileSize_becomes_max_chunk_size, SEEK_CUR );
+
+    while( ok && samplesLeft && _complete==0 )
+    {
+        size_t samples_needed = (samplesLeft > READSIZE ? (size_t)READSIZE : (size_t)samplesLeft);
+        size_t raw_bytes_needed = samples_needed * _raw_bytesPerSample;
+  
+        int readSuccess = AS3_ByteArray_readBytes( _in_buffer, _rawData_in, raw_bytes_needed );
+        // /* file vs */ size_t readSuccess = fread( in_buffer, 1, raw_bytes_needed, rawDatfile );
+
+        // just check that this is actually advancing
+        //    positionOfSrcArray = AS3_GetS( _rawData_in, "position" );
+        //    lengthOfSrcArray = AS3_GetS( _rawData_in, "length" );
+        //    pos = AS3_IntValue( positionOfSrcArray );
+        //    length = AS3_IntValue( lengthOfSrcArray );
+        //    memset(outStr,0, 255); sprintf( outStr,  "Alchemy_Debug> is position advancing? %d of %d (%d). Leaving %d (%d)", pos, srcLength, length, samplesLeft, (length-pos) ); msg = AS3_String(outStr); AS3_Trace(msg);
+        //    AS3_ReleaseX( positionOfSrcArray ); AS3_ReleaseX( lengthOfSrcArray );        
+        // ok, end test        
+
+        if( readSuccess != raw_bytes_needed ) {
+            memset(outStr,0, 255); sprintf( outStr, "Alchemy_Debug> ERROR: reading from RAW input byteArray. NEEDED> %d : we got> %d", raw_bytes_needed, readSuccess ); msg = AS3_String(outStr); AS3_Trace(msg);AS3_ReleaseX( msg ); 
+            ok = false;
+
+        } else {
+
+            /* convert the packed little-endian 16-bit PCM samples from WAVE into an interleaved FLAC__int32 buffer for libFLAC */                
+            int limitIndex = samples_needed * _channelCount;
+            
+            for( size_t i=0; i<limitIndex; i++ )
+            {
+                int inPos = i*4;
+                int32_t convertedVal = _in_buffer[inPos]<<24 & 0xff000000 | _in_buffer[inPos+1]<<16 & 0x00ff0000 | (_in_buffer[inPos+2]<<8  & 0x0000ff00) | _in_buffer[inPos+3];
+                float *convertedVal_ptr = (float *)&convertedVal;                    
+                
+                // Multiply the float by max 16 bit int
+                FLAC__int16 pcmValue = (*convertedVal_ptr) * 0x7fff;    
+                _pcm[i] = pcmValue;
+            }
+            /* feed samples to encoder */
+            // ok = FLAC__stream_encoder_process_interleaved( encoder, pcm, need);
+            FLAC__int32 **arrayOfArrays = &_pcm;
+            ok = FLAC__stream_encoder_process( _static_encoder, arrayOfArrays, samples_needed );
+        }
+        samplesLeft -= samples_needed;
+
+      
+    }
+ 
+    AS3_ReleaseX( args );
+    return AS3_Int( 0 );
+}
+
+static AS3_Val new_destroyStaticFlacEncoder( void *self, AS3_Val args ) {
+
+    char outStr[255];
+    AS3_Val msg;
+    
+    FLAC__bool ok = true;
+    ok &= FLAC__stream_encoder_finish( _static_encoder );
+    
+    memset(outStr,0, 255); sprintf( outStr, "encoding: %s\n", ok? "succeeded" : "FAILED" ); msg = AS3_String(outStr); AS3_Trace(msg); AS3_ReleaseX( msg );
+    memset(outStr,0, 255); sprintf( outStr, "state: %s\n", FLAC__StreamEncoderStateString[FLAC__stream_encoder_get_state(_static_encoder)] ); msg = AS3_String(outStr); AS3_Trace(msg); AS3_ReleaseX( msg );
+
+    
+//    AS3_Val lengthOfFlac = AS3_GetS( flacData_arg, "length" );
+//    int lengthOfDataWritten = AS3_IntValue( lengthOfFlac );
+//    AS3_ReleaseX( lengthOfFlac );
+    
+    /*
+     * Cleanup
+     */
+    
+    FLAC__stream_encoder_delete( _static_encoder );
+    
+    free(_in_buffer);
+    free(_pcm);
+    
+    msg = AS3_String("Did not crash"); AS3_Trace(msg); AS3_ReleaseX( msg );
+        
+    AS3_ReleaseX( _rawData_in );
+    AS3_ReleaseX( _flacData_out );
+    AS3_ReleaseX( args );
+    
+//    int64_t duration = gettime() - time_start;
+//    fprintf( stderr, "finished processing %0.2f s\n", (double)duration/1000000.0 );
+        
+    return AS3_Int( 0 );
+}
+
+/*
+ *
+ *
+ *
+ * END NEW STUFF to encode raw just a chunk at a time 
+ * (As it uploads)
+ *
+ *
+ *
+ */
+
+
+
+/* Encode a whole cabudle of raw data */
 static AS3_Val encodeRawData( void *self, AS3_Val args ) {
 
     int64_t time_start = gettime();
@@ -395,8 +688,11 @@ static AS3_Val encodeRawData( void *self, AS3_Val args ) {
 }
 
 
+/* Encode a whole cabudle of wav data */
 static AS3_Val encodeWavData( void *self, AS3_Val args ) {
 
+    char outStr[255];
+    AS3_Val msg;
     int64_t time_start = gettime();
 
     // get Actionscript Args
@@ -565,7 +861,8 @@ static AS3_Val encodeWavData( void *self, AS3_Val args ) {
     ok &= FLAC__stream_encoder_set_bits_per_sample( encoder, bps );
     ok &= FLAC__stream_encoder_set_sample_rate( encoder, sample_rate );
     ok &= FLAC__stream_encoder_set_total_samples_estimate( encoder, total_samples_per_channel );
-    
+    memset(outStr,0, 255); sprintf( outStr, "encoding: bps %d\n", bps ); msg = AS3_String(outStr); AS3_Trace(msg); AS3_ReleaseX( msg );
+
 	/* initialize encoder */
     if(ok) {
         init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)&flacData_arg );
@@ -667,9 +964,7 @@ static AS3_Val encodeWavData( void *self, AS3_Val args ) {
     free(in_buffer);
     free(pcm);
     
-    AS3_Val msg = AS3_String("Did not crash");
-    AS3_Trace(msg);
-    AS3_ReleaseX( msg );
+    msg = AS3_String("Did not crash"); AS3_Trace(msg); AS3_ReleaseX( msg );
     
     fclose( wavDatfile );
     fclose( _logFile );
@@ -730,14 +1025,22 @@ int main( ) {
     /* Setup actionscript */
 	gg_lib = AS3_Object("");
 
+    // new stuff
+    gg_reg( gg_lib, "new_createStaticFlacEncoder", new_createStaticFlacEncoder );
+    gg_reg( gg_lib, "new_encodeChunckOfRawData", new_encodeChunckOfRawData );
+    gg_reg( gg_lib, "new_destroyStaticFlacEncoder", new_destroyStaticFlacEncoder );
+
+    // old stuf
     gg_reg_async( gg_lib, "encodeWavData", encodeWavData );
     gg_reg_async( gg_lib, "encodeRawData", encodeRawData );
     
+    // test stuff
     gg_reg( gg_lib, "echo", echo);    
     gg_reg( gg_lib, "initByteArray", initByteArray );
     gg_reg( gg_lib, "clearByteArray", clearByteArray );
     gg_reg( gg_lib, "testTheFunk", testTheFunk );
-
+    gg_reg( gg_lib, "testModifyPassedInByteArray", testModifyPassedInByteArray );
+    
 	// notify that we initialized -- THIS DOES NOT RETURN!
 	AS3_LibInit( gg_lib );
     
