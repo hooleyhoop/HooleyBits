@@ -364,7 +364,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 //	'loca' - index to location: The ‘loca’ table simply provides an offset (based on a glyph index) for glyph data in the ‘glyf’ table
 //	'LTSH' - Linear threshold data: The optional ‘LTSH’ table indicates when a given glyph’s size begins to scale without being affected by hinting.
 //	'hdmx' - horizontal device metrics: (Precalculated glyph advances (which can be hinted and so are non-linear) for various sized)
-//	'GPOS' - Glyph positioning data
+//	'GPOS' - Glyph positioning data - complex positioning? Vietnamese?
 
 //	'cvt ' - control value: (Hinting?)
 //	'fpgm' - font program:  (Hinting?)
