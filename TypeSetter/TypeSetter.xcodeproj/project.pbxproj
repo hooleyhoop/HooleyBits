@@ -37,13 +37,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		735F80BB11467360000AC142 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
 		735F80BD11467360000AC142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 735F80AF11467360000AC142 /* SHShared.xcodeproj */;
@@ -419,7 +412,6 @@
 		735F80B011467360000AC142 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				735F80BC11467360000AC142 /* SHShared.framework */,
 				735F80BE11467360000AC142 /* SHSharedTests.octest */,
 				735F80C011467360000AC142 /* libSHShared_static.a */,
 				735F80C211467360000AC142 /* libSHShared_iphone.a */,
@@ -617,13 +609,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		735F80BC11467360000AC142 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 735F80BB11467360000AC142 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		735F80BE11467360000AC142 /* SHSharedTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;

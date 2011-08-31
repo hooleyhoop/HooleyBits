@@ -80,13 +80,6 @@
 			remoteGlobalIDString = 73AC016A0F4039D100FA9887;
 			remoteInfo = SHShared_iphone;
 		};
-		73AEEA960F483A5B00862D98 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73AEEA8A0F483A5A00862D98 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
 		73AEEA980F483A5B00862D98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73AEEA8A0F483A5A00862D98 /* SHShared.xcodeproj */;
@@ -539,7 +532,6 @@
 		73AEEA8B0F483A5A00862D98 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				73AEEA970F483A5B00862D98 /* SHShared.framework */,
 				73AEEA990F483A5B00862D98 /* SHSharedTests.octest */,
 				73AEEA9B0F483A5B00862D98 /* libSHShared_static.a */,
 				73AEEA9D0F483A5B00862D98 /* libSHShared_iphone.a */,
@@ -772,13 +764,6 @@
 			fileType = wrapper.cfbundle;
 			path = PerformanceTests.octest;
 			remoteRef = 736C30BA11A3FF9800812E21 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		73AEEA970F483A5B00862D98 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 73AEEA960F483A5B00862D98 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		73AEEA990F483A5B00862D98 /* SHSharedTests.octest */ = {
