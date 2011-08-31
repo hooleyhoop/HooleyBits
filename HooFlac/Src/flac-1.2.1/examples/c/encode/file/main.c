@@ -30,6 +30,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stream_encoder.h"
+#include "stream_decoder.h"
+
+FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder, const FLAC__Frame *frame, const FLAC__int32 * const buffer[], void *client_data);
+void metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__StreamMetadata *metadata, void *client_data);
+void error_callback(const FLAC__StreamDecoder *decoder, FLAC__StreamDecoderErrorStatus status, void *client_data);
 
 static void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data);
 
@@ -132,7 +137,7 @@ int main(int argc, char *argv[])
     
 	FLAC__bool ok = true;
 	FLAC__StreamEncoder *encoder = 0;
-	FLAC__StreamEncoderInitStatus init_status;
+	FLAC__StreamEncoderInitStatus encoder_init_status;
 
 	FILE *fin;
 	unsigned sample_rate = 0;
@@ -142,10 +147,10 @@ int main(int argc, char *argv[])
 	unsigned averageBytesPerSecond = 0;
 	unsigned blockAlign = 0;
 	
-    const char *inputFilename = "/recording_mono.wav";
-    const char *outputFilename = "/Users/shooley/Desktop/recording_mono.flac";
+    const char *wavInputFilename = "/Users/shooley/Desktop/recording_mono.wav";
+    const char *flacOutputFilename = "/Users/shooley/Desktop/recording_mono.flac";
     const char *logFilename = "/Users/shooley/Desktop/log_flac.txt";
-	
+
 	_logFile = fopen( logFilename, "w" );
 	if( _logFile==NULL ) {
 		printf("Error opening %s for writing. Program terminated.", logFilename );
@@ -161,8 +166,8 @@ int main(int argc, char *argv[])
 //		return 1;
 //	}
 
-	if( (fin=fopen(inputFilename, "rb") )==NULL ) {
-		fprintf(stderr, "ERROR: opening %s for output\n", inputFilename);
+	if( (fin=fopen(wavInputFilename, "rb") )==NULL ) {
+		fprintf(stderr, "ERROR: opening %s for input\n", wavInputFilename);
 		return 1;
 	}
 
@@ -288,11 +293,11 @@ int main(int argc, char *argv[])
     
 	/* initialize encoder */
 	if(ok) {
-        init_status = FLAC__stream_encoder_init_file( encoder, outputFilename, progress_callback, /*client_data=*/NULL );
-  //stream out      init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
+        encoder_init_status = FLAC__stream_encoder_init_file( encoder, flacOutputFilename, progress_callback, /*client_data=*/NULL );
+  //stream out      encoder_init_status = FLAC__stream_encoder_init_stream( encoder, FLACStreamEncoderWriteCallback, FLACStreamEncoderSeekCallback, FLACStreamEncoderTellCallback, NULL, (void *)NULL );
         
-		if( init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
-			fprintf( stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[init_status]);
+		if( encoder_init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK ) {
+			fprintf( stderr, "ERROR: initializing encoder: %s\n", FLAC__StreamEncoderInitStatusString[encoder_init_status]);
 			ok = false;
 		}
 	}
@@ -379,8 +384,138 @@ int main(int argc, char *argv[])
 	fclose( _logFile );
     free(in_buffer);
     free(pcm);
+    
+    /* 
+     * 
+     * 
+     * 
+     * ATTEMPT DECODE! 
+     *
+     *
+     *
+     *
+     *
+     */
+	FILE *fout;
+    const char *flacInputFileName = flacOutputFilename;
+    const char *rawOutputFilename = "/Users/shooley/Desktop/recording_mono_raw.raw";
+
+	if((fout = fopen( rawOutputFilename, "wb")) == NULL) {
+		fprintf(stderr, "ERROR: opening %s for output\n", argv[2]);
+		return 1;
+	}
+    
+	FLAC__StreamDecoder *decoder = decoder = FLAC__stream_decoder_new();
+	FLAC__StreamDecoderInitStatus decoder_init_status;
+    
+    (void)FLAC__stream_decoder_set_md5_checking(decoder, true);
+	decoder_init_status = FLAC__stream_decoder_init_file(decoder, flacInputFileName, write_callback, metadata_callback, error_callback, /*client_data=*/fout);
+	if(decoder_init_status != FLAC__STREAM_DECODER_INIT_STATUS_OK) {
+		fprintf(stderr, "ERROR: initializing decoder: %s\n", FLAC__StreamDecoderInitStatusString[decoder_init_status]);
+		ok = false;
+	}    
+    
+	if(ok) {
+		ok = FLAC__stream_decoder_process_until_end_of_stream(decoder);
+		fprintf(stderr, "decoding: %s\n", ok? "succeeded" : "FAILED");
+		fprintf(stderr, "   state: %s\n", FLAC__StreamDecoderStateString[FLAC__stream_decoder_get_state(decoder)]);
+	}
+    
+	FLAC__stream_decoder_delete(decoder);
+	fclose(fout);
+    
 	return 0;
 }
+
+static FLAC__uint64 total_samples = 0;
+static unsigned sample_rate = 0;
+static unsigned channels = 0;
+static unsigned bps = 0;
+
+FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder, const FLAC__Frame *frame, const FLAC__int32 * const buffer[], void *client_data) {
+
+	FILE *f = (FILE*)client_data;
+	const FLAC__uint32 total_size = (FLAC__uint32)(total_samples * channels * (bps/8));
+	size_t i;
+    
+	(void)decoder;
+    
+	if(total_samples == 0) {
+		fprintf(stderr, "ERROR: this example only works for FLAC files that have a total_samples count in STREAMINFO\n");
+		return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
+	if(channels!=1 /*!= 2*/ || bps != 16) {
+		fprintf(stderr, "ERROR: this example only supports 16bit mono streams\n");
+		return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
+    
+	/* write WAVE header before we write the first frame */
+//	if(frame->header.number.sample_number == 0) {
+//		if(
+//           fwrite("RIFF", 1, 4, f) < 4 ||
+//           !write_little_endian_uint32(f, total_size + 36) ||
+//           fwrite("WAVEfmt ", 1, 8, f) < 8 ||
+//           !write_little_endian_uint32(f, 16) ||
+//           !write_little_endian_uint16(f, 1) ||
+//           !write_little_endian_uint16(f, (FLAC__uint16)channels) ||
+//           !write_little_endian_uint32(f, sample_rate) ||
+//           !write_little_endian_uint32(f, sample_rate * channels * (bps/8)) ||
+//           !write_little_endian_uint16(f, (FLAC__uint16)(channels * (bps/8))) || /* block align */
+//           !write_little_endian_uint16(f, (FLAC__uint16)bps) ||
+//           fwrite("data", 1, 4, f) < 4 ||
+//           !write_little_endian_uint32(f, total_size)
+//           ) {
+//			fprintf(stderr, "ERROR: write error\n");
+//			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+//		}
+//	}
+    
+	/* write decoded PCM samples */
+	for(i = 0; i < frame->header.blocksize; i++) {
+//		if(
+//           !write_little_endian_int16(f, (FLAC__int16)buffer[0][i]) ||  /* left channel */
+//           !write_little_endian_int16(f, (FLAC__int16)buffer[1][i])     /* right channel */
+//           ) {
+//			fprintf(stderr, "ERROR: write error\n");
+//			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+//		}
+	}
+    
+	return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
+}
+
+void metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__StreamMetadata *metadata, void *client_data) {
+	(void)decoder, (void)client_data;
+    
+	/* print some stats */
+	if(metadata->type == FLAC__METADATA_TYPE_STREAMINFO) {
+		/* save for later */
+		total_samples = metadata->data.stream_info.total_samples;
+		sample_rate = metadata->data.stream_info.sample_rate;
+		channels = metadata->data.stream_info.channels;
+		bps = metadata->data.stream_info.bits_per_sample;
+        
+		fprintf(stderr, "sample rate    : %u Hz\n", sample_rate);
+		fprintf(stderr, "channels       : %u\n", channels);
+		fprintf(stderr, "bits per sample: %u\n", bps);
+//#ifdef _MSC_VER
+//		fprintf(stderr, "total samples  : %I64u\n", total_samples);
+//#else
+//		fprintf(stderr, "total samples  : %llu\n", total_samples);
+//#endif
+	}
+}
+
+void error_callback(const FLAC__StreamDecoder *decoder, FLAC__StreamDecoderErrorStatus status, void *client_data)
+{
+	(void)decoder, (void)client_data;
+    
+	fprintf(stderr, "Got error callback: %s\n", FLAC__StreamDecoderErrorStatusString[status]);
+}
+
+
+
+
 
 void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data)
 {

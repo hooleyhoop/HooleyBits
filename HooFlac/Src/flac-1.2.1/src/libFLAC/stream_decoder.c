@@ -496,6 +496,7 @@ FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_FILE(
 	return init_FILE_internal_(decoder, file, write_callback, metadata_callback, error_callback, client_data, /*is_ogg=*/false);
 }
 
+
 //FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_ogg_FILE(
 //	FLAC__StreamDecoder *decoder,
 //	FILE *file,
@@ -508,40 +509,34 @@ FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_FILE(
 //	return init_FILE_internal_(decoder, file, write_callback, metadata_callback, error_callback, client_data, /*is_ogg=*/true);
 //}
 
-//static FLAC__StreamDecoderInitStatus init_file_internal_(
-//	FLAC__StreamDecoder *decoder,
-//	const char *filename,
-//	FLAC__StreamDecoderWriteCallback write_callback,
-//	FLAC__StreamDecoderMetadataCallback metadata_callback,
-//	FLAC__StreamDecoderErrorCallback error_callback,
-//	void *client_data,
-//	FLAC__bool is_ogg
-//)
-//{
-//	FILE *file;
-//
-//	FLAC__ASSERT(0 != decoder);
-//
-//	/*
-//	 * To make sure that our file does not go unclosed after an error, we
-//	 * have to do the same entrance checks here that are later performed
-//	 * in FLAC__stream_decoder_init_FILE() before the FILE* is assigned.
-//	 */
-//	if(decoder->protected_->state != FLAC__STREAM_DECODER_UNINITIALIZED)
-//		return decoder->protected_->state = FLAC__STREAM_DECODER_INIT_STATUS_ALREADY_INITIALIZED;
-//
-//	if(0 == write_callback || 0 == error_callback)
-//		return decoder->protected_->state = FLAC__STREAM_DECODER_INIT_STATUS_INVALID_CALLBACKS;
-//
-//	file = filename? fopen(filename, "rb") : stdin;
-//
-//	if(0 == file)
-//		return FLAC__STREAM_DECODER_INIT_STATUS_ERROR_OPENING_FILE;
-//
-//	return init_FILE_internal_(decoder, file, write_callback, metadata_callback, error_callback, client_data, is_ogg);
-//}
+static FLAC__StreamDecoderInitStatus init_file_internal_( FLAC__StreamDecoder *decoder, const char *filename, FLAC__StreamDecoderWriteCallback write_callback, FLAC__StreamDecoderMetadataCallback metadata_callback, FLAC__StreamDecoderErrorCallback error_callback, void *client_data, FLAC__bool is_ogg
+) {
+	FILE *file;
 
+	FLAC__ASSERT(0 != decoder);
 
+	/*
+	 * To make sure that our file does not go unclosed after an error, we
+	 * have to do the same entrance checks here that are later performed
+	 * in FLAC__stream_decoder_init_FILE() before the FILE* is assigned.
+	 */
+	if(decoder->protected_->state != FLAC__STREAM_DECODER_UNINITIALIZED)
+		return decoder->protected_->state = FLAC__STREAM_DECODER_INIT_STATUS_ALREADY_INITIALIZED;
+
+	if(0 == write_callback || 0 == error_callback)
+		return decoder->protected_->state = FLAC__STREAM_DECODER_INIT_STATUS_INVALID_CALLBACKS;
+
+	file = filename? fopen(filename, "rb") : stdin;
+
+	if(0 == file)
+		return FLAC__STREAM_DECODER_INIT_STATUS_ERROR_OPENING_FILE;
+
+	return init_FILE_internal_(decoder, file, write_callback, metadata_callback, error_callback, client_data, is_ogg);
+}
+
+FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_file( FLAC__StreamDecoder *decoder, const char *filename, FLAC__StreamDecoderWriteCallback write_callback, FLAC__StreamDecoderMetadataCallback metadata_callback, FLAC__StreamDecoderErrorCallback error_callback, void *client_data ) {
+	return init_file_internal_(decoder, filename, write_callback, metadata_callback, error_callback, client_data, /*is_ogg=*/false);
+}
 
 //FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_ogg_file(
 //	FLAC__StreamDecoder *decoder,
@@ -616,15 +611,14 @@ FLAC_API FLAC__bool FLAC__stream_decoder_finish(FLAC__StreamDecoder *decoder)
 	return !md5_failed;
 }
 
-//FLAC_API FLAC__bool FLAC__stream_decoder_set_md5_checking(FLAC__StreamDecoder *decoder, FLAC__bool value)
-//{
-//	FLAC__ASSERT(0 != decoder);
-//	FLAC__ASSERT(0 != decoder->protected_);
-//	if(decoder->protected_->state != FLAC__STREAM_DECODER_UNINITIALIZED)
-//		return false;
-//	decoder->protected_->md5_checking = value;
-//	return true;
-//}
+FLAC_API FLAC__bool FLAC__stream_decoder_set_md5_checking(FLAC__StreamDecoder *decoder, FLAC__bool value) {
+	FLAC__ASSERT(0 != decoder);
+	FLAC__ASSERT(0 != decoder->protected_);
+	if(decoder->protected_->state != FLAC__STREAM_DECODER_UNINITIALIZED)
+		return false;
+	decoder->protected_->md5_checking = value;
+	return true;
+}
 
 //FLAC_API FLAC__bool FLAC__stream_decoder_set_metadata_respond(FLAC__StreamDecoder *decoder, FLAC__MetadataType type)
 //{
@@ -878,39 +872,39 @@ FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_metadata(FLAC__Str
 	}
 }
 
-//FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_stream(FLAC__StreamDecoder *decoder)
-//{
-//	FLAC__bool dummy;
-//	FLAC__ASSERT(0 != decoder);
-//	FLAC__ASSERT(0 != decoder->protected_);
-//
-//	while(1) {
-//		switch(decoder->protected_->state) {
-//			case FLAC__STREAM_DECODER_SEARCH_FOR_METADATA:
-//				if(!find_metadata_(decoder))
-//					return false; /* above function sets the status for us */
-//				break;
-//			case FLAC__STREAM_DECODER_READ_METADATA:
-//				if(!read_metadata_(decoder))
-//					return false; /* above function sets the status for us */
-//				break;
-//			case FLAC__STREAM_DECODER_SEARCH_FOR_FRAME_SYNC:
-//				if(!frame_sync_(decoder))
-//					return true; /* above function sets the status for us */
-//				break;
-//			case FLAC__STREAM_DECODER_READ_FRAME:
-//				if(!read_frame_(decoder, &dummy, /*do_full_decode=*/true))
-//					return false; /* above function sets the status for us */
-//				break;
-//			case FLAC__STREAM_DECODER_END_OF_STREAM:
-//			case FLAC__STREAM_DECODER_ABORTED:
-//				return true;
-//			default:
-//				FLAC__ASSERT(0);
-//				return false;
-//		}
-//	}
-//}
+FLAC_API FLAC__bool FLAC__stream_decoder_process_until_end_of_stream(FLAC__StreamDecoder *decoder)
+{
+	FLAC__bool dummy;
+	FLAC__ASSERT(0 != decoder);
+	FLAC__ASSERT(0 != decoder->protected_);
+
+	while(1) {
+		switch(decoder->protected_->state) {
+			case FLAC__STREAM_DECODER_SEARCH_FOR_METADATA:
+				if(!find_metadata_(decoder))
+					return false; /* above function sets the status for us */
+				break;
+			case FLAC__STREAM_DECODER_READ_METADATA:
+				if(!read_metadata_(decoder))
+					return false; /* above function sets the status for us */
+				break;
+			case FLAC__STREAM_DECODER_SEARCH_FOR_FRAME_SYNC:
+				if(!frame_sync_(decoder))
+					return true; /* above function sets the status for us */
+				break;
+			case FLAC__STREAM_DECODER_READ_FRAME:
+				if(!read_frame_(decoder, &dummy, /*do_full_decode=*/true))
+					return false; /* above function sets the status for us */
+				break;
+			case FLAC__STREAM_DECODER_END_OF_STREAM:
+			case FLAC__STREAM_DECODER_ABORTED:
+				return true;
+			default:
+				FLAC__ASSERT(0);
+				return false;
+		}
+	}
+}
 
 //FLAC_API FLAC__bool FLAC__stream_decoder_skip_single_frame(FLAC__StreamDecoder *decoder)
 //{

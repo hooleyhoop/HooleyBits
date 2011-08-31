@@ -20,10 +20,10 @@
 /* #undef FLAC__HAS_DOCBOOK_TO_MAN */
 
 /* define if you are compiling for PowerPC and have the 'gas' assembler */
-#define FLAC__HAS_GAS 0
+#define FLAC__HAS_GAS 1
 
 /* define if you are compiling for x86 and have the NASM assembler */
-#define FLAC__HAS_NASM 0
+#define FLAC__HAS_NASM 1
 
 /* define if you have the ogg library */
 /* #undef FLAC__HAS_OGG */
@@ -41,10 +41,10 @@
 /* #undef FLAC__SYS_LINUX */
 
 /* define to enable use of 3Dnow! instructions */
-#define FLAC__USE_3DNOW 0
+#define FLAC__USE_3DNOW 1
 
 /* define to enable use of Altivec instructions */
-#define FLAC__USE_ALTIVEC 0
+#define FLAC__USE_ALTIVEC 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1

@@ -330,7 +330,7 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
 	
 	// get locations to glyp outines before parsing GLYF table
 	[self _processLOCATable];
-	//	[self _processGLYFTable];
+    [self _processGLYFTable];
 	
 }
 
@@ -1623,66 +1623,66 @@ void getUInt32( CFDataRef *tablePtr, uint *locPtr, UInt32 *valPtr ) {
 	int glyphCount = 0;
 
 	// lets have a play and see what we can do with this
-//	while( loc<_glyfTableLength ) {
-//
-//		int16_t numberOfContours;
-//		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof numberOfContours), (UInt8 *)&numberOfContours );
-//		loc += sizeof numberOfContours;
-//		numberOfContours = OSSwapBigToHostInt16(numberOfContours);
-//		
-//		int16_t xMin;
-//		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof xMin), (UInt8 *)&xMin );
-//		loc += sizeof xMin;
-//		xMin = OSSwapBigToHostInt16(xMin);
-//
-//		int16_t yMin;
-//		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof yMin), (UInt8 *)&yMin );
-//		loc += sizeof yMin;
-//		yMin = OSSwapBigToHostInt16(yMin);
-//		
-//		int16_t xMax;
-//		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof xMax), (UInt8 *)&xMax );
-//		loc += sizeof xMax;
-//		xMax = OSSwapBigToHostInt16(xMax);
-//		
-//		int16_t yMax;
-//		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof yMax), (UInt8 *)&yMax );
-//		loc += sizeof yMax;
-//		yMax = OSSwapBigToHostInt16(yMax);
-//		
-//		NSLog(@"Glyph %i has %i contours", glyphCount, numberOfContours );
-//	
-//		// NOT a composite glyph
-//		if(numberOfContours>=0) {
-//			
-//			// Array of last points of each contour; n is the number of contours
-//			// UInt16 endPtsOfContours[n];
-//			loc += sizeof UInt16 * numberOfContours;
-//			
-//			// Total number of bytes for instructions
-//			UInt16 instructionLength;
-//			CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof instructionLength), (UInt8 *)&instructionLength );
-//			loc += sizeof instructionLength;
-//			instructionLength = OSSwapBigToHostInt16(instructionLength);
-//			
-//			// UInt8 instructions[n]
-//			loc += sizeof UInt8 * instructionLength;
-//			
-//			UInt8 flags[n]
-//			UInt8 or int16_t
-//			UInt8 or int16_t
-//			
-//		// COMPOSITE glyph
-//		} else {
-//			[NSException raise:@"Composite Glyph found" format:@"blrrgg"];
-////			UInt16	flags
-////			UInt16	glyphIndex
-////			VARIABLE	argument1
-////			VARIABLE	argument2
-////			Transformation Option
-//		}
-//		glyphCount++;
-//	}
+	while( loc<_glyfTableLength ) {
+
+		int16_t numberOfContours;
+		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof numberOfContours), (UInt8 *)&numberOfContours );
+		loc += sizeof numberOfContours;
+		numberOfContours = OSSwapBigToHostInt16(numberOfContours);
+		
+		int16_t xMin;
+		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof xMin), (UInt8 *)&xMin );
+		loc += sizeof xMin;
+		xMin = OSSwapBigToHostInt16(xMin);
+
+		int16_t yMin;
+		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof yMin), (UInt8 *)&yMin );
+		loc += sizeof yMin;
+		yMin = OSSwapBigToHostInt16(yMin);
+		
+		int16_t xMax;
+		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof xMax), (UInt8 *)&xMax );
+		loc += sizeof xMax;
+		xMax = OSSwapBigToHostInt16(xMax);
+		
+		int16_t yMax;
+		CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof yMax), (UInt8 *)&yMax );
+		loc += sizeof yMax;
+		yMax = OSSwapBigToHostInt16(yMax);
+		
+		NSLog(@"Glyph %i has %i contours", glyphCount, numberOfContours );
+	
+		// NOT a composite glyph
+		if(numberOfContours>=0) {
+			
+			// Array of last points of each contour; n is the number of contours
+			// UInt16 endPtsOfContours[n];
+			//loc += sizeof UInt16 * numberOfContours;
+			
+			// Total number of bytes for instructions
+			//UInt16 instructionLength;
+			//CFDataGetBytes( glyfTable, CFRangeMake(loc, sizeof instructionLength), (UInt8 *)&instructionLength );
+			//loc += sizeof instructionLength;
+			//instructionLength = OSSwapBigToHostInt16(instructionLength);
+			
+			// UInt8 instructions[n]
+			//loc += sizeof UInt8 * instructionLength;
+			
+			//UInt8 flags[n]
+			//UInt8 or int16_t
+			//UInt8 or int16_t
+			
+		// COMPOSITE glyph
+		} else {
+			[NSException raise:@"Composite Glyph found" format:@"blrrgg"];
+//			UInt16	flags
+//			UInt16	glyphIndex
+//			VARIABLE	argument1
+//			VARIABLE	argument2
+//			Transformation Option
+		}
+		glyphCount++;
+	}
 	
 	CFRelease(glyfTable);
 }

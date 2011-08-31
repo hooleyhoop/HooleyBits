@@ -376,7 +376,7 @@ static CGRect alignRectToUserSpace( CGContextRef context, CGRect rec ) {
 	
     // Allocate our buffers for characters and glyphs.
 	
-	how big is UniChar? do we need sizeof ? >
+#warning how big is UniChar? do we need sizeof ? >
 	UniChar *characters = malloc(sizeof(UniChar) * count);
 	CGGlyph *glyphs = malloc(sizeof(CGGlyph) * count);
     assert( characters != NULL );
