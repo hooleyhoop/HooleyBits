@@ -13,6 +13,8 @@
 @private
     HooStateMachine_controller *_stateMachineController;
     id _controller;
+    
+    HooStateMachineConfigurator *_savedConfig;    
 }
 
 @property (retain) HooStateMachine_controller *stateMachineController;
@@ -23,7 +25,10 @@
 - (id)initWithConfig:(HooStateMachineConfigurator *)config controller:(id)cntrllr;
 
 - (void)processInputSignal:(NSString *)signal;
-- (NSString *)currentStateName;
 - (void)send:(HooStateMachine_command *)command;
+
+- (NSString *)currentStateName;
+
+- (void)_setCurrentStateName:(NSString *)evName;
 
 @end

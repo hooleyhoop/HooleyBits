@@ -42,6 +42,7 @@
     self = [super init];
     if (self) {
         _controller = cntrllr;
+        _savedConfig = [config retain];
         [self setupStateMachines:config];
     }
     
@@ -50,6 +51,7 @@
 
 - (void)dealloc {
     [_stateMachineController release];
+    [_savedConfig release];
     [super dealloc];
 }
 
@@ -86,5 +88,9 @@
     return [[_stateMachineController currentState] name];
 }
 
+- (void)_setCurrentStateName:(NSString *)evName {
+    HooStateMachine_state *st = [_savedConfig state:evName];
+    _stateMachineController.currentState = st;
+}
 
 @end

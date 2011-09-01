@@ -28,6 +28,8 @@
 - (HooStateMachine_state *)state:(NSString *)key;
 
 - (HooStateMachine_state *)firstState;
+- (HooStateMachine_state *)state:(NSString *)key;
+
 - (NSMutableArray *)resetEvents;
 - (NSMutableArray *)transitions;
 
