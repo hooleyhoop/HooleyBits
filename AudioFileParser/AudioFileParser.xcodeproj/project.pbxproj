@@ -99,13 +99,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		73E19DB81250F586005B7C35 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
 		73E19DBA1250F586005B7C35 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
@@ -168,13 +161,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 732E93681189AFEA00DD3435;
 			remoteInfo = PerformanceTests;
-		};
-		73E19DCC1250F590005B7C35 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73E19D941250F585005B7C35 /* SHShared.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 738C7C760C5CDC170096EF9D;
-			remoteInfo = SHShared;
 		};
 		73E19DCE1250F590005B7C35 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -589,7 +575,6 @@
 		73E19D951250F585005B7C35 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				73E19DB91250F586005B7C35 /* SHShared.framework */,
 				73E19DBB1250F586005B7C35 /* SHSharedTests.octest */,
 				73E19DBD1250F586005B7C35 /* libSHShared_static.a */,
 				73E19DBF1250F586005B7C35 /* libSHShared_iphone.a */,
@@ -629,7 +614,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				73E19DCD1250F590005B7C35 /* PBXTargetDependency */,
 				73E19DCF1250F590005B7C35 /* PBXTargetDependency */,
 			);
 			name = AudioFileParserTests;
@@ -687,13 +671,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		73E19DB91250F586005B7C35 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 73E19DB81250F586005B7C35 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		73E19DBB1250F586005B7C35 /* SHSharedTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -877,11 +854,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		73E19DCD1250F590005B7C35 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHShared;
-			targetProxy = 73E19DCC1250F590005B7C35 /* PBXContainerItemProxy */;
-		};
 		73E19DCF1250F590005B7C35 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SHTestUtilities;

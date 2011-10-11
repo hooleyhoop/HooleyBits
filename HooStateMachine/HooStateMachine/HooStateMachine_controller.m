@@ -50,7 +50,7 @@
         else
             break;
     }
-    if( sharedparentsIndex > -1 ) {
+    if( sharedparentsIndex > (NSUInteger)-1 ) {
         thisParentList = [thisParentList subarrayWithRange:NSMakeRange(0, sharedparentsIndex+1)];
         thatParentList = [thatParentList subarrayWithRange:NSMakeRange(0,sharedparentsIndex+1)];
     }
