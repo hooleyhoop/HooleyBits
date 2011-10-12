@@ -80,6 +80,29 @@
 
 /* Begin PBXFileReference section */
 		730B2B0513891FDB0012F1C1 /* JSONTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONTest.m; sourceTree = "<group>"; };
+		7344C2FE1444457C0087E912 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7344C3001444457C0087E912 /* Project-Base.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Project-Base.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3011444457C0087E912 /* Project-Coverage.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Project-Coverage.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3021444457C0087E912 /* Project-Debug.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Project-Debug.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3031444457C0087E912 /* Project-Release.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Project-Release.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3041444457C0087E912 /* Target-Base.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-Base.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3051444457C0087E912 /* Target-CocoaDaemon.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-CocoaDaemon.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3061444457C0087E912 /* Target-Executable.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-Executable.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3071444457C0087E912 /* Target-Framework.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-Framework.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3081444457C0087E912 /* Target-iPhone.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-iPhone.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C3091444457C0087E912 /* Target-iPhoneTestBundle.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-iPhoneTestBundle.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C30A1444457C0087E912 /* Target-Plugin.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-Plugin.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C30B1444457C0087E912 /* Target-QCPlugin.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-QCPlugin.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C30C1444457C0087E912 /* Target-TestBundle.xcconfig_txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Target-TestBundle.xcconfig_txt"; sourceTree = "<group>"; };
+		7344C30D1444457C0087E912 /* Project-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Base.xcconfig"; sourceTree = "<group>"; };
+		7344C30E1444457C0087E912 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
+		7344C30F1444457C0087E912 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		7344C3101444457C0087E912 /* Target-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Base.xcconfig"; sourceTree = "<group>"; };
+		7344C3111444457C0087E912 /* Target-Executable.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Executable.xcconfig"; sourceTree = "<group>"; };
+		7344C3121444457C0087E912 /* Target-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Framework.xcconfig"; sourceTree = "<group>"; };
+		7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-ios_static_library.xcconfig"; sourceTree = "<group>"; };
+		7344C3141444457C0087E912 /* Target-ios_static_library_tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-ios_static_library_tests.xcconfig"; sourceTree = "<group>"; };
+		7344C3151444457C0087E912 /* Target-TestBundle.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-TestBundle.xcconfig"; sourceTree = "<group>"; };
 		7351335613893103007393A5 /* AbstractConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractConfiguration.h; sourceTree = "<group>"; };
 		7351335713893103007393A5 /* AbstractConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractConfiguration.m; sourceTree = "<group>"; };
 		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConfig.h; path = ../HooStateMachine/TestConfig.h; sourceTree = "<group>"; };
@@ -180,6 +203,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7344C2FD1444457C0087E912 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				7344C2FE1444457C0087E912 /* .gitignore */,
+				7344C2FF1444457C0087E912 /* old */,
+				7344C30D1444457C0087E912 /* Project-Base.xcconfig */,
+				7344C30E1444457C0087E912 /* Project-Debug.xcconfig */,
+				7344C30F1444457C0087E912 /* Project-Release.xcconfig */,
+				7344C3101444457C0087E912 /* Target-Base.xcconfig */,
+				7344C3111444457C0087E912 /* Target-Executable.xcconfig */,
+				7344C3121444457C0087E912 /* Target-Framework.xcconfig */,
+				7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */,
+				7344C3141444457C0087E912 /* Target-ios_static_library_tests.xcconfig */,
+				7344C3151444457C0087E912 /* Target-TestBundle.xcconfig */,
+			);
+			name = Config;
+			path = ../../../../../../../Dropbox/Programming/Config;
+			sourceTree = "<group>";
+		};
+		7344C2FF1444457C0087E912 /* old */ = {
+			isa = PBXGroup;
+			children = (
+				7344C3001444457C0087E912 /* Project-Base.xcconfig_txt */,
+				7344C3011444457C0087E912 /* Project-Coverage.xcconfig_txt */,
+				7344C3021444457C0087E912 /* Project-Debug.xcconfig_txt */,
+				7344C3031444457C0087E912 /* Project-Release.xcconfig_txt */,
+				7344C3041444457C0087E912 /* Target-Base.xcconfig_txt */,
+				7344C3051444457C0087E912 /* Target-CocoaDaemon.xcconfig_txt */,
+				7344C3061444457C0087E912 /* Target-Executable.xcconfig_txt */,
+				7344C3071444457C0087E912 /* Target-Framework.xcconfig_txt */,
+				7344C3081444457C0087E912 /* Target-iPhone.xcconfig_txt */,
+				7344C3091444457C0087E912 /* Target-iPhoneTestBundle.xcconfig_txt */,
+				7344C30A1444457C0087E912 /* Target-Plugin.xcconfig_txt */,
+				7344C30B1444457C0087E912 /* Target-QCPlugin.xcconfig_txt */,
+				7344C30C1444457C0087E912 /* Target-TestBundle.xcconfig_txt */,
+			);
+			path = old;
+			sourceTree = "<group>";
+		};
 		73CFF75913ABF23300FA0498 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +303,7 @@
 		73D5281B1389165300B50908 /* HooStateMachine */ = {
 			isa = PBXGroup;
 			children = (
+				7344C2FD1444457C0087E912 /* Config */,
 				73BCB9C6138C1F9600F4C8D7 /* HooSM.h */,
 				73C12DBD13A6C849004F1824 /* HooSM_headers.h */,
 				73D5284613891B1100B50908 /* HooStateMachine_abstractEvent.h */,
@@ -626,6 +689,7 @@
 /* Begin XCBuildConfiguration section */
 		73D528371389165300B50908 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C30E1444457C0087E912 /* Project-Debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -649,6 +713,7 @@
 		};
 		73D528381389165300B50908 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C30F1444457C0087E912 /* Project-Release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -665,55 +730,32 @@
 		};
 		73D5283A1389165300B50908 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3121444457C0087E912 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HooStateMachine/HooStateMachine-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
 					"_ROOT_OBJECT_=SHooleyObject",
 					"HOOSM_IS_LIBRARY=true",
 				);
-				INFOPLIST_FILE = "HooStateMachine/HooStateMachine-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
 		73D5283B1389165300B50908 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3121444457C0087E912 /* Target-Framework.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HooStateMachine/HooStateMachine-Prefix.pch";
-				INFOPLIST_FILE = "HooStateMachine/HooStateMachine-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
 		73D5283D1389165300B50908 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3151444457C0087E912 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
@@ -737,6 +779,7 @@
 		};
 		73D5283E1389165300B50908 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3151444457C0087E912 /* Target-TestBundle.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
@@ -760,6 +803,7 @@
 		};
 		73EE83E513A152860076FFE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -780,11 +824,13 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"";
 			};
 			name = Debug;
 		};
 		73EE83E613A152860076FFE6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -806,6 +852,7 @@
 		};
 		73EE83E813A152860076FFE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3141444457C0087E912 /* Target-ios_static_library_tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -834,6 +881,7 @@
 		};
 		73EE83E913A152860076FFE6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344C3141444457C0087E912 /* Target-ios_static_library_tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
