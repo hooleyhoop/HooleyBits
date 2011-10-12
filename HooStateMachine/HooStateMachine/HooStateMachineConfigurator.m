@@ -39,6 +39,9 @@
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
     NSError *error = nil;        
     NSDictionary *config = [parser objectWithString:cnfgStr error:&error];
+    if(!config) {
+        [NSException raise:@"Error loading json config? " format:@"%@", error];
+    }
     return [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
 }
 
@@ -76,6 +79,7 @@
 
 - (void)parseStates {
     
+    NSAssert( _config, @"eh, no config?");
     NSArray *states = [_config valueForKey:@"states"];
     for( id state in states ) {
         NSString *stateName = state;

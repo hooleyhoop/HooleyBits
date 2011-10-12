@@ -28,6 +28,7 @@
     NSString *path = [bndl pathForResource:configName ofType:@"json"];
     NSError *error = nil;        
     NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    NSAssert( configContents, @"oops, problem with config file?" );
     return [self smConfiguration:configContents delegate:cntrl];
 }
 
