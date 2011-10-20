@@ -20,10 +20,11 @@
 		73AB4E5013A1596600063149 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73AB4E5113A1596600063149 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
 		73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8113A1817F00CE4B80 /* SHRootObject.framework */; };
-		73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8313A1818E00CE4B80 /* JSON.framework */; };
 		73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */; };
 		73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BCB9C6138C1F9600F4C8D7 /* HooSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73C12DBE13A6C849004F1824 /* HooSM_headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C12DBD13A6C849004F1824 /* HooSM_headers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73C3E316144AFA1D00460E55 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8113A1817F00CE4B80 /* SHRootObject.framework */; };
+		73C3E31A144AFB2200460E55 /* SBJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C3E319144AFB2200460E55 /* SBJson.framework */; };
 		73CFF75B13ABF23300FA0498 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CFF75A13ABF23300FA0498 /* HooSM.h */; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
@@ -108,10 +109,10 @@
 		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConfig.h; path = ../HooStateMachine/TestConfig.h; sourceTree = "<group>"; };
 		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestConfig.m; path = ../HooStateMachine/TestConfig.m; sourceTree = "<group>"; };
 		73B20B8113A1817F00CE4B80 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = SOURCE_ROOT; };
-		73B20B8313A1818E00CE4B80 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
 		73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSHRootObject_ios.a; sourceTree = SOURCE_ROOT; };
 		73BCB9C6138C1F9600F4C8D7 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73C12DBD13A6C849004F1824 /* HooSM_headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM_headers.h; sourceTree = "<group>"; };
+		73C3E319144AFB2200460E55 /* SBJson.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SBJson.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug/SBJson.framework"; sourceTree = "<group>"; };
 		73CFF75A13ABF23300FA0498 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -164,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */,
+				73C3E31A144AFB2200460E55 /* SBJson.framework in Frameworks */,
 				73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */,
 				73D528161389165300B50908 /* Cocoa.framework in Frameworks */,
 			);
@@ -176,6 +177,7 @@
 			files = (
 				73D528281389165300B50908 /* Cocoa.framework in Frameworks */,
 				73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */,
+				73C3E316144AFA1D00460E55 /* SHRootObject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,8 +279,8 @@
 		73D528141389165300B50908 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73C3E319144AFB2200460E55 /* SBJson.framework */,
 				73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */,
-				73B20B8313A1818E00CE4B80 /* JSON.framework */,
 				73B20B8113A1817F00CE4B80 /* SHRootObject.framework */,
 				73EE844A13A159060076FFE6 /* liblibjson.a */,
 				73D528151389165300B50908 /* Cocoa.framework */,
@@ -734,12 +736,14 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
 					"_ROOT_OBJECT_=SHooleyObject",
 					"HOOSM_IS_LIBRARY=true",
 				);
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -749,7 +753,9 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -762,6 +768,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -787,6 +794,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug\"",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

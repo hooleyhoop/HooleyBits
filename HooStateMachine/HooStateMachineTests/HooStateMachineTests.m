@@ -13,7 +13,7 @@
 #import "HooStateMachine.h"
 #import "HooStateMachine_controller.h"
 #import "HooStateMachineConfigurator.h"
-#import <JSON/JSON.h>
+#import <SBJson/SBJson.h>
 #import "AbstractConfiguration.h"
 
 @interface HooStateMachineTests : SenTestCase {
