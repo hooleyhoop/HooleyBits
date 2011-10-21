@@ -847,6 +847,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"";
 			};
 			name = Release;
 		};
