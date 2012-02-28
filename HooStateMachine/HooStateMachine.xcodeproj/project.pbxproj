@@ -20,10 +20,10 @@
 		73AB4E5013A1596600063149 /* HooStateMachineConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D5285513891B1100B50908 /* HooStateMachineConfigurator.m */; };
 		73AB4E5113A1596600063149 /* AbstractConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7351335713893103007393A5 /* AbstractConfiguration.m */; };
 		73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8113A1817F00CE4B80 /* SHRootObject.framework */; };
-		73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8313A1818E00CE4B80 /* JSON.framework */; };
-		73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */; };
 		73BCB9C7138C1F9600F4C8D7 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73BCB9C6138C1F9600F4C8D7 /* HooSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73C12DBE13A6C849004F1824 /* HooSM_headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 73C12DBD13A6C849004F1824 /* HooSM_headers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		73C3E316144AFA1D00460E55 /* SHRootObject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B20B8113A1817F00CE4B80 /* SHRootObject.framework */; };
+		73C3E31A144AFB2200460E55 /* SBJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C3E319144AFB2200460E55 /* SBJson.framework */; };
 		73CFF75B13ABF23300FA0498 /* HooSM.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CFF75A13ABF23300FA0498 /* HooSM.h */; };
 		73D528161389165300B50908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D528151389165300B50908 /* Cocoa.framework */; };
 		73D528201389165300B50908 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73D5281E1389165300B50908 /* InfoPlist.strings */; };
@@ -58,7 +58,6 @@
 		73EE83DE13A152860076FFE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73EE83DC13A152860076FFE6 /* InfoPlist.strings */; };
 		73EE83E113A152860076FFE6 /* HooStateMachine_iosTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 73EE83E013A152860076FFE6 /* HooStateMachine_iosTests.h */; };
 		73EE83E313A152860076FFE6 /* HooStateMachine_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EE83E213A152860076FFE6 /* HooStateMachine_iosTests.m */; };
-		73EE844B13A159060076FFE6 /* liblibjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EE844A13A159060076FFE6 /* liblibjson.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,11 +106,12 @@
 		7351335713893103007393A5 /* AbstractConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractConfiguration.m; sourceTree = "<group>"; };
 		7351335A138932EE007393A5 /* TestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConfig.h; path = ../HooStateMachine/TestConfig.h; sourceTree = "<group>"; };
 		7351335B138932EE007393A5 /* TestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestConfig.m; path = ../HooStateMachine/TestConfig.m; sourceTree = "<group>"; };
+		739CC7891450BEB100900011 /* libsbjson-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsbjson-ios.a"; path = "../../../Source/json-framework/build/Release-iphoneos/libsbjson-ios.a"; sourceTree = "<group>"; };
 		73B20B8113A1817F00CE4B80 /* SHRootObject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SHRootObject.framework; sourceTree = SOURCE_ROOT; };
-		73B20B8313A1818E00CE4B80 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSON.framework; sourceTree = SOURCE_ROOT; };
 		73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSHRootObject_ios.a; sourceTree = SOURCE_ROOT; };
 		73BCB9C6138C1F9600F4C8D7 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73C12DBD13A6C849004F1824 /* HooSM_headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM_headers.h; sourceTree = "<group>"; };
+		73C3E319144AFB2200460E55 /* SBJson.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SBJson.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug/SBJson.framework"; sourceTree = "<group>"; };
 		73CFF75A13ABF23300FA0498 /* HooSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HooSM.h; sourceTree = "<group>"; };
 		73D528121389165300B50908 /* HooStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HooStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D528151389165300B50908 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -156,7 +156,6 @@
 		73EE83DF13A152860076FFE6 /* HooStateMachine_iosTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HooStateMachine_iosTests-Prefix.pch"; sourceTree = "<group>"; };
 		73EE83E013A152860076FFE6 /* HooStateMachine_iosTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HooStateMachine_iosTests.h; sourceTree = "<group>"; };
 		73EE83E213A152860076FFE6 /* HooStateMachine_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HooStateMachine_iosTests.m; sourceTree = "<group>"; };
-		73EE844A13A159060076FFE6 /* liblibjson.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = liblibjson.a; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73B20B8413A1818E00CE4B80 /* JSON.framework in Frameworks */,
+				73C3E31A144AFB2200460E55 /* SBJson.framework in Frameworks */,
 				73B20B8213A1817F00CE4B80 /* SHRootObject.framework in Frameworks */,
 				73D528161389165300B50908 /* Cocoa.framework in Frameworks */,
 			);
@@ -176,6 +175,7 @@
 			files = (
 				73D528281389165300B50908 /* Cocoa.framework in Frameworks */,
 				73D5282B1389165300B50908 /* HooStateMachine.framework in Frameworks */,
+				73C3E316144AFA1D00460E55 /* SHRootObject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,8 +183,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73B20B8613A181AC00CE4B80 /* libSHRootObject_ios.a in Frameworks */,
-				73EE844B13A159060076FFE6 /* liblibjson.a in Frameworks */,
 				73EE83C713A152860076FFE6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,10 +275,10 @@
 		73D528141389165300B50908 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				739CC7891450BEB100900011 /* libsbjson-ios.a */,
+				73C3E319144AFB2200460E55 /* SBJson.framework */,
 				73B20B8513A181AC00CE4B80 /* libSHRootObject_ios.a */,
-				73B20B8313A1818E00CE4B80 /* JSON.framework */,
 				73B20B8113A1817F00CE4B80 /* SHRootObject.framework */,
-				73EE844A13A159060076FFE6 /* liblibjson.a */,
 				73D528151389165300B50908 /* Cocoa.framework */,
 				73EE83C613A152860076FFE6 /* Foundation.framework */,
 				73EE83D113A152860076FFE6 /* UIKit.framework */,
@@ -691,23 +689,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7344C30E1444457C0087E912 /* Project-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					"_ROOT_OBJECT_=SHooleyObject",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = YES;
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -715,16 +696,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7344C30F1444457C0087E912 /* Project-Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -735,11 +706,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					"_ROOT_OBJECT_=SHooleyObject",
-					"HOOSM_IS_LIBRARY=true",
-				);
 			};
 			name = Debug;
 		};
@@ -762,6 +728,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -787,6 +754,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/DocStuff-fyzltajovjabcxgmsavrrywcuzfl/Build/Products/Debug\"",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -805,26 +773,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DSTROOT = /tmp/HooStateMachine_ios.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HooStateMachine_ios/HooStateMachine_ios-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					"_ROOT_OBJECT_=SHooleyObject",
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject\"",
+					"\"$(SRCROOT)/../../../Source/json-framework/Classes\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"",
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/usr/local/include";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"";
 			};
 			name = Debug;
 		};
@@ -832,22 +785,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7344C3131444457C0087E912 /* Target-ios_static_library.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DSTROOT = /tmp/HooStateMachine_ios.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HooStateMachine_ios/HooStateMachine_ios-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/usr/local/include";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject\"",
+					"\"$(SRCROOT)/../../../Source/json-framework/Classes\"",
+					"\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../../../Dropbox/Programming/SHRootObject/SHRootObject/src\"";
 			};
 			name = Release;
 		};
@@ -867,7 +809,7 @@
 					DEBUG,
 					"_ROOT_OBJECT_=SHooleyObject",
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "HooStateMachine_iosTests/HooStateMachine_iosTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
@@ -892,7 +834,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HooStateMachine_iosTests/HooStateMachine_iosTests-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "HooStateMachine_iosTests/HooStateMachine_iosTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (

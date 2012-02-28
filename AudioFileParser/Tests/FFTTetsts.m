@@ -144,13 +144,13 @@
 	BOOL _shouldScale = NO;
     float scale;
 	if(_shouldScale){
-		float scale = (float) 1.0 / (2 * fftSize);
+		float scale = (float) 1.0 / (2 * fftSize); //(1/2048)
 		vDSP_vsmul( complexData->realp, 1, &scale, complexData->realp, 1, numberOfResults );
 		vDSP_vsmul( complexData->imagp, 1, &scale, complexData->imagp, 1, numberOfResults );
 	} else {
 		scale = 1;
 	}
-	float maxComplexValue = 2 * fftSize * scale;
+	float maxComplexValue = 2 * fftSize * scale; // 1
 
 	// magnitude test
 	float maxMag = sqrtf( maxComplexValue*maxComplexValue + maxComplexValue*maxComplexValue ); // 2048 = 2896.309326, 1 = 1.4142

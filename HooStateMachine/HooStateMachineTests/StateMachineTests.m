@@ -3,7 +3,7 @@
 //  SHShared2
 //
 //  Created by Steven Hooley on 21/05/2011.
-//  Copyright 2011 Tinsal Parks. All rights reserved.
+//  Copyright 2011 AudioBoo. All rights reserved.
 //
 
 #import <SenTestingKit/SenTestingKit.h>

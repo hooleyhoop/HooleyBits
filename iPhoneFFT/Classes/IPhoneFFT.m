@@ -71,19 +71,19 @@
 	
 	
 	// Use an NSPort so the background thread can sen the main thread messages
-    NSPort *myPort = [NSMachPort port];
-	// This class handles incoming port messages.
-	[myPort setDelegate:self];
-	// Install the port as an input source on the current run loop.
-	[[NSRunLoop currentRunLoop] addPort:myPort forMode:NSDefaultRunLoopMode];
-
-	[self performSelectorInBackground:@selector(_processDataInBackground:) withObject:myPort];
-	
-	[self performSelectorInBackground:@selector(_mockCoreAudioThread:) withObject:myPort];
+//    NSPort *myPort = [NSMachPort port];
+//	// This class handles incoming port messages.
+//	[myPort setDelegate:self];
+//	// Install the port as an input source on the current run loop.
+//	[[NSRunLoop currentRunLoop] addPort:myPort forMode:NSDefaultRunLoopMode];
+//
+//	[self performSelectorInBackground:@selector(_processDataInBackground:) withObject:myPort];
+//	
+//	[self performSelectorInBackground:@selector(_mockCoreAudioThread:) withObject:myPort];
 
 // GRAPH WAY
-//	[self setUpGraph];
-//	[self _beginRecording];
+	[self setUpGraph];
+	[self _beginRecording];
 }
 
 #pragma mark -
@@ -328,6 +328,14 @@ void _tweakInputStreamDesc( AudioStreamBasicDescription *desc, AudioUnit *unit )
 	//                          |                     t |
 	//                          -------------------------	
 
+    
+	// --bus0--
+    // input: from app (Set ASBD depending what you provide)  >  output: to hardware (Get ASBD to inspect what is being sent to hardware)
+    
+	// --bus1--
+    // input: from mic (Get ASBD to inspect what you are getting from hardware)  >  output: to app (Set ASBD to indicate what format you want your units to receive)
+    
+    
 	// Input Scope:0 Set ASBD to indicate what you’re providing for play-out
 	// Input Scope:1 Get ASBD to inspect audio format being received from H/W
 

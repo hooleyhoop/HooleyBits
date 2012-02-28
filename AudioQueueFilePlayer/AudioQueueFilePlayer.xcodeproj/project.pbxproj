@@ -27,13 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		733676880F4188C300E40357 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 738C7C770C5CDC180096EF9D;
-			remoteInfo = SHShared;
-		};
 		7336768A0F4188C300E40357 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 733676810F4188C300E40357 /* SHShared.xcodeproj */;
@@ -238,7 +231,6 @@
 		733676820F4188C300E40357 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				733676890F4188C300E40357 /* SHShared.framework */,
 				7336768B0F4188C300E40357 /* SHSharedTests.octest */,
 				7336768D0F4188C300E40357 /* libSHShared_static.a */,
 				7336768F0F4188C300E40357 /* libSHShared_iphone.a */,
@@ -344,7 +336,11 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AudioQueueFilePlayer" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectReferences = (
@@ -361,13 +357,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		733676890F4188C300E40357 /* SHShared.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SHShared.framework;
-			remoteRef = 733676880F4188C300E40357 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		7336768B0F4188C300E40357 /* SHSharedTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;

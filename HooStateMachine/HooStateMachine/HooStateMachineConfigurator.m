@@ -3,7 +3,7 @@
 //  SHShared2
 //
 //  Created by Steven Hooley on 21/05/2011.
-//  Copyright 2011 Tinsal Parks. All rights reserved.
+//  Copyright 2011 AudioBoo. All rights reserved.
 //
 
 #import "HooStateMachineConfigurator.h"
@@ -39,6 +39,9 @@
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
     NSError *error = nil;        
     NSDictionary *config = [parser objectWithString:cnfgStr error:&error];
+    if(!config) {
+        [NSException raise:@"Error loading json config? " format:@"%@", error];
+    }
     return [[[HooStateMachineConfigurator alloc] initWithConfig:config] autorelease];
 }
 
@@ -76,7 +79,8 @@
 
 - (void)parseStates {
     
-    NSArray *states = [_config valueForKey:@"states"];
+    NSAssert( _config, @"eh, no config?");
+    NSArray *states = [_config objectForKey:@"states"];
     for( id state in states ) {
         NSString *stateName = state;
         HooStateMachine_state *parentState = nil;
@@ -95,7 +99,7 @@
 
 - (void)parseEvents {
 
-    NSArray *events = [_config valueForKey:@"events"];
+    NSArray *events = [_config objectForKey:@"events"];
     for( NSString *event in events ) {
         HooStateMachine_event *newEvent = [[[HooStateMachine_event alloc] initWithName:event] autorelease];
         [_events setObject:newEvent forKey:event];
@@ -104,7 +108,7 @@
 
 - (void)parseResetEvents {
     
-    NSArray *resetEvents = [_config valueForKey:@"resetEvents"];
+    NSArray *resetEvents = [_config objectForKey:@"resetEvents"];
     for( NSString *resetEvent in resetEvents ) {
         HooStateMachine_event *ev = [_events objectForKey:resetEvent];
         NSAssert( ev, @"Error! is reset event a real event?" );
@@ -114,7 +118,7 @@
 
 - (void)parseCommands {
 
-    NSArray *commands = [_config valueForKey:@"commands"];
+    NSArray *commands = [_config objectForKey:@"commands"];
     for( NSString *command in commands ) {
         HooStateMachine_command *newCommand = [[[HooStateMachine_command alloc] initWithName:command] autorelease];
         [_commands setObject:newCommand forKey:command];
@@ -123,7 +127,7 @@
 
 - (void)parseTransitions {
 
-    NSArray *transitions = [_config valueForKey:@"transitions"];
+    NSArray *transitions = [_config objectForKey:@"transitions"];
     for( NSDictionary *transition in transitions ) {
         NSString *stateName = [transition objectForKey:@"state"];
         NSString *eventName = [transition objectForKey:@"event"];
@@ -138,7 +142,7 @@
 
 - (void)parseActions {
     
-    NSArray *actions = [_config valueForKey:@"actions"];
+    NSArray *actions = [_config objectForKey:@"actions"];
     for( NSDictionary *action in actions ) {
         NSString *stateName = [action objectForKey:@"state"];
         NSString *entryAction = [action objectForKey:@"entryAction"];

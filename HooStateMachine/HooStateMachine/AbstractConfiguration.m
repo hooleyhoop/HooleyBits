@@ -3,7 +3,7 @@
 //  HooStateMachine
 //
 //  Created by Steven Hooley on 22/05/2011.
-//  Copyright 2011 Tinsal Parks. All rights reserved.
+//  Copyright 2011 AudioBoo. All rights reserved.
 //
 
 #import "AbstractConfiguration.h"
@@ -28,6 +28,7 @@
     NSString *path = [bndl pathForResource:configName ofType:@"json"];
     NSError *error = nil;        
     NSString *configContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    NSAssert( configContents, @"oops, problem with config file?" );
     return [self smConfiguration:configContents delegate:cntrl];
 }
 
